@@ -25,7 +25,7 @@ function layer(name,game,rotation,size,ss=2){
 const text=(value,px,weight,color,x,y)=>['(','-background','none','-density','72',`pango:<span font_family="${font}" weight="${weight}" size="${px*1024}" foreground="${color}">${value}</span>`,')','-geometry',`+${x}+${y}`,'-composite'];
 const magick=(...args)=>execFileSync('magick',args,{stdio:'inherit'});
 
-const sphere=layer('sphere',position('sphere',4,46,7),[-.42,.62],480),torus=layer('torus',position('torus',9,52,11),[-.78,.5],390);
+const sphere=layer('sphere',position('sphere',4,46,7),[.75,.62],480),torus=layer('torus',position('torus',9,52,11),[1,.5],390);
 magick('-size','1200x630','xc:#102b2b',
  '(',sphere,'-resize','480x480',')','-geometry','+700+20','-composite',
  '(',torus,'-resize','390x390',')','-geometry','+575+235','-composite',
@@ -36,7 +36,7 @@ magick('-size','1200x630','xc:#102b2b',
  '-strip',out('og-image.png'));
 
 // Icons: a sphere board on the app background; favicon.ico is downscaled from a 512px master.
-const icon=layer('icon',position('sphere',3,24,3),[-.42,.62],180,4);
+const icon=layer('icon',position('sphere',3,24,3),[.75,.62],180,4);
 magick('-size','180x180','xc:#102b2b','(',icon,'-resize','176x176',')','-geometry','+2+2','-composite','-strip',out('apple-touch-icon.png'));
 magick('-size','512x512','xc:#102b2b','(',icon,'-resize','480x480',')','-geometry','+16+16','-composite',join(tmp,'icon-512.png'));
 magick(join(tmp,'icon-512.png'),'-define','icon:auto-resize=48,32,16',out('favicon.ico'));
