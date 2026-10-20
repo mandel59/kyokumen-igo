@@ -1,6 +1,6 @@
 # ai-tuner
 
-`dist/engine.js` の `chooseMove`（AI の評価関数）の重みを、自己対局で調整するためのツールです。盤・ルール・AI を Rust に移植しており、交点の番号付けと評価は JavaScript 版と一致します。外部クレートは使いません。
+従来の `dist/engine.js` の `chooseMove`（一手評価 AI の評価関数）の重みを、自己対局で調整するためのツールです。盤・ルール・AI を Rust に移植しており、交点の番号付けと評価は JavaScript 版と一致します。外部クレートは使いません。
 
 ```sh
 cargo run --release -- selftest            # 盤の構造とルールの確認
@@ -19,3 +19,5 @@ JS 版と Rust / WASM 版の速度比較は、[WASM ベンチマーク記録](WA
 アプリに組み込んだ WASM の範囲と配信物の再生成は、[アプリ用 WASM AI](WASM.md) を参照してください。
 
 現行 AI 同士の得点差とコミ別勝率は、[コミの推定記録](KOMI-STUDY.md) を参照してください。
+
+現在アプリで使う最大 4 手の探索 AI と、一手評価 AI によるコミ推定の再検証は [探索 AI の評価](SEARCH-AI.md) にまとめています。

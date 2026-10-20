@@ -2,6 +2,7 @@
 mod ai;
 mod board;
 mod rng;
+mod search;
 
 use std::cell::RefCell;
 use board::{Game, Kind, Scratch, Topology};
@@ -13,7 +14,7 @@ struct Engine {
     scratch: Option<Scratch>,
 }
 impl Engine {
-    fn choose(&mut self, kind: u32, size: usize, komi: f64, moves: &[i32], seed: u32, randomize: bool) -> i32 {
+    fn choose(&mut self, kind: u32, size: usize, komi: f64, moves: &[i32], seed: u32, randomize: bool, depth: u32) -> i32 {
         if !matches!((kind, size), (0, 3..=5) | (1, 7 | 9 | 11))
             || !komi.is_finite() || moves.len() > 10000 {
             return -2;
@@ -32,6 +33,7 @@ impl Engine {
                 return -3;
             }
         }
+        if depth>0 {return search::choose_search(&game,depth,if randomize {seed}else{0}).0.map_or(-1,|m|m as i32);}
         let mut rng = Rng::new(seed as u64);
         let mut random = || if randomize { rng.f64() } else { 0.0 };
         ai::choose_move(&game, &ai::Params::tuned(), scratch, &mut random).map_or(-1, |m| m as i32)
@@ -40,7 +42,7 @@ impl Engine {
 thread_local! { static ENGINE: RefCell<Engine> = RefCell::new(Engine::default()); }
 
 #[no_mangle]
-pub extern "C" fn ai_version() -> u32 { 1 }
+pub extern "C" fn ai_version() -> u32 { 2 }
 
 #[no_mangle]
 pub extern "C" fn ai_weight(index: usize) -> f64 {
@@ -64,5 +66,12 @@ pub unsafe extern "C" fn ai_free(ptr: *mut i32, len: usize) {
 pub unsafe extern "C" fn ai_choose(kind: u32, size: usize, komi: f64, ptr: *const i32, len: usize, seed: u32, randomize: u32) -> i32 {
     if ptr.is_null() || len > 10000 { return -2; }
     let moves = std::slice::from_raw_parts(ptr, len);
-    ENGINE.with(|engine| engine.borrow_mut().choose(kind, size, komi, moves, seed, randomize != 0))
+    ENGINE.with(|engine| engine.borrow_mut().choose(kind, size, komi, moves, seed, randomize != 0, 0))
+}
+
+#[no_mangle]
+pub unsafe extern "C" fn ai_search(kind: u32, size: usize, komi: f64, ptr: *const i32, len: usize, seed: u32, randomize: u32, depth: u32) -> i32 {
+    if ptr.is_null() || len>10000 || !(1..=4).contains(&depth) {return -2;}
+    let moves=std::slice::from_raw_parts(ptr,len);
+    ENGINE.with(|engine|engine.borrow_mut().choose(kind,size,komi,moves,seed,randomize!=0,depth))
 }

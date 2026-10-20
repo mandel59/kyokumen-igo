@@ -10,7 +10,7 @@ self.onmessage=async({data})=>{
     const ai=await ready;
     let move,backend='js';
     if(ai&&!wasmFailed) {
-      try {move=ai.chooseMove(data.position);backend='wasm';}
+      try {move=ai.chooseMove(data.position,{depth:4});backend='wasm';}
       catch {wasmFailed=true;}
     }
     if(backend==='js')move=chooseMove(restoreAIPosition(data.position));

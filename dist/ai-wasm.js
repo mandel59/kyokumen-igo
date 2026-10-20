@@ -14,13 +14,14 @@ async function loadBytes() {
 export async function createWasmAI({load=loadBytes,random=Math.random}={}) {
   const {instance}=await WebAssembly.instantiate(await load(),{});
   const api=instance.exports;
-  if(api.ai_version()!==1||WEIGHTS.some((key,i)=>api.ai_weight(i)!==AI_WEIGHTS[key]))
+  if(api.ai_version()!==2||WEIGHTS.some((key,i)=>api.ai_weight(i)!==AI_WEIGHTS[key]))
     throw new Error('Incompatible AI module');
   let pointer=0,capacity=0,disposed=false;
   return {
-    chooseMove(position,{seed,randomize=true}={}) {
+    chooseMove(position,{seed,randomize=true,depth=0}={}) {
       if(disposed)throw new Error('AI module disposed');
       validateAIPosition(position);
+      if(!Number.isInteger(depth)||depth<0||depth>4)throw new Error('Invalid AI search depth');
       const needed=Math.max(1,position.moves.length);
       if(needed>capacity) {
         const nextCapacity=Math.min(10000,Math.max(needed,capacity*2));
@@ -31,8 +32,9 @@ export async function createWasmAI({load=loadBytes,random=Math.random}={}) {
       }
       // Recreate the view: Rust allocations may have grown/detached the old memory buffer.
       new Int32Array(api.memory.buffer,pointer,position.moves.length).set(position.moves);
-      const chosen=api.ai_choose(position.kind==='sphere'?0:1,position.size,position.komi,
-        pointer,position.moves.length,seed??(random()*4294967296)>>>0,randomize?1:0);
+      const args=[position.kind==='sphere'?0:1,position.size,position.komi,
+        pointer,position.moves.length,seed??(random()*4294967296)>>>0,randomize?1:0];
+      const chosen=depth?api.ai_search(...args,depth):api.ai_choose(...args);
       if(chosen< -1)throw new Error(chosen===-3?'Illegal AI history':'Invalid AI position');
       return chosen===-1?null:chosen;
     },
