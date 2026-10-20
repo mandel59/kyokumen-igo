@@ -57,7 +57,7 @@ for(const kind of ['torus','sphere']) {
 }
 // The browser AI makes exactly the moves the self-play tuner evaluated (tools/ai-tuner parity fixture).
 {
-  const parity=JSON.parse(readFileSync(new URL('./tools/ai-tuner/parity.json',import.meta.url),'utf8'));
+  const parity=JSON.parse(readFileSync(new URL('./tests/fixtures/ai/v1-parity.json',import.meta.url),'utf8'));
   assert.deepEqual(parity.params,AI_WEIGHTS,'fixture was generated with the shipped weights');
   for(const c of parity.cases) {
     const g=new Game(createTopology(c.kind,c.size));

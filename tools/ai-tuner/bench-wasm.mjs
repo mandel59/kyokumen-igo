@@ -1,15 +1,16 @@
 // Run from the repo root: node tools/ai-tuner/bench-wasm.mjs
-// Build instructions and measurement definitions are in WASM-BENCHMARK.md.
+// Build instructions and measurement definitions are in experiments/ai/v1/2026-10-21-wasm-benchmark/README.md.
 import assert from 'node:assert/strict';
 import {readFileSync, writeFileSync} from 'node:fs';
 import os from 'node:os';
+import {outputPath,writeReport} from './experiment-paths.mjs';
 import {fileURLToPath} from 'node:url';
 import {createTopology, Game, chooseMove, AI_WEIGHTS} from '../../dist/engine.js';
 
 const here = new URL('./', import.meta.url);
-const fixture = JSON.parse(readFileSync(new URL('parity.json', here), 'utf8'));
+const fixture = JSON.parse(readFileSync(new URL('../../tests/fixtures/ai/v1-parity.json', here), 'utf8'));
 assert.deepEqual(fixture.params, AI_WEIGHTS);
-const output = new URL('target/wasm-bench/results.json', here);
+const output = outputPath('target/wasm-bench/results.json');
 const started = performance.now();
 const bytes = readFileSync(new URL('target/wasm-bench/engine.wasm', here));
 const readMs = performance.now() - started;
@@ -115,5 +116,5 @@ const report = {
     replay: 'rebuild from move history then choose; WASM includes copying moves into linear memory; excludes JSON and Worker messaging'},
   checksum, results,
 };
-writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+writeReport(output,report);
 console.log('Saved ' + fileURLToPath(output));

@@ -1,10 +1,14 @@
-# Rust / WASM と JavaScript の速度比較（2026-10-21）
+# Kyokugo AI v1 の JS / WASM 比較（2026-10-21）
 
-この測定は 4 手探索の導入前の一手評価 AI を対象としています。
+> 実験記録：v1/2026-10-21-wasm-benchmark。v1 / v2 はアーキテクチャ名、係数セットと実行方式は別に扱います。
+> 生データ・ログと当時のハッシュは内容を変えずに `data/` へ移しました。履歴中のパスと実行時点のコードは [manifest.json](manifest.json) から追跡できます。
+> 当時のコマンドと測定値は履歴です。現在の配置での実行・再集計は [ツールの使い方](../../../../tools/ai-tuner/README.md) を参照し、当時の性能を再測定する場合は記録されたソース版も固定してください。
+
+この測定は Kyokugo AI v2 の導入前のKyokugo AI v1 を対象としています。
 
 同じ 300 局面を使った Node.js 上の計測では、既存 Rust 実装を WASM にしたものが、既存 JS 実装に比べて着手計算で約 **8.3 倍**、手順からの局面復元・転送込みで約 **10.8 倍**速くなりました。異なる Node.js プロセスで 2 回実行し、ほぼ同じ比率を得ています。
 
-この測定時点では比較用のアダプタを使い、アプリへの WASM 導入は行っていませんでした。その後のアプリへの組み込みは [アプリ用 WASM AI](WASM.md) を参照してください。
+この測定時点では比較用のアダプタを使い、アプリへの WASM 導入は行っていませんでした。その後のアプリへの組み込みは [アプリ用 WASM AI](../../../../docs/ai/wasm.md) を参照してください。
 
 ## 環境と比較条件
 
@@ -16,7 +20,7 @@
 | WASM target | `wasm32-unknown-unknown` |
 | 最適化 | `opt-level=3`、LTO、codegen-units=1、panic=abort |
 | 並列化 | JS / WASM ともに単一スレッド |
-| 局面 | 既存の [parity.json](parity.json) 全 300 局面。6 種類の盤で各 50 局面 |
+| 局面 | 既存の [parity.json](../../../../tests/fixtures/ai/v1-parity.json) 全 300 局面。6 種類の盤で各 50 局面 |
 | 評価の重み | 両方とも採用済みの tuned |
 | 乱数加点 | 両方とも 0 に固定 |
 | ウォームアップ | 各測定方式で全 300 局面をそれぞれ 10 周 |
@@ -95,6 +99,6 @@ rustc --edition 2021 --target wasm32-unknown-unknown --crate-type cdylib -C opt-
 node tools/ai-tuner/bench-wasm.mjs
 ```
 
-[bench-wasm.rs](bench-wasm.rs) は既存の Rust エンジンを読み込む計測専用アダプタです。[bench-wasm.mjs](bench-wasm.mjs) が一致確認と時間計測を行い、結果を `target/wasm-bench/results.json` に書きます。
+[bench-wasm.rs](../../../../tools/ai-tuner/bench-wasm.rs) は既存の Rust エンジンを読み込む計測専用アダプタです。[bench-wasm.mjs](../../../../tools/ai-tuner/bench-wasm.mjs) が一致確認と時間計測を行い、結果を `target/wasm-bench/results.json` に書きます。
 
-今回の 2 回分の全標本と実装・fixture の SHA-256 は [wasm-node-results.json](experiments/2026-10-21/wasm-node-results.json) に保存しています。コンパイル済み WASM は `target/` 内に生成し、Git の管理対象にはしていません。
+今回の 2 回分の全標本と実装・fixture の SHA-256 は [wasm-node-results.json](data/wasm-node-results.json) に保存しています。コンパイル済み WASM は `target/` 内に生成し、Git の管理対象にはしていません。

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "id": "v2/2026-10-21-initial",
+  "architecture": "v2",
+  "title": "Kyokugo AI v2 の導入とコミ再検証",
+  "recordedAtCommit": "c02fc419bf83152273dffbe5f8f7002ec13398bb",
+  "variants": [
+    "v1-tuned-20261020",
+    "v2-original",
+    "v2-depth1-probe",
+    "v2-depth2-probe",
+    "v2-depth3-probe"
+  ],
+  "notes": [
+    "Recorded data moved without rewriting contents.",
+    "recordedAtCommit contains the archive before reorganization; original source commits and hashes remain in the report/data.",
+    "Historical path keys and CLI aliases are preserved; legacyPath maps each artifact to its original location."
+  ],
+  "artifacts": [
+    {
+      "path": "data/heldout-d4-d2.json",
+      "sha256": "d674c08c3c0ca1d8baeaa579cea463d9e2dcaf0c2ccee50ced058a30c172334c",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/heldout-d4-d2.json"
+    },
+    {
+      "path": "data/heldout-d4-greedy.json",
+      "sha256": "af34e691b8728386dcc0f417286a8782c948ea4ba95a3f50ba10c464d66acaf2",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/heldout-d4-greedy.json"
+    },
+    {
+      "path": "data/pilot-d1-greedy.json",
+      "sha256": "87389e316ad3598734d2299228149591128b113303f702b8168d584437e993e1",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/pilot-d1-greedy.json"
+    },
+    {
+      "path": "data/pilot-d2-greedy.json",
+      "sha256": "4bfc363b753ed106696075e424531e2e3026399e5dfa04760438e16d453b4c71",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/pilot-d2-greedy.json"
+    },
+    {
+      "path": "data/pilot-d3-greedy.json",
+      "sha256": "7df40aeaebf4c2371e405f3dc006b27aacac77ac124d68c6ab47c61afd2655f0",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/pilot-d3-greedy.json"
+    },
+    {
+      "path": "data/pilot-d4-greedy.json",
+      "sha256": "4b784514dd5d845e9d599a42cff17a9bc639c7f925a8003500189f692942f7a0",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/pilot-d4-greedy.json"
+    },
+    {
+      "path": "data/self-d2-komi-1.json",
+      "sha256": "9cd4ea23503060d11d4692df8193663f7d6e18091825ab0426711a475b7fdd2f",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d2-komi-1.json"
+    },
+    {
+      "path": "data/self-d2-komi-6.5.json",
+      "sha256": "4a405e1e138c71f55ff5af95ff9dbd9daffd1cfd12aa21873f552c8f840281d6",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d2-komi-6.5.json"
+    },
+    {
+      "path": "data/self-d4-komi-0.json",
+      "sha256": "5eb86a6748b65156e0141f9c67c9c5c2b5d7ed5fe64d8a6a7a095e370293d2ee",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d4-komi-0.json"
+    },
+    {
+      "path": "data/self-d4-komi-1.json",
+      "sha256": "717edc5f56c1fea8008f6748d0e21edf76d555239cbe99940f1f6b125ae7e5b7",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d4-komi-1.json"
+    },
+    {
+      "path": "data/self-d4-komi-3.5.json",
+      "sha256": "af85da3ecedd382196f43be86ddb9f2172e5aa739211ef13a16d9f58ac89dafd",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d4-komi-3.5.json"
+    },
+    {
+      "path": "data/self-d4-komi-6.5.json",
+      "sha256": "a275fa68828721f67da99854cc2293e891d46351c8f585fee0180a3ffce74dc0",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/self-d4-komi-6.5.json"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "1b857e329c0149aafe418e6b93aceb7010204ec17a214792a4daa5a53342c181",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/summary.json"
+    },
+    {
+      "path": "data/wasm-performance.json",
+      "sha256": "da37993691fc92e53d0ef42211874e6cfbe135927bb86999efd91d2676e64360",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search/wasm-performance.json"
+    }
+  ]
+}

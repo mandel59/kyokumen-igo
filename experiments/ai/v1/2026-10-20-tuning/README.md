@@ -1,8 +1,12 @@
-# AI 評価関数のチューニング記録（2026-10-20）
+# Kyokugo AI v1 の係数調整（2026-10-20）
+
+> 実験記録：v1/2026-10-20-tuning。v1 / v2 はアーキテクチャ名、係数セットと実行方式は別に扱います。
+> 生データ・ログと当時のハッシュは内容を変えずに `data/` へ移しました。履歴中のパスと実行時点のコードは [manifest.json](manifest.json) から追跡できます。
+> 当時のコマンドと測定値は履歴です。現在の配置での実行・再集計は [ツールの使い方](../../../../tools/ai-tuner/README.md) を参照し、当時の性能を再測定する場合は記録されたソース版も固定してください。
 
 調整前の AI（`legacy`）に対する最終版（`tuned`）の成績は、12,000 局中 11,593 勝、勝率 96.6% でした。Rust で自己対局と重みの探索を行い、採用した重みと勢力評価をブラウザの JavaScript に反映しました。実装はコミット `4c5375f` に含まれます。
 
-この文書は、Claude のセッション の実行コマンド・出力と、保存されていた探索ログをもとに 2026-10-21 に整理した作業記録です。以下の数値は当時の測定結果であり、文書化のために探索をやり直した結果ではありません。
+この文書は、Claude のセッションの実行コマンド・出力と、保存されていた探索ログをもとに 2026-10-21 に整理した作業記録です。以下の数値は当時の測定結果であり、文書化のために探索をやり直した結果ではありません。
 
 ## 目的と実装
 
@@ -52,7 +56,7 @@ cargo build --release
 
 この設定では 1 世代あたり候補の評価が 24,576 局、平均候補の確認が 1,536 局、60 世代で計 1,566,720 局です。
 
-探索の生ログを [search-progress.txt](experiments/2026-10-20/search-progress.txt)、標準出力を [search-result.txt](experiments/2026-10-20/search-result.txt) に保存しています。これらは当時の `tune-full.log` と `tune-full.out` の内容です。
+探索の生ログを [search-progress.txt](data/search-progress.txt)、標準出力を [search-result.txt](data/search-result.txt) に保存しています。これらは当時の `tune-full.log` と `tune-full.out` の内容です。
 
 ## 探索結果から採用値を決めるまで
 
@@ -124,7 +128,7 @@ cargo run --release -- match tuned legacy --games 2000 --seed 2026
 
 ### JS への反映と一致確認
 
-採用値を [src/ai.rs](src/ai.rs) の `Params::tuned()` と [dist/engine.js](../../dist/engine.js) の `AI_WEIGHTS` の両方に反映しました。試作したアタリ数の計算とその重みは、Rust / JS の双方から削除しています。
+採用値を [src/ai.rs](../../../../tools/ai-tuner/src/ai.rs) の `Params::tuned()` と [dist/engine.js](../../../../dist/engine.js) の `AI_WEIGHTS` の両方に反映しました。試作したアタリ数の計算とその重みは、Rust / JS の双方から削除しています。
 
 ```sh
 # tools/ai-tuner/ で実行
@@ -135,7 +139,7 @@ cargo run --release -- parity parity.json --count 300
 node tests.mjs
 ```
 
-最終版の 300 局面で、合法手順の再生・重みの一致・乱数加点を 0 にした選択手の一致を確認しました。この fixture は [parity.json](parity.json) として保存され、[tests.mjs](../../tests.mjs) が検証します。調整前の 600 局面の確認とは別の検証です。
+最終版の 300 局面で、合法手順の再生・重みの一致・乱数加点を 0 にした選択手の一致を確認しました。この fixture は [parity.json](../../../../tests/fixtures/ai/v1-parity.json) として保存され、[tests.mjs](../../../../tests.mjs) が検証します。調整前の 600 局面の確認とは別の検証です。
 
 セッションではエンジン、コミ、棋譜、保存復元、投影、描画、姿勢・回転、UI の各テストを実行し、成功出力を確認しています。UI シミュレーションは 360×640、390×844、844×390 の 3 サイズでした。これらは実ブラウザやスマートフォンでの表示確認を代替するものではありません。
 

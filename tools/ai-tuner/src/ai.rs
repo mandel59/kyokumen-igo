@@ -1,4 +1,4 @@
-// Parameterised port of chooseMove from dist/engine.js. Every weight is a field so self-play
+// Kyokugo AI v1. Parameterised port of chooseMove from dist/engine.js. Every weight is a field so self-play
 // can tune it; `legacy()` reproduces the hand-written weights the browser AI shipped with.
 use crate::board::{Game, Scratch};
 

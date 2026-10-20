@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "v1/2026-10-20-tuning",
+  "architecture": "v1",
+  "title": "Kyokugo AI v1 の係数調整",
+  "recordedAtCommit": "c02fc419bf83152273dffbe5f8f7002ec13398bb",
+  "variants": [
+    "v1-original",
+    "v1-tuned-20261020"
+  ],
+  "notes": [
+    "Recorded data moved without rewriting contents.",
+    "recordedAtCommit contains the archive before reorganization; original source commits and hashes remain in the report/data.",
+    "Historical path keys and CLI aliases are preserved; legacyPath maps each artifact to its original location."
+  ],
+  "artifacts": [
+    {
+      "path": "data/search-progress.txt",
+      "sha256": "c0ee0fb5e44abc59a16bb9ca0c02ba22c7f4f6cd98d09fde27b2255541e79aac",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-20/search-progress.txt"
+    },
+    {
+      "path": "data/search-result.txt",
+      "sha256": "828379f2f7d71c6ae5293af4dc8a9cc526e5bb8d61c4e9c40b9ff1eb693f50be",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-20/search-result.txt"
+    }
+  ]
+}

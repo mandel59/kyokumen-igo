@@ -1,6 +1,10 @@
-# 一手評価 AI によるコミの推定（2026-10-21）
+# Kyokugo AI v1 のコミ評価（2026-10-21）
 
-4 手探索の導入前に配信していた一手評価 AI の重みで自己対局を行い、先手・後手の得点差を調べました。探索版との比較は [探索 AI の評価](SEARCH-AI.md) を参照してください。各盤 20,000 局、全 6 種類で **120,000 局**です。
+> 実験記録：v1/2026-10-21-komi。v1 / v2 はアーキテクチャ名、係数セットと実行方式は別に扱います。
+> 生データ・ログと当時のハッシュは内容を変えずに `data/` へ移しました。履歴中のパスと実行時点のコードは [manifest.json](manifest.json) から追跡できます。
+> 当時のコマンドと測定値は履歴です。現在の配置での実行・再集計は [ツールの使い方](../../../../tools/ai-tuner/README.md) を参照し、当時の性能を再測定する場合は記録されたソース版も固定してください。
+
+Kyokugo AI v2 の導入前に配信していたKyokugo AI v1 の重みで自己対局を行い、先手・後手の得点差を調べました。探索版との比較は [探索 AI の評価](../../v2/2026-10-21-initial/README.md) を参照してください。各盤 20,000 局、全 6 種類で **120,000 局**です。
 
 コミを除いた黒の得点差の平均は約 3〜7 目、中央値は球面で 0 目、トーラスで 1 目でした。黒の大勝が平均を押し上げており、平均得点差と勝率を均すコミは一致しません。現在のコミ 6.5 では黒の勝率が約 14〜24% で、この AI 同士の対局では後手有利でした。
 
@@ -71,9 +75,9 @@ rustc --edition 2021 -C opt-level=3 -C lto=fat -C codegen-units=1 -A dead_code t
 node tools/ai-tuner/komi-study.mjs
 ```
 
-[komi-study.rs](komi-study.rs) が自己対局を行い、[komi-study.mjs](komi-study.mjs) が集計と WASM / JS での一致確認を行います。
+[komi-study.rs](../../../../tools/ai-tuner/komi-study.rs) が自己対局を行い、[komi-study.mjs](../../../../tools/ai-tuner/komi-study.mjs) が集計と WASM / JS での一致確認を行います。
 
-- [komi-scores.json](experiments/2026-10-21/komi-scores.json)：全対戦組の得点差と、検証用の代表棋譜。
-- [komi-summary.json](experiments/2026-10-21/komi-summary.json)：得点差の度数分布、コミ別の勝率・引き分け率、区間推定、ソースと配信 WASM の SHA-256。
+- [komi-scores.json](data/komi-scores.json)：全対戦組の得点差と、検証用の代表棋譜。
+- [komi-summary.json](data/komi-summary.json)：得点差の度数分布、コミ別の勝率・引き分け率、区間推定、ソースと配信 WASM の SHA-256。
 
 これは現在の AI の打ち方に依存する自己対局での推定です。人間同士や、より強い AI で対局したときの適正コミ、盤そのものの理論的な先手有利を示す値ではありません。

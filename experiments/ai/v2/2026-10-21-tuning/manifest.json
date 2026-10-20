@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "id": "v2/2026-10-21-tuning",
+  "architecture": "v2",
+  "title": "Kyokugo AI v2 の係数調整と盤別採用",
+  "recordedAtCommit": "c02fc419bf83152273dffbe5f8f7002ec13398bb",
+  "variants": [
+    "v1-tuned-20261020",
+    "v2-original",
+    "v2-global13-20261021",
+    "v2-tuned-20261021",
+    "v2-deployed-20261021"
+  ],
+  "notes": [
+    "Recorded data moved without rewriting contents.",
+    "recordedAtCommit contains the archive before reorganization; original source commits and hashes remain in the report/data.",
+    "Historical path keys and CLI aliases are preserved; legacyPath maps each artifact to its original location."
+  ],
+  "artifacts": [
+    {
+      "path": "data/adoption.json",
+      "sha256": "c57fb8e2af4fc1ea21ec6b4d32d956399406aa3b1dd8c61cf0c6110c9c339467",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/adoption.json"
+    },
+    {
+      "path": "data/browser-smoke.json",
+      "sha256": "d9704cf1e9e7cb47f1815b9b0b49b45e9ff609b395a3510df15daa8cdbe73554",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/browser-smoke.json"
+    },
+    {
+      "path": "data/diagnostic-vs-greedy-komi-6.5.json",
+      "sha256": "76839e7a703bd17f927e0554ec42860526a1010a90702f2518b39445acd45cbd",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/diagnostic-vs-greedy-komi-6.5.json"
+    },
+    {
+      "path": "data/diagnostic-vs-original-komi-0.json",
+      "sha256": "7a1a705d4bc56be080e12b62f163abc99bc978eaec9fc3cbcbe0986018d1270f",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/diagnostic-vs-original-komi-0.json"
+    },
+    {
+      "path": "data/diagnostic-vs-original-komi-6.5.json",
+      "sha256": "ec0df3a7ff551ac00d163f1dd200d19924b6beeb6299de6fc78d5f60a17fd9d2",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/diagnostic-vs-original-komi-6.5.json"
+    },
+    {
+      "path": "data/diagnostic-vs-original-komi-9.5.json",
+      "sha256": "f2c1349fc8fee1cef1f18f1f18f71e4db633c221ce9fed8b7b87907143621d76",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/diagnostic-vs-original-komi-9.5.json"
+    },
+    {
+      "path": "data/heldout-control-vs-greedy-komi-6.5.json",
+      "sha256": "ebdcf821b6ffa541238df4ffbf02244374e8406853c954a005086782827aaced",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-control-vs-greedy-komi-6.5.json"
+    },
+    {
+      "path": "data/heldout-vs-greedy-komi-6.5.json",
+      "sha256": "7f440f2f45ebc63fb57e162ac857131a494dd185520e6d284e04d67b1228488b",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-greedy-komi-6.5.json"
+    },
+    {
+      "path": "data/heldout-vs-original-komi-0.json",
+      "sha256": "edb816ae03b42908049c66785ef1d4019ff584037b1daea4197120efb4067f0b",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-original-komi-0.json"
+    },
+    {
+      "path": "data/heldout-vs-original-komi-6.5.json",
+      "sha256": "8eaf1e68ed2fbd616d483aa0af1a98b56f6e2508e34ed4cb47e21adee3e2a796",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-original-komi-6.5.json"
+    },
+    {
+      "path": "data/heldout-vs-original-komi-9.5.json",
+      "sha256": "e65f542425b39d92856c73564d37d8b2a2d7ec2303d1007a99d30b166a0bcbb8",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-original-komi-9.5.json"
+    },
+    {
+      "path": "data/params.txt",
+      "sha256": "cd94c22e5ef6d8e4121200305828106a542aeba8f9ff2b6b2970cde4e7a0bbdf",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/params.txt"
+    },
+    {
+      "path": "data/performance-baseline.json",
+      "sha256": "d148b6dc7833a1427902b9a7b8057ee3386eb2bc557c5fee9ad067adfbc3cb25",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/performance-baseline.json"
+    },
+    {
+      "path": "data/performance-tuned.json",
+      "sha256": "8bef099a6bebf02a1478769dad1f6ed67f44ca818f3880a9af109cae0e76e0f1",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/performance-tuned.json"
+    },
+    {
+      "path": "data/plan-global.json",
+      "sha256": "012580f0da200319748440fdd5783bf3c078d7f30c5fc4374c367c2107215fa4",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/plan-global.json"
+    },
+    {
+      "path": "data/plan-size-routing-abandoned.json",
+      "sha256": "6b6e1bbc6559877530d8cd054872d7fa5b2f17b7141b4e82bf32e5998dd0d02f",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/plan-size-routing-abandoned.json"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "8587557976c5a6334219b90b70809eed0f5f95ba9177175cd535f94f8a1672b9",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/plan.json"
+    },
+    {
+      "path": "data/progress.txt",
+      "sha256": "85d08aee77a9cab71b8bc33d121c5397e72e84d6aa35214a6cbe9e140f88ec93",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/progress.txt"
+    },
+    {
+      "path": "data/robust/ablation-blend-greedy.json",
+      "sha256": "5b4ea869f86419b62961bb8c914279b6aaa52fbd7601088f1a0442125374158b",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/ablation-blend-greedy.json"
+    },
+    {
+      "path": "data/robust/ablation-blend-original.json",
+      "sha256": "659f81c53109ed6889832b311f17106894f26e56b1844c2a579a131a37dfe921",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/ablation-blend-original.json"
+    },
+    {
+      "path": "data/robust/ablation-static-greedy.json",
+      "sha256": "408bea07c6d9c49a006f2fd30a9d479fd792e2b703f55c4460bdf3445b7a9e3e",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/ablation-static-greedy.json"
+    },
+    {
+      "path": "data/robust/ablation-static-original.json",
+      "sha256": "94e06bef0bbfc83c270ed56d1b333e2e31121e6639195b6b704f3097775cc0dc",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/ablation-static-original.json"
+    },
+    {
+      "path": "data/robust/blend-half.txt",
+      "sha256": "70b5110c285a6d8200ec60c9eeb32ddf1f5c2eb069631f3d83f1ded73bef747a",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/blend-half.txt"
+    },
+    {
+      "path": "data/robust/params.txt",
+      "sha256": "26eb890f6c94e83b25ad0632466ef3b8e7a971af21c92e08bb5038bdc83c7663",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/params.txt"
+    },
+    {
+      "path": "data/robust/progress.txt",
+      "sha256": "f7a94ab3a9e54dbb0219e42314a1536a9c34f80ff4e61838a4682e1bca931125",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/progress.txt"
+    },
+    {
+      "path": "data/robust/static-only.txt",
+      "sha256": "26eb890f6c94e83b25ad0632466ef3b8e7a971af21c92e08bb5038bdc83c7663",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/static-only.txt"
+    },
+    {
+      "path": "data/robust/tune.json",
+      "sha256": "c58da6c36e53c00a9177663d113021d7be5f5f24825560990b8d530ff73bafcd",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/tune.json"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "7531e3a0a48aa8e7635fecd9d93c374e8182c34dc4702c7f6758de36949a3afd",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/summary.json"
+    },
+    {
+      "path": "data/tune.json",
+      "sha256": "6e1e097398b50c918c510d2183f9442f1bc05679c5ee576269f1356cdefe1546",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/search-tuning/tune.json"
+    }
+  ]
+}

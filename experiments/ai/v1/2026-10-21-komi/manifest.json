@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "v1/2026-10-21-komi",
+  "architecture": "v1",
+  "title": "Kyokugo AI v1 のコミ評価",
+  "recordedAtCommit": "c02fc419bf83152273dffbe5f8f7002ec13398bb",
+  "variants": [
+    "v1-tuned-20261020"
+  ],
+  "notes": [
+    "Recorded data moved without rewriting contents.",
+    "recordedAtCommit contains the archive before reorganization; original source commits and hashes remain in the report/data.",
+    "Historical path keys and CLI aliases are preserved; legacyPath maps each artifact to its original location."
+  ],
+  "artifacts": [
+    {
+      "path": "data/komi-scores.json",
+      "sha256": "3bafc5b8827c104e2f48256d5aae847f7cbb1644641864e9744dc93ced51e271",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/komi-scores.json"
+    },
+    {
+      "path": "data/komi-summary.json",
+      "sha256": "4462754888ef21a670384c69faa79662a1ba7126c57da88f56e896206cdf28d6",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/komi-summary.json"
+    }
+  ]
+}

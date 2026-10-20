@@ -3,11 +3,11 @@ import {readFileSync} from 'node:fs';
 import {Game,createTopology} from './dist/engine.js';
 import {aiPosition} from './dist/ai-position.js';
 import {createWasmAI} from './dist/ai-wasm.js';
-const study=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-greedy-komi-6.5.json',import.meta.url),'utf8'));
+const study=JSON.parse(readFileSync(new URL('./experiments/ai/v2/2026-10-21-tuning/data/heldout-vs-greedy-komi-6.5.json',import.meta.url),'utf8'));
 const ai=await createWasmAI({load:async()=>readFileSync(new URL('./dist/ai-engine.wasm',import.meta.url))});
-const chosenParams=readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/params.txt',import.meta.url),'utf8').trim().split(/\s+/).map(Number);
+const chosenParams=readFileSync(new URL('./experiments/ai/v2/2026-10-21-tuning/data/robust/params.txt',import.meta.url),'utf8').trim().split(/\s+/).map(Number);
 assert.deepEqual(study.playerA.values,chosenParams,'archived match must use the deployed chosen parameters');
-const adoption=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/adoption.json',import.meta.url),'utf8'));
+const adoption=JSON.parse(readFileSync(new URL('./experiments/ai/v2/2026-10-21-tuning/data/adoption.json',import.meta.url),'utf8'));
 const mask=(1n<<64n)-1n;
 function rng(seed) {
  let state=(seed^0x6a09e667f3bcc909n)&mask;
@@ -19,7 +19,7 @@ function rng(seed) {
  };
 }
 let turns=0,searchTurns=0;
-const original=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search/heldout-d4-greedy.json',import.meta.url),'utf8'));
+const original=JSON.parse(readFileSync(new URL('./experiments/ai/v2/2026-10-21-initial/data/heldout-d4-greedy.json',import.meta.url),'utf8'));
 for(const [data,onlyOriginal]of [[study,false],[original,true]]){
 for(const [config,board] of data.boards.entries()){
  const points=board.kind==='sphere'?6*board.size**2+2:board.size**2;
@@ -61,4 +61,4 @@ const ko=fixture(.5,[17,24,31,18,23,32,0,26,25]);
 assert.notEqual(ai.chooseMove(aiPosition(ko),{depth:4,seed:23}),24);
 for(const depth of [-1,.5,5,NaN])assert.throws(()=>ai.chooseMove(aiPosition(ko),{depth}),/depth/);
 ai.dispose();
-console.log('Search WASM passed: '+turns+' native/JS replayed turns ('+searchTurns+' search turns), capture, superko, komi-aware pass, bounds and immutable inputs.');
+console.log('Kyokugo AI v2 WASM passed: '+turns+' native/JS replayed turns ('+searchTurns+' search turns), capture, superko, komi-aware pass, bounds and immutable inputs.');

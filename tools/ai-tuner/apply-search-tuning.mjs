@@ -1,11 +1,20 @@
 // Apply the board-wise acceptance rule declared before the final matches.
 import fs from 'node:fs';
+import {reportOptions,writeReport} from './experiment-paths.mjs';
 import assert from 'node:assert/strict';
-const root=new URL('./',import.meta.url),dir=new URL('experiments/2026-10-21/search-tuning/',root);
+const root=new URL('./',import.meta.url);
+const {data:dir,output,context}=reportOptions('v2/2026-10-21-tuning','adoption.json');
 const read=p=>JSON.parse(fs.readFileSync(new URL(p,dir),'utf8'));
 const plan=read('plan.json'),primary=read(plan.heldout[0].file);
 const greedy=read('heldout-vs-greedy-komi-6.5.json'),control=read('heldout-control-vs-greedy-komi-6.5.json');
-assert.equal(primary.seed,20261050);assert.equal(greedy.seed,20261052);assert.equal(control.seed,20261052);
+for(const [data,file] of [[primary,'heldout-vs-original-komi-6.5.json'],[greedy,'heldout-vs-greedy-komi-6.5.json'],[control,'heldout-control-vs-greedy-komi-6.5.json']]){
+ const spec=plan.heldout.find(s=>s.file===file);assert.ok(spec,'missing planned match '+file);
+ assert.equal(data.seed,spec.seed);assert.equal(data.komi,spec.komi);assert.equal(data.pairsPerBoard,spec.pairsPerBoard);
+}
+assert.equal(greedy.seed,control.seed);
+assert.deepEqual(primary.playerB,control.playerA,'original opponent/control must be the same model');
+assert.deepEqual(greedy.playerB,control.playerB,'greedy opponent must match the control');
+assert.ok(plan.adoption.primary.includes('2.394'),'Unsupported acceptance rule');
 const params=fs.readFileSync(new URL('robust/params.txt',dir),'utf8').trim().split(/\s+/).map(Number);
 assert.deepEqual(primary.playerA.values,params);assert.deepEqual(greedy.playerA.values,params);
 function pairScores(data,index){
@@ -24,7 +33,7 @@ function estimate(values){
 }
 const points=[56,98,152,49,81,121];
 const boards=primary.boards.map((b,i)=>{
- assert.equal(b.games,1000);assert.equal(greedy.boards[i].games,500);assert.equal(control.boards[i].games,500);
+ assert.equal(b.games,primary.pairsPerBoard*2);assert.equal(greedy.boards[i].games,greedy.pairsPerBoard*2);assert.equal(control.boards[i].games,greedy.pairsPerBoard*2);
  assert.equal(greedy.boards[i].kind,b.kind);assert.equal(greedy.boards[i].size,b.size);
  const a=pairScores(greedy,i),c=pairScores(control,i),score=estimate(pairScores(primary,i));
  const difference=estimate(a.map((v,j)=>v-c[j]));
@@ -35,14 +44,21 @@ const boards=primary.boards.map((b,i)=>{
   greedyScore:estimate(a),controlGreedyScore:estimate(c),greedyDifference:difference,capped,accepted};
 });
 const tunedPoints=boards.filter(b=>b.accepted).map(b=>b.points);
-const report={rule:plan.adoption,params,boards,tunedPoints,originalPoints:boards.filter(b=>!b.accepted).map(b=>b.points)};
-fs.writeFileSync(new URL('adoption.json',dir),JSON.stringify(report,null,2)+'\n');
+const report={analysisContext:context,rule:plan.adoption,params,boards,tunedPoints,originalPoints:boards.filter(b=>!b.accepted).map(b=>b.points)};
+writeReport(output,report);
+if(process.argv.includes('--apply')){
 const source=new URL('src/search.rs',root);let s=fs.readFileSync(source,'utf8');
+assert.equal(params.length,13);assert.ok(params.every(Number.isFinite));
+const tuned=/pub fn tuned\(\) -> Self \{ Self \{ values: \[[^\]]+\] \} \}/;
+assert.ok(tuned.test(s),'missing tuned parameters');
+s=s.replace(/    \/\/\/ Robust CEM self-play tuning[^\n]*\n/, '    /// Selected experiment parameters; see docs/ai/architectures/v2.md.\n');
+s=s.replace(tuned,'pub fn tuned() -> Self { Self { values: ['+params.map(x=>Number.isInteger(x)?x+'.0':x).join(', ')+'] } }');
 const body=tunedPoints.length?'if matches!(points, '+tunedPoints.join(' | ')+') { Self::tuned() } else { Self::legacy() }':'let _=points; Self::legacy()';
 const method=/    pub fn for_points\(points: usize\) -> Self \{[\s\S]*?\n    \}/;
 assert.ok(method.test(s),'missing board selection method');
 s=s.replace(method,'    pub fn for_points(points: usize) -> Self {\n        '+body+'\n    }');
 s=s.replace('    /// The global tune regressed on the two largest app boards. Retain the\n    /// original 4-ply weights there; the other four boards use the tuned vector.',
- '    /// Board-wise acceptance on independent games; see SEARCH-TUNING.md.');
+ '    /// Board-wise acceptance on independent games; see docs/ai/architectures/v2.md.');
 fs.writeFileSync(source,s);
+}
 console.log(JSON.stringify(report,null,2));

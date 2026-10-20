@@ -1,11 +1,12 @@
 import fs from 'node:fs';
 import os from 'node:os';
+import {writeReport,outputPath} from './experiment-paths.mjs';
 import {createWasmAI} from '../../dist/ai-wasm.js';
 const root=new URL('./',import.meta.url);
 const arg=(name,fallback)=>{const i=process.argv.indexOf(name);return i<0?fallback:process.argv[i+1];};
 const wasm=arg('--wasm',new URL('../../dist/ai-engine.wasm',root));
-const output=arg('--output',new URL('target/search-study/wasm-performance.json',root));
-const cases=JSON.parse(fs.readFileSync(new URL('parity.json',root),'utf8')).cases;
+const output=outputPath('target/search-study/wasm-performance.json');
+const cases=JSON.parse(fs.readFileSync(new URL('../../tests/fixtures/ai/v1-parity.json',root),'utf8')).cases;
 const ai=await createWasmAI({load:async()=>fs.readFileSync(wasm)});
 const groups=new Map();
 for(const c of cases){
@@ -28,7 +29,7 @@ for(const [board,positions]of groups){
  rows.push(row);console.log(JSON.stringify({...row,times:undefined}));
 }
 ai.dispose();
-const report={date:'2026-10-21',node:process.version,v8:process.versions.v8,cpu:os.cpus()[0].model,
+const report={timestamp:new Date().toISOString(),node:process.version,v8:process.versions.v8,cpu:os.cpus()[0].model,
  method:'4-ply WASM; includes input validation/copy and history replay; excludes Worker messaging/rendering; 2 warmup rounds, 5 measured rounds over 50 positions per board',
  wasmBytes:fs.statSync(wasm).size,boards:rows};
-fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');
+writeReport(output,report);

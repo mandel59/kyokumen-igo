@@ -1,6 +1,7 @@
 // Analyze paired self-play scores and verify sample games against production WASM.
 // Input defaults to the Rust runner's output in target/komi-study/scores.json.
 import fs from 'node:fs';
+import {outputPath,writeReport} from './experiment-paths.mjs';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {execFileSync} from 'node:child_process';
@@ -8,7 +9,7 @@ import {createTopology,Game,AI_WEIGHTS} from '../../dist/engine.js';
 import {aiPosition} from '../../dist/ai-position.js';
 import {createWasmAI} from '../../dist/ai-wasm.js';
 const root=new URL('./',import.meta.url);
-const input=process.argv[2]??new URL('target/komi-study/scores.json',root);
+const input=process.argv[2]&&!process.argv[2].startsWith('--')?process.argv[2]:new URL('target/komi-study/scores.json',root);
 const study=JSON.parse(fs.readFileSync(input,'utf8'));
 assert.deepEqual(study.weights,AI_WEIGHTS);
 const wasm=await createWasmAI({load:async()=>fs.readFileSync(new URL('../../dist/ai-engine.wasm',root))});
@@ -108,7 +109,7 @@ const rows=study.boards.map((board,index)=>{
   return row;
 });
 const sha256={};
-for(const name of ['src/ai.rs','src/board.rs','src/rng.rs','komi-study.rs','komi-study.mjs',
+for(const name of ['experiment-paths.mjs','src/ai.rs','src/board.rs','src/rng.rs','komi-study.rs','komi-study.mjs',
   '../../dist/ai-engine.wasm','../../dist/ai-wasm.js']) {
   sha256[name]=createHash('sha256').update(fs.readFileSync(new URL(name,root))).digest('hex');
 }
@@ -121,5 +122,5 @@ const report={date:'2026-10-21',sourceCommit:execFileSync('git',['rev-parse','HE
     medianCI:'2000 paired bootstrap resamples; percentile 2.5% and 97.5%',
     verifiedExampleGames:study.boards.length*2,verifiedExampleMoves:verifiedMoves},
   weights:study.weights,sha256,boards:rows};
-fs.writeFileSync(new URL('target/komi-study/summary.json',root),JSON.stringify(report,null,2)+'\n');
+writeReport(outputPath('target/komi-study/summary.json'),report);
 console.log('Verified '+verifiedMoves+' moves and scores in 12 full games against production WASM / JS.');

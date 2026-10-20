@@ -8,7 +8,7 @@ import {aiPosition,restoreAIPosition} from './dist/ai-position.js';
 import {createWasmAI} from './dist/ai-wasm.js';
 
 const bytes=readFileSync(new URL('./dist/ai-engine.wasm',import.meta.url));
-const fixture=JSON.parse(readFileSync(new URL('./tools/ai-tuner/parity.json',import.meta.url),'utf8'));
+const fixture=JSON.parse(readFileSync(new URL('./tests/fixtures/ai/v1-parity.json',import.meta.url),'utf8'));
 assert.deepEqual(fixture.params,AI_WEIGHTS);
 const ai=await createWasmAI({load:async()=>bytes});
 for(const c of fixture.cases) {

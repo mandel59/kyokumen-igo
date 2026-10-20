@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "experiments": [
+    {
+      "id": "v1/2026-10-20-tuning",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 の係数調整",
+      "path": "v1/2026-10-20-tuning/"
+    },
+    {
+      "id": "v1/2026-10-21-wasm-benchmark",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 の JS / WASM 比較",
+      "path": "v1/2026-10-21-wasm-benchmark/"
+    },
+    {
+      "id": "v1/2026-10-21-komi",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 のコミ評価",
+      "path": "v1/2026-10-21-komi/"
+    },
+    {
+      "id": "v2/2026-10-21-initial",
+      "architecture": "v2",
+      "title": "Kyokugo AI v2 の導入とコミ再検証",
+      "path": "v2/2026-10-21-initial/"
+    },
+    {
+      "id": "v2/2026-10-21-tuning",
+      "architecture": "v2",
+      "title": "Kyokugo AI v2 の係数調整と盤別採用",
+      "path": "v2/2026-10-21-tuning/"
+    }
+  ]
+}

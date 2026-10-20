@@ -1,6 +1,6 @@
-# アプリ用 WASM AI
+# Kyokugo AI の WASM / Worker 運用
 
-AI の着手計算を Rust / WASM に移し、Web Worker 内で実行します。配信物は `dist/ai-engine.wasm`（現ビルドで 57,461 bytes）です。
+Kyokugo AI v2 の着手計算を Rust / WASM で実行し、Web Worker 内で実行します。配信物は `dist/ai-engine.wasm`（現ビルドで 57,461 bytes）です。
 
 ## WASM に移す範囲
 
@@ -12,7 +12,7 @@ AI の着手計算を Rust / WASM に移し、Web Worker 内で実行します�
 | プレイヤーの入力、待った、終局・得点表示 | JS |
 | 保存復元、棋譜リンク、設定、盤面描画 | JS |
 
-計算量の多い AI 評価を移すことで、保存形式や操作・描画のインターフェースを変えずに高速化します。Rust は調整ツールと同じ [ai.rs](src/ai.rs)、[board.rs](src/board.rs)、[rng.rs](src/rng.rs) を使います。現在は [search.rs](src/search.rs) の最大 4 手の候補限定探索を使います。従来の一手評価も、比較実験・一致確認と JS フォールバックのために維持します。初版は [探索 AI の評価](SEARCH-AI.md)、現行係数と盤別採用は [チューニング記録](SEARCH-TUNING.md) を参照してください。
+計算量の多い AI 評価を移すことで、保存形式や操作・描画のインターフェースを変えずに高速化します。Rust は調整ツールと同じ [ai.rs](../../tools/ai-tuner/src/ai.rs)、[board.rs](../../tools/ai-tuner/src/board.rs)、[rng.rs](../../tools/ai-tuner/src/rng.rs) を使います。通常は [search.rs](../../tools/ai-tuner/src/search.rs) の最大 4 手の候補限定探索を使います。Kyokugo AI v1 も、比較実験・一致確認と JS フォールバックのために維持します。初版は [探索 AI の評価](../../experiments/ai/v2/2026-10-21-initial/README.md)、現行係数と盤別採用は [チューニング記録](../../experiments/ai/v2/2026-10-21-tuning/README.md) を参照してください。
 
 ## データとライフサイクル
 
@@ -57,4 +57,6 @@ node tools/ai-tuner/build-wasm.mjs --check
 - 既存のエンジン、保存復元、棋譜、描画、回転・投影などのテストも通しています。
 - ヘッドレス Edge 155.0.4283.62 では、HTTP 配信した実アプリで WASM の使用、2 手番で Worker / WASM 取得が各 1 回であること、待った・再読み込み後の対局、スーパーコウ履歴の復元を確認しました。WASM を 404 にした場合の JS 継続と、Content-Type が `application/octet-stream` の場合も確認しています。
 
-高速化の事前測定は [WASM-BENCHMARK.md](WASM-BENCHMARK.md) を参照してください。そちらの約 8.3 倍はウォームアップ後の着手計算の比較で、アプリの描画・保存・Worker 起動を含めた応答時間の倍率ではありません。
+高速化の事前測定は [WASM-BENCHMARK.md](../../experiments/ai/v1/2026-10-21-wasm-benchmark/README.md) を参照してください。そちらの約 8.3 倍はウォームアップ後の着手計算の比較で、アプリの描画・保存・Worker 起動を含めた応答時間の倍率ではありません。
+
+[AI 文書の入口](README.md) / [実験索引](../../experiments/ai/README.md)

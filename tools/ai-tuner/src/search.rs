@@ -1,4 +1,4 @@
-// Selective alpha-beta search on the graph board. No learned model.
+// Kyokugo AI v2: selective alpha-beta search on the graph board. No learned model.
 // This evaluator is experimental; strength must be measured against the shipped greedy AI.
 use crate::board::{Game, Scratch};
 use crate::rng::Rng;
@@ -20,9 +20,9 @@ pub struct Params { pub values: [f64; N] }
 impl Params {
     /// The original hand-set search parameters, preserved for reproducible comparisons.
     pub fn legacy() -> Self { Self { values: [1.0,6.0,1.7,2.0,0.2,2.0,20.0,3.0,24.0,0.8,0.3,-0.1,16.0] } }
-    /// Robust CEM self-play tuning, seed 20261040; see SEARCH-TUNING.md.
+    /// Robust CEM self-play tuning, seed 20261040; see experiments/ai/v2/2026-10-21-tuning/README.md.
     pub fn tuned() -> Self { Self { values: [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0] } }
-    /// Board-wise acceptance on independent games; see SEARCH-TUNING.md.
+    /// Board-wise acceptance on independent games; see experiments/ai/v2/2026-10-21-tuning/README.md.
     pub fn for_points(points: usize) -> Self {
         if matches!(points, 49 | 81) { Self::tuned() } else { Self::legacy() }
     }

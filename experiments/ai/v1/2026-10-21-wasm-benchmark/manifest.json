@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "v1/2026-10-21-wasm-benchmark",
+  "architecture": "v1",
+  "title": "Kyokugo AI v1 の JS / WASM 比較",
+  "recordedAtCommit": "c02fc419bf83152273dffbe5f8f7002ec13398bb",
+  "variants": [
+    "v1-tuned-20261020"
+  ],
+  "notes": [
+    "Recorded data moved without rewriting contents.",
+    "recordedAtCommit contains the archive before reorganization; original source commits and hashes remain in the report/data.",
+    "Historical path keys and CLI aliases are preserved; legacyPath maps each artifact to its original location."
+  ],
+  "artifacts": [
+    {
+      "path": "data/wasm-node-results.json",
+      "sha256": "c4b0a2b01c03d660bbb4fc209eed3f42d3f42fe66af6d6b8e1b355b2feb3c14f",
+      "legacyPath": "tools/ai-tuner/experiments/2026-10-21/wasm-node-results.json"
+    }
+  ]
+}
