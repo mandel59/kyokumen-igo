@@ -361,3 +361,10 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  delete window.location;delete window.history;
  console.log('Draw UI passed: zero/integer komi, neutral result, share/replay and undo.');
 }
+// SNS card metadata points at the deployed origin and at images that ship in dist/.
+{const meta=name=>new RegExp(`<meta (?:property|name)="${name}" content="([^"]+)"`).exec(html)?.[1];const origin='https://kyokugo.ryusei.dev/';
+ assert.equal(meta('og:url'),origin);assert.equal(meta('twitter:card'),'summary_large_image');assert.equal(meta('og:description'),/<meta name="description" content="([^"]+)"/.exec(html)[1]);
+ assert.ok(meta('og:image').startsWith(origin));const png=readFileSync(new URL('./dist/'+meta('og:image').slice(origin.length),import.meta.url));
+ assert.deepEqual([png.readUInt32BE(16),png.readUInt32BE(20)],[Number(meta('og:image:width')),Number(meta('og:image:height'))],'og:image size matches its metadata');
+ for(const [,href] of html.matchAll(/<link rel="(?:icon|apple-touch-icon)" href="([^"]+)"/g))assert.ok(readFileSync(new URL('./dist/'+href,import.meta.url)).length>0,href);
+ console.log('SNS card metadata checks passed.');}

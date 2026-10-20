@@ -109,6 +109,8 @@ UI テストは実ブラウザやスマートフォンの描画・タッチ操�
 
 静的ホスティングに `dist/` の内容を配置します。
 
+SNS 共有時のカード画像（`og-image.png`）とアイコンは、アプリの盤描画から `node tools/social-card.mjs` で再生成します。ImageMagick 7（Pango 対応）と Noto Sans JP が必要です。
+
 ### Cloudflare Workers
 
 公開先は <https://kyokugo.ryusei.dev> です。`wrangler.jsonc` で `dist/` の静的配信と独自ドメインを設定しています。アプリのビルドやサーバー側の実行コードは不要です。
