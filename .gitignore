@@ -1,0 +1,21 @@
+# Hosting-specific local metadata
+.openai/
+
+# Credentials and local environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Dependencies, logs, and local test artifacts
+node_modules/
+*.log
+coverage/
+playwright-report/
+test-results/
+
+# Editor / OS metadata
+.DS_Store
+Thumbs.db
+*.swp

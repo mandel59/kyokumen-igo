@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
+const noop=()=>{};const context=new Proxy({createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
+const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.env.UI_HEIGHT||640)};const landscape=viewport.width>viewport.height&&viewport.height<540;const boardWidth=viewport.width-(landscape?218:20);const boardHeight=viewport.height-(landscape?132:285);
+const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
+globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
+await import('./dist/app.js');
+assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
+
+// Spherical global map: every original point has a clickable projected position.
+const {sphereProjection}=await import('./dist/sphere-projection.js');
+const {createTopology}=await import('./dist/engine.js');
+assert.equal(el('viewToggle').hidden,false);assert.equal(el('viewToggle').textContent,'全球図');
+el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);assert.equal(el('surfaceSection').hidden,true);
+const layout=sphereProjection(createTopology('sphere',4),boardWidth,boardHeight);
+el('inspect').checked=true;el('inspect').onchange();
+const repeated=layout.points.find(p=>layout.points.filter(q=>q.i===p.i).length===2);
+assert.ok(repeated,'equator points appear in both projections');
+el('map').events.click({currentTarget:el('map'),clientX:repeated.x,clientY:repeated.y});
+assert.match(el('boardHint').textContent,new RegExp('交点 '+(repeated.i+1)+' · 隣接'));
+assert.doesNotMatch(el('boardHint').textContent,/裏側/);
+el('inspect').checked=false;el('inspect').onchange();
+el('map').events.click({currentTarget:el('map'),clientX:repeated.x,clientY:repeated.y});
+assert.equal(el('moveCount').textContent,'1 手');
+el('viewToggle').onclick();assert.equal(el('mapSection').hidden,true);assert.equal(el('moveCount').textContent,'1 手');
+el('undo').onclick();assert.equal(el('moveCount').textContent,'0 手');
+el('viewToggle').onclick();el('map').events.keydown({key:'ArrowRight',preventDefault:noop});el('map').events.keydown({key:'Enter',preventDefault:noop});
+assert.equal(el('moveCount').textContent,'1 手');el('undo').onclick();el('viewToggle').onclick();
+el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');assert.equal(el('turnText').textContent,'AI が考えています');
+await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'2 手');assert.equal(el('turnText').textContent,'あなたの番です');el('undo').onclick();assert.equal(el('moveCount').textContent,'0 手');
+el('torusTab').onclick();assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('mapSection').hidden,true);assert.equal(el('viewToggle').hidden,false);el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);assert.equal(el('surfaceSection').hidden,true);el('map').events.keydown({key:'Enter',preventDefault:noop});await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'2 手');el('viewToggle').onclick();assert.equal(el('mapSection').hidden,true);assert.equal(el('surfaceSection').hidden,false);assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS · NO EDGES');
+el('settingsOpen').onclick();assert.equal(el('settingsDialog').open,true);el('opponent').value='human';el('newGame').onclick();assert.equal(el('settingsDialog').open,false);el('pass').onclick();el('pass').onclick();assert.match(el('status').textContent,/終局/);assert.equal(el('pass').disabled,true);el('undo').onclick();assert.equal(el('pass').disabled,false);
+el('rulesOpen').onclick();assert.equal(el('rulesDialog').open,true);el('rulesClose').onclick();assert.equal(el('rulesDialog').open,false);
+el('opponent').value='ai';el('humanColor').value='2';el('newGame').onclick();assert.equal(el('turnText').textContent,'AI が考えています');el('sphereTab').onclick();await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'1 手');assert.equal(el('turnText').textContent,'あなたの番です');
+console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help dialogs, AI fallback, undo, pass/end, reset cancellation, white start.');
