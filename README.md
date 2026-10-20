@@ -50,7 +50,8 @@ python3 -m http.server --directory dist 8000
 | `dist/orientation.js` | クォータニオンによる画面基準の回転と旧保存形式の姿勢変換 |
 | `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、盤ごとに寸法を揃えた碁石、可視部分に対応した選択判定・強調表示 |
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
-| `dist/ai-worker.js` | Web Worker で AI の手を計算 |
+| `dist/ai-worker.js` / `dist/ai-wasm.js` / `dist/ai-engine.wasm` | 再利用する Worker 内で Rust / WASM による AI 計算。利用できない場合は JS で継続 |
+| `dist/ai-position.js` | Worker に渡す着手履歴と、JS フォールバック用の局面復元 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
 | `dist/record.js` | 棋譜リンクの符号化と、ルールに沿った再生による検証 |
 | `dist/persistence.js` | ブラウザへの自動保存、合法手の再生による保存内容の検証・復元 |
@@ -58,12 +59,19 @@ python3 -m http.server --directory dist 8000
 
 ルールは立体座標ではなく交点と隣接関係のグラフ上で動きます。立体表示と平面表示は同じ交点 ID・対局状態を共有します。処理は端末内で完結し、バックエンドはありません。
 
+## AI の WASM 実装
+
+AI の着手計算は Rust / WASM を使います。画面操作、保存・棋譜、実際の着手検証は JS が担当します。配布済みの `dist/` には WASM を含むため、起動時のビルドは不要です。WASM や Worker を利用できない場合は JS 版で対局を続けます。
+
+WASM 化の範囲、Worker の再利用、ビルド手順は [アプリ用 WASM AI](tools/ai-tuner/WASM.md) を参照してください。Rust の実装を変更した場合は `node tools/ai-tuner/build-wasm.mjs` で配信物を更新します。
+
 ## テスト
 
 Node.js 24 で動作確認しています。外部パッケージは不要です。
 
 ```sh
 node tests.mjs
+node wasm-tests.mjs
 node komi-tests.mjs
 node record-tests.mjs
 node persistence-tests.mjs
@@ -81,6 +89,7 @@ UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
 
 - `persistence-tests.mjs` / `persistence-review.mjs`：保存・復元、破損データ、履歴・スーパーコウ、再読み込み後の AI 再開。後者は新規 VM コンテキストを使う UI シミュレーションです。
 - `record-tests.mjs`：棋譜リンクの往復変換と、壊れた・不正なリンクの拒否。
+- `wasm-tests.mjs`：配布 WASM と JS の選択手、履歴・スーパーコウ、Worker の再利用と読み込み失敗時のフォールバック。
 - `tests.mjs`：盤の構造、合法手、取り、反復禁止、得点、AI など。AI が調整ツールと同じ手を選ぶことも確認します。
 - `rendering-review.mjs`：描画バッファの奥行き・可視性・選択判定の検証。実ブラウザの描画テストではありません。
 - `projection-review.mjs`：全交点・辺の網羅、境界での切り分け、投影の逆変換・表示範囲・点の衝突など。

@@ -13,3 +13,7 @@ cargo run --release -- parity parity.json  # JS との一致確認用の局面�
 - 結果は `Params::tuned`（`src/ai.rs`）と `AI_WEIGHTS`（`dist/engine.js`）の両方に反映します。そのあと `parity parity.json` で局面を作り直すと、`tests.mjs` が JS 版の選ぶ手と一致することを確認します。
 
 探索条件・比較実験・採用した重みと検証結果は、[2026-10-20 のチューニング記録](TUNING.md) にまとめています。
+
+JS 版と Rust / WASM 版の速度比較は、[WASM ベンチマーク記録](WASM-BENCHMARK.md) を参照してください。
+
+アプリに組み込んだ WASM の範囲と配信物の再生成は、[アプリ用 WASM AI](WASM.md) を参照してください。

@@ -1,4 +1,5 @@
 import {createTopology,Game,chooseMove} from './engine.js';
+import {aiPosition} from './ai-position.js';
 import {renderSurface,highlightSurface,MARKER,markerColor} from './surface-renderer.js';
 import {sphereProjection} from './sphere-projection.js';
 import {loadSavedGame,saveGame} from './persistence.js';
@@ -101,7 +102,45 @@ function who(color){if(replay)return replay.ai===color?'AI':color===1?'先手':'
 function passMessage(){const name=color=>settings.opponent==='human'?(color===1?'黒':'白'):color===settings.human?'あなた':'AI ';return `${name(3-game.turn)}がパスしました。${name(game.turn)}もパスすると終局です。`;}
 function update(message){$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
 if(replay){const s=replay.result;$('turnText').textContent='棋譜 · '+resultText(s);$('status').textContent=game.ended?`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）`:game.moves?`${game.moves} 手目 · ${game.turn===1?'白':'黒'}${game.lastMove===null?'がパス':''}`:'対局開始';}else if(game.ended){const s=game.score();$('turnText').textContent=resultText(s);$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?passMessage():thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning&&!replay)$('status').textContent+=' '+restoreWarning;render();}
-function scheduleAI(){if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}thinking=true;const id=++requestId;update();timer=setTimeout(()=>{if(id!==requestId)return;const handle=result=>{if(id!==requestId)return;thinking=false;if(worker){worker.terminate();worker=null;}if(result===null)game.pass();else{const r=game.play(result);if(!r.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}}update();};try{worker=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});worker.onmessage=e=>{if(e.data.id!==id)return;if(e.data.error){thinking=false;update('AI の処理に失敗しました。待ったで戻せます。');worker.terminate();worker=null;}else handle(e.data.move);};worker.onerror=()=>{if(id!==requestId)return;worker.terminate();worker=null;handle(chooseMove(game));};worker.postMessage({id,game:game.toJSON()});}catch{handle(chooseMove(game));}},400);}
+function scheduleAI(){
+ if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}
+ thinking=true;const id=++requestId;update();
+ timer=setTimeout(()=>{
+  timer=null;if(id!==requestId)return;
+  const handle=result=>{
+   if(id!==requestId||!thinking)return;
+   thinking=false;
+   if(result===null)game.pass();
+   else {
+    const played=game.play(result);
+    if(!played.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}
+   }
+   update();
+  };
+  try{
+   worker??=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});
+   const activeWorker=worker;
+   const fallback=()=>{
+    if(id!==requestId||worker!==activeWorker)return;
+    activeWorker.terminate();worker=null;handle(chooseMove(game));
+   };
+   activeWorker.onmessage=e=>{
+    if(id!==requestId||worker!==activeWorker||e.data.id!==id||!thinking)return;
+    if(e.data.error){fallback();return;}
+    // The UI's JS rules remain authoritative, including positional superko.
+    if(e.data.move!==null&&!game.analyze(e.data.move).ok){fallback();return;}
+    handle(e.data.move);
+   };
+   activeWorker.onerror=fallback;
+   activeWorker.onmessageerror=fallback;
+   const position=aiPosition(game);
+   activeWorker.postMessage({id,position},[position.moves.buffer]);
+  }catch{
+   if(worker){worker.terminate();worker=null;}
+   handle(chooseMove(game));
+  }
+ },0);
+}
 function act(i){if($('inspect').checked){selected=i;const ns=game.topology.neighbors[i],hidden=mapView?0:ns.filter(n=>!screen[n]?.visible).length;$('boardHint').textContent=`交点 ${i+1} · 隣接 ${ns.length} 点${hidden?' · '+hidden+' 点は裏側':''}`;render();return;}if(!canPlay())return;const r=game.play(i);if(!r.ok){update(errors[r.reason]);return;}selected=null;update();scheduleAI();}
 function pick(e,points){const rect=e.currentTarget.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;if(e.currentTarget===canvas&&surfaceFrame)return surfaceFrame.pick(x*rasterRatio,y*rasterRatio,Math.max(10,Math.min(20,scale*.1))*rasterRatio);let nearest=null,distance=e.currentTarget===map?20:Math.max(14,Math.min(23,scale*.12));for(const s of points){if(s.visible===false)continue;const d=Math.hypot(s.x-x,s.y-y);if(d<distance){nearest=s.i;distance=d;}}return nearest;}
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);requestRender();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){orientation=rotateByDrag(orientation,e.clientX-drag.lastX,e.clientY-drag.lastY);requestRender();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;render();persist();});canvas.addEventListener('pointercancel',()=>{drag=null;render();persist();});canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});

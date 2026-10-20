@@ -260,3 +260,50 @@ el('inspect').checked=false;el('inspect').onchange();el('map').events.pointerlea
 delete context.arc;delete context.stroke;delete context.fillText;
 delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
+
+// Reuse a Worker across turns, transfer compact histories, and ignore cancelled replies.
+{
+ const {restoreAIPosition}=await import('./dist/ai-position.js');
+ const instances=[];
+ globalThis.Worker=class {
+  constructor(){this.requests=[];this.terminated=false;instances.push(this);}
+  postMessage(data,transfer){this.requests.push(structuredClone(data,{transfer}));}
+  terminate(){this.terminated=true;}
+ };
+ const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
+ const reset=()=>{
+  el('opponent').value='ai';el('humanColor').value='1';el('newGame').onclick();
+  assert.equal(el('moveCount').textContent,'0 手');
+ };
+ const answer=(worker,request=worker.requests.at(-1))=>{
+  const game=restoreAIPosition(request.position);
+  worker.onmessage({data:{id:request.id,move:engine.chooseMove(game,{random:()=>0}),backend:'wasm'}});
+ };
+ reset();el('pass').onclick();await tick();
+ assert.equal(instances.length,1);
+ const first=instances[0],request=first.requests[0],oldHandler=first.onmessage;
+ assert.deepEqual([...request.position.moves],[-1]);assert.equal(request.game,undefined);
+ answer(first);assert.equal(el('moveCount').textContent,'2 手');assert.equal(first.terminated,false);
+ el('pass').onclick();await tick();assert.equal(instances.length,1,'same Worker serves the second turn');
+ oldHandler({data:{id:request.id,move:0}});assert.equal(el('moveCount').textContent,'3 手','stale reply ignored');
+ const pending=first.requests.at(-1),pendingHandler=first.onmessage;
+ el('undo').onclick();assert.equal(first.terminated,true);assert.equal(el('moveCount').textContent,'2 手');
+ pendingHandler({data:{id:pending.id,move:0}});assert.equal(el('moveCount').textContent,'2 手','undo cancels outstanding reply');
+ reset();el('pass').onclick();await tick();
+ const failed=instances.at(-1);failed.onerror();
+ assert.equal(failed.terminated,true);assert.equal(el('moveCount').textContent,'2 手','Worker error falls back to JS');
+ reset();el('pass').onclick();await tick();
+ const cancelled=instances.at(-1),cancelledHandler=cancelled.onmessage,cancelledRequest=cancelled.requests.at(-1);
+ reset();el('pass').onclick();await tick();
+ const current=instances.at(-1);
+ cancelled.onerror();cancelledHandler({data:{id:cancelledRequest.id,move:0}});
+ assert.equal(current.terminated,false,'old errors cannot terminate a newer Worker');
+ assert.equal(el('moveCount').textContent,'1 手');
+ answer(current);assert.equal(el('moveCount').textContent,'2 手');
+ reset();el('pass').onclick();await tick();
+ const invalid=instances.at(-1);
+ invalid.onmessage({data:{id:invalid.requests.at(-1).id,move:-17}});
+ assert.equal(invalid.terminated,true);assert.equal(el('moveCount').textContent,'2 手','JS rejects invalid Worker moves and falls back');
+ reset();delete globalThis.Worker;
+ console.log('Persistent AI Worker UI tests passed: compact transfer, reuse, undo/reset cancellation, stale responses and error/illegal-move fallback.');
+}
