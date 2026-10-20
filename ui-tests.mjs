@@ -108,5 +108,26 @@ for(const closeId of ['aboutClose','aboutDone','aboutClose']){
 assert.equal(el('aboutDialog').events.cancel,undefined);
 el('aboutOpen').onclick();el('aboutDialog').close();el('aboutOpen').onclick();el('aboutDone').onclick();
 assert.equal(infoState(),beforeInfo);
+// Tutorial is four concise pages with bounded navigation and a read-only live game.
+assert.match(html,/<dialog id="rulesDialog" aria-labelledby="rulesTitle">/);
+assert.match(html,/<details class="about-details"><summary>詳細ルールと得点<\/summary>/);
+const tutorialHTML=html.slice(html.indexOf('<dialog id="rulesDialog"'),html.indexOf('<dialog id="aboutDialog"'));
+assert.doesNotMatch(tutorialHTML,/スーパーコウ|正距方位|ニューラル|標準/);
+assert.match(html.slice(html.indexOf('<dialog id="aboutDialog"')),/位置的スーパーコウ/);
+const checkPage=n=>{
+ assert.match(el('rulesProgress').textContent,new RegExp('^'+(n+1)+' / 4'));
+ for(let i=0;i<4;i++)assert.equal(el('rulesStep'+i).hidden,i!==n);
+ assert.equal(el('rulesPrev').disabled,n===0);
+ assert.equal(el('rulesDone').textContent,n===3?'盤に戻る':'次へ');
+ assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);assert.deepEqual(painted.data,beforeInfoPixels);
+};
+el('rulesOpen').onclick();checkPage(0);el('rulesPrev').onclick();checkPage(0);
+for(let i=1;i<4;i++){el('rulesDone').onclick();checkPage(i);}
+el('rulesPrev').onclick();checkPage(2);el('rulesDone').onclick();checkPage(3);
+el('rulesDone').onclick();assert.equal(el('rulesDialog').open,false);
+el('rulesOpen').onclick();checkPage(0);el('rulesDone').onclick();checkPage(1);el('rulesClose').onclick();
+el('rulesOpen').onclick();checkPage(0);
+assert.equal(el('rulesDialog').events.cancel,undefined,'native Escape dismissal not blocked');
+el('rulesDone').onclick();el('rulesDialog').close();el('rulesOpen').onclick();checkPage(0);el('rulesClose').onclick();
 delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
