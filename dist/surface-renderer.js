@@ -10,12 +10,34 @@ export function surfaceNormal(kind,p) {
   const r=Math.hypot(p.x,p.z);
   return unit({x:p.x*(1-.72/r),y:p.y,z:p.z*(1-.72/r)});
 }
+const radiusCache=new WeakMap(),stoneMeshCache=new WeakMap();
+export function stoneRadius(topology){
+  if(radiusCache.has(topology))return radiusCache.get(topology);
+  let spacing=Infinity;
+  for(const [a,b] of topology.edges){const p=topology.vertices[a],q=topology.vertices[b];spacing=Math.min(spacing,Math.hypot(q.x-p.x,q.y-p.y,q.z-p.z));}
+  const radius=spacing*.43;radiusCache.set(topology,radius);return radius;
+}
 export function stoneGeometry(topology,index) {
   const p=topology.vertices[index],normal=surfaceNormal(topology.kind,p);
-  const spacing=Math.min(...topology.neighbors[index].map(i=>{const q=topology.vertices[i];return Math.hypot(q.x-p.x,q.y-p.y,q.z-p.z);}));
-  const radius=spacing*.43,halfHeight=radius*.42;
+  const radius=stoneRadius(topology),halfHeight=radius*.42;
   const tangent=unit(cross(normal,Math.abs(normal.y)<.9?{x:0,y:1,z:0}:{x:1,y:0,z:0}));
   return {center:add(p,normal,halfHeight*.56),normal,tangent,bitangent:cross(normal,tangent),radius,halfHeight};
+}
+function stoneMesh(topology,index,interactive){
+  let cache=stoneMeshCache.get(topology);if(!cache){cache=new Map();stoneMeshCache.set(topology,cache);}
+  const key=index+':'+interactive;if(cache.has(key))return cache.get(key);
+  const {center,normal,tangent,bitangent,radius,halfHeight}=stoneGeometry(topology,index);
+  const nu=interactive?16:32,nv=interactive?8:16,vertices=[],triangles=[];
+  for(let v=0;v<=nv;v++)for(let u=0;u<=nu;u++){
+    const a=u*TAU/nu,b=v*Math.PI/nv,s=Math.sin(b),c=Math.cos(b),tx=Math.cos(a)*s,ty=Math.sin(a)*s;
+    const p=add(add(add(center,tangent,tx*radius),bitangent,ty*radius),normal,c*halfHeight);
+    const gradient=add(add({x:0,y:0,z:0},tangent,tx/radius),bitangent,ty/radius);
+    vertices.push({...p,normal:unit(add(gradient,normal,c/halfHeight))});
+  }
+  for(let v=0;v<nv;v++)for(let u=0;u<nu;u++){
+    const a=v*(nu+1)+u,b=a+nu+1;triangles.push([a,b,a+1],[b,b+1,a+1]);
+  }
+  const mesh={vertices,triangles};cache.set(key,mesh);return mesh;
 }
 export function rotatePoint(p,rotX,rotY) {
   const c=Math.cos(rotY),s=Math.sin(rotY),x=p.x*c+p.z*s,z=-p.x*s+p.z*c;
@@ -23,9 +45,9 @@ export function rotatePoint(p,rotX,rotY) {
 }
 function torus(u,v){const r=.72+.28*Math.cos(v);return {x:r*Math.cos(u),y:.28*Math.sin(v),z:r*Math.sin(u)};}
 const meshCache=new Map();
-function boardMesh(kind){
-  if(meshCache.has(kind))return meshCache.get(kind);
-  const nu=kind==='sphere'?64:96,nv=kind==='sphere'?32:48,vertices=[],triangles=[];
+function boardMesh(kind,interactive){
+  const key=kind+':'+interactive;if(meshCache.has(key))return meshCache.get(key);
+  const nu=interactive?(kind==='sphere'?48:64):(kind==='sphere'?96:128),nv=interactive?(kind==='sphere'?24:32):(kind==='sphere'?48:64),vertices=[],triangles=[];
   for(let u=0;u<=nu;u++)for(let v=0;v<=nv;v++){
     const a=u*TAU/nu,b=v*(kind==='sphere'?Math.PI:TAU)/nv;
     const p=kind==='sphere'?{x:Math.sin(b)*Math.cos(a),y:Math.cos(b),z:Math.sin(b)*Math.sin(a)}:torus(a,b);
@@ -34,12 +56,12 @@ function boardMesh(kind){
   for(let u=0;u<nu;u++)for(let v=0;v<nv;v++){
     const a=u*(nv+1)+v,b=a+nv+1;triangles.push([a,b,a+1],[b,b+1,a+1]);
   }
-  const mesh={vertices,triangles};meshCache.set(kind,mesh);return mesh;
+  const mesh={vertices,triangles};meshCache.set(key,mesh);return mesh;
 }
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
 
-export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46}) {
+export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
   const project=p=>{const q=rotatePoint(p,rotX,rotY);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
@@ -78,7 +100,7 @@ export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,w
       pixels[o+2]=(material===0?148:material===1?29:222)*factor+shine;pixels[o+3]=255;
     }
   }
-  function line(a,b,color,owner=-1,radius=.65,epsilon=.002){
+  function line(a,b,color,owner=-1,radius=.65*pixelRatio,epsilon=.002){
     const steps=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)*1.4));
     for(let i=0;i<=steps;i++){
       const t=i/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t,z=a.z+(b.z-a.z)*t;
@@ -88,7 +110,7 @@ export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,w
       }
     }
   }
-  const mesh=boardMesh(topology.kind),vs=mesh.vertices.map(p=>vertex(p,p.normal));
+  const mesh=boardMesh(topology.kind,interactive),vs=mesh.vertices.map(p=>vertex(p,p.normal));
   for(const [a,b,c] of mesh.triangles)triangle(vs[a],vs[b],vs[c],0,-1);
   // Grid lines follow the curved surface, not straight chords through it.
   for(const [a,b] of topology.edges){
@@ -122,31 +144,22 @@ export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,w
   }
   const points=topology.vertices.map((p,i)=>({...project(p),i,visible:false}));
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
+  const dotRadius=1.6*pixelRatio;
   for(const p of points)if(!board[p.i]){
     const normal=rotatePoint(surfaceNormal(topology.kind,topology.vertices[p.i]),rotX,rotY);
     if(normal.z<=0)continue;
-    for(let y=Math.floor(p.y-1.6);y<=p.y+1.6;y++)for(let x=Math.floor(p.x-1.6);x<=p.x+1.6;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<1.6)put(x,y,p.z,[65,76,56],p.i,.003);
+    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,[65,76,56],p.i,.003);
   }
   for(let index=0;index<board.length;index++)if(board[index]){
-    const shape=stoneGeometry(topology,index),{center,normal,tangent,bitangent,radius,halfHeight}=shape;
-    const nu=16,nv=8,stone=[];
-    for(let v=0;v<=nv;v++)for(let u=0;u<=nu;u++){
-      const a=u*TAU/nu,b=v*Math.PI/nv,s=Math.sin(b),c=Math.cos(b),tx=Math.cos(a)*s,ty=Math.sin(a)*s;
-      const p=add(add(add(center,tangent,tx*radius),bitangent,ty*radius),normal,c*halfHeight);
-      // Ellipsoid gradient, not a spherical normal: the flatter crown shades naturally.
-      const gradient=add(add({x:0,y:0,z:0},tangent,tx/radius),bitangent,ty/radius);
-      stone.push(vertex(p,unit(add(gradient,normal,c/halfHeight))));
-    }
-    for(let v=0;v<nv;v++)for(let u=0;u<nu;u++){
-      const a=v*(nu+1)+u,b=a+nu+1;triangle(stone[a],stone[b],stone[a+1],board[index],index);triangle(stone[b],stone[b+1],stone[a+1],board[index],index);
-    }
+    const mesh=stoneMesh(topology,index,interactive),stone=mesh.vertices.map(p=>vertex(p,p.normal));
+    for(const [a,b,c] of mesh.triangles)triangle(stone[a],stone[b],stone[c],board[index],index);
   }
   // Last-move ring lies on the curved crown and participates in occlusion.
   if(lastMove!==null&&board[lastMove]){
     const {center,normal,tangent,bitangent,radius,halfHeight}=stoneGeometry(topology,lastMove);let prev;
     for(let i=0;i<=48;i++){
       const a=i*TAU/48,r=.34,p=add(add(add(center,normal,halfHeight*Math.sqrt(1-r*r)+.001),tangent,radius*r*Math.cos(a)),bitangent,radius*r*Math.sin(a));
-      const next=project(p);if(prev)line(prev,next,board[lastMove]===1?[226,201,145]:[81,104,83],lastMove,.8,.001);prev=next;
+      const next=project(p);if(prev)line(prev,next,board[lastMove]===1?[226,201,145]:[81,104,83],lastMove,.8*pixelRatio,.001);prev=next;
     }
   }
   const visibleCounts=new Uint32Array(board.length);for(const id of owners)if(id>=0)visibleCounts[id]++;
@@ -160,22 +173,55 @@ export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,w
     for(const p of points)if(p.visible&&!board[p.i]){const d=Math.hypot(x-p.x,y-p.y);if(d<distance){distance=d;result=p.i;}}
     return result;
   }
-  return {width,height,pixels,depth,owners,points,pick,project,board,topology};
+  return {width,height,pixels,depth,owners,points,pick,project,board,topology,scale,pixelRatio};
 }
 
-// Screen-space highlights are masked by fragment ownership rather than painted over
-// nearer stones. They never make an occluded intersection look selectable.
+// Broad, surface-following rings remain readable at every raster scale. A dark
+// under-stroke separates them from pale wood/white stones; depth clipping prevents
+// highlighting through the board, another stone, or the opposite torus wall.
 export function highlightSurface(frame,selected,hover){
   if(selected===null&&hover===null)return frame.pixels;
   const pixels=frame.pixels.slice(),ids=new Set(selected===null?[]:[selected,...frame.topology.neighbors[selected]]);
   if(hover!==null)ids.add(hover);
-  for(let i=0;i<frame.owners.length;i++){
-    const id=frame.owners[i];if(!ids.has(id))continue;
-    const strong=id===selected||id===hover;
-    // Outline visible silhouettes (and the tiny empty dot) without hiding shading.
-    const x=i%frame.width,y=Math.floor(i/frame.width);
-    if(x>0&&x<frame.width-1&&y>0&&y<frame.height-1&&frame.owners[i-1]===id&&frame.owners[i+1]===id&&frame.owners[i-frame.width]===id&&frame.owners[i+frame.width]===id)continue;
-    const color=strong?[234,185,77]:[185,132,49];for(let c=0;c<3;c++)pixels[i*4+c]=color[c];
+  const {width,height,depth,owners,project,topology,board,scale,pixelRatio}=frame;
+  function triangle(a,b,c,color,id){
+    const area=(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);if(Math.abs(area)<1e-8)return;
+    for(let y=Math.max(0,Math.floor(Math.min(a.y,b.y,c.y)));y<=Math.min(height-1,Math.ceil(Math.max(a.y,b.y,c.y)));y++)
+      for(let x=Math.max(0,Math.floor(Math.min(a.x,b.x,c.x)));x<=Math.min(width-1,Math.ceil(Math.max(a.x,b.x,c.x)));x++){
+        const px=x+.5,py=y+.5,wa=((b.x-px)*(c.y-py)-(b.y-py)*(c.x-px))/area,wb=((c.x-px)*(a.y-py)-(c.y-py)*(a.x-px))/area,wc=1-wa-wb;
+        if(wa<0||wb<0||wc<0)continue;
+        const i=y*width+x,z=wa*a.z+wb*b.z+wc*c.z;
+        if(z+.002<depth[i]||(owners[i]>=0&&owners[i]!==id))continue;
+        const o=i*4;pixels[o]=color[0];pixels[o+1]=color[1];pixels[o+2]=color[2];pixels[o+3]=255;
+      }
+  }
+  for(const id of ids){
+    if(!frame.points[id]?.visible)continue;
+    const shape=stoneGeometry(topology,id),{center,normal,tangent,bitangent,radius,halfHeight}=shape;
+    const active=id===selected||id===hover,ringRadius=board[id]?radius*.78:radius*1.18;
+    const color=id===selected?[255,207,75]:id===hover?[242,255,253]:[87,226,202];
+    function onRing(angle,r){
+      let p;
+      if(board[id]){
+        const height=halfHeight*Math.sqrt(Math.max(0,1-(r/radius)**2));
+        p=add(add(add(center,normal,height+.002),tangent,r*Math.cos(angle)),bitangent,r*Math.sin(angle));
+      }else{
+        const base=topology.vertices[id];p=add(add(base,tangent,r*Math.cos(angle)),bitangent,r*Math.sin(angle));
+        if(topology.kind==='sphere')p=unit(p);
+        else{const length=Math.hypot(p.x,p.z),core={x:p.x*.72/length,y:0,z:p.z*.72/length};p=add(core,unit({x:p.x-core.x,y:p.y,z:p.z-core.z}),.28);}
+        p=add(p,surfaceNormal(topology.kind,p),.002);
+      }
+      return project(p);
+    }
+    for(const [cssWidth,ink] of [[active?4.6:3.6,[38,54,44]],[active?2.6:1.8,color]]){
+      const halfWidth=cssWidth*pixelRatio/(2*scale),inner=Math.max(radius*.12,ringRadius-halfWidth),outer=board[id]?Math.min(radius*.98,ringRadius+halfWidth):ringRadius+halfWidth;
+      let prevInner=onRing(0,inner),prevOuter=onRing(0,outer);
+      for(let step=1;step<=64;step++){
+        const angle=step*TAU/64,nextInner=onRing(angle,inner),nextOuter=onRing(angle,outer);
+        triangle(prevInner,prevOuter,nextInner,ink,id);triangle(prevOuter,nextOuter,nextInner,ink,id);
+        prevInner=nextInner;prevOuter=nextOuter;
+      }
+    }
   }
   return pixels;
 }
