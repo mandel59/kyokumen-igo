@@ -13,7 +13,7 @@ assert.deepEqual(loadSavedGame(storage), {state: null, error: null});
 
 for (const kind of ['sphere', 'torus']) {
   for (const size of kind === 'sphere' ? [3, 4, 5] : [7, 9, 11]) {
-    for (const komi of [.5, 6.5, 9.5]) {
+    for (const komi of Array.from({length:20},(_,i)=>i/2)) {
       const game = new Game(createTopology(kind, size), komi);
       game.play(0); game.play(1); game.pass(); save(game);
       const {state, error} = loadSavedGame(storage);
@@ -47,6 +47,13 @@ for (const kind of ['sphere', 'torus']) {
   }
 }
 
+const tied = new Game(createTopology('torus',7),1);
+for(const move of [0,24,1])tied.play(move);
+tied.pass();tied.pass();save(tied);
+const restoredDraw=loadSavedGame(storage).state.game;
+assert.equal(restoredDraw.score().winner,0);assert.equal(restoredDraw.score().margin,0);
+assert.equal(restoredDraw.komi,1);
+
 const ko = new Game(createTopology('torus', 7), 6.5);
 for (const point of [17,24,31,18,23,32,0,26,25]) assert.equal(ko.play(point).ok, true);
 save(ko);
@@ -59,6 +66,8 @@ const mutations = [
   d => d.game.size = 40,
   d => d.game.komi = '6.5',
   d => d.game.komi = 10.5,
+  d => d.game.komi = -.5,
+  d => d.game.komi = .25,
   d => d.settings.opponent = 'other',
   d => d.settings.human = 0,
   d => d.view.mapView = 'true',

@@ -1,4 +1,5 @@
 import {Game, createTopology} from './engine.js';
+import {isValidKomi} from './komi.js';
 import {orientationFromEuler, normalizeOrientation} from './orientation.js';
 
 // Keep the discovery key so upgrading never abandons an existing version-1 game.
@@ -24,7 +25,7 @@ export function restoreSnapshot(data) {
   if (!record(data) || ![1, 2].includes(data.version) || !record(data.game) || !record(data.settings) || !record(data.view)) throw new Error('Invalid saved game');
   const saved = data.game;
   const sizes = saved.kind === 'sphere' ? [3, 4, 5] : saved.kind === 'torus' ? [7, 9, 11] : [];
-  if (saved.version !== 1 || !sizes.includes(saved.size) || typeof saved.komi !== 'number' || saved.komi < .5 || saved.komi > 9.5 || !Number.isInteger(saved.komi - .5)) throw new Error('Invalid board settings');
+  if (saved.version !== 1 || !sizes.includes(saved.size) || !isValidKomi(saved.komi)) throw new Error('Invalid board settings');
   if (!['ai', 'human'].includes(data.settings.opponent) || ![1, 2].includes(data.settings.human)) throw new Error('Invalid opponent');
   const view = savedView(data.view, data.version);
   if (!Array.isArray(saved.history) || saved.history.length < 1 || saved.history.length > MAX_HISTORY) throw new Error('Invalid history');

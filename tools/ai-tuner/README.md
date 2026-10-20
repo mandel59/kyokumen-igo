@@ -17,3 +17,5 @@ cargo run --release -- parity parity.json  # JS との一致確認用の局面�
 JS 版と Rust / WASM 版の速度比較は、[WASM ベンチマーク記録](WASM-BENCHMARK.md) を参照してください。
 
 アプリに組み込んだ WASM の範囲と配信物の再生成は、[アプリ用 WASM AI](WASM.md) を参照してください。
+
+現行 AI 同士の得点差とコミ別勝率は、[コミの推定記録](KOMI-STUDY.md) を参照してください。

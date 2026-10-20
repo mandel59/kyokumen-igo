@@ -1,5 +1,6 @@
 import {createTopology,Game,chooseMove} from './engine.js';
 import {aiPosition} from './ai-position.js';
+import {KOMI_MIN,KOMI_MAX,KOMI_STEP} from './komi.js';
 import {renderSurface,highlightSurface,MARKER,markerColor} from './surface-renderer.js';
 import {sphereProjection} from './sphere-projection.js';
 import {loadSavedGame,saveGame} from './persistence.js';
@@ -100,7 +101,7 @@ const resultText=s=>s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝
 function who(color){if(replay)return replay.ai===color?'AI':color===1?'先手':'後手';return settings.opponent==='human'?(color===1?'先手':'後手'):settings.human===color?'あなた':'AI';}
 // After one pass, name both sides: the game ends only when the other player passes as well.
 function passMessage(){const name=color=>settings.opponent==='human'?(color===1?'黒':'白'):color===settings.human?'あなた':'AI ';return `${name(3-game.turn)}がパスしました。${name(game.turn)}もパスすると終局です。`;}
-function update(message){$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
+function update(message){const outcome=replay?.result??(game.ended?game.score():null);$('turnStone').hidden=outcome?.winner===0;$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
 if(replay){const s=replay.result;$('turnText').textContent='棋譜 · '+resultText(s);$('status').textContent=game.ended?`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）`:game.moves?`${game.moves} 手目 · ${game.turn===1?'白':'黒'}${game.lastMove===null?'がパス':''}`:'対局開始';}else if(game.ended){const s=game.score();$('turnText').textContent=resultText(s);$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?passMessage():thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning&&!replay)$('status').textContent+=' '+restoreWarning;render();}
 function scheduleAI(){
  if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}
@@ -211,7 +212,7 @@ $('boardKind').onchange=()=>sizeOptions();
 // The dialog shows segmented radio groups and a komi stepper. They write into hidden fields
 // (#opponent, #humanColor, #boardKind, #size, #komi), which syncSettings and startGame use.
 const CHOICES={opponent:['ai','human'],humanColor:['1','2'],boardKind:['sphere','torus'],size:['0','1','2']};
-const SIZE_DETAILS={sphere:['56 交点','98 交点','152 交点'],torus:['7 × 7','9 × 9','11 × 11']},KOMI_RANGE=[.5,9.5];
+const SIZE_DETAILS={sphere:['56 交点','98 交点','152 交点'],torus:['7 × 7','9 × 9','11 × 11']},KOMI_RANGE=[KOMI_MIN,KOMI_MAX];
 function syncChoices(){
   const boardKind=$('boardKind').value,ordinal=String(BOARD_SIZES[boardKind].indexOf(Number($('size').value)));
   for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(field+'_'+value).checked=(field==='size'?ordinal:$(field).value)===value;
@@ -225,7 +226,7 @@ for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(
   $(field).onchange?.();syncChoices();
 };
 const stepKomi=delta=>{$('komi').value=String(Math.min(KOMI_RANGE[1],Math.max(KOMI_RANGE[0],Number($('komi').value)+delta)));syncChoices();};
-$('komiDown').onclick=()=>stepKomi(-1);$('komiUp').onclick=()=>stepKomi(1);
+$('komiDown').onclick=()=>stepKomi(-KOMI_STEP);$('komiUp').onclick=()=>stepKomi(KOMI_STEP);
 $('settingsDialog').addEventListener('cancel',syncSettings);
 const tutorialTitles=['石を置く','石を取る','端のない盤','盤を見渡す','終局と勝敗'];
 let tutorialStep=0;

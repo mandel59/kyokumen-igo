@@ -81,10 +81,10 @@ el('humanColor_1').onchange();assert.equal(el('humanColor').value,'1');
 el('size_2').onchange();assert.equal(el('size').value,'5');assert.equal(el('sizeDetail2').textContent,'152 交点');
 el('boardKind_torus').onchange();assert.equal(el('boardKind').value,'torus');assert.equal(el('size').value,'11','large stays large on the other board');assert.equal(el('sizeDetail2').textContent,'11 × 11');
 assert.equal(choiceState(),'opponent_ai,humanColor_1,boardKind_torus,size_2');
-for(let i=0;i<12;i++)el('komiDown').onclick();
-assert.equal(el('komi').value,'0.5');assert.equal(el('komiValue').textContent,'0.5 目');assert.equal(el('komiDown').disabled,true);assert.equal(el('komiUp').disabled,false);
-el('komiUp').onclick();assert.equal(el('komi').value,'1.5');
-for(let i=0;i<12;i++)el('komiUp').onclick();
+for(let i=0;i<25;i++)el('komiDown').onclick();
+assert.equal(el('komi').value,'0');assert.equal(el('komiValue').textContent,'0 目');assert.equal(el('komiDown').disabled,true);assert.equal(el('komiUp').disabled,false);
+el('komiUp').onclick();assert.equal(el('komi').value,'0.5');
+for(let i=0;i<25;i++)el('komiUp').onclick();
 assert.equal(el('komi').value,'9.5');assert.equal(el('komiUp').disabled,true);
 // Closing discards the draft: the controls show the applied settings again.
 el('settingsClose').onclick();el('settingsOpen').onclick();
@@ -331,4 +331,33 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  reset();delete globalThis.Worker;
  globalThis.setTimeout=realTimeout;globalThis.clearTimeout=realClearTimeout;Date.now=realNow;
  console.log('Persistent AI Worker UI tests passed: minimum 400 ms turn, immediate slow replies, compact transfer, reuse, cancellation during delay, stale responses and error/illegal-move fallback.');
+}
+
+// Zero/integer komi can draw; draws survive sharing and are neutral in both live/replay headers.
+{
+ el('settingsOpen').onclick();el('opponent_human').onchange();
+ for(let i=0;i<25;i++)el('komiDown').onclick();
+ assert.equal(el('komiValue').textContent,'0 目');
+ el('newGame').onclick();el('pass').onclick();el('pass').onclick();
+ assert.equal(el('turnText').textContent,'引き分け');
+ assert.equal(el('turnStone').hidden,true);
+ assert.match(el('status').textContent,/黒 0 \/ 白 0/);
+ window.location={href:'https://example.test/igo/',pathname:'/igo/',search:'',hash:''};
+ window.history={replaceState(state,title,url){window.location.hash='';window.location.href='https://example.test'+url;}};
+ await el('shareRecord').onclick();
+ const drawCode=copied.split('#kifu=')[1],shared=decodeRecord(drawCode).game;
+ assert.equal(shared.komi,0);assert.equal(shared.score().winner,0);
+ const tied=new engine.Game(engine.createTopology('torus',7),1);
+ for(const move of [0,24,1])tied.play(move);
+ tied.pass();tied.pass();
+ assert.equal(tied.score().winner,0);
+ window.location.hash='#kifu='+encodeRecord(tied);window.onhashchange();
+ assert.equal(el('turnText').textContent,'棋譜 · 引き分け');assert.equal(el('turnStone').hidden,true);
+ assert.equal(el('komiLabel').textContent,'コミ 1 目');
+ el('replayPrev').onclick();assert.equal(el('turnText').textContent,'棋譜 · 引き分け');
+ el('replayClose').onclick();assert.equal(el('turnText').textContent,'引き分け');
+ el('undo').onclick();assert.equal(el('turnStone').hidden,false);
+ assert.notEqual(el('turnText').textContent,'引き分け');
+ delete window.location;delete window.history;
+ console.log('Draw UI passed: zero/integer komi, neutral result, share/replay and undo.');
 }
