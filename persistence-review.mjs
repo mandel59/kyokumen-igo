@@ -64,3 +64,6 @@ store.clear();const q=await boot();play(q);q.el('settingsOpen').onclick();q.el('
 // Existing top-level topology tabs also ignore stale drafts and preserve actual options.
 q.el('settingsClose').onclick();q.el('torusTab').onclick();assert.equal(q.el('size').value,'9');assert.equal(q.el('komi').value,'6.5');assert.equal(q.moves(),0);q.el('board').events.keydown({key:'Enter',preventDefault(){}});q.setConfirm(false);const liveBeforeTab=store.get(STORAGE_KEY);q.el('sphereTab').onclick();assert.equal(q.el('topologyName').textContent,'トーラス盤');assert.equal(store.get(STORAGE_KEY),liveBeforeTab);
 console.log('AI-during-draft and existing topology-tab isolation checks passed.');
+// Idle status is intentionally quiet; informative game-state messages remain.
+store.clear();const quiet=await boot();assert.equal(quiet.el('status').textContent,'','new game idle status is empty with usable storage');human(quiet);play(quiet);assert.equal(quiet.el('status').textContent,'','human-play idle status is empty');quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/パス/);quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/終局/);
+console.log('Quiet idle status and preserved pass/end status checks passed.');
