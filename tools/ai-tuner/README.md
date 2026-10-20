@@ -11,3 +11,5 @@ cargo run --release -- parity parity.json  # JS との一致確認用の局面�
 
 - `tune` は交差エントロピー法で重みを探します。各候補を、調整前の重み（`legacy`）とその時点の最良候補の両方と、全 6 種類の盤で先後を入れ替えて対局させ、勝率で評価します。`capture`（取った石 1 個あたり 10）と `noise` は尺度の基準として固定です。
 - 結果は `Params::tuned`（`src/ai.rs`）と `AI_WEIGHTS`（`dist/engine.js`）の両方に反映します。そのあと `parity parity.json` で局面を作り直すと、`tests.mjs` が JS 版の選ぶ手と一致することを確認します。
+
+探索条件・比較実験・採用した重みと検証結果は、[2026-10-20 のチューニング記録](TUNING.md) にまとめています。

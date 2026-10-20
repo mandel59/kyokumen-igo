@@ -1,0 +1,120 @@
+gen   0: best fitness 0.810, elite mean 0.452 | mean vs champion 0.505, vs legacy 0.505
+         mean {capture:10,savePerStone:1.32,saveCap:11.642,killPerStone:3.211,killCap:14.736,liberty:1.095,enemyAdjacent:0.869,friendAdjacent:0.294,selfAtari:-15.609,crowded:-4.571,open:1.264,passBelow:-2.055,atari:-0.42,territory:0.343,noise:0.7}
+gen   1: best fitness 0.479, elite mean 0.351 | mean vs champion 0.582, vs legacy 0.582  -> champion
+         mean {capture:10,savePerStone:1.778,saveCap:10.373,killPerStone:4.282,killCap:16.126,liberty:1.487,enemyAdjacent:0.73,friendAdjacent:0.195,selfAtari:-15.914,crowded:-5.557,open:1.077,passBelow:-2.56,atari:-1.222,territory:0.445,noise:0.7}
+gen   2: best fitness 0.908, elite mean 0.552 | mean vs champion 0.536, vs legacy 0.743  -> champion
+         mean {capture:10,savePerStone:1.94,saveCap:8.191,killPerStone:4.155,killCap:11.437,liberty:1.749,enemyAdjacent:0.82,friendAdjacent:-0.116,selfAtari:-15.977,crowded:-7.179,open:0.738,passBelow:-2.119,atari:-1.548,territory:0.393,noise:0.7}
+gen   3: best fitness 0.786, elite mean 0.702 | mean vs champion 0.712, vs legacy 0.913  -> champion
+         mean {capture:10,savePerStone:2.203,saveCap:9.828,killPerStone:3.865,killCap:9.429,liberty:1.978,enemyAdjacent:1.252,friendAdjacent:-0.429,selfAtari:-15.635,crowded:-7.661,open:1.091,passBelow:-2.606,atari:-0.977,territory:0.159,noise:0.7}
+gen   4: best fitness 0.820, elite mean 0.693 | mean vs champion 0.490, vs legacy 0.957
+         mean {capture:10,savePerStone:2.354,saveCap:9.725,killPerStone:3.798,killCap:8.819,liberty:2.189,enemyAdjacent:1.105,friendAdjacent:-0.768,selfAtari:-18.026,crowded:-7.192,open:0.562,passBelow:-1.918,atari:-0.908,territory:0.021,noise:0.7}
+gen   5: best fitness 0.793, elite mean 0.766 | mean vs champion 0.613, vs legacy 0.961  -> champion
+         mean {capture:10,savePerStone:2.352,saveCap:11.549,killPerStone:4.428,killCap:9.233,liberty:2.656,enemyAdjacent:1.146,friendAdjacent:-0.9,selfAtari:-18.878,crowded:-6.882,open:0.17,passBelow:-2.247,atari:-0.855,territory:0.117,noise:0.7}
+gen   6: best fitness 0.771, elite mean 0.743 | mean vs champion 0.544, vs legacy 0.971  -> champion
+         mean {capture:10,savePerStone:2.616,saveCap:8.291,killPerStone:3.904,killCap:8.497,liberty:2.611,enemyAdjacent:0.947,friendAdjacent:-0.923,selfAtari:-20.439,crowded:-6.687,open:-0.761,passBelow:-2.145,atari:-0.308,territory:0.209,noise:0.7}
+gen   7: best fitness 0.742, elite mean 0.718 | mean vs champion 0.510, vs legacy 0.973
+         mean {capture:10,savePerStone:2.196,saveCap:6.485,killPerStone:3.928,killCap:6.791,liberty:2.826,enemyAdjacent:0.838,friendAdjacent:-0.947,selfAtari:-21.215,crowded:-6.37,open:-1.687,passBelow:-1.509,atari:0.124,territory:0.18,noise:0.7}
+gen   8: best fitness 0.751, elite mean 0.741 | mean vs champion 0.500, vs legacy 0.965
+         mean {capture:10,savePerStone:2.281,saveCap:6.111,killPerStone:3.919,killCap:5.772,liberty:2.853,enemyAdjacent:0.872,friendAdjacent:-0.892,selfAtari:-20.917,crowded:-7.029,open:-1.84,passBelow:-2.106,atari:0.289,territory:0.21,noise:0.7}
+gen   9: best fitness 0.743, elite mean 0.738 | mean vs champion 0.507, vs legacy 0.975
+         mean {capture:10,savePerStone:1.942,saveCap:7.129,killPerStone:3.991,killCap:6.849,liberty:2.937,enemyAdjacent:0.675,friendAdjacent:-0.831,selfAtari:-21.65,crowded:-5.551,open:-2.369,passBelow:-2.101,atari:0.221,territory:0.207,noise:0.7}
+gen  10: best fitness 0.758, elite mean 0.745 | mean vs champion 0.525, vs legacy 0.964
+         mean {capture:10,savePerStone:1.889,saveCap:8.311,killPerStone:3.119,killCap:5.776,liberty:2.951,enemyAdjacent:0.569,friendAdjacent:-0.876,selfAtari:-18.738,crowded:-5.148,open:-1.917,passBelow:-1.21,atari:-0.415,territory:0.24,noise:0.7}
+gen  11: best fitness 0.754, elite mean 0.745 | mean vs champion 0.553, vs legacy 0.967  -> champion
+         mean {capture:10,savePerStone:1.905,saveCap:6.78,killPerStone:3.41,killCap:5.927,liberty:2.81,enemyAdjacent:0.66,friendAdjacent:-0.852,selfAtari:-19.75,crowded:-6.358,open:-2.297,passBelow:-1.248,atari:-0.268,territory:0.206,noise:0.7}
+gen  12: best fitness 0.749, elite mean 0.737 | mean vs champion 0.483, vs legacy 0.971
+         mean {capture:10,savePerStone:1.874,saveCap:7.441,killPerStone:3.202,killCap:5.647,liberty:2.841,enemyAdjacent:0.664,friendAdjacent:-0.811,selfAtari:-20.658,crowded:-6.168,open:-2.527,passBelow:-1.969,atari:-0.076,territory:0.219,noise:0.7}
+gen  13: best fitness 0.746, elite mean 0.737 | mean vs champion 0.491, vs legacy 0.974
+         mean {capture:10,savePerStone:2.077,saveCap:5.345,killPerStone:3.449,killCap:5.014,liberty:2.904,enemyAdjacent:0.698,friendAdjacent:-0.751,selfAtari:-22.094,crowded:-6.649,open:-2.554,passBelow:-1.967,atari:-0.543,territory:0.197,noise:0.7}
+gen  14: best fitness 0.747, elite mean 0.741 | mean vs champion 0.487, vs legacy 0.965
+         mean {capture:10,savePerStone:1.672,saveCap:6.904,killPerStone:3.663,killCap:4.176,liberty:2.911,enemyAdjacent:0.538,friendAdjacent:-0.758,selfAtari:-23.177,crowded:-6.14,open:-2.249,passBelow:-0.735,atari:-0.536,territory:0.197,noise:0.7}
+gen  15: best fitness 0.745, elite mean 0.733 | mean vs champion 0.496, vs legacy 0.961
+         mean {capture:10,savePerStone:1.73,saveCap:6.646,killPerStone:3.941,killCap:4.302,liberty:2.883,enemyAdjacent:0.558,friendAdjacent:-0.755,selfAtari:-22.884,crowded:-6.09,open:-2.48,passBelow:-0.717,atari:-0.569,territory:0.22,noise:0.7}
+gen  16: best fitness 0.736, elite mean 0.729 | mean vs champion 0.509, vs legacy 0.967
+         mean {capture:10,savePerStone:2.224,saveCap:7.329,killPerStone:3.372,killCap:4.515,liberty:2.934,enemyAdjacent:0.632,friendAdjacent:-0.759,selfAtari:-23.527,crowded:-5.823,open:-2.544,passBelow:-0.483,atari:-0.489,territory:0.24,noise:0.7}
+gen  17: best fitness 0.757, elite mean 0.749 | mean vs champion 0.495, vs legacy 0.966
+         mean {capture:10,savePerStone:2.34,saveCap:7.722,killPerStone:3.106,killCap:4.187,liberty:2.953,enemyAdjacent:0.653,friendAdjacent:-0.799,selfAtari:-24.091,crowded:-5.154,open:-2.717,passBelow:-0.214,atari:-0.373,territory:0.203,noise:0.7}
+gen  18: best fitness 0.742, elite mean 0.736 | mean vs champion 0.486, vs legacy 0.956
+         mean {capture:10,savePerStone:2.443,saveCap:7.535,killPerStone:3.054,killCap:4.473,liberty:3.004,enemyAdjacent:0.568,friendAdjacent:-0.799,selfAtari:-20.656,crowded:-4.539,open:-2.731,passBelow:-0.04,atari:-0.103,territory:0.182,noise:0.7}
+gen  19: best fitness 0.758, elite mean 0.751 | mean vs champion 0.501, vs legacy 0.970
+         mean {capture:10,savePerStone:2.358,saveCap:7.508,killPerStone:2.815,killCap:4.057,liberty:3.01,enemyAdjacent:0.595,friendAdjacent:-0.808,selfAtari:-20.497,crowded:-3.902,open:-2.574,passBelow:-0.231,atari:-0.064,territory:0.194,noise:0.7}
+gen  20: best fitness 0.747, elite mean 0.742 | mean vs champion 0.482, vs legacy 0.961
+         mean {capture:10,savePerStone:2.309,saveCap:7.369,killPerStone:2.96,killCap:3.442,liberty:3.101,enemyAdjacent:0.663,friendAdjacent:-0.781,selfAtari:-21.773,crowded:-3.84,open:-2.367,passBelow:-0.333,atari:0.15,territory:0.206,noise:0.7}
+gen  21: best fitness 0.749, elite mean 0.739 | mean vs champion 0.487, vs legacy 0.969
+         mean {capture:10,savePerStone:2.572,saveCap:7.697,killPerStone:2.761,killCap:3.575,liberty:3.007,enemyAdjacent:0.613,friendAdjacent:-0.771,selfAtari:-22.319,crowded:-3.74,open:-2.495,passBelow:-0.415,atari:0.074,territory:0.231,noise:0.7}
+gen  22: best fitness 0.751, elite mean 0.747 | mean vs champion 0.493, vs legacy 0.962
+         mean {capture:10,savePerStone:2.56,saveCap:8.646,killPerStone:3.035,killCap:4.419,liberty:2.998,enemyAdjacent:0.597,friendAdjacent:-0.756,selfAtari:-20.136,crowded:-3.321,open:-2.5,passBelow:-0.296,atari:0.193,territory:0.19,noise:0.7}
+gen  23: best fitness 0.758, elite mean 0.748 | mean vs champion 0.509, vs legacy 0.973
+         mean {capture:10,savePerStone:2.365,saveCap:8.903,killPerStone:3.299,killCap:4.121,liberty:3.128,enemyAdjacent:0.561,friendAdjacent:-0.737,selfAtari:-21.462,crowded:-3.001,open:-2.544,passBelow:-0.212,atari:-0.058,territory:0.236,noise:0.7}
+gen  24: best fitness 0.747, elite mean 0.743 | mean vs champion 0.495, vs legacy 0.965
+         mean {capture:10,savePerStone:2.193,saveCap:8.855,killPerStone:3.256,killCap:4.085,liberty:3.028,enemyAdjacent:0.558,friendAdjacent:-0.728,selfAtari:-19.54,crowded:-2.341,open:-2.39,passBelow:-0.28,atari:0.351,territory:0.216,noise:0.7}
+gen  25: best fitness 0.760, elite mean 0.754 | mean vs champion 0.517, vs legacy 0.958
+         mean {capture:10,savePerStone:2.411,saveCap:8.068,killPerStone:3.231,killCap:3.658,liberty:3.192,enemyAdjacent:0.527,friendAdjacent:-0.714,selfAtari:-20.081,crowded:-2.51,open:-2.052,passBelow:-0.519,atari:0.204,territory:0.239,noise:0.7}
+gen  26: best fitness 0.743, elite mean 0.737 | mean vs champion 0.522, vs legacy 0.958
+         mean {capture:10,savePerStone:2.536,saveCap:7.493,killPerStone:3.297,killCap:3.566,liberty:3.197,enemyAdjacent:0.527,friendAdjacent:-0.706,selfAtari:-22.517,crowded:-2.877,open:-1.997,passBelow:-0.439,atari:-0.05,territory:0.204,noise:0.7}
+gen  27: best fitness 0.753, elite mean 0.748 | mean vs champion 0.510, vs legacy 0.956
+         mean {capture:10,savePerStone:2.331,saveCap:7.217,killPerStone:3.289,killCap:4.021,liberty:3.314,enemyAdjacent:0.511,friendAdjacent:-0.726,selfAtari:-21.248,crowded:-2.696,open:-2.281,passBelow:-0.807,atari:-0.072,territory:0.203,noise:0.7}
+gen  28: best fitness 0.759, elite mean 0.752 | mean vs champion 0.501, vs legacy 0.967
+         mean {capture:10,savePerStone:2.61,saveCap:6.955,killPerStone:3.142,killCap:4.098,liberty:3.301,enemyAdjacent:0.486,friendAdjacent:-0.786,selfAtari:-17.211,crowded:-2.543,open:-2.222,passBelow:-1,atari:-0.199,territory:0.163,noise:0.7}
+gen  29: best fitness 0.757, elite mean 0.746 | mean vs champion 0.496, vs legacy 0.966
+         mean {capture:10,savePerStone:2.565,saveCap:7.445,killPerStone:2.988,killCap:4.012,liberty:3.193,enemyAdjacent:0.511,friendAdjacent:-0.747,selfAtari:-16.22,crowded:-2.39,open:-2.073,passBelow:-0.989,atari:-0.418,territory:0.167,noise:0.7}
+gen  30: best fitness 0.750, elite mean 0.737 | mean vs champion 0.513, vs legacy 0.969
+         mean {capture:10,savePerStone:2.543,saveCap:7.094,killPerStone:2.759,killCap:4.17,liberty:3.105,enemyAdjacent:0.548,friendAdjacent:-0.761,selfAtari:-16.025,crowded:-1.655,open:-2.302,passBelow:-1.569,atari:-0.373,territory:0.142,noise:0.7}
+gen  31: best fitness 0.772, elite mean 0.762 | mean vs champion 0.507, vs legacy 0.962
+         mean {capture:10,savePerStone:2.57,saveCap:7.174,killPerStone:2.683,killCap:4.381,liberty:3.151,enemyAdjacent:0.539,friendAdjacent:-0.738,selfAtari:-16.008,crowded:-1.663,open:-2.227,passBelow:-1.364,atari:-0.32,territory:0.202,noise:0.7}
+gen  32: best fitness 0.760, elite mean 0.744 | mean vs champion 0.526, vs legacy 0.956
+         mean {capture:10,savePerStone:2.437,saveCap:6.811,killPerStone:2.586,killCap:4.348,liberty:3.147,enemyAdjacent:0.502,friendAdjacent:-0.735,selfAtari:-16.533,crowded:-2.058,open:-2.174,passBelow:-1.224,atari:0.137,territory:0.205,noise:0.7}
+gen  33: best fitness 0.758, elite mean 0.749 | mean vs champion 0.507, vs legacy 0.954
+         mean {capture:10,savePerStone:2.314,saveCap:6.406,killPerStone:2.487,killCap:4.128,liberty:3.105,enemyAdjacent:0.534,friendAdjacent:-0.776,selfAtari:-15.852,crowded:-2.21,open:-2.155,passBelow:-0.988,atari:0.246,territory:0.239,noise:0.7}
+gen  34: best fitness 0.745, elite mean 0.739 | mean vs champion 0.491, vs legacy 0.974
+         mean {capture:10,savePerStone:2.247,saveCap:6.282,killPerStone:2.418,killCap:4.023,liberty:3.007,enemyAdjacent:0.558,friendAdjacent:-0.76,selfAtari:-16.726,crowded:-2.283,open:-1.998,passBelow:-1.102,atari:0.412,territory:0.199,noise:0.7}
+gen  35: best fitness 0.751, elite mean 0.744 | mean vs champion 0.510, vs legacy 0.961
+         mean {capture:10,savePerStone:2.212,saveCap:6.052,killPerStone:2.372,killCap:4.172,liberty:2.947,enemyAdjacent:0.542,friendAdjacent:-0.799,selfAtari:-17.093,crowded:-2.595,open:-2.171,passBelow:-0.791,atari:0.404,territory:0.155,noise:0.7}
+gen  36: best fitness 0.751, elite mean 0.745 | mean vs champion 0.513, vs legacy 0.962
+         mean {capture:10,savePerStone:2.172,saveCap:6.515,killPerStone:2.225,killCap:4.111,liberty:2.884,enemyAdjacent:0.591,friendAdjacent:-0.785,selfAtari:-18.582,crowded:-2.68,open:-2.238,passBelow:-0.567,atari:0.459,territory:0.155,noise:0.7}
+gen  37: best fitness 0.750, elite mean 0.740 | mean vs champion 0.513, vs legacy 0.971
+         mean {capture:10,savePerStone:2.327,saveCap:6.094,killPerStone:2.157,killCap:4.248,liberty:2.909,enemyAdjacent:0.623,friendAdjacent:-0.826,selfAtari:-18.519,crowded:-2.58,open:-2.239,passBelow:-0.617,atari:0.341,territory:0.166,noise:0.7}
+gen  38: best fitness 0.760, elite mean 0.751 | mean vs champion 0.520, vs legacy 0.958
+         mean {capture:10,savePerStone:2.358,saveCap:6.165,killPerStone:2.122,killCap:4.461,liberty:2.891,enemyAdjacent:0.665,friendAdjacent:-0.844,selfAtari:-18.078,crowded:-2.748,open:-2.284,passBelow:-0.744,atari:0.366,territory:0.193,noise:0.7}
+gen  39: best fitness 0.747, elite mean 0.742 | mean vs champion 0.488, vs legacy 0.962
+         mean {capture:10,savePerStone:2.408,saveCap:5.903,killPerStone:2.166,killCap:4.533,liberty:2.933,enemyAdjacent:0.707,friendAdjacent:-0.815,selfAtari:-17.276,crowded:-2.563,open:-2.308,passBelow:-0.632,atari:0.377,territory:0.224,noise:0.7}
+gen  40: best fitness 0.747, elite mean 0.740 | mean vs champion 0.497, vs legacy 0.964
+         mean {capture:10,savePerStone:2.304,saveCap:6.083,killPerStone:2.167,killCap:4.424,liberty:3.021,enemyAdjacent:0.67,friendAdjacent:-0.781,selfAtari:-17.528,crowded:-2.824,open:-2.276,passBelow:-0.645,atari:0.451,territory:0.212,noise:0.7}
+gen  41: best fitness 0.749, elite mean 0.744 | mean vs champion 0.499, vs legacy 0.961
+         mean {capture:10,savePerStone:2.221,saveCap:6.041,killPerStone:2.336,killCap:4.544,liberty:3.065,enemyAdjacent:0.685,friendAdjacent:-0.77,selfAtari:-18.18,crowded:-2.683,open:-2.203,passBelow:-0.615,atari:0.355,territory:0.246,noise:0.7}
+gen  42: best fitness 0.750, elite mean 0.744 | mean vs champion 0.512, vs legacy 0.966
+         mean {capture:10,savePerStone:2.164,saveCap:6.072,killPerStone:2.363,killCap:4.746,liberty:3.077,enemyAdjacent:0.64,friendAdjacent:-0.747,selfAtari:-17.975,crowded:-2.66,open:-2.209,passBelow:-0.607,atari:0.381,territory:0.241,noise:0.7}
+gen  43: best fitness 0.762, elite mean 0.754 | mean vs champion 0.496, vs legacy 0.974
+         mean {capture:10,savePerStone:2.259,saveCap:6.157,killPerStone:2.402,killCap:4.779,liberty:3.065,enemyAdjacent:0.642,friendAdjacent:-0.733,selfAtari:-17.322,crowded:-2.982,open:-2.216,passBelow:-0.698,atari:0.562,territory:0.233,noise:0.7}
+gen  44: best fitness 0.758, elite mean 0.754 | mean vs champion 0.508, vs legacy 0.969
+         mean {capture:10,savePerStone:2.297,saveCap:6.162,killPerStone:2.433,killCap:4.792,liberty:3.059,enemyAdjacent:0.624,friendAdjacent:-0.747,selfAtari:-18.166,crowded:-3.007,open:-2.221,passBelow:-0.621,atari:0.476,territory:0.163,noise:0.7}
+gen  45: best fitness 0.745, elite mean 0.740 | mean vs champion 0.501, vs legacy 0.967
+         mean {capture:10,savePerStone:2.332,saveCap:6.298,killPerStone:2.453,killCap:4.77,liberty:3.05,enemyAdjacent:0.591,friendAdjacent:-0.723,selfAtari:-18.061,crowded:-3.019,open:-2.136,passBelow:-0.65,atari:0.432,territory:0.171,noise:0.7}
+gen  46: best fitness 0.741, elite mean 0.731 | mean vs champion 0.491, vs legacy 0.958
+         mean {capture:10,savePerStone:2.25,saveCap:6.416,killPerStone:2.434,killCap:4.997,liberty:3.01,enemyAdjacent:0.625,friendAdjacent:-0.756,selfAtari:-18.232,crowded:-2.948,open:-2.18,passBelow:-0.589,atari:0.381,territory:0.244,noise:0.7}
+gen  47: best fitness 0.749, elite mean 0.736 | mean vs champion 0.521, vs legacy 0.979
+         mean {capture:10,savePerStone:2.211,saveCap:6.459,killPerStone:2.419,killCap:4.973,liberty:3.037,enemyAdjacent:0.654,friendAdjacent:-0.731,selfAtari:-18.546,crowded:-2.981,open:-2.233,passBelow:-0.675,atari:0.356,territory:0.27,noise:0.7}
+gen  48: best fitness 0.753, elite mean 0.746 | mean vs champion 0.526, vs legacy 0.969
+         mean {capture:10,savePerStone:2.22,saveCap:6.45,killPerStone:2.343,killCap:5.162,liberty:3.036,enemyAdjacent:0.651,friendAdjacent:-0.743,selfAtari:-18.173,crowded:-3.055,open:-2.226,passBelow:-0.529,atari:0.416,territory:0.216,noise:0.7}
+gen  49: best fitness 0.747, elite mean 0.744 | mean vs champion 0.508, vs legacy 0.973
+         mean {capture:10,savePerStone:2.29,saveCap:6.3,killPerStone:2.329,killCap:5.014,liberty:3.03,enemyAdjacent:0.635,friendAdjacent:-0.716,selfAtari:-17.922,crowded:-3.124,open:-2.178,passBelow:-0.378,atari:0.387,territory:0.244,noise:0.7}
+gen  50: best fitness 0.763, elite mean 0.754 | mean vs champion 0.509, vs legacy 0.962
+         mean {capture:10,savePerStone:2.214,saveCap:6.281,killPerStone:2.213,killCap:4.954,liberty:3.058,enemyAdjacent:0.585,friendAdjacent:-0.724,selfAtari:-17.786,crowded:-3.116,open:-2.166,passBelow:-0.499,atari:0.355,territory:0.246,noise:0.7}
+gen  51: best fitness 0.745, elite mean 0.739 | mean vs champion 0.521, vs legacy 0.970
+         mean {capture:10,savePerStone:2.191,saveCap:6.519,killPerStone:2.214,killCap:4.979,liberty:3.106,enemyAdjacent:0.598,friendAdjacent:-0.758,selfAtari:-18.491,crowded:-2.985,open:-2.204,passBelow:-0.587,atari:0.325,territory:0.219,noise:0.7}
+gen  52: best fitness 0.759, elite mean 0.744 | mean vs champion 0.509, vs legacy 0.964
+         mean {capture:10,savePerStone:2.238,saveCap:6.527,killPerStone:2.283,killCap:4.714,liberty:3.11,enemyAdjacent:0.582,friendAdjacent:-0.746,selfAtari:-19.208,crowded:-2.88,open:-2.215,passBelow:-0.481,atari:0.361,territory:0.154,noise:0.7}
+gen  53: best fitness 0.755, elite mean 0.749 | mean vs champion 0.523, vs legacy 0.965
+         mean {capture:10,savePerStone:2.249,saveCap:6.269,killPerStone:2.258,killCap:4.595,liberty:3.087,enemyAdjacent:0.587,friendAdjacent:-0.753,selfAtari:-20.158,crowded:-2.976,open:-2.224,passBelow:-0.529,atari:0.307,territory:0.214,noise:0.7}
+gen  54: best fitness 0.747, elite mean 0.743 | mean vs champion 0.508, vs legacy 0.973
+         mean {capture:10,savePerStone:2.184,saveCap:6.462,killPerStone:2.241,killCap:4.417,liberty:3.089,enemyAdjacent:0.604,friendAdjacent:-0.741,selfAtari:-21.053,crowded:-3.029,open:-2.193,passBelow:-0.48,atari:0.361,territory:0.245,noise:0.7}
+gen  55: best fitness 0.753, elite mean 0.745 | mean vs champion 0.484, vs legacy 0.961
+         mean {capture:10,savePerStone:2.156,saveCap:6.552,killPerStone:2.277,killCap:4.545,liberty:3.099,enemyAdjacent:0.593,friendAdjacent:-0.757,selfAtari:-20.125,crowded:-3.121,open:-2.188,passBelow:-0.513,atari:0.328,territory:0.222,noise:0.7}
+gen  56: best fitness 0.759, elite mean 0.748 | mean vs champion 0.518, vs legacy 0.964
+         mean {capture:10,savePerStone:2.13,saveCap:6.653,killPerStone:2.314,killCap:4.527,liberty:3.12,enemyAdjacent:0.631,friendAdjacent:-0.754,selfAtari:-20.233,crowded:-3.145,open:-2.157,passBelow:-0.55,atari:0.275,territory:0.225,noise:0.7}
+gen  57: best fitness 0.762, elite mean 0.751 | mean vs champion 0.513, vs legacy 0.971
+         mean {capture:10,savePerStone:2.13,saveCap:6.716,killPerStone:2.276,killCap:4.369,liberty:3.113,enemyAdjacent:0.673,friendAdjacent:-0.77,selfAtari:-20.259,crowded:-3.124,open:-2.139,passBelow:-0.493,atari:0.335,territory:0.249,noise:0.7}
+gen  58: best fitness 0.762, elite mean 0.756 | mean vs champion 0.513, vs legacy 0.970
+         mean {capture:10,savePerStone:2.128,saveCap:6.851,killPerStone:2.368,killCap:4.69,liberty:3.097,enemyAdjacent:0.695,friendAdjacent:-0.797,selfAtari:-20.27,crowded:-3.046,open:-2.181,passBelow:-0.369,atari:0.376,territory:0.253,noise:0.7}
+gen  59: best fitness 0.760, elite mean 0.743 | mean vs champion 0.510, vs legacy 0.969
+         mean {capture:10,savePerStone:2.099,saveCap:6.661,killPerStone:2.326,killCap:4.69,liberty:3.142,enemyAdjacent:0.661,friendAdjacent:-0.852,selfAtari:-20.158,crowded:-3.143,open:-2.127,passBelow:-0.513,atari:0.334,territory:0.27,noise:0.7}
