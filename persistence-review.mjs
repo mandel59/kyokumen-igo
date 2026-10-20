@@ -27,8 +27,9 @@ b.el('pass').onclick();b.el('pass').onclick();assert.equal(b.moves(),3);assert.m
 human(d);d.el('settingsOpen').onclick();d.el('opponent').value='ai';d.el('humanColor').value='2';d.el('komi').value='9.5';d.el('settingsClose').onclick();play(d);let e=await boot();assert.equal(e.el('opponent').value,'human');assert.equal(e.el('komi').value,'6.5');assert.equal(e.moves(),1);
 // AI pending at reload resumes once, with no duplicated response.
 e.el('opponent').value='ai';e.el('humanColor').value='1';e.el('newGame').onclick();play(e);assert.equal(e.moves(),1);let f=await boot();assert.equal(f.moves(),1);assert.equal(f.timers.size,1);await f.tick();assert.equal(f.moves(),2);await f.tick();assert.equal(f.moves(),2);let g=await boot();assert.equal(g.moves(),2);assert.equal(g.timers.size,0);
-// Reset replaces persisted game, including kind and selected size.
-g.el('torusTab').onclick();let h=await boot();assert.equal(h.moves(),0);assert.equal(h.el('topologyName').textContent,'トーラス盤');assert.equal(h.el('size').value,'9');
+// Reset replaces persisted game, including kind and selected size. Mid-game the board tabs are locked,
+// so the reset goes through the new-game dialog.
+g.el('torusTab').onclick();assert.equal(g.moves(),2,'locked tab ignored');g.el('settingsOpen').onclick();g.el('boardKind').value='torus';g.el('boardKind').onchange();g.el('newGame').onclick();let h=await boot();assert.equal(h.moves(),0);assert.equal(h.el('topologyName').textContent,'トーラス盤');assert.equal(h.el('size').value,'9');
 const good=[...store];for(const [key] of store)store.set(key,'{');let i=await boot();assert.equal(i.moves(),0,'corrupt storage safely falls back');
 store.clear();for(const [k,v]of good)store.set(k,v);unavailable=true;let j=await boot();human(j);play(j);assert.equal(j.moves(),1,'storage errors do not break play');unavailable=false;
 console.log('Independent fresh-realm persistence review passed: restore, end/undo/history, unsaved settings, AI resume once, reset, corrupt/blocked storage.');
@@ -64,7 +65,8 @@ console.log('Independent board-kind review passed: ordinal size mapping, isolate
 // An AI response while the dialog is open saves only the live topology/settings.
 store.clear();const q=await boot();play(q);q.el('settingsOpen').onclick();q.el('boardKind').value='torus';q.el('boardKind').onchange();q.el('size').value='11';q.el('komi').value='0.5';await q.tick();assert.equal(q.moves(),2);const r=await boot();assert.equal(r.el('topologyName').textContent,'球面盤');assert.equal(r.el('size').value,'4');assert.equal(r.el('komi').value,'6.5');assert.equal(r.moves(),2);
 // Existing top-level topology tabs also ignore stale drafts and preserve actual options.
-q.el('settingsClose').onclick();q.el('torusTab').onclick();assert.equal(q.el('size').value,'9');assert.equal(q.el('komi').value,'6.5');assert.equal(q.moves(),0);q.el('board').events.keydown({key:'Enter',preventDefault(){}});q.setConfirm(false);const liveBeforeTab=store.get(STORAGE_KEY);q.el('sphereTab').onclick();assert.equal(q.el('topologyName').textContent,'トーラス盤');assert.equal(store.get(STORAGE_KEY),liveBeforeTab);
+// The tabs work only on an empty board, so the game is first undone to its start.
+q.el('settingsClose').onclick();q.el('undo').onclick();assert.equal(q.moves(),0);q.el('torusTab').onclick();assert.equal(q.el('size').value,'9');assert.equal(q.el('komi').value,'6.5');assert.equal(q.moves(),0);q.el('board').events.keydown({key:'Enter',preventDefault(){}});q.setConfirm(false);const liveBeforeTab=store.get(STORAGE_KEY);q.el('sphereTab').onclick();assert.equal(q.el('topologyName').textContent,'トーラス盤');assert.equal(store.get(STORAGE_KEY),liveBeforeTab);
 console.log('AI-during-draft and existing topology-tab isolation checks passed.');
 // Idle status is intentionally quiet; informative game-state messages remain.
 store.clear();const quiet=await boot();assert.equal(quiet.el('status').textContent,'','new game idle status is empty with usable storage');human(quiet);play(quiet);assert.equal(quiet.el('status').textContent,'','human-play idle status is empty');quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/パス/);quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/終局/);
