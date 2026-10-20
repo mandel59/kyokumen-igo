@@ -19,3 +19,6 @@ test-results/
 .DS_Store
 Thumbs.db
 *.swp
+
+# Rust build output
+tools/ai-tuner/target/

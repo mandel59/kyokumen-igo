@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
-import {createTopology,Game,chooseMove} from './dist/engine.js';
+import {readFileSync} from 'node:fs';
+import {createTopology,Game,chooseMove,AI_WEIGHTS} from './dist/engine.js';
 function fixture(stones,turn=1,size=7) {
   const g=new Game(createTopology('torus',size));
   for(const [i,c] of stones)g.board[i]=c;
@@ -53,5 +54,15 @@ for(const kind of ['torus','sphere']) {
     assert.equal(move===null?g.pass().ok:g.play(move).ok,true);
   }
   const clone=Game.fromJSON(g.toJSON());assert.deepEqual([...clone.board],[...g.board]);assert.equal(clone.moves,g.moves);
+}
+// The browser AI makes exactly the moves the self-play tuner evaluated (tools/ai-tuner parity fixture).
+{
+  const parity=JSON.parse(readFileSync(new URL('./tools/ai-tuner/parity.json',import.meta.url),'utf8'));
+  assert.deepEqual(parity.params,AI_WEIGHTS,'fixture was generated with the shipped weights');
+  for(const c of parity.cases) {
+    const g=new Game(createTopology(c.kind,c.size));
+    for(const m of c.moves) assert.equal((m<0?g.pass():g.play(m)).ok,true);
+    assert.equal(chooseMove(g,{random:()=>0}),c.expected,`${c.kind} ${c.size} after ${c.moves.length} moves`);
+  }
 }
 console.log('All graph Go engine tests passed.');
