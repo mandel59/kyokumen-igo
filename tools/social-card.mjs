@@ -25,10 +25,9 @@ function layer(name,game,rotation,size,ss=2){
 const text=(value,px,weight,color,x,y)=>['(','-background','none','-density','72',`pango:<span font_family="${font}" weight="${weight}" size="${px*1024}" foreground="${color}">${value}</span>`,')','-geometry',`+${x}+${y}`,'-composite'];
 const magick=(...args)=>execFileSync('magick',args,{stdio:'inherit'});
 
-const sphere=layer('sphere',position('sphere',4,46,7),[.75,.62],480),torus=layer('torus',position('torus',9,52,11),[1,.5],390);
+const sphere=layer('sphere',position('sphere',4,46,7),[.75,.62],600);
 magick('-size','1200x630','xc:#102b2b',
- '(',sphere,'-resize','480x480',')','-geometry','+700+20','-composite',
- '(',torus,'-resize','390x390',')','-geometry','+575+235','-composite',
+ '(',sphere,'-resize','600x600',')','-geometry','+590+15','-composite',
  ...text('曲面囲碁',104,700,'#edece0',70,118),
  ...text('球面とトーラスで遊ぶ囲碁',40,500,'#dcc18b',76,288),
  ...text('回転できる立体盤 · ローカル AI 対局',28,400,'#a0b3ac',76,360),
