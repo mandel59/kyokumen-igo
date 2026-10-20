@@ -1,0 +1,278 @@
+{
+  "rule": {
+    "unit": "board",
+    "family": "6 board-wise primary tests",
+    "primary": "paired mean score >0.5 with one-sided z=2.394 (Bonferroni alpha=.05/6)",
+    "secondary": "vs greedy, candidate observed score >= original observed score on matched seeds; report paired difference CI without formal non-inferiority claim",
+    "cap": "no capped games",
+    "otherwise": "retain original 4-ply parameters on that board",
+    "note": "Pre-specified board-wise tests; report all boards, including rejected ones. Candidate aggregate rate is not the rate of a routed deployed policy."
+  },
+  "params": [
+    1,
+    6.988,
+    1.307,
+    2.382,
+    0.413,
+    2,
+    20,
+    3,
+    24,
+    0.8,
+    0.3,
+    -0.1,
+    16
+  ],
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "points": 56,
+      "score": {
+        "value": 0.554,
+        "se": 0.015448148451551116,
+        "ci95": [
+          0.5237216290349599,
+          0.5842783709650402
+        ]
+      },
+      "simultaneousLower": 0.5170171326069867,
+      "greedyScore": {
+        "value": 0.728,
+        "se": 0.019223479619327456,
+        "ci95": [
+          0.6903219799461182,
+          0.7656780200538817
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.744,
+        "se": 0.018417731983217243,
+        "ci95": [
+          0.7079012453128942,
+          0.7800987546871058
+        ]
+      },
+      "greedyDifference": {
+        "value": -0.016,
+        "se": 0.024686305001325605,
+        "ci95": [
+          -0.06438515780259818,
+          0.03238515780259819
+        ]
+      },
+      "capped": 0,
+      "accepted": false
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "points": 98,
+      "score": {
+        "value": 0.532,
+        "se": 0.01620114051256316,
+        "ci95": [
+          0.5002457645953762,
+          0.5637542354046239
+        ]
+      },
+      "simultaneousLower": 0.4932144696129238,
+      "greedyScore": {
+        "value": 0.664,
+        "se": 0.02131274106554357,
+        "ci95": [
+          0.6222270275115347,
+          0.7057729724884654
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.646,
+        "se": 0.021554451454630898,
+        "ci95": [
+          0.6037532751489234,
+          0.6882467248510766
+        ]
+      },
+      "greedyDifference": {
+        "value": 0.018,
+        "se": 0.02633396877887161,
+        "ci95": [
+          -0.03361457880658836,
+          0.06961457880658835
+        ]
+      },
+      "capped": 0,
+      "accepted": false
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "points": 152,
+      "score": {
+        "value": 0.5,
+        "se": 0.01620262479045295,
+        "ci95": [
+          0.4682428554107122,
+          0.5317571445892878
+        ]
+      },
+      "simultaneousLower": 0.46121091625165567,
+      "greedyScore": {
+        "value": 0.636,
+        "se": 0.020970815444364722,
+        "ci95": [
+          0.5948972017290451,
+          0.6771027982709549
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.644,
+        "se": 0.020560811947775967,
+        "ci95": [
+          0.6037008085823591,
+          0.684299191417641
+        ]
+      },
+      "greedyDifference": {
+        "value": -0.008,
+        "se": 0.02502496745220531,
+        "ci95": [
+          -0.057048936206322405,
+          0.041048936206322405
+        ]
+      },
+      "capped": 0,
+      "accepted": false
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "points": 49,
+      "score": {
+        "value": 0.572,
+        "se": 0.015102588399102489,
+        "ci95": [
+          0.542398926737759,
+          0.6016010732622409
+        ]
+      },
+      "simultaneousLower": 0.5358444033725486,
+      "greedyScore": {
+        "value": 0.692,
+        "se": 0.019953359270677703,
+        "ci95": [
+          0.6528914158294716,
+          0.7311085841705283
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.676,
+        "se": 0.018478686300426185,
+        "ci95": [
+          0.6397817748511647,
+          0.7122182251488354
+        ]
+      },
+      "greedyDifference": {
+        "value": 0.016,
+        "se": 0.02595516678295332,
+        "ci95": [
+          -0.034872126894588504,
+          0.0668721268945885
+        ]
+      },
+      "capped": 0,
+      "accepted": true
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "points": 81,
+      "score": {
+        "value": 0.542,
+        "se": 0.015587107359342363,
+        "ci95": [
+          0.511449269575689,
+          0.572550730424311
+        ]
+      },
+      "simultaneousLower": 0.5046844649817345,
+      "greedyScore": {
+        "value": 0.642,
+        "se": 0.020713769356731224,
+        "ci95": [
+          0.6014010120608069,
+          0.6825989879391932
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.628,
+        "se": 0.021917699290041184,
+        "ci95": [
+          0.5850413093915193,
+          0.6709586906084807
+        ]
+      },
+      "greedyDifference": {
+        "value": 0.014,
+        "se": 0.026190835025967193,
+        "ci95": [
+          -0.0373340366508957,
+          0.0653340366508957
+        ]
+      },
+      "capped": 0,
+      "accepted": true
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "points": 121,
+      "score": {
+        "value": 0.522,
+        "se": 0.01554075384465376,
+        "ci95": [
+          0.49154012246447865,
+          0.5524598775355214
+        ]
+      },
+      "simultaneousLower": 0.4847954352958989,
+      "greedyScore": {
+        "value": 0.65,
+        "se": 0.01885263076461715,
+        "ci95": [
+          0.6130488437013504,
+          0.6869511562986497
+        ]
+      },
+      "controlGreedyScore": {
+        "value": 0.652,
+        "se": 0.021103683608493316,
+        "ci95": [
+          0.6106367801273531,
+          0.6933632198726469
+        ]
+      },
+      "greedyDifference": {
+        "value": -0.002,
+        "se": 0.025109879013973477,
+        "ci95": [
+          -0.051215362867388016,
+          0.04721536286738801
+        ]
+      },
+      "capped": 0,
+      "accepted": false
+    }
+  ],
+  "tunedPoints": [
+    49,
+    81
+  ],
+  "originalPoints": [
+    56,
+    98,
+    152,
+    121
+  ]
+}

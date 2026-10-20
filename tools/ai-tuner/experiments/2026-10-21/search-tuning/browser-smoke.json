@@ -1,0 +1,33 @@
+{
+  "browser": "155.0.4283.62",
+  "results": [
+    {
+      "mode": "wasm",
+      "backend": "wasm",
+      "reusedWorker": true,
+      "compactHistory": true,
+      "undo": true,
+      "reload": true
+    },
+    {
+      "mode": "plain",
+      "backend": "wasm",
+      "reusedWorker": true,
+      "compactHistory": true,
+      "undo": true,
+      "reload": true
+    },
+    {
+      "mode": "missing",
+      "backend": "js",
+      "reusedWorker": true,
+      "compactHistory": true,
+      "undo": true,
+      "reload": true
+    },
+    {
+      "restoredSuperko": true,
+      "backend": "wasm"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ fn play(t:&Topology,black_depth:u32,white_depth:u32,black_seed:u64,white_seed:u6
   let depth=if game.turn==1 {black_depth}else{white_depth};
   let seed=if game.turn==1 {black.next_u64()}else{white.next_u64()}as u32;
   let point=if depth==0 {let mut noise=Rng::new(seed as u64);ai::choose_move(&game,&ai::Params::tuned(),&mut scratch,&mut||noise.f64())}
-   else {let (point,stats)=search::choose_search(&game,depth,seed);nodes+=stats.nodes;point};
+   else {let (point,stats)=search::choose_with_params(&game,depth,seed,&search::Params::legacy());nodes+=stats.nodes;point};
   assert!(match point {Some(p)=>game.play(p,&mut scratch),None=>game.pass()});
  }
  let (black,white)=game.score();

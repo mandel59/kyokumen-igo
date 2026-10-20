@@ -1,0 +1,53 @@
+{
+  "baseCommit": "37b1886",
+  "phase": "final validation after robust multi-opponent tuning",
+  "development": "Initial 13-weight tune and diagnostics revealed opponent/board overfitting. Robust stage fixes ordering weights and tunes 5 static-evaluation weights vs original4/incumbent4/greedy; 6 generations x8 candidates, seed20261040.",
+  "heldout": [
+    {
+      "file": "heldout-vs-original-komi-6.5.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 500,
+      "komi": 6.5,
+      "seed": 20261050
+    },
+    {
+      "file": "heldout-vs-original-komi-0.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 50,
+      "komi": 0,
+      "seed": 20261051
+    },
+    {
+      "file": "heldout-vs-greedy-komi-6.5.json",
+      "opponent": "greedy",
+      "pairsPerBoard": 250,
+      "komi": 6.5,
+      "seed": 20261052
+    },
+    {
+      "file": "heldout-control-vs-greedy-komi-6.5.json",
+      "opponent": "greedy",
+      "control": true,
+      "pairsPerBoard": 250,
+      "komi": 6.5,
+      "seed": 20261052
+    },
+    {
+      "file": "heldout-vs-original-komi-9.5.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 50,
+      "komi": 9.5,
+      "seed": 20261053
+    }
+  ],
+  "adoption": {
+    "unit": "board",
+    "family": "6 board-wise primary tests",
+    "primary": "paired mean score >0.5 with one-sided z=2.394 (Bonferroni alpha=.05/6)",
+    "secondary": "vs greedy, candidate observed score >= original observed score on matched seeds; report paired difference CI without formal non-inferiority claim",
+    "cap": "no capped games",
+    "otherwise": "retain original 4-ply parameters on that board",
+    "note": "Pre-specified board-wise tests; report all boards, including rejected ones. Candidate aggregate rate is not the rate of a routed deployed policy."
+  },
+  "note": "Written before robust tuning finishes and before any final-validation game. Final seeds are not used for training/selection."
+}

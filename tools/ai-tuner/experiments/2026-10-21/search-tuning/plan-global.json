@@ -1,0 +1,41 @@
+{
+  "baseCommit": "37b1886ee651d71c540814faf55e5a590720eb98",
+  "method": "CEM, 8 generations, 12 candidates, elite 3; original search and incumbent opponents; fixed depth/widths; mixed komi 1,3.5,6.5",
+  "tuningSeed": 20261025,
+  "heldout": [
+    {
+      "file": "heldout-vs-original-komi-6.5.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 500,
+      "komi": 6.5,
+      "seed": 20261026,
+      "role": "primary strength comparison; 6000 games"
+    },
+    {
+      "file": "heldout-vs-original-komi-0.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 50,
+      "komi": 0,
+      "seed": 20261027,
+      "role": "komi generalization; 600 games"
+    },
+    {
+      "file": "heldout-vs-original-komi-9.5.json",
+      "opponent": "legacy",
+      "pairsPerBoard": 50,
+      "komi": 9.5,
+      "seed": 20261028,
+      "role": "komi generalization; 600 games"
+    },
+    {
+      "file": "heldout-vs-greedy-komi-6.5.json",
+      "opponent": "greedy",
+      "pairsPerBoard": 100,
+      "komi": 6.5,
+      "seed": 20261029,
+      "role": "one-ply comparison and native/WASM fixture; 1200 games"
+    }
+  ],
+  "adoption": "Freeze coefficients after 8 generations before heldout. Primary paired 95% CI lower bound must exceed 50%; inspect board-specific and endpoint results for material regressions. Do not tune on these heldout seeds.",
+  "note": "Written while tuning is still running, before the coefficient set is final or any heldout game is played."
+}

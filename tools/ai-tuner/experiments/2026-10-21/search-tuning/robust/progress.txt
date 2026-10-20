@@ -1,0 +1,18 @@
+gen 0: fitness 0.708, vs champion 0.546, vs baseline 0.567, promoted true, 61.3s
+  greedy 0.688, control 0.658
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]
+gen 1: fitness 0.606, vs champion 0.512, vs baseline 0.463, promoted false, 61.9s
+  greedy 0.662, control 0.662
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]
+gen 2: fitness 0.681, vs champion 0.496, vs baseline 0.483, promoted false, 61.3s
+  greedy 0.717, control 0.675
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]
+gen 3: fitness 0.671, vs champion 0.483, vs baseline 0.512, promoted false, 59.7s
+  greedy 0.729, control 0.692
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]
+gen 4: fitness 0.630, vs champion 0.433, vs baseline 0.567, promoted false, 62.2s
+  greedy 0.713, control 0.696
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]
+gen 5: fitness 0.657, vs champion 0.479, vs baseline 0.592, promoted false, 63.8s
+  greedy 0.750, control 0.625
+  champion [1.0, 6.988, 1.307, 2.382, 0.413, 2.0, 20.0, 3.0, 24.0, 0.8, 0.3, -0.1, 16.0]

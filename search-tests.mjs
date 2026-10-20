@@ -3,8 +3,11 @@ import {readFileSync} from 'node:fs';
 import {Game,createTopology} from './dist/engine.js';
 import {aiPosition} from './dist/ai-position.js';
 import {createWasmAI} from './dist/ai-wasm.js';
-const study=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search/heldout-d4-greedy.json',import.meta.url),'utf8'));
+const study=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/heldout-vs-greedy-komi-6.5.json',import.meta.url),'utf8'));
 const ai=await createWasmAI({load:async()=>readFileSync(new URL('./dist/ai-engine.wasm',import.meta.url))});
+const chosenParams=readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/robust/params.txt',import.meta.url),'utf8').trim().split(/\s+/).map(Number);
+assert.deepEqual(study.playerA.values,chosenParams,'archived match must use the deployed chosen parameters');
+const adoption=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search-tuning/adoption.json',import.meta.url),'utf8'));
 const mask=(1n<<64n)-1n;
 function rng(seed) {
  let state=(seed^0x6a09e667f3bcc909n)&mask;
@@ -16,14 +19,19 @@ function rng(seed) {
  };
 }
 let turns=0,searchTurns=0;
-for(const [config,board] of study.boards.entries()){
- const master=rng(((BigInt(study.seed)*0x100000001b3n)&mask)^(BigInt(config)<<40n));
+const original=JSON.parse(readFileSync(new URL('./tools/ai-tuner/experiments/2026-10-21/search/heldout-d4-greedy.json',import.meta.url),'utf8'));
+for(const [data,onlyOriginal]of [[study,false],[original,true]]){
+for(const [config,board] of data.boards.entries()){
+ const points=board.kind==='sphere'?6*board.size**2+2:board.size**2;
+ const adopted=adoption.tunedPoints.includes(points);
+ if(onlyOriginal?adopted:!adopted)continue;
+ const master=rng(((BigInt(data.seed)*0x100000001b3n)&mask)^(BigInt(config)<<40n));
  const a=master(),b=master();
  for(const [index,example] of board.examples.entries()){
-  const game=new Game(createTopology(board.kind,board.size),study.komi);
+  const game=new Game(createTopology(board.kind,board.size),data.komi);
   const black=rng(index===0?a:b),white=rng(index===0?b:a);
-  const blackDepth=index===0?study.depthA:study.depthB;
-  const whiteDepth=index===0?study.depthB:study.depthA;
+  const blackDepth=index===0?data.depthA:data.depthB;
+  const whiteDepth=index===0?data.depthB:data.depthA;
   for(const move of example.moves){
    const seed=Number((game.turn===1?black():white())&0xffffffffn);
    const depth=game.turn===1?blackDepth:whiteDepth;
@@ -37,6 +45,7 @@ for(const [config,board] of study.boards.entries()){
   assert.equal(game.ended,example.ended);
   assert.equal(game.score().black-game.score().white+game.komi,example.margin);
  }
+}
 }
 function fixture(komi,moves){
  const game=new Game(createTopology('torus',7),komi);
