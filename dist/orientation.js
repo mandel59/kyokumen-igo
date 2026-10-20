@@ -18,8 +18,10 @@ export function orientationFromEuler(rotX, rotY) {
   return normalizeOrientation(multiply([Math.sin(rotX/2), 0, 0, Math.cos(rotX/2)], [0, Math.sin(rotY/2), 0, Math.cos(rotY/2)]));
 }
 
+// Home view: looking slightly down at the board, symmetric left to right. The sphere faces the
+// centre of a cube face; the torus turns so point 0 (present on every size) sits at the front.
 export function defaultOrientation(kind = 'sphere') {
-  return orientationFromEuler(kind === 'sphere' ? -.26 : -.65, .57);
+  return kind === 'sphere' ? orientationFromEuler(.35, 0) : orientationFromEuler(.65, -Math.PI / 2);
 }
 
 export function rotateByDrag(orientation, dx, dy, sensitivity = .009) {

@@ -1,6 +1,6 @@
 // Orthographic software renderer: one depth buffer for the board, grid and stones.
 // The same final fragment ownership drives picking, including partly hidden stones.
-import {orientationFromEuler,orientationMatrix,transformPoint} from './orientation.js';
+import {defaultOrientation,orientationFromEuler,orientationMatrix,transformPoint} from './orientation.js';
 const TAU = Math.PI * 2;
 const dot = (a, b) => a.x*b.x+a.y*b.y+a.z*b.z;
 const cross = (a,b) => ({x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x});
@@ -67,10 +67,10 @@ let coverage=new Float32Array(0);
 export const MARKER={outline:[38,54,44],selected:[255,207,75],hover:[250,248,240],neighbor:[86,200,178],width:{active:[4.6,2.6],neighbor:[3.6,1.8]},onStone:.78,aroundPoint:1.18};
 export const markerColor=(id,selected,hover)=>id===selected?MARKER.selected:id===hover?MARKER.hover:MARKER.neighbor;
 
-export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
+export function renderSurface({topology,board,lastMove=null,orientation,rotX,rotY,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
-  const matrix=orientationMatrix(orientation??orientationFromEuler(rotX,rotY));
+  const matrix=orientationMatrix(orientation??(rotX===undefined?defaultOrientation(topology.kind):orientationFromEuler(rotX,rotY)));
   const rotate=p=>transformPoint(p,matrix);
   const project=p=>{const q=rotate(p);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
   const vertex=(p,n)=>({...project(p),normal:rotate(n)});

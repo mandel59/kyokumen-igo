@@ -20,7 +20,18 @@ for(const x of [-9,-Math.PI,-Math.PI/2,-.26,0,Math.PI/2,Math.PI,12])
       closePoint(rotatePoint(p,q),legacy(p,x,y),'quaternion renderer interface');
     }
 for(const kind of ['sphere','torus'])for(const p of points)
-  closePoint(rotate(p,defaultOrientation(kind)),legacy(p,kind==='sphere'?-.26:-.65,.57),'home view');
+  closePoint(rotate(p,defaultOrientation(kind)),legacy(p,kind==='sphere'?.35:.65,kind==='sphere'?0:-Math.PI/2),'home view');
+// The home view looks down at the board and is centred left to right.
+for(const kind of ['sphere','torus']){
+  const up=transformPoint({x:0,y:1,z:0},orientationMatrix(defaultOrientation(kind)));
+  assert.ok(up.y>0&&up.z>0,kind+' home view looks down at the board, not up from below');
+}
+const sphereFront=transformPoint({x:0,y:0,z:1},orientationMatrix(defaultOrientation('sphere')));
+close(sphereFront.x,0,'sphere home view faces a cube face centre');assert.ok(sphereFront.z>.9);
+for(const size of [7,9,11]){
+  const first=transformPoint(createTopology('torus',size).vertices[0],orientationMatrix(defaultOrientation('torus')));
+  close(first.x,0,'torus point 0 at the front centre, size '+size,1e-12);assert.ok(first.z>0);
+}
 
 const orientations=[
   [0,0,0,1],
