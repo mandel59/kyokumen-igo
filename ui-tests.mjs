@@ -264,46 +264,71 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
 // Reuse a Worker across turns, transfer compact histories, and ignore cancelled replies.
 {
  const {restoreAIPosition}=await import('./dist/ai-position.js');
- const instances=[];
+ const instances=[],scheduled=new Map();
+ const realTimeout=globalThis.setTimeout,realClearTimeout=globalThis.clearTimeout,realNow=Date.now;
+ let now=0,nextTimer=0;
+ Date.now=()=>now;
+ globalThis.setTimeout=(f,delay=0)=>{const id=++nextTimer;scheduled.set(id,{f,due:now+delay});return id;};
+ globalThis.clearTimeout=id=>scheduled.delete(id);
+ const advance=ms=>{
+  now+=ms;
+  for(;;){
+   const next=[...scheduled].filter(([,task])=>task.due<=now).sort((a,b)=>a[1].due-b[1].due)[0];
+   if(!next)break;
+   scheduled.delete(next[0]);next[1].f();
+  }
+ };
  globalThis.Worker=class {
   constructor(){this.requests=[];this.terminated=false;instances.push(this);}
   postMessage(data,transfer){this.requests.push(structuredClone(data,{transfer}));}
   terminate(){this.terminated=true;}
  };
- const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
+ const tick=async()=>advance(0);
  const reset=()=>{
   el('opponent').value='ai';el('humanColor').value='1';el('newGame').onclick();
   assert.equal(el('moveCount').textContent,'0 手');
  };
- const answer=(worker,request=worker.requests.at(-1))=>{
+ const answer=(worker,request=worker.requests.at(-1),wait=true)=>{
   const game=restoreAIPosition(request.position);
   worker.onmessage({data:{id:request.id,move:engine.chooseMove(game,{random:()=>0}),backend:'wasm'}});
+  if(wait)advance(400);
  };
  reset();el('pass').onclick();await tick();
- assert.equal(instances.length,1);
+ assert.equal(instances.length,1,'computation starts without waiting for the minimum turn time');
  const first=instances[0],request=first.requests[0],oldHandler=first.onmessage;
  assert.deepEqual([...request.position.moves],[-1]);assert.equal(request.game,undefined);
- answer(first);assert.equal(el('moveCount').textContent,'2 手');assert.equal(first.terminated,false);
+ advance(25);answer(first,request,false);
+ assert.equal(el('moveCount').textContent,'1 手','fast reply waits for the minimum turn duration');
+ assert.equal(el('turnText').textContent,'AI が考えています');assert.equal(el('pass').disabled,true);
+ advance(374);assert.equal(el('moveCount').textContent,'1 手');
+ advance(1);assert.equal(el('moveCount').textContent,'2 手');assert.equal(first.terminated,false);
  el('pass').onclick();await tick();assert.equal(instances.length,1,'same Worker serves the second turn');
  oldHandler({data:{id:request.id,move:0}});assert.equal(el('moveCount').textContent,'3 手','stale reply ignored');
  const pending=first.requests.at(-1),pendingHandler=first.onmessage;
+ answer(first,pending,false);
  el('undo').onclick();assert.equal(first.terminated,true);assert.equal(el('moveCount').textContent,'2 手');
- pendingHandler({data:{id:pending.id,move:0}});assert.equal(el('moveCount').textContent,'2 手','undo cancels outstanding reply');
+ advance(500);pendingHandler({data:{id:pending.id,move:0}});
+ assert.equal(el('moveCount').textContent,'2 手','undo cancels a reply that is already waiting to be applied');
  reset();el('pass').onclick();await tick();
- const failed=instances.at(-1);failed.onerror();
+ const failed=instances.at(-1);failed.onerror();advance(400);
  assert.equal(failed.terminated,true);assert.equal(el('moveCount').textContent,'2 手','Worker error falls back to JS');
  reset();el('pass').onclick();await tick();
  const cancelled=instances.at(-1),cancelledHandler=cancelled.onmessage,cancelledRequest=cancelled.requests.at(-1);
+ answer(cancelled,cancelledRequest,false);
  reset();el('pass').onclick();await tick();
  const current=instances.at(-1);
  cancelled.onerror();cancelledHandler({data:{id:cancelledRequest.id,move:0}});
+ advance(500);
  assert.equal(current.terminated,false,'old errors cannot terminate a newer Worker');
- assert.equal(el('moveCount').textContent,'1 手');
- answer(current);assert.equal(el('moveCount').textContent,'2 手');
+ assert.equal(el('moveCount').textContent,'1 手','new game cancels an already delayed reply');
+ answer(current,current.requests.at(-1),false);
+ assert.equal(el('moveCount').textContent,'2 手','slow replies are applied without adding another 400 ms');
+ assert.equal(scheduled.size,0);
  reset();el('pass').onclick();await tick();
  const invalid=instances.at(-1);
- invalid.onmessage({data:{id:invalid.requests.at(-1).id,move:-17}});
+ invalid.onmessage({data:{id:invalid.requests.at(-1).id,move:-17}});advance(400);
  assert.equal(invalid.terminated,true);assert.equal(el('moveCount').textContent,'2 手','JS rejects invalid Worker moves and falls back');
  reset();delete globalThis.Worker;
- console.log('Persistent AI Worker UI tests passed: compact transfer, reuse, undo/reset cancellation, stale responses and error/illegal-move fallback.');
+ globalThis.setTimeout=realTimeout;globalThis.clearTimeout=realClearTimeout;Date.now=realNow;
+ console.log('Persistent AI Worker UI tests passed: minimum 400 ms turn, immediate slow replies, compact transfer, reuse, cancellation during delay, stale responses and error/illegal-move fallback.');
 }

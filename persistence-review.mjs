@@ -7,17 +7,17 @@ const base=new URL('./dist/',import.meta.url),html=readFileSync(new URL('index.h
 const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 const store=new Map();let unavailable=false;
 async function boot(hash=''){
- const noop=()=>{},elements=new Map(),timers=new Map();let tid=0,confirmAllowed=true;
+ const noop=()=>{},elements=new Map(),timers=new Map();let tid=0,clock=0,confirmAllowed=true;
  const context2d=new Proxy({createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
  function el(id){assert(validIds.has(id),id);if(!elements.has(id)){
  const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context2d,getBoundingClientRect:()=>({width:340,height:355,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f},showModal(){this.open=true},close(){this.open=false}};
  if(id==='size'){let options=['3','4','5'],value='4';Object.defineProperty(e,'value',{get:()=>value,set:v=>value=String(v)});Object.defineProperty(e,'selectedIndex',{get:()=>options.indexOf(value),set:i=>value=options[i]??''});Object.defineProperty(e,'innerHTML',{set(v){this.html=v;options=[...v.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);value=options[0]??''}});}elements.set(id,e);}return elements.get(id);}
  const storage={getItem(k){if(unavailable)throw Error('denied');return store.get(k)??null},setItem(k,v){if(unavailable)throw Error('quota');store.set(k,String(v))},removeItem(k){if(unavailable)throw Error('denied');store.delete(k)}};
  const win={devicePixelRatio:1,localStorage:storage,addEventListener:noop,location:{hash,pathname:'/',search:'',href:'https://example.test/'+hash},history:{replaceState(){win.location.hash=''}}};
- const realm=vm.createContext({console,URL,atob,document:{getElementById:el},window:win,localStorage:storage,ResizeObserver:class{constructor(f){this.f=f}observe(){this.f()}},confirm:()=>confirmAllowed,setTimeout:(f)=>{timers.set(++tid,f);return tid},clearTimeout:id=>timers.delete(id)});
+ const realm=vm.createContext({console,URL,atob,document:{getElementById:el},window:win,localStorage:storage,ResizeObserver:class{constructor(f){this.f=f}observe(){this.f()}},confirm:()=>confirmAllowed,Date:class extends Date{static now(){return clock}},setTimeout:(f,delay=0)=>{timers.set(++tid,{f,due:clock+delay});return tid},clearTimeout:id=>timers.delete(id)});
  const cache=new Map();async function mod(url){const path=fileURLToPath(url);if(cache.has(path))return cache.get(path);const m=new vm.SourceTextModule(readFileSync(path,'utf8'),{context:realm,identifier:url.href,initializeImportMeta(meta){meta.url=url.href}});cache.set(path,m);await m.link((s,p)=>mod(new URL(s,p.identifier)));return m;}
  const app=await mod(new URL('app.js',base));await app.evaluate();
- return {el,win,timers,setConfirm:value=>confirmAllowed=value,async tick(){const ts=[...timers.values()];timers.clear();for(const f of ts)f();await Promise.resolve()},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
+ return {el,win,timers,setConfirm:value=>confirmAllowed=value,async tick(){while(timers.size){const [id,task]=[...timers].sort((a,b)=>a[1].due-b[1].due)[0];timers.delete(id);clock=task.due;task.f();}await Promise.resolve()},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
 }
 function human(a){a.el('opponent').value='human';a.el('newGame').onclick()}
 function play(a){a.el('board').events.keydown({key:'Enter',preventDefault(){}})}

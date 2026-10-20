@@ -104,18 +104,28 @@ function update(message){$('blackCaptures').textContent=game.captures[1];$('whit
 if(replay){const s=replay.result;$('turnText').textContent='棋譜 · '+resultText(s);$('status').textContent=game.ended?`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）`:game.moves?`${game.moves} 手目 · ${game.turn===1?'白':'黒'}${game.lastMove===null?'がパス':''}`:'対局開始';}else if(game.ended){const s=game.score();$('turnText').textContent=resultText(s);$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?passMessage():thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning&&!replay)$('status').textContent+=' '+restoreWarning;render();}
 function scheduleAI(){
  if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}
+ const started=Date.now();
  thinking=true;const id=++requestId;update();
  timer=setTimeout(()=>{
-  timer=null;if(id!==requestId)return;
+  if(id!==requestId)return;timer=null;
+  let answered=false;
   const handle=result=>{
-   if(id!==requestId||!thinking)return;
-   thinking=false;
-   if(result===null)game.pass();
-   else {
-    const played=game.play(result);
-    if(!played.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}
-   }
-   update();
+   if(id!==requestId||!thinking||answered)return;
+   answered=true;
+   const finish=()=>{
+    if(id!==requestId||!thinking)return;timer=null;
+    thinking=false;
+    if(result===null)game.pass();
+    else {
+     const played=game.play(result);
+     if(!played.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}
+    }
+    update();
+   };
+   // Compute immediately; only hold back replies that would make the turn too brief.
+   const remaining=400-(Date.now()-started);
+   if(remaining>0)timer=setTimeout(finish,remaining);
+   else finish();
   };
   try{
    worker??=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});
