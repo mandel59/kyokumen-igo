@@ -44,7 +44,7 @@ python3 -m http.server --directory dist 8000
 | --- | --- |
 | `dist/index.html` / `dist/style.css` | 画面、設定・説明ダイアログ、モバイル向けレイアウト |
 | `dist/app.js` | Canvas 描画、操作、対局進行 |
-| `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、表面に沿う碁石、可視部分に対応した選択判定 |
+| `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、盤ごとに寸法を揃えた碁石、可視部分に対応した選択判定・強調表示 |
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
 | `dist/ai-worker.js` | Web Worker で AI の手を計算 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
