@@ -11,6 +11,13 @@ let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrien
 let width=0,height=0,scale=1,centerX=0,centerY=0;
 const errors={occupied:'そこにはすでに石があります。',suicide:'呼吸点がなくなる手は打てません。',superko:'過去と同じ盤面になる手は打てません。',ended:'対局は終了しました。',invalid:'交点を選んでください。'};
 let surfaceFrame=null,surfaceKey='',rasterRatio=1,renderQueued=false;
+// Drag frames trade resolution for speed. Their pixel budget follows the measured frame
+// time, so fast devices drag sharply while slow ones keep the original 90k-pixel floor.
+const DRAG_FRAME_MS=16;let dragPixels=90000;
+function adaptDragPixels(elapsed){
+  if(elapsed>DRAG_FRAME_MS*1.25)dragPixels=Math.max(90000,dragPixels*Math.max(.6,DRAG_FRAME_MS/elapsed));
+  else if(elapsed<DRAG_FRAME_MS*.7)dragPixels=Math.min(3000000,dragPixels*Math.min(1.3,DRAG_FRAME_MS/elapsed));
+}
 function requestRender(){
   if(typeof requestAnimationFrame!=='function'){render();return;}
   if(renderQueued)return;renderQueued=true;
@@ -20,14 +27,14 @@ function render(){
   if(!game)return;
   if(mapView){renderMap();return;}
   if(!width||!height)return;
-  const budget=drag?.moved?90000:3000000;
+  const interactive=!!drag?.moved,started=interactive?performance.now():0;
   // Supersample standard-DPI screens too: the CPU rasterizer has no native edge AA.
-  rasterRatio=Math.min(drag?.moved?(window.devicePixelRatio||1):Math.max(1.5,window.devicePixelRatio||1),(drag?.moved ? .8 : 3),Math.sqrt(budget/Math.max(1,width*height)));
+  rasterRatio=Math.min(interactive?(window.devicePixelRatio||1):Math.max(1.5,window.devicePixelRatio||1),3,Math.sqrt((interactive?dragPixels:3000000)/Math.max(1,width*height)));
   const rw=Math.max(1,Math.round(width*rasterRatio)),rh=Math.max(1,Math.round(height*rasterRatio));
   if(canvas.width!==rw)canvas.width=rw;if(canvas.height!==rh)canvas.height=rh;
-  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height].join('|');
-  if(key!==surfaceKey){
-    surfaceFrame=renderSurface({topology:game.topology,board:game.board,lastMove:game.lastMove,orientation,width:canvas.width,height:canvas.height,scale:scale*rasterRatio,centerX:centerX*rasterRatio,centerY:centerY*rasterRatio,pixelRatio:rasterRatio,interactive:!!drag?.moved});
+  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height].join('|'),drawn=key!==surfaceKey;
+  if(drawn){
+    surfaceFrame=renderSurface({topology:game.topology,board:game.board,lastMove:game.lastMove,orientation,width:canvas.width,height:canvas.height,scale:scale*rasterRatio,centerX:centerX*rasterRatio,centerY:centerY*rasterRatio,pixelRatio:rasterRatio,interactive});
     surfaceKey=key;
   }
   screen=surfaceFrame.points.map(p=>({...p,x:p.x/rasterRatio,y:p.y/rasterRatio}));
@@ -35,6 +42,7 @@ function render(){
   // createImageData is available in browsers; headless DOM test doubles may omit it.
   const image=ctx.createImageData(canvas.width,canvas.height);
   if(image?.data){image.data.set(pixels);ctx.putImageData(image,0,0);}
+  if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}
 let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const x=ox+v.i*step,y=oy+v.j*step;mapPoints.push({x,y,i});if(game.board[i])drawStone(mctx,x,y,Math.min(step*.4,13),game.board[i],game.lastMove===i);else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(x,y,2,0,Math.PI*2);mctx.fill();}if(selected===i||selected!==null&&game.topology.neighbors[selected].includes(i)){mctx.strokeStyle='#a76a16';mctx.lineWidth=2;mctx.beginPath();mctx.arc(x,y,Math.min(step*.45,15),0,Math.PI*2);mctx.stroke();}});}

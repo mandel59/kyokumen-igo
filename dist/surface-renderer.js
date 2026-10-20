@@ -60,6 +60,7 @@ function boardMesh(kind,interactive){
 }
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
+let coverage=new Float32Array(0);
 
 export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
@@ -79,10 +80,13 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.2
     const area=(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);if(Math.abs(area)<1e-8)return;
     const minX=Math.max(0,Math.floor(Math.min(a.x,b.x,c.x))),maxX=Math.min(width-1,Math.ceil(Math.max(a.x,b.x,c.x)));
     const minY=Math.max(0,Math.floor(Math.min(a.y,b.y,c.y))),maxY=Math.min(height-1,Math.ceil(Math.max(a.y,b.y,c.y)));
-    for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++){
-      const px=x+.5,py=y+.5;
-      const wa=((b.x-px)*(c.y-py)-(b.y-py)*(c.x-px))/area;
-      const wb=((c.x-px)*(a.y-py)-(c.y-py)*(a.x-px))/area,wc=1-wa-wb;
+    // Barycentric weights are affine in x: compute them exactly once per row, then step.
+    const stepA=(b.y-c.y)/area,stepB=(c.y-a.y)/area;
+    for(let y=minY;y<=maxY;y++){
+     const px0=minX+.5,py=y+.5;
+     let wa=((b.x-px0)*(c.y-py)-(b.y-py)*(c.x-px0))/area,wb=((c.x-px0)*(a.y-py)-(c.y-py)*(a.x-px0))/area;
+     for(let x=minX;x<=maxX;x++,wa+=stepA,wb+=stepB){
+      const wc=1-wa-wb;
       if(wa< -1e-7||wb< -1e-7||wc< -1e-7)continue;
       const z=wa*a.z+wb*b.z+wc*c.z,i=y*width+x;if(z<=depth[i])continue;
       if(material>=3){
@@ -93,38 +97,58 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.2
       const nx=wa*a.normal.x+wb*b.normal.x+wc*c.normal.x,ny=wa*a.normal.y+wb*b.normal.y+wc*c.normal.y,nz=wa*a.normal.z+wb*b.normal.z+wc*c.normal.z;
       const inv=1/Math.sqrt(nx*nx+ny*ny+nz*nz);
       const diffuse=Math.max(0,(nx*LIGHT.x+ny*LIGHT.y+nz*LIGHT.z)*inv);
-      const spec=Math.pow(Math.max(0,(nx*HALF.x+ny*HALF.y+nz*HALF.z)*inv),material===1?48:material===2?32:70);
+      // Below .88 the highlight adds less than half a colour level, so skip the pow.
+      const h=(nx*HALF.x+ny*HALF.y+nz*HALF.z)*inv,spec=h>.88?Math.pow(h,material===1?48:material===2?32:70):0;
       const factor=material===1?.48+.62*diffuse:.57+.43*diffuse;
       const shine=spec*(material===1?115:material===2?28:8),o=i*4;
       depth[i]=z;owners[i]=owner;
       pixels[o]=(material===0?218:material===1?23:240)*factor+shine;
       pixels[o+1]=(material===0?195:material===1?30:239)*factor+shine;
       pixels[o+2]=(material===0?148:material===1?29:222)*factor+shine;pixels[o+3]=255;
+     }
     }
   }
-  function line(a,b,color,owner=-1,radius=.65*pixelRatio,epsilon=.002){
-    const steps=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)*1.4));
-    for(let i=0;i<=steps;i++){
-      const t=i/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t,z=a.z+(b.z-a.z)*t;
-      for(let dy=-Math.ceil(radius);dy<=Math.ceil(radius);dy++)for(let dx=-Math.ceil(radius);dx<=Math.ceil(radius);dx++){
-        const px=Math.floor(x)+dx,py=Math.floor(y)+dy;
-        if(Math.hypot(px+.5-x,py+.5-y)<=radius)put(px,py,z,color,owner,epsilon);
-      }
+  // Anti-aliased strokes. Per-pixel coverage is kept as a maximum until flushed, so
+  // polyline joints don't darken, and strokes thinner than a raster pixel fade
+  // instead of breaking into dots in low-resolution drag frames.
+  if(coverage.length<width*height)coverage=new Float32Array(width*height);
+  const touched=[];
+  function stroke(a,b,radius,epsilon){
+    const half=Math.max(radius,.5),strength=radius/half,dx=b.x-a.x,dy=b.y-a.y,length2=dx*dx+dy*dy;
+    const minX=Math.max(0,Math.floor(Math.min(a.x,b.x)-half-1)),maxX=Math.min(width-1,Math.ceil(Math.max(a.x,b.x)+half+1));
+    const minY=Math.max(0,Math.floor(Math.min(a.y,b.y)-half-1)),maxY=Math.min(height-1,Math.ceil(Math.max(a.y,b.y)+half+1));
+    for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++){
+      const px=x+.5,py=y+.5,t=length2?Math.max(0,Math.min(1,((px-a.x)*dx+(py-a.y)*dy)/length2)):0;
+      const ex=a.x+dx*t-px,ey=a.y+dy*t-py,c=strength*Math.min(1,half+.5-Math.sqrt(ex*ex+ey*ey)),i=y*width+x;
+      if(c<=coverage[i]||a.z+(b.z-a.z)*t+epsilon<depth[i])continue;
+      if(!coverage[i])touched.push(i);
+      coverage[i]=c;
     }
+  }
+  function flush(color){
+    for(const i of touched){
+      const c=coverage[i],o=i*4;coverage[i]=0;
+      if(pixels[o+3]){pixels[o]+=(color[0]-pixels[o])*c;pixels[o+1]+=(color[1]-pixels[o+1])*c;pixels[o+2]+=(color[2]-pixels[o+2])*c;}
+      else{pixels[o]=color[0];pixels[o+1]=color[1];pixels[o+2]=color[2];pixels[o+3]=255*c;}
+    }
+    touched.length=0;
   }
   const mesh=boardMesh(topology.kind,interactive),vs=mesh.vertices.map(p=>vertex(p,p.normal));
   for(const [a,b,c] of mesh.triangles)triangle(vs[a],vs[b],vs[c],0,-1);
   // Grid lines follow the curved surface, not straight chords through it.
   for(const [a,b] of topology.edges){
     const p=topology.vertices[a],q=topology.vertices[b];let previous;
+    // A closed board always hides its own far side; skip those edges before sampling them.
+    if(rotate(surfaceNormal(topology.kind,p)).z< -.15&&rotate(surfaceNormal(topology.kind,q)).z< -.15)continue;
     const steps=16;
     for(let j=0;j<=steps;j++){
       const t=j/steps;let s;
       if(topology.kind==='sphere')s=unit({x:p.x+(q.x-p.x)*t,y:p.y+(q.y-p.y)*t,z:p.z+(q.z-p.z)*t});
       else{let du=q.u-p.u,dv=q.v-p.v;if(du>Math.PI)du-=TAU;if(du< -Math.PI)du+=TAU;if(dv>Math.PI)dv-=TAU;if(dv< -Math.PI)dv+=TAU;s=torus(p.u+du*t,p.v+dv*t);}
-      const next=project(add(s,surfaceNormal(topology.kind,s),.001));if(previous)line(previous,next,[97,99,72]);previous=next;
+      const next=project(add(s,surfaceNormal(topology.kind,s),.001));if(previous)stroke(previous,next,.65*pixelRatio,.002);previous=next;
     }
   }
+  flush([97,99,72]);
   // Small surface-conforming contact shadows anchor each stone to the board.
   // Blend into the existing board/grid without changing depth or hit ownership.
   function onSurface(p){
@@ -146,7 +170,8 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.2
   }
   const points=topology.vertices.map((p,i)=>({...project(p),i,visible:false}));
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
-  const dotRadius=1.6*pixelRatio;
+  // At least one pixel centre always falls inside, so dots never vanish at low drag resolution.
+  const dotRadius=Math.max(.75,1.6*pixelRatio);
   for(const p of points)if(!board[p.i]){
     const normal=rotate(surfaceNormal(topology.kind,topology.vertices[p.i]));
     if(normal.z<=0)continue;
@@ -161,10 +186,11 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.2
     const {center,normal,tangent,bitangent,radius,halfHeight}=stoneGeometry(topology,lastMove);let prev;
     for(let i=0;i<=48;i++){
       const a=i*TAU/48,r=.34,p=add(add(add(center,normal,halfHeight*Math.sqrt(1-r*r)+.001),tangent,radius*r*Math.cos(a)),bitangent,radius*r*Math.sin(a));
-      const next=project(p);if(prev)line(prev,next,board[lastMove]===1?[226,201,145]:[81,104,83],lastMove,.8*pixelRatio,.001);prev=next;
+      const next=project(p);if(prev)stroke(prev,next,.8*pixelRatio,.001);prev=next;
     }
+    flush(board[lastMove]===1?[226,201,145]:[81,104,83]);
   }
-  const visibleCounts=new Uint32Array(board.length);for(const id of owners)if(id>=0)visibleCounts[id]++;
+  const visibleCounts=new Uint32Array(board.length);for(let i=0;i<owners.length;i++)if(owners[i]>=0)visibleCounts[owners[i]]++;
   for(const p of points)p.visible=visibleCounts[p.i]>0;
   function pick(x,y,tolerance=12){
     const px=Math.floor(x),py=Math.floor(y);if(px<0||px>=width||py<0||py>=height)return null;
