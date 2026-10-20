@@ -3,7 +3,7 @@ import {readFileSync} from 'node:fs';
 const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 const noop=()=>{};const context=new Proxy({createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
 const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.env.UI_HEIGHT||640)};const landscape=viewport.width>viewport.height&&viewport.height<540;const boardWidth=viewport.width-(landscape?218:20);const boardHeight=viewport.height-(landscape?132:285);
-const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
+const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
 globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
 await import('./dist/app.js');
 assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
@@ -33,4 +33,32 @@ el('torusTab').onclick();assert.equal(el('topologyName').textContent,'トーラ�
 el('settingsOpen').onclick();assert.equal(el('settingsDialog').open,true);el('opponent').value='human';el('newGame').onclick();assert.equal(el('settingsDialog').open,false);el('pass').onclick();el('pass').onclick();assert.match(el('status').textContent,/終局/);assert.equal(el('pass').disabled,true);el('undo').onclick();assert.equal(el('pass').disabled,false);
 el('rulesOpen').onclick();assert.equal(el('rulesDialog').open,true);el('rulesClose').onclick();assert.equal(el('rulesDialog').open,false);
 el('opponent').value='ai';el('humanColor').value='2';el('newGame').onclick();assert.equal(el('turnText').textContent,'AI が考えています');el('sphereTab').onclick();await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'1 手');assert.equal(el('turnText').textContent,'あなたの番です');
-console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help dialogs, AI fallback, undo, pass/end, reset cancellation, white start.');
+// Board-kind changes in the dialog are drafts until the new-game confirmation.
+el('settingsOpen').onclick();
+assert.equal(el('boardKind').value,'sphere');
+el('boardKind').value='torus';el('boardKind').onchange();
+assert.match(el('size').html,/value="9"/);
+assert.equal(el('topologyName').textContent,'球面盤');
+assert.equal(el('moveCount').textContent,'1 手');
+el('settingsClose').onclick();
+el('settingsOpen').onclick();
+assert.equal(el('boardKind').value,'sphere');
+assert.equal(el('size').value,'4');
+el('boardKind').value='torus';el('boardKind').onchange();
+el('opponent').value='human';
+globalThis.confirm=()=>false;
+el('newGame').onclick();
+assert.equal(el('topologyName').textContent,'球面盤');
+assert.equal(el('settingsDialog').open,true);
+globalThis.confirm=()=>true;
+el('newGame').onclick();
+assert.equal(el('topologyName').textContent,'トーラス盤');
+assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS · NO EDGES');
+assert.equal(el('moveCount').textContent,'0 手');
+el('settingsOpen').onclick();
+assert.equal(el('boardKind').value,'torus');
+el('boardKind').value='sphere';el('boardKind').onchange();
+el('settingsDialog').events.cancel();
+assert.equal(el('boardKind').value,'torus');
+assert.equal(el('size').value,'9');
+console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help dialogs, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
