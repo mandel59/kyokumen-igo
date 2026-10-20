@@ -1,13 +1,23 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
-const noop=()=>{};const context=new Proxy({createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
+let painted=null,paintCount=0;
+const noop=()=>{};const context=new Proxy({createImageData:(width,height)=>({width,height,data:new Uint8ClampedArray(width*height*4)}),putImageData:image=>{painted=image;paintCount++;},createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
 const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.env.UI_HEIGHT||640)};const landscape=viewport.width>viewport.height&&viewport.height<540;const boardWidth=viewport.width-(landscape?218:20);const boardHeight=viewport.height-(landscape?132:285);
 const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
 globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
 await import('./dist/app.js');
 assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
 
+assert.ok(painted?.data.some((value,index)=>index%4===3&&value===255),'software framebuffer reaches canvas');
+// Pointer input uses the rendered fragment/visible-intersection picker.
+const {renderSurface}=await import('./dist/surface-renderer.js');
+const {createTopology:makeTopology}=await import('./dist/engine.js');
+const initialFrame=renderSurface({topology:makeTopology('sphere',4),board:new Int8Array(98),width:boardWidth,height:boardHeight});
+const clickable=initialFrame.points.find(p=>p.visible&&initialFrame.pick(p.x,p.y)===p.i);
+const pointer={currentTarget:el('board'),pointerId:1,clientX:clickable.x,clientY:clickable.y};
+el('board').events.pointerdown(pointer);el('board').events.pointerup(pointer);
+assert.equal(el('moveCount').textContent,'1 手');el('undo').onclick();
 // Spherical global map: every original point has a clickable projected position.
 const {sphereProjection}=await import('./dist/sphere-projection.js');
 const {createTopology}=await import('./dist/engine.js');
@@ -61,4 +71,17 @@ el('boardKind').value='sphere';el('boardKind').onchange();
 el('settingsDialog').events.cancel();
 assert.equal(el('boardKind').value,'torus');
 assert.equal(el('size').value,'9');
+// Drag frames coalesce, but pointerup flushes the final full-resolution camera.
+const frames=[];globalThis.requestAnimationFrame=f=>{frames.push(f);};
+const event={currentTarget:el('board'),pointerId:2,clientX:120,clientY:100};
+el('board').events.pointerdown(event);
+el('board').events.pointermove({...event,clientX:145,clientY:110});
+el('board').events.pointermove({...event,clientX:170,clientY:120});
+assert.equal(frames.length,1,'drag events coalesce into one scheduled frame');
+const beforeRelease=paintCount;
+el('board').events.pointerup({...event,clientX:170,clientY:120});
+assert.ok(paintCount>beforeRelease,'release flushes final frame without awaiting RAF');
+const finalPixels=painted.data.slice();frames.shift()();
+assert.deepEqual(painted.data,finalPixels,'queued frame cannot revert released camera');
+delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help dialogs, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
