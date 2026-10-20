@@ -190,5 +190,14 @@ openSmallRecord();
 el('sphereTab').onclick();assert.equal(el('replayControls').hidden,false);
 el('torusTab').onclick();assert.equal(el('replayControls').hidden,true);assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(window.location.hash,'');
 delete window.location;delete window.history;
+// Size tabs start a new game on the same shape; shape tabs keep the size on screen.
+assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS · NO EDGES','the small record board carried over its size');
+el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');
+globalThis.confirm=()=>false;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS · NO EDGES','declined');assert.equal(el('moveCount').textContent,'1 手');
+globalThis.confirm=()=>true;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'121 INTERSECTIONS · NO EDGES');assert.equal(el('moveCount').textContent,'0 手');
+el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');assert.equal(el('topologyName').textContent,'球面盤');
+el('sizeStandard').onclick();assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
+el('board').events.keydown({key:'Enter',preventDefault:noop});globalThis.confirm=()=>{throw new Error('the current size tab must not ask');};
+el('sizeStandard').onclick();assert.equal(el('moveCount').textContent,'1 手');globalThis.confirm=()=>true;
 delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');

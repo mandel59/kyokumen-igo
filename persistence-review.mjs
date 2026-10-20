@@ -100,3 +100,7 @@ starter.setConfirm(true);starter.el('newGame').onclick();
 assert.equal(starter.el('replayControls').hidden,true);assert.equal(starter.win.location.hash,'');assert.equal(starter.moves(),0);
 const restarted=await boot();assert.equal(restarted.moves(),0,'the new game replaced the saved match');assert.equal(restarted.el('replayControls').hidden,true);
 console.log('New game from a shared record: confirmation guards the saved match, then replaces it and leaves the record.');
+// A size tab starts and saves a new game of that size.
+restarted.el('sizeLarge').onclick();assert.equal(restarted.el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');
+const resized=await boot();assert.equal(resized.el('size').value,'5');assert.equal(resized.el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');assert.equal(resized.moves(),0);
+console.log('Size tabs start and save a new game of the chosen size.');
