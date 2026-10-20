@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import {Game, createTopology} from './dist/engine.js';
+import {orientationFromEuler} from './dist/orientation.js';
 import {STORAGE_KEY, restoreSnapshot, loadSavedGame, saveGame} from './dist/persistence.js';
 
 const settings = {opponent: 'human', human: 2};
-const view = {mapView: true, rotX: -.8, rotY: 1.2};
+const view = {mapView: true, orientation: orientationFromEuler(-.8, 1.2)};
 const data = new Map();
 const storage = {getItem: key => data.get(key) ?? null, setItem: (key, value) => data.set(key, value)};
 const save = game => assert.equal(saveGame(game, settings, view, storage), true);
@@ -20,6 +21,19 @@ for (const kind of ['sphere', 'torus']) {
       assert.deepEqual(state.game.toJSON(), game.toJSON());
       assert.deepEqual(state.settings, settings);
       assert.deepEqual(state.view, view);
+      assert.equal(read().version, 2);
+      assert.deepEqual(Object.keys(read().view).sort(), ['mapView', 'orientation']);
+      // Load the previous deployed schema using the unchanged storage key,
+      // preserving the full game/history/settings and the exact legacy view.
+      const legacyView = {mapView: true, rotX: -.8, rotY: 1.2};
+      storage.setItem(STORAGE_KEY, JSON.stringify({version: 1, game: game.toJSON(), settings, view: legacyView}));
+      const migrated = loadSavedGame(storage).state;
+      assert.deepEqual(migrated.game.toJSON(), game.toJSON());
+      assert.deepEqual(migrated.settings, settings);
+      assert.deepEqual(migrated.view, view);
+      assert.equal(saveGame(migrated.game, migrated.settings, migrated.view, storage), true);
+      assert.equal(read().version, 2);
+      assert.deepEqual(loadSavedGame(storage).state.view, view);
       assert.deepEqual([...state.game._seen], [...game._seen]);
       state.game.pass(); game.pass();
       assert.equal(state.game.ended, true);
@@ -39,7 +53,7 @@ save(ko);
 assert.equal(loadSavedGame(storage).state.game.analyze(24).reason, 'superko');
 const original = read();
 const mutations = [
-  d => d.version = 2,
+  d => d.version = 3,
   d => d.game.version = 2,
   d => d.game.kind = 'plane',
   d => d.game.size = 40,
@@ -48,7 +62,12 @@ const mutations = [
   d => d.settings.opponent = 'other',
   d => d.settings.human = 0,
   d => d.view.mapView = 'true',
-  d => d.view.rotX = null,
+  d => d.view.orientation = null,
+  d => d.view.orientation = [0, 0, 0, 0],
+  d => d.view.orientation = [0, 0, 0, 2],
+  d => d.view.orientation = [0, 0, 1],
+  d => d.view.orientation = [0, 0, 0, '1'],
+  d => d.view.orientation = [0, 0, 0, Infinity],
   d => d.game.history = [],
   d => d.game.history[0].board[0] = 1,
   d => d.game.history[1].lastMove = 24,
@@ -64,6 +83,9 @@ for (const mutate of mutations) {
   storage.setItem(STORAGE_KEY, JSON.stringify(changed));
   assert.equal(loadSavedGame(storage).state, null);
   assert.ok(loadSavedGame(storage).error);
+}
+for (const rotX of [null, '0', Infinity, NaN]) {
+  assert.throws(() => restoreSnapshot({...original, version: 1, view: {mapView: false, rotX, rotY: 0}}));
 }
 for (const raw of ['{broken', 'null', '[]', '{}', 'x'.repeat(8 * 1024 * 1024 + 1)]) {
   storage.setItem(STORAGE_KEY, raw);

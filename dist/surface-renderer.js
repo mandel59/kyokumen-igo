@@ -1,5 +1,6 @@
 // Orthographic software renderer: one depth buffer for the board, grid and stones.
 // The same final fragment ownership drives picking, including partly hidden stones.
+import {orientationFromEuler,orientationMatrix,transformPoint} from './orientation.js';
 const TAU = Math.PI * 2;
 const dot = (a, b) => a.x*b.x+a.y*b.y+a.z*b.z;
 const cross = (a,b) => ({x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x});
@@ -40,8 +41,7 @@ function stoneMesh(topology,index,interactive){
   const mesh={vertices,triangles};cache.set(key,mesh);return mesh;
 }
 export function rotatePoint(p,rotX,rotY) {
-  const c=Math.cos(rotY),s=Math.sin(rotY),x=p.x*c+p.z*s,z=-p.x*s+p.z*c;
-  return {x,y:p.y*Math.cos(rotX)-z*Math.sin(rotX),z:p.y*Math.sin(rotX)+z*Math.cos(rotX)};
+  return transformPoint(p,orientationMatrix(Array.isArray(rotX)?rotX:orientationFromEuler(rotX,rotY)));
 }
 function torus(u,v){const r=.72+.28*Math.cos(v);return {x:r*Math.cos(u),y:.28*Math.sin(v),z:r*Math.sin(u)};}
 const meshCache=new Map();
@@ -61,11 +61,13 @@ function boardMesh(kind,interactive){
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
 
-export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
+export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
-  const project=p=>{const q=rotatePoint(p,rotX,rotY);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
-  const vertex=(p,n)=>({...project(p),normal:rotatePoint(n,rotX,rotY)});
+  const matrix=orientationMatrix(orientation??orientationFromEuler(rotX,rotY));
+  const rotate=p=>transformPoint(p,matrix);
+  const project=p=>{const q=rotate(p);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
+  const vertex=(p,n)=>({...project(p),normal:rotate(n)});
   const put=(x,y,z,color,owner,epsilon=0)=>{
     if(x<0||x>=width||y<0||y>=height)return;
     const i=y*width+x;if(z+epsilon<depth[i])return;
@@ -146,7 +148,7 @@ export function renderSurface({topology,board,lastMove=null,rotX=-.26,rotY=.57,w
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
   const dotRadius=1.6*pixelRatio;
   for(const p of points)if(!board[p.i]){
-    const normal=rotatePoint(surfaceNormal(topology.kind,topology.vertices[p.i]),rotX,rotY);
+    const normal=rotate(surfaceNormal(topology.kind,topology.vertices[p.i]));
     if(normal.z<=0)continue;
     for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,[65,76,56],p.i,.003);
   }

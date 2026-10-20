@@ -14,7 +14,7 @@ python3 -m http.server --directory dist 8000
 
 ## 操作と盤
 
-- ドラッグで立体盤を回転、交点をタップして着手。
+- ドラッグで立体盤を画面基準の軸で回転、交点をタップして着手。上下が反転しても横ドラッグの操作方向は反転しません。
 - 球面の「全球図」は、前後の半球を正距方位図法で投影します。全交点を表示し、図からも着手できます。円周上で重複表示される点は同じ交点です。
 - トーラスの「展開図」は、上下・左右の端がつながる正方格子です。
 - 「つながり」をオンにして点を選ぶと、その点と隣接点を確認できます。
@@ -44,6 +44,7 @@ python3 -m http.server --directory dist 8000
 | --- | --- |
 | `dist/index.html` / `dist/style.css` | 画面、設定・説明ダイアログ、モバイル向けレイアウト |
 | `dist/app.js` | Canvas 描画、操作、対局進行 |
+| `dist/orientation.js` | クォータニオンによる画面基準の回転と旧保存形式の姿勢変換 |
 | `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、盤ごとに寸法を揃えた碁石、可視部分に対応した選択判定・強調表示 |
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
 | `dist/ai-worker.js` | Web Worker で AI の手を計算 |
@@ -63,6 +64,8 @@ node persistence-tests.mjs
 node --experimental-vm-modules persistence-review.mjs
 node projection-review.mjs
 node rendering-review.mjs
+node orientation-tests.mjs
+node --experimental-vm-modules rotation-review.mjs
 node ui-tests.mjs
 UI_WIDTH=390 UI_HEIGHT=844 node ui-tests.mjs
 UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs

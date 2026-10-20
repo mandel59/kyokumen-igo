@@ -33,12 +33,13 @@ store.clear();for(const [k,v]of good)store.set(k,v);unavailable=true;let j=await
 console.log('Independent fresh-realm persistence review passed: restore, end/undo/history, unsaved settings, AI resume once, reset, corrupt/blocked storage.');
 const {Game,createTopology}=await import('./dist/engine.js');
 const {saveGame,loadSavedGame,restoreSnapshot,STORAGE_KEY}=await import('./dist/persistence.js');
+const {orientationFromEuler}=await import('./dist/orientation.js');
 const memory={getItem:k=>store.get(k)??null,setItem:(k,v)=>store.set(k,v)};
 const ko=new Game(createTopology('torus',7),.5);for(const point of [17,24,31,18,23,32,0,26,25])assert.equal(ko.play(point).ok,true);
-assert.equal(saveGame(ko,{opponent:'human',human:1},{mapView:true,rotX:.2,rotY:-2},memory),true);
+assert.equal(saveGame(ko,{opponent:'human',human:1},{mapView:true,orientation:orientationFromEuler(.2,-2)},memory),true);
 const loaded=loadSavedGame(memory).state;assert.equal(loaded.game.play(24).reason,'superko');assert.deepEqual(loaded.game.toJSON(),ko.toJSON());assert.equal(loaded.game.undo(),true);assert.equal(loaded.game.play(25).ok,true);
 const k=await boot();assert.equal(k.moves(),9);assert.equal(k.el('komi').value,'0.5');assert.equal(k.el('size').value,'7');assert.equal(k.el('mapSection').hidden,false);assert.equal(k.el('surfaceSection').hidden,true);
-const saved=JSON.parse(store.get(STORAGE_KEY));for(const mutation of [v=>v.version=9,v=>v.game.history.at(-1).captures[2]++,v=>v.game.history.at(-1).board[0]=2,v=>v.settings.opponent='unknown',v=>v.view.rotX=null]){const bad=structuredClone(saved);mutation(bad);assert.throws(()=>restoreSnapshot(bad));}
+const saved=JSON.parse(store.get(STORAGE_KEY));for(const mutation of [v=>v.version=9,v=>v.game.history.at(-1).captures[2]++,v=>v.game.history.at(-1).board[0]=2,v=>v.settings.opponent='unknown',v=>v.view.orientation=null]){const bad=structuredClone(saved);mutation(bad);assert.throws(()=>restoreSnapshot(bad));}
 // Reset while AI work is pending cancels the old response.
 k.el('opponent').value='ai';k.el('humanColor').value='2';k.el('newGame').onclick();assert.equal(k.timers.size,1);human(k);await k.tick();assert.equal(k.moves(),0);const l=await boot();assert.equal(l.moves(),0);assert.equal(l.el('opponent').value,'human');
 console.log('Additional independent checks passed: legal ko history survives reload, captures/history equality, view/size/komi restore, corrupt schema rejection, pending AI reset cancellation.');
