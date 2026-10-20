@@ -5,10 +5,14 @@ let painted=null,paintCount=0;
 const noop=()=>{};const context=new Proxy({createImageData:(width,height)=>({width,height,data:new Uint8ClampedArray(width*height*4)}),putImageData:image=>{painted=image;paintCount++;},createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
 const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.env.UI_HEIGHT||640)};const landscape=viewport.width>viewport.height&&viewport.height<540;const boardWidth=viewport.width-(landscape?218:20);const boardHeight=viewport.height-(landscape?132:285);
 const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
-globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:1};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
+globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:Number(process.env.UI_DPR||1)};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
 await import('./dist/app.js');
 assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
+assert.doesNotMatch(el('status').textContent,/盤の裏側|黒から始め|両方の図から|展開図から/);
 
+const expectedRatio=Math.min(Math.max(1.5,window.devicePixelRatio),3,Math.sqrt(3000000/(boardWidth*boardHeight)));
+assert.equal(el('board').width,Math.round(boardWidth*expectedRatio));
+assert.equal(el('board').height,Math.round(boardHeight*expectedRatio));
 assert.ok(painted?.data.some((value,index)=>index%4===3&&value===255),'software framebuffer reaches canvas');
 // Pointer input uses the rendered fragment/visible-intersection picker.
 const {renderSurface}=await import('./dist/surface-renderer.js');
@@ -78,9 +82,13 @@ el('board').events.pointerdown(event);
 el('board').events.pointermove({...event,clientX:145,clientY:110});
 el('board').events.pointermove({...event,clientX:170,clientY:120});
 assert.equal(frames.length,1,'drag events coalesce into one scheduled frame');
+frames.shift()();
+assert.ok(el('board').width<Math.round(boardWidth*expectedRatio),'drag uses temporary low resolution');
+el('board').events.pointermove({...event,clientX:180,clientY:125});
 const beforeRelease=paintCount;
 el('board').events.pointerup({...event,clientX:170,clientY:120});
 assert.ok(paintCount>beforeRelease,'release flushes final frame without awaiting RAF');
+assert.equal(el('board').width,Math.round(boardWidth*expectedRatio),'release restores high-DPI resolution');
 const finalPixels=painted.data.slice();frames.shift()();
 assert.deepEqual(painted.data,finalPixels,'queued frame cannot revert released camera');
 delete globalThis.requestAnimationFrame;
