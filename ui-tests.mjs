@@ -141,9 +141,16 @@ for(const closeId of ['aboutClose','aboutDone','aboutClose']){
 assert.equal(el('aboutDialog').events.cancel,undefined);
 el('aboutOpen').onclick();el('aboutDialog').close();el('aboutOpen').onclick();el('aboutDone').onclick();
 assert.equal(infoState(),beforeInfo);
+// The rule points are a list, the page explains what a shared record link contains, and it leads to the tutorial.
+const aboutHTML=html.slice(html.indexOf('<dialog id="aboutDialog"'));
+assert.deepEqual([...aboutHTML.matchAll(/<dt>([^<]+)<\/dt>/g)].map(m=>m[1]),['取る','打てない手','終局','数え方','コミ']);
+assert.match(aboutHTML,/棋譜のリンクには、盤・コミ・全手順/);
+el('aboutOpen').onclick();el('aboutTutorial').onclick();
+assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,true);assert.match(el('rulesProgress').textContent,/^1 \/ 5/);
+el('rulesClose').onclick();assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);
 // Tutorial is five one-idea pages, each with a figure, bounded navigation and a read-only live game.
 assert.match(html,/<dialog id="rulesDialog" aria-labelledby="rulesTitle">/);
-assert.match(html,/<details class="about-details"><summary>詳細ルールと得点<\/summary>/);
+assert.match(html,/<details class="about-details"><summary>盤の構造と表示<\/summary>/);
 const tutorialHTML=html.slice(html.indexOf('<dialog id="rulesDialog"'),html.indexOf('<dialog id="aboutDialog"'));
 assert.doesNotMatch(tutorialHTML,/スーパーコウ|正距方位|ニューラル|標準/);
 assert.match(html.slice(html.indexOf('<dialog id="aboutDialog"')),/位置的スーパーコウ/);
