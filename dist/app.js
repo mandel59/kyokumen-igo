@@ -97,15 +97,18 @@ function switchBoard(nextKind){
 }
 $('boardKind').onchange=()=>sizeOptions();
 $('settingsDialog').addEventListener('cancel',syncSettings);
-const tutorialTitles=['石を置く','石を取る','盤の全体を見る','対局を終える'];
+const tutorialTitles=['石を置く','石を取る','端のない盤','盤を見渡す','終局と勝敗'];
 let tutorialStep=0;
 function showTutorialStep(next){
  tutorialStep=Math.max(0,Math.min(tutorialTitles.length-1,next));
- tutorialTitles.forEach((_,i)=>{$('rulesStep'+i).hidden=i!==tutorialStep;});
+ // Inactive pages stay laid out (inert, invisible) so paging never resizes the dialog.
+ tutorialTitles.forEach((_,i)=>{$('rulesStep'+i).inert=i!==tutorialStep;});
+ $('rulesDots').innerHTML=tutorialTitles.map((_,i)=>i===tutorialStep?'<i class="current"></i>':'<i></i>').join('');
  $('rulesProgress').textContent=`${tutorialStep+1} / ${tutorialTitles.length} · ${tutorialTitles[tutorialStep]}`;
+ if(tutorialStep===0&&document.activeElement===$('rulesPrev'))$('rulesDone').focus();
  $('rulesPrev').disabled=tutorialStep===0;
  $('rulesDone').textContent=tutorialStep===tutorialTitles.length-1?'盤に戻る':'次へ';
- $('rulesDialog').scrollTop=0;
+ $('rulesPages').scrollTop=0;
 }
 function confirmReset(){return!game.moves||confirm('今の対局を終了して、新しい対局を始めますか？');}
 $('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=$('inspect').checked?'交点を選ぶと、隣接点が光ります':mapView?'全体表示 · タップで着手':'ドラッグで回転 · タップで着手';render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};

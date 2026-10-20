@@ -74,5 +74,5 @@ const aboutBefore=store.get(STORAGE_KEY),aboutMoves=quiet.moves();
 for(const closeId of ['aboutClose','aboutDone']){quiet.el('aboutOpen').onclick();assert.equal(quiet.el('aboutDialog').open,true);quiet.el(closeId).onclick();assert.equal(quiet.el('aboutDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);}
 console.log('Read-only application information dialog storage checks passed.');
 
-quiet.el('rulesOpen').onclick();for(let n=0;n<3;n++)quiet.el('rulesDone').onclick();quiet.el('rulesPrev').onclick();quiet.el('rulesDone').onclick();quiet.el('rulesDone').onclick();assert.equal(quiet.el('rulesDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);
+quiet.el('rulesOpen').onclick();for(let n=0;n<4;n++)quiet.el('rulesDone').onclick();quiet.el('rulesPrev').onclick();quiet.el('rulesDone').onclick();quiet.el('rulesDone').onclick();assert.equal(quiet.el('rulesDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);
 console.log('Tutorial page navigation does not change the saved match or view.');

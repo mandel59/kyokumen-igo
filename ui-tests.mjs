@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
+const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8'),css=readFileSync(new URL('./dist/style.css',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 let painted=null,paintCount=0;
 const noop=()=>{};const context=new Proxy({createImageData:(width,height)=>({width,height,data:new Uint8ClampedArray(width*height*4)}),putImageData:image=>{painted=image;paintCount++;},createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
 const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.env.UI_HEIGHT||640)};const landscape=viewport.width>viewport.height&&viewport.height<540;const boardWidth=viewport.width-(landscape?218:20);const boardHeight=viewport.height-(landscape?132:285);
-const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
+const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;},focus(){document.activeElement=this;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
 globalThis.document={getElementById:el};globalThis.window={devicePixelRatio:Number(process.env.UI_DPR||1)};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
 await import('./dist/app.js');
 assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
@@ -108,24 +108,38 @@ for(const closeId of ['aboutClose','aboutDone','aboutClose']){
 assert.equal(el('aboutDialog').events.cancel,undefined);
 el('aboutOpen').onclick();el('aboutDialog').close();el('aboutOpen').onclick();el('aboutDone').onclick();
 assert.equal(infoState(),beforeInfo);
-// Tutorial is four concise pages with bounded navigation and a read-only live game.
+// Tutorial is five one-idea pages, each with a figure, bounded navigation and a read-only live game.
 assert.match(html,/<dialog id="rulesDialog" aria-labelledby="rulesTitle">/);
 assert.match(html,/<details class="about-details"><summary>詳細ルールと得点<\/summary>/);
 const tutorialHTML=html.slice(html.indexOf('<dialog id="rulesDialog"'),html.indexOf('<dialog id="aboutDialog"'));
 assert.doesNotMatch(tutorialHTML,/スーパーコウ|正距方位|ニューラル|標準/);
 assert.match(html.slice(html.indexOf('<dialog id="aboutDialog"')),/位置的スーパーコウ/);
+const tutorialPages=[...tutorialHTML.matchAll(/<section id="rulesStep\d"[\s\S]*?<\/section>/g)].map(m=>m[0]);
+assert.equal(tutorialPages.length,5);
+for(const page of tutorialPages){
+ assert.equal(page.match(/<svg class="tutorial-figure" viewBox="0 0 300 132" aria-hidden="true">/g)?.length,1,'one same-sized figure per page');
+ assert.doesNotMatch(page,/\shidden[\s>]/,'pages are never removed from layout');
+}
+// Size stability: pages share one grid cell and inactive ones are inert and invisible, so paging cannot resize the dialog.
+assert.match(css,/\.tutorial-step\{grid-area:1\/1/);
+assert.match(css,/\.tutorial-step\[inert\]\{visibility:hidden\}/);
 const checkPage=n=>{
- assert.match(el('rulesProgress').textContent,new RegExp('^'+(n+1)+' / 4'));
- for(let i=0;i<4;i++)assert.equal(el('rulesStep'+i).hidden,i!==n);
+ assert.match(el('rulesProgress').textContent,new RegExp('^'+(n+1)+' / 5 · '));
+ for(let i=0;i<5;i++)assert.equal(el('rulesStep'+i).inert,i!==n);
+ assert.deepEqual([...el('rulesDots').html.matchAll(/<i( class="current")?><\/i>/g)].map(m=>!!m[1]),[0,1,2,3,4].map(i=>i===n));
  assert.equal(el('rulesPrev').disabled,n===0);
- assert.equal(el('rulesDone').textContent,n===3?'盤に戻る':'次へ');
+ assert.equal(el('rulesDone').textContent,n===4?'盤に戻る':'次へ');
+ assert.equal(el('rulesPages').scrollTop,0);
  assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);assert.deepEqual(painted.data,beforeInfoPixels);
 };
 el('rulesOpen').onclick();checkPage(0);el('rulesPrev').onclick();checkPage(0);
-for(let i=1;i<4;i++){el('rulesDone').onclick();checkPage(i);}
-el('rulesPrev').onclick();checkPage(2);el('rulesDone').onclick();checkPage(3);
+for(let i=1;i<5;i++){el('rulesPages').scrollTop=90;el('rulesDone').onclick();checkPage(i);}
+el('rulesPrev').onclick();checkPage(3);el('rulesDone').onclick();checkPage(4);
 el('rulesDone').onclick();assert.equal(el('rulesDialog').open,false);
-el('rulesOpen').onclick();checkPage(0);el('rulesDone').onclick();checkPage(1);el('rulesClose').onclick();
+el('rulesOpen').onclick();checkPage(0);el('rulesDone').onclick();checkPage(1);
+// Returning to the first page moves focus off the button that becomes disabled.
+document.activeElement=el('rulesPrev');el('rulesPrev').onclick();checkPage(0);assert.equal(document.activeElement,el('rulesDone'));
+el('rulesClose').onclick();
 el('rulesOpen').onclick();checkPage(0);
 assert.equal(el('rulesDialog').events.cancel,undefined,'native Escape dismissal not blocked');
 el('rulesDone').onclick();el('rulesDialog').close();el('rulesOpen').onclick();checkPage(0);el('rulesClose').onclick();
