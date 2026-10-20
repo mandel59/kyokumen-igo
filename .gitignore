@@ -1,6 +1,3 @@
-# Hosting-specific local metadata
-.openai/
-
 # Credentials and local environment files
 .env
 .env.*
@@ -22,3 +19,6 @@ Thumbs.db
 
 # Rust build output
 tools/ai-tuner/target/
+
+# Cloudflare local state
+.wrangler/

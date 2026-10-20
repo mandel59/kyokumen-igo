@@ -107,4 +107,18 @@ UI テストは実ブラウザやスマートフォンの描画・タッチ操�
 
 ## 配信
 
-静的ホスティングに `dist/` の内容を配置します。`.openai/hosting.json` は特定のホスティング先に結び付くローカル設定で、このリポジトリの実行には不要です。
+静的ホスティングに `dist/` の内容を配置します。
+
+### Cloudflare Workers
+
+公開先は <https://kyokugo.ryusei.dev> です。`wrangler.jsonc` で `dist/` の静的配信と独自ドメインを設定しています。アプリのビルドやサーバー側の実行コードは不要です。
+
+Cloudflare の対象アカウントにログインし、リポジトリのルートで実行します。
+
+```sh
+npx --yes wrangler@4.151.3 login
+npx --yes wrangler@4.151.3 deploy --dry-run
+npx --yes wrangler@4.151.3 deploy
+```
+
+デプロイには Workers の編集と `ryusei.dev` の独自ドメイン設定に必要な権限を使います。独自ドメインの DNS と証明書は Cloudflare が管理します。`workers.dev` とプレビュー URL は無効にしています。`dist/` 以外の文書・実験データは配信しません。AI の Rust 実装を変更した場合は、先に上記の WASM ビルドとテストを実行してください。

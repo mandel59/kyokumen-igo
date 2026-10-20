@@ -1,0 +1,16 @@
+{
+  "name": "kyokugo",
+  "account_id": "49875f33dc7d86c02b9daf2358924096",
+  "compatibility_date": "2026-10-21",
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./dist"
+  },
+  "routes": [
+    {
+      "pattern": "kyokugo.ryusei.dev",
+      "custom_domain": true
+    }
+  ]
+}
