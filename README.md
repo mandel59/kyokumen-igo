@@ -44,6 +44,7 @@ python3 -m http.server --directory dist 8000
 | --- | --- |
 | `dist/index.html` / `dist/style.css` | 画面、設定・説明ダイアログ、モバイル向けレイアウト |
 | `dist/app.js` | Canvas 描画、操作、対局進行 |
+| `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、表面に沿う碁石、可視部分に対応した選択判定 |
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
 | `dist/ai-worker.js` | Web Worker で AI の手を計算 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
@@ -61,6 +62,7 @@ node komi-tests.mjs
 node persistence-tests.mjs
 node --experimental-vm-modules persistence-review.mjs
 node projection-review.mjs
+node rendering-review.mjs
 node ui-tests.mjs
 UI_WIDTH=390 UI_HEIGHT=844 node ui-tests.mjs
 UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
@@ -70,6 +72,7 @@ UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
 
 - `persistence-tests.mjs` / `persistence-review.mjs`：保存・復元、破損データ、履歴・スーパーコウ、再読み込み後の AI 再開。後者は新規 VM コンテキストを使う UI シミュレーションです。
 - `tests.mjs`：盤の構造、合法手、取り、反復禁止、得点、AI など。
+- `rendering-review.mjs`：描画バッファの奥行き・可視性・選択判定の検証。実ブラウザの描画テストではありません。
 - `projection-review.mjs`：全交点・辺の網羅、境界での切り分け、投影の逆変換・表示範囲・点の衝突など。
 - `ui-tests.mjs`：DOM / Canvas スタブによる操作連携テスト。全球図での着手、表示切替、AI、待った、設定、終局など。
 
