@@ -3,10 +3,11 @@ import {renderSurface,highlightSurface} from './surface-renderer.js';
 import {sphereProjection} from './sphere-projection.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
+import {encodeRecord,decodeRecord} from './record.js';
 const $=id=>document.getElementById(id),canvas=$('board'),ctx=canvas.getContext('2d'),map=$('map'),mctx=map.getContext('2d');
-let mapView=false;
+let mapView=false,replay=null;
 let restoreWarning='';
-function persist(){return saveGame(game,settings,{mapView,orientation});}
+function persist(){return replay?true:saveGame(game,settings,{mapView,orientation});}
 let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrientation('sphere'),selected=null,hover=null,screen=[],thinking=false,worker=null,requestId=0,timer=null,drag=null,keyboardIndex=0;
 let width=0,height=0,scale=1,centerX=0,centerY=0;
 const errors={occupied:'そこにはすでに石があります。',suicide:'呼吸点がなくなる手は打てません。',superko:'過去と同じ盤面になる手は打てません。',ended:'対局は終了しました。',invalid:'交点を選んでください。'};
@@ -74,24 +75,28 @@ function resize(){
   scale=Math.min(width*.405,height*.385);centerX=width/2;centerY=height*.46;render();
 }new ResizeObserver(resize).observe(canvas);new ResizeObserver(()=>{if(game&&mapView)renderMap();}).observe(map);
 function cancelAI(){requestId++;clearTimeout(timer);timer=null;if(worker){worker.terminate();worker=null;}thinking=false;}
-function canPlay(){return!game.ended&&!thinking&&(settings.opponent==='human'||game.turn===settings.human);}
-function update(message){$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+(game.turn===1?'black':'white');$('blackWho').textContent=settings.opponent==='human'?'先手':settings.human===1?'あなた':'AI';$('whiteWho').textContent=settings.opponent==='human'?'後手':settings.human===2?'あなた':'AI';$('pass').disabled=!canPlay();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
-if(game.ended){const s=game.score();$('turnText').textContent=s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝ち':'引き分け';$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?'直前の手はパス。次のパスで終局です。':thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning)$('status').textContent+=' '+restoreWarning;render();}
-function scheduleAI(){if(game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}thinking=true;const id=++requestId;update();timer=setTimeout(()=>{if(id!==requestId)return;const handle=result=>{if(id!==requestId)return;thinking=false;if(worker){worker.terminate();worker=null;}if(result===null)game.pass();else{const r=game.play(result);if(!r.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}}update();};try{worker=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});worker.onmessage=e=>{if(e.data.id!==id)return;if(e.data.error){thinking=false;update('AI の処理に失敗しました。待ったで戻せます。');worker.terminate();worker=null;}else handle(e.data.move);};worker.onerror=()=>{if(id!==requestId)return;worker.terminate();worker=null;handle(chooseMove(game));};worker.postMessage({id,game:game.toJSON()});}catch{handle(chooseMove(game));}},400);}
+function canPlay(){return!replay&&!game.ended&&!thinking&&(settings.opponent==='human'||game.turn===settings.human);}
+const resultText=s=>s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝ち':'引き分け';
+function who(color){if(replay)return replay.ai===color?'AI':color===1?'先手':'後手';return settings.opponent==='human'?(color===1?'先手':'後手'):settings.human===color?'あなた':'AI';}
+function update(message){$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
+if(replay){const s=replay.result;$('turnText').textContent='棋譜 · '+resultText(s);$('status').textContent=game.ended?`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）`:game.moves?`${game.moves} 手目 · ${game.turn===1?'白':'黒'}${game.lastMove===null?'がパス':''}`:'対局開始';}else if(game.ended){const s=game.score();$('turnText').textContent=resultText(s);$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?'直前の手はパス。次のパスで終局です。':thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning&&!replay)$('status').textContent+=' '+restoreWarning;render();}
+function scheduleAI(){if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}thinking=true;const id=++requestId;update();timer=setTimeout(()=>{if(id!==requestId)return;const handle=result=>{if(id!==requestId)return;thinking=false;if(worker){worker.terminate();worker=null;}if(result===null)game.pass();else{const r=game.play(result);if(!r.ok){update('AI の着手に失敗しました。待った、または新しい対局を選んでください。');return;}}update();};try{worker=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});worker.onmessage=e=>{if(e.data.id!==id)return;if(e.data.error){thinking=false;update('AI の処理に失敗しました。待ったで戻せます。');worker.terminate();worker=null;}else handle(e.data.move);};worker.onerror=()=>{if(id!==requestId)return;worker.terminate();worker=null;handle(chooseMove(game));};worker.postMessage({id,game:game.toJSON()});}catch{handle(chooseMove(game));}},400);}
 function act(i){if($('inspect').checked){selected=i;const ns=game.topology.neighbors[i],hidden=mapView?0:ns.filter(n=>!screen[n]?.visible).length;$('boardHint').textContent=`交点 ${i+1} · 隣接 ${ns.length} 点${hidden?' · '+hidden+' 点は裏側':''}`;render();return;}if(!canPlay())return;const r=game.play(i);if(!r.ok){update(errors[r.reason]);return;}selected=null;update();scheduleAI();}
 function pick(e,points){const rect=e.currentTarget.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;if(e.currentTarget===canvas&&surfaceFrame)return surfaceFrame.pick(x*rasterRatio,y*rasterRatio,Math.max(10,Math.min(20,scale*.1))*rasterRatio);let nearest=null,distance=e.currentTarget===map?20:Math.max(14,Math.min(23,scale*.12));for(const s of points){if(s.visible===false)continue;const d=Math.hypot(s.x-x,s.y-y);if(d<distance){nearest=s.i;distance=d;}}return nearest;}
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);requestRender();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){orientation=rotateByDrag(orientation,e.clientX-drag.lastX,e.clientY-drag.lastY);requestRender();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;render();persist();});canvas.addEventListener('pointercancel',()=>{drag=null;render();persist();});canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});
-function keyboard(e,points){if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Enter',' '].includes(e.key))return;e.preventDefault();const ps=points.filter((p,j)=>p.visible!==false&&points.findIndex(q=>q.i===p.i)===j);if(!ps.length)return;if(e.key==='Enter'||e.key===' '){act(ps[keyboardIndex%ps.length].i);}else{keyboardIndex=(keyboardIndex+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+ps.length)%ps.length;selected=ps[keyboardIndex].i;$('boardHint').textContent='交点 '+(selected+1)+' · Enter で着手';render();}}canvas.addEventListener('keydown',e=>keyboard(e,screen));map.addEventListener('keydown',e=>keyboard(e,mapPoints));
+function keyboard(e,points){if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Enter',' '].includes(e.key))return;e.preventDefault();const ps=points.filter((p,j)=>p.visible!==false&&points.findIndex(q=>q.i===p.i)===j);if(!ps.length)return;if(e.key==='Enter'||e.key===' '){act(ps[keyboardIndex%ps.length].i);}else{keyboardIndex=(keyboardIndex+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+ps.length)%ps.length;selected=ps[keyboardIndex].i;$('boardHint').textContent='交点 '+(selected+1)+(replay?'':' · Enter で着手');render();}}canvas.addEventListener('keydown',e=>keyboard(e,screen));map.addEventListener('keydown',e=>keyboard(e,mapPoints));
 function sizeOptions(boardKind=$('boardKind').value){const old=$('size').selectedIndex;$('size').innerHTML=boardKind==='sphere'?'<option value="3">小 · 56 交点</option><option value="4">標準 · 98 交点</option><option value="5">大 · 152 交点</option>':'<option value="7">小 · 7 × 7</option><option value="9">標準 · 9 × 9</option><option value="11">大 · 11 × 11</option>';$('size').selectedIndex=Math.max(0,old);}
-function startGame(){restoreWarning='';cancelAI();kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;orientation=defaultOrientation(kind);mapView=false;showGame();}
+function startGame(){restoreWarning='';cancelAI();if(replay){replay=null;clearSharedRecordURL();}kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;orientation=defaultOrientation(kind);mapView=false;showGame();}
 function showGame(){$('sphereTab').classList.toggle('active',kind==='sphere');$('torusTab').classList.toggle('active',kind==='torus');$('sphereTab').setAttribute('aria-pressed',kind==='sphere');$('torusTab').setAttribute('aria-pressed',kind==='torus');syncView();$('topologyName').textContent=kind==='sphere'?'球面盤':'トーラス盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS · NO EDGES';$('humanColor').disabled=settings.opponent==='human';update();resize();scheduleAI();}
-function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':kind==='sphere'?'全球図':'展開図';$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent=kind==='sphere'?'表裏を正距方位で投影 · 円周上の点は両図で共通':'上下・左右の端がつながります';map.setAttribute('aria-label',kind==='sphere'?'球面の全交点を前後の半球に投影した全球図。交点をタップして着手':'上下左右がつながる展開図。交点をタップして着手');$('boardHint').textContent=showMap?(kind==='sphere'?'全 '+game.board.length+' 点 · タップで着手':'上下・左右がつながる盤'):'ドラッグで回転 · タップで着手';if(showMap)renderMap();else resize();}
-// The dialog is a draft. Opening or cancelling it restores the applied settings.
+function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':kind==='sphere'?'全球図':'展開図';$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent=kind==='sphere'?'表裏を正距方位で投影 · 円周上の点は両図で共通':'上下・左右の端がつながります';map.setAttribute('aria-label',kind==='sphere'?'球面の全交点を前後の半球に投影した全球図。交点をタップして着手':'上下左右がつながる展開図。交点をタップして着手');$('boardHint').textContent=showMap?(kind==='sphere'?'全 '+game.board.length+' 点'+(replay?'':' · タップで着手'):'上下・左右がつながる盤'):'ドラッグで回転'+(replay?'':' · タップで着手');if(showMap)renderMap();else resize();}
+// The dialog is a draft. Opening or cancelling it restores the applied settings of the
+// player's own game, even while a shared record is on screen.
 function syncSettings(){
-  $('boardKind').value=kind;
-  sizeOptions(kind);
-  $('size').value=String(game.topology.size);
-  $('komi').value=String(game.komi);
+  const own=replay?replay.own:{game,kind};
+  $('boardKind').value=own.kind;
+  sizeOptions(own.kind);
+  $('size').value=String(own.game.topology.size);
+  $('komi').value=String(own.game.komi);
   $('opponent').value=settings.opponent;
   $('humanColor').value=String(settings.human);
   $('humanColor').disabled=settings.opponent==='human';
@@ -118,8 +123,46 @@ function showTutorialStep(next){
  $('rulesDone').textContent=tutorialStep===tutorialTitles.length-1?'盤に戻る':'次へ';
  $('rulesPages').scrollTop=0;
 }
-function confirmReset(){return!game.moves||confirm('今の対局を終了して、新しい対局を始めますか？');}
-$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=$('inspect').checked?'交点を選ぶと、隣接点が光ります':mapView?'全体表示 · タップで着手':'ドラッグで回転 · タップで着手';render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
+// Shared records travel in the URL fragment, so they never reach the server. Viewing one
+// sets the player's own game aside without saving it, and restores it unchanged afterwards.
+const sharedRecordCode=()=>/^#kifu=([A-Za-z0-9_-]+)/.exec(window.location?.hash||'')?.[1]??null;
+function clearSharedRecordURL(){window.history.replaceState(null,'',window.location.pathname+window.location.search);}
+function openSharedRecord(){
+ const code=sharedRecordCode();
+ if(!code){if(replay)closeReplay();return;}
+ let shared;
+ try{shared=decodeRecord(code);}catch{clearSharedRecordURL();$('status').textContent='共有された棋譜を読み込めませんでした。';return;}
+ cancelAI();
+ replay={own:replay?.own??{game,kind,orientation,mapView},moves:shared.game.history.slice(1).map(s=>s.lastMove),topology:shared.game.topology,komi:shared.game.komi,ai:shared.ai,result:shared.game.score()};
+ game=shared.game;kind=game.topology.kind;orientation=defaultOrientation(kind);mapView=false;selected=null;hover=null;
+ showGame();
+}
+function showReplayStep(step){
+ game=new Game(replay.topology,replay.komi);
+ for(const move of replay.moves.slice(0,Math.max(0,step)))if(move===null)game.pass();else game.play(move);
+ selected=null;update();
+}
+function syncReplay(){
+ $('gameActions').hidden=!!replay;$('replayControls').hidden=!replay;
+ if(!replay)return;
+ $('replaySlider').max=replay.moves.length;$('replaySlider').value=game.moves;
+ $('replayPrev').disabled=game.moves===0;$('replayNext').disabled=game.moves===replay.moves.length;
+}
+function closeReplay(){
+ ({game,kind,orientation,mapView}=replay.own);replay=null;selected=null;hover=null;
+ clearSharedRecordURL();showGame();
+}
+async function shareRecord(){
+ const url=window.location.href.split('#')[0]+'#kifu='+encodeRecord(game,settings.opponent==='ai'?3-settings.human:0);
+ const text=`曲面囲碁の棋譜（${kind==='sphere'?'球面盤':'トーラス盤'} · ${resultText(game.score())}）`;
+ if(navigator.share)try{await navigator.share({title:'曲面囲碁の棋譜',text,url});return;}catch(error){if(error.name==='AbortError')return;}
+ try{await navigator.clipboard.writeText(url);$('status').textContent='棋譜のリンクをコピーしました。';}
+ catch{prompt('このリンクをコピーして共有してください。',url);}
+}
+$('shareRecord').onclick=shareRecord;$('replayPrev').onclick=()=>showReplayStep(game.moves-1);$('replayNext').onclick=()=>showReplayStep(game.moves+1);$('replaySlider').oninput=()=>showReplayStep(Number($('replaySlider').value));$('replayClose').onclick=closeReplay;window.onhashchange=openSharedRecord;
+// Starting a new game from a shared record still replaces the player's own saved game.
+function confirmReset(){return!(replay?replay.own.game:game).moves||confirm(replay?'自分の対局を終了して、新しい対局を始めますか？':'今の対局を終了して、新しい対局を始めますか？');}
+$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=$('inspect').checked?'交点を選ぶと、隣接点が光ります':(mapView?'全体表示':'ドラッグで回転')+(replay?'':' · タップで着手');render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
 
 const restored=loadSavedGame();
 if(restored.state){
@@ -133,4 +176,5 @@ if(restored.state){
   restoreWarning=restored.error||'';
   if(restoreWarning)update();
 }
+openSharedRecord();
 

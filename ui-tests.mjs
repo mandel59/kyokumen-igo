@@ -143,5 +143,52 @@ el('rulesClose').onclick();
 el('rulesOpen').onclick();checkPage(0);
 assert.equal(el('rulesDialog').events.cancel,undefined,'native Escape dismissal not blocked');
 el('rulesDone').onclick();el('rulesDialog').close();el('rulesOpen').onclick();checkPage(0);el('rulesClose').onclick();
+// A finished game is shared as a URL-fragment record; opening one is a read-only replay.
+const {decodeRecord}=await import('./dist/record.js');
+el('board').events.keydown({key:'Enter',preventDefault:noop});el('pass').onclick();el('pass').onclick();
+assert.equal(el('pass').hidden,true);assert.equal(el('shareRecord').hidden,false);
+let copied=null;Object.defineProperty(globalThis,'navigator',{value:{clipboard:{writeText:async text=>{copied=text;}}},configurable:true});
+window.location={href:'https://example.test/igo/?x=1#old',pathname:'/igo/',search:'?x=1',hash:'#old'};
+window.history={replaceState(state,title,url){window.location.hash='';window.location.href='https://example.test'+url;}};
+await el('shareRecord').onclick();
+assert.match(el('status').textContent,/コピーしました/);
+assert.match(copied,/^https:\/\/example\.test\/igo\/\?x=1#kifu=[A-Za-z0-9_-]+$/);
+const sharedCode=copied.split('#kifu=')[1],sharedGame=decodeRecord(sharedCode).game;
+assert.equal(sharedGame.moves,3);assert.equal(sharedGame.ended,true);
+el('undo').onclick();assert.equal(el('shareRecord').hidden,true);assert.equal(el('pass').hidden,false);
+const ownMoves=el('moveCount').textContent;
+window.location.hash='#kifu='+sharedCode;window.onhashchange();
+assert.equal(el('replayControls').hidden,false);assert.equal(el('gameActions').hidden,true);
+assert.equal(el('moveCount').textContent,'3 / 3 手');assert.match(el('turnText').textContent,/^棋譜 · /);assert.match(el('status').textContent,/^終局/);
+assert.equal(el('blackWho').textContent,'先手');assert.equal(el('whiteWho').textContent,'後手');
+el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'3 / 3 手','replay never places stones');
+el('replayPrev').onclick();assert.equal(el('moveCount').textContent,'2 / 3 手');assert.equal(el('status').textContent,'2 手目 · 白がパス');
+el('replaySlider').value='0';el('replaySlider').oninput();assert.equal(el('moveCount').textContent,'0 / 3 手');assert.equal(el('status').textContent,'対局開始');assert.equal(el('replayPrev').disabled,true);
+el('replayNext').onclick();assert.equal(el('moveCount').textContent,'1 / 3 手');assert.equal(el('status').textContent,'1 手目 · 黒');assert.equal(el('replaySlider').value,1);
+el('replayClose').onclick();
+assert.equal(el('replayControls').hidden,true);assert.equal(el('gameActions').hidden,false);assert.equal(el('moveCount').textContent,ownMoves);
+assert.equal(window.location.hash,'');
+// A damaged link leaves the current game alone.
+window.location.hash='#kifu=AAAA';window.onhashchange();
+assert.equal(el('replayControls').hidden,true);assert.equal(el('moveCount').textContent,ownMoves);
+assert.equal(el('status').textContent,'共有された棋譜を読み込めませんでした。');assert.equal(window.location.hash,'');
+// A new game can be started straight from a record. The settings draft and the confirmation
+// refer to the player's own game (a 9×9 torus with moves), not to the small sphere on screen.
+const engine=await import('./dist/engine.js'),{encodeRecord}=await import('./dist/record.js');
+const smallRecord=new engine.Game(engine.createTopology('sphere',3),.5);smallRecord.pass();smallRecord.pass();
+const openSmallRecord=()=>{window.location.hash='#kifu='+encodeRecord(smallRecord,1);window.onhashchange();assert.equal(el('replayControls').hidden,false);assert.equal(el('topologyName').textContent,'球面盤');};
+openSmallRecord();
+el('settingsOpen').onclick();assert.equal(el('settingsDialog').open,true);
+assert.equal(el('boardKind').value,'torus','draft starts from the own board, not the record');assert.equal(el('size').value,'9');
+globalThis.confirm=()=>false;el('newGame').onclick();
+assert.equal(el('replayControls').hidden,false,'declining keeps the record open');assert.equal(el('moveCount').textContent,'2 / 2 手');
+globalThis.confirm=()=>true;el('newGame').onclick();
+assert.equal(el('settingsDialog').open,false);assert.equal(el('replayControls').hidden,true);assert.equal(el('gameActions').hidden,false);
+assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('moveCount').textContent,'0 手');assert.equal(window.location.hash,'');
+// Board tabs start a new game from a record too; the tab of the board already on screen does nothing.
+openSmallRecord();
+el('sphereTab').onclick();assert.equal(el('replayControls').hidden,false);
+el('torusTab').onclick();assert.equal(el('replayControls').hidden,true);assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(window.location.hash,'');
+delete window.location;delete window.history;
 delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');

@@ -6,17 +6,18 @@ import {fileURLToPath} from 'node:url';
 const base=new URL('./dist/',import.meta.url),html=readFileSync(new URL('index.html',base),'utf8');
 const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 const store=new Map();let unavailable=false;
-async function boot(){
+async function boot(hash=''){
  const noop=()=>{},elements=new Map(),timers=new Map();let tid=0,confirmAllowed=true;
  const context2d=new Proxy({createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
  function el(id){assert(validIds.has(id),id);if(!elements.has(id)){
  const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context2d,getBoundingClientRect:()=>({width:340,height:355,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f},showModal(){this.open=true},close(){this.open=false}};
  if(id==='size'){let options=['3','4','5'],value='4';Object.defineProperty(e,'value',{get:()=>value,set:v=>value=String(v)});Object.defineProperty(e,'selectedIndex',{get:()=>options.indexOf(value),set:i=>value=options[i]??''});Object.defineProperty(e,'innerHTML',{set(v){this.html=v;options=[...v.matchAll(/value="([^"]+)"/g)].map(m=>m[1]);value=options[0]??''}});}elements.set(id,e);}return elements.get(id);}
  const storage={getItem(k){if(unavailable)throw Error('denied');return store.get(k)??null},setItem(k,v){if(unavailable)throw Error('quota');store.set(k,String(v))},removeItem(k){if(unavailable)throw Error('denied');store.delete(k)}};
- const realm=vm.createContext({console,URL,document:{getElementById:el},window:{devicePixelRatio:1,localStorage:storage,addEventListener:noop},localStorage:storage,ResizeObserver:class{constructor(f){this.f=f}observe(){this.f()}},confirm:()=>confirmAllowed,setTimeout:(f)=>{timers.set(++tid,f);return tid},clearTimeout:id=>timers.delete(id)});
+ const win={devicePixelRatio:1,localStorage:storage,addEventListener:noop,location:{hash,pathname:'/',search:'',href:'https://example.test/'+hash},history:{replaceState(){win.location.hash=''}}};
+ const realm=vm.createContext({console,URL,atob,document:{getElementById:el},window:win,localStorage:storage,ResizeObserver:class{constructor(f){this.f=f}observe(){this.f()}},confirm:()=>confirmAllowed,setTimeout:(f)=>{timers.set(++tid,f);return tid},clearTimeout:id=>timers.delete(id)});
  const cache=new Map();async function mod(url){const path=fileURLToPath(url);if(cache.has(path))return cache.get(path);const m=new vm.SourceTextModule(readFileSync(path,'utf8'),{context:realm,identifier:url.href,initializeImportMeta(meta){meta.url=url.href}});cache.set(path,m);await m.link((s,p)=>mod(new URL(s,p.identifier)));return m;}
  const app=await mod(new URL('app.js',base));await app.evaluate();
- return {el,timers,setConfirm:value=>confirmAllowed=value,async tick(){const ts=[...timers.values()];timers.clear();for(const f of ts)f();await Promise.resolve()},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
+ return {el,win,timers,setConfirm:value=>confirmAllowed=value,async tick(){const ts=[...timers.values()];timers.clear();for(const f of ts)f();await Promise.resolve()},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
 }
 function human(a){a.el('opponent').value='human';a.el('newGame').onclick()}
 function play(a){a.el('board').events.keydown({key:'Enter',preventDefault(){}})}
@@ -76,3 +77,26 @@ console.log('Read-only application information dialog storage checks passed.');
 
 quiet.el('rulesOpen').onclick();for(let n=0;n<4;n++)quiet.el('rulesDone').onclick();quiet.el('rulesPrev').onclick();quiet.el('rulesDone').onclick();quiet.el('rulesDone').onclick();assert.equal(quiet.el('rulesDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);
 console.log('Tutorial page navigation does not change the saved match or view.');
+
+// Opening a shared record in a fresh page shows it read-only and never rewrites the saved match.
+const {encodeRecord}=await import('./dist/record.js');
+const sharedRecord=new Game(createTopology('torus',7),.5);for(const point of [17,24,31,18,23,32,0,26,25])sharedRecord.play(point);sharedRecord.pass();sharedRecord.pass();
+const ownSave=store.get(STORAGE_KEY),viewer=await boot('#kifu='+encodeRecord(sharedRecord,2));
+assert.equal(viewer.el('moveCount').textContent,'11 / 11 手');assert.equal(viewer.el('topologyName').textContent,'トーラス盤');assert.equal(viewer.el('whiteWho').textContent,'AI');
+assert.equal(viewer.timers.size,0,'no AI turn is scheduled for a record');
+viewer.el('replayPrev').onclick();viewer.el('homeView').onclick();viewer.el('viewToggle').onclick();viewer.el('pass').onclick();
+assert.equal(store.get(STORAGE_KEY),ownSave,'viewing, stepping, rotating and toggling the map never save');
+viewer.el('replayClose').onclick();
+assert.equal(viewer.win.location.hash,'');assert.equal(viewer.moves(),aboutMoves,'own match is restored after viewing');
+assert.deepEqual(JSON.parse(store.get(STORAGE_KEY)).game,JSON.parse(ownSave).game);
+const afterViewer=await boot();assert.equal(afterViewer.moves(),aboutMoves);assert.equal(afterViewer.el('replayControls').hidden,true);
+const damaged=await boot('#kifu=AQEHAQA');assert.equal(damaged.moves(),aboutMoves);assert.equal(damaged.el('status').textContent,'共有された棋譜を読み込めませんでした。');assert.equal(damaged.win.location.hash,'');
+console.log('Shared-record viewer review passed: fresh-page open, no AI, no saves while viewing, own match restored, damaged link ignored.');
+// A new game started from a record replaces the saved match only once the player confirms.
+const starter=await boot('#kifu='+encodeRecord(sharedRecord,2)),beforeStart=store.get(STORAGE_KEY);
+starter.setConfirm(false);starter.el('settingsOpen').onclick();starter.el('newGame').onclick();
+assert.equal(store.get(STORAGE_KEY),beforeStart,'declined: saved match untouched');assert.equal(starter.el('replayControls').hidden,false);
+starter.setConfirm(true);starter.el('newGame').onclick();
+assert.equal(starter.el('replayControls').hidden,true);assert.equal(starter.win.location.hash,'');assert.equal(starter.moves(),0);
+const restarted=await boot();assert.equal(restarted.moves(),0,'the new game replaced the saved match');assert.equal(restarted.el('replayControls').hidden,true);
+console.log('New game from a shared record: confirmation guards the saved match, then replaces it and leaves the record.');

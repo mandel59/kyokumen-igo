@@ -19,6 +19,7 @@ python3 -m http.server --directory dist 8000
 - トーラスの「展開図」は、上下・左右の端がつながる正方格子です。
 - 「つながり」をオンにして点を選ぶと、その点と隣接点を確認できます。
 - 「遊び方（？）」で、基本の操作とルールを図解で確認できます。
+- 終局後の「棋譜をシェア」で棋譜をリンクとして共有でき、リンクを開くと棋譜を再生できます。
 - ヘッダーの「アプリ情報」（小画面では「情報」）から、アプリ概要・ルールの注意点・保存方法・ソースコードを確認できます。開閉しても対局は変わりません。
 - 「新しい対局」から盤の種類（球面・トーラス）、大きさ、相手、自分の色、コミを選べます。設定変更の適用は新しい対局からです。
 
@@ -51,6 +52,7 @@ python3 -m http.server --directory dist 8000
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
 | `dist/ai-worker.js` | Web Worker で AI の手を計算 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
+| `dist/record.js` | 棋譜リンクの符号化と、ルールに沿った再生による検証 |
 | `dist/persistence.js` | ブラウザへの自動保存、合法手の再生による保存内容の検証・復元 |
 
 ルールは立体座標ではなく交点と隣接関係のグラフ上で動きます。立体表示と平面表示は同じ交点 ID・対局状態を共有します。処理は端末内で完結し、バックエンドはありません。
@@ -62,6 +64,7 @@ Node.js 24 で動作確認しています。外部パッケージは不要です
 ```sh
 node tests.mjs
 node komi-tests.mjs
+node record-tests.mjs
 node persistence-tests.mjs
 node --experimental-vm-modules persistence-review.mjs
 node projection-review.mjs
@@ -76,6 +79,7 @@ UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
 最後の 2 行は POSIX シェル向けです。`UI_WIDTH` / `UI_HEIGHT` を省略すると 360 × 640 の想定になります。
 
 - `persistence-tests.mjs` / `persistence-review.mjs`：保存・復元、破損データ、履歴・スーパーコウ、再読み込み後の AI 再開。後者は新規 VM コンテキストを使う UI シミュレーションです。
+- `record-tests.mjs`：棋譜リンクの往復変換と、壊れた・不正なリンクの拒否。
 - `tests.mjs`：盤の構造、合法手、取り、反復禁止、得点、AI など。
 - `rendering-review.mjs`：描画バッファの奥行き・可視性・選択判定の検証。実ブラウザの描画テストではありません。
 - `projection-review.mjs`：全交点・辺の網羅、境界での切り分け、投影の逆変換・表示範囲・点の衝突など。
