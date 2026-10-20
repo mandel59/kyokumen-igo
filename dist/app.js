@@ -54,23 +54,38 @@ function act(i){if($('inspect').checked){selected=i;const ns=game.topology.neigh
 function pick(e,points){const rect=e.currentTarget.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;let nearest=null,distance=e.currentTarget===map?20:Math.max(14,Math.min(23,scale*.12));for(const s of points){if(s.visible===false)continue;const d=Math.hypot(s.x-x,s.y-y);if(d<distance){nearest=s.i;distance=d;}}return nearest;}
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);render();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){rotY+=(e.clientX-drag.lastX)*.009;rotX+=(e.clientY-drag.lastY)*.009;render();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;persist();});canvas.addEventListener('pointercancel',()=>drag=null);canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});
 function keyboard(e,points){if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Enter',' '].includes(e.key))return;e.preventDefault();const ps=points.filter((p,j)=>p.visible!==false&&points.findIndex(q=>q.i===p.i)===j);if(!ps.length)return;if(e.key==='Enter'||e.key===' '){act(ps[keyboardIndex%ps.length].i);}else{keyboardIndex=(keyboardIndex+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+ps.length)%ps.length;selected=ps[keyboardIndex].i;$('boardHint').textContent='交点 '+(selected+1)+' · Enter で着手';render();}}canvas.addEventListener('keydown',e=>keyboard(e,screen));map.addEventListener('keydown',e=>keyboard(e,mapPoints));
-function sizeOptions(){const old=$('size').selectedIndex;$('size').innerHTML=kind==='sphere'?'<option value="3">小 · 56 交点</option><option value="4">標準 · 98 交点</option><option value="5">大 · 152 交点</option>':'<option value="7">小 · 7 × 7</option><option value="9">標準 · 9 × 9</option><option value="11">大 · 11 × 11</option>';$('size').selectedIndex=Math.max(0,old);}
-function startGame(){restoreWarning='';cancelAI();settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;rotX=kind==='sphere'?-.26:-.65;rotY=.57;mapView=false;showGame();}
+function sizeOptions(boardKind=$('boardKind').value){const old=$('size').selectedIndex;$('size').innerHTML=boardKind==='sphere'?'<option value="3">小 · 56 交点</option><option value="4">標準 · 98 交点</option><option value="5">大 · 152 交点</option>':'<option value="7">小 · 7 × 7</option><option value="9">標準 · 9 × 9</option><option value="11">大 · 11 × 11</option>';$('size').selectedIndex=Math.max(0,old);}
+function startGame(){restoreWarning='';cancelAI();kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;rotX=kind==='sphere'?-.26:-.65;rotY=.57;mapView=false;showGame();}
 function showGame(){$('sphereTab').classList.toggle('active',kind==='sphere');$('torusTab').classList.toggle('active',kind==='torus');$('sphereTab').setAttribute('aria-pressed',kind==='sphere');$('torusTab').setAttribute('aria-pressed',kind==='torus');syncView();$('topologyName').textContent=kind==='sphere'?'球面盤':'トーラス盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS · NO EDGES';$('humanColor').disabled=settings.opponent==='human';update();resize();scheduleAI();}
 function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':kind==='sphere'?'全球図':'展開図';$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent=kind==='sphere'?'表裏を正距方位で投影 · 円周上の点は両図で共通':'上下・左右の端がつながります';map.setAttribute('aria-label',kind==='sphere'?'球面の全交点を前後の半球に投影した全球図。交点をタップして着手':'上下左右がつながる展開図。交点をタップして着手');$('boardHint').textContent=showMap?(kind==='sphere'?'全 '+game.board.length+' 点 · タップで着手':'上下・左右がつながる盤'):'ドラッグで回転 · タップで着手';if(showMap)renderMap();else resize();}
+// The dialog is a draft. Opening or cancelling it restores the applied settings.
+function syncSettings(){
+  $('boardKind').value=kind;
+  sizeOptions(kind);
+  $('size').value=String(game.topology.size);
+  $('komi').value=String(game.komi);
+  $('opponent').value=settings.opponent;
+  $('humanColor').value=String(settings.human);
+  $('humanColor').disabled=settings.opponent==='human';
+}
+function switchBoard(nextKind){
+  if(kind===nextKind||!confirmReset())return;
+  syncSettings();
+  $('boardKind').value=nextKind;
+  sizeOptions(nextKind);
+  startGame();
+}
+$('boardKind').onchange=()=>sizeOptions();
+$('settingsDialog').addEventListener('cancel',syncSettings);
 function confirmReset(){return!game.moves||confirm('今の対局を終了して、新しい対局を始めますか？');}
-$('sphereTab').onclick=()=>{if(kind!=='sphere'&&confirmReset()){kind='sphere';sizeOptions();startGame();}};$('torusTab').onclick=()=>{if(kind!=='torus'&&confirmReset()){kind='torus';sizeOptions();startGame();}};$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{rotX=kind==='sphere'?-.26:-.65;rotY=.57;render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=$('inspect').checked?'交点を選ぶと、隣接点が光ります':mapView?'全体表示 · タップで着手':'ドラッグで回転 · タップで着手';render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};for(const id of ['rulesOpen'])$(id).onclick=()=>$('rulesDialog').showModal();for(const id of ['rulesClose','rulesDone'])$(id).onclick=()=>$('rulesDialog').close();$('settingsOpen').onclick=()=>$('settingsDialog').showModal();$('settingsClose').onclick=()=>$('settingsDialog').close();$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
+$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{rotX=kind==='sphere'?-.26:-.65;rotY=.57;render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=$('inspect').checked?'交点を選ぶと、隣接点が光ります':mapView?'全体表示 · タップで着手':'ドラッグで回転 · タップで着手';render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};for(const id of ['rulesOpen'])$(id).onclick=()=>$('rulesDialog').showModal();for(const id of ['rulesClose','rulesDone'])$(id).onclick=()=>$('rulesDialog').close();$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
 
 const restored=loadSavedGame();
 if(restored.state){
   ({game,settings}=restored.state);
   ({mapView,rotX,rotY}=restored.state.view);
   kind=game.topology.kind;
-  sizeOptions();
-  $('size').value=String(game.topology.size);
-  $('komi').value=String(game.komi);
-  $('opponent').value=settings.opponent;
-  $('humanColor').value=String(settings.human);
+  syncSettings();
   showGame();
 }else{
   startGame();
