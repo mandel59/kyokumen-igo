@@ -65,9 +65,28 @@ el('opponent').value='ai';el('humanColor').value='2';el('newGame').onclick();ass
 el('settingsOpen').onclick();
 assert.equal(el('boardKind').value,'sphere');
 el('boardKind').value='torus';el('boardKind').onchange();
-assert.match(el('size').html,/value="9"/);
+assert.equal(el('size').value,'9');assert.equal(el('sizeDetail1').textContent,'9 × 9');
 assert.equal(el('topologyName').textContent,'球面盤');
 assert.equal(el('moveCount').textContent,'1 手');
+el('settingsClose').onclick();
+// The visible controls are segmented radio groups and a komi stepper writing into the same fields.
+el('settingsOpen').onclick();
+const choiceState=()=>['opponent_ai','opponent_human','humanColor_1','humanColor_2','boardKind_sphere','boardKind_torus','size_0','size_1','size_2'].filter(id=>el(id).checked).join();
+assert.equal(choiceState(),'opponent_ai,humanColor_2,boardKind_sphere,size_1');
+el('opponent_human').onchange();assert.equal(el('opponent').value,'human');assert.equal(el('humanColor_1').disabled,true,'own colour is moot for two players');
+el('opponent_ai').onchange();assert.equal(el('humanColor_2').disabled,false);
+el('humanColor_1').onchange();assert.equal(el('humanColor').value,'1');
+el('size_2').onchange();assert.equal(el('size').value,'5');assert.equal(el('sizeDetail2').textContent,'152 交点');
+el('boardKind_torus').onchange();assert.equal(el('boardKind').value,'torus');assert.equal(el('size').value,'11','large stays large on the other board');assert.equal(el('sizeDetail2').textContent,'11 × 11');
+assert.equal(choiceState(),'opponent_ai,humanColor_1,boardKind_torus,size_2');
+for(let i=0;i<12;i++)el('komiDown').onclick();
+assert.equal(el('komi').value,'0.5');assert.equal(el('komiValue').textContent,'0.5 目');assert.equal(el('komiDown').disabled,true);assert.equal(el('komiUp').disabled,false);
+el('komiUp').onclick();assert.equal(el('komi').value,'1.5');
+for(let i=0;i<12;i++)el('komiUp').onclick();
+assert.equal(el('komi').value,'9.5');assert.equal(el('komiUp').disabled,true);
+// Closing discards the draft: the controls show the applied settings again.
+el('settingsClose').onclick();el('settingsOpen').onclick();
+assert.equal(choiceState(),'opponent_ai,humanColor_2,boardKind_sphere,size_1');assert.equal(el('komiValue').textContent,'6.5 目');
 el('settingsClose').onclick();
 el('settingsOpen').onclick();
 assert.equal(el('boardKind').value,'sphere');

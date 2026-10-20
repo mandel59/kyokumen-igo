@@ -104,9 +104,14 @@ function act(i){if($('inspect').checked){selected=i;const ns=game.topology.neigh
 function pick(e,points){const rect=e.currentTarget.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;if(e.currentTarget===canvas&&surfaceFrame)return surfaceFrame.pick(x*rasterRatio,y*rasterRatio,Math.max(10,Math.min(20,scale*.1))*rasterRatio);let nearest=null,distance=e.currentTarget===map?20:Math.max(14,Math.min(23,scale*.12));for(const s of points){if(s.visible===false)continue;const d=Math.hypot(s.x-x,s.y-y);if(d<distance){nearest=s.i;distance=d;}}return nearest;}
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);requestRender();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){orientation=rotateByDrag(orientation,e.clientX-drag.lastX,e.clientY-drag.lastY);requestRender();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;render();persist();});canvas.addEventListener('pointercancel',()=>{drag=null;render();persist();});canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});
 function keyboard(e,points){if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Enter',' '].includes(e.key))return;e.preventDefault();const ps=points.filter((p,j)=>p.visible!==false&&points.findIndex(q=>q.i===p.i)===j);if(!ps.length)return;if(e.key==='Enter'||e.key===' '){act(ps[keyboardIndex%ps.length].i);}else{keyboardIndex=(keyboardIndex+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+ps.length)%ps.length;selected=ps[keyboardIndex].i;$('boardHint').textContent='交点 '+(selected+1)+(replay?'':' · Enter で着手');render();}}canvas.addEventListener('keydown',e=>keyboard(e,screen));map.addEventListener('keydown',e=>keyboard(e,mapPoints));
-function sizeOptions(boardKind=$('boardKind').value){const old=$('size').selectedIndex;$('size').innerHTML=boardKind==='sphere'?'<option value="3">小 · 56 交点</option><option value="4">標準 · 98 交点</option><option value="5">大 · 152 交点</option>':'<option value="7">小 · 7 × 7</option><option value="9">標準 · 9 × 9</option><option value="11">大 · 11 × 11</option>';$('size').selectedIndex=Math.max(0,old);}
+// Switching the board kind keeps the size's position (small, standard, large).
+function sizeOptions(boardKind=$('boardKind').value){
+  const size=Number($('size').value),ordinal=Math.max(0,BOARD_SIZES.sphere.indexOf(size),BOARD_SIZES.torus.indexOf(size));
+  $('size').value=String(BOARD_SIZES[boardKind][ordinal]);
+  syncChoices();
+}
 function startGame(){restoreWarning='';cancelAI();if(replay){replay=null;clearSharedRecordURL();}kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;orientation=defaultOrientation(kind);mapView=false;showGame();}
-function showGame(){$('sphereTab').classList.toggle('active',kind==='sphere');$('torusTab').classList.toggle('active',kind==='torus');$('sphereTab').setAttribute('aria-pressed',kind==='sphere');$('torusTab').setAttribute('aria-pressed',kind==='torus');SIZE_TABS.forEach((id,i)=>{const active=BOARD_SIZES[kind][i]===game.topology.size;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);});syncView();$('topologyName').textContent=kind==='sphere'?'球面盤':'トーラス盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS';$('humanColor').disabled=settings.opponent==='human';update();resize();scheduleAI();}
+function showGame(){$('sphereTab').classList.toggle('active',kind==='sphere');$('torusTab').classList.toggle('active',kind==='torus');$('sphereTab').setAttribute('aria-pressed',kind==='sphere');$('torusTab').setAttribute('aria-pressed',kind==='torus');SIZE_TABS.forEach((id,i)=>{const active=BOARD_SIZES[kind][i]===game.topology.size;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);});syncView();$('topologyName').textContent=kind==='sphere'?'球面盤':'トーラス盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS';update();resize();scheduleAI();}
 function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':kind==='sphere'?'全球図':'展開図';$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent=kind==='sphere'?'表裏を正距方位で投影 · 円周上の点は両図で共通':'上下・左右の端がつながります';applyInputWords();$('boardHint').textContent=defaultHint();if(showMap)renderMap();else resize();}
 // The board hint when nothing is selected; contextual hints (a selected point) replace it.
 function defaultHint(){
@@ -138,7 +143,7 @@ function syncSettings(){
   $('komi').value=String(own.game.komi);
   $('opponent').value=settings.opponent;
   $('humanColor').value=String(settings.human);
-  $('humanColor').disabled=settings.opponent==='human';
+  syncChoices();
 }
 // Board tabs start a new game on the board they pick, keeping the other choice that is on screen
 // (the shape or the size), with the player's own opponent and komi.
@@ -152,6 +157,24 @@ function switchBoard(nextKind,nextSize=BOARD_SIZES[nextKind][BOARD_SIZES[kind].i
   startGame();
 }
 $('boardKind').onchange=()=>sizeOptions();
+// The dialog shows segmented radio groups and a komi stepper. They write into hidden fields
+// (#opponent, #humanColor, #boardKind, #size, #komi), which syncSettings and startGame use.
+const CHOICES={opponent:['ai','human'],humanColor:['1','2'],boardKind:['sphere','torus'],size:['0','1','2']};
+const SIZE_DETAILS={sphere:['56 交点','98 交点','152 交点'],torus:['7 × 7','9 × 9','11 × 11']},KOMI_RANGE=[.5,9.5];
+function syncChoices(){
+  const boardKind=$('boardKind').value,ordinal=String(BOARD_SIZES[boardKind].indexOf(Number($('size').value)));
+  for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(field+'_'+value).checked=(field==='size'?ordinal:$(field).value)===value;
+  for(const value of CHOICES.humanColor)$('humanColor_'+value).disabled=$('opponent').value==='human';
+  SIZE_DETAILS[boardKind].forEach((text,i)=>{$('sizeDetail'+i).textContent=text;});
+  const komi=Number($('komi').value);
+  $('komiValue').textContent=komi+' 目';$('komiDown').disabled=komi<=KOMI_RANGE[0];$('komiUp').disabled=komi>=KOMI_RANGE[1];
+}
+for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(field+'_'+value).onchange=()=>{
+  if(field==='size')$('size').value=String(BOARD_SIZES[$('boardKind').value][Number(value)]);else $(field).value=value;
+  $(field).onchange?.();syncChoices();
+};
+const stepKomi=delta=>{$('komi').value=String(Math.min(KOMI_RANGE[1],Math.max(KOMI_RANGE[0],Number($('komi').value)+delta)));syncChoices();};
+$('komiDown').onclick=()=>stepKomi(-1);$('komiUp').onclick=()=>stepKomi(1);
 $('settingsDialog').addEventListener('cancel',syncSettings);
 const tutorialTitles=['石を置く','石を取る','端のない盤','盤を見渡す','終局と勝敗'];
 let tutorialStep=0;
@@ -205,7 +228,7 @@ async function shareRecord(){
 $('shareRecord').onclick=shareRecord;$('replayPrev').onclick=()=>showReplayStep(game.moves-1);$('replayNext').onclick=()=>showReplayStep(game.moves+1);$('replaySlider').oninput=()=>showReplayStep(Number($('replaySlider').value));$('replayClose').onclick=closeReplay;window.onhashchange=openSharedRecord;
 // Starting a new game from a shared record still replaces the player's own saved game.
 function confirmReset(){return!(replay?replay.own.game:game).moves||confirm(replay?'自分の対局を終了して、新しい対局を始めますか？':'今の対局を終了して、新しい対局を始めますか？');}
-$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=()=>{$('humanColor').disabled=$('opponent').value==='human';};$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
+$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=syncChoices;$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
 
 const restored=loadSavedGame();
 if(restored.state){
