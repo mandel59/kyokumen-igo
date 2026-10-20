@@ -34,7 +34,7 @@ python3 -m http.server --directory dist 8000
 - 連続 2 パスで終局。石と地を合計する面積方式で計算します。取った石は得点に直接加算しません。
 - コミは 0.5〜9.5 目を 1 目刻みで選択でき、初期値は 6.5 目です。**これらの曲面盤で公平になる値を検証したものではなく、暫定設定です。**
 - 死に石の自動判定・手動除去はありません。必要な石を取り切ってから終局してください。日本ルールの死活判定付き計算とは異なります。
-- 対局保存・復元の UI はなく、再読み込みでリセットされます。
+- 対局・履歴・設定をブラウザの localStorage に自動保存し、再読み込み時に復元します。端末間の同期はありません。新しい対局は保存中の対局を置き換え、サイトデータの削除で保存内容も消えます。ブラウザが保存を許可しない場合は永続化できません。
 - AI は合法手を手作りの評価関数で採点する 1 手先の貪欲法です。取り・アタリ・呼吸点などを評価し、乱数を少量加えます。学習済みモデルや木探索は使わず、深い読みや正確な死活判断はできません。
 - 全球図は中心からの角距離を保ちますが、形・面積は歪みます。小さい画面や大きな盤では交点が密になります。
 
@@ -47,6 +47,7 @@ python3 -m http.server --directory dist 8000
 | `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
 | `dist/ai-worker.js` | Web Worker で AI の手を計算 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
+| `dist/persistence.js` | ブラウザへの自動保存、合法手の再生による保存内容の検証・復元 |
 
 ルールは立体座標ではなく交点と隣接関係のグラフ上で動きます。立体表示と平面表示は同じ交点 ID・対局状態を共有します。処理は端末内で完結し、バックエンドはありません。
 
@@ -57,6 +58,8 @@ Node.js 24 で動作確認しています。外部パッケージは不要です
 ```sh
 node tests.mjs
 node komi-tests.mjs
+node persistence-tests.mjs
+node --experimental-vm-modules persistence-review.mjs
 node projection-review.mjs
 node ui-tests.mjs
 UI_WIDTH=390 UI_HEIGHT=844 node ui-tests.mjs
@@ -65,6 +68,7 @@ UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
 
 最後の 2 行は POSIX シェル向けです。`UI_WIDTH` / `UI_HEIGHT` を省略すると 360 × 640 の想定になります。
 
+- `persistence-tests.mjs` / `persistence-review.mjs`：保存・復元、破損データ、履歴・スーパーコウ、再読み込み後の AI 再開。後者は新規 VM コンテキストを使う UI シミュレーションです。
 - `tests.mjs`：盤の構造、合法手、取り、反復禁止、得点、AI など。
 - `projection-review.mjs`：全交点・辺の網羅、境界での切り分け、投影の逆変換・表示範囲・点の衝突など。
 - `ui-tests.mjs`：DOM / Canvas スタブによる操作連携テスト。全球図での着手、表示切替、AI、待った、設定、終局など。
