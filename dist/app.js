@@ -46,11 +46,20 @@ function render(){
   if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}
-let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const x=ox+v.i*step,y=oy+v.j*step;mapPoints.push({x,y,i});if(game.board[i])drawStone(mctx,x,y,Math.min(step*.4,13),game.board[i],game.lastMove===i);else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(x,y,2,0,Math.PI*2);mctx.fill();}if(selected===i||selected!==null&&game.topology.neighbors[selected].includes(i)){mctx.strokeStyle='#a76a16';mctx.lineWidth=2;mctx.beginPath();mctx.arc(x,y,Math.min(step*.45,15),0,Math.PI*2);mctx.stroke();}});}
+let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),Math.min(step*.45,15),2);});}
+// Both maps mark points alike: hover and selection in dark amber (the selection numbered),
+// the selection's neighbours in light amber.
+function drawMapPoint(p,stoneRadius,ringRadius,dotRadius){
+  if(game.board[p.i])drawStone(mctx,p.x,p.y,stoneRadius,game.board[p.i],game.lastMove===p.i);
+  else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,dotRadius,0,Math.PI*2);mctx.fill();}
+  const active=selected===p.i||hover===p.i;
+  if(!active&&(selected===null||!game.topology.neighbors[selected].includes(p.i)))return;
+  mctx.strokeStyle=active?'#a05b08':'#bd8b36';mctx.lineWidth=2;mctx.beginPath();mctx.arc(p.x,p.y,ringRadius,0,Math.PI*2);mctx.stroke();
+  if(selected===p.i){mctx.fillStyle='#633d08';mctx.font='bold 9px sans-serif';mctx.textAlign='center';mctx.fillText(String(p.i+1),p.x,p.y-ringRadius-3);}
+}
 
 function renderSphereMap(w,h){
   const projection=sphereProjection(game.topology,w,h);mapPoints=projection.points;
-  const selectedNeighbors=selected===null?[]:game.topology.neighbors[selected];
   for(const view of projection.views){
     const g=mctx.createRadialGradient(view.x-view.radius*.3,view.y-view.radius*.3,0,view.x,view.y,view.radius);g.addColorStop(0,'#f3e8ca');g.addColorStop(1,'#dbc79c');
     mctx.fillStyle=g;mctx.beginPath();mctx.arc(view.x,view.y,view.radius,0,Math.PI*2);mctx.fill();mctx.strokeStyle='#8b805d';mctx.lineWidth=1;mctx.stroke();
@@ -61,14 +70,7 @@ function renderSphereMap(w,h){
     mctx.strokeStyle=selected===edge.a||selected===edge.b?'#a76a16':'#66705a80';mctx.lineWidth=selected===edge.a||selected===edge.b?2:1;mctx.stroke();
   }
   const radius=Math.max(2,Math.min(projection.radius/game.topology.size*.30,10));
-  for(const p of mapPoints){
-    if(game.board[p.i])drawStone(mctx,p.x,p.y,radius,game.board[p.i],game.lastMove===p.i);
-    else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,1.8,0,Math.PI*2);mctx.fill();}
-    if(selected===p.i||hover===p.i||selectedNeighbors.includes(p.i)){
-      mctx.strokeStyle=selected===p.i||hover===p.i?'#a05b08':'#bd8b36';mctx.lineWidth=2;mctx.beginPath();mctx.arc(p.x,p.y,radius+2,0,Math.PI*2);mctx.stroke();
-      if(selected===p.i){mctx.fillStyle='#633d08';mctx.font='bold 9px sans-serif';mctx.fillText(String(p.i+1),p.x,p.y-radius-5);}
-    }
-  }
+  for(const p of mapPoints)drawMapPoint(p,radius,radius+2,1.8);
 }
 function resize(){
   const r=canvas.getBoundingClientRect();width=r.width;height=r.height;

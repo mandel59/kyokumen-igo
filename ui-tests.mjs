@@ -199,5 +199,18 @@ el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSEC
 el('sizeStandard').onclick();assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
 el('board').events.keydown({key:'Enter',preventDefault:noop});globalThis.confirm=()=>{throw new Error('the current size tab must not ask');};
 el('sizeStandard').onclick();assert.equal(el('moveCount').textContent,'1 手');globalThis.confirm=()=>true;
+// The torus map rings the hovered point and the つながり selection the same way the sphere map does.
+const strokes=[],labels=[];let lastArc=null;
+context.arc=(x,y,r)=>{lastArc={x,y,r};};context.stroke=()=>{strokes.push({...lastArc,style:context.strokeStyle});};context.fillText=text=>labels.push(text);
+el('torusTab').onclick();el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);
+const torusSide=Math.max(20,Math.min(boardWidth-60,boardHeight-48)),torusTarget=40,torusVertex=makeTopology('torus',9).vertices[torusTarget];
+const torusAt={x:(boardWidth-torusSide)/2+torusVertex.i*torusSide/8,y:(boardHeight-torusSide)/2+torusVertex.j*torusSide/8};
+strokes.length=0;el('map').events.pointermove({currentTarget:el('map'),clientX:torusAt.x+2,clientY:torusAt.y-1});
+assert.ok(strokes.some(s=>s.style==='#a05b08'&&Math.hypot(s.x-torusAt.x,s.y-torusAt.y)<1e-6),'hovered torus point is ringed');
+el('inspect').checked=true;el('inspect').onchange();strokes.length=0;labels.length=0;
+el('map').events.click({currentTarget:el('map'),clientX:torusAt.x,clientY:torusAt.y});
+assert.equal(strokes.filter(s=>s.style==='#bd8b36').length,4,'four neighbours in light amber');assert.ok(labels.includes(String(torusTarget+1)),'selection is numbered');
+el('inspect').checked=false;el('inspect').onchange();el('map').events.pointerleave();el('viewToggle').onclick();
+delete context.arc;delete context.stroke;delete context.fillText;
 delete globalThis.requestAnimationFrame;
 console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
