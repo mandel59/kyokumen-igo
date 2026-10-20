@@ -7,7 +7,7 @@ const viewport={width:Number(process.env.UI_WIDTH||360),height:Number(process.en
 const elements=new Map();function el(id){assert.ok(validIds.has(id),'DOM ID exists: '+id);if(!elements.has(id)){const e={id,style:{},disabled:false,hidden:false,textContent:'',value:({boardKind:'sphere',opponent:'ai',humanColor:'1',size:'4',komi:'6.5'})[id]||'',selectedIndex:1,checked:false,events:{},classList:{toggle:noop},getContext:()=>context,getBoundingClientRect:()=>({width:boardWidth,height:boardHeight,left:0,top:0}),setAttribute:noop,setPointerCapture:noop,addEventListener(k,f){this.events[k]=f;},showModal(){this.open=true;},close(){this.open=false;},focus(){document.activeElement=this;}};Object.defineProperty(e,'innerHTML',{set(v){this.html=v;this.value=v.includes('value="7"')?'9':'4';}});elements.set(id,e);}return elements.get(id);}
 globalThis.document={getElementById:el};const coarsePointer={matches:true};globalThis.window={devicePixelRatio:Number(process.env.UI_DPR||1),matchMedia:query=>query==='(pointer: coarse)'?coarsePointer:{matches:false}};globalThis.ResizeObserver=class{constructor(f){this.f=f}observe(){this.f()}};globalThis.confirm=()=>true;
 await import('./dist/app.js');
-assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
+assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('topologyName').textContent,'球面盤');assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS');
 assert.doesNotMatch(el('status').textContent,/盤の裏側|黒から始め|両方の図から|展開図から/);
 // Gesture words start from the primary pointer (touch here) and follow the pointer actually used.
 const gestureWords=()=>[el('boardHint').textContent,el('rulesPlaceWord').textContent,el('rulesRotateWord').textContent,el('rulesRotateCaption').textContent];
@@ -57,7 +57,7 @@ el('viewToggle').onclick();el('map').events.keydown({key:'ArrowRight',preventDef
 assert.equal(el('moveCount').textContent,'1 手');el('undo').onclick();el('viewToggle').onclick();
 el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');assert.equal(el('turnText').textContent,'AI が考えています');
 await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'2 手');assert.equal(el('turnText').textContent,'あなたの番です');el('undo').onclick();assert.equal(el('moveCount').textContent,'0 手');
-el('torusTab').onclick();assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('mapSection').hidden,true);assert.equal(el('viewToggle').hidden,false);el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);assert.equal(el('surfaceSection').hidden,true);el('map').events.keydown({key:'Enter',preventDefault:noop});await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'2 手');el('viewToggle').onclick();assert.equal(el('mapSection').hidden,true);assert.equal(el('surfaceSection').hidden,false);assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS · NO EDGES');
+el('torusTab').onclick();assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('mapSection').hidden,true);assert.equal(el('viewToggle').hidden,false);el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);assert.equal(el('surfaceSection').hidden,true);el('map').events.keydown({key:'Enter',preventDefault:noop});await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'2 手');el('viewToggle').onclick();assert.equal(el('mapSection').hidden,true);assert.equal(el('surfaceSection').hidden,false);assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS');
 el('settingsOpen').onclick();assert.equal(el('settingsDialog').open,true);el('opponent').value='human';el('newGame').onclick();assert.equal(el('settingsDialog').open,false);el('pass').onclick();el('pass').onclick();assert.match(el('status').textContent,/終局/);assert.equal(el('pass').disabled,true);el('undo').onclick();assert.equal(el('pass').disabled,false);
 el('rulesOpen').onclick();assert.equal(el('rulesDialog').open,true);el('rulesClose').onclick();assert.equal(el('rulesDialog').open,false);
 el('opponent').value='ai';el('humanColor').value='2';el('newGame').onclick();assert.equal(el('turnText').textContent,'AI が考えています');el('sphereTab').onclick();await new Promise(r=>setTimeout(r,550));assert.equal(el('moveCount').textContent,'1 手');assert.equal(el('turnText').textContent,'あなたの番です');
@@ -81,7 +81,7 @@ assert.equal(el('settingsDialog').open,true);
 globalThis.confirm=()=>true;
 el('newGame').onclick();
 assert.equal(el('topologyName').textContent,'トーラス盤');
-assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS · NO EDGES');
+assert.equal(el('nodeCount').textContent,'81 INTERSECTIONS');
 assert.equal(el('moveCount').textContent,'0 手');
 el('settingsOpen').onclick();
 assert.equal(el('boardKind').value,'torus');
@@ -205,12 +205,12 @@ el('sphereTab').onclick();assert.equal(el('replayControls').hidden,false);
 el('torusTab').onclick();assert.equal(el('replayControls').hidden,true);assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(window.location.hash,'');
 delete window.location;delete window.history;
 // Size tabs start a new game on the same shape; shape tabs keep the size on screen.
-assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS · NO EDGES','the small record board carried over its size');
+assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS','the small record board carried over its size');
 el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');
-globalThis.confirm=()=>false;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS · NO EDGES','declined');assert.equal(el('moveCount').textContent,'1 手');
-globalThis.confirm=()=>true;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'121 INTERSECTIONS · NO EDGES');assert.equal(el('moveCount').textContent,'0 手');
-el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');assert.equal(el('topologyName').textContent,'球面盤');
-el('sizeStandard').onclick();assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS · NO EDGES');
+globalThis.confirm=()=>false;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS','declined');assert.equal(el('moveCount').textContent,'1 手');
+globalThis.confirm=()=>true;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'121 INTERSECTIONS');assert.equal(el('moveCount').textContent,'0 手');
+el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSECTIONS');assert.equal(el('topologyName').textContent,'球面盤');
+el('sizeStandard').onclick();assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS');
 el('board').events.keydown({key:'Enter',preventDefault:noop});globalThis.confirm=()=>{throw new Error('the current size tab must not ask');};
 el('sizeStandard').onclick();assert.equal(el('moveCount').textContent,'1 手');globalThis.confirm=()=>true;
 // Maps mark the hovered point and the つながり selection in the 3D board's marker style:

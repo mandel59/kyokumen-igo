@@ -56,7 +56,7 @@ assert.equal(m.el('topologyName').textContent,'球面盤');assert.equal(m.moves(
 m.setConfirm(false);m.el('newGame').onclick();assert.equal(m.el('settingsDialog').open,true);assert.equal(m.el('topologyName').textContent,'球面盤');assert.equal(m.moves(),1);assert.equal(store.get(STORAGE_KEY),beforeDraft,'cancel reset leaves original save intact');
 const n=await boot();assert.equal(n.el('boardKind').value,'sphere');assert.equal(n.el('size').value,'4');assert.equal(n.el('opponent').value,'human');assert.equal(n.el('komi').value,'6.5');assert.equal(n.moves(),1,'reload disregards drafts');
 m.el('settingsClose').onclick();m.el('settingsOpen').onclick();assert.equal(m.el('boardKind').value,'sphere');assert.equal(m.el('size').value,'4');assert.equal(m.el('opponent').value,'human');assert.equal(m.el('komi').value,'6.5');
-m.el('boardKind').value='torus';m.el('boardKind').onchange();m.el('size').value='11';m.setConfirm(true);m.el('newGame').onclick();assert.equal(m.el('settingsDialog').open,false);assert.equal(m.el('topologyName').textContent,'トーラス盤');assert.equal(m.moves(),0);assert.equal(m.el('nodeCount').textContent,'121 INTERSECTIONS · NO EDGES');
+m.el('boardKind').value='torus';m.el('boardKind').onchange();m.el('size').value='11';m.setConfirm(true);m.el('newGame').onclick();assert.equal(m.el('settingsDialog').open,false);assert.equal(m.el('topologyName').textContent,'トーラス盤');assert.equal(m.moves(),0);assert.equal(m.el('nodeCount').textContent,'121 INTERSECTIONS');
 const o=await boot();assert.equal(o.el('boardKind').value,'torus');assert.equal(o.el('size').value,'11');assert.equal(o.el('opponent').value,'human');assert.equal(o.moves(),0);
 // Escape/cancel then reopening also discards draft topology and sizes.
 o.el('settingsOpen').onclick();o.el('boardKind').value='sphere';o.el('boardKind').onchange();o.el('size').value='3';const cancel=o.el('settingsDialog').events.cancel??o.el('settingsDialog').oncancel;if(cancel)cancel({preventDefault(){}});o.el('settingsDialog').close();o.el('settingsOpen').onclick();assert.equal(o.el('boardKind').value,'torus');assert.equal(o.el('size').value,'11');
@@ -101,6 +101,6 @@ assert.equal(starter.el('replayControls').hidden,true);assert.equal(starter.win.
 const restarted=await boot();assert.equal(restarted.moves(),0,'the new game replaced the saved match');assert.equal(restarted.el('replayControls').hidden,true);
 console.log('New game from a shared record: confirmation guards the saved match, then replaces it and leaves the record.');
 // A size tab starts and saves a new game of that size.
-restarted.el('sizeLarge').onclick();assert.equal(restarted.el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');
-const resized=await boot();assert.equal(resized.el('size').value,'5');assert.equal(resized.el('nodeCount').textContent,'152 INTERSECTIONS · NO EDGES');assert.equal(resized.moves(),0);
+restarted.el('sizeLarge').onclick();assert.equal(restarted.el('nodeCount').textContent,'152 INTERSECTIONS');
+const resized=await boot();assert.equal(resized.el('size').value,'5');assert.equal(resized.el('nodeCount').textContent,'152 INTERSECTIONS');assert.equal(resized.moves(),0);
 console.log('Size tabs start and save a new game of the chosen size.');
