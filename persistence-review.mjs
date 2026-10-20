@@ -68,3 +68,8 @@ console.log('AI-during-draft and existing topology-tab isolation checks passed.'
 // Idle status is intentionally quiet; informative game-state messages remain.
 store.clear();const quiet=await boot();assert.equal(quiet.el('status').textContent,'','new game idle status is empty with usable storage');human(quiet);play(quiet);assert.equal(quiet.el('status').textContent,'','human-play idle status is empty');quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/パス/);quiet.el('pass').onclick();assert.match(quiet.el('status').textContent,/終局/);
 console.log('Quiet idle status and preserved pass/end status checks passed.');
+
+// Opening information neither rewrites storage nor resets the in-progress match/view.
+const aboutBefore=store.get(STORAGE_KEY),aboutMoves=quiet.moves();
+for(const closeId of ['aboutClose','aboutDone']){quiet.el('aboutOpen').onclick();assert.equal(quiet.el('aboutDialog').open,true);quiet.el(closeId).onclick();assert.equal(quiet.el('aboutDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);}
+console.log('Read-only application information dialog storage checks passed.');

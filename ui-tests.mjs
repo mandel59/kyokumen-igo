@@ -91,5 +91,22 @@ assert.ok(paintCount>beforeRelease,'release flushes final frame without awaiting
 assert.equal(el('board').width,Math.round(boardWidth*expectedRatio),'release restores high-DPI resolution');
 const finalPixels=painted.data.slice();frames.shift()();
 assert.deepEqual(painted.data,finalPixels,'queued frame cannot revert released camera');
+// Information dialog is read-only: repeated opens/dismissals leave board, view and settings alone.
+assert.match(html,/<dialog id="aboutDialog" aria-labelledby="aboutTitle">/);
+assert.match(html,/<button id="aboutOpen"[^>]*aria-haspopup="dialog"[^>]*aria-controls="aboutDialog"/);
+assert.match(html,/<button id="aboutClose"[^>]*autofocus/);
+assert.match(html,/<a href="https:\/\/github.com\/mandel59\/kyokumen-igo" target="_blank" rel="noopener noreferrer">/);
+const infoState=()=>JSON.stringify(['moveCount','topologyName','turnText','status','komiLabel','boardHint'].map(id=>el(id).textContent).concat(['opponent','humanColor','boardKind','size','komi'].map(id=>el(id).value),el('mapSection').hidden,el('surfaceSection').hidden));
+const beforeInfo=infoState(),beforeInfoPaints=paintCount,beforeInfoPixels=painted.data.slice();
+for(const closeId of ['aboutClose','aboutDone','aboutClose']){
+ el('aboutOpen').onclick();assert.equal(el('aboutDialog').open,true);
+ el('aboutOpen').onclick();assert.equal(el('aboutDialog').open,true);
+ el(closeId).onclick();assert.equal(el('aboutDialog').open,false);
+ assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);assert.deepEqual(painted.data,beforeInfoPixels);
+}
+// Escape is native dialog behavior; no cancellation override blocks it.
+assert.equal(el('aboutDialog').events.cancel,undefined);
+el('aboutOpen').onclick();el('aboutDialog').close();el('aboutOpen').onclick();el('aboutDone').onclick();
+assert.equal(infoState(),beforeInfo);
 delete globalThis.requestAnimationFrame;
-console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help dialogs, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
+console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.');
