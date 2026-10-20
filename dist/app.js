@@ -1,5 +1,5 @@
 import {createTopology,Game,chooseMove} from './engine.js';
-import {renderSurface,highlightSurface} from './surface-renderer.js';
+import {renderSurface,highlightSurface,MARKER,markerColor} from './surface-renderer.js';
 import {sphereProjection} from './sphere-projection.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
@@ -46,16 +46,25 @@ function render(){
   if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}
-let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),Math.min(step*.45,15),2);});}
-// Both maps mark points alike: hover and selection in dark amber (the selection numbered),
-// the selection's neighbours in light amber.
-function drawMapPoint(p,stoneRadius,ringRadius,dotRadius){
-  if(game.board[p.i])drawStone(mctx,p.x,p.y,stoneRadius,game.board[p.i],game.lastMove===p.i);
+let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),2);});}
+// Both maps draw markers in the 3D board's style (MARKER): same colours, outline and ring sizes.
+// Only the maps number the selection, since a point can appear twice there.
+const rgb=([r,g,b])=>`rgb(${r},${g},${b})`;
+function drawMapPoint(p,stoneRadius,dotRadius){
+  const stone=game.board[p.i];
+  if(stone)drawStone(mctx,p.x,p.y,stoneRadius,stone,game.lastMove===p.i);
   else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,dotRadius,0,Math.PI*2);mctx.fill();}
   const active=selected===p.i||hover===p.i;
   if(!active&&(selected===null||!game.topology.neighbors[selected].includes(p.i)))return;
-  mctx.strokeStyle=active?'#a05b08':'#bd8b36';mctx.lineWidth=2;mctx.beginPath();mctx.arc(p.x,p.y,ringRadius,0,Math.PI*2);mctx.stroke();
-  if(selected===p.i){mctx.fillStyle='#633d08';mctx.font='bold 9px sans-serif';mctx.textAlign='center';mctx.fillText(String(p.i+1),p.x,p.y-ringRadius-3);}
+  const [outlineWidth,inkWidth]=active?MARKER.width.active:MARKER.width.neighbor;
+  const ring=stone?Math.max(1,Math.min(stoneRadius*MARKER.onStone,stoneRadius-outlineWidth/2)):stoneRadius*MARKER.aroundPoint;
+  for(const [width,ink] of [[outlineWidth,MARKER.outline],[inkWidth,markerColor(p.i,selected,hover)]]){mctx.strokeStyle=rgb(ink);mctx.lineWidth=width;mctx.beginPath();mctx.arc(p.x,p.y,ring,0,Math.PI*2);mctx.stroke();}
+  if(selected===p.i){
+    // Upper right of the ring lies inside a cell, clear of the grid lines to the neighbours.
+    const offset=(Math.max(ring,stoneRadius)+outlineWidth/2)*Math.SQRT1_2,x=p.x+offset+1,y=p.y-offset-1;
+    mctx.font='bold 10px sans-serif';mctx.textAlign='left';mctx.lineJoin='round';
+    mctx.strokeStyle='#f3e8ca';mctx.lineWidth=3;mctx.strokeText(String(p.i+1),x,y);mctx.fillStyle=rgb(MARKER.outline);mctx.fillText(String(p.i+1),x,y);
+  }
 }
 
 function renderSphereMap(w,h){
@@ -65,12 +74,15 @@ function renderSphereMap(w,h){
     mctx.fillStyle=g;mctx.beginPath();mctx.arc(view.x,view.y,view.radius,0,Math.PI*2);mctx.fill();mctx.strokeStyle='#8b805d';mctx.lineWidth=1;mctx.stroke();
     mctx.font='10px sans-serif';mctx.textAlign='center';mctx.fillStyle='#62694f';mctx.fillText(view.name,view.x,view.y-view.radius-9);
   }
-  for(const edge of projection.edges){
-    mctx.beginPath();edge.path.forEach((p,i)=>i?mctx.lineTo(p.x,p.y):mctx.moveTo(p.x,p.y));
-    mctx.strokeStyle=selected===edge.a||selected===edge.b?'#a76a16':'#66705a80';mctx.lineWidth=selected===edge.a||selected===edge.b?2:1;mctx.stroke();
-  }
+  const trace=edge=>{mctx.beginPath();edge.path.forEach((p,i)=>i?mctx.lineTo(p.x,p.y):mctx.moveTo(p.x,p.y));};
+  const links=projection.edges.filter(edge=>selected===edge.a||selected===edge.b);
+  mctx.strokeStyle='#66705a80';mctx.lineWidth=1;
+  for(const edge of projection.edges)if(!links.includes(edge)){trace(edge);mctx.stroke();}
+  // Edges from the selection lead to its neighbours, so they take the neighbour colour.
+  mctx.strokeStyle=rgb(MARKER.neighbor);mctx.lineWidth=2;
+  for(const edge of links){trace(edge);mctx.stroke();}
   const radius=Math.max(2,Math.min(projection.radius/game.topology.size*.30,10));
-  for(const p of mapPoints)drawMapPoint(p,radius,radius+2,1.8);
+  for(const p of mapPoints)drawMapPoint(p,radius,1.8);
 }
 function resize(){
   const r=canvas.getBoundingClientRect();width=r.width;height=r.height;

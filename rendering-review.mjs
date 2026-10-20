@@ -22,7 +22,7 @@ const sphere=render('sphere',5,[.37,.78],false).frame;let maxError=0;for(let y=0
 assert(maxError<.035,`sphere mesh depth error ${maxError}`);console.log('Sphere max analytic depth error',maxError);
 const torus=render('torus',11,[Math.PI/2,0],false).frame;for(let y=centerY-25;y<=centerY+25;y+=5)for(let x=centerX-25;x<=centerX+25;x+=5){assert.equal(torus.pixels[(y*width+x)*4+3],0,'face-on torus hole has no board fragment');assert.equal(torus.pick(x,y,0),null,'hole has no pickable point');}
 console.log(`Pure framebuffer fixtures written to ${dir}; all independent numeric renderer checks passed.`);
-const {surfaceNormal,stoneGeometry,rotatePoint,highlightSurface}=await import('./dist/surface-renderer.js');
+const {surfaceNormal,stoneGeometry,rotatePoint,highlightSurface,MARKER}=await import('./dist/surface-renderer.js');
 const dot=(a,b)=>a.x*b.x+a.y*b.y+a.z*b.z;
 for(const kind of ['sphere','torus']){const t=createTopology(kind,kind==='sphere'?5:11);for(let i=0;i<t.vertices.length;i++){const p=t.vertices[i],g=stoneGeometry(t,i);assert(Math.abs(Math.hypot(g.normal.x,g.normal.y,g.normal.z)-1)<1e-12);assert(Math.abs(dot(g.normal,g.tangent))<1e-12);assert(Math.abs(dot(g.normal,g.bitangent))<1e-12);assert(Math.abs(dot(g.tangent,g.bitangent))<1e-12);assert(g.radius>0&&g.halfHeight<g.radius);if(kind==='torus'){const analytic={x:Math.cos(p.u)*Math.cos(p.v),y:Math.sin(p.v),z:Math.sin(p.u)*Math.cos(p.v)};assert(dot(analytic,g.normal)>1-1e-12,'inner-wall normal correct');}const rotated=rotatePoint(g.normal,.81,-1.7);assert(Math.abs(dot(rotated,rotated)-1)<1e-12);}}
 // Highlight rings may legitimately color the board surface; depth-specific checks follow.
@@ -49,7 +49,9 @@ for(const kind of ['sphere','torus']){
  const empty=renderSurface(options),visible=empty.points.filter(p=>p.visible).sort((a,b)=>b.z-a.z),selected=visible[0].i,hover=visible.find(p=>p.i!==selected&&topology.neighbors[selected].includes(p.i))?.i??visible[2].i;
  board[selected]=1;board[visible.at(-3).i]=2;const f=renderSurface(options),highlighted=highlightSurface(f,selected,hover),ids=new Set([selected,hover,...topology.neighbors[selected]]);let changed=0,changedBoard=0;
  for(let i=0;i<f.owners.length;i++){const different=highlighted[i*4]!==f.pixels[i*4]||highlighted[i*4+1]!==f.pixels[i*4+1]||highlighted[i*4+2]!==f.pixels[i*4+2];if(different){changed++;if(f.owners[i]<0)changedBoard++;assert(f.owners[i]<0||ids.has(f.owners[i]),'unrelated occupied/empty owner never overwritten');}}
- assert(changed>100,`${kind} clearly visible highlight footprint`);assert(changedBoard>30,`${kind} empty intersections get rings, not tiny dot borders`);
+ assert(changed>100,`${kind} clearly visible highlight footprint`);
+ const painted=new Set();for(let i=0;i<highlighted.length;i+=4)painted.add(highlighted[i]+','+highlighted[i+1]+','+highlighted[i+2]);
+ for(const name of ['outline','selected','hover','neighbor'])assert(painted.has(MARKER[name].join(',')),`${kind} 3D markers use the shared ${name} colour`);assert(changedBoard>30,`${kind} empty intersections get rings, not tiny dot borders`);
  const hidden=f.points.find(p=>!p.visible&&topology.neighbors[p.i].every(i=>!f.points[i].visible));assert(hidden,'fully hidden selection fixture exists');assert.deepEqual(highlightSurface(f,hidden.i,null),f.pixels,'hidden selection and neighbors never show through');
  ppm(`${kind}-highlight-selected-hover`,{...f,pixels:highlighted});console.log(JSON.stringify({highlightBoard:kind,changedPixels:changed,changedSurfacePixels:changedBoard,selected,hover,hidden:hidden.i}));
 }

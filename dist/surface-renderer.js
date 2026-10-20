@@ -61,6 +61,11 @@ function boardMesh(kind,interactive){
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
 let coverage=new Float32Array(0);
+// One marker style for the 3D board and both maps. A dark under-stroke keeps each coloured ring
+// readable on pale wood, white stones and black stones alike. Widths are CSS pixels; ring radii
+// are fractions of the stone radius (inside a stone's rim, or around an empty point).
+export const MARKER={outline:[38,54,44],selected:[255,207,75],hover:[250,248,240],neighbor:[86,200,178],width:{active:[4.6,2.6],neighbor:[3.6,1.8]},onStone:.78,aroundPoint:1.18};
+export const markerColor=(id,selected,hover)=>id===selected?MARKER.selected:id===hover?MARKER.hover:MARKER.neighbor;
 
 export function renderSurface({topology,board,lastMove=null,orientation,rotX=-.26,rotY=.57,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
@@ -226,8 +231,8 @@ export function highlightSurface(frame,selected,hover){
   for(const id of ids){
     if(!frame.points[id]?.visible)continue;
     const shape=stoneGeometry(topology,id),{center,normal,tangent,bitangent,radius,halfHeight}=shape;
-    const active=id===selected||id===hover,ringRadius=board[id]?radius*.78:radius*1.18;
-    const color=id===selected?[255,207,75]:id===hover?[242,255,253]:[87,226,202];
+    const active=id===selected||id===hover,ringRadius=radius*(board[id]?MARKER.onStone:MARKER.aroundPoint);
+    const [outlineWidth,inkWidth]=active?MARKER.width.active:MARKER.width.neighbor;
     function onRing(angle,r){
       let p;
       if(board[id]){
@@ -241,7 +246,7 @@ export function highlightSurface(frame,selected,hover){
       }
       return project(p);
     }
-    for(const [cssWidth,ink] of [[active?4.6:3.6,[38,54,44]],[active?2.6:1.8,color]]){
+    for(const [cssWidth,ink] of [[outlineWidth,MARKER.outline],[inkWidth,markerColor(id,selected,hover)]]){
       const halfWidth=cssWidth*pixelRatio/(2*scale),inner=Math.max(radius*.12,ringRadius-halfWidth),outer=board[id]?Math.min(radius*.98,ringRadius+halfWidth):ringRadius+halfWidth;
       let prevInner=onRing(0,inner),prevOuter=onRing(0,outer);
       for(let step=1;step<=64;step++){
