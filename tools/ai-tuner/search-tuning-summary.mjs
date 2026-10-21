@@ -54,7 +54,7 @@ const ablations=fs.readdirSync(new URL('robust/',dir)).filter(p=>/^ablation-.*\.
 const adoption=read('adoption.json');assert.deepEqual(adoption.params,chosenParams);
 const performance={baseline:read('performance-baseline.json'),tuned:read('performance-tuned.json')};
 const sha256={};
-for(const p of ['src/search.rs','src/board.rs','src/rng.rs','src/ai.rs','src/wasm.rs','experiment-paths.mjs','search-tune.rs','search-study.rs','apply-search-tuning.mjs','search-tuning-summary.mjs','bench-search.mjs','build-wasm.mjs','../../search-tests.mjs','../../dist/ai-engine.wasm','../../dist/ai-worker.js','../../dist/ai-wasm.js'])sha256[p]=createHash('sha256').update(fs.readFileSync(new URL(p,root))).digest('hex');
+for(const p of ['src/search.rs','src/endgame.rs','src/board.rs','src/rng.rs','src/ai.rs','src/wasm.rs','experiment-paths.mjs','search-tune.rs','search-study.rs','apply-search-tuning.mjs','search-tuning-summary.mjs','bench-search.mjs','build-wasm.mjs','../../search-tests.mjs','../../dist/ai-engine.wasm','../../dist/ai-worker.js','../../dist/ai-wasm.js'])sha256[p]=createHash('sha256').update(fs.readFileSync(new URL(p,root))).digest('hex');
 const report={analysisContext:context,date:'2026-10-21',baseCommit:plan.baseCommit,rustc:execFileSync('rustc',['--version'],{encoding:'utf8'}).trim(),node:process.version,
  methodology:{optimizer:'Initial 13-weight CEM (8x12) then static-evaluation-only CEM (6x8) with greedy opponent and control',
  robust:'5 static weights; ordering fixed to original; original4/incumbent4/greedy opponents, 36 training games each per candidate. Validation 120 games each vs 3 opponents plus original-vs-greedy control. Promotion >53% vs incumbent, >52% vs original, greedy >= control-1pp, no capped games.',

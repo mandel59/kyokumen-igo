@@ -2,7 +2,7 @@
 use crate::board::{Game, Scratch};
 use crate::gnn::{self, Features, ACTIONS, PASS};
 use crate::rng::Rng;
-use crate::tactics;
+use crate::{tactics,endgame};
 
 const MAX_NODES: usize = 8192;
 #[derive(Default)]
@@ -67,7 +67,7 @@ impl Search {
                         for p in avoided { legal[p] = false; }
                     }
                     if self.endgame && path.len() == 1 {
-                        self.loss_margin = tactics::proven_loss_margin(&game);
+                        self.loss_margin = endgame::proven_loss_margin(&game);
                         if self.loss_margin > 0. {
                             // Stop futile continuations, including extensions of existing
                             // dead groups. Re-evaluate the certificate on each real turn.

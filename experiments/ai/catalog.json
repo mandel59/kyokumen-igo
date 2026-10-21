@@ -66,6 +66,12 @@
       "architecture": "v3",
       "title": "Selfplay curriculum, balanced fine-tuning and rejected candidates",
       "path": "v3/2026-10-22-learning/"
+    },
+    {
+      "id": "v2/2026-10-22-endgame",
+      "architecture": "v2",
+      "title": "Share Benson certificates and pass after proven defeat in v2",
+      "path": "v2/2026-10-22-endgame/"
     }
   ]
 }

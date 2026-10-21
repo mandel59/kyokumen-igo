@@ -3,6 +3,7 @@
 #[path="src/ai.rs"] mod ai;
 #[path="src/rng.rs"] mod rng;
 #[path="src/search.rs"] mod search;
+#[path="src/endgame.rs"] mod endgame;
 #[path="src/gnn.rs"] mod gnn;
 use board::{Game,Kind,Scratch,Topology};
 use std::io::{Write,BufWriter};

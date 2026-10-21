@@ -3,6 +3,7 @@
 #[path="src/board.rs"] mod board;
 #[path="src/rng.rs"] mod rng;
 #[path="src/search.rs"] mod search;
+#[path="src/endgame.rs"] mod endgame;
 use board::{Game,Kind,Topology,Scratch};
 use rng::Rng;
 use std::sync::{Mutex,atomic::{AtomicUsize,Ordering}};

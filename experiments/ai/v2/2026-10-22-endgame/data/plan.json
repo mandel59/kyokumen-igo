@@ -1,0 +1,8 @@
+{
+  "baseCommit": "bdc09d59de3ea31f57f1a1516c97f96361fc3c67",
+  "scope": "Reuse v3 certified-loss bound at the v2 root before alpha-beta. No v1 or inner-node heuristic changes.",
+  "regression": "Reported sphere5 record: all white roots from ply166 through230 must pass; compare baseline on the same snapshots, depths1..4.",
+  "safeguards": "Both colours and all six boards; ties and unsettled enemy chains must still enter search. Preserve legality, superko, komi, winning-pass and capture tests.",
+  "parity": "Replay archived v2 positions; moves may change to pass only when the shared v3 guard independently classifies the root as proven lost.",
+  "deployment": "Not included in this implementation task."
+}

@@ -1,6 +1,6 @@
 # Kyokugo AI の WASM / Worker 運用
 
-Kyokugo AI v2 の着手計算を Rust / WASM で実行し、Web Worker 内で実行します。配信物は `dist/ai-engine.wasm`（現ビルドで 57,461 bytes）です。
+Kyokugo AI v2 の着手計算を Rust / WASM で実行し、Web Worker 内で実行します。配信物は `dist/ai-engine.wasm`（現ビルドで 62,360 bytes）です。
 
 ## WASM に移す範囲
 
@@ -18,7 +18,7 @@ Kyokugo AI v2 の着手計算を Rust / WASM で実行し、Web Worker 内で実
 
 1. UI は盤種・サイズ・コミ・全着手履歴を Worker へ送ります。着手履歴は `Int32Array` で、交点番号、パスは `-1` です。各手の盤面スナップショットは送りません。転送するバッファは UI の対局状態とは別に作ります。
 2. Worker は WASM を 1 度読み込み、ABI バージョンと、一手評価版の全 14 項目の重みを JS と照合します。探索係数と配信物の一致は、ビルド照合と代表対局の native / WASM テストで確認します。
-3. WASM は履歴を合法手として再生し、スーパーコウを含む状態を復元します。候補を絞った最大 4 手の alpha-beta 探索で着手を選びます。乱数は JS から渡す seed を使い、ルート候補の順位に少量のゆらぎを加えます。
+3. WASM は履歴を合法手として再生し、スーパーコウを含む状態を復元します。相手の生存石から敗北を証明できた根ではパスを返し、それ以外は候補を絞った最大 4 手の alpha-beta 探索で着手を選びます。乱数は JS から渡す seed を使い、ルート候補の順位に少量のゆらぎを加えます。
 4. UI は回答を現在の `Game` で検証してから着手します。
 
 Worker は手番をまたいで再利用します。WASM 内では現在の盤の隣接関係・勢力範囲・探索用配列と入力バッファを再利用し、盤種やサイズを変えると以前の盤を解放します。対局状態は各リクエストの履歴から作り直すため、待ったや保存復元との同期用に別の永続状態を持ちません。
@@ -43,7 +43,7 @@ node tools/ai-tuner/build-wasm.mjs
 node wasm-tests.mjs
 ```
 
-ビルドは rustc 1.99.0、`opt-level=3`、LTO、codegen-units=1、panic=abort、strip=symbols で確認しています。ビルドスクリプトはカレントディレクトリに依存しません。変更後のソースと配布バイナリの一致は、同じツールチェーンで次のように確認できます。
+ビルドは rustc 1.99.1、`opt-level=3`、LTO、codegen-units=1、panic=abort、strip=symbols で確認しています。ビルドスクリプトはカレントディレクトリに依存しません。変更後のソースと配布バイナリの一致は、同じツールチェーンで次のように確認できます。
 
 ```sh
 node tools/ai-tuner/build-wasm.mjs --check
@@ -51,7 +51,7 @@ node tools/ai-tuner/build-wasm.mjs --check
 
 ## 検証
 
-- `search-tests.mjs`：代表対局で native と WASM の探索結果を照合し、JS のルール・得点で再検証します。
+- `search-tests.mjs`：代表対局の 1,257 手を再生し、敗北確定時のパスと、それ以外の native / WASM の選択手一致を検証します。報告された終盤 33 局面は深さ 1–4 のすべてでパスすることも確認します。
 - `wasm-tests.mjs`：配布する実際の WASM と JS で 300 局面の選択手を照合します。取り・スーパーコウ、待った後の分岐、パス・終局、乱数、入力の検証も確認します。実際の Worker ハンドラを Worker thread 上で動かし、WASM の再利用、404・破損・非対応時の JS 切り替えを検証します。
 - `ui-tests.mjs`：Worker の再利用、転送した履歴、待った・新しい対局による取消し、古い回答・エラーの無視、不正な回答からの JS 切り替えを確認します。
 - 既存のエンジン、保存復元、棋譜、描画、回転・投影などのテストも通しています。

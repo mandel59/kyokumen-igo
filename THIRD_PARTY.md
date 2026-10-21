@@ -10,7 +10,7 @@
 
 | ソフトウェア | 利用形態・ライセンス | 用途・変更点・告知 |
 | --- | --- | --- |
-| [KataGo](https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp) | 実装を参照 / MIT | AI v3 の Benson 生存判定で calculateAreaForPla を参照。 曲面の隣接グラフ向けに連・空領域・vital 関係を実装。 Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository. [KataGo-LICENSE.txt](dist/licenses/KataGo-LICENSE.txt) |
+| [KataGo](https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp) | 実装を参照 / MIT | AI v2 / v3 の Benson 生存判定で calculateAreaForPla を参照。 曲面の隣接グラフ向けに連・空領域・vital 関係を実装。 Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository. [KataGo-LICENSE.txt](dist/licenses/KataGo-LICENSE.txt) |
 | [SplitMix64 2015](https://prng.di.unimi.it/splitmix.c) | WASM に組み込み / Public domain（利用許諾付き） | AI の乱数生成とコミ検証の seed 生成。 Rust と JavaScript BigInt へ翻訳。 状態のインスタンス化、seed 混合、標本化補助を追加。 Written in 2015 by Sebastiano Vigna (vigna@acm.org) [SplitMix64-NOTICE.txt](dist/licenses/SplitMix64-NOTICE.txt) |
 | [Mulberry32 2017](https://gist.github.com/tommyettinger/46a874533244883189143505d203312c) | 開発時に利用 / Public domain / CC0 | 共有カードの再現可能な盤面生成。 JavaScript の変数名を変更し、seeded() クロージャに整理。 Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com) / JavaScript implementation by bryc [Mulberry32-NOTICE.txt](dist/licenses/Mulberry32-NOTICE.txt) |
 

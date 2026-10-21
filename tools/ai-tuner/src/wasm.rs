@@ -3,6 +3,7 @@ mod ai;
 mod board;
 mod rng;
 mod search;
+mod endgame;
 
 use std::cell::RefCell;
 use board::{Game, Kind, Scratch, Topology};

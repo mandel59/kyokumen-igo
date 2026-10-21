@@ -1,5 +1,5 @@
 //! Separate v3 module; the deployed v2 ABI and binary remain independent.
-mod ai; mod board; mod rng; mod gnn; mod mcts; mod tactics;
+mod ai; mod board; mod rng; mod gnn; mod mcts; mod tactics; mod endgame;
 use std::cell::RefCell;
 use board::{Game,Kind,Scratch,Topology};
 use gnn::{ACTIONS,GLOBALS,CHANNELS,POINTS};

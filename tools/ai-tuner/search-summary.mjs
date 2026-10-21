@@ -45,7 +45,7 @@ const oldRows=old.boards.map(b=>({kind:b.kind,size:b.size,games:b.games,
  massAt0or1:b.histogram.filter(([x])=>x===0||x===1).reduce((s,[,n])=>s+n,0)/b.games}));
 const performance=JSON.parse(fs.readFileSync(new URL('wasm-performance.json',folder),'utf8'));
 const sha256={};
-for(const p of ['src/search.rs','src/wasm.rs','src/ai.rs','src/board.rs','src/rng.rs',
+for(const p of ['src/search.rs','src/endgame.rs','src/wasm.rs','src/ai.rs','src/board.rs','src/rng.rs',
  'experiment-paths.mjs','search-study.rs','search-summary.mjs','bench-search.mjs','../../dist/ai-engine.wasm',
  '../../dist/ai-wasm.js','../../dist/ai-worker.js','../../search-tests.mjs'])
  sha256[p]=createHash('sha256').update(fs.readFileSync(new URL(p,root))).digest('hex');

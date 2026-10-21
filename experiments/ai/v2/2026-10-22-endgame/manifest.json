@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "v2/2026-10-22-endgame",
+  "architecture": "v2",
+  "title": "Share Benson certificates and pass after proven defeat in v2",
+  "source": {
+    "baseCommit": "bdc09d59de3ea31f57f1a1516c97f96361fc3c67",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "baseline:v2-deployed-20261021",
+    "current:v2-with-shared-certified-loss-pass"
+  ],
+  "scope": {
+    "sharedModule": "tools/ai-tuner/src/endgame.rs",
+    "v2Caller": "tools/ai-tuner/src/search.rs",
+    "v3Caller": "tools/ai-tuner/src/mcts.rs",
+    "v3Tactics": "tools/ai-tuner/src/tactics.rs",
+    "coefficientChanges": false,
+    "v1Changes": false
+  },
+  "results": {
+    "reportedRoots": 33,
+    "depths": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "depth4BeforeContinuations": 31,
+    "depth4AfterContinuations": 0,
+    "archivedTurns": 1257,
+    "certifiedSearchRoots": 47,
+    "otherChoicesUnchanged": true,
+    "sharedCalculationBodyUnchanged": true
+  },
+  "artifacts": [
+    {
+      "path": "data/baseline.wasm",
+      "sha256": "57e4038ae9a22c714ecc639be5c0dcadb5ca6ac38fb4fa50da978b57b3f89984"
+    },
+    {
+      "path": "data/browser.json",
+      "sha256": "09752f71e78bec6e6e037771e4b09e1019fb2c7b7e0f0322c5dd6f5076c2c77f"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "cec7bfb8cc76eaa07e11632256b5a748ae6e9a1f070da3a363ba2111af5bc876"
+    },
+    {
+      "path": "data/replay.json",
+      "sha256": "583c512189e54dd5abadd61e83047095ad09b4ffc8c332acca8ae041ce7ad9f8"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "c90f6c75738571613df6283f5594b26879b96dbd8adb87bb1a91e45937056069"
+    },
+    {
+      "path": "data/verification.json",
+      "sha256": "f832edfb74d3746ccbbfc9f164acabca32064e9249bc87db3d6859b28c95a3dc"
+    }
+  ]
+}

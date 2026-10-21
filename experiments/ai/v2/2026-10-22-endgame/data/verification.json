@@ -1,0 +1,36 @@
+{
+  "sharedAlgorithmBodyUnchanged": true,
+  "sharedSource": "tools/ai-tuner/src/endgame.rs",
+  "v2NativeTests": 9,
+  "v3NativeTests": 5,
+  "allSixBoards": true,
+  "bothColours": true,
+  "drawAndWinningBounds": true,
+  "unsettledRootsSearch": true,
+  "rootImmutable": true,
+  "archivedReplay": {
+    "turns": 1257,
+    "searchTurns": 629,
+    "certifiedRoots": 47,
+    "choicesOutsideGuardUnchanged": true
+  },
+  "reportedRecord": {
+    "certifiedRoots": 33,
+    "depths": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "depth4BeforeContinuations": 31,
+    "depth4AfterContinuations": 0
+  },
+  "passed": [
+    "search-tests.mjs",
+    "v3-tests.mjs",
+    "wasm-tests.mjs",
+    "search-tune.rs compile",
+    "gnn-data.rs compile",
+    "test-browser.mjs"
+  ]
+}

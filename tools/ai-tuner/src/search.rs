@@ -2,6 +2,7 @@
 // This evaluator is experimental; strength must be measured against the shipped greedy AI.
 use crate::board::{Game, Scratch};
 use crate::rng::Rng;
+use crate::endgame;
 
 /// The search depth, widths (12/6), stone scale (1), capture ordering (12),
 /// terminal win reward and root noise remain fixed while tuning these 13 weights.
@@ -129,6 +130,8 @@ pub fn choose_search(game:&Game,depth:u32,seed:u32)->(Option<usize>,Stats) {
 pub fn choose_with_params(game:&Game,depth:u32,seed:u32,params:&Params)->(Option<usize>,Stats) {
     let mut stats=Stats::default();
     if game.ended {return (None,stats);}
+    // Only a certified lost root skips alpha-beta; inner evaluations stay unchanged.
+    if endgame::proven_loss_margin(game)>0. {return (None,stats);}
     let mut scratch=Scratch::new(game.topology.len());
     let mut random=Rng::new(seed as u64);
     let choices=candidates(game,&mut scratch,12,Some(&mut random),params);
@@ -211,5 +214,46 @@ mod tests {
     fn never_moves_after_the_game_ends() {
         let t=Topology::new(Kind::Sphere,3);
         assert_eq!(choose_search(&position(&t,0.0,&[-1,-1]),4,1).0,None);
+    }
+    #[test]
+    fn certified_loss_passes_before_search_on_every_board_and_for_both_colours() {
+        for (kind,size) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),(Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11)] {
+            let t=Topology::new(kind,size);let n=t.len();
+            let other=(1..n).find(|p|!t.neighbors[0].contains(p)).unwrap();
+            let stones:Vec<_>=(0..n).filter(|&p|p!=0&&p!=other).collect();
+            for loser in [1,2] {
+                let mut moves=vec![];
+                for &p in &stones {
+                    if loser==1 {moves.extend([-1,p as i32]);}
+                    else {if !moves.is_empty(){moves.push(-1);}moves.push(p as i32);}
+                }
+                let game=position(&t,6.5,&moves);assert_eq!(game.turn,loser);
+                let before=game.clone();
+                for depth in 1..=4 {
+                    let (point,stats)=choose_search(&game,depth,19);
+                    assert_eq!(point,None);assert_eq!(stats.nodes,0);
+                }
+                assert_eq!(game.board,before.board);assert_eq!(game.history,before.history);
+                assert_eq!(game.turn,before.turn);assert_eq!(game.score(),before.score());
+                // A possible draw or win must still enter normal search.
+                for advantage in [0.,0.5] {
+                    let komi=if loser==1 {4.-n as f64-advantage}else{n as f64-4.+advantage};
+                    let tied=position(&t,komi,&moves);
+                    assert_eq!(endgame::proven_loss_margin(&tied),0.);
+                    assert!(choose_search(&tied,1,19).1.nodes>0);
+                }
+            }
+        }
+    }
+    #[test]
+    fn unsettled_enclosures_and_small_living_groups_still_enter_search() {
+        let t=Topology::new(Kind::Torus,7);
+        let one_eye:Vec<_>=(0..49).filter(|p|![16,17,18,23,24,25].contains(p)).flat_map(|p|[-1,p]).collect();
+        let sparse:Vec<_>=[8,9,10,11,12,15,17,19,22,23,24,25,26].iter().flat_map(|&p|[-1,p]).collect();
+        for moves in [one_eye,sparse] {
+            let game=position(&t,6.5,&moves);
+            assert_eq!(endgame::proven_loss_margin(&game),0.);
+            assert!(choose_search(&game,4,19).1.nodes>0);
+        }
     }
 }

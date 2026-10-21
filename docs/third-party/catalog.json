@@ -12,9 +12,9 @@
       "category": "reference",
       "relationship": "implementation-reference",
       "licenseExpression": "MIT",
-      "usage": "AI v3 の Benson 生存判定で calculateAreaForPla を参照。",
+      "usage": "AI v2 / v3 の Benson 生存判定で calculateAreaForPla を参照。",
       "files": [
-        "tools/ai-tuner/src/tactics.rs"
+        "tools/ai-tuner/src/endgame.rs"
       ],
       "urls": [
         "https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp"
