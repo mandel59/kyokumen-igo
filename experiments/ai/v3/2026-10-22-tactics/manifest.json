@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-tactics",
+  "architecture": "v3",
+  "title": "Root tactical guard against useless invasions",
+  "source": {
+    "baseCommit": "ada891cea6f23a076d386514a469b9c54a95fc64",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "v3-retrained-20261021:tactics=safe",
+    "v3-retrained-20261021:tactics=none"
+  ],
+  "notes": [
+    "No model retraining; rules and area scoring unchanged.",
+    "Root-only Benson vital regions and bounded capture proofs.",
+    "Unknown proof outcomes and potentially useful sacrifices remain searchable.",
+    "Synthetic reproducers; the user has not provided a specific record.",
+    "12-game diagnostic was 5 wins / 7 losses; no strength improvement claim."
+  ],
+  "artifacts": [
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "48036aa028e711d42345b339e8b9abd00daeaed1c006deca8db65ce8c7f114de"
+    },
+    {
+      "path": "data/match.json",
+      "sha256": "e3b9255702e7c0f5c7087aedb75a8ff5c6e55786abf784a6ca39cea097ce4aef"
+    },
+    {
+      "path": "data/root-timing.json",
+      "sha256": "5a120f8b0d892395d06b89b11b651480e7133bb0d9dbb5817c4660d64028cd65"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "0746f3a34105462c842e51309f976fc1d7718c79ee2d7aaa2a7b8f63fed4ddb0"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "d320942e326aca7804749183b6693f82f4fa5afffcc45eebaf0ceeee1f69d8ce"
+    }
+  ]
+}

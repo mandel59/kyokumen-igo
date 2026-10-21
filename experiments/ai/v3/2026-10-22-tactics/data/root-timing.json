@@ -1,0 +1,57 @@
+{
+  "note": "Development Node/WASM observations, 5 warmups and 20 measurements. Includes root history replay and all feature extraction; excludes GNN. Not a device-general benchmark.",
+  "rows": [
+    {
+      "position": "empty-sphere-large",
+      "before": {
+        "medianMs": 0.07110000000000127,
+        "maxMs": 0.1617999999999995,
+        "avoided": 0
+      },
+      "guarded": {
+        "medianMs": 0.05840000000000245,
+        "maxMs": 0.17129999999999512,
+        "avoided": 0
+      }
+    },
+    {
+      "position": "two-liberty-torus7",
+      "before": {
+        "medianMs": 0.028349999999999653,
+        "maxMs": 0.15030000000000143,
+        "avoided": 0
+      },
+      "guarded": {
+        "medianMs": 0.10479999999999734,
+        "maxMs": 0.2616999999999976,
+        "avoided": 3
+      }
+    },
+    {
+      "position": "two-liberty-torus11",
+      "before": {
+        "medianMs": 0.036249999999999005,
+        "maxMs": 0.09009999999999962,
+        "avoided": 0
+      },
+      "guarded": {
+        "medianMs": 0.18704999999999927,
+        "maxMs": 0.5463000000000022,
+        "avoided": 3
+      }
+    },
+    {
+      "position": "pass-alive-eyes",
+      "before": {
+        "medianMs": 0.04274999999999807,
+        "maxMs": 0.24399999999999977,
+        "avoided": 0
+      },
+      "guarded": {
+        "medianMs": 0.04339999999999122,
+        "maxMs": 0.05700000000000216,
+        "avoided": 6
+      }
+    }
+  ]
+}

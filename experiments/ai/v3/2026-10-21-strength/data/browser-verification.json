@@ -1,0 +1,145 @@
+{
+  "cpu": {
+    "selected": "wasm",
+    "adapterInfo": null,
+    "differences": {
+      "policy": 0.000003814697265625,
+      "wdl": 4.76837158203125e-7,
+      "score": 5.960464477539063e-8,
+      "ownership": 7.152557373046875e-7
+    },
+    "coldMs": 926.7999999523163,
+    "warmBatchMs": [
+      19,
+      18,
+      17,
+      16.200000047683716,
+      14.899999976158142
+    ],
+    "turns": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "simulations": 41,
+        "elapsedMs": 99,
+        "batches": 6
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "simulations": 33,
+        "elapsedMs": 98.60000002384186,
+        "batches": 5
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "simulations": 33,
+        "elapsedMs": 101.89999997615814,
+        "batches": 5
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "simulations": 33,
+        "elapsedMs": 98.29999995231628,
+        "batches": 5
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "simulations": 33,
+        "elapsedMs": 101.80000007152557,
+        "batches": 5
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "simulations": 33,
+        "elapsedMs": 91.90000009536743,
+        "batches": 5
+      }
+    ],
+    "cancelled": true
+  },
+  "gpu": {
+    "selected": "webgpu",
+    "adapterInfo": {
+      "vendor": "nvidia",
+      "architecture": "blackwell",
+      "device": "",
+      "description": ""
+    },
+    "differences": {
+      "policy": 0.00000286102294921875,
+      "wdl": 4.76837158203125e-7,
+      "score": 1.4901161193847656e-8,
+      "ownership": 7.152557373046875e-7
+    },
+    "coldMs": 1270.6999999284744,
+    "warmBatchMs": [
+      13.399999976158142,
+      11.5,
+      10.400000095367432,
+      13.5,
+      11.899999976158142
+    ],
+    "turns": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "simulations": 49,
+        "elapsedMs": 93.30000007152557,
+        "batches": 7
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "simulations": 49,
+        "elapsedMs": 91.80000007152557,
+        "batches": 7
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "simulations": 41,
+        "elapsedMs": 89.29999995231628,
+        "batches": 6
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "simulations": 57,
+        "elapsedMs": 95.10000002384186,
+        "batches": 8
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "simulations": 65,
+        "elapsedMs": 98.20000004768372,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "simulations": 57,
+        "elapsedMs": 92.39999997615814,
+        "batches": 8
+      }
+    ],
+    "cancelled": true
+  },
+  "production": {
+    "id": 5,
+    "move": 29,
+    "backend": "v3-webgpu"
+  },
+  "environment": {
+    "node": "v26.12.1",
+    "browser": "155.0.4283.62",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  }
+}

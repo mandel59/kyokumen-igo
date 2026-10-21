@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-21-strength",
+  "architecture": "v3",
+  "title": "GPU retraining and diagnostic strength matches",
+  "source": {
+    "baseCommit": "ada891cea6f23a076d386514a469b9c54a95fc64",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "v3-bootstrap-20261021",
+    "v3-retrained-20261021",
+    "v2-deployed-20261021"
+  ],
+  "notes": [
+    "Model selected by validation loss before final matches.",
+    "Fixed v3 simulations vs v2 depth 4; not equal wall time.",
+    "Experimental model replaced after its predeclared diagnostic guard; normal production remains v2."
+  ],
+  "artifacts": [
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "9927b62adc51832dd8580b395c9ab5ba64f7ebf5add9ca518567a8bda49a4cab"
+    },
+    {
+      "path": "data/candidate-vs-initial.json",
+      "sha256": "53bccdf959c5d09165250654eb6c896457680fd1af4bf603e75300f2d3a408da"
+    },
+    {
+      "path": "data/candidate-vs-v2.json",
+      "sha256": "6a049cb9fc0f1514866121a343112bd79a0a51067a6038d9287a8647c73d0723"
+    },
+    {
+      "path": "data/data-20261110.jsonl.gz",
+      "sha256": "355539555a56e3898c9b4d7ab38d05899ddd7b7f8b1d9b1cb6f0d40fa5495b98"
+    },
+    {
+      "path": "data/data-20261110.log",
+      "sha256": "edc9ad95087fe9fc9e4def524d055d1a6b811f33cec9fb6e90c6a756c723c7eb"
+    },
+    {
+      "path": "data/data-20261111.jsonl.gz",
+      "sha256": "869f04d2890bb7faef543a1e9e7466a204ed8667dc24e5b434d62e2c93b10a6e"
+    },
+    {
+      "path": "data/data-20261111.log",
+      "sha256": "a0d4f6e0d0228e078377a826ec6492eabd47ea728ade6dafdc5597cb13eba777"
+    },
+    {
+      "path": "data/data-20261112.jsonl.gz",
+      "sha256": "6f5816100dd94ffb5549a3627688f6ee5ead08e99451c7eb6733c15ef370d4b5"
+    },
+    {
+      "path": "data/data-20261112.log",
+      "sha256": "3f3e6ef07de250a2c6bf9bc08385924f3b21ce4de2135af19989e0d29d7e5d89"
+    },
+    {
+      "path": "data/data-20261113.jsonl.gz",
+      "sha256": "71c13ad071111ca12c27e8ae0257faa511b5f81d561ecf9dd56632633444a8e1"
+    },
+    {
+      "path": "data/data-20261113.log",
+      "sha256": "0df2e08091643409e55c48ad326382c04fc47866124f5c572f89f1ecfc8ddc9f"
+    },
+    {
+      "path": "data/data-20261114.jsonl.gz",
+      "sha256": "3d7fc95c15999a24569ead649b4b6ded792e453dcd6cb5818e2b6d687b1ddf8d"
+    },
+    {
+      "path": "data/data-20261114.log",
+      "sha256": "fa1e6d109596702b0de66187d6c30505f5bb552f0b28715e76b92e7dc29759e8"
+    },
+    {
+      "path": "data/data-20261115.jsonl.gz",
+      "sha256": "cdc4e7570b5ae85eee47ba807f315c4e354daaa3d0cbfaafbd0af45485512a5d"
+    },
+    {
+      "path": "data/data-20261115.log",
+      "sha256": "1388df983dfed6fc8f4f20b0590c735c33f2389c5af614850c995235018d5041"
+    },
+    {
+      "path": "data/initial-control-vs-v2.json",
+      "sha256": "65c0d1efd37f33ae1066b3ac5bcf9eaf42458d5d4fbc83b84345eb8929537cae"
+    },
+    {
+      "path": "data/initial-diagnostic-vs-v2.json",
+      "sha256": "0debd739cf7d36f68d227d3d1e99976ce2d554323ab006aa0572c1d1f146585b"
+    },
+    {
+      "path": "data/model-manifest.json",
+      "sha256": "fd3cefc7a3851097abe3745bc139ef000b11e4e58638df7344359793f5302cfa"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "571da692d81876c3d87d93f0258d2bd3eb3aed10f6836f2d2ca6f762244f40d8"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "5e9928c1578f9a3479cbaf6d3f60c04fc70f324abeb91775a41b8797ec9bcc36"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "4bddf7ca4d3dd5f3f49c7c8416015109d8ec52214e7f4319c64f9e67581a8dfd"
+    },
+    {
+      "path": "data/weights.pt",
+      "sha256": "7fe2279ced23ce3fffb562c18843c99895eafe4a799d5a0a7dc22b655deef786"
+    }
+  ]
+}

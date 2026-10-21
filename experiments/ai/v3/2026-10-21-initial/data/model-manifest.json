@@ -1,0 +1,54 @@
+{
+  "seed": 20261021,
+  "epochs": 3,
+  "trainPositions": 668,
+  "validationPositions": 660,
+  "trainGames": [
+    "20261021-0-1",
+    "20261021-1-0",
+    "20261021-2-1",
+    "20261021-3-1",
+    "20261021-4-1",
+    "20261021-5-0"
+  ],
+  "validationGames": [
+    "20261021-0-0",
+    "20261021-1-1",
+    "20261021-2-0",
+    "20261021-3-0",
+    "20261021-4-0",
+    "20261021-5-1"
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "trainLoss": 4.877319364490623,
+      "validationLoss": 4.579272004329797
+    },
+    {
+      "epoch": 2,
+      "trainLoss": 4.4364208546941155,
+      "validationLoss": 4.375216310674494
+    },
+    {
+      "epoch": 3,
+      "trainLoss": 3.9700904649174857,
+      "validationLoss": 3.8361632029215493
+    }
+  ],
+  "dataSha256": {
+    "tools/ai-gnn/target/bootstrap.jsonl": "91ac6b998238f1c2c7b5f6b0af793c9a4167cd3df36abad2521958c771c8b6ce"
+  },
+  "architecture": "v3",
+  "featureVersion": 1,
+  "points": 160,
+  "channels": 32,
+  "globals": 8,
+  "hidden": 64,
+  "blocks": 6,
+  "parameters": 120905,
+  "model": "model.onnx",
+  "sha256": "c4d9f4309d7efced36dce6e6f8c6fc98808258c924f1473a0ab79a3d06392daa",
+  "status": "experimental",
+  "accepted": false
+}

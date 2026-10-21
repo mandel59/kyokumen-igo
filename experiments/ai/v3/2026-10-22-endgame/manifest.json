@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-endgame",
+  "architecture": "v3",
+  "title": "Pass after defeat is certified by enemy living stones",
+  "source": {
+    "baseCommit": "ada891cea6f23a076d386514a469b9c54a95fc64",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "v3-retrained-20261021:tactics=safe:endgame=false",
+    "v3-retrained-20261021:tactics=safe:endgame=true"
+  ],
+  "notes": [
+    "Same model weights, exact Go legality and area scoring. No resignation or early game termination.",
+    "Root pass only when Benson-certified enemy stones outweigh the most optimistic allocation of all other points, with komi.",
+    "Original 231-ply sphere5 record, white AI: all 33 white-to-move snapshots from ply 166 pass; 31 original non-passes prevented.",
+    "Six fixed snapshots, seed 3 and 64 simulations; certified-loss searches stop after the first submitted evaluation.",
+    "Both real browser WebGPU and WASM backends verified. This is a regression diagnosis, not a strength estimate."
+  ],
+  "artifacts": [
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "e546f7e07e2be75ec61e209a96ae6dae18e1a69827f6663b00313a0b32a95b6b"
+    },
+    {
+      "path": "data/replay.json",
+      "sha256": "03efa549a4fe3d98ef13efd12ad634b9c43d2dd895d0bb10b3f714ec23dd8801"
+    },
+    {
+      "path": "data/reported-record.json",
+      "sha256": "5aba556ce77e0c9a31220e67a79ebb2b8c03574953619140cde6972da40d0325"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "2a8ae0ddd8904c3bc8170eab3f4130d09816de60cf0b8bd8eda2130e8a684d68"
+    }
+  ]
+}

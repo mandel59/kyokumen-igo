@@ -66,6 +66,8 @@ python3 -m http.server --directory dist 8000
 
 一手評価のアーキテクチャを **Kyokugo AI v1**、最大 4 手探索のアーキテクチャを **Kyokugo AI v2** と呼びます。仕様・現在の配信構成は [AI 文書](docs/ai/README.md)、評価結果と保存データは [実験索引](experiments/ai/README.md)、実行方法は [開発ツール](tools/ai-tuner/README.md) にまとめています。
 
+実験版の **Kyokugo AI v3** は小型 GNN とバッチ MCTS を組み合わせ、`?ai=v3` で試せます。WebGPU 推論・初期学習モデル・uv による学習手順は [v3 開発](tools/ai-gnn/README.md) を参照してください。通常対局への採用はまだ行っていません。
+
 ### WASM 実装
 
 AI の着手計算は Rust / WASM を使います。画面操作、保存・棋譜、実際の着手検証は JS が担当します。配布済みの `dist/` には WASM を含むため、起動時のビルドは不要です。WASM や Worker を利用できない場合は JS 版で対局を続けます。
@@ -80,6 +82,7 @@ Node.js 24 で動作確認しています。外部パッケージは不要です
 node tests.mjs
 node wasm-tests.mjs
 node search-tests.mjs
+node v3-tests.mjs
 node komi-tests.mjs
 node record-tests.mjs
 node persistence-tests.mjs

@@ -30,6 +30,30 @@
       "architecture": "v2",
       "title": "Kyokugo AI v2 の係数調整と盤別採用",
       "path": "v2/2026-10-21-tuning/"
+    },
+    {
+      "id": "v3/2026-10-21-initial",
+      "architecture": "v3",
+      "title": "Kyokugo AI v3 GNN / WebGPU",
+      "path": "v3/2026-10-21-initial/"
+    },
+    {
+      "id": "v3/2026-10-21-strength",
+      "architecture": "v3",
+      "title": "Kyokugo AI v3 retraining and diagnostic matches",
+      "path": "v3/2026-10-21-strength/"
+    },
+    {
+      "id": "v3/2026-10-22-tactics",
+      "architecture": "v3",
+      "title": "Avoid useless invasions while retaining sacrifices",
+      "path": "v3/2026-10-22-tactics/"
+    },
+    {
+      "id": "v3/2026-10-22-endgame",
+      "architecture": "v3",
+      "title": "Pass after defeat is certified by enemy living stones",
+      "path": "v3/2026-10-22-endgame/"
     }
   ]
 }

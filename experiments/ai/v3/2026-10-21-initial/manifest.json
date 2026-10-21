@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-21-initial",
+  "architecture": "v3",
+  "title": "Kyokugo AI v3 initial GNN/WebGPU implementation",
+  "source": {
+    "baseCommit": "ada891cea6f23a076d386514a469b9c54a95fc64",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "v3-bootstrap-20261021",
+    "v2-deployed-20261021"
+  ],
+  "notes": [
+    "Implementation smoke test; no independent strength evaluation.",
+    "Experimental URL opt-in only; production remains v2.",
+    "The bootstrap uses komi 0 and 3.5; broader komi validation is outstanding."
+  ],
+  "artifacts": [
+    {
+      "path": "data/bootstrap.jsonl.gz",
+      "sha256": "e3d2155bc77b754fbb984f9c0b5039bfecf2229b8cdb28209e626c9f56320736"
+    },
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "6533093c5750a021b549336bc5a94f9aa855e39d0d88c8a98de5f2a8c667c1cd"
+    },
+    {
+      "path": "data/model-manifest.json",
+      "sha256": "0742654a28b9e5e05c035f1a5b3b4ad7ec9f37315ea792be588a76cc59d8b9fd"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "d49b707c5bcccac9aa084eab5216842830ea19070d683754a88c4fd13c15d346"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "477d2d066079e13353182e217688bfcadc68ff2210e7185c4fdbbfadecf6350d"
+    },
+    {
+      "path": "data/weights.pt",
+      "sha256": "6ac1b9b12e6b6499075de2c62596d734649ffb05a9ac9c3fe82de7232582e79c"
+    }
+  ]
+}

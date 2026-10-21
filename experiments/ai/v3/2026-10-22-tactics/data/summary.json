@@ -1,0 +1,15 @@
+{
+  "modelSha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+  "modelChanged": false,
+  "featureABI": 1,
+  "searchABI": 2,
+  "rootNodeBudget": 1024,
+  "candidateNodeBudget": 384,
+  "pliesAfterPlacement": 3,
+  "rootOnly": true,
+  "matchScore": 5,
+  "matchGames": 12,
+  "strengthImprovementEstablished": false,
+  "tacticalRegressionTests": "Six-board isolated self-atari; 7/9/11 two-liberty pockets; Benson vital regions; one-eye and large-region false-positive checks; escape; profitable capture; eight-stone snapback; superko and cancellation",
+  "unprovidedUserRecord": true
+}

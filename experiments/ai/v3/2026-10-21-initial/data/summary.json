@@ -1,0 +1,21 @@
+{
+  "architecture": "v3",
+  "purpose": "implementation smoke verification; no strength evaluation or promotion",
+  "parameters": 120905,
+  "onnxBytes": 502401,
+  "teacherGames": 12,
+  "teacherPositions": 1328,
+  "cappedTeacherGames": 0,
+  "trainPositions": 668,
+  "validationPositions": 660,
+  "epochs": 3,
+  "seed": 20261021,
+  "selfplaySmoke": {
+    "board": "torus7",
+    "simulations": 8,
+    "seed": 20261022,
+    "positions": 48,
+    "capped": 0
+  },
+  "timingNote": "Development smoke observations only; training/data-generation wall times were not recorded."
+}

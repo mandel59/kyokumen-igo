@@ -23,7 +23,7 @@ for(const e of catalog.experiments){
  const manifestPath=path.join(dir,'manifest.json');registered.add(manifestPath);
  const m=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
  assert.equal(m.schemaVersion,1);assert.equal(m.id,e.id);assert.equal(m.architecture,e.architecture);
- assert.ok(['v1','v2'].includes(m.architecture));
+ assert.ok(['v1','v2','v3'].includes(m.architecture));
  assert.match(m.source?.baseCommit??m.recordedAtCommit??'',/^[a-f0-9]{7,40}$/,'missing pinned source/archive commit');
  if(m.source?.patch)assert.ok(m.artifacts.some(a=>a.path===m.source.patch),'source patch not archived');
  assert.ok(Array.isArray(m.variants)&&m.variants.length>0);

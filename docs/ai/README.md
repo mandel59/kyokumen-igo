@@ -8,14 +8,17 @@
 | --- | --- | --- |
 | [Kyokugo AI v1](architectures/v1.md) | 合法手を採点する一手評価。相手の応手は探索しない | JS / Rust / WASM |
 | [Kyokugo AI v2](architectures/v2.md) | 候補手を限定した最大 4 手の alpha-beta 探索 | Rust / WASM |
+| [Kyokugo AI v3（実験）](architectures/v3.md) | 小型 GNN とバッチ PUCT / MCTS | Rust / WASM + WebGPU / ONNX |
 
-v1 / v2 はアーキテクチャの世代です。係数の再調整、盤別の採用、JS と WASM の実行方式の違いでは世代を変えません。WASM の ABI バージョンも別の番号です。
+v1 / v2 / v3 はアーキテクチャの世代です。係数の再調整、モデルの再学習、盤別の採用、実行方式の違いでは世代を変えません。WASM の ABI バージョンも別の番号です。
 
 v2 の深さ 1〜3 手の試走は、v2 の探索量を減らした比較条件です。評価関数も異なるため、深さ 1 の試走を v1 と読み替えません。
 
 ## 現在の配信状態
 
 通常は Kyokugo AI v2 を Worker 内の WASM で実行します。WASM / Worker を利用できない場合は Kyokugo AI v1 の JS 実装で継続します。
+
+v3 は `?ai=v3` で試す実験実装です。現在は [再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md) で旧版からの改善を確認したモデルです。通常対局への採用はしていません。[セットアップと学習手順](../../tools/ai-gnn/README.md) を参照してください。
 
 | 盤 | アーキテクチャ | v2 の係数 |
 | --- | --- | --- |

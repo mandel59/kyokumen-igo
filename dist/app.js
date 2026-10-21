@@ -129,7 +129,14 @@ function scheduleAI(){
    else finish();
   };
   try{
-   worker??=new Worker(new URL('./ai-worker.js',import.meta.url),{type:'module'});
+   if(!worker){
+    const workerURL=new URL('./ai-worker.js',import.meta.url);
+    if(globalThis.location?.search){
+     const aiQuery=new URLSearchParams(globalThis.location.search);
+     if(aiQuery.get('ai')==='v3'){workerURL.search='ai=v3'+(aiQuery.get('backend')==='wasm'?'&backend=wasm':'');}
+    }
+    worker=new Worker(workerURL,{type:'module'});
+   }
    const activeWorker=worker;
    const fallback=()=>{
     if(id!==requestId||worker!==activeWorker)return;

@@ -7,6 +7,10 @@
 
 # Dependencies, logs, and local test artifacts
 node_modules/
+.venv/
+__pycache__/
+tools/ai-gnn/target/
+dist/vendor/onnxruntime/
 *.log
 coverage/
 playwright-report/

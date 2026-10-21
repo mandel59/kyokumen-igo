@@ -1,0 +1,22 @@
+{
+  "purpose": "Improve the undertrained v3 model; architecture stays 64 channels and six blocks",
+  "initialDiagnosticSeed": 20261101,
+  "trainingSeeds": [
+    20261110,
+    20261111,
+    20261112,
+    20261113,
+    20261114,
+    20261115
+  ],
+  "gamesPerBoardPerSeed": 4,
+  "validationSplitSeed": 20261120,
+  "epochs": 30,
+  "selection": "minimum held-out-game validation loss, not match results",
+  "fixedVisits": 128,
+  "candidateVsInitialSeed": 20261130,
+  "candidateVsV2Seed": 20261140,
+  "initialVsV2ControlSeed": 20261140,
+  "finalPairsPerBoard": 2,
+  "promotionGuard": "Candidate must improve vs initial on new colour-swapped games and outperform the initial matched v2 control; report all six boards and any caps. No claim of human strength or statistically established superiority to v2."
+}
