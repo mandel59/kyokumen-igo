@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-22",
+  "versions": {
+    "onnxruntime": "1.30.0"
+  },
+  "condition": "Generated from docs/third-party/catalog.json. Full upstream notices and implementation attributions are retained.",
+  "notices": [
+    {
+      "path": "KataGo-LICENSE.txt",
+      "url": "https://github.com/lightvector/KataGo/blob/master/LICENSE",
+      "gitBlobSha": "b7bb8b7408679966c53fa75a440ed54e4c6eac8a",
+      "sha256": "770f21e95cfc982b19b2b17366b23b502925e4c882e409036ea00fff488cedd6"
+    },
+    {
+      "path": "onnxruntime-ThirdPartyNotices.txt",
+      "url": "https://github.com/microsoft/onnxruntime/blob/v1.30.0/ThirdPartyNotices.txt",
+      "gitBlobSha": "75af6ad7e3db5c34e9ff923734ea49056c578d5f",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
+    },
+    {
+      "path": "onnxruntime-LICENSE.txt",
+      "url": "https://github.com/microsoft/onnxruntime/blob/v1.30.0/LICENSE",
+      "gitBlobSha": "48bc6bb4996ac924359e8e28b9ae88970e5ed3fc",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "SplitMix64-NOTICE.txt",
+      "url": "https://prng.di.unimi.it/splitmix.c",
+      "sha256": "99637b862616ceefc20f7b18f37c433ff3109754e44affffd364ad92b00cf8b4"
+    },
+    {
+      "path": "Mulberry32-NOTICE.txt",
+      "url": "https://github.com/bryc/code/blob/master/jshash/PRNGs.md",
+      "gitBlobSha": "5b58125493d8043cc416bd035b8f24fa8843e006",
+      "sha256": "788c64f0b7ef381b429124f1e78b97ec5e90290f48d32176833f9ef43960b8c6"
+    }
+  ]
+}

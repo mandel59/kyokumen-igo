@@ -1,6 +1,9 @@
 //! Conservative root guards against isolated invasions and certified lost games.
 //! A capture proof must cover *all* legal defender replies (including pass).
 //! Exhausting the depth/node budget means unknown, never "dead".
+//! Benson reference: KataGo cpp/game/board.cpp, calculateAreaForPla.
+//! Copyright 2025 David J Wu and/or other authors; MIT notice retained in
+//! dist/licenses/KataGo-LICENSE.txt. See THIRD_PARTY.md for the adaptation scope.
 use crate::board::{Game, Scratch};
 
 const ROOT_BUDGET: usize = 1024;

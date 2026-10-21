@@ -1,0 +1,99 @@
+{
+  "purpose": "Improve learning with fresh search-policy selfplay, balanced sampling, cosine fine-tuning and EMA; preserve fixed v3 architecture and optimized inference.",
+  "baseline": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+  "pilot": {
+    "seed": 20261219,
+    "gamesPerBoard": 2,
+    "simulations": 128,
+    "usedForTraining": false
+  },
+  "selfplay": {
+    "seed": 20261220,
+    "gamesPerBoard": 16,
+    "simulations": 128,
+    "komi": [
+      0,
+      3.5,
+      6.5,
+      9.5
+    ],
+    "cap": 20,
+    "excludeCaps": true,
+    "rootNoise": {
+      "fraction": 0.25,
+      "concentration": 10
+    },
+    "temperature": "1 for first min(18,N/3), .25 until N/2, then argmax"
+  },
+  "training": {
+    "seed": 20261230,
+    "epochs": 24,
+    "batchSize": 128,
+    "device": "cuda",
+    "learningRate": 0.0003,
+    "minimumLearningRate": 0.00003,
+    "emaDecay": 0.99,
+    "selfplayMass": 0.7,
+    "teacherMass": 0.3,
+    "balance": "source, board, game, game thirds",
+    "split": "Preserve all baseline train/validation IDs; split only new games.",
+    "selection": "Minimum balanced held-out-game validation loss including epoch-zero baseline"
+  },
+  "diagnostics": {
+    "seed": 20261240,
+    "pairsPerBoard": 2,
+    "visits": 128,
+    "opponent": "frozen baseline",
+    "role": "development diagnostic; do not call independent after using for selection"
+  },
+  "final": {
+    "seed": 20261250,
+    "pairsPerBoard": 4,
+    "visits": 128,
+    "opponent": "frozen baseline",
+    "role": "new paired openings, all six boards, unchanged search rules"
+  },
+  "replacementGuard": "At least 30/48 score against the frozen baseline, no board below 25%, no capped games; validate inference and reported endgame. Otherwise retain deployed model. No statistically established strength claim.",
+  "amendments": [
+    {
+      "stage": "Before full training, after baseline endgame diagnostic",
+      "reason": "Baseline knows the reported loss with >99.99% probability but pass prior is about 0.0000025 after the large capture.",
+      "curriculum": {
+        "input": "Fresh selfplay games only; never the user record",
+        "steps": 8,
+        "policy": "Pass only at newly verified certified-loss roots",
+        "value": "Loss; exact margin and ownership after legal branch completion",
+        "split": "Reuse parent gameId for every cleanup branch, so family cannot cross train/validation"
+      }
+    },
+    {
+      "stage": "After candidate A validation and development matches; final seed remains unused",
+      "reason": "A improved validation loss and pass recall but loses most development games. Suspect diffuse low-visit policy targets; do not promote A.",
+      "candidateB": {
+        "epochs": 24,
+        "learningRate": 0.0001,
+        "minimumLearningRate": 0.00001,
+        "selfplayMass": 0.5,
+        "emaDecay": 0.99,
+        "policyTemperature": 0.5,
+        "minimumPolicyConfidence": 0.25,
+        "policyAnchor": "frozen baseline prior on all positions",
+        "policyAnchorKLWeight": 0.5
+      },
+      "selection": "Choose by validation within B; compare with same development openings, retaining all A results; only the selected acceptable candidate sees final seed 20261250."
+    },
+    {
+      "stage": "After B development 13/24, before any final-seed games",
+      "reason": "Isolate value learning from policy drift; B is only a small development gain.",
+      "candidateC": {
+        "trainable": "value head only; trunk and policy remain bit-identical",
+        "epochs": 24,
+        "learningRate": 0.0003,
+        "minimumLearningRate": 0.00003,
+        "selfplayMass": 0.7,
+        "emaDecay": 0.99
+      },
+      "selection": "Compare validation within C and the same development openings; select B or C by development score, reject A. Run final seed 20261250 once on the selected candidate; retain baseline unless the predeclared replacement guard passes."
+    }
+  ]
+}

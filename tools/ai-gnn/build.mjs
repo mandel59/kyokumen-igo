@@ -1,6 +1,8 @@
 import {spawnSync} from 'node:child_process';
 import {mkdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import {prepareRustNotices} from '../prepare-rust-notices.mjs';
+prepareRustNotices();
 const root=new URL('../../',import.meta.url),target=new URL('tools/ai-gnn/target/',root);
 mkdirSync(target,{recursive:true});
 const windows=process.platform==='win32';

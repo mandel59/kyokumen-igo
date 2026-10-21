@@ -1,0 +1,478 @@
+{
+  "candidates": [
+    {
+      "name": "candidate-a",
+      "sha256": "21e39187884c1ff42e1a73637a1649c801bcc0b8586426524c8644a05a861bb6",
+      "selectedEpoch": 24,
+      "initial": {
+        "loss": 3.7528839111328125,
+        "unweightedLoss": 3.4093233183521616,
+        "policyTop1": 0.5263958288072996,
+        "policyTop5": 0.8377145339995655,
+        "policyKL": 1.6452558750746795,
+        "wdlAccuracy": 0.7238757332174669,
+        "wdlBrier": 0.34876862003211223,
+        "scoreMAE": 26.008866500108624,
+        "ownershipAccuracy": 0.7308642652380242,
+        "passRecall": 0.5663716814159292,
+        "positions": 4603
+      },
+      "selected": {
+        "loss": 3.222817897796631,
+        "unweightedLoss": 3.1041073331930265,
+        "policyTop1": 0.4959808820334564,
+        "policyTop5": 0.8527047577666739,
+        "policyKL": 1.3323430159339018,
+        "wdlAccuracy": 0.7653704106017815,
+        "wdlBrier": 0.3431863496802357,
+        "scoreMAE": 23.476352039430807,
+        "ownershipAccuracy": 0.7312417470603411,
+        "passRecall": 0.7831858407079646,
+        "positions": 4603
+      },
+      "bySource": {
+        "selfplay": {
+          "loss": 3.3806583881378174,
+          "unweightedLoss": 3.4528864703033135,
+          "policyTop1": 0.7081774452164618,
+          "policyTop5": 0.9257081774452165,
+          "policyKL": 0.2777276418860235,
+          "wdlAccuracy": 0.7589524318546232,
+          "wdlBrier": 0.34792182306629144,
+          "scoreMAE": 20.758280164350616,
+          "ownershipAccuracy": 0.7282327298236237,
+          "passRecall": 0.6936936936936937,
+          "positions": 1871
+        },
+        "teacher": {
+          "loss": 2.854524850845337,
+          "unweightedLoss": 2.865247422046578,
+          "policyTop1": 0.3506588579795022,
+          "policyTop5": 0.8027086383601757,
+          "policyKL": 2.0545924174139825,
+          "wdlAccuracy": 0.7697657393850659,
+          "wdlBrier": 0.3399433230934869,
+          "scoreMAE": 25.33781341508053,
+          "ownershipAccuracy": 0.7333024165989889,
+          "passRecall": 0.8695652173913043,
+          "positions": 2732
+        }
+      }
+    },
+    {
+      "name": "candidate-b",
+      "sha256": "783b9eb0f4b343c5d8a6d46c18e6499c0c9c450f779f0024336572e47372d5fc",
+      "selectedEpoch": 16,
+      "initial": {
+        "loss": 2.2065842151641846,
+        "unweightedLoss": 2.3126593305317185,
+        "policyTop1": 0.5263958288072996,
+        "policyTop5": 0.8377145339995655,
+        "policyKL": 1.6452558750746795,
+        "wdlAccuracy": 0.7238757332174669,
+        "wdlBrier": 0.34876862003211223,
+        "scoreMAE": 26.008866500108624,
+        "ownershipAccuracy": 0.7308642652380242,
+        "passRecall": 0.5663716814159292,
+        "positions": 4603
+      },
+      "selected": {
+        "loss": 2.105550527572632,
+        "unweightedLoss": 2.2390199835704974,
+        "policyTop1": 0.5183575928742125,
+        "policyTop5": 0.8553117532044319,
+        "policyKL": 1.584493553796437,
+        "wdlAccuracy": 0.7475559417771019,
+        "wdlBrier": 0.3406490215705111,
+        "scoreMAE": 23.48165428796437,
+        "ownershipAccuracy": 0.7306264363085216,
+        "passRecall": 0.7522123893805309,
+        "positions": 4603
+      },
+      "bySource": {
+        "selfplay": {
+          "loss": 1.4431923627853394,
+          "unweightedLoss": 1.4458695477435195,
+          "policyTop1": 0.746125066809193,
+          "policyTop5": 0.9273115980758952,
+          "policyKL": 1.0399218854389365,
+          "wdlAccuracy": 0.7915553180117584,
+          "wdlBrier": 0.34372899164049975,
+          "scoreMAE": 21.146080388161412,
+          "ownershipAccuracy": 0.7238442009620524,
+          "passRecall": 0.6216216216216216,
+          "positions": 1871
+        },
+        "teacher": {
+          "loss": 2.7679085731506348,
+          "unweightedLoss": 2.7822054727534775,
+          "policyTop1": 0.3623718887262079,
+          "policyTop5": 0.8060029282576867,
+          "policyKL": 1.9574414276971999,
+          "wdlAccuracy": 0.7174231332357247,
+          "wdlBrier": 0.3385396708855692,
+          "scoreMAE": 25.081164783125914,
+          "ownershipAccuracy": 0.7352712695455481,
+          "passRecall": 0.8782608695652174,
+          "positions": 2732
+        }
+      }
+    },
+    {
+      "name": "candidate-c",
+      "sha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+      "selectedEpoch": 0,
+      "trainable": "value",
+      "initial": {
+        "loss": 3.7528839111328125,
+        "unweightedLoss": 3.4093233183521616,
+        "policyTop1": 0.5263958288072996,
+        "policyTop5": 0.8377145339995655,
+        "policyKL": 1.6452558750746795,
+        "wdlAccuracy": 0.7238757332174669,
+        "wdlBrier": 0.34876862003211223,
+        "scoreMAE": 26.008866500108624,
+        "ownershipAccuracy": 0.7308642652380242,
+        "passRecall": 0.5663716814159292,
+        "positions": 4603
+      },
+      "selected": {
+        "loss": 3.7528839111328125,
+        "unweightedLoss": 3.4093233183521616,
+        "policyTop1": 0.5263958288072996,
+        "policyTop5": 0.8377145339995655,
+        "policyKL": 1.6452558750746795,
+        "wdlAccuracy": 0.7238757332174669,
+        "wdlBrier": 0.34876862003211223,
+        "scoreMAE": 26.008866500108624,
+        "ownershipAccuracy": 0.7308642652380242,
+        "passRecall": 0.5663716814159292,
+        "positions": 4603
+      },
+      "bySource": {
+        "selfplay": {
+          "loss": 4.195990562438965,
+          "unweightedLoss": 4.395989569414751,
+          "policyTop1": 0.7498663816141101,
+          "policyTop5": 0.8888295029396045,
+          "policyKL": 1.2206776800925307,
+          "wdlAccuracy": 0.7397113842864779,
+          "wdlBrier": 0.35453192070166356,
+          "scoreMAE": 23.478090760288616,
+          "ownershipAccuracy": 0.7224503419795564,
+          "passRecall": 0.23423423423423423,
+          "positions": 1871
+        },
+        "teacher": {
+          "loss": 2.7189674377441406,
+          "unweightedLoss": 2.733608620058565,
+          "policyTop1": 0.3733528550512445,
+          "policyTop5": 0.8027086383601757,
+          "policyKL": 1.9360263986433932,
+          "wdlAccuracy": 0.7130307467057101,
+          "wdlBrier": 0.3448216227451844,
+          "scoreMAE": 27.74205595717423,
+          "ownershipAccuracy": 0.7366264198046303,
+          "passRecall": 0.8869565217391304,
+          "positions": 2732
+        }
+      }
+    }
+  ],
+  "development": {
+    "a": {
+      "games": 24,
+      "wins": 7,
+      "draws": 0,
+      "losses": 17,
+      "score": 7,
+      "capped": 0,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 4,
+          "score": 2,
+          "pairScores": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 4,
+          "score": 1,
+          "pairScores": [
+            0.5,
+            0
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 4,
+          "score": 0,
+          "pairScores": [
+            0,
+            0
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 4,
+          "score": 1,
+          "pairScores": [
+            0,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 4,
+          "score": 3,
+          "pairScores": [
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 4,
+          "score": 0,
+          "pairScores": [
+            0,
+            0
+          ]
+        }
+      ],
+      "metrics": {
+        "a_turns": 1219,
+        "a_ms": 106277.03240000001,
+        "a_simulations": 149472,
+        "a_passes": 113,
+        "a_losingPasses": 91,
+        "a_earlyPasses": 0,
+        "a_certifiedLossPasses": 69,
+        "a_uncertifiedLosingPasses": 22,
+        "a_selfAtaris": 13,
+        "a_eyeFills": 0,
+        "a_missedCaptures": 54,
+        "b_turns": 1224,
+        "b_ms": 112152.83909999981,
+        "b_simulations": 157463,
+        "b_passes": 36,
+        "b_losingPasses": 15,
+        "b_earlyPasses": 0,
+        "b_certifiedLossPasses": 11,
+        "b_uncertifiedLosingPasses": 4,
+        "b_selfAtaris": 5,
+        "b_eyeFills": 1,
+        "b_missedCaptures": 168
+      }
+    },
+    "b": {
+      "games": 24,
+      "wins": 13,
+      "draws": 0,
+      "losses": 11,
+      "score": 13,
+      "capped": 0,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 4,
+          "score": 2,
+          "pairScores": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 4,
+          "score": 2,
+          "pairScores": [
+            0,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 4,
+          "score": 2,
+          "pairScores": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 4,
+          "score": 2,
+          "pairScores": [
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 4,
+          "score": 4,
+          "pairScores": [
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 4,
+          "score": 1,
+          "pairScores": [
+            0,
+            0.5
+          ]
+        }
+      ],
+      "metrics": {
+        "a_turns": 1221,
+        "a_ms": 107791.47319999998,
+        "a_simulations": 154234,
+        "a_passes": 69,
+        "a_losingPasses": 48,
+        "a_earlyPasses": 0,
+        "a_certifiedLossPasses": 35,
+        "a_uncertifiedLosingPasses": 13,
+        "a_selfAtaris": 3,
+        "a_eyeFills": 0,
+        "a_missedCaptures": 141,
+        "b_turns": 1220,
+        "b_ms": 108303.20170000027,
+        "b_simulations": 153734,
+        "b_passes": 60,
+        "b_losingPasses": 45,
+        "b_earlyPasses": 0,
+        "b_certifiedLossPasses": 36,
+        "b_uncertifiedLosingPasses": 9,
+        "b_selfAtaris": 10,
+        "b_eyeFills": 1,
+        "b_missedCaptures": 59
+      }
+    },
+    "c": {
+      "selectedEpoch": 0,
+      "identicalToBaseline": true,
+      "partialMatchExcluded": true
+    }
+  },
+  "final": {
+    "games": 48,
+    "wins": 19,
+    "draws": 0,
+    "losses": 29,
+    "score": 19,
+    "capped": 0,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 8,
+        "score": 3,
+        "pairScores": [
+          0.5,
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 8,
+        "score": 2,
+        "pairScores": [
+          0,
+          0.5,
+          0.5,
+          0
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 8,
+        "score": 3,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 8,
+        "score": 3,
+        "pairScores": [
+          0,
+          0,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 8,
+        "score": 3,
+        "pairScores": [
+          0.5,
+          0,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 8,
+        "score": 5,
+        "pairScores": [
+          0,
+          1,
+          1,
+          0.5
+        ]
+      }
+    ],
+    "metrics": {
+      "a_turns": 2436,
+      "a_ms": 203284.03210000054,
+      "a_simulations": 301456,
+      "a_passes": 192,
+      "a_losingPasses": 153,
+      "a_earlyPasses": 0,
+      "a_certifiedLossPasses": 120,
+      "a_uncertifiedLosingPasses": 33,
+      "a_selfAtaris": 16,
+      "a_eyeFills": 0,
+      "a_missedCaptures": 175,
+      "b_turns": 2443,
+      "b_ms": 210118.54559999995,
+      "b_simulations": 311002,
+      "b_passes": 129,
+      "b_losingPasses": 80,
+      "b_earlyPasses": 0,
+      "b_certifiedLossPasses": 54,
+      "b_uncertifiedLosingPasses": 26,
+      "b_selfAtaris": 15,
+      "b_eyeFills": 2,
+      "b_missedCaptures": 237
+    }
+  },
+  "pairedBootstrap": {
+    "seed": 20261251,
+    "iterations": 10000,
+    "stratifiedByBoard": true,
+    "unit": "colour-swapped opening pair",
+    "interval95": [
+      0.2708333333333333,
+      0.5208333333333334
+    ],
+    "condition": "Descriptive interval for this fixed opponent and search budget; six fixed boards, 24 opening pairs."
+  },
+  "promoted": false,
+  "baselineRetained": true
+}

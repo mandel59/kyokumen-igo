@@ -11,7 +11,8 @@ import {createNodeInference} from './node-inference.mjs';
 
 const fixture=readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url));
 const {game:record,ai:colour}=decodeRecord(JSON.parse(fixture).code);
-const inference=await createNodeInference('dist/models/v3');
+const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
+const inference=await createNodeInference(arg('--model','dist/models/v3'));
 const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
 const adjacency=adjacencyFor(record.topology),game=new Game(record.topology,record.komi);
 const report={schemaVersion:1,fixtureSha256:createHash('sha256').update(fixture).digest('hex'),
@@ -26,7 +27,17 @@ try{
     search.start(aiPosition(game),{seed:report.seed,endgame});const start=performance.now();
     while(search.result().simulations<report.simulations){
      const request=search.collect();
-     if(request.count)search.submit(request,await inference.evaluate(request,adjacency));
+     if(request.count){
+      const evaluation=await inference.evaluate(request,adjacency);
+      if(!endgame&&!position.neural){
+       const logits=evaluation.policy.subarray(0,161),points=Array.from(request.legal,(_,p)=>p).filter(p=>request.legal[p]);
+       const max=Math.max(...points.map(p=>logits[p])),total=points.reduce((sum,p)=>sum+Math.exp(logits[p]-max),0);
+       const w=Array.from(evaluation.wdl.subarray(0,3)),peak=Math.max(...w),probability=w.map(v=>Math.exp(v-peak)),denominator=probability.reduce((a,b)=>a+b,0);
+       position.neural={passPrior:Math.exp(logits[160]-max)/total,passRank:1+points.filter(p=>logits[p]>logits[160]).length,
+        win:probability[0]/denominator,draw:probability[1]/denominator,loss:probability[2]/denominator};
+      }
+      search.submit(request,evaluation);
+     }
      if(search.result().provenLoss)break;
     }
     const result=search.result();position[endgame?'after':'before']={move:result.move,simulations:result.simulations,
@@ -42,5 +53,5 @@ try{
 }finally{search.dispose();await inference.dispose();}
 report.summary={checkedPositions:report.positions.length,certifiedPasses:report.positions.filter(p=>p.after.provenLoss).length,
  priorNonPassesAfterCertificate:report.positions.filter(p=>p.after.provenLoss&&p.before.move!==null).length};
-const args=process.argv.slice(2);if(args.includes('--output'))writeFileSync(args[args.indexOf('--output')+1],JSON.stringify(report,null,2)+'\n');
+if(args.includes('--output'))writeFileSync(arg('--output'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report.summary));

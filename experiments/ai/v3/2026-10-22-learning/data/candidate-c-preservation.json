@@ -1,0 +1,7 @@
+{
+  "selectedEpoch": 0,
+  "changedParameters": [],
+  "policyPreserved": true,
+  "allWeightsEqual": true,
+  "onnxEqual": true
+}

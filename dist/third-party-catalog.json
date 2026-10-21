@@ -1,0 +1,1131 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-22",
+  "repository": "https://github.com/mandel59/kyokumen-igo",
+  "scope": "参考実装、配信するライブラリ、開発ツールと文献の一覧。",
+  "entries": [
+    {
+      "id": "katago",
+      "name": "KataGo",
+      "version": null,
+      "category": "reference",
+      "relationship": "implementation-reference",
+      "licenseExpression": "MIT",
+      "usage": "AI v3 の Benson 生存判定で calculateAreaForPla を参照。",
+      "files": [
+        "tools/ai-tuner/src/tactics.rs"
+      ],
+      "urls": [
+        "https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp"
+      ],
+      "notices": [
+        "dist/licenses/KataGo-LICENSE.txt"
+      ],
+      "distribution": "reference",
+      "copyrightNotices": [
+        "Copyright 2025 David J Wu (\"lightvector\") and/or other authors of the content in this repository."
+      ],
+      "modifications": [
+        "曲面の隣接グラフ向けに連・空領域・vital 関係を実装。"
+      ],
+      "provenance": {
+        "kind": "documented-reference",
+        "evidence": [
+          "experiments/ai/v3/2026-10-22-tactics/README.md"
+        ],
+        "ref": "master",
+        "gitBlobSha": "ae27c64c2ef53baf9343a3d0a16d640506f1dd09"
+      }
+    },
+    {
+      "id": "splitmix64",
+      "name": "SplitMix64",
+      "version": "2015",
+      "category": "reference",
+      "relationship": "adapted",
+      "licenseExpression": "LicenseRef-SplitMix64-Public-Domain",
+      "usage": "AI の乱数生成とコミ検証の seed 生成。",
+      "files": [
+        "tools/ai-tuner/src/rng.rs",
+        "tools/ai-tuner/komi-study.mjs"
+      ],
+      "urls": [
+        "https://prng.di.unimi.it/splitmix.c"
+      ],
+      "notices": [
+        "dist/licenses/SplitMix64-NOTICE.txt"
+      ],
+      "distribution": "wasm",
+      "copyrightNotices": [
+        "Written in 2015 by Sebastiano Vigna (vigna@acm.org)"
+      ],
+      "modifications": [
+        "Rust と JavaScript BigInt へ翻訳。",
+        "状態のインスタンス化、seed 混合、標本化補助を追加。"
+      ],
+      "provenance": {
+        "kind": "implementation-match",
+        "evidence": [
+          "tools/ai-tuner/src/rng.rs",
+          "tools/ai-tuner/komi-study.mjs"
+        ],
+        "ref": null,
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "mulberry32",
+      "name": "Mulberry32",
+      "version": "2017",
+      "category": "reference",
+      "relationship": "adapted",
+      "licenseExpression": "CC0-1.0 AND LicenseRef-Bryc-Public-Domain",
+      "usage": "共有カードの再現可能な盤面生成。",
+      "files": [
+        "tools/social-card.mjs"
+      ],
+      "urls": [
+        "https://gist.github.com/tommyettinger/46a874533244883189143505d203312c",
+        "https://github.com/bryc/code/blob/master/jshash/PRNGs.md#mulberry32"
+      ],
+      "notices": [
+        "dist/licenses/Mulberry32-NOTICE.txt"
+      ],
+      "distribution": "development-only",
+      "copyrightNotices": [
+        "Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com)",
+        "JavaScript implementation by bryc"
+      ],
+      "modifications": [
+        "JavaScript の変数名を変更し、seeded() クロージャに整理。"
+      ],
+      "provenance": {
+        "kind": "implementation-match",
+        "evidence": [
+          "tools/social-card.mjs"
+        ],
+        "ref": "master",
+        "gitBlobSha": "5b58125493d8043cc416bd035b8f24fa8843e006"
+      }
+    },
+    {
+      "id": "onnxruntime-web",
+      "name": "ONNX Runtime Web / Common",
+      "version": "1.30.0",
+      "category": "runtime",
+      "relationship": "dependency",
+      "licenseExpression": "MIT",
+      "usage": "AI v3 の ONNX WebGPU / WASM 推論。",
+      "files": [
+        "tools/ai-gnn/prepare.mjs",
+        "dist/ai-v3-inference.js"
+      ],
+      "urls": [
+        "https://github.com/microsoft/onnxruntime/tree/v1.30.0/js"
+      ],
+      "notices": [
+        "dist/licenses/onnxruntime-LICENSE.txt",
+        "dist/licenses/onnxruntime-ThirdPartyNotices.txt"
+      ],
+      "distribution": "runtime-files",
+      "copyrightNotices": [
+        "Copyright (c) Microsoft Corporation"
+      ],
+      "modifications": [
+        "上流 npm の JS・WASM を配置し、WASM を gzip 圧縮。"
+      ],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/package-lock.json"
+        ],
+        "ref": "v1.30.0",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "rust-stdlib",
+      "name": "Rust standard library",
+      "version": "1.99.1",
+      "category": "runtime",
+      "relationship": "static-link",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "usage": "ai-engine.wasm と ai-v3.wasm に静的リンク。",
+      "files": [
+        "tools/ai-tuner/build-wasm.mjs",
+        "tools/ai-gnn/build.mjs"
+      ],
+      "urls": [
+        "https://github.com/rust-lang/rust/tree/1.99.1"
+      ],
+      "notices": [
+        "dist/licenses/rust/COPYRIGHT-library.html",
+        "dist/licenses/rust/manifest.json"
+      ],
+      "distribution": "wasm",
+      "copyrightNotices": [
+        "The Rust Project Developers"
+      ],
+      "modifications": [],
+      "provenance": {
+        "kind": "toolchain",
+        "evidence": [
+          "dist/licenses/rust/manifest.json"
+        ],
+        "ref": "1.99.1",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "torch",
+      "name": "PyTorch",
+      "version": "2.14.1+cu130",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT",
+      "usage": "GNN の学習。",
+      "files": [
+        "tools/ai-gnn/pyproject.toml",
+        "tools/ai-gnn/uv.lock"
+      ],
+      "urls": [
+        "https://github.com/pytorch/pytorch"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/pyproject.toml",
+          "tools/ai-gnn/uv.lock"
+        ],
+        "ref": "2.14.1+cu130",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "numpy",
+      "name": "NumPy",
+      "version": "2.5.4",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "usage": "学習・出力時の数値配列処理。",
+      "files": [
+        "tools/ai-gnn/pyproject.toml",
+        "tools/ai-gnn/uv.lock"
+      ],
+      "urls": [
+        "https://github.com/numpy/numpy"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/pyproject.toml",
+          "tools/ai-gnn/uv.lock"
+        ],
+        "ref": "2.5.4",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "onnx",
+      "name": "ONNX",
+      "version": "1.23.2",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "Apache-2.0",
+      "usage": "モデルの出力・検査。",
+      "files": [
+        "tools/ai-gnn/pyproject.toml",
+        "tools/ai-gnn/uv.lock"
+      ],
+      "urls": [
+        "https://github.com/onnx/onnx"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/pyproject.toml",
+          "tools/ai-gnn/uv.lock"
+        ],
+        "ref": "1.23.2",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "onnxscript",
+      "name": "ONNX Script",
+      "version": "0.7.2",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "MIT",
+      "usage": "ONNX 出力の補助。",
+      "files": [
+        "tools/ai-gnn/pyproject.toml",
+        "tools/ai-gnn/uv.lock"
+      ],
+      "urls": [
+        "https://microsoft.github.io/onnxscript/"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/pyproject.toml",
+          "tools/ai-gnn/uv.lock"
+        ],
+        "ref": "0.7.2",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "onnxruntime-node",
+      "name": "ONNX Runtime Node",
+      "version": "1.30.0",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "MIT",
+      "usage": "自己対局と推論比較。",
+      "files": [
+        "tools/ai-gnn/package.json"
+      ],
+      "urls": [
+        "https://github.com/microsoft/onnxruntime/tree/v1.30.0/js/node"
+      ],
+      "notices": [
+        "dist/licenses/onnxruntime-LICENSE.txt",
+        "dist/licenses/onnxruntime-ThirdPartyNotices.txt"
+      ],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/package.json"
+        ],
+        "ref": "1.30.0",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "playwright",
+      "name": "Playwright Core",
+      "version": "1.56.1",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "Apache-2.0",
+      "usage": "実ブラウザによる回帰検証。",
+      "files": [
+        "tools/ai-gnn/package.json"
+      ],
+      "urls": [
+        "https://github.com/microsoft/playwright"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-gnn/package.json"
+        ],
+        "ref": "1.56.1",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "uv",
+      "name": "uv",
+      "version": "0.12.23",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "MIT OR Apache-2.0",
+      "usage": "Python 環境と依存の管理。",
+      "files": [
+        "tools/ai-gnn/pyproject.toml"
+      ],
+      "urls": [
+        "https://github.com/astral-sh/uv"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/ai-gnn/pyproject.toml"
+        ],
+        "ref": "0.12.23",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "version": "26.12.1",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "MIT",
+      "usage": "開発・検証スクリプトの実行。",
+      "files": [
+        "README.md"
+      ],
+      "urls": [
+        "https://nodejs.org/"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "README.md"
+        ],
+        "ref": "26.12.1",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "version": "3.12.14",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "PSF-2.0",
+      "usage": "学習スクリプトとローカル HTTP サーバーの実行。",
+      "files": [
+        "README.md",
+        "tools/ai-gnn/pyproject.toml"
+      ],
+      "urls": [
+        "https://www.python.org/"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "README.md",
+          "tools/ai-gnn/pyproject.toml"
+        ],
+        "ref": "3.12.14",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "imagemagick",
+      "name": "ImageMagick",
+      "version": "7.1.2-34",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "ImageMagick",
+      "usage": "共有カードとアイコンの生成。",
+      "files": [
+        "tools/social-card.mjs"
+      ],
+      "urls": [
+        "https://github.com/ImageMagick/ImageMagick/blob/main/LICENSE"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/social-card.mjs"
+        ],
+        "ref": "7.1.2-34",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "pango",
+      "name": "Pango",
+      "version": null,
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "LGPL-2.1-or-later",
+      "usage": "ImageMagick を通した文字描画。",
+      "files": [
+        "tools/social-card.mjs"
+      ],
+      "urls": [
+        "https://github.com/GNOME/pango/blob/main/meson.build",
+        "https://github.com/GNOME/pango/blob/main/COPYING"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/social-card.mjs"
+        ],
+        "ref": null,
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "noto-sans-jp",
+      "name": "Noto Sans JP",
+      "version": null,
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "OFL-1.1",
+      "usage": "共有カードの文字をラスター画像へ描画。",
+      "files": [
+        "tools/social-card.mjs"
+      ],
+      "urls": [
+        "https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/social-card.mjs"
+        ],
+        "ref": null,
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "wrangler",
+      "name": "Wrangler / Workers SDK",
+      "version": "4.151.3",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "MIT",
+      "usage": "静的サイトの配信。",
+      "files": [
+        "README.md"
+      ],
+      "urls": [
+        "https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT"
+      ],
+      "notices": [],
+      "distribution": "development-only",
+      "copyrightNotices": [],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "README.md"
+        ],
+        "ref": "4.151.3",
+        "gitBlobSha": null
+      }
+    }
+  ],
+  "inventoryFiles": {
+    "node": "docs/third-party/node-packages.json",
+    "python": "docs/third-party/python-packages.json"
+  },
+  "noticeSnapshots": [
+    {
+      "path": "dist/licenses/KataGo-LICENSE.txt",
+      "url": "https://github.com/lightvector/KataGo/blob/master/LICENSE",
+      "gitBlobSha": "b7bb8b7408679966c53fa75a440ed54e4c6eac8a",
+      "sha256": "770f21e95cfc982b19b2b17366b23b502925e4c882e409036ea00fff488cedd6"
+    },
+    {
+      "path": "dist/licenses/onnxruntime-ThirdPartyNotices.txt",
+      "url": "https://github.com/microsoft/onnxruntime/blob/v1.30.0/ThirdPartyNotices.txt",
+      "gitBlobSha": "75af6ad7e3db5c34e9ff923734ea49056c578d5f",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
+    },
+    {
+      "path": "dist/licenses/onnxruntime-LICENSE.txt",
+      "url": "https://github.com/microsoft/onnxruntime/blob/v1.30.0/LICENSE",
+      "gitBlobSha": "48bc6bb4996ac924359e8e28b9ae88970e5ed3fc",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "dist/licenses/SplitMix64-NOTICE.txt",
+      "url": "https://prng.di.unimi.it/splitmix.c",
+      "sha256": "99637b862616ceefc20f7b18f37c433ff3109754e44affffd364ad92b00cf8b4"
+    },
+    {
+      "path": "dist/licenses/Mulberry32-NOTICE.txt",
+      "url": "https://github.com/bryc/code/blob/master/jshash/PRNGs.md",
+      "gitBlobSha": "5b58125493d8043cc416bd035b8f24fa8843e006",
+      "sha256": "788c64f0b7ef381b429124f1e78b97ec5e90290f48d32176833f9ef43960b8c6"
+    }
+  ],
+  "references": [
+    {
+      "id": "benson1976",
+      "title": "Life in the game of Go",
+      "authors": "D. B. Benson",
+      "year": 1976,
+      "url": "https://doi.org/10.1016/S0020-0255(76)90554-5",
+      "usage": "無条件生存の固定点。"
+    },
+    {
+      "id": "alphazero2017",
+      "title": "Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm",
+      "authors": "D. Silver et al.",
+      "year": 2017,
+      "url": "https://arxiv.org/abs/1712.01815",
+      "usage": "PUCT、自己対局の訪問分布、探索時のノイズ。"
+    },
+    {
+      "id": "gamma2000",
+      "title": "A simple method for generating gamma variables",
+      "authors": "G. Marsaglia and W. W. Tsang",
+      "year": 2000,
+      "url": "https://doi.org/10.1145/358407.358414",
+      "usage": "Dirichlet ノイズのための Gamma 乱数。"
+    },
+    {
+      "id": "xorshift2003",
+      "title": "Xorshift RNGs",
+      "authors": "G. Marsaglia",
+      "year": 2003,
+      "url": "https://doi.org/10.18637/jss.v008.i14",
+      "usage": "検証・自己対局の seed 付き乱数。"
+    }
+  ],
+  "resolvedInventories": {
+    "node": {
+      "schemaVersion": 1,
+      "source": "tools/ai-gnn/package-lock.json",
+      "sourceSha256": "a538049f022fe21eb04e1ea5ccb6c36c9f02472b067b9d2812a6ed34e8dd3f08",
+      "condition": "Lockfile inventory, including Node tools and types. A declared web dependency is not evidence that its code is in the shipped browser bundle.",
+      "packages": [
+        {
+          "name": "@protobufjs/aspromise",
+          "version": "1.1.2",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/base64",
+          "version": "1.1.2",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/codegen",
+          "version": "2.0.5",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/eventemitter",
+          "version": "1.1.1",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/fetch",
+          "version": "1.1.1",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/float",
+          "version": "1.0.2",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/path",
+          "version": "1.1.2",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/pool",
+          "version": "1.1.0",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/dcodeIO/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@protobufjs/utf8",
+          "version": "1.1.2",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/protobufjs/protobuf.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "@types/node",
+          "version": "26.6.5",
+          "license": "MIT",
+          "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "adm-zip",
+          "version": "0.6.1",
+          "license": "MIT",
+          "repository": "https://github.com/cthackers/adm-zip.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "define-data-property",
+          "version": "1.1.4",
+          "license": "MIT",
+          "repository": "git+https://github.com/ljharb/define-data-property.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "define-properties",
+          "version": "1.2.1",
+          "license": "MIT",
+          "repository": "git://github.com/ljharb/define-properties.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "es-define-property",
+          "version": "1.0.1",
+          "license": "MIT",
+          "repository": "git+https://github.com/ljharb/es-define-property.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "es-errors",
+          "version": "1.3.0",
+          "license": "MIT",
+          "repository": "git+https://github.com/ljharb/es-errors.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "escape-string-regexp",
+          "version": "4.0.0",
+          "license": "MIT",
+          "repository": "sindresorhus/escape-string-regexp",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "flatbuffers",
+          "version": "25.9.23",
+          "license": "Apache-2.0",
+          "repository": "git+https://github.com/google/flatbuffers.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "global-agent",
+          "version": "4.1.3",
+          "license": "BSD-3-Clause",
+          "repository": "https://github.com/gajus/global-agent",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "globalthis",
+          "version": "1.0.4",
+          "license": "MIT",
+          "repository": "git://github.com/ljharb/System.global.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "gopd",
+          "version": "1.2.0",
+          "license": "MIT",
+          "repository": "git+https://github.com/ljharb/gopd.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "guid-typescript",
+          "version": "1.0.9",
+          "license": "ISC",
+          "repository": "https://github.com/NicolasDeveloper/guid-typescript",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "has-property-descriptors",
+          "version": "1.0.2",
+          "license": "MIT",
+          "repository": "git+https://github.com/inspect-js/has-property-descriptors.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "long",
+          "version": "5.3.2",
+          "license": "Apache-2.0",
+          "repository": "https://github.com/dcodeIO/long.js.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "matcher",
+          "version": "4.0.0",
+          "license": "MIT",
+          "repository": "sindresorhus/matcher",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "object-keys",
+          "version": "1.1.1",
+          "license": "MIT",
+          "repository": "git://github.com/ljharb/object-keys.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "onnxruntime-common",
+          "version": "1.30.0",
+          "license": "MIT",
+          "repository": "https://github.com/Microsoft/onnxruntime.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "onnxruntime-node",
+          "version": "1.30.0",
+          "license": "MIT",
+          "repository": "https://github.com/Microsoft/onnxruntime.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "onnxruntime-web",
+          "version": "1.30.0",
+          "license": "MIT",
+          "repository": "https://github.com/Microsoft/onnxruntime.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "platform",
+          "version": "1.3.6",
+          "license": "MIT",
+          "repository": "bestiejs/platform.js",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "playwright-core",
+          "version": "1.56.1",
+          "license": "Apache-2.0",
+          "repository": "git+https://github.com/microsoft/playwright.git",
+          "declaredWebDependency": false,
+          "developmentOnly": true
+        },
+        {
+          "name": "protobufjs",
+          "version": "7.6.6",
+          "license": "BSD-3-Clause",
+          "repository": "protobufjs/protobuf.js",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        },
+        {
+          "name": "semver",
+          "version": "7.8.5",
+          "license": "ISC",
+          "repository": "git+https://github.com/npm/node-semver.git",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "serialize-error",
+          "version": "8.1.0",
+          "license": "MIT",
+          "repository": "sindresorhus/serialize-error",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "type-fest",
+          "version": "0.20.2",
+          "license": "(MIT OR CC0-1.0)",
+          "repository": "sindresorhus/type-fest",
+          "declaredWebDependency": false,
+          "developmentOnly": false
+        },
+        {
+          "name": "undici-types",
+          "version": "8.9.0",
+          "license": "MIT",
+          "repository": "git+https://github.com/nodejs/undici.git",
+          "declaredWebDependency": true,
+          "developmentOnly": false
+        }
+      ]
+    },
+    "python": {
+      "schemaVersion": 1,
+      "source": "tools/ai-gnn/uv.lock",
+      "sourceSha256": "0e0fdb2a1a972dd7c2b7effb797de2feef1a0f975178a64e98826618548b340b",
+      "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+      "condition": "Installed uv environment; training/export tools only, not distributed in dist. License declarations are preserved from package metadata, including composite wheel licenses.",
+      "packages": [
+        {
+          "name": "filelock",
+          "version": "4.2.4",
+          "license": "MIT",
+          "projectUrls": [
+            "Documentation, https://py-filelock.readthedocs.io",
+            "Homepage, https://github.com/tox-dev/py-filelock",
+            "Source, https://github.com/tox-dev/py-filelock",
+            "Tracker, https://github.com/tox-dev/py-filelock/issues"
+          ],
+          "home": null,
+          "licenseClassifiers": [
+            "License :: OSI Approved :: MIT License"
+          ]
+        },
+        {
+          "name": "fsspec",
+          "version": "2026.9.0",
+          "license": "BSD-3-Clause",
+          "projectUrls": [
+            "Changelog, https://filesystem-spec.readthedocs.io/en/latest/changelog.html",
+            "Documentation, https://filesystem-spec.readthedocs.io/en/latest/",
+            "Homepage, https://github.com/fsspec/filesystem_spec"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "Jinja2",
+          "version": "3.1.6",
+          "license": null,
+          "projectUrls": [
+            "Changes, https://jinja.palletsprojects.com/changes/",
+            "Chat, https://discord.gg/pallets",
+            "Documentation, https://jinja.palletsprojects.com/",
+            "Donate, https://palletsprojects.com/donate",
+            "Source, https://github.com/pallets/jinja/"
+          ],
+          "home": null,
+          "licenseClassifiers": [
+            "License :: OSI Approved :: BSD License"
+          ]
+        },
+        {
+          "name": "MarkupSafe",
+          "version": "3.0.4",
+          "license": "BSD-3-Clause",
+          "projectUrls": [
+            "Donate, https://palletsprojects.com/donate",
+            "Documentation, https://markupsafe.palletsprojects.com/",
+            "Changes, https://markupsafe.palletsprojects.com/page/changes/",
+            "Source, https://github.com/pallets/markupsafe/",
+            "Chat, https://discord.gg/pallets"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "ml_dtypes",
+          "version": "0.6.0",
+          "license": "Apache-2.0",
+          "projectUrls": [
+            "homepage, https://github.com/jax-ml/ml_dtypes",
+            "repository, https://github.com/jax-ml/ml_dtypes"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "mpmath",
+          "version": "1.3.0",
+          "license": "BSD",
+          "projectUrls": [
+            "Source, https://github.com/fredrik-johansson/mpmath",
+            "Tracker, https://github.com/fredrik-johansson/mpmath/issues",
+            "Documentation, http://mpmath.org/doc/current/"
+          ],
+          "home": "http://mpmath.org/",
+          "licenseClassifiers": [
+            "License :: OSI Approved :: BSD License"
+          ]
+        },
+        {
+          "name": "networkx",
+          "version": "3.7",
+          "license": "BSD-3-Clause",
+          "projectUrls": [
+            "Homepage, https://networkx.org/",
+            "Bug Tracker, https://github.com/networkx/networkx/issues",
+            "Documentation, https://networkx.org/documentation/stable/",
+            "Source Code, https://github.com/networkx/networkx"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "numpy",
+          "version": "2.5.4",
+          "license": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+          "projectUrls": [
+            "homepage, https://numpy.org",
+            "documentation, https://numpy.org/doc/",
+            "source, https://github.com/numpy/numpy",
+            "download, https://pypi.org/project/numpy/#files",
+            "tracker, https://github.com/numpy/numpy/issues",
+            "release notes, https://numpy.org/doc/stable/release"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "onnx",
+          "version": "1.23.2",
+          "license": "Apache-2.0",
+          "projectUrls": [
+            "Homepage, https://onnx.ai/",
+            "Repository, https://github.com/onnx/onnx"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "onnx-ir",
+          "version": "1.1.0",
+          "license": "Apache-2.0",
+          "projectUrls": [
+            "Homepage, https://onnx.ai/ir-py",
+            "Issues, https://github.com/onnx/ir-py/issues",
+            "Repository, https://github.com/onnx/ir-py"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "onnxscript",
+          "version": "0.7.2",
+          "license": "MIT License\n\nCopyright (c) Microsoft Corporation\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n",
+          "projectUrls": [
+            "Homepage, https://microsoft.github.io/onnxscript/",
+            "Repository, https://github.com/microsoft/onnxscript"
+          ],
+          "home": null,
+          "licenseClassifiers": [
+            "License :: OSI Approved :: MIT License"
+          ]
+        },
+        {
+          "name": "packaging",
+          "version": "26.3",
+          "license": "Apache-2.0 OR BSD-2-Clause",
+          "projectUrls": [
+            "Documentation, https://packaging.pypa.io/",
+            "Source, https://github.com/pypa/packaging"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "protobuf",
+          "version": "7.36.2",
+          "license": "3-Clause BSD License",
+          "projectUrls": [],
+          "home": "https://developers.google.com/protocol-buffers/",
+          "licenseClassifiers": []
+        },
+        {
+          "name": "setuptools",
+          "version": "84.2.1",
+          "license": "MIT",
+          "projectUrls": [
+            "Source, https://github.com/pypa/setuptools",
+            "Documentation, https://setuptools.pypa.io/",
+            "Changelog, https://setuptools.pypa.io/en/stable/history.html"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "sympy",
+          "version": "1.14.0",
+          "license": "BSD",
+          "projectUrls": [
+            "Source, https://github.com/sympy/sympy"
+          ],
+          "home": "https://sympy.org",
+          "licenseClassifiers": [
+            "License :: OSI Approved :: BSD License"
+          ]
+        },
+        {
+          "name": "torch",
+          "version": "2.14.1+cu130",
+          "license": "Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT",
+          "projectUrls": [
+            "Homepage, https://pytorch.org",
+            "Repository, https://github.com/pytorch/pytorch",
+            "Documentation, https://pytorch.org/docs",
+            "Issue Tracker, https://github.com/pytorch/pytorch/issues",
+            "Forum, https://discuss.pytorch.org"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        },
+        {
+          "name": "typing_extensions",
+          "version": "4.16.0",
+          "license": "PSF-2.0",
+          "projectUrls": [
+            "Bug Tracker, https://github.com/python/typing_extensions/issues",
+            "Changes, https://github.com/python/typing_extensions/blob/main/CHANGELOG.md",
+            "Documentation, https://typing-extensions.readthedocs.io/",
+            "Home, https://github.com/python/typing_extensions",
+            "Q & A, https://github.com/python/typing/discussions",
+            "Repository, https://github.com/python/typing_extensions"
+          ],
+          "home": null,
+          "licenseClassifiers": []
+        }
+      ]
+    }
+  }
+}

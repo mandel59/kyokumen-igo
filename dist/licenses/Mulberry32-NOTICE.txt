@@ -1,0 +1,20 @@
+Mulberry32
+
+Original C algorithm: Tommy Ettinger
+https://gist.github.com/tommyettinger/46a874533244883189143505d203312c
+
+Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com)
+
+To the extent possible under law, the author has dedicated all copyright
+and related and neighboring rights to this software to the public domain
+worldwide. This software is distributed without any warranty.
+
+See <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+JavaScript implementation: bryc
+https://github.com/bryc/code/blob/master/jshash/PRNGs.md#mulberry32
+The upstream file declares: "License: Public domain."
+
+Used in tools/social-card.mjs, function seeded().
+Changes: renamed state variable and compacted the JavaScript closure.
+The generator is a development tool for deterministic social-card images.

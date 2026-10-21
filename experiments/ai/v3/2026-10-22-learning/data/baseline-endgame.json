@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "fixtureSha256": "5aba556ce77e0c9a31220e67a79ebb2b8c03574953619140cde6972da40d0325",
+  "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+  "seed": 3,
+  "simulations": 64,
+  "aiColour": 2,
+  "kind": "sphere",
+  "size": 5,
+  "komi": 6.5,
+  "originalMoves": 231,
+  "condition": "Same model, root tactics and seed; only certified-loss passing toggled. Fixed visits, native CPU inference.",
+  "positions": [
+    {
+      "ply": 164,
+      "originalMove": 60,
+      "score": {
+        "black": 84,
+        "white": 66.5,
+        "territoryBlack": 5,
+        "territoryWhite": 1,
+        "neutral": 8,
+        "stonesBlack": 79,
+        "stonesWhite": 59,
+        "winner": 1,
+        "margin": 17.5
+      },
+      "neural": {
+        "passPrior": 0.24201948450714017,
+        "passRank": 3,
+        "win": 0.00036444312862125654,
+        "draw": 6.982806218051673e-8,
+        "loss": 0.9996354870433165
+      },
+      "before": {
+        "move": 67,
+        "simulations": 64,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.2380952388048172,
+        "elapsedMs": 59.56390000000002
+      },
+      "after": {
+        "move": 67,
+        "simulations": 64,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.2380952388048172,
+        "elapsedMs": 47.50369999999998
+      }
+    },
+    {
+      "ply": 166,
+      "originalMove": null,
+      "score": {
+        "black": 85,
+        "white": 67.5,
+        "territoryBlack": 5,
+        "territoryWhite": 1,
+        "neutral": 6,
+        "stonesBlack": 80,
+        "stonesWhite": 60,
+        "winner": 1,
+        "margin": 17.5
+      },
+      "neural": {
+        "passPrior": 0.7588950485067084,
+        "passRank": 1,
+        "win": 0.00003382753479686694,
+        "draw": 7.573209297715838e-9,
+        "loss": 0.999966164891994
+      },
+      "before": {
+        "move": null,
+        "simulations": 65,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.765625,
+        "elapsedMs": 39.547799999999995
+      },
+      "after": {
+        "move": null,
+        "simulations": 1,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "passPolicy": 1,
+        "elapsedMs": 1.0646999999999593
+      }
+    },
+    {
+      "ply": 168,
+      "originalMove": 27,
+      "score": {
+        "black": 128,
+        "white": 24.5,
+        "territoryBlack": 47,
+        "territoryWhite": 0,
+        "neutral": 6,
+        "stonesBlack": 81,
+        "stonesWhite": 18,
+        "winner": 1,
+        "margin": 103.5
+      },
+      "neural": {
+        "passPrior": 0.0000025173418201431622,
+        "passRank": 42,
+        "win": 0.000004596831397981709,
+        "draw": 3.6905164302309716e-11,
+        "loss": 0.9999954031316969
+      },
+      "before": {
+        "move": 124,
+        "simulations": 65,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.015625,
+        "elapsedMs": 50.082899999999995
+      },
+      "after": {
+        "move": null,
+        "simulations": 1,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "passPolicy": 1,
+        "elapsedMs": 2.841899999999953
+      }
+    },
+    {
+      "ply": 184,
+      "originalMove": 84,
+      "score": {
+        "black": 104,
+        "white": 31.5,
+        "territoryBlack": 15,
+        "territoryWhite": 0,
+        "neutral": 23,
+        "stonesBlack": 89,
+        "stonesWhite": 25,
+        "winner": 1,
+        "margin": 72.5
+      },
+      "neural": {
+        "passPrior": 0.00001798781955772643,
+        "passRank": 20,
+        "win": 0.0000016511547996049376,
+        "draw": 1.0013068145679468e-11,
+        "loss": 0.9999983488351875
+      },
+      "before": {
+        "move": 11,
+        "simulations": 67,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.01515151560306549,
+        "elapsedMs": 49.392600000000016
+      },
+      "after": {
+        "move": null,
+        "simulations": 1,
+        "provenLoss": true,
+        "lossMarginLowerBound": 19.5,
+        "passPolicy": 1,
+        "elapsedMs": 2.4811000000000263
+      }
+    },
+    {
+      "ply": 210,
+      "originalMove": 88,
+      "score": {
+        "black": 134,
+        "white": 16.5,
+        "territoryBlack": 32,
+        "territoryWhite": 0,
+        "neutral": 8,
+        "stonesBlack": 102,
+        "stonesWhite": 10,
+        "winner": 1,
+        "margin": 117.5
+      },
+      "neural": {
+        "passPrior": 0.000001926069529840688,
+        "passRank": 16,
+        "win": 1.0518892172079836e-7,
+        "draw": 9.696196399305454e-14,
+        "loss": 0.9999998948109814
+      },
+      "before": {
+        "move": 87,
+        "simulations": 65,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.015625,
+        "elapsedMs": 52.30200000000002
+      },
+      "after": {
+        "move": null,
+        "simulations": 1,
+        "provenLoss": true,
+        "lossMarginLowerBound": 45.5,
+        "passPolicy": 1,
+        "elapsedMs": 2.161900000000003
+      }
+    },
+    {
+      "ply": 228,
+      "originalMove": 101,
+      "score": {
+        "black": 133,
+        "white": 16.5,
+        "territoryBlack": 22,
+        "territoryWhite": 0,
+        "neutral": 9,
+        "stonesBlack": 111,
+        "stonesWhite": 10,
+        "winner": 1,
+        "margin": 116.5
+      },
+      "neural": {
+        "passPrior": 0.14699136432467652,
+        "passRank": 5,
+        "win": 2.8311310883451378e-8,
+        "draw": 1.3951242712997675e-14,
+        "loss": 0.999999971688675
+      },
+      "before": {
+        "move": 18,
+        "simulations": 70,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "passPolicy": 0.30434781312942505,
+        "elapsedMs": 63.072299999999984
+      },
+      "after": {
+        "move": null,
+        "simulations": 1,
+        "provenLoss": true,
+        "lossMarginLowerBound": 63.5,
+        "passPolicy": 1,
+        "elapsedMs": 1.7175999999999476
+      }
+    }
+  ],
+  "summary": {
+    "checkedPositions": 6,
+    "certifiedPasses": 5,
+    "priorNonPassesAfterCertificate": 4
+  }
+}

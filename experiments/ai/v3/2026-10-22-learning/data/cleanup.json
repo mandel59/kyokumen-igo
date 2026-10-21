@@ -1,0 +1,744 @@
+{
+  "schemaVersion": 1,
+  "input": "tools/ai-gnn/target/learning/selfplay.jsonl",
+  "families": 96,
+  "steps": 8,
+  "positions": 177,
+  "branchedFamilies": 43,
+  "captures": 668,
+  "skipped": 50,
+  "condition": "Same gameId as parent enforces family-level splits; all added policies are pass, proved lost at every sampled root. Score/ownership come from the legally completed branch.",
+  "games": [
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-1",
+      "positions": 8,
+      "captured": 3,
+      "loser": 2,
+      "finalScore": {
+        "black": 53,
+        "white": 5.5,
+        "territoryBlack": 11,
+        "territoryWhite": 0,
+        "neutral": 1,
+        "stonesBlack": 42,
+        "stonesWhite": 2,
+        "winner": 1,
+        "margin": 47.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-2",
+      "positions": 4,
+      "captured": 3,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 62.5,
+        "territoryBlack": 0,
+        "territoryWhite": 21,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 35,
+        "winner": 2,
+        "margin": 62.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-3",
+      "positions": 1,
+      "captured": 24,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 65.5,
+        "territoryBlack": 0,
+        "territoryWhite": 27,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 29,
+        "winner": 2,
+        "margin": 65.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-4",
+      "positions": 4,
+      "captured": 20,
+      "loser": 2,
+      "finalScore": {
+        "black": 56,
+        "white": 0,
+        "territoryBlack": 23,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 33,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 56
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-6",
+      "positions": 5,
+      "captured": 13,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 62.5,
+        "territoryBlack": 0,
+        "territoryWhite": 20,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 36,
+        "winner": 2,
+        "margin": 62.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-7",
+      "positions": 2,
+      "captured": 2,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 65.5,
+        "territoryBlack": 0,
+        "territoryWhite": 24,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 32,
+        "winner": 2,
+        "margin": 65.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-11",
+      "positions": 3,
+      "captured": 2,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 65.5,
+        "territoryBlack": 0,
+        "territoryWhite": 24,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 32,
+        "winner": 2,
+        "margin": 65.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere3-14",
+      "positions": 6,
+      "captured": 6,
+      "loser": 2,
+      "finalScore": {
+        "black": 56,
+        "white": 6.5,
+        "territoryBlack": 18,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 38,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 49.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere4-0",
+      "positions": 2,
+      "captured": 5,
+      "loser": 1,
+      "finalScore": {
+        "black": 34,
+        "white": 64,
+        "territoryBlack": 2,
+        "territoryWhite": 8,
+        "neutral": 0,
+        "stonesBlack": 32,
+        "stonesWhite": 56,
+        "winner": 2,
+        "margin": 30
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere4-2",
+      "positions": 3,
+      "captured": 37,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 104.5,
+        "territoryBlack": 0,
+        "territoryWhite": 47,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 51,
+        "winner": 2,
+        "margin": 104.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere4-6",
+      "positions": 3,
+      "captured": 35,
+      "loser": 2,
+      "finalScore": {
+        "black": 98,
+        "white": 6.5,
+        "territoryBlack": 42,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 56,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 91.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere4-14",
+      "positions": 6,
+      "captured": 18,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 104.5,
+        "territoryBlack": 0,
+        "territoryWhite": 43,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 55,
+        "winner": 2,
+        "margin": 104.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere4-15",
+      "positions": 4,
+      "captured": 37,
+      "loser": 2,
+      "finalScore": {
+        "black": 98,
+        "white": 9.5,
+        "territoryBlack": 40,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 58,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 88.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere5-4",
+      "positions": 7,
+      "captured": 4,
+      "loser": 2,
+      "finalScore": {
+        "black": 152,
+        "white": 0,
+        "territoryBlack": 66,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 86,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 152
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere5-7",
+      "positions": 2,
+      "captured": 56,
+      "loser": 2,
+      "finalScore": {
+        "black": 152,
+        "white": 9.5,
+        "territoryBlack": 69,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 83,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 142.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-sphere5-13",
+      "positions": 7,
+      "captured": 45,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 155.5,
+        "territoryBlack": 0,
+        "territoryWhite": 64,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 88,
+        "winner": 2,
+        "margin": 155.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-2",
+      "positions": 5,
+      "captured": 5,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 55.5,
+        "territoryBlack": 0,
+        "territoryWhite": 15,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 34,
+        "winner": 2,
+        "margin": 55.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-5",
+      "positions": 1,
+      "captured": 20,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 52.5,
+        "territoryBlack": 0,
+        "territoryWhite": 23,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 26,
+        "winner": 2,
+        "margin": 52.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-6",
+      "positions": 2,
+      "captured": 2,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 55.5,
+        "territoryBlack": 0,
+        "territoryWhite": 21,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 28,
+        "winner": 2,
+        "margin": 55.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-7",
+      "positions": 5,
+      "captured": 9,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 58.5,
+        "territoryBlack": 0,
+        "territoryWhite": 11,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 38,
+        "winner": 2,
+        "margin": 58.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-9",
+      "positions": 1,
+      "captured": 19,
+      "loser": 2,
+      "finalScore": {
+        "black": 49,
+        "white": 3.5,
+        "territoryBlack": 21,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 28,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 45.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-11",
+      "positions": 4,
+      "captured": 6,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 58.5,
+        "territoryBlack": 0,
+        "territoryWhite": 17,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 32,
+        "winner": 2,
+        "margin": 58.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-13",
+      "positions": 4,
+      "captured": 8,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 52.5,
+        "territoryBlack": 0,
+        "territoryWhite": 13,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 36,
+        "winner": 2,
+        "margin": 52.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-14",
+      "positions": 2,
+      "captured": 16,
+      "loser": 2,
+      "finalScore": {
+        "black": 49,
+        "white": 6.5,
+        "territoryBlack": 18,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 31,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 42.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus7-15",
+      "positions": 3,
+      "captured": 7,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 58.5,
+        "territoryBlack": 0,
+        "territoryWhite": 15,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 34,
+        "winner": 2,
+        "margin": 58.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-1",
+      "positions": 6,
+      "captured": 4,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 84.5,
+        "territoryBlack": 0,
+        "territoryWhite": 31,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 50,
+        "winner": 2,
+        "margin": 84.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-3",
+      "positions": 8,
+      "captured": 4,
+      "loser": 2,
+      "finalScore": {
+        "black": 67,
+        "white": 10.5,
+        "territoryBlack": 13,
+        "territoryWhite": 0,
+        "neutral": 13,
+        "stonesBlack": 54,
+        "stonesWhite": 1,
+        "winner": 1,
+        "margin": 56.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-5",
+      "positions": 3,
+      "captured": 30,
+      "loser": 2,
+      "finalScore": {
+        "black": 81,
+        "white": 3.5,
+        "territoryBlack": 35,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 46,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 77.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-7",
+      "positions": 4,
+      "captured": 0,
+      "loser": 1,
+      "finalScore": {
+        "black": 38,
+        "white": 51.5,
+        "territoryBlack": 1,
+        "territoryWhite": 2,
+        "neutral": 1,
+        "stonesBlack": 37,
+        "stonesWhite": 40,
+        "winner": 2,
+        "margin": 13.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-9",
+      "positions": 1,
+      "captured": 9,
+      "loser": 2,
+      "finalScore": {
+        "black": 81,
+        "white": 3.5,
+        "territoryBlack": 37,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 44,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 77.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-10",
+      "positions": 6,
+      "captured": 4,
+      "loser": 2,
+      "finalScore": {
+        "black": 81,
+        "white": 6.5,
+        "territoryBlack": 30,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 51,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 74.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-11",
+      "positions": 7,
+      "captured": 13,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 90.5,
+        "territoryBlack": 0,
+        "territoryWhite": 29,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 52,
+        "winner": 2,
+        "margin": 90.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-13",
+      "positions": 1,
+      "captured": 3,
+      "loser": 1,
+      "finalScore": {
+        "black": 34,
+        "white": 50.5,
+        "territoryBlack": 2,
+        "territoryWhite": 5,
+        "neutral": 0,
+        "stonesBlack": 32,
+        "stonesWhite": 42,
+        "winner": 2,
+        "margin": 16.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus9-14",
+      "positions": 3,
+      "captured": 32,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 87.5,
+        "territoryBlack": 0,
+        "territoryWhite": 40,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 41,
+        "winner": 2,
+        "margin": 87.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-1",
+      "positions": 2,
+      "captured": 2,
+      "loser": 2,
+      "finalScore": {
+        "black": 121,
+        "white": 3.5,
+        "territoryBlack": 56,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 65,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 117.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-2",
+      "positions": 8,
+      "captured": 6,
+      "loser": 1,
+      "finalScore": {
+        "black": 5,
+        "white": 104.5,
+        "territoryBlack": 0,
+        "territoryWhite": 20,
+        "neutral": 18,
+        "stonesBlack": 5,
+        "stonesWhite": 78,
+        "winner": 2,
+        "margin": 99.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-3",
+      "positions": 5,
+      "captured": 5,
+      "loser": 2,
+      "finalScore": {
+        "black": 121,
+        "white": 9.5,
+        "territoryBlack": 49,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 72,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 111.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-4",
+      "positions": 2,
+      "captured": 54,
+      "loser": 2,
+      "finalScore": {
+        "black": 121,
+        "white": 0,
+        "territoryBlack": 58,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 63,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 121
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-7",
+      "positions": 2,
+      "captured": 44,
+      "loser": 2,
+      "finalScore": {
+        "black": 121,
+        "white": 9.5,
+        "territoryBlack": 53,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 68,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 111.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-8",
+      "positions": 5,
+      "captured": 4,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 121,
+        "territoryBlack": 0,
+        "territoryWhite": 51,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 70,
+        "winner": 2,
+        "margin": 121
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-11",
+      "positions": 6,
+      "captured": 5,
+      "loser": 2,
+      "finalScore": {
+        "black": 121,
+        "white": 9.5,
+        "territoryBlack": 48,
+        "territoryWhite": 0,
+        "neutral": 0,
+        "stonesBlack": 73,
+        "stonesWhite": 0,
+        "winner": 1,
+        "margin": 111.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-14",
+      "positions": 8,
+      "captured": 4,
+      "loser": 1,
+      "finalScore": {
+        "black": 2,
+        "white": 105.5,
+        "territoryBlack": 0,
+        "territoryWhite": 25,
+        "neutral": 20,
+        "stonesBlack": 2,
+        "stonesWhite": 74,
+        "winner": 2,
+        "margin": 103.5
+      }
+    },
+    {
+      "gameId": "selfplay-e04f00bacc18-20261220-torus11-15",
+      "positions": 6,
+      "captured": 43,
+      "loser": 1,
+      "finalScore": {
+        "black": 0,
+        "white": 130.5,
+        "territoryBlack": 0,
+        "territoryWhite": 51,
+        "neutral": 0,
+        "stonesBlack": 0,
+        "stonesWhite": 70,
+        "winner": 2,
+        "margin": 130.5
+      }
+    }
+  ]
+}

@@ -60,6 +60,12 @@
       "architecture": "v3",
       "title": "Sparse fused WebGPU kernels and actual-batch CPU inference",
       "path": "v3/2026-10-22-inference/"
+    },
+    {
+      "id": "v3/2026-10-22-learning",
+      "architecture": "v3",
+      "title": "Selfplay curriculum, balanced fine-tuning and rejected candidates",
+      "path": "v3/2026-10-22-learning/"
     }
   ]
 }

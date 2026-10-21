@@ -1,0 +1,25 @@
+sphere 3 pair 0 A colour 1 score 1 margin 13.5 moves 57
+sphere 3 pair 0 A colour 2 score 0 margin -0.5 moves 61
+sphere 3 pair 1 A colour 1 score 0 margin -19.5 moves 60
+sphere 3 pair 1 A colour 2 score 1 margin 35.5 moves 66
+sphere 4 pair 0 A colour 1 score 0 margin -104.5 moves 130
+sphere 4 pair 0 A colour 2 score 1 margin 3.5 moves 99
+sphere 4 pair 1 A colour 1 score 0 margin -5.5 moves 94
+sphere 4 pair 1 A colour 2 score 0 margin -16.5 moves 101
+sphere 5 pair 0 A colour 1 score 0 margin -9.5 moves 148
+sphere 5 pair 0 A colour 2 score 0 margin -18.5 moves 165
+sphere 5 pair 1 A colour 1 score 0 margin -14.5 moves 168
+sphere 5 pair 1 A colour 2 score 0 margin -17.5 moves 175
+torus 7 pair 0 A colour 1 score 0 margin -42.5 moves 70
+torus 7 pair 0 A colour 2 score 0 margin -10.5 moves 57
+torus 7 pair 1 A colour 1 score 0 margin -38.5 moves 70
+torus 7 pair 1 A colour 2 score 1 margin 37.5 moves 62
+torus 9 pair 0 A colour 1 score 0 margin -87.5 moves 112
+torus 9 pair 0 A colour 2 score 1 margin 12.5 moves 84
+torus 9 pair 1 A colour 1 score 1 margin 8.5 moves 81
+torus 9 pair 1 A colour 2 score 1 margin 63.5 moves 108
+torus 11 pair 0 A colour 1 score 0 margin -5.5 moves 121
+torus 11 pair 0 A colour 2 score 0 margin -111.5 moves 165
+torus 11 pair 1 A colour 1 score 0 margin -8.5 moves 122
+torus 11 pair 1 A colour 2 score 0 margin -78.5 moves 163
+{"games":24,"completed":24,"capped":0,"score":7,"metrics":{"a_turns":1219,"a_ms":106277.03240000001,"a_simulations":149472,"a_passes":113,"a_losingPasses":91,"a_earlyPasses":0,"a_certifiedLossPasses":69,"a_uncertifiedLosingPasses":22,"a_selfAtaris":13,"a_eyeFills":0,"a_missedCaptures":54,"b_turns":1224,"b_ms":112152.83909999981,"b_simulations":157463,"b_passes":36,"b_losingPasses":15,"b_earlyPasses":0,"b_certifiedLossPasses":11,"b_uncertifiedLosingPasses":4,"b_selfAtaris":5,"b_eyeFills":1,"b_missedCaptures":168},"scoreRate":0.2916666666666667}

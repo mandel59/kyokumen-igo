@@ -2,6 +2,7 @@
 import {spawnSync} from 'node:child_process';
 import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import {prepareRustNotices} from '../prepare-rust-notices.mjs';
 
 const root=new URL('./',import.meta.url),output=new URL('../../dist/ai-engine.wasm',root);
 const target=new URL('target/browser-wasm/',root);
@@ -25,6 +26,7 @@ if(process.argv.includes('--check')) {
   }
   console.log('Shipped WASM matches the Rust source.');
 } else {
+  prepareRustNotices();
   writeFileSync(output,bytes);
   console.log('Built dist/ai-engine.wasm ('+bytes.length+' bytes).');
 }

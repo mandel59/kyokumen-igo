@@ -6,11 +6,11 @@ import {aiPosition} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 import {createNodeInference} from './node-inference.mjs';
+import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
 const args=process.argv.slice(2),value=(flag,fallback)=>args.includes(flag)?args[args.indexOf(flag)+1]:fallback;
 const games=Number(value('--games','2')),simulations=Number(value('--simulations','64')),seed=Number(value('--seed','20261022'));
 if(!Number.isInteger(games)||games<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid selfplay options');
-let state=seed>>>0;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return (state>>>0)/4294967296;};
-if(!state)state=1;
+const random=createRandom(seed);
 const inference=await createNodeInference(value('--model','tools/ai-gnn/target/model'));
 const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
 const out=createWriteStream(value('--output','tools/ai-gnn/target/selfplay.jsonl'));
@@ -23,25 +23,22 @@ try{
    const game=new Game(topology,[0,3.5,6.5,9.5][k%4]),samples=[];
    while(!game.ended&&game.moves<game.board.length*20){
     search.start(aiPosition(game),{seed:(random()*4294967296)>>>0});
-    let root;
+    let root,stalled=0;
     while(search.result().simulations<simulations){
      const batch=search.collect(8);
      if(!root&&batch.count)root=batch;
-     if(!batch.count)continue;
+     if(!batch.count){if(++stalled>16)throw new Error('Stalled selfplay search');continue;}stalled=0;
      const evaluation=await inference.evaluate(batch,adjacency);
-     if(game.moves<12&&search.result().simulations===0){
-      // Seeded exploration noise on root priors during data generation only.
-      for(let p=0;p<161;p++)if(batch.legal[p])evaluation.policy[p]+=0.5*(-Math.log(Math.max(1e-12,random()))-1);
-     }
+     if(game.moves<Math.min(24,game.board.length/2)&&search.result().simulations===0)exploreRoot(evaluation.policy,batch.legal,random);
      search.submit(batch,evaluation);
+     if(search.result().provenLoss)break;
     }
     const result=search.result();let move=result.move;
-    if(game.moves<12){
-     const draw=random();let cumulative=0;
-     for(let p=0;p<161;p++){cumulative+=result.policy[p];if(draw<cumulative){move=p===160?null:p;break;}}
-    }
+    const temperature=game.moves<Math.min(18,game.board.length/3)?1:game.moves<game.board.length/2?.25:0;
+    const action=sampleVisits(result.policy,random,temperature);move=action===160?null:action;
     samples.push({x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),
-     legal:Array.from(root.legal,Boolean),policy:Array.from(result.policy),turn:game.turn});
+     legal:Array.from(root.legal,Boolean),policy:Array.from(result.policy),turn:game.turn,ply:game.moves,
+     action,visits:result.simulations,source:'selfplay'});
     if(!(move===null?game.pass():game.play(move)).ok)throw new Error('Illegal MCTS move');
    }
    if(!game.ended){capped++;continue;}

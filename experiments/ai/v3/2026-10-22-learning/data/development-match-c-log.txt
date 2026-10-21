@@ -1,0 +1,4 @@
+sphere 3 pair 0 A colour 1 score 0 margin -58.5 moves 70
+sphere 3 pair 0 A colour 2 score 1 margin 58.5 moves 70
+sphere 3 pair 1 A colour 1 score 1 margin 38.5 moves 77
+sphere 3 pair 1 A colour 2 score 0 margin -38.5 moves 77

@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "command": "uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/test_training.py",
+      "passed": true,
+      "tests": 8
+    },
+    {
+      "command": "node tools/ai-gnn/test-selfplay.mjs",
+      "passed": true
+    },
+    {
+      "command": "node v3-tests.mjs",
+      "passed": true,
+      "reportedEndgamePositions": 33
+    },
+    {
+      "command": "node tools/ai-gnn/test-onnx.mjs tools/ai-gnn/target/learning/candidate-b",
+      "passed": true,
+      "boards": 6
+    },
+    {
+      "command": "node tools/ai-gnn/test-browser.mjs --model tools/ai-gnn/target/learning/candidate-b --output tools/ai-gnn/target/learning/candidate-b-browser.json",
+      "passed": true,
+      "modelSha256": "783b9eb0f4b343c5d8a6d46c18e6499c0c9c450f779f0024336572e47372d5fc",
+      "result": "candidate-b-browser.json"
+    },
+    {
+      "command": "node --check tools/ai-gnn/endgame-curriculum.mjs",
+      "passed": true
+    },
+    {
+      "command": "node --check tools/ai-gnn/match.mjs",
+      "passed": true
+    }
+  ],
+  "condition": "Executed against current learning source. Browser warnings about checksum fallback are intentional test cases."
+}

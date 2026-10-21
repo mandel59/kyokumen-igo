@@ -1,0 +1,16 @@
+{
+  "selected": "candidate-b",
+  "reason": "A scored 7/24, B scored 13/24 on development openings; C selected epoch 0 and is byte-identical to baseline, so its redundant development match was stopped.",
+  "developmentSeed": 20261240,
+  "finalSeed": 20261250,
+  "finalGames": 48,
+  "promotionGuard": {
+    "minimumScore": 30,
+    "minimumBoardScore": 2,
+    "maximumCaps": 0
+  },
+  "promoted": false,
+  "finalScore": 19,
+  "baselineRetained": true,
+  "reasonForRetention": "Final 19/48 is below the predeclared 30/48 guard; all six boards completed, no caps. No deployment change."
+}

@@ -22,6 +22,7 @@ async function player(model,tactics){
   while(search.result().simulations<simulations){
    const leaves=search.collect();if(!root&&leaves.count)root=leaves;
    if(leaves.count)search.submit(leaves,await inference.evaluate(leaves,adjacency));
+   if(search.result().provenLoss)break;
   }
   return {...search.result(),root};
  },async dispose(){search.dispose();await inference.dispose();}};
@@ -29,7 +30,7 @@ async function player(model,tactics){
 let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
 const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe')),b=await player(arg('--b','v2'),arg('--b-tactics','safe'));
 const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,
- condition:'Fixed v3 simulations vs v2 depth 4; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
+ condition:'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
 const output=arg('--output','tools/ai-gnn/target/match.json');
 try{
  for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
@@ -44,14 +45,18 @@ try{
    const turnSeeds=Array.from({length:topology.vertices.length*20},random);let pairScore=0,completed=0;
    for(const aColor of [1,2]){
     const game=new Game(topology,6.5);for(const move of moves)game.play(move);
-    const stats=()=>({turns:0,ms:0,simulations:0,passes:0,losingPasses:0,selfAtaris:0,eyeFills:0,missedCaptures:0});
+    const stats=()=>({turns:0,ms:0,simulations:0,passes:0,losingPasses:0,earlyPasses:0,certifiedLossPasses:0,uncertifiedLosingPasses:0,selfAtaris:0,eyeFills:0,missedCaptures:0});
     const metrics={a:stats(),b:stats()};
     while(!game.ended&&game.moves<turnSeeds.length){
      const side=game.turn===aColor?'a':'b',actor=side==='a'?a:b,m=metrics[side];
      const start=performance.now(),result=await actor.choose(aiPosition(game),turnSeeds[game.moves],adjacency);m.ms+=performance.now()-start;
      m.turns++;m.simulations+=result.simulations??0;
      const score=game.score(),move=result.move;
-     if(move===null){m.passes++;if(score.winner!==0&&score.winner!==game.turn)m.losingPasses++;}
+     if(move===null){
+      m.passes++;if(game.moves<topology.vertices.length/2)m.earlyPasses++;
+      if(result.provenLoss)m.certifiedLossPasses++;
+      if(score.winner!==0&&score.winner!==game.turn){m.losingPasses++;if(!result.provenLoss)m.uncertifiedLosingPasses++;}
+     }
      else{
       const analysis=game.analyze(move);if(!analysis.ok)throw new Error('Illegal AI move');
       if(analysis.liberties===1&&!analysis.captured)m.selfAtaris++;

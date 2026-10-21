@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-learning",
+  "architecture": "v3",
+  "title": "Selfplay curriculum, balanced fine-tuning and rejected candidates",
+  "source": {
+    "baseCommit": "6e85836df9067da269dc3eff21220bdbb2179c5b",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "baseline:e04f00bacc18",
+    "candidate-a:21e39187884c",
+    "candidate-b:783b9eb0f4b3",
+    "candidate-c:epoch-zero-baseline"
+  ],
+  "notes": [
+    "96 selfplay games plus 177 certified-loss cleanup positions, preserving parent-family validation splits.",
+    "Candidate A development 7/24, B 13/24; development reused for selection and is not independent.",
+    "Candidate C selects epoch 0; all parameters and ONNX equal baseline. Its redundant partial development match was stopped and excluded.",
+    "B final 19/48, no caps; predeclared 30/48 guard failed. Deployed baseline retained.",
+    "Stratified bootstrap over 24 colour-swapped opening pairs: descriptive 95% score-rate interval 27.1% to 52.1%.",
+    "Policy sharpening, confidence gate, baseline KL anchor, balanced sampling, device tensor cache, cosine learning rate and EMA; no architecture/inference change.",
+    "Stage A/B patches pin historical training code; final source patch includes value-only and candidate-browser validation.",
+    "Log files are archived as .txt to avoid the repository .log ignore pattern."
+  ],
+  "artifacts": [
+    {
+      "path": "data/baseline-endgame.json",
+      "sha256": "ea79d38b5924fd7c700056318b9595907728b95e8c473d79b9baa3a13a1a198d"
+    },
+    {
+      "path": "data/baseline-model-manifest.json",
+      "sha256": "a675996593e3c6337edc3cd98d2745557a3fb0a102865e3fd59ff9de07c605aa"
+    },
+    {
+      "path": "data/candidate-a-golden.json",
+      "sha256": "75397247112a5059666d543a70eb6e1bf74da44b20a490a1091e9b2d7497f23e"
+    },
+    {
+      "path": "data/candidate-a-manifest.json",
+      "sha256": "dedd09518d72e8db8c7141933c7cd71f5e49a105bfc990b0d00f6e60f7814fe0"
+    },
+    {
+      "path": "data/candidate-a-model.onnx",
+      "sha256": "21e39187884c1ff42e1a73637a1649c801bcc0b8586426524c8644a05a861bb6"
+    },
+    {
+      "path": "data/candidate-a-weights.f32",
+      "sha256": "5b100aa17e2f8e249275c36d6843a2414612d25373ae799d7490b23d4e81e023"
+    },
+    {
+      "path": "data/candidate-a-weights.pt",
+      "sha256": "1bc5f4b519d5c4fcd29b1297590db9b7d6a7448c9719fb52672d0bfbd12ebb01"
+    },
+    {
+      "path": "data/candidate-b-browser.json",
+      "sha256": "e5eb7908235f7c67130b7c9ffde41ca875af852cd5b58ce6ecc1ac727a80eaaa"
+    },
+    {
+      "path": "data/candidate-b-endgame.json",
+      "sha256": "3b738d341b1f8c93e0617fb8b0fe29dffb400ce11ce23e2159c7ff08cbeb3919"
+    },
+    {
+      "path": "data/candidate-b-golden.json",
+      "sha256": "c243f60532dce59a401cc400dced7846eca6a59f9e457a2db4449c7f4f38a912"
+    },
+    {
+      "path": "data/candidate-b-manifest.json",
+      "sha256": "85083469a4a6f7187a24801e8b689a25d1734ddd0f97be4b00728e94e67d0fc2"
+    },
+    {
+      "path": "data/candidate-b-model.onnx",
+      "sha256": "783b9eb0f4b343c5d8a6d46c18e6499c0c9c450f779f0024336572e47372d5fc"
+    },
+    {
+      "path": "data/candidate-b-weights.f32",
+      "sha256": "ff61b1eba68f9388ed3919225c5fd1ea6650977abb02aae21099ad79d13b7461"
+    },
+    {
+      "path": "data/candidate-b-weights.pt",
+      "sha256": "77169c51c2a759f72a344299b1d5366a673cab7277bc34e43fd7b332babf2928"
+    },
+    {
+      "path": "data/candidate-c-golden.json",
+      "sha256": "f022b206a5fe0b25e70db513b71192f82403a1715621c8320e295da837973914"
+    },
+    {
+      "path": "data/candidate-c-manifest.json",
+      "sha256": "bd4f8e779d133774b0d91aea486e567977def3d51474b531a1dcd74cce890f37"
+    },
+    {
+      "path": "data/candidate-c-model.onnx",
+      "sha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5"
+    },
+    {
+      "path": "data/candidate-c-preservation.json",
+      "sha256": "7da1625afc0f6d2f36d4866944efff6215f9d32d951df56e3bb95c2c04dd2f5a"
+    },
+    {
+      "path": "data/candidate-c-weights.f32",
+      "sha256": "d4b86a06364e06376d578250d10b79a7053a16fa234fe2821f2f8b2fcb31535a"
+    },
+    {
+      "path": "data/candidate-c-weights.pt",
+      "sha256": "7fe2279ced23ce3fffb562c18843c99895eafe4a799d5a0a7dc22b655deef786"
+    },
+    {
+      "path": "data/candidate-endgame.json",
+      "sha256": "42e643adcfcc558b9c8bb49fdeeb9a0c95b9f4754c4beaec8a16b89559dd0553"
+    },
+    {
+      "path": "data/cleanup.json",
+      "sha256": "d0862ca149aa99c4892d52dd3bfeee20a67d58b8fa8b734345b44d6ec56f1a59"
+    },
+    {
+      "path": "data/cleanup.jsonl.gz",
+      "sha256": "64c7ea5e5fbb7b9681fbcf6fb3cc77eb4d5dbac24a6c55494c7c072365339112"
+    },
+    {
+      "path": "data/development-match-b-log.txt",
+      "sha256": "4f23d4e18a3447ba31ae9d1d7843f03499298323ed5df788f6b68967f38ac8a9"
+    },
+    {
+      "path": "data/development-match-b.json",
+      "sha256": "3e97e06768ee1cb6adcf034ac99be12806b18033cb8a7c79bb180e143aafe5e7"
+    },
+    {
+      "path": "data/development-match-c-log.txt",
+      "sha256": "1ae81d772a2f6c616313d974fafa89b6954e3da8d9fa5946dd5f85d01c88f54e"
+    },
+    {
+      "path": "data/development-match-c.json",
+      "sha256": "35a4ef19780ef454d2924f20a0bb48a0d487aca4480b44cfd708218f77ca72b5"
+    },
+    {
+      "path": "data/development-match-log.txt",
+      "sha256": "c692a9bd5b9f305e732097bea9590a65d9c20124c81ed4454506a4a2dbb6e0ce"
+    },
+    {
+      "path": "data/development-match.json",
+      "sha256": "4142287091a0b11241606d965b85ce4a0c553c20d5356af65f921ca24c3106c8"
+    },
+    {
+      "path": "data/final-match-log.txt",
+      "sha256": "4fa730f1f2e69a544ad447d54e22d5190a18c4f091cdb6fdf5b04c4a9c0a3338"
+    },
+    {
+      "path": "data/final-match.json",
+      "sha256": "027c69538995f4d1130e5c3b7616f9278f1ab24ba46ee8b2db57c3e8cf50a1b0"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "2a2560faf3b12ad4b46462cc4aa2ecc6aea1bed71a68a5c0065537883464d925"
+    },
+    {
+      "path": "data/reproduce-summary.mjs",
+      "sha256": "3c1fede629cfeba45f28789fc2d6007edb773e02ca79c8b2a75acb8ed60f6089"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "a331e45c95a6d5a8b8d8a0867319b5375b4a5a25e9e4c940d629dc7dc26ba569"
+    },
+    {
+      "path": "data/selfplay-log.txt",
+      "sha256": "43aaae01e7d2c01b1d767159d0f240f0c0437e55518e1bc399d281f26489213d"
+    },
+    {
+      "path": "data/selfplay.jsonl.gz",
+      "sha256": "6ed356229eddfa7e92ee72bb727b0f09812b3e73bd311ebfc438e8fb18115334"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "4a06958a9f3c1548f1ec62f7f7cb27075ab41e55cd976272a0e9d5667dc4e2ef"
+    },
+    {
+      "path": "data/stage-a-source.patch",
+      "sha256": "5903caadf1e82f6e0960484d1c8e6499fe86eca987702a6de3e75fc626806de6"
+    },
+    {
+      "path": "data/stage-b-source.patch",
+      "sha256": "792c60bc2c000b53100b26c56da92ae847654c04a6ac8fe6269eb7b43645fe11"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "1d10366e626af1334b512af04792b8045a5a056565b4ab61357e36aaf3abed9f"
+    },
+    {
+      "path": "data/timings.json",
+      "sha256": "a40d673373ed31f27981f2c94c1c217c303387ac1c866ccbdfdf9a4c2eb1a65b"
+    },
+    {
+      "path": "data/train-b-log.txt",
+      "sha256": "28826e60bd469fd96cd92ceaddd180e9a5a557d0c22a31b941ce9ee065879b19"
+    },
+    {
+      "path": "data/train-c-log.txt",
+      "sha256": "b6d595aab3ddf15796ee4390bd9a91395dd2a1e997fc6487aa322357f39ce9da"
+    },
+    {
+      "path": "data/train-log.txt",
+      "sha256": "1a8c440d01baabe985cf7b3252875a1f9984e120f714ee2bef1b943a996fc644"
+    },
+    {
+      "path": "data/verification.json",
+      "sha256": "abd0b9d594eb32de72ec26b873ebf9f9b97a111ba9105f6a2d718a2ef0f7f6e1"
+    }
+  ]
+}

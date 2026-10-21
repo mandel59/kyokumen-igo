@@ -1,4 +1,6 @@
 // SplitMix64: small, fast and good enough for self-play noise and sampling.
+// Sebastiano Vigna's public-domain reference, adapted to Rust with per-instance state.
+// See dist/licenses/SplitMix64-NOTICE.txt and THIRD_PARTY.md.
 pub struct Rng(u64);
 
 impl Rng {

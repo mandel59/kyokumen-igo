@@ -12,6 +12,8 @@ const font=process.env.CARD_FONT||'Noto Sans JP';
 const tmp=mkdtempSync(join(tmpdir(),'kyokugo-card-'));
 
 // Deterministic AI self-play so the boards look like a game in progress.
+// Mulberry32: Tommy Ettinger; JavaScript form by bryc (public domain).
+// Adapted to our seeded closure; see dist/licenses/Mulberry32-NOTICE.txt.
 function seeded(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
 function position(kind,size,moves,seed){const game=new Game(createTopology(kind,size)),random=seeded(seed);while(game.moves<moves&&!game.ended){const move=chooseMove(game,{random});if(move==null||move<0)game.pass();else game.play(move);}return game;}
 

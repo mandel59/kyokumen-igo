@@ -16,6 +16,7 @@
 | v3/2026-10-22-tactics | 無駄な打ち込みの回避・捨て石保持の回帰検証 | [記録](v3/2026-10-22-tactics/README.md) |
 | v3/2026-10-22-endgame | 実棋譜の終盤の粘り・敗北確定後のパス | [記録](v3/2026-10-22-endgame/README.md) |
 | v3/2026-10-22-inference | 専用 WebGPU・CPU の実バッチ推論と速度比較 | [記録](v3/2026-10-22-inference/README.md) |
+| v3/2026-10-22-learning | 自己対局教材・追加学習・不採用候補の評価 | [記録](v3/2026-10-22-learning/README.md) |
 
 機械可読の索引は [catalog.json](catalog.json) です。各実験は README（報告）、manifest.json（識別情報・出所・データハッシュ）、data/（結果・計画・ログ）を持ちます。
 

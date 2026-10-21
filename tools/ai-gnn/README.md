@@ -4,6 +4,10 @@
 
 ## セットアップと試走
 
+第三者ソフトウェアの出所・利用範囲は [目録](../../THIRD_PARTY.md) を参照してください。`prepare.mjs` は固定した ONNX Runtime の LICENSE / ThirdPartyNotices をローカルからコピーし、WASM のビルドは同じ Rust 配布物の標準ライブラリ告知を保存します。最小構成の Rust では `rustup component add rust-docs` が必要です。配信前に `node tools/check-third-party.mjs --prepared` で告知と実ファイルを確認できます。
+
+目録の正本は [catalog.json](../../docs/third-party/catalog.json) です。`node tools/third-party.mjs --write` で Markdown・配信用 HTML・公開 JSON を再生成し、`node tools/third-party.mjs` で編集内容と生成結果の一致を検査します。
+
 リポジトリのルートで実行します。Python は uv で管理します。Rust の `wasm32-unknown-unknown` ターゲットと Node.js も必要です。
 
 ```powershell
@@ -51,16 +55,31 @@ node tools/ai-gnn/selfplay.mjs --model tools/ai-gnn/target/model --games 10 --si
 uv run --project tools/ai-gnn python tools/ai-gnn/train.py --data tools/ai-gnn/target/bootstrap.jsonl tools/ai-gnn/target/selfplay.jsonl --resume tools/ai-gnn/target/model/weights.pt --output tools/ai-gnn/target/next-model
 ```
 
-Node の CPU ONNX Runtime と配信 WASM の探索を組み合わせ、訪問分布を教師にします。最初の 12 手は探索分布から着手を抽選し、根の logits に乱数を加えます。`--board torus7` のように盤を限定できます。打ち切り局は除外します。棋力評価や過去モデルとのリーグ戦は別途必要です。
+Node の CPU ONNX Runtime と配信 WASM の探索を組み合わせ、訪問分布を教師にします。序盤は合法手の prior に 25% の Dirichlet ノイズ（総濃度 10）を混ぜます。着手温度は最初の `min(18,N/3)` 手が 1、`N/2` 手まで 0.25、その後は最大訪問数の手です。`--board torus7` のように盤を限定できます。打ち切り局は除外します。棋力評価や過去モデルとのリーグ戦は別途必要です。
+
+終盤の追加教材は、自己対局の敗北確定局面から合法な取り進めを作ります。各教材の根で再び敗北を証明できた場合だけパスを教師にし、枝を終局させた実際の得点・所属を付けます。派生局面は元の `gameId` を保持するため、同じ対局の枝が学習側と検証側へ分かれません。
+
+```powershell
+node tools/ai-gnn/endgame-curriculum.mjs --input tools/ai-gnn/target/selfplay.jsonl --output tools/ai-gnn/target/cleanup.jsonl --report tools/ai-gnn/target/cleanup.json --steps 8
+uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/train.py --data tools/ai-gnn/target/bootstrap.jsonl tools/ai-gnn/target/selfplay.jsonl tools/ai-gnn/target/cleanup.jsonl --resume tools/ai-gnn/target/model/weights.pt --split-manifest tools/ai-gnn/target/model/manifest.json --device cuda --epochs 24 --batch-size 128 --learning-rate 0.0001 --minimum-learning-rate 0.00001 --cosine --ema-decay 0.99 --balanced --selfplay-mass 0.5 --policy-temperature 0.5 --minimum-policy-confidence 0.25 --policy-anchor tools/ai-gnn/target/model/weights.pt --policy-anchor-weight 0.5 --best-validation --output tools/ai-gnn/target/next-model
+```
+
+学習入力は JSONL と gzip を混在できます。再開時は隣の `manifest.json` の対局分割を自動で引き継ぎ、`--split-manifest` で明示もできます。`--balanced` はデータ源・盤・対局・対局の三等分を均等化し、長い対局だけが支配するのを防ぎます。特徴と教師テンソルをデバイスへ一度転送して再利用し、`--cosine` と `--ema-decay` で学習率と平均重みを管理します。検証最良の選択には更新前の重みも含めます。
+
+低訪問数の探索分布は拡散しやすいため、`--policy-temperature` は自己対局の着手教師だけを鋭くし、`--minimum-policy-confidence` 未満の局面では着手損失だけを無効にします。勝敗・得点・所属の学習は続けます。`--policy-anchor` は旧モデルの着手分布への KL 損失で変化を抑えます。`--trainable value` は勝敗ヘッドだけを更新する比較用設定です。元の訪問分布での着手一致率・KL、勝敗 Brier、得点誤差、パス再現率を保存し、損失が下がっただけで棋力向上とは判定しません。[学習改善の実験](../../experiments/ai/v3/2026-10-22-learning/README.md) に失敗候補も記録します。
 
 ## 検証
 
 ```powershell
 node v3-tests.mjs
 uv run --project tools/ai-gnn python tools/ai-gnn/test_model.py
+uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/test_training.py
+node tools/ai-gnn/test-selfplay.mjs
 node tools/ai-gnn/test-onnx.mjs
 node tools/ai-gnn/test-browser.mjs
 ```
+
+学習候補は `node tools/ai-gnn/test-browser.mjs --model tools/ai-gnn/target/next-model --output tools/ai-gnn/target/candidate-browser.json` で配信モデルを変更せず検証できます。候補ディレクトリの manifest・重み・golden をテストサーバーだけで配信し、本番 Worker もその候補で動かします。
 
 ブラウザ検証はローカルサーバーと一時プロファイルのヘッドレス Edge を起動し、Worker 内の専用 WebGPU / WASM を PyTorch の固定出力と比較します。実バッチ数・最大容量 1 / 4 / 8、交点の並べ替え、破損重み・未対応グラフからの ONNX フォールバック、6 盤での MCTS、終盤、キャンセル、実際の Worker の v3 選択も検証します。Windows の既定 Edge パス以外では環境変数 `EDGE_PATH` を指定してください。`--output <file.json>` で環境と観測時間を保存できます。
 

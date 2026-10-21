@@ -7,7 +7,10 @@ import {resolve,extname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright-core';
 const root=fileURLToPath(new URL('../../',import.meta.url));
-const golden=readFileSync(new URL('../../tests/fixtures/ai/v3-golden.json',import.meta.url));
+const modelArgument=process.argv.indexOf('--model');
+if(modelArgument>=0&&!process.argv[modelArgument+1])throw new Error('--model requires a model directory');
+const modelDirectory=modelArgument>=0?resolve(process.argv[modelArgument+1]):resolve(root,'dist/models/v3');
+const golden=readFileSync(modelArgument>=0?resolve(modelDirectory,'golden.json'):resolve(root,'tests/fixtures/ai/v3-golden.json'));
 const mime={'.js':'text/javascript','.mjs':'text/javascript','.wasm':'application/wasm','.json':'application/json','.html':'text/html','.css':'text/css','.onnx':'application/octet-stream'};
 const server=createServer((req,res)=>{
  try{
@@ -17,8 +20,13 @@ const server=createServer((req,res)=>{
   if(name==='/golden.json'){res.setHeader('content-type','application/json');res.end(golden);return;}
   if(name==='/endgame.json'){res.setHeader('content-type','application/json');res.end(readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url)));return;}
   if(name==='/dist/models/v3/bad-gpu-manifest.json'){
-   const manifest=JSON.parse(readFileSync(new URL('../../dist/models/v3/manifest.json',import.meta.url)));
+   const manifest=JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json')));
    manifest.webgpu.sha256='0'.repeat(64);res.setHeader('content-type','application/json');res.end(JSON.stringify(manifest));return;
+  }
+  if(name.startsWith('/dist/models/v3/')){
+   const file=resolve(modelDirectory,decodeURIComponent(name.slice('/dist/models/v3/'.length)));
+   if(!file.startsWith(modelDirectory+sep)||!existsSync(file)){res.writeHead(404);res.end();return;}
+   res.setHeader('content-type',mime[extname(file)]??'application/octet-stream');res.end(readFileSync(file));return;
   }
   const path=resolve(root,'.'+decodeURIComponent(name));
   if(!name.startsWith('/dist/')||!path.startsWith(root.endsWith(sep)?root:root+sep)||!existsSync(path)){res.writeHead(404);res.end();return;}
@@ -174,7 +182,8 @@ try{
  assert.equal(result.cpu.selected,'wasm');assert.equal(result.gpu.selected,'webgpu');
  assert.equal(result.cpu.runtime,'wasm');assert.equal(result.gpu.runtime,'wgsl');assert.equal(result.gpu.gpuChecksumFallback,true);assert.equal(result.gpu.gpuExecutionFallback,true);
  assert.equal(result.production.backend,'v3-webgpu');assert.equal(result.production.error,undefined);
- result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model};
+ result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model,
+  modelSha256:JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json'))).sha256};
  if(process.argv.includes('--output'))writeFileSync(process.argv[process.argv.indexOf('--output')+1],JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result,null,2));
  console.log('Real browser Worker: WebGPU/WASM numerical parity, six-board MCTS, cancellation and production v3 routing passed.');

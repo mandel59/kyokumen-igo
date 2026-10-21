@@ -1,0 +1,47 @@
+{
+  "condition": "Log creation to last modification, approximate elapsed wall time, not an isolated training benchmark.",
+  "timings": [
+    {
+      "file": "selfplay.log",
+      "created": "2026-10-21T16:36:19.650Z",
+      "modified": "2026-10-21T16:49:50.448Z",
+      "approximateElapsedSeconds": 810.798119140625
+    },
+    {
+      "file": "train.log",
+      "created": "2026-10-21T16:51:49.500Z",
+      "modified": "2026-10-21T16:53:55.258Z",
+      "approximateElapsedSeconds": 125.75821923828126
+    },
+    {
+      "file": "train-b.log",
+      "created": "2026-10-21T17:02:15.497Z",
+      "modified": "2026-10-21T17:04:15.205Z",
+      "approximateElapsedSeconds": 119.707580078125
+    },
+    {
+      "file": "train-c.log",
+      "created": "2026-10-21T17:10:21.169Z",
+      "modified": "2026-10-21T17:11:50.954Z",
+      "approximateElapsedSeconds": 89.78509106445313
+    },
+    {
+      "file": "development-match.log",
+      "created": "2026-10-21T16:54:54.989Z",
+      "modified": "2026-10-21T16:58:34.417Z",
+      "approximateElapsedSeconds": 219.42869799804689
+    },
+    {
+      "file": "development-match-b.log",
+      "created": "2026-10-21T17:04:35.157Z",
+      "modified": "2026-10-21T17:08:12.252Z",
+      "approximateElapsedSeconds": 217.09407202148438
+    },
+    {
+      "file": "final-match.log",
+      "created": "2026-10-21T17:15:52.629Z",
+      "modified": "2026-10-21T17:22:47.710Z",
+      "approximateElapsedSeconds": 415.08129248046873
+    }
+  ]
+}

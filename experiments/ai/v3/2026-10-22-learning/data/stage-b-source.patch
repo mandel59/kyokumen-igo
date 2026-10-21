@@ -1,0 +1,740 @@
+diff --git a/tools/ai-gnn/match.mjs b/tools/ai-gnn/match.mjs
+index 3eb2487..33ba81f 100644
+--- a/tools/ai-gnn/match.mjs
++++ b/tools/ai-gnn/match.mjs
+@@ -22,6 +22,7 @@ async function player(model,tactics){
+   while(search.result().simulations<simulations){
+    const leaves=search.collect();if(!root&&leaves.count)root=leaves;
+    if(leaves.count)search.submit(leaves,await inference.evaluate(leaves,adjacency));
++   if(search.result().provenLoss)break;
+   }
+   return {...search.result(),root};
+  },async dispose(){search.dispose();await inference.dispose();}};
+@@ -29,7 +30,7 @@ async function player(model,tactics){
+ let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
+ const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe')),b=await player(arg('--b','v2'),arg('--b-tactics','safe'));
+ const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,
+- condition:'Fixed v3 simulations vs v2 depth 4; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
++ condition:'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
+ const output=arg('--output','tools/ai-gnn/target/match.json');
+ try{
+  for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+@@ -44,14 +45,18 @@ try{
+    const turnSeeds=Array.from({length:topology.vertices.length*20},random);let pairScore=0,completed=0;
+    for(const aColor of [1,2]){
+     const game=new Game(topology,6.5);for(const move of moves)game.play(move);
+-    const stats=()=>({turns:0,ms:0,simulations:0,passes:0,losingPasses:0,selfAtaris:0,eyeFills:0,missedCaptures:0});
++    const stats=()=>({turns:0,ms:0,simulations:0,passes:0,losingPasses:0,earlyPasses:0,certifiedLossPasses:0,uncertifiedLosingPasses:0,selfAtaris:0,eyeFills:0,missedCaptures:0});
+     const metrics={a:stats(),b:stats()};
+     while(!game.ended&&game.moves<turnSeeds.length){
+      const side=game.turn===aColor?'a':'b',actor=side==='a'?a:b,m=metrics[side];
+      const start=performance.now(),result=await actor.choose(aiPosition(game),turnSeeds[game.moves],adjacency);m.ms+=performance.now()-start;
+      m.turns++;m.simulations+=result.simulations??0;
+      const score=game.score(),move=result.move;
+-     if(move===null){m.passes++;if(score.winner!==0&&score.winner!==game.turn)m.losingPasses++;}
++     if(move===null){
++      m.passes++;if(game.moves<topology.vertices.length/2)m.earlyPasses++;
++      if(result.provenLoss)m.certifiedLossPasses++;
++      if(score.winner!==0&&score.winner!==game.turn){m.losingPasses++;if(!result.provenLoss)m.uncertifiedLosingPasses++;}
++     }
+      else{
+       const analysis=game.analyze(move);if(!analysis.ok)throw new Error('Illegal AI move');
+       if(analysis.liberties===1&&!analysis.captured)m.selfAtaris++;
+diff --git a/tools/ai-gnn/replay-endgame.mjs b/tools/ai-gnn/replay-endgame.mjs
+index e9d89af..ac8ee89 100644
+--- a/tools/ai-gnn/replay-endgame.mjs
++++ b/tools/ai-gnn/replay-endgame.mjs
+@@ -11,7 +11,8 @@ import {createNodeInference} from './node-inference.mjs';
+ 
+ const fixture=readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url));
+ const {game:record,ai:colour}=decodeRecord(JSON.parse(fixture).code);
+-const inference=await createNodeInference('dist/models/v3');
++const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
++const inference=await createNodeInference(arg('--model','dist/models/v3'));
+ const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
+ const adjacency=adjacencyFor(record.topology),game=new Game(record.topology,record.komi);
+ const report={schemaVersion:1,fixtureSha256:createHash('sha256').update(fixture).digest('hex'),
+@@ -26,7 +27,17 @@ try{
+     search.start(aiPosition(game),{seed:report.seed,endgame});const start=performance.now();
+     while(search.result().simulations<report.simulations){
+      const request=search.collect();
+-     if(request.count)search.submit(request,await inference.evaluate(request,adjacency));
++     if(request.count){
++      const evaluation=await inference.evaluate(request,adjacency);
++      if(!endgame&&!position.neural){
++       const logits=evaluation.policy.subarray(0,161),points=Array.from(request.legal,(_,p)=>p).filter(p=>request.legal[p]);
++       const max=Math.max(...points.map(p=>logits[p])),total=points.reduce((sum,p)=>sum+Math.exp(logits[p]-max),0);
++       const w=Array.from(evaluation.wdl.subarray(0,3)),peak=Math.max(...w),probability=w.map(v=>Math.exp(v-peak)),denominator=probability.reduce((a,b)=>a+b,0);
++       position.neural={passPrior:Math.exp(logits[160]-max)/total,passRank:1+points.filter(p=>logits[p]>logits[160]).length,
++        win:probability[0]/denominator,draw:probability[1]/denominator,loss:probability[2]/denominator};
++      }
++      search.submit(request,evaluation);
++     }
+      if(search.result().provenLoss)break;
+     }
+     const result=search.result();position[endgame?'after':'before']={move:result.move,simulations:result.simulations,
+@@ -42,5 +53,5 @@ try{
+ }finally{search.dispose();await inference.dispose();}
+ report.summary={checkedPositions:report.positions.length,certifiedPasses:report.positions.filter(p=>p.after.provenLoss).length,
+  priorNonPassesAfterCertificate:report.positions.filter(p=>p.after.provenLoss&&p.before.move!==null).length};
+-const args=process.argv.slice(2);if(args.includes('--output'))writeFileSync(args[args.indexOf('--output')+1],JSON.stringify(report,null,2)+'\n');
++if(args.includes('--output'))writeFileSync(arg('--output'),JSON.stringify(report,null,2)+'\n');
+ console.log(JSON.stringify(report.summary));
+diff --git a/tools/ai-gnn/selfplay.mjs b/tools/ai-gnn/selfplay.mjs
+index a0801b3..173c86c 100644
+--- a/tools/ai-gnn/selfplay.mjs
++++ b/tools/ai-gnn/selfplay.mjs
+@@ -6,11 +6,11 @@ import {aiPosition} from '../../dist/ai-position.js';
+ import {createV3Search} from '../../dist/ai-v3-search.js';
+ import {adjacencyFor} from '../../dist/ai-v3-inference.js';
+ import {createNodeInference} from './node-inference.mjs';
++import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
+ const args=process.argv.slice(2),value=(flag,fallback)=>args.includes(flag)?args[args.indexOf(flag)+1]:fallback;
+ const games=Number(value('--games','2')),simulations=Number(value('--simulations','64')),seed=Number(value('--seed','20261022'));
+ if(!Number.isInteger(games)||games<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid selfplay options');
+-let state=seed>>>0;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return (state>>>0)/4294967296;};
+-if(!state)state=1;
++const random=createRandom(seed);
+ const inference=await createNodeInference(value('--model','tools/ai-gnn/target/model'));
+ const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
+ const out=createWriteStream(value('--output','tools/ai-gnn/target/selfplay.jsonl'));
+@@ -23,25 +23,22 @@ try{
+    const game=new Game(topology,[0,3.5,6.5,9.5][k%4]),samples=[];
+    while(!game.ended&&game.moves<game.board.length*20){
+     search.start(aiPosition(game),{seed:(random()*4294967296)>>>0});
+-    let root;
++    let root,stalled=0;
+     while(search.result().simulations<simulations){
+      const batch=search.collect(8);
+      if(!root&&batch.count)root=batch;
+-     if(!batch.count)continue;
++     if(!batch.count){if(++stalled>16)throw new Error('Stalled selfplay search');continue;}stalled=0;
+      const evaluation=await inference.evaluate(batch,adjacency);
+-     if(game.moves<12&&search.result().simulations===0){
+-      // Seeded exploration noise on root priors during data generation only.
+-      for(let p=0;p<161;p++)if(batch.legal[p])evaluation.policy[p]+=0.5*(-Math.log(Math.max(1e-12,random()))-1);
+-     }
++     if(game.moves<Math.min(24,game.board.length/2)&&search.result().simulations===0)exploreRoot(evaluation.policy,batch.legal,random);
+      search.submit(batch,evaluation);
++     if(search.result().provenLoss)break;
+     }
+     const result=search.result();let move=result.move;
+-    if(game.moves<12){
+-     const draw=random();let cumulative=0;
+-     for(let p=0;p<161;p++){cumulative+=result.policy[p];if(draw<cumulative){move=p===160?null:p;break;}}
+-    }
++    const temperature=game.moves<Math.min(18,game.board.length/3)?1:game.moves<game.board.length/2?.25:0;
++    const action=sampleVisits(result.policy,random,temperature);move=action===160?null:action;
+     samples.push({x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),
+-     legal:Array.from(root.legal,Boolean),policy:Array.from(result.policy),turn:game.turn});
++     legal:Array.from(root.legal,Boolean),policy:Array.from(result.policy),turn:game.turn,ply:game.moves,
++     action,visits:result.simulations,source:'selfplay'});
+     if(!(move===null?game.pass():game.play(move)).ok)throw new Error('Illegal MCTS move');
+    }
+    if(!game.ended){capped++;continue;}
+diff --git a/tools/ai-gnn/train.py b/tools/ai-gnn/train.py
+index 9637fe9..cf74605 100644
+--- a/tools/ai-gnn/train.py
++++ b/tools/ai-gnn/train.py
+@@ -1,7 +1,10 @@
+ """uv run --project tools/ai-gnn python tools/ai-gnn/train.py --data DATA.jsonl --output DIR"""
+ import argparse
++import copy
++import gzip
+ import hashlib
+ import json
++import math
+ from pathlib import Path
+ import random
+ import torch
+@@ -9,10 +12,11 @@ from torch.nn import functional as F
+ from model import GraphNet, POINTS, CHANNELS, GLOBALS, HIDDEN, BLOCKS
+ 
+ 
+-def load_data(paths):
++def load_data(paths, policy_temperature=1., minimum_policy_confidence=0.):
+     records = []
+     for path in paths:
+-        with open(path, encoding="utf-8") as source:
++        opener = gzip.open if str(path).endswith('.gz') else open
++        with opener(path, 'rt', encoding="utf-8") as source:
+             for line in source:
+                 r = json.loads(line)
+                 if r.get("schemaVersion") != 1:
+@@ -30,35 +34,166 @@ def load_data(paths):
+                 if policy.shape != legal.shape or not torch.isfinite(policy).all() or (policy < 0).any() or policy[~legal].sum() > 1e-6 or policy.sum() <= 0:
+                     raise ValueError("Invalid policy target")
+                 policy /= policy.sum()
++                raw_policy = policy.clone()
++                policy_weight = 1.
++                if r.get('source') == 'selfplay':
++                    policy_weight = float(policy.max().item() >= minimum_policy_confidence)
++                    policy = policy.pow(1/policy_temperature)
++                    policy /= policy.sum()
+                 own = torch.tensor(r["ownership"], dtype=torch.long)
+                 if own.shape != (n,) or (own < 0).any() or (own > 2).any() or r["wdl"] not in (0, 1, 2):
+                     raise ValueError("Invalid outcome target")
+                 global_features = torch.tensor(r["global"], dtype=torch.float32)
+                 if global_features.shape != (GLOBALS,) or not torch.isfinite(x).all() or not torch.isfinite(global_features).all():
+                     raise ValueError("Invalid features")
+-                records.append(dict(record=r, n=n, x=F.pad(x, (0, 0, 0, POINTS-n)),
++                margin = float(r['score'])
++                if not math.isfinite(margin) or r['wdl'] != (0 if margin > 0 else 2 if margin < 0 else 1):
++                    raise ValueError('Inconsistent outcome and margin')
++                owner_margin = (own == 0).sum().item() - (own == 2).sum().item() + global_features[0].item()*n
++                if abs(owner_margin-margin) > 1e-4:
++                    raise ValueError('Ownership and score disagree')
++                # Do not retain a second copy of all features as Python float lists.
++                metadata = {k:v for k,v in r.items() if k not in ('x','global','legal','policy','ownership')}
++                metadata.setdefault('source', 'teacher')
++                records.append(dict(record=metadata, n=n, x=F.pad(x, (0, 0, 0, POINTS-n)),
+                     mask=F.pad(torch.ones(n, 1), (0, 0, 0, POINTS-n)), global_features=global_features,
+-                    legal=legal, policy=policy, own=F.pad(own, (0, POINTS-n), value=1)))
++                    legal=legal, policy=policy, raw_policy=raw_policy, policy_weight=policy_weight, own=F.pad(own, (0, POINTS-n), value=1)))
+     if not records:
+         raise ValueError("No data")
+     return records
+ 
+ 
+-def split_games(records, seed):
++def split_games(records, seed, pinned=None):
+     groups = {}
+     for r in records:
+         key = (r["record"]["kind"], r["record"]["size"])
+         groups.setdefault(key, set()).add(r["record"]["gameId"])
+     rng = random.Random(seed)
+     validation = set()
++    fixed_train = set((pinned or {}).get('trainGames', []))
++    fixed_validation = set((pinned or {}).get('validationGames', []))
++    if fixed_train & fixed_validation:
++        raise ValueError('Pinned training and validation overlap')
+     for key, ids in sorted(groups.items()):
+         ids = sorted(ids)
+         if len(ids) < 2:
+             raise ValueError(f"Need at least two completed games per board: {key}")
+-        rng.shuffle(ids)
+-        validation.update(ids[:max(1, len(ids)//5)])
+-    return ([r for r in records if r["record"]["gameId"] not in validation],
+-            [r for r in records if r["record"]["gameId"] in validation])
++        fresh = [i for i in ids if i not in fixed_train and i not in fixed_validation]
++        rng.shuffle(fresh)
++        chosen = {i for i in ids if i in fixed_validation}
++        if fresh:
++            if len(fresh) < 2 and not chosen:
++                raise ValueError('Need at least two new games for a fresh split')
++            chosen.update(fresh[:max(1, len(fresh)//5)])
++        validation.update((key[0], key[1], i) for i in chosen)
++    is_validation = lambda r: (r['record']['kind'],r['record']['size'],r['record']['gameId']) in validation
++    train, validation = [r for r in records if not is_validation(r)], [r for r in records if is_validation(r)]
++    if not train or not validation:
++        raise ValueError('Empty training or validation partition')
++    return train, validation
++
++
++def sampling_weights(records, selfplay_mass=.7):
++    """Equal boards, games and game thirds within each source, with a fixed source mix."""
++    games = {}
++    for index, item in enumerate(records):
++        r = item['record']
++        games.setdefault((r['source'],r['kind'],r['size'],r['gameId']), []).append(index)
++    cells, phase_at, board_games = {}, {}, {}
++    for key, indices in games.items():
++        board_games.setdefault(key[:3], set()).add(key[3])
++        for position, index in enumerate(indices):
++            phase = min(2, position*3//len(indices))
++            phase_at[index] = phase
++            cells.setdefault((*key,phase), []).append(index)
++    sources = {k[0] for k in games}
++    if not sources <= {'teacher','selfplay'}:
++        raise ValueError('Unknown training source')
++    masses = {'selfplay':selfplay_mass,'teacher':1-selfplay_mass}
++    if len(sources)==1:
++        masses[next(iter(sources))] = 1.
++    weights = [0.]*len(records)
++    for key, indices in games.items():
++        boards = sum(1 for board in board_games if board[0]==key[0])
++        phases = len({phase_at[i] for i in indices})
++        for index in indices:
++            weights[index] = masses[key[0]] / boards / len(board_games[key[:3]]) / phases / len(cells[(*key,phase_at[index])])
++    return weights
++
++
++def dataset_summary(records):
++    return {source:dict(positions=sum(r['record']['source']==source for r in records),
++        games=len({r['record']['gameId'] for r in records if r['record']['source']==source}))
++        for source in sorted({r['record']['source'] for r in records})}
++
++
++def loss_terms(logits, wdl, score, ownership, legal, target, outcome, score_target, own_target, mask, policy_weight=None, anchor=None, anchor_weight=0.):
++    log_probability = F.log_softmax(logits.masked_fill(~legal,-1e9),-1)
++    policy = -(target*log_probability).sum(-1)
++    if policy_weight is not None:
++        policy = policy*policy_weight
++    if anchor is not None:
++        policy = policy+anchor_weight*F.kl_div(log_probability,anchor,reduction='none').sum(-1)
++    value = F.cross_entropy(wdl,outcome,reduction='none')
++    points = F.smooth_l1_loss(score,score_target,reduction='none')
++    own = (F.cross_entropy(ownership.transpose(1,2),own_target,reduction='none')*mask).sum(1)/mask.sum(1)
++    return policy+value+.5*points+.5*own
++
++
++class Prepared:
++    """Cache feature/target tensors on the training device once, rather than each step."""
++    def __init__(self, items, adjacency, device):
++        self.items, self.count = items, len(items)
++        self.data = {k:torch.stack([r[k] for r in items]).to(device) for k in ('x','mask','global_features','legal','policy','own')}
++        self.data['raw_policy'] = torch.stack([r.get('raw_policy',r['policy']) for r in items]).to(device)
++        self.policy_weight = torch.tensor([r.get('policy_weight',1.) for r in items],device=device)
++        self.anchor, self.anchor_weight = None, 0.
++        keys = sorted(adjacency)
++        self.adjacency = torch.stack([adjacency[k] for k in keys]).to(device)
++        self.boards = torch.tensor([keys.index((r['record']['kind'],r['record']['size'])) for r in items],device=device)
++        self.outcome = torch.tensor([r['record']['wdl'] for r in items],device=device)
++        self.score = torch.tensor([r['record']['score']/r['n'] for r in items],device=device)
++        self.n = torch.tensor([r['n'] for r in items],device=device)
++        self.indices = torch.arange(len(items),device=device)
++
++    def forward(self, model, indices):
++        d = {k:v[indices] for k,v in self.data.items()}
++        output = model(d['x'],self.adjacency[self.boards[indices]],d['mask'],d['global_features'])
++        loss = loss_terms(*output,d['legal'],d['policy'],self.outcome[indices],self.score[indices],d['own'],d['mask'].squeeze(-1),
++            self.policy_weight[indices],None if self.anchor is None else self.anchor[indices],self.anchor_weight)
++        return loss, output, d
++
++    @torch.no_grad()
++    def anchor_policy(self, teacher, batch_size, weight):
++        teacher.eval();self.anchor = torch.empty_like(self.data['policy']);self.anchor_weight = weight
++        for start in range(0,self.count,batch_size):
++            ix = self.indices[start:start+batch_size]
++            logits = teacher(self.data['x'][ix],self.adjacency[self.boards[ix]],self.data['mask'][ix],self.data['global_features'][ix])[0]
++            self.anchor[ix] = F.softmax(logits.masked_fill(~self.data['legal'][ix],-1e9),-1)
++
++    @torch.no_grad()
++    def evaluate(self, model, batch_size, weights=None, subset=None):
++        model.eval()
++        indices = self.indices if subset is None else self.indices[subset]
++        mass = torch.ones(self.count,device=self.indices.device) if weights is None else torch.tensor(weights,device=self.indices.device)
++        mass = mass/mass[indices].sum()
++        totals = torch.zeros(11,device=self.indices.device)
++        for start in range(0,len(indices),batch_size):
++            ix = indices[start:start+batch_size]
++            losses, (logits,wdl,score,own), d = self.forward(model,ix)
++            ranked = logits.masked_fill(~d['legal'],-1e9).topk(5,-1).indices
++            targets = d['raw_policy'].argmax(-1)
++            probability = F.softmax(wdl,-1)
++            entropy = -(d['raw_policy']*d['raw_policy'].clamp_min(1e-30).log()).sum(-1)
++            ce = -(d['raw_policy']*F.log_softmax(logits.masked_fill(~d['legal'],-1e9),-1)).sum(-1)
++            totals += torch.stack([(losses*mass[ix]).sum(),losses.sum(),(ranked[:,0]==targets).sum(),
++                (ranked==targets[:,None]).any(-1).sum(),(ce-entropy).sum(),(wdl.argmax(-1)==self.outcome[ix]).sum(),
++                ((probability-F.one_hot(self.outcome[ix],3))**2).sum(),((score-self.score[ix]).abs()*self.n[ix]).sum(),
++                (((own.argmax(-1)==d['own'])*d['mask'].squeeze(-1)).sum(-1)/self.n[ix]).sum(),
++                ((ranked[:,0]==160)&(targets==160)).sum(),(targets==160).sum()])
++        t = totals.cpu().tolist();n = len(indices)
++        return dict(loss=t[0],unweightedLoss=t[1]/n,policyTop1=t[2]/n,policyTop5=t[3]/n,policyKL=t[4]/n,
++            wdlAccuracy=t[5]/n,wdlBrier=t[6]/n,scoreMAE=t[7]/n,ownershipAccuracy=t[8]/n,passRecall=t[9]/max(1,t[10]),positions=n)
+ 
+ 
+ def batch(items, adjacency):
+@@ -139,9 +274,27 @@ def main():
+     parser.add_argument("--device", choices=("cpu", "cuda", "auto"), default="cpu")
+     parser.add_argument("--learning-rate", type=float, default=1e-3)
+     parser.add_argument("--best-validation", action="store_true", help="Export the epoch with the lowest validation loss")
++    parser.add_argument('--split-manifest', help='Preserve train/validation game IDs from a previous model')
++    parser.add_argument('--balanced', action='store_true', help='Balance source, board, game and game thirds')
++    parser.add_argument('--selfplay-mass', type=float, default=.7)
++    parser.add_argument('--cosine', action='store_true')
++    parser.add_argument('--minimum-learning-rate', type=float, default=3e-5)
++    parser.add_argument('--ema-decay', type=float, default=0.)
++    parser.add_argument('--policy-temperature', type=float, default=1.)
++    parser.add_argument('--minimum-policy-confidence', type=float, default=0.)
++    parser.add_argument('--policy-anchor', help='Trusted frozen policy checkpoint used to limit policy drift')
++    parser.add_argument('--policy-anchor-weight', type=float, default=0.)
+     args = parser.parse_args()
+-    if args.epochs < 1 or args.batch_size < 1:
+-        parser.error("epochs and batch size must be positive")
++    if args.epochs < 1 or args.batch_size < 1 or not 0 < args.selfplay_mass < 1 or not 0 <= args.ema_decay < 1:
++        parser.error("Invalid epochs, batch size, mixture or EMA decay")
++    if args.learning_rate <= 0 or args.minimum_learning_rate <= 0 or (args.cosine and args.minimum_learning_rate > args.learning_rate):
++        parser.error('Invalid learning rate range')
++    if args.policy_temperature <= 0 or not 0 <= args.minimum_policy_confidence <= 1 or args.policy_anchor_weight < 0 or (args.policy_anchor_weight and not args.policy_anchor):
++        parser.error('Invalid policy supervision settings')
++    if args.resume and not args.split_manifest:
++        previous = Path(args.resume).with_name('manifest.json')
++        if previous.is_file():
++            args.split_manifest = str(previous)
+     torch.set_num_threads(4)
+     torch.manual_seed(args.seed)
+     device = "cuda" if args.device == "auto" and torch.cuda.is_available() else args.device
+@@ -154,8 +307,11 @@ def main():
+     if args.resume:
+         model.load_state_dict(torch.load(args.resume, weights_only=True))
+     model.to(device)
+-    records = load_data(args.data)
+-    train, validation = split_games(records, args.seed)
++    records = load_data(args.data,args.policy_temperature,args.minimum_policy_confidence)
++    pinned = json.loads(Path(args.split_manifest).read_text(encoding='utf-8')) if args.split_manifest else None
++    train, validation = split_games(records, args.seed, pinned)
++    data_sources = dict(train=dataset_summary(train),validation=dataset_summary(validation))
++    print(json.dumps(dict(dataSources=data_sources)),flush=True)
+     topology_data = json.loads(Path(args.topologies).read_text(encoding="utf-8"))
+     adjacency = {}
+     for t in topology_data:
+@@ -164,42 +320,71 @@ def main():
+             a[p, neighbors] = 1/len(neighbors)
+         adjacency[(t["kind"], t["size"])] = a
+     optimizer = torch.optim.AdamW(model.parameters(), lr=args.learning_rate, weight_decay=1e-4)
++    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,args.epochs,eta_min=args.minimum_learning_rate) if args.cosine else None
++    ema = copy.deepcopy(model).eval().requires_grad_(False) if args.ema_decay else None
++    prepared_train, prepared_validation = Prepared(train,adjacency,device), Prepared(validation,adjacency,device)
++    if args.policy_anchor:
++        teacher = GraphNet().to(device).eval()
++        teacher.load_state_dict(torch.load(args.policy_anchor,map_location=device,weights_only=True))
++        prepared_train.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
++        prepared_validation.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
++        del teacher
++    train_weights = sampling_weights(train,args.selfplay_mass) if args.balanced else None
++    validation_weights = sampling_weights(validation,args.selfplay_mass) if args.balanced else None
++    initial_metrics = prepared_validation.evaluate(model,args.batch_size,validation_weights)
++    initial_by_source = {}
++    for source in sorted({r['record']['source'] for r in validation}):
++        subset = torch.tensor([r['record']['source']==source for r in validation],device=device)
++        initial_by_source[source] = prepared_validation.evaluate(model,args.batch_size,validation_weights,subset)
++    print(json.dumps(dict(epoch=0,validation=initial_metrics)),flush=True)
+     history = []
+-    best_loss, best_state, best_epoch = float("inf"), None, 0
++    best_loss, best_state, best_epoch = initial_metrics['loss'], None, 0
++    if args.best_validation:
++        best_state = {k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
+     for epoch in range(args.epochs):
+-        rng.shuffle(train)
++        order = rng.choices(range(len(train)),weights=train_weights,k=len(train)) if args.balanced else list(range(len(train)))
++        if not args.balanced:
++            rng.shuffle(order)
++        order = torch.tensor(order,device=device)
+         model.train()
+         total = 0
+         for start in range(0, len(train), args.batch_size):
+-            items = train[start:start+args.batch_size]
++            indices = order[start:start+args.batch_size]
+             optimizer.zero_grad()
+-            loss = loss_for(model, items, adjacency)
++            loss = prepared_train.forward(model,indices)[0].mean()
+             if not torch.isfinite(loss):
+                 raise ValueError("Nonfinite training loss")
+             loss.backward()
+             torch.nn.utils.clip_grad_norm_(model.parameters(), 5)
+             optimizer.step()
+-            total += loss.item()*len(items)
++            if ema is not None:
++                with torch.no_grad():
++                    for average, value in zip(ema.parameters(),model.parameters()):
++                        average.lerp_(value,1-args.ema_decay)
++            total += loss.item()*len(indices)
+         model.eval()
+-        with torch.no_grad():
+-            val = sum(loss_for(model, validation[i:i+args.batch_size], adjacency).item()*len(validation[i:i+args.batch_size])
+-                for i in range(0,len(validation),args.batch_size))/len(validation)
+-        metrics = dict(epoch=epoch+1, trainLoss=total/len(train), validationLoss=val)
++        val_metrics = prepared_validation.evaluate(ema if ema is not None else model,args.batch_size,validation_weights)
++        val = val_metrics['loss']
++        metrics = dict(epoch=epoch+1,trainLoss=total/len(train),validationLoss=val,learningRate=optimizer.param_groups[0]['lr'],validation=val_metrics)
+         history.append(metrics)
+         if val < best_loss:
+             best_loss, best_epoch = val, epoch+1
+             if args.best_validation:
+-                best_state = {k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
++                best_state = {k:v.detach().cpu().clone() for k,v in (ema if ema is not None else model).state_dict().items()}
+         print(json.dumps(metrics), flush=True)
++        if scheduler is not None:
++            scheduler.step()
+     if best_state is not None:
+         model.load_state_dict(best_state)
++    elif ema is not None:
++        model.load_state_dict(ema.state_dict())
++    validation_metrics = prepared_validation.evaluate(model,args.batch_size,validation_weights)
++    by_source = {}
++    for source in sorted({r['record']['source'] for r in validation}):
++        subset = torch.tensor([r['record']['source']==source for r in validation],device=device)
++        by_source[source] = prepared_validation.evaluate(model,args.batch_size,validation_weights,subset)
+     model.cpu()
+     model.eval()
+-    validation_metrics = dict(policyTop1=0, policyTop5=0, wdlAccuracy=0)
+-    with torch.no_grad():
+-        for i in range(0,len(validation),args.batch_size):
+-            for key,value in prediction_metrics(model,validation[i:i+args.batch_size],adjacency).items():
+-                validation_metrics[key] += value/len(validation)
+     print(json.dumps(dict(validationMetrics=validation_metrics)),flush=True)
+     # Golden batch must have a common topology, as in production searches.
+     examples = [r for r in validation if (r["record"]["kind"],r["record"]["size"]) ==
+@@ -210,8 +395,14 @@ def main():
+             validationGames=sorted({r["record"]["gameId"] for r in validation}), history=history,
+             device=device, torchVersion=torch.__version__, learningRate=args.learning_rate,
+             selectedEpoch=best_epoch if args.best_validation else args.epochs,
+-            selection="minimum validation loss" if args.best_validation else "last epoch",
+-            validationMetrics=validation_metrics,
++            selection=("minimum balanced validation loss including initial checkpoint" if args.balanced else "minimum validation loss including initial checkpoint") if args.best_validation else "last epoch",
++            validationMetrics=validation_metrics,initialValidationMetrics=initial_metrics,validationBySource=by_source,initialValidationBySource=initial_by_source,
++            sampling='source/board/game/thirds' if args.balanced else 'uniform positions',selfplayMass=args.selfplay_mass,
++            emaDecay=args.ema_decay,learningRateSchedule='cosine' if args.cosine else 'constant',minimumLearningRate=args.minimum_learning_rate,
++            splitManifestSha256=hashlib.sha256(Path(args.split_manifest).read_bytes()).hexdigest() if args.split_manifest else None,
++            dataSources=data_sources,
++            policyTemperature=args.policy_temperature,minimumPolicyConfidence=args.minimum_policy_confidence,
++            policyAnchorSha256=hashlib.sha256(Path(args.policy_anchor).read_bytes()).hexdigest() if args.policy_anchor else None,policyAnchorWeight=args.policy_anchor_weight,
+             dataSha256={str(p):hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in args.data}))
+     print(json.dumps(dict(parameters=metadata["parameters"], onnxBytes=(Path(args.output)/"model.onnx").stat().st_size)))
+ 
+diff --git a/tools/ai-gnn/endgame-curriculum.mjs b/tools/ai-gnn/endgame-curriculum.mjs
+new file mode 100644
+index 0000000..ef94519
+--- /dev/null
++++ b/tools/ai-gnn/endgame-curriculum.mjs
+@@ -0,0 +1,75 @@
++// Complete cleanup branches from selfplay families; the reported user game is never input.
++import assert from 'node:assert/strict';
++import {createReadStream,createWriteStream,readFileSync,writeFileSync} from 'node:fs';
++import {createInterface} from 'node:readline';
++import {once} from 'node:events';
++import {Game,createTopology} from '../../dist/engine.js';
++import {aiPosition} from '../../dist/ai-position.js';
++import {createV3Search} from '../../dist/ai-v3-search.js';
++const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
++const input=arg('--input'),output=arg('--output'),steps=Number(arg('--steps','8'));
++if(!input||!output||!Number.isInteger(steps)||steps<1||steps>32)throw new Error('Expected --input, --output and optional --steps 1..32');
++const families=new Map();
++for await(const line of createInterface({input:createReadStream(input),crlfDelay:Infinity})){
++ const r=JSON.parse(line);let family=families.get(r.gameId);
++ if(!family){family={id:r.gameId,kind:r.kind,size:r.size,komi:-r.global[0]*(r.kind==='sphere'?6*r.size*r.size+2:r.size*r.size),moves:[],start:null};families.set(r.gameId,family);}
++ assert.equal(r.ply,family.moves.length);assert.equal(r.source,'selfplay');
++ if(family.start===null&&r.visits===1&&r.action===160)family.start=r.ply;
++ family.moves.push(r.action===160?null:r.action);
++}
++const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
++const out=createWriteStream(output),report={schemaVersion:1,input,families:families.size,steps,positions:0,branchedFamilies:0,captures:0,skipped:0,
++ condition:'Same gameId as parent enforces family-level splits; all added policies are pass, proved lost at every sampled root. Score/ownership come from the legally completed branch.',games:[]};
++function proof(game){
++ search.start(aiPosition(game));const request=search.collect(1),result=search.result();search.cancel();
++ return result.provenLoss?{request,margin:result.lossMarginLowerBound}:null;
++}
++function owners(game){
++ const result=Array.from(game.board),seen=new Set();
++ for(let p=0;p<result.length;p++)if(!result[p]&&!seen.has(p)){
++  const region=[p],border=new Set();seen.add(p);
++  for(let k=0;k<region.length;k++)for(const q of game.topology.neighbors[region[k]]){
++   if(game.board[q])border.add(game.board[q]);else if(!seen.has(q)){seen.add(q);region.push(q);}
++  }
++  const owner=border.size===1?[...border][0]:0;for(const q of region)result[q]=owner;
++ }return result;
++}
++try{
++ for(const family of families.values()){
++  if(family.start===null){report.skipped++;continue;}
++  // Komi was encoded as float32/n; restore the exact half point before replay.
++  const game=new Game(createTopology(family.kind,family.size),Math.round(family.komi*2)/2);
++  for(const move of family.moves)assert.equal((move===null?game.pass():game.play(move)).ok,true);
++  assert.equal(game.ended,true);game.undo(game.moves-family.start);
++  const loser=game.turn,initial=proof(game);assert.ok(initial,'Only a certified-loss root can start a branch');
++  if(game.passes===1)game.undo(1);else game.pass();
++  assert.equal(game.turn,3-loser);const samples=[];let captured=0;
++  for(let step=0;step<steps&&!game.ended;step++){
++   const candidates=[];
++   for(let p=0;p<game.board.length;p++){
++    const adjacent=game.topology.neighbors[p].filter(q=>game.board[q]===loser).length;
++    if(!adjacent)continue;const a=game.analyze(p);if(a.ok)candidates.push({p,priority:1000*a.captured+10*adjacent-a.liberties,captured:a.captured});
++   }
++   candidates.sort((a,b)=>b.priority-a.priority||a.p-b.p);let chosen=null;
++   for(const candidate of candidates){
++    assert.equal(game.play(candidate.p).ok,true);const certified=proof(game);
++    if(certified){chosen={...candidate,...certified};break;}game.undo();
++   }
++   if(!chosen)break;
++   const root=chosen.request;captured+=chosen.captured;
++   samples.push({schemaVersion:1,gameId:family.id,sequenceId:family.id+'-cleanup',source:'selfplay',variant:'certified-cleanup',kind:family.kind,size:family.size,
++    ply:game.moves,x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),legal:Array.from(root.legal,Boolean),
++    policy:Array.from({length:161},(_,p)=>p===160?1:0),action:160,visits:0,certificateMargin:chosen.margin});
++   assert.equal(game.pass().ok,true);
++  }
++  while(!game.ended)game.pass();
++  const score=game.score(),own=owners(game);assert.notEqual(score.winner,loser);assert.notEqual(score.winner,0);
++  for(const sample of samples){
++   const r={...sample,wdl:2,score:(score.black-score.white)*(loser===1?1:-1),ownership:own.map(v=>v===0?1:v===loser?0:2)};
++   if(!out.write(JSON.stringify(r)+'\n'))await once(out,'drain');report.positions++;
++  }
++  if(samples.length){report.branchedFamilies++;report.captures+=captured;report.games.push({gameId:family.id,positions:samples.length,captured,loser,finalScore:score});}
++ }
++}finally{search.dispose();out.end();await once(out,'finish');}
++if(arg('--report'))writeFileSync(arg('--report'),JSON.stringify(report,null,2)+'\n');
++console.log(JSON.stringify({families:report.families,branchedFamilies:report.branchedFamilies,positions:report.positions,captures:report.captures,skipped:report.skipped}));
+diff --git a/tools/ai-gnn/selfplay-policy.mjs b/tools/ai-gnn/selfplay-policy.mjs
+new file mode 100644
+index 0000000..9993abc
+--- /dev/null
++++ b/tools/ai-gnn/selfplay-policy.mjs
+@@ -0,0 +1,29 @@
++// Reproducible AlphaZero-style exploration, used for data generation only.
++export function createRandom(seed){
++ let state=seed>>>0||1;
++ return ()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return (state>>>0)/4294967296;};
++}
++function normal(random){return Math.sqrt(-2*Math.log(Math.max(1e-12,random())))*Math.cos(2*Math.PI*random());}
++function gamma(shape,random){
++ if(shape<1)return gamma(shape+1,random)*Math.pow(Math.max(1e-12,random()),1/shape);
++ const d=shape-1/3,c=1/Math.sqrt(9*d);
++ for(;;){
++  const x=normal(random),v=1+c*x;if(v<=0)continue;
++  const cube=v*v*v,u=random();
++  if(u<1-.0331*x*x*x*x||Math.log(Math.max(1e-12,u))<.5*x*x+d*(1-cube+Math.log(cube)))return d*cube;
++ }
++}
++export function exploreRoot(logits,legal,random,{fraction=.25,concentration=10}={}){
++ const points=Array.from(legal,(_,p)=>p).filter(p=>legal[p]),max=Math.max(...points.map(p=>logits[p]));
++ const prior=points.map(p=>Math.exp(logits[p]-max)),noise=points.map(()=>gamma(concentration/points.length,random));
++ const total=prior.reduce((a,b)=>a+b,0),sum=noise.reduce((a,b)=>a+b,0);
++ points.forEach((p,k)=>{logits[p]=Math.log(Math.max(1e-30,(1-fraction)*prior[k]/total+fraction*noise[k]/sum));});
++}
++export function sampleVisits(policy,random,temperature){
++ if(temperature===0){let best=160;for(let p=0;p<160;p++)if(policy[p]>policy[best])best=p;return best;}
++ const weights=Array.from(policy,v=>Math.pow(v,1/temperature)),total=weights.reduce((a,b)=>a+b,0);
++ if(!(total>0))throw new Error('Empty visit distribution');
++ const target=random()*total;let sum=0;
++ for(let p=0;p<weights.length;p++){sum+=weights[p];if(target<sum)return p;}
++ return weights.findLastIndex(v=>v>0);
++}
+diff --git a/tools/ai-gnn/test-selfplay.mjs b/tools/ai-gnn/test-selfplay.mjs
+new file mode 100644
+index 0000000..dbbf2f3
+--- /dev/null
++++ b/tools/ai-gnn/test-selfplay.mjs
+@@ -0,0 +1,13 @@
++import assert from 'node:assert/strict';
++import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
++const left=createRandom(7),right=createRandom(7);for(let i=0;i<100;i++)assert.equal(left(),right());
++const legal=new Float32Array(161);legal[2]=legal[30]=legal[160]=1;
++const policy=new Float32Array(161).fill(-100);policy[2]=3;policy[30]=2;policy[160]=-1;
++const repeat=policy.slice();exploreRoot(policy,legal,createRandom(23));exploreRoot(repeat,legal,createRandom(23));assert.deepEqual(policy,repeat);
++const sum=[2,30,160].reduce((s,p)=>s+Math.exp(policy[p]),0);assert.ok(Math.abs(sum-1)<1e-6);assert.equal(policy[0],-100);
++const visits=new Float32Array(161);visits[2]=.6;visits[30]=.3;visits[160]=.1;
++assert.equal(sampleVisits(visits,createRandom(1),0),2);
++const random=createRandom(91),counts=new Map();for(let i=0;i<10000;i++){const p=sampleVisits(visits,random,1);counts.set(p,(counts.get(p)??0)+1);}
++assert.equal(counts.size,3);assert.ok(Math.abs(counts.get(2)/10000-.6)<.025);assert.ok(Math.abs(counts.get(160)/10000-.1)<.02);
++const pass=new Float32Array(161);pass[160]=1;assert.equal(sampleVisits(pass,random,1),160);
++console.log('Selfplay: seeded Dirichlet noise, legal support, temperature sampling and exact pass targets passed.');
+diff --git a/tools/ai-gnn/test_training.py b/tools/ai-gnn/test_training.py
+new file mode 100644
+index 0000000..8323f9e
+--- /dev/null
++++ b/tools/ai-gnn/test_training.py
+@@ -0,0 +1,114 @@
++import gzip
++import json
++from pathlib import Path
++import tempfile
++import unittest
++import torch
++from model import GraphNet
++from train import Prepared, load_data, loss_for, sampling_weights, split_games
++
++
++def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
++    n=6*size*size+2 if kind=='sphere' else size*size
++    return dict(record=dict(gameId=game,kind=kind,size=size,source=source,wdl=1 if score==0 else 0 if score>0 else 2,score=score,ply=ply),n=n,
++        x=torch.zeros(160,32),mask=torch.cat((torch.ones(n,1),torch.zeros(160-n,1))),global_features=torch.zeros(8),
++        legal=torch.ones(161,dtype=torch.bool),policy=torch.nn.functional.one_hot(torch.tensor(160),161).float(),own=torch.ones(160,dtype=torch.long))
++
++
++class TrainingTests(unittest.TestCase):
++    def test_pinned_split_never_promotes_old_training_games_to_validation(self):
++        records=[item(game) for game in ['old-train','old-val']+[f'new-{i}' for i in range(10)]]
++        train,val=split_games(records,42,dict(trainGames=['old-train'],validationGames=['old-val']))
++        self.assertIn('old-train',{r['record']['gameId'] for r in train})
++        self.assertIn('old-val',{r['record']['gameId'] for r in val})
++        self.assertFalse({r['record']['gameId'] for r in train}&{r['record']['gameId'] for r in val})
++        self.assertEqual(len(val),3)
++        branch=item('old-val');branch['record']['sequenceId']='old-val-cleanup'
++        a,b=split_games(records+[branch],42,dict(trainGames=['old-train'],validationGames=['old-val']))
++        self.assertEqual(sum(r['record']['gameId']=='old-val' for r in b),2)
++        self.assertFalse(any(r['record']['gameId']=='old-val' for r in a))
++        with self.assertRaisesRegex(ValueError,'overlap'):
++            split_games(records,42,dict(trainGames=['old-train'],validationGames=['old-train']))
++
++    def test_split_qualifies_game_ids_by_board(self):
++        records=[item(game,kind,size) for kind,size in [('torus',7),('sphere',3)] for game in ['same-a','same-b','same-c','same-d','same-e']]
++        train,val=split_games(records,3)
++        self.assertEqual(len(train),8);self.assertEqual(len(val),2)
++        self.assertEqual({r['record']['kind'] for r in val},{'sphere','torus'})
++
++    def test_sampling_equalizes_sources_boards_games_and_thirds(self):
++        records=[item('teacher-short',source='teacher') for _ in range(3)]
++        records += [item('teacher-long',source='teacher') for _ in range(30)]
++        records += [item('self-small',source='selfplay') for _ in range(6)]
++        records += [item('self-big',kind='sphere',size=5,source='selfplay') for _ in range(60)]
++        weights=sampling_weights(records,.7)
++        self.assertAlmostEqual(sum(weights),1.)
++        self.assertAlmostEqual(sum(w for w,r in zip(weights,records) if r['record']['source']=='selfplay'),.7)
++        for game,expected in [('teacher-short',.15),('teacher-long',.15),('self-small',.35),('self-big',.35)]:
++            selected=[w for w,r in zip(weights,records) if r['record']['gameId']==game]
++            self.assertAlmostEqual(sum(selected),expected)
++            self.assertAlmostEqual(sum(selected[:len(selected)//3]),expected/3)
++
++    def test_cached_loss_matches_reference_and_soft_targets_backpropagate(self):
++        torch.set_num_threads(2);torch.manual_seed(4)
++        records=[item('a'),item('b',kind='sphere',size=3)]
++        records[0]['policy'][0]=.25;records[0]['policy'][160]=.75
++        adjacency={('torus',7):torch.eye(160),('sphere',3):torch.eye(160)}
++        model=GraphNet();cached=Prepared(records,adjacency,'cpu')
++        expected=loss_for(model,records,adjacency)
++        actual=cached.forward(model,cached.indices)[0].mean()
++        torch.testing.assert_close(actual,expected)
++        actual.backward();self.assertTrue(all(p.grad is not None and torch.isfinite(p.grad).all() for p in model.parameters()))
++        metrics=cached.evaluate(model,2)
++        self.assertAlmostEqual(metrics['loss'],metrics['unweightedLoss'])
++        self.assertTrue(all(isinstance(v,(float,int)) for v in metrics.values()))
++
++    def test_uncertain_policy_does_not_train_heads_but_still_trains_value(self):
++        torch.set_num_threads(2);model=GraphNet()
++        records=[item('a')];records[0]['policy_weight']=0.
++        cached=Prepared(records,{('torus',7):torch.eye(160)},'cpu')
++        cached.forward(model,cached.indices)[0].mean().backward()
++        self.assertTrue(all(p.grad is not None and p.grad.abs().sum()==0 for p in list(model.policy.parameters())+list(model.passing.parameters())))
++        self.assertGreater(model.value[-1].bias.grad.abs().sum().item(),0)
++
++    def test_policy_anchor_is_zero_for_teacher_and_penalizes_drift(self):
++        torch.set_num_threads(2);torch.manual_seed(3)
++        teacher=GraphNet().eval();records=[item('a')]
++        cached=Prepared(records,{('torus',7):torch.eye(160)},'cpu')
++        cached.policy_weight.zero_();cached.anchor_policy(teacher,1,.5)
++        _, outputs, d=cached.forward(teacher,cached.indices)
++        logits=outputs[0].detach().clone().requires_grad_(True)
++        from train import loss_terms
++        args=[*outputs,d['legal'],d['policy'],cached.outcome,cached.score,d['own'],d['mask'].squeeze(-1)]
++        base=loss_terms(*args,cached.policy_weight).item()
++        anchored=loss_terms(*args,cached.policy_weight,cached.anchor,.5).item()
++        self.assertAlmostEqual(base,anchored,places=5)
++        changed=outputs[0].clone();changed[:,160]+=5
++        shifted=loss_terms(changed,*outputs[1:],*args[4:],cached.policy_weight,cached.anchor,.5).item()
++        self.assertGreater(shifted,anchored+.1)
++
++    def test_gzip_loading_rejects_inconsistent_labels_and_compacts_records(self):
++        row=dict(schemaVersion=1,kind='torus',size=7,gameId='a',x=[0.]*(49*32),legal=[True]*161,action=160,
++            ownership=[1]*49,wdl=1,score=0.,**{'global':[0.]*8})
++        with tempfile.TemporaryDirectory() as directory:
++            path=Path(directory)/'data.jsonl.gz'
++            with gzip.open(path,'wt',encoding='utf-8') as out:out.write(json.dumps(row)+'\n')
++            loaded=load_data([path]);self.assertNotIn('x',loaded[0]['record']);self.assertEqual(loaded[0]['record']['source'],'teacher')
++            row['score']=1;row['wdl']=0
++            with gzip.open(path,'wt',encoding='utf-8') as out:out.write(json.dumps(row)+'\n')
++            with self.assertRaisesRegex(ValueError,'Ownership'):
++                load_data([path])
++
++    def test_sharpening_keeps_raw_visits_and_gates_only_uncertain_policy(self):
++        row=dict(schemaVersion=1,kind='torus',size=7,gameId='a',source='selfplay',x=[0.]*(49*32),legal=[True]*161,
++            ownership=[1]*49,wdl=1,score=0.,policy=[.5,.3]+[0.]*158+[.2],**{'global':[0.]*8})
++        with tempfile.TemporaryDirectory() as directory:
++            path=Path(directory)/'data.jsonl';path.write_text(json.dumps(row)+'\n',encoding='utf-8')
++            r=load_data([path],.5,.6)[0]
++        self.assertEqual(r['policy_weight'],0.)
++        self.assertAlmostEqual(r['raw_policy'][0].item(),.5)
++        self.assertAlmostEqual(r['policy'][0].item(),.25/.38,places=6)
++        self.assertEqual(r['record']['wdl'],1)
++
++
++if __name__=='__main__':unittest.main()
