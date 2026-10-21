@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-inference",
+  "architecture": "v3",
+  "title": "Sparse fused WebGPU kernels and actual-batch CPU inference",
+  "source": {
+    "baseCommit": "a02b26a2252662d7dad262e39974d476fc7c7f49",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "a02b26a:onnx-webgpu-and-padded-wasm",
+    "current:sparse-wgsl-and-actual-batch-wasm"
+  ],
+  "notes": [
+    "Same learned weights, architecture, features and search rules.",
+    "FP32 weights sidecar d4b86a06364e06376d578250d10b79a7053a16fa234fe2821f2f8b2fcb31535a; no quantization.",
+    "Six boards, real batches 1/8, five warmups and twenty samples per case, two rounds with reversed execution order.",
+    "GPU 8-leaf median 10.9 -> 3.45ms; CPU 1-leaf 13.9 -> 2.1ms.",
+    "300ms GPU search median 201 -> 573 simulations; not a strength comparison.",
+    "All accepted output comparisons within 0.0000062. Rejected graph-capture and JSPI trials are not part of the implementation."
+  ],
+  "artifacts": [
+    {
+      "path": "data/benchmark.json",
+      "sha256": "9cb26107f21ebea6318499789f6d53eda849a5f78887a0b65f48780647a352d8"
+    },
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "e9505874a5b615899c9fad94219bdae635e3afb6719d5f81797fd5e3b1c78139"
+    },
+    {
+      "path": "data/model-manifest.json",
+      "sha256": "a675996593e3c6337edc3cd98d2745557a3fb0a102865e3fd59ff9de07c605aa"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "c255f385f01b160e2971e87c77d9d376dab53e2f7c031aec411556de02c8f476"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "7661f03a427a8214211556007cf643e1ccfe78f64d2a3e7be5b7e8659032e074"
+    }
+  ]
+}

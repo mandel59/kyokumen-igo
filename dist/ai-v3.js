@@ -4,13 +4,19 @@ import {createV3Inference,adjacencyFor} from './ai-v3-inference.js';
 
 export async function createV3AI(options={}){
  const search=await createV3Search(options);
+ const adjacencies=new Map();
+ function adjacencyForPosition(position){
+  const key=position.kind+':'+position.size;
+  if(!adjacencies.has(key))adjacencies.set(key,adjacencyFor(createTopology(position.kind,position.size)));
+  return adjacencies.get(key);
+ }
  let inference;
  try{
   inference=await createV3Inference(options);
   // Compile kernels during initialization; the Worker keeps serving v2 meanwhile.
   const warm={kind:'torus',size:7,komi:6.5,moves:new Int32Array()};
   search.start(warm);const leaves=search.collect(1);
-  search.submit(leaves,await inference.evaluate(leaves,adjacencyFor(createTopology('torus',7))));
+  search.submit(leaves,await inference.evaluate(leaves,adjacencyForPosition(warm)));
   search.cancel();
  }catch(error){search.dispose();await inference?.dispose();throw error;}
  let cancelled=0,busy=false;
@@ -21,7 +27,7 @@ export async function createV3AI(options={}){
    if(!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(maxSimulations)||maxSimulations<1)throw new Error('Invalid v3 search budget');
    busy=true;const generation=cancelled;
    try{
-    search.start(position,{seed});const adjacency=adjacencyFor(createTopology(position.kind,position.size));
+    search.start(position,{seed});const adjacency=adjacencyForPosition(position);
     const start=performance.now();let batches=0,lastBatchMs=0;
     while(search.result().simulations<maxSimulations){
      const remaining=budgetMs-(performance.now()-start);

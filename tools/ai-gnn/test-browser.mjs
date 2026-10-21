@@ -16,6 +16,10 @@ const server=createServer((req,res)=>{
   if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Kyokugo v3 verification</title>');return;}
   if(name==='/golden.json'){res.setHeader('content-type','application/json');res.end(golden);return;}
   if(name==='/endgame.json'){res.setHeader('content-type','application/json');res.end(readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url)));return;}
+  if(name==='/dist/models/v3/bad-gpu-manifest.json'){
+   const manifest=JSON.parse(readFileSync(new URL('../../dist/models/v3/manifest.json',import.meta.url)));
+   manifest.webgpu.sha256='0'.repeat(64);res.setHeader('content-type','application/json');res.end(JSON.stringify(manifest));return;
+  }
   const path=resolve(root,'.'+decodeURIComponent(name));
   if(!name.startsWith('/dist/')||!path.startsWith(root.endsWith(sep)?root:root+sep)||!existsSync(path)){res.writeHead(404);res.end();return;}
   res.setHeader('content-type',mime[extname(path)]??'application/octet-stream');res.end(readFileSync(path));
@@ -26,7 +30,7 @@ const base='http://127.0.0.1:'+server.address().port;
 const browser=await chromium.launch({executablePath:process.env.EDGE_PATH??'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
  headless:true,args:['--enable-unsafe-webgpu','--no-first-run']});
 try{
- const page=await browser.newPage();page.on('console',message=>{if(message.type()==='error')console.error(message.text());});
+ const page=await browser.newPage();page.on('console',message=>{if(['error','warning'].includes(message.type()))console.error(message.text());});
  await page.goto(base);
  const result=await page.evaluate(async(base)=>{
   const run=async function({base,backend}){
@@ -49,7 +53,65 @@ try{
    const times=[];for(let k=0;k<5;k++){
     const start=performance.now();await ai.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);times.push(performance.now()-start);
    }
-   const selected=ai.backend;await ai.dispose();
+   const selected=ai.backend,runtime=ai.runtime;
+   // Exercise changing real batch counts and data after buffer reuse, not just repeated inputs.
+   const widths={policy:161,wdl:3,score:1,ownership:480},batchParity=[];
+   for(const count of [8,1,4,8]){
+    const request={count};
+    for(const [key,width]of [['x',160*32],['mask',160],['global_features',8]]){
+     request[key]=new Float32Array(count*width);
+     for(let b=0;b<count;b++)request[key].set(input[key].subarray((b%2)*width,(b%2+1)*width),b*width);
+    }
+    const result=await ai.evaluate(request,input.adjacency,{auxiliary:true});let max=0;
+    for(const [key,width]of Object.entries(widths))for(let b=0;b<count;b++)for(let j=0;j<width;j++)max=Math.max(max,Math.abs(result[key][b*width+j]-golden.outputs[key].data[(b%2)*width+j]));
+    if(max>2e-4)throw new Error('Real batch '+count+' changed outputs: '+max);batchParity.push({count,maxError:max});
+   }
+   // The specialized kernels must preserve graph permutation equivariance, including padding.
+   const permutation=Array.from({length:160},(_,p)=>(p*37+13)%160),permuted={count:1,global_features:input.global_features.slice(0,8),x:new Float32Array(160*32),mask:new Float32Array(160)};
+   const permutedAdjacency=new Float32Array(160*160);
+   for(let p=0;p<160;p++){
+    permuted.x.set(input.x.subarray(permutation[p]*32,(permutation[p]+1)*32),p*32);permuted.mask[p]=input.mask[permutation[p]];
+    for(let q=0;q<160;q++)permutedAdjacency[p*160+q]=input.adjacency[permutation[p]*160+permutation[q]];
+   }
+   const permutedOutput=await ai.evaluate(permuted,permutedAdjacency,{auxiliary:true});let permutationError=0;
+   for(const [key,width]of Object.entries(widths))for(let i=0;i<width;i++){
+    const source=key==='policy'&&i<160?permutation[i]:key==='ownership'?permutation[Math.floor(i/3)]*3+i%3:i;
+    permutationError=Math.max(permutationError,Math.abs(permutedOutput[key][i]-golden.outputs[key].data[source]));
+   }
+   if(permutationError>2e-4)throw new Error('Graph permutation changed outputs: '+permutationError);
+   const waitingEvaluation=ai.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);let concurrentRejected=false;
+   try{await ai.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);}catch(error){concurrentRejected=/already running/.test(error.message);}
+   await waitingEvaluation;if(!concurrentRejected)throw new Error('Concurrent inference was not rejected');
+   await ai.dispose();
+   const capacityParity=[];
+   if(backend==='webgpu')for(const batchSize of [1,4]){
+    const small=await createV3Inference({manifestURL:base+'/dist/models/v3/manifest.json',backend,batchSize}),request={count:batchSize};
+    for(const [key,width]of [['x',160*32],['mask',160],['global_features',8]]){
+     request[key]=new Float32Array(batchSize*width);for(let b=0;b<batchSize;b++)request[key].set(input[key].subarray((b%2)*width,(b%2+1)*width),b*width);
+    }
+    const result=await small.evaluate(request,input.adjacency,{auxiliary:true});let error=0;
+    for(const [key,width]of Object.entries(widths))for(let b=0;b<batchSize;b++)for(let j=0;j<width;j++)error=Math.max(error,Math.abs(result[key][b*width+j]-golden.outputs[key].data[(b%2)*width+j]));
+    if(small.runtime!=='wgsl'||error>2e-4)throw new Error('GPU capacity '+batchSize+' failed: '+error);capacityParity.push({batchSize,maxError:error});await small.dispose();
+   }
+   let gpuChecksumFallback=false,gpuExecutionFallback=false;
+   if(backend==='webgpu'){
+    const fallback=await createV3Inference({manifestURL:base+'/dist/models/v3/bad-gpu-manifest.json',backend});
+    const result=await fallback.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);
+    const error=Math.max(...result.policy.map((v,i)=>Math.abs(v-golden.outputs.policy.data[i])));
+    gpuChecksumFallback=fallback.backend==='webgpu'&&fallback.runtime==='asyncify'&&error<2e-4;
+    await fallback.dispose();if(!gpuChecksumFallback)throw new Error('Corrupt GPU sidecar did not fall back to the verified ONNX model');
+    const unusual=input.adjacency.slice();
+    const row=Array.from({length:160},(_,p)=>p).find(p=>unusual.subarray(p*160,(p+1)*160).filter(Boolean).length===4);
+    const extra=Array.from({length:160},(_,q)=>q).find(q=>unusual[row*160+q]===0);unusual[row*160+extra]=.1;
+    const native=await createV3Inference({manifestURL:base+'/dist/models/v3/manifest.json',backend});
+    await native.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);
+    const actual=await native.evaluate({count:golden.inputs.x.shape[0],...input},unusual);
+    const reference=await createV3Inference({manifestURL:base+'/dist/models/v3/manifest.json',backend:'wasm'});
+    const expected=await reference.evaluate({count:golden.inputs.x.shape[0],...input},unusual);
+    const max=Math.max(...actual.policy.map((v,i)=>Math.abs(v-expected.policy[i])),...actual.wdl.map((v,i)=>Math.abs(v-expected.wdl[i])));
+    gpuExecutionFallback=native.runtime==='asyncify'&&native.backend==='webgpu'&&max<2e-4;
+    await native.dispose();await reference.dispose();if(!gpuExecutionFallback)throw new Error('Unsupported graph did not switch from dedicated GPU to ONNX');
+   }
    const player=await createV3AI({manifestURL:base+'/dist/models/v3/manifest.json',backend});
    const turns=[];
    for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
@@ -84,7 +146,7 @@ try{
    await player.dispose();
    const adapter=backend==='webgpu'?await navigator.gpu.requestAdapter():null;
    const adapterInfo=adapter?Object.fromEntries(['vendor','architecture','device','description'].map(k=>[k,adapter.info[k]])):null;
-   return {selected,adapterInfo,differences,coldMs,warmBatchMs:times,turns,cancelled,
+   return {selected,runtime,adapterInfo,differences,coldMs,warmBatchMs:times,batchParity,capacityParity,permutationError,concurrentRejected,gpuChecksumFallback,gpuExecutionFallback,turns,cancelled,
     tactics:{pocketAvoided:pocketResult.avoidedInvasions,eyePointsAvoided:eyesResult.avoidedInvasions},endgame};
   };
   const runWorker=backend=>new Promise((resolve,reject)=>{
@@ -110,6 +172,7 @@ try{
  },base);
  for(const backend of ['cpu','gpu'])for(const [key,difference]of Object.entries(result[backend].differences))assert.ok(difference<1e-3,backend+' '+key+': '+difference);
  assert.equal(result.cpu.selected,'wasm');assert.equal(result.gpu.selected,'webgpu');
+ assert.equal(result.cpu.runtime,'wasm');assert.equal(result.gpu.runtime,'wgsl');assert.equal(result.gpu.gpuChecksumFallback,true);assert.equal(result.gpu.gpuExecutionFallback,true);
  assert.equal(result.production.backend,'v3-webgpu');assert.equal(result.production.error,undefined);
  result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model};
  if(process.argv.includes('--output'))writeFileSync(process.argv[process.argv.indexOf('--output')+1],JSON.stringify(result,null,2)+'\n');

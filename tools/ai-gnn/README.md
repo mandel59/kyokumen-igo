@@ -31,7 +31,7 @@ Unix では生成器名の `.exe` を省略します。数値 `20` は盤ごと�
 
 データは 1 行 1 局面の JSONL。特徴 ABI、盤、対局 ID、合法手、着手（または探索訪問分布）、最終勝敗・得点・所属を保存します。盤ごとに対局 ID を分割し、同じ対局を学習と検証に混在させません。各盤 2 局以上の終局データが必要です。
 
-`train.py` は ONNX、再開用 `weights.pt`、入出力の `golden.json`、学習履歴と SHA-256 を含む `manifest.json` を出力します。`--resume` は自分で生成したローカルチェックポイントを指定します。既定では CPU で実行します。
+`train.py` は ONNX、専用 WebGPU 用の FP32 `weights.f32`、再開用 `weights.pt`、入出力の `golden.json`、学習履歴と SHA-256 を含む `manifest.json` を出力します。`--resume` は自分で生成したローカルチェックポイントを指定します。既定では CPU で実行します。
 
 CUDA 対応 GPU がある場合は、uv の追加依存を指定して学習できます。
 
@@ -62,7 +62,23 @@ node tools/ai-gnn/test-onnx.mjs
 node tools/ai-gnn/test-browser.mjs
 ```
 
-ブラウザ検証はローカルサーバーと一時プロファイルのヘッドレス Edge を起動し、Worker 内の WebGPU / WASM を PyTorch の固定出力と比較します。6 盤での MCTS、キャンセル、実際の Worker の v3 選択も検証します。Windows の既定 Edge パス以外では環境変数 `EDGE_PATH` を指定してください。`--output <file.json>` で環境と観測時間を保存できます。
+ブラウザ検証はローカルサーバーと一時プロファイルのヘッドレス Edge を起動し、Worker 内の専用 WebGPU / WASM を PyTorch の固定出力と比較します。実バッチ数・最大容量 1 / 4 / 8、交点の並べ替え、破損重み・未対応グラフからの ONNX フォールバック、6 盤での MCTS、終盤、キャンセル、実際の Worker の v3 選択も検証します。Windows の既定 Edge パス以外では環境変数 `EDGE_PATH` を指定してください。`--output <file.json>` で環境と観測時間を保存できます。
+
+## 推論速度の比較
+
+```powershell
+node tools/ai-gnn/bench-inference.mjs --baseline a02b26a --iterations 20 --rounds 2 --output tools/ai-gnn/target/inference-benchmark.json
+```
+
+指定コミットの推論コードをメモリ上で配信し、作業ツリーを変えずに現在の実装と比較します。全 6 盤・実バッチ 1 / 8 のアップロードと読み戻しを含む時間を計測し、各盤の異なる 8 局面の出力を native ONNX と照合します。別 Worker で逐次実行し、2 周目は実行順を逆にします。300ms の MCTS 探索数も保存します。これは処理速度の測定で、対局勝率の評価ではありません。
+
+既存のチェックポイントに補助重みだけを追加する場合は、同じ ONNX と固定入出力の組を用意して次を実行します。
+
+```powershell
+uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py --weights experiments/ai/v3/2026-10-21-strength/data/weights.pt --directory dist/models/v3 --golden tests/fixtures/ai/v3-golden.json
+```
+
+固定出力でチェックポイントを照合してから `weights.f32` と manifest の補助情報を作ります。専用推論は転置した FP32 重みを使い、再学習や量子化は行いません。`createV3Inference({accelerator:false})` で ONNX 経路を直接比較できます。以前の形式のモデルも ONNX で動作します。[最適化の測定記録](../../experiments/ai/v3/2026-10-22-inference/README.md) を参照してください。
 
 従来の `node tests.mjs`、`node wasm-tests.mjs`、`node search-tests.mjs`、`node ui-tests.mjs` なども継続して実行します。
 

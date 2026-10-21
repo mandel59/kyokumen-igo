@@ -332,5 +332,11 @@
   "model": "model.onnx",
   "sha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
   "status": "experimental",
-  "accepted": false
+  "accepted": false,
+  "webgpu": {
+    "formatVersion": 1,
+    "model": "weights.f32",
+    "sha256": "d4b86a06364e06376d578250d10b79a7053a16fa234fe2821f2f8b2fcb31535a",
+    "sourceSha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5"
+  }
 }

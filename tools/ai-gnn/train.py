@@ -117,6 +117,8 @@ def export(model, directory, examples, adjacency, metadata):
         parameters=sum(p.numel() for p in model.parameters()),
         model="model.onnx", sha256=hashlib.sha256(model_path.read_bytes()).hexdigest(),
         status="experimental", accepted=False))
+    from export_webgpu import export_webgpu
+    export_webgpu(model, directory, metadata)
     (directory / "manifest.json").write_text(json.dumps(metadata, indent=2)+"\n", encoding="utf-8", newline="\n")
     golden = dict(inputs={k:dict(shape=list(v.shape), data=v.flatten().tolist()) for k,v in zip(names,inputs)},
                   outputs={k:dict(shape=list(v.shape), data=v.flatten().tolist()) for k,v in zip(outputs,expected)})

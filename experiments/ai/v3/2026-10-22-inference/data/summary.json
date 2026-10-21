@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "baseline": "a02b26a",
+  "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+  "webgpuWeights": "d4b86a06364e06376d578250d10b79a7053a16fa234fe2821f2f8b2fcb31535a",
+  "parameters": 120905,
+  "precision": "FP32 unchanged",
+  "environment": {
+    "node": "v26.12.1",
+    "browser": "155.0.4283.62",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "platform": "win32",
+    "gpu": "NVIDIA GeForce RTX 5060 Ti",
+    "driver": "617.42"
+  },
+  "inference": [
+    {
+      "backend": "wasm",
+      "count": 1,
+      "baselineMs": 13.899999976158142,
+      "optimizedMs": 2.100000023841858,
+      "speedup": 6.619047532546548
+    },
+    {
+      "backend": "wasm",
+      "count": 8,
+      "baselineMs": 14.299999952316284,
+      "optimizedMs": 13.900000095367432,
+      "speedup": 1.028776967928379
+    },
+    {
+      "backend": "webgpu",
+      "count": 1,
+      "baselineMs": 11,
+      "optimizedMs": 3.0999999046325684,
+      "speedup": 3.548387205935669
+    },
+    {
+      "backend": "webgpu",
+      "count": 8,
+      "baselineMs": 10.899999976158142,
+      "optimizedMs": 3.449999988079071,
+      "speedup": 3.159420293861266
+    }
+  ],
+  "search": [
+    {
+      "backend": "wasm",
+      "baselineSimulations": 113,
+      "baselineElapsedMs": 297.2999999523163,
+      "optimizedSimulations": 121,
+      "optimizedElapsedMs": 295.25,
+      "speedup": 1.0707964601769913
+    },
+    {
+      "backend": "webgpu",
+      "baselineSimulations": 201,
+      "baselineElapsedMs": 294.5999999642372,
+      "optimizedSimulations": 573,
+      "optimizedElapsedMs": 298.35000002384186,
+      "speedup": 2.8507462686567164
+    }
+  ],
+  "maxAbsoluteError": 0.000006198883056640625,
+  "tests": [
+    "PyTorch/ONNX/all-four-head WebGPU parity",
+    "Real batches and capacities 1/4/8",
+    "Graph permutation including padding",
+    "Concurrent evaluation rejection",
+    "Corrupt GPU sidecar -> ONNX",
+    "Unsupported graph during GPU evaluation -> ONNX",
+    "Six-board MCTS and production Worker",
+    "Reported late-game pass regression",
+    "All FP32 parameters serialized without loss",
+    "v3 WASM, existing v2 WASM/Worker and UI regressions"
+  ],
+  "limits": [
+    "One Windows/Edge desktop and GPU; no mobile measurement.",
+    "Warm inference includes upload and readback but excludes feature extraction.",
+    "Equal-time simulations, not an estimate of playing strength.",
+    "Initialization is per Worker, not fully cleared browser/HTTP/shader caches.",
+    "Graph capture and JSPI trials were rejected and are not used."
+  ]
+}

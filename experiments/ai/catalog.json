@@ -54,6 +54,12 @@
       "architecture": "v3",
       "title": "Pass after defeat is certified by enemy living stones",
       "path": "v3/2026-10-22-endgame/"
+    },
+    {
+      "id": "v3/2026-10-22-inference",
+      "architecture": "v3",
+      "title": "Sparse fused WebGPU kernels and actual-batch CPU inference",
+      "path": "v3/2026-10-22-inference/"
     }
   ]
 }
