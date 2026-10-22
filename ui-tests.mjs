@@ -474,3 +474,21 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  assert.equal([...aboutHTML.matchAll(/role="tabpanel"/g)].length,4);assert.equal([...aboutHTML.matchAll(/role="tab"/g)].length,4);
  console.log('About tabs passed: one panel at a time, click and arrow/Home/End navigation, game untouched.');
 }
+
+// Display settings are split into two tabs, marks and counter; switching them changes no choice.
+{
+ const state=()=>[0,1].map(i=>[el('displayPanel'+i).inert,String(el('displayTab'+i).tabIndex)].join(':')).join(' ');
+ const displayHTML=html.slice(html.indexOf('<dialog id="displayDialog"'),html.indexOf('</dialog>',html.indexOf('<dialog id="displayDialog"')));
+ assert.equal([...displayHTML.matchAll(/role="tabpanel"/g)].length,2);assert.equal([...displayHTML.matchAll(/role="tab"/g)].length,2);
+ assert.match(displayHTML.slice(displayHTML.indexOf('id="displayPanel0"'),displayHTML.indexOf('id="displayPanel1"')),/id="markAlive"[\s\S]*id="markTerritory"/,'marks are on the first tab');
+ assert.match(displayHTML.slice(displayHTML.indexOf('id="displayPanel1"')),/id="counter_captures"[\s\S]*id="counter_area"/,'counters are on the second tab');
+ el('displayOpen').onclick();el('displayTab0').onclick();assert.equal(state(),'false:0 true:-1');
+ el('markAtari').checked=true;el('markAtari').onchange();
+ el('displayTab1').onclick();assert.equal(state(),'true:-1 false:0');
+ el('counter_stones').checked=true;el('counter_stones').onchange();
+ let prevented=false;el('displayTab1').onkeydown({key:'ArrowRight',preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.equal(state(),'false:0 true:-1','arrows wrap between the two tabs');
+ el('displayDone').onclick();el('displayOpen').onclick();
+ assert.equal(el('markAtari').checked,true);assert.equal(el('counter_stones').checked,true,'choices survive tab switches');
+ el('markAtari').checked=false;el('markAtari').onchange();el('counter_captures').checked=true;el('counter_captures').onchange();el('displayDone').onclick();
+ console.log('Display settings tabs passed: marks and counter on separate tabs, keyboard navigation, choices kept.');
+}
