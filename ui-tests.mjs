@@ -149,7 +149,7 @@ const aboutHTML=html.slice(html.indexOf('<dialog id="aboutDialog"'));
 assert.deepEqual([...aboutHTML.matchAll(/<dt>([^<]+)<\/dt>/g)].map(m=>m[1]),['石を置く','石を取る','打てない手','パス','終局','数え方','コミ']);
 assert.match(aboutHTML,/棋譜のリンクには、盤・コミ・全手順/);
 el('aboutOpen').onclick();el('aboutTutorial').onclick();
-assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,true);assert.match(el('rulesProgress').textContent,/^1 \/ 6/);
+assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,true);assert.match(el('rulesProgress').textContent,/^1 \/ 7/);
 el('rulesClose').onclick();assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);
 // Tutorial is five one-idea pages, each with a figure, bounded navigation and a read-only live game.
 assert.match(html,/<dialog id="rulesDialog" aria-labelledby="rulesTitle">/);
@@ -158,7 +158,7 @@ const tutorialHTML=html.slice(html.indexOf('<dialog id="rulesDialog"'),html.inde
 assert.doesNotMatch(tutorialHTML,/スーパーコウ|正距方位|ニューラル|標準/);
 assert.match(html.slice(html.indexOf('<dialog id="aboutDialog"')),/位置的スーパーコウ/);
 const tutorialPages=[...tutorialHTML.matchAll(/<section id="rulesStep\d"[\s\S]*?<\/section>/g)].map(m=>m[0]);
-assert.equal(tutorialPages.length,6);
+assert.equal(tutorialPages.length,7);
 for(const page of tutorialPages){
  assert.equal(page.match(/<svg class="tutorial-figure" viewBox="0 0 300 132" aria-hidden="true">/g)?.length,1,'one same-sized figure per page');
  assert.doesNotMatch(page,/\shidden[\s>]/,'pages are never removed from layout');
@@ -167,17 +167,17 @@ for(const page of tutorialPages){
 assert.match(css,/\.tutorial-step\{grid-area:1\/1/);
 assert.match(css,/\.tutorial-step\[inert\]\{visibility:hidden\}/);
 const checkPage=n=>{
- assert.match(el('rulesProgress').textContent,new RegExp('^'+(n+1)+' / 6 · '));
- for(let i=0;i<6;i++)assert.equal(el('rulesStep'+i).inert,i!==n);
- assert.deepEqual([...el('rulesDots').html.matchAll(/<i( class="current")?><\/i>/g)].map(m=>!!m[1]),[0,1,2,3,4,5].map(i=>i===n));
+ assert.match(el('rulesProgress').textContent,new RegExp('^'+(n+1)+' / 7 · '));
+ for(let i=0;i<7;i++)assert.equal(el('rulesStep'+i).inert,i!==n);
+ assert.deepEqual([...el('rulesDots').html.matchAll(/<i( class="current")?><\/i>/g)].map(m=>!!m[1]),[0,1,2,3,4,5,6].map(i=>i===n));
  assert.equal(el('rulesPrev').disabled,n===0);
- assert.equal(el('rulesDone').textContent,n===5?'盤に戻る':'次へ');
+ assert.equal(el('rulesDone').textContent,n===6?'盤に戻る':'次へ');
  assert.equal(el('rulesPages').scrollTop,0);
  assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);assert.deepEqual(painted.data,beforeInfoPixels);
 };
 el('rulesOpen').onclick();checkPage(0);el('rulesPrev').onclick();checkPage(0);
-for(let i=1;i<6;i++){el('rulesPages').scrollTop=90;el('rulesDone').onclick();checkPage(i);}
-el('rulesPrev').onclick();checkPage(4);el('rulesDone').onclick();checkPage(5);
+for(let i=1;i<7;i++){el('rulesPages').scrollTop=90;el('rulesDone').onclick();checkPage(i);}
+el('rulesPrev').onclick();checkPage(5);el('rulesDone').onclick();checkPage(6);
 el('rulesDone').onclick();assert.equal(el('rulesDialog').open,false);
 el('rulesOpen').onclick();checkPage(0);el('rulesDone').onclick();checkPage(1);
 // Returning to the first page moves focus off the button that becomes disabled.
