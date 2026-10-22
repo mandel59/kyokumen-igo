@@ -1,0 +1,14 @@
+{
+ "schemaVersion":1,
+ "id":"v3/2026-10-23-antipodal",
+ "purpose":"Measure whether white antipodal copying defeats the current black AI on the spherical boards; no tuning or promotion.",
+ "sourceBaseCommit":"8f8d574cc06db0919d756d7aaa50dade80888973",
+ "blackPlayers":{"v2":{"wasm":"dist/ai-engine.wasm","depth":4},"v3":{"model":"dist/models/v3","backend":"WebGPU in browser Worker","visits":64,"timeCutoff":false}},
+ "whitePolicy":{"normal":"Antipode of black's last move; pass after black passes.","illegalAntipode":"Current v2 depth 4 chooses that one white move, then copying resumes. Record every exception and its reason.","symmetry":"Measure loss of color/antipodal board symmetry separately from legality of the next copy."},
+ "common":{"sizes":[3,4,5],"komi":6.5,"openingMoves":0,"maximumMoves":"20 times the number of vertices","seedFormula":"baseSeed + size * 100000 + gameIndex * 1009; xorshift32 generates a fixed per-ply seed list"},
+ "evaluation":{"gamesPerPlayerAndBoard":16,"totalGames":96,"seed":2026102301,"preflight":{"gamesPerPlayer":1,"size":3,"seed":2026102399,"excludedFromEvaluation":true}},
+ "statistics":{"report":["black/white wins and draws/caps","board scores before and after komi","completed games with exclusively legal mirror replies","games needing illegal-mirror fallback","first illegal copy / first asymmetric white turn","unique full move sequences per condition"],"confidenceInterval":false,"reason":"All games start empty with seeded AI tie-breaking; repeated trajectories are not independent opening samples."},
+ "stopRule":"Complete all 96 declared games regardless of results. Report caps separately, do not assign them a winner.",
+ "verification":"Replay every move and verify legality, antipodal policy or justified fallback, end score, exact ordinary v3 visits, source hashes and unique trajectories.",
+ "interpretation":"Performance against this specified white policy; not a proof about optimal play. A game with any fallback is not evidence for pure copying alone. No human rank estimate or equal-compute claim."
+}

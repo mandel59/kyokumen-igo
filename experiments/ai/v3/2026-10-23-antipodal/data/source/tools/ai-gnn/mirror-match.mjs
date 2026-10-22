@@ -1,0 +1,84 @@
+// Current black AIs versus white antipodal replies in a real browser Worker.
+import assert from 'node:assert/strict';
+import {createServer} from 'node:http';
+import {readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {resolve,sep,extname} from 'node:path';
+import {cpus} from 'node:os';
+import {createHash} from 'node:crypto';
+import {chromium} from 'playwright-core';
+const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
+const games=Number(arg('--games','16')),seed=Number(arg('--seed','2026102301')),output=arg('--output'),selectedSize=Number(arg('--size','0'));
+if(!output||existsSync(output)||!Number.isInteger(games)||games<1||!Number.isInteger(seed)||![0,3,4,5].includes(selectedSize))throw new Error('Use a new --output, positive --games and integer --seed / --size');
+const root=resolve('.'),hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+const sources=['dist/engine.js','dist/board-analysis.js','dist/ai-position.js','dist/ai-api.js','dist/ai-wasm.js','dist/ai-engine.wasm','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js','dist/ai-v3-webgpu.js','dist/ai-v3.wasm','dist/models/v3/manifest.json','dist/models/v3/model.onnx','dist/models/v3/weights.f32','tools/ai-gnn/antipodal.mjs','tools/ai-gnn/mirror-match.mjs'];
+const hashes=Object.fromEntries(sources.map(p=>[p,hash(p)]));
+const server=createServer((req,res)=>{try{
+ const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+ if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Antipodal Go study</title>');return;}
+ if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
+ const path=resolve(root,'.'+name);
+ if(!path.startsWith(root+sep)||!name.startsWith('/dist/')&&name!=='/tools/ai-gnn/antipodal.mjs')throw new Error('Invalid path');
+ res.setHeader('content-type',({'.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.wasm':'application/wasm'})[extname(path)]??'application/octet-stream');res.end(readFileSync(path));
+}catch{res.writeHead(404);res.end();}});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const base='http://127.0.0.1:'+server.address().port;
+const browser=await chromium.launch({executablePath:process.env.EDGE_PATH??'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--enable-unsafe-webgpu','--no-first-run']});
+try{
+ const page=await browser.newPage();await page.goto(base);
+ await page.exposeFunction('studyProgress',report=>{writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Completed',report.games.length,'games');});
+ const report=await page.evaluate(async config=>{
+  const run=async function({base,games,seed,selectedSize}){
+   const {Game,createTopology}=await import(base+'/dist/engine.js'),{aiPosition}=await import(base+'/dist/ai-position.js');
+   const {createWasmAI}=await import(base+'/dist/ai-wasm.js'),{createV3AI,V3_DEFAULT_SIMULATIONS}=await import(base+'/dist/ai-v3.js');
+   const {antipodalMap,colorAntipodal}=await import(base+'/tools/ai-gnn/antipodal.mjs');
+   if(V3_DEFAULT_SIMULATIONS!==64)throw new Error('Expected the current shared 64-visit default');
+   const v2=await createWasmAI(),v3=await createV3AI({backend:'webgpu'});
+   const report={schemaVersion:1,seed,gamesPerCondition:games,komi:6.5,openingMoves:0,
+    blackPlayers:{v2:{backend:'wasm',depth:4},v3:{backend:'webgpu',visits:64,timeCutoff:false}},
+    whitePolicy:'Reply at the antipode of every black move; reply pass to pass. If the antipode is illegal, use current v2 depth 4 for that one turn, then resume antipodal replies. Count every exception separately.',games:[]};
+   try{
+    for(const size of selectedSize?[selectedSize]:[3,4,5])for(const player of['v2','v3'])for(let index=0;index<games;index++){
+     const game=new Game(createTopology('sphere',size),6.5),map=antipodalMap(game.topology),gameSeed=(seed+size*100000+index*1009)>>>0;
+     let state=gameSeed||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
+     const limit=game.board.length*20,seeds=Array.from({length:limit},random),turns=[];
+     let whiteMirrorMoves=0,whiteFallbackMoves=0,firstIllegalMirror=null,firstAsymmetryPly=null;
+     while(!game.ended&&game.moves<limit){
+      const start=performance.now(),ply=game.moves,black=game.turn===1;
+      let result,target=null,illegalReason=null,mode;
+      if(black){
+       if(player==='v2')result={move:v2.chooseMove(aiPosition(game),{depth:4,seed:seeds[ply]}),backend:'wasm'};
+       else{result=await v3.chooseMove(aiPosition(game),{seed:seeds[ply]});if(result.backend!=='v3-webgpu'||!result.provenLoss&&result.simulations!==64)throw new Error('Unexpected v3 search');}
+       mode=player;
+      }else{
+       target=game.lastMove===null?null:map[game.lastMove];
+       const legal=target===null?{ok:true}:game.analyze(target);
+       if(legal.ok){result={move:target};mode='mirror';whiteMirrorMoves++;}
+       else{
+        illegalReason=legal.reason;whiteFallbackMoves++;
+        firstIllegalMirror??={ply:ply+1,target,reason:illegalReason};
+        result={move:v2.chooseMove(aiPosition(game),{depth:4,seed:seeds[ply]})};mode='v2-fallback';
+       }
+      }
+      const elapsedMs=performance.now()-start,applied=result.move===null?game.pass():game.play(result.move);
+      if(!applied.ok)throw new Error('Illegal match move: '+applied.reason);
+      const symmetric=game.turn===1?colorAntipodal(game.board,map):null;
+      if(symmetric===false)firstAsymmetryPly??=game.moves;
+      turns.push({ply:game.moves,color:black?'black':'white',mode,move:result.move,target,illegalReason,captured:applied.captured??0,elapsedMs,simulations:result.simulations??null,provenLoss:result.provenLoss??false,symmetricAfterWhite:symmetric});
+     }
+     report.games.push({size,player,index,seed:gameSeed,ended:game.ended,score:game.score(),whiteMirrorMoves,whiteFallbackMoves,firstIllegalMirror,firstAsymmetryPly,turns,moves:game.history.slice(1).map(s=>s.lastMove??-1)});
+     self.postMessage({kind:'progress',report});
+    }
+   }finally{v2.dispose();await v3.dispose();}
+   return report;
+  };
+  return new Promise((resolve,reject)=>{
+   const blob=URL.createObjectURL(new Blob(['self.onmessage=async({data})=>{try{self.postMessage({kind:"done",report:await ('+run.toString()+')(data)});}catch(e){self.postMessage({kind:"error",error:e.stack});}};'],{type:'text/javascript'}));
+   const worker=new Worker(blob,{type:'module'});URL.revokeObjectURL(blob);let pending=Promise.resolve();
+   worker.onmessage=({data})=>{if(data.kind==='progress'){pending=pending.then(()=>window.studyProgress(data.report));pending.catch(reject);}else if(data.kind==='done'){worker.terminate();pending.then(()=>resolve(data.report),reject);}else{worker.terminate();reject(new Error(data.error));}};
+   worker.onerror=e=>{worker.terminate();reject(new Error(e.message));};worker.postMessage(config);
+  });
+ },{base,games,seed,selectedSize});
+ for(const[p,h]of Object.entries(hashes))assert.equal(hash(p),h,'Source changed during the study: '+p);
+ report.environment={browser:browser.version(),node:process.version,cpu:cpus()[0].model};report.sourceSha256=hashes;
+ writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Finished',report.games.length,'games');
+}finally{await browser.close();await new Promise(r=>server.close(r));}

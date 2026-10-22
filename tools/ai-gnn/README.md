@@ -108,6 +108,8 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py 
 
 ## 棋力の診断対戦
 
+白の対蹠点コピーへの診断は [2026-10-23-antipodal](../../experiments/ai/v3/2026-10-23-antipodal/README.md) に保存しています。`node tools/ai-gnn/mirror-match.mjs --games 16 --seed 2026102301 --output tools/ai-gnn/target/antipodal.json` は空の球面3盤で現行v2・v3を黒にし、白は対蹠点が合法な限り真似します。違法なときだけ1手をv2で補い、補助手なしの成績・違法理由・棋譜の重複を別に記録します。
+
 ブラウザーの固定訪問数で比較する場合は、実Worker・WebGPUで対戦する `browser-match.mjs --simulations` を使います。通常手は指定訪問数に厳密に一致し、敗北確定時だけ早期パスします。`--budget-ms` とは併用できません。[64訪問の評価](../../experiments/ai/v3/2026-10-22-fixed64-strength/README.md)は全6盤・先後交換96局です。
 
 ```powershell

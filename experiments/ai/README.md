@@ -21,6 +21,7 @@
 | v3/2026-10-22-vs-v2 | 現行v3 WebGPUとv2 WASMの対戦・計算時間比較 | [記録](v3/2026-10-22-vs-v2/README.md) |
 | v3/2026-10-22-pixel8a-visits | Pixel 8aのChrome / Firefox実測と共通64訪問への調整 | [記録](v3/2026-10-22-pixel8a-visits/README.md) |
 | v3/2026-10-22-fixed64-strength | 実ブラウザーの共通64訪問v3と現行v2の先後交換96局 | [記録](v3/2026-10-22-fixed64-strength/README.md) |
+| v3/2026-10-23-antipodal | 黒v2・64訪問v3に対する白の対蹠点コピーと違法応手の診断 | [記録](v3/2026-10-23-antipodal/README.md) |
 | v2/2026-10-22-endgame | 生存・敗北確定判定の共通化と v2 のパス改善 | [記録](v2/2026-10-22-endgame/README.md) |
 
 機械可読の索引は [catalog.json](catalog.json) です。各実験は README（報告）、manifest.json（識別情報・出所・データハッシュ）、data/（結果・計画・ログ）を持ちます。

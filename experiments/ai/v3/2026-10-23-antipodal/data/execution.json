@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "8f8d574cc06db0919d756d7aaa50dade80888973",
+  "planSha256": "a3d941c2ea8c1e98ee56585d76a64224f0ff3689aad5c425f96d3c416dce8718",
+  "hashes": {
+    "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+    "dist/board-analysis.js": "eb24998ca2f5c98dadebcd3765355b865bf26447ad4e4a1b22164a1552e87897",
+    "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+    "dist/ai-api.js": "b027c22a06b64dffee2cf6811ed44c90b86f1273ea8fb9ab4720dc334d5f2a27",
+    "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+    "dist/ai-engine.wasm": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/ai-v3-search.js": "7cd12275af1a00312cc1eb673fdb06b01bb8876b8cbc29daab4c796f4a3a6746",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+    "dist/ai-v3.wasm": "ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216",
+    "dist/models/v3/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "dist/models/v3/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "dist/models/v3/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+    "tools/ai-gnn/antipodal.mjs": "fce87b5d6226564ce858a6f98fd8d6d0b01aae9facffe7d7c3d8c816be79efa6",
+    "tools/ai-gnn/mirror-match.mjs": "ac94f122a996f4549bb0a71b143c37add794c43630d06490448c56e926a854be",
+    "tools/ai-gnn/study-commands.mjs": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+    "experiments/ai/v3/2026-10-23-antipodal/data/run.mjs": "a6837b3c732da52e60cc39dad8b182ac38c1222367e454ad0a76eee29de226a3"
+  },
+  "started": "2026-10-22T16:04:51.611Z",
+  "status": "ready-for-summary",
+  "finished": "2026-10-22T16:07:14.104Z"
+}

@@ -92,6 +92,12 @@
       "path": "v3/2026-10-22-pixel8a-visits/"
     },
     {
+      "id": "v3/2026-10-23-antipodal",
+      "architecture": "v3",
+      "title": "Black v2 and fixed-64 v3 versus white antipodal copying",
+      "path": "v3/2026-10-23-antipodal/"
+    },
+    {
       "id": "v2/2026-10-22-endgame",
       "architecture": "v2",
       "title": "Share Benson certificates and pass after proven defeat in v2",

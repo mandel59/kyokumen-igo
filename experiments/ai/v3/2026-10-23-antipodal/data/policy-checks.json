@@ -1,0 +1,20 @@
+[
+  {
+    "size": 3,
+    "points": 56,
+    "blackCapture": 27,
+    "illegalCopy": "suicide"
+  },
+  {
+    "size": 4,
+    "points": 98,
+    "blackCapture": 48,
+    "illegalCopy": "suicide"
+  },
+  {
+    "size": 5,
+    "points": 152,
+    "blackCapture": 75,
+    "illegalCopy": "suicide"
+  }
+]

@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-23-antipodal",
+  "conditions": [
+    {
+      "size": 3,
+      "points": 56,
+      "player": "v2",
+      "games": 16,
+      "blackWins": 4,
+      "whiteWins": 12,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 12,
+        "blackWins": 0,
+        "whiteWins": 12,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 4,
+        "blackWins": 4,
+        "whiteWins": 0,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 4,
+      "fallbackReasons": {
+        "suicide": 4,
+        "occupied": 27
+      },
+      "komiOnlyWhiteWins": 12,
+      "blackRawMarginRange": [
+        0,
+        34
+      ],
+      "firstIllegalPly": [
+        56,
+        62
+      ]
+    },
+    {
+      "size": 3,
+      "points": 56,
+      "player": "v3",
+      "games": 16,
+      "blackWins": 7,
+      "whiteWins": 9,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 3,
+        "blackWins": 0,
+        "whiteWins": 3,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 13,
+        "blackWins": 7,
+        "whiteWins": 6,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 13,
+      "fallbackReasons": {
+        "suicide": 7,
+        "occupied": 60
+      },
+      "komiOnlyWhiteWins": 3,
+      "blackRawMarginRange": [
+        -38,
+        45
+      ],
+      "firstIllegalPly": [
+        56,
+        58
+      ]
+    },
+    {
+      "size": 4,
+      "points": 98,
+      "player": "v2",
+      "games": 16,
+      "blackWins": 3,
+      "whiteWins": 13,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 11,
+        "blackWins": 0,
+        "whiteWins": 11,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 5,
+        "blackWins": 3,
+        "whiteWins": 2,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 5,
+      "fallbackReasons": {
+        "occupied": 33,
+        "suicide": 3
+      },
+      "komiOnlyWhiteWins": 11,
+      "blackRawMarginRange": [
+        -59,
+        51
+      ],
+      "firstIllegalPly": [
+        96,
+        100
+      ]
+    },
+    {
+      "size": 4,
+      "points": 98,
+      "player": "v3",
+      "games": 16,
+      "blackWins": 7,
+      "whiteWins": 9,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 2,
+        "blackWins": 0,
+        "whiteWins": 2,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 14,
+        "blackWins": 7,
+        "whiteWins": 7,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 14,
+      "fallbackReasons": {
+        "occupied": 130,
+        "suicide": 7
+      },
+      "komiOnlyWhiteWins": 2,
+      "blackRawMarginRange": [
+        -90,
+        88
+      ],
+      "firstIllegalPly": [
+        98,
+        100
+      ]
+    },
+    {
+      "size": 5,
+      "points": 152,
+      "player": "v2",
+      "games": 16,
+      "blackWins": 3,
+      "whiteWins": 13,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 13,
+        "blackWins": 0,
+        "whiteWins": 13,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 3,
+        "blackWins": 3,
+        "whiteWins": 0,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 3,
+      "fallbackReasons": {
+        "suicide": 3,
+        "occupied": 24
+      },
+      "komiOnlyWhiteWins": 13,
+      "blackRawMarginRange": [
+        0,
+        93
+      ],
+      "firstIllegalPly": [
+        150,
+        154
+      ]
+    },
+    {
+      "size": 5,
+      "points": 152,
+      "player": "v3",
+      "games": 16,
+      "blackWins": 7,
+      "whiteWins": 9,
+      "draws": 0,
+      "capped": 0,
+      "uniqueTrajectories": 16,
+      "pureMirror": {
+        "games": 4,
+        "blackWins": 0,
+        "whiteWins": 4,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 12,
+        "blackWins": 7,
+        "whiteWins": 5,
+        "draws": 0,
+        "capped": 0
+      },
+      "gamesWithAsymmetry": 12,
+      "fallbackReasons": {
+        "suicide": 7,
+        "occupied": 235
+      },
+      "komiOnlyWhiteWins": 4,
+      "blackRawMarginRange": [
+        -140,
+        147
+      ],
+      "firstIllegalPly": [
+        152,
+        154
+      ]
+    }
+  ],
+  "totals": {
+    "v2": {
+      "games": 48,
+      "blackWins": 10,
+      "whiteWins": 38,
+      "draws": 0,
+      "capped": 0,
+      "komiOnlyWhiteWins": 36,
+      "pureMirror": {
+        "games": 36,
+        "blackWins": 0,
+        "whiteWins": 36,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 12,
+        "blackWins": 10,
+        "whiteWins": 2,
+        "draws": 0,
+        "capped": 0
+      }
+    },
+    "v3": {
+      "games": 48,
+      "blackWins": 21,
+      "whiteWins": 27,
+      "draws": 0,
+      "capped": 0,
+      "komiOnlyWhiteWins": 9,
+      "pureMirror": {
+        "games": 9,
+        "blackWins": 0,
+        "whiteWins": 9,
+        "draws": 0,
+        "capped": 0
+      },
+      "neededFallback": {
+        "games": 39,
+        "blackWins": 21,
+        "whiteWins": 18,
+        "draws": 0,
+        "capped": 0
+      }
+    }
+  },
+  "whitePolicy": "Reply at the antipode of every black move; reply pass to pass. If the antipode is illegal, use current v2 depth 4 for that one turn, then resume antipodal replies. Count every exception separately.",
+  "environment": {
+    "browser": "155.0.4283.62",
+    "node": "v26.12.1",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "elapsedSeconds": 139.327,
+  "verification": {
+    "replayedGames": 98,
+    "allMovesLegal": true,
+    "allMirrorDecisionsVerified": true,
+    "allScoresMatch": true,
+    "ordinaryV3TurnsAt64Visits": 2943,
+    "inputsUnchanged": true
+  },
+  "limits": [
+    "All games start empty; seed variation is not a collection of independent opening positions. Unique trajectory counts are reported; no binomial confidence interval is claimed.",
+    "Any game with an illegal antipodal reply uses the declared one-turn v2 fallback, and must not be counted as pure mirroring.",
+    "Only current black v2 depth 4 and v3 WebGPU 64 visits, komi 6.5, the three application sphere sizes. No conclusion about optimal play or zero-komi rules."
+  ]
+}
