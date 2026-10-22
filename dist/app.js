@@ -8,7 +8,7 @@ import {COUNTERS,MARK_KEYS,counterValues,loadDisplay,marksShown,saveDisplay} fro
 import {sphereProjection} from './sphere-projection.js';
 import {AI_CHOICES,loadAIChoice,saveAIChoice} from './ai-choice.js';
 import {v3Supported} from './ai-support.js';
-import {loadRevision} from './revision.js';
+import {loadBuildInfo} from './build-info.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
 import {encodeRecord,decodeRecord} from './record.js';
@@ -439,6 +439,10 @@ if(restored.state){
   if(restoreWarning)update();
 }
 renderAIInfo();startAIWorker();
-void loadRevision().then(revision=>{if(revision){$('appRevision').textContent='('+revision+')';$('appRevision').hidden=false;}});
+void loadBuildInfo().then(info=>{
+  if(!info)return;
+  $('appRevision').textContent='('+info.revision+')';$('appRevision').hidden=false;
+  $('appDeployed').textContent='デプロイ '+info.deployed;$('appDeployed').hidden=false;
+});
 openSharedRecord();
 

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {createTopology, Game} from './dist/engine.js';
 import {AI_CHOICE_KEY,DEFAULT_AI,loadAIChoice,saveAIChoice} from './dist/ai-choice.js';
 import {v3Supported} from './dist/ai-support.js';
-import {loadRevision,parseRevision} from './dist/revision.js';
+import {loadBuildInfo,parseBuildInfo} from './dist/build-info.js';
 import {COUNTERS, DEFAULT_DISPLAY, DISPLAY_KEY, MARK_KEYS, counterValues, loadDisplay, normalizeDisplay, saveDisplay} from './dist/display.js';
 
 // Black captures the white stone at (3, 3) of a 7 × 7 torus; white passes three times and black once.
@@ -108,13 +108,15 @@ assert.deepEqual(MARK_KEYS, ['alive', 'dead', 'atari', 'territory']);
   assert.equal(v3Supported({Worker(){},WebAssembly:{validate(){throw new Error('x');}}}),false);
 }
 
-// The revision shown in the About dialog is accepted only as a bare hash.
+// The build shown in the About dialog is accepted only as a bare hash and a plain date.
 {
-  assert.equal(parseRevision('f5c25e2d\n'),'f5c25e2d');assert.equal(parseRevision('f5c25e2d+'),'f5c25e2d+');
-  for(const text of ['','<!doctype html>','F5C25E2D','f5c25e2d f5c25e2d','abc','g5c25e2d'])assert.equal(parseRevision(text),null,text);
-  assert.equal(await loadRevision(async()=>({ok:true,text:async()=>'f5c25e2d\n'})),'f5c25e2d');
-  assert.equal(await loadRevision(async()=>({ok:false,text:async()=>'f5c25e2d'})),null,'a missing file shows nothing');
-  assert.equal(await loadRevision(async()=>{throw new Error('offline');}),null);
+  const good={revision:'f5c25e2d',deployed:'2026-10-23'};
+  assert.deepEqual(parseBuildInfo(JSON.stringify(good)),good);
+  assert.deepEqual(parseBuildInfo('{"revision":"f5c25e2d+","deployed":"2026-10-23"}'),{revision:'f5c25e2d+',deployed:'2026-10-23'});
+  for(const text of ['','<!doctype html>','null','[]','{}','{"revision":"F5C25E2D","deployed":"2026-10-23"}','{"revision":"f5c25e2d f5c25e2d","deployed":"2026-10-23"}','{"revision":"f5c25e2d","deployed":"yesterday"}','{"revision":"f5c25e2d"}','{"revision":5,"deployed":"2026-10-23"}'])assert.equal(parseBuildInfo(text),null,text);
+  assert.deepEqual(await loadBuildInfo(async()=>({ok:true,text:async()=>JSON.stringify(good)})),good);
+  assert.equal(await loadBuildInfo(async()=>({ok:false,text:async()=>JSON.stringify(good)})),null,'a missing file shows nothing');
+  assert.equal(await loadBuildInfo(async()=>{throw new Error('offline');}),null);
 }
 
 console.log('Display tests passed: counters (captures, captures + opponent passes, stones, stones + territory) through undo, and display settings storage, defaults and corrupt data.');
