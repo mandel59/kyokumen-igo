@@ -9,6 +9,13 @@ const v3Ready=v3Options?.get('ai')==='v3'
   ?import('./ai-v3.js').then(({createV3AI})=>createV3AI({backend:v3Options.get('backend')==='wasm'?'wasm':'auto'}))
     .then(ai=>{v3=ai;}).catch(error=>{v3Failed=true;console.warn('v3 initialization failed:',error.message);})
   :null;
+// Report the backend once loading settles, so the page can show which AI this device runs.
+(async()=>{
+  if(v3Ready)await v3Ready;
+  if(v3&&!v3Failed){self.postMessage({type:'info',backend:v3.backend});return;}
+  const {ai,error}=await ready;
+  self.postMessage(error?{type:'info',error:error?.message??String(error)}:{type:'info',backend:ai.backend});
+})();
 self.onmessage=async({data})=>{
   try {
     if(data.type==='cancel'){v3?.cancel();return;}

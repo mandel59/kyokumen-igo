@@ -146,8 +146,12 @@ el('aboutOpen').onclick();el('aboutDialog').close();el('aboutOpen').onclick();el
 assert.equal(infoState(),beforeInfo);
 // The rule points are a list, the page explains what a shared record link contains, and it leads to the tutorial.
 const aboutHTML=html.slice(html.indexOf('<dialog id="aboutDialog"'));
-assert.deepEqual([...aboutHTML.matchAll(/<dt>([^<]+)<\/dt>/g)].map(m=>m[1]),['石を置く','石を取る','打てない手','パス','終局','数え方','コミ']);
+assert.deepEqual([...aboutHTML.slice(0,aboutHTML.indexOf('id="aboutPanel3"')).matchAll(/<dt>([^<]+)<\/dt>/g)].map(m=>m[1]),['石を置く','石を取る','打てない手','パス','終局','数え方','コミ']);
 assert.match(aboutHTML,/棋譜のリンクには、盤・コミ・全手順/);
+// Without Web Workers the AI loads on the page itself at startup, and the AI tab says so.
+for(let wait=0;wait<100&&/読み込み中/.test(String(el('aiBackend').textContent));wait++)await new Promise(r=>setTimeout(r,20));
+assert.equal(String(el('aiName').textContent),'Kyokugo AI v2');
+assert.match(String(el('aiBackend').textContent),/^JavaScript.*Web Worker を使えないため/,'this device runs the JS version on the page');
 el('aboutOpen').onclick();el('aboutTutorial').onclick();
 assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,true);assert.match(el('rulesProgress').textContent,/^1 \/ 6/);
 el('rulesClose').onclick();assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);
@@ -319,7 +323,16 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  oldHandler({data:{id:request.id,move:0}});assert.equal(el('moveCount').textContent,'3 手','stale reply ignored');
  const pending=first.requests.at(-1),pendingHandler=first.onmessage;
  answer(first,pending,false);
+ first.onmessage({data:{type:'info',backend:'wasm'}});
+ assert.equal(String(el('aiBackend').textContent),'WebAssembly');assert.equal(String(el('aiName').textContent),'Kyokugo AI v2');
+ first.onmessage({data:{type:'info',backend:'v3-webgpu'}});
+ assert.equal(String(el('aiName').textContent),'Kyokugo AI v3（実験版）');assert.equal(String(el('aiBackend').textContent),'WebGPU');
+ first.onmessage({data:{type:'info',backend:'wasm'}});
+ const before=instances.length;
  el('undo').onclick();assert.equal(first.terminated,true);assert.equal(el('moveCount').textContent,'2 手');
+ assert.equal(instances.length,before+1,'a stopped worker is replaced at once, so the AI stays loaded');assert.equal(instances.at(-1).terminated,false);
+ assert.equal(String(el('aiBackend').textContent),'読み込み中…','the replacement reports again once loaded');
+ instances.at(-1).onmessage({data:{type:'info',backend:'wasm'}});assert.equal(String(el('aiBackend').textContent),'WebAssembly');
  advance(500);pendingHandler({data:{id:pending.id,move:0}});
  assert.equal(el('moveCount').textContent,'2 手','undo cancels a reply that is already waiting to be applied');
  reset();el('pass').onclick();await tick();

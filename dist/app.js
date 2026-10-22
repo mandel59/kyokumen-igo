@@ -20,6 +20,20 @@ const inputWords=()=>touchInput?{rotate:'スワイプ',place:'タップ'}:{rotat
 function persist(){return replay?true:saveGame(game,settings,{mapView,orientation});}
 let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrientation('sphere'),selected=null,hover=null,screen=[],thinking=false,worker=null,requestId=0,timer=null,drag=null,keyboardIndex=0;
 let fallbackAI=null;
+// The AI this device runs, shown in the app info dialog. The worker loads at startup and reports its backend.
+const aiQuery=globalThis.location?.search?new URLSearchParams(globalThis.location.search):null;
+const AI_NAMES={v2:'Kyokugo AI v2',v3:'Kyokugo AI v3（実験版）'};
+const AI_BACKENDS={wasm:'WebAssembly','generated-js':'JavaScript（WebAssembly を使えないため）','v3-webgpu':'WebGPU','v3-wasm':'WebAssembly'};
+const AI_DESCRIPTIONS={v2:$('aiDescription').textContent,v3:'実験中のニューラルネットワーク AI です。局面を評価するモデルを端末内で動かし、モンテカルロ木探索で着手を選びます。'};
+let aiInfo={ai:aiQuery?.get('ai')==='v3'?'v3':'v2',backend:null,mainThread:false,failed:false};
+function renderAIInfo(){
+  const {ai,backend,mainThread,failed}=aiInfo;
+  $('aiName').textContent=AI_NAMES[ai];$('aiDescription').textContent=AI_DESCRIPTIONS[ai];
+  $('aiBackend').textContent=failed?'読み込めませんでした':backend?(AI_BACKENDS[backend]??backend)+(mainThread?'（Web Worker を使えないため画面側で実行）':''):'読み込み中…';
+}
+function setAIInfo(change){aiInfo={...aiInfo,...change};renderAIInfo();}
+// Report a backend; a v3 request that fell back to v2 shows as v2.
+const reportBackend=(backend,mainThread=false)=>setAIInfo({ai:backend.startsWith('v3-')?'v3':'v2',backend,mainThread,failed:false});
 // Viewer choices (board marks, counter), saved apart from the game. Marks are derived from the position alone.
 let display=loadDisplay(),analysisKey='',analysis=null,mapMarks=null;
 function boardMarks(){
@@ -127,7 +141,28 @@ function resize(){
   const r=canvas.getBoundingClientRect();width=r.width;height=r.height;
   scale=Math.min(width*.405,height*.385);centerX=width/2;centerY=height*.46;render();
 }new ResizeObserver(resize).observe(canvas);new ResizeObserver(()=>{if(game&&mapView)renderMap();}).observe(map);
-function cancelAI(){requestId++;clearTimeout(timer);timer=null;if(worker){worker.terminate();worker=null;}thinking=false;}
+// Only a search in flight needs stopping; an idle worker stays loaded, and a stopped one is replaced at once.
+function cancelAI(){const searching=thinking;requestId++;clearTimeout(timer);timer=null;thinking=false;if(searching&&worker){worker.terminate();worker=null;startAIWorker();}}
+function mainThreadAI(){
+  fallbackAI??=createJSAI().then(ai=>{if(!worker)reportBackend(ai.backend,true);return ai;},error=>{fallbackAI=null;if(!worker)setAIInfo({failed:true});throw error;});
+  return fallbackAI;
+}
+function workerInfo(source,data){
+  if(worker!==source)return;
+  if(!data.error){reportBackend(data.backend);return;}
+  source.terminate();worker=null;mainThreadAI().catch(()=>{});
+}
+function ensureWorker(){
+  if(worker)return worker;
+  const url=new URL('./ai-worker.js',import.meta.url);
+  if(aiInfo.ai==='v3')url.search='ai=v3'+(aiQuery.get('backend')==='wasm'?'&backend=wasm':'');
+  const started=new Worker(url,{type:'module'});
+  started.onmessage=e=>{if(e.data.type==='info')workerInfo(started,e.data);};
+  started.onerror=()=>{if(worker!==started||thinking)return;started.terminate();worker=null;mainThreadAI().catch(()=>{});};
+  worker=started;setAIInfo({backend:null,mainThread:false,failed:false});
+  return started;
+}
+function startAIWorker(){try{ensureWorker();}catch{mainThreadAI().catch(()=>{});}}
 function canPlay(){return!replay&&!game.ended&&!thinking&&(settings.opponent==='human'||game.turn===settings.human);}
 const resultText=s=>s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝ち':'引き分け';
 function who(color){if(replay)return replay.ai===color?'AI':color===1?'先手':'後手';return settings.opponent==='human'?(color===1?'先手':'後手'):settings.human===color?'あなた':'AI';}
@@ -162,8 +197,7 @@ function scheduleAI(){
   };
   const fallback=async()=>{
    try{
-    fallbackAI??=createJSAI().catch(error=>{fallbackAI=null;throw error;});
-    const ai=await fallbackAI;
+    const ai=await mainThreadAI();
     if(id!==requestId||!thinking||answered)return;
     handle(ai.chooseMove(aiPosition(game),{depth:4}));
    }catch{
@@ -172,24 +206,18 @@ function scheduleAI(){
    }
   };
   try{
-   if(!worker){
-    const workerURL=new URL('./ai-worker.js',import.meta.url);
-    if(globalThis.location?.search){
-     const aiQuery=new URLSearchParams(globalThis.location.search);
-     if(aiQuery.get('ai')==='v3'){workerURL.search='ai=v3'+(aiQuery.get('backend')==='wasm'?'&backend=wasm':'');}
-    }
-    worker=new Worker(workerURL,{type:'module'});
-   }
-   const activeWorker=worker;
+   const activeWorker=ensureWorker();
    const workerFallback=()=>{
     if(id!==requestId||worker!==activeWorker)return;
     activeWorker.terminate();worker=null;void fallback();
    };
    activeWorker.onmessage=e=>{
+    if(e.data.type==='info'){workerInfo(activeWorker,e.data);return;}
     if(id!==requestId||worker!==activeWorker||e.data.id!==id||!thinking)return;
     if(e.data.error){workerFallback();return;}
     // The UI's JS rules remain authoritative, including positional superko.
     if(e.data.move!==null&&!game.analyze(e.data.move).ok){workerFallback();return;}
+    if(e.data.backend)reportBackend(e.data.backend);
     handle(e.data.move);
    };
    activeWorker.onerror=workerFallback;
@@ -380,5 +408,6 @@ if(restored.state){
   restoreWarning=restored.error||'';
   if(restoreWarning)update();
 }
+renderAIInfo();startAIWorker();
 openSharedRecord();
 
