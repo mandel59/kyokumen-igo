@@ -4,6 +4,8 @@
 
 自作ソースコードのライセンスは [MIT-0](LICENSE) です。適用範囲：このアプリと開発・学習・検証ツールの自作ソースコード。第三者に由来するコードや同梱ライブラリには、それぞれのライセンスが適用されます。
 
+コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。
+
 正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-22。参考実装、配信するライブラリ、開発ツールと文献の一覧。
 
 配信用の表示は [ライセンスと参考ソフトウェア](dist/credits.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
@@ -40,6 +42,8 @@
 | [Pango](https://github.com/GNOME/pango/blob/main/meson.build) | 開発時に利用 / LGPL-2.1-or-later | ImageMagick を通した文字描画。    |
 | [Noto Sans JP](https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE) | 開発時に利用 / OFL-1.1 | 共有カードの文字をラスター画像へ描画。    |
 | [Wrangler / Workers SDK 4.151.3](https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT) | 開発時に利用 / MIT | 静的サイトの配信。    |
+| [OpenAI Codex](https://github.com/openai/codex) | 開発時に利用 / Apache-2.0 | コードの作成・修正・検証に使用。    |
+| [Claude Code](https://www.anthropic.com/claude-code) | 開発時に利用 / 提供元の利用条件 | コードの作成・修正・検証に使用。    |
 | [Binaryen / wasm2js 132.0.0](https://github.com/WebAssembly/binaryen/tree/version_132) | JS / WASM を配信 / Apache-2.0 | v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。 Copyright 2015 WebAssembly Community Group participants [Binaryen-LICENSE.txt](dist/licenses/Binaryen-LICENSE.txt) |
 
 ## 推移依存と手法の一次資料

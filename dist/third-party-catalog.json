@@ -548,6 +548,60 @@
       }
     },
     {
+      "id": "openai-codex",
+      "name": "OpenAI Codex",
+      "version": null,
+      "category": "tool",
+      "relationship": "coding-agent",
+      "licenseExpression": "Apache-2.0",
+      "usage": "コードの作成・修正・検証に使用。",
+      "files": [
+        "README.md"
+      ],
+      "urls": [
+        "https://github.com/openai/codex"
+      ],
+      "notices": [],
+      "copyrightNotices": [],
+      "modifications": [],
+      "distribution": "development-only",
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "README.md"
+        ],
+        "ref": null,
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "claude-code",
+      "name": "Claude Code",
+      "version": null,
+      "category": "tool",
+      "relationship": "coding-agent",
+      "licenseExpression": null,
+      "usage": "コードの作成・修正・検証に使用。",
+      "files": [
+        "README.md"
+      ],
+      "urls": [
+        "https://www.anthropic.com/claude-code"
+      ],
+      "notices": [],
+      "copyrightNotices": [],
+      "modifications": [],
+      "distribution": "development-only",
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "README.md"
+        ],
+        "ref": null,
+        "gitBlobSha": null
+      }
+    },
+    {
       "id": "binaryen",
       "name": "Binaryen / wasm2js",
       "version": "132.0.0",

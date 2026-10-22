@@ -135,7 +135,8 @@
             "implementation-reference",
             "dependency",
             "static-link",
-            "build-tool"
+            "build-tool",
+            "coding-agent"
           ]
         },
         "licenseExpression": {
