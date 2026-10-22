@@ -1,7 +1,9 @@
 import {createTopology,Game,chooseMove} from './engine.js';
 import {aiPosition} from './ai-position.js';
 import {KOMI_MIN,KOMI_MAX,KOMI_STEP} from './komi.js';
-import {renderSurface,highlightSurface,MARKER,markerColor} from './surface-renderer.js';
+import {renderSurface,highlightSurface,MARKER,MARKS,markerColor} from './surface-renderer.js';
+import {analyzeBoard} from './board-analysis.js';
+import {COUNTERS,MARK_KEYS,counterValues,loadDisplay,marksShown,saveDisplay} from './display.js';
 import {sphereProjection} from './sphere-projection.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
@@ -16,6 +18,18 @@ let touchInput=!!coarsePointer?.matches;
 const inputWords=()=>touchInput?{rotate:'スワイプ',place:'タップ'}:{rotate:'ドラッグ',place:'クリック'};
 function persist(){return replay?true:saveGame(game,settings,{mapView,orientation});}
 let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrientation('sphere'),selected=null,hover=null,screen=[],thinking=false,worker=null,requestId=0,timer=null,drag=null,keyboardIndex=0;
+// Viewer choices (board marks, counter), saved apart from the game. Marks are derived from the position alone.
+let display=loadDisplay(),analysisKey='',analysis=null,mapMarks=null;
+function boardMarks(){
+  if(!marksShown(display))return null;
+  const key=kind+game.board.join('');
+  if(key!==analysisKey){analysis=analyzeBoard(game.topology,game.board);analysisKey=key;}
+  return Object.fromEntries(MARK_KEYS.map(name=>[name,display.marks[name]?analysis[name]:null]));
+}
+function renderCounters(){
+  const [,black,white]=counterValues(game,display.counter);
+  $('blackCount').textContent=black;$('whiteCount').textContent=white;$('counterCaption').textContent=COUNTERS[display.counter];
+}
 let width=0,height=0,scale=1,centerX=0,centerY=0;
 const errors={occupied:'そこにはすでに石があります。',suicide:'呼吸点がなくなる手は打てません。',superko:'過去と同じ盤面になる手は打てません。',ended:'対局は終了しました。',invalid:'交点を選んでください。'};
 let surfaceFrame=null,surfaceKey='',rasterRatio=1,renderQueued=false;
@@ -40,9 +54,9 @@ function render(){
   rasterRatio=Math.min(interactive?(window.devicePixelRatio||1):Math.max(1.5,window.devicePixelRatio||1),3,Math.sqrt((interactive?dragPixels:3000000)/Math.max(1,width*height)));
   const rw=Math.max(1,Math.round(width*rasterRatio)),rh=Math.max(1,Math.round(height*rasterRatio));
   if(canvas.width!==rw)canvas.width=rw;if(canvas.height!==rh)canvas.height=rh;
-  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height].join('|'),drawn=key!==surfaceKey;
+  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height,MARK_KEYS.map(name=>display.marks[name]?1:0).join('')].join('|'),drawn=key!==surfaceKey;
   if(drawn){
-    surfaceFrame=renderSurface({topology:game.topology,board:game.board,lastMove:game.lastMove,orientation,width:canvas.width,height:canvas.height,scale:scale*rasterRatio,centerX:centerX*rasterRatio,centerY:centerY*rasterRatio,pixelRatio:rasterRatio,interactive});
+    surfaceFrame=renderSurface({topology:game.topology,board:game.board,lastMove:game.lastMove,marks:boardMarks(),orientation,width:canvas.width,height:canvas.height,scale:scale*rasterRatio,centerX:centerX*rasterRatio,centerY:centerY*rasterRatio,pixelRatio:rasterRatio,interactive});
     surfaceKey=key;
   }
   screen=surfaceFrame.points.map(p=>({...p,x:p.x/rasterRatio,y:p.y/rasterRatio}));
@@ -53,7 +67,7 @@ function render(){
   if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}
-let mapPoints=[];function renderMap(){const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),2);});}
+let mapPoints=[];function renderMap(){mapMarks=boardMarks();const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),2);});}
 // Both maps draw markers in the 3D board's style (MARKER): same colours, outline and ring sizes.
 // Only the maps number the selection, since a point can appear twice there.
 const rgb=([r,g,b])=>`rgb(${r},${g},${b})`;
@@ -61,6 +75,7 @@ function drawMapPoint(p,stoneRadius,dotRadius){
   const stone=game.board[p.i];
   if(stone)drawStone(mctx,p.x,p.y,stoneRadius,stone,game.lastMove===p.i);
   else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,dotRadius,0,Math.PI*2);mctx.fill();}
+  drawMapMarks(p,stoneRadius);
   const active=selected===p.i||hover===p.i;
   if(!active&&(selected===null||!game.topology.neighbors[selected].includes(p.i)))return;
   const [outlineWidth,inkWidth]=active?MARKER.width.active:MARKER.width.neighbor;
@@ -71,6 +86,28 @@ function drawMapPoint(p,stoneRadius,dotRadius){
     const offset=(Math.max(ring,stoneRadius)+outlineWidth/2)*Math.SQRT1_2,x=p.x+offset+1,y=p.y-offset-1;
     mctx.font='bold 10px sans-serif';mctx.textAlign='left';mctx.lineJoin='round';
     mctx.strokeStyle='#f3e8ca';mctx.lineWidth=3;mctx.strokeText(String(p.i+1),x,y);mctx.fillStyle=rgb(MARKER.outline);mctx.fillText(String(p.i+1),x,y);
+  }
+}
+
+// Board marks in the 3D board's shapes and colours (MARKS), each with a dark under-stroke.
+function drawMapMarks(p,radius){
+  if(!mapMarks)return;
+  const line=Math.max(1,radius*.14),trace=(shape,ink,width)=>{mctx.strokeStyle=rgb(ink);mctx.lineWidth=width;mctx.lineCap='round';mctx.beginPath();shape();mctx.stroke();};
+  if(!game.board[p.i]){
+    const owner=mapMarks.territory?.[p.i],half=radius*MARKS.territorySquare;
+    if(!owner)return;
+    mctx.fillStyle=rgb(MARKS.outline);mctx.fillRect(p.x-half*1.3,p.y-half*1.3,half*2.6,half*2.6);
+    mctx.fillStyle=rgb(MARKS.territory[owner]);mctx.fillRect(p.x-half,p.y-half,half*2,half*2);
+    return;
+  }
+  if(mapMarks.atari?.[p.i]){const ring=()=>mctx.arc(p.x,p.y,radius*MARKS.atariRing,0,Math.PI*2);trace(ring,MARKS.outline,line+1.8);trace(ring,MARKS.atari,line);}
+  if(mapMarks.alive?.[p.i]){
+    const dot=Math.max(1.3,radius*MARKS.aliveDot);
+    for(const [ink,size] of [[MARKS.outline,dot+.9],[MARKS.alive,dot]]){mctx.fillStyle=rgb(ink);mctx.beginPath();mctx.arc(p.x,p.y,size,0,Math.PI*2);mctx.fill();}
+  }
+  if(mapMarks.dead?.[p.i]){
+    const arm=radius*MARKS.deadArm,cross=()=>{mctx.moveTo(p.x-arm,p.y-arm);mctx.lineTo(p.x+arm,p.y+arm);mctx.moveTo(p.x+arm,p.y-arm);mctx.lineTo(p.x-arm,p.y+arm);};
+    trace(cross,MARKS.outline,line+1.8);trace(cross,MARKS.dead,line);
   }
 }
 
@@ -101,7 +138,7 @@ const resultText=s=>s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝
 function who(color){if(replay)return replay.ai===color?'AI':color===1?'先手':'後手';return settings.opponent==='human'?(color===1?'先手':'後手'):settings.human===color?'あなた':'AI';}
 // After one pass, name both sides: the game ends only when the other player passes as well.
 function passMessage(){const name=color=>settings.opponent==='human'?(color===1?'黒':'白'):color===settings.human?'あなた':'AI ';return `${name(3-game.turn)}がパスしました。${name(game.turn)}もパスすると終局です。`;}
-function update(message){const outcome=replay?.result??(game.ended?game.score():null);$('turnStone').hidden=outcome?.winner===0;$('blackCaptures').textContent=game.captures[1];$('whiteCaptures').textContent=game.captures[2];$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();syncBoardTabs();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
+function update(message){const outcome=replay?.result??(game.ended?game.score():null);$('turnStone').hidden=outcome?.winner===0;renderCounters();$('moveCount').textContent=replay?`${game.moves} / ${replay.moves.length} 手`:game.moves+' 手';$('komiLabel').textContent='コミ '+game.komi+' 目';$('turnStone').className='stone '+((replay?replay.result.winner||1:game.turn)===1?'black':'white');$('blackWho').textContent=who(1);$('whiteWho').textContent=who(2);$('pass').disabled=!canPlay();$('pass').hidden=game.ended;$('shareRecord').hidden=!game.ended;syncReplay();syncBoardTabs();$('undo').disabled=game.moves===0||settings.opponent==='ai'&&settings.human===2&&game.moves===1;
 if(replay){const s=replay.result;$('turnText').textContent='棋譜 · '+resultText(s);$('status').textContent=game.ended?`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）`:game.moves?`${game.moves} 手目 · ${game.turn===1?'白':'黒'}${game.lastMove===null?'がパス':''}`:'対局開始';}else if(game.ended){const s=game.score();$('turnText').textContent=resultText(s);$('status').textContent=`終局 · 面積方式｜黒 ${s.black} / 白 ${s.white}（コミ込み）。死に石の判定なし。`;}else{$('turnText').textContent=thinking?'AI が考えています':settings.opponent==='human'?(game.turn===1?'黒':'白')+'の番です':'あなたの番です';$('status').textContent=message||(game.passes?passMessage():thinking?'次の一手を探しています。':'');}const saved=persist();if(!saved)$('status').textContent+=' このブラウザーでは対局を保存できません。';else if(restoreWarning&&!replay)$('status').textContent+=' '+restoreWarning;render();}
 function scheduleAI(){
  if(replay||game.ended||settings.opponent!=='ai'||game.turn===settings.human){update();return;}
@@ -243,6 +280,17 @@ for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(
 const stepKomi=delta=>{$('komi').value=String(Math.min(KOMI_RANGE[1],Math.max(KOMI_RANGE[0],Number($('komi').value)+delta)));syncChoices();};
 $('komiDown').onclick=()=>stepKomi(-KOMI_STEP);$('komiUp').onclick=()=>stepKomi(KOMI_STEP);
 $('settingsDialog').addEventListener('cancel',syncSettings);
+// Display choices apply as soon as they are made; unlike the new-game settings there is no draft.
+const MARK_CONTROLS={alive:'markAlive',dead:'markDead',atari:'markAtari',territory:'markTerritory'};
+function syncDisplay(){
+  for(const name of MARK_KEYS)$(MARK_CONTROLS[name]).checked=display.marks[name];
+  for(const value of Object.keys(COUNTERS))$('counter_'+value).checked=display.counter===value;
+}
+function changeDisplay(change){change();saveDisplay(display);renderCounters();render();}
+for(const name of MARK_KEYS)$(MARK_CONTROLS[name]).onchange=()=>changeDisplay(()=>{display.marks[name]=$(MARK_CONTROLS[name]).checked;});
+for(const value of Object.keys(COUNTERS))$('counter_'+value).onchange=()=>changeDisplay(()=>{display.counter=value;});
+$('displayOpen').onclick=()=>{syncDisplay();$('displayDialog').showModal();};
+for(const id of ['displayClose','displayDone'])$(id).onclick=()=>$('displayDialog').close();
 const tutorialTitles=['石を置く','石を取る','端のない盤','盤を見渡す','終局と勝敗'];
 let tutorialStep=0;
 function showTutorialStep(next){

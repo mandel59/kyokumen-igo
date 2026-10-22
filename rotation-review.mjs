@@ -185,15 +185,17 @@ async function boot(raw = null) {
     clearTimeout: id => timers.delete(id),
   });
   const cache = new Map();
-  async function moduleAt(url) {
+  // Cache the load itself: a module must be fully linked before another importer can take it.
+  function moduleAt(url) {
     const path = fileURLToPath(url);
-    if (cache.has(path)) return cache.get(path);
-    const module = new vm.SourceTextModule(readFileSync(path, 'utf8'), {
-      context: realm, identifier: url.href, initializeImportMeta(meta) {meta.url = url.href;},
-    });
-    cache.set(path, module);
-    await module.link((specifier, parent) => moduleAt(new URL(specifier, parent.identifier)));
-    return module;
+    if (!cache.has(path)) cache.set(path, (async () => {
+      const module = new vm.SourceTextModule(readFileSync(path, 'utf8'), {
+        context: realm, identifier: url.href, initializeImportMeta(meta) {meta.url = url.href;},
+      });
+      await module.link((specifier, parent) => moduleAt(new URL(specifier, parent.identifier)));
+      return module;
+    })());
+    return cache.get(path);
   }
   await (await moduleAt(new URL('app.js', base))).evaluate();
   return {

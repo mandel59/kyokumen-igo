@@ -380,3 +380,66 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  assert.deepEqual([png.readUInt32BE(16),png.readUInt32BE(20)],[Number(meta('og:image:width')),Number(meta('og:image:height'))],'og:image size matches its metadata');
  for(const [,href] of html.matchAll(/<link rel="(?:icon|apple-touch-icon)" href="([^"]+)"/g))assert.ok(readFileSync(new URL('./dist/'+href,import.meta.url)).length>0,href);
  console.log('SNS card metadata checks passed.');}
+
+// Display settings: board marks and the counter apply at once, in the 3D board and the map, and never touch the game.
+{
+ const {MARKS}=await import('./dist/surface-renderer.js'),{DISPLAY_KEY}=await import('./dist/display.js');
+ const store=new Map();window.localStorage={getItem:key=>store.has(key)?store.get(key):null,setItem:(key,value)=>{store.set(key,value);}};
+ window.location={href:'https://example.test/igo/',pathname:'/igo/',search:'',hash:''};
+ window.history={replaceState(state,title,url){window.location.hash='';window.location.href='https://example.test'+url;}};
+ const shown=id=>String(el(id).textContent),has=color=>{const d=painted.data;for(let i=0;i<d.length;i+=4)if(d[i]===color[0]&&d[i+1]===color[1]&&d[i+2]===color[2]&&d[i+3]===255)return true;return false;};
+ const open=game=>{window.location.hash='#kifu='+encodeRecord(game,0);window.onhashchange();assert.equal(el('replayControls').hidden,false);};
+ // A white stone with one liberty left, on the point facing the viewer.
+ const sphere=engine.createTopology('sphere',4),frontView=renderSurface({topology:sphere,board:new Int8Array(98),width:boardWidth,height:boardHeight});
+ const front=frontView.points.filter(p=>p.visible&&sphere.neighbors[p.i].length===4).sort((a,b)=>b.z-a.z)[0].i,[a,b,c]=sphere.neighbors[front];
+ const atariGame=new engine.Game(sphere,6.5);
+ for(const move of [a,front,b,null,c,null,null,null])move===null?atariGame.pass():atariGame.play(move);
+ assert.equal(atariGame.ended,true);open(atariGame);
+ // Nothing is marked until asked for; the counter starts as the captured stones.
+ const plain=painted.data.slice();
+ assert.equal(el('counterCaption').textContent,'取った石');assert.deepEqual([shown('blackCount'),shown('whiteCount')],['0','0']);
+ assert.equal(has(MARKS.atari),false);
+ el('displayOpen').onclick();assert.equal(el('displayDialog').open,true);
+ assert.deepEqual(['markAlive','markDead','markAtari','markTerritory'].map(id=>el(id).checked),[false,false,false,false]);assert.equal(el('counter_captures').checked,true);
+ const gameState=()=>JSON.stringify([el('moveCount').textContent,el('turnText').textContent,el('status').textContent,el('komiLabel').textContent]);
+ const before=gameState();
+ el('markAtari').checked=true;el('markAtari').onchange();
+ assert.equal(has(MARKS.atari),true,'atari ring is painted');assert.equal(has(MARKS.alive)||has(MARKS.dead),false,'only the chosen mark');
+ assert.deepEqual(JSON.parse(store.get(DISPLAY_KEY)).marks,{alive:false,dead:false,atari:true,territory:false},'choice is saved');
+ el('markDead').checked=true;el('markDead').onchange();el('markAlive').checked=true;el('markAlive').onchange();
+ el('markAtari').checked=false;el('markAtari').onchange();assert.equal(has(MARKS.atari),false);
+ el('markDead').checked=false;el('markDead').onchange();el('markAlive').checked=false;el('markAlive').onchange();
+ assert.deepEqual(painted.data,plain,'turning every mark off restores the board exactly');assert.equal(gameState(),before,'the game is untouched');
+ // The map draws the same marks.
+ const squares=[];context.fillRect=()=>{squares.push(context.fillStyle);};context.arc=()=>{};
+ el('viewToggle').onclick();el('markAtari').checked=true;el('markAtari').onchange();
+ el('viewToggle').onclick();el('markAtari').checked=false;el('markAtari').onchange();
+ // Territory: black owns the empty torus once its stone captures the last white one.
+ const torusTopology=engine.createTopology('torus',7),at=(u,v)=>u*7+v,capture=new engine.Game(torusTopology,6.5);
+ for(const move of [at(2,3),at(3,3),at(4,3),null,at(3,2),null,at(3,4),null,null])move===null?capture.pass():capture.play(move);
+ assert.equal(capture.ended,true);open(capture);
+ const counterPlan={captures:['1','0'],capturesAndPasses:['4','1'],stones:['4','0'],area:['49','0']},captions={captures:'取った石',capturesAndPasses:'取った石＋相手のパス',stones:'盤上の石',area:'盤上の石＋地'};
+ for(const [counter,expected] of Object.entries(counterPlan)){
+  el('counter_'+counter).checked=true;el('counter_'+counter).onchange();
+  assert.deepEqual([shown('blackCount'),shown('whiteCount'),shown('counterCaption')],[...expected,captions[counter]],counter);
+ }
+ assert.equal(JSON.parse(store.get(DISPLAY_KEY)).counter,'area');
+ // The counter follows replay steps and a new game.
+ el('replaySlider').value='5';el('replaySlider').oninput();
+ assert.deepEqual([shown('blackCount'),shown('whiteCount')],['3','1'],'area at step 5: three black stones, one white');
+ el('replaySlider').value='9';el('replaySlider').oninput();assert.equal(shown('blackCount'),'49');
+ squares.length=0;const flat=painted.data.slice();
+ el('markTerritory').checked=true;el('markTerritory').onchange();
+ assert.equal(has(MARKS.territory[1]),true,'black territory squares are painted');assert.notDeepEqual(painted.data,flat);
+ el('viewToggle').onclick();assert.ok(squares.includes(rgb(MARKS.territory[1])),'map draws territory squares in the owner colour');assert.ok(squares.includes(rgb(MARKS.outline)));
+ el('viewToggle').onclick();
+ delete context.fillRect;delete context.arc;
+ // Dialog dismissal changes nothing, and the choices come back from storage.
+ el('displayDone').onclick();assert.equal(el('displayDialog').open,false);el('displayOpen').onclick();el('displayClose').onclick();
+ assert.equal(el('counter_area').checked,true);assert.equal(el('markTerritory').checked,true);
+ const {loadDisplay}=await import('./dist/display.js');assert.deepEqual(loadDisplay(window.localStorage),{marks:{alive:false,dead:false,atari:false,territory:true},counter:'area'});
+ // Put the page back as the other tests expect.
+ el('markTerritory').checked=false;el('markTerritory').onchange();el('counter_captures').checked=true;el('counter_captures').onchange();
+ el('replayClose').onclick();delete window.location;delete window.history;delete window.localStorage;
+ console.log('Display settings UI passed: marks and counters switch at once in the board and map, follow replay steps, leave the game untouched, and are saved.');
+}

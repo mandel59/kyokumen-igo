@@ -1,4 +1,5 @@
 // Go rules on a closed, undirected graph. Area scoring; positional superko.
+import {territoryOwners} from './board-analysis.js';
 export function createTopology(kind = 'sphere', size = 6) {
   size = Math.round(Number(size));
   if (!Number.isFinite(size) || size < 3 || size > 40) throw new Error('Board size must be between 3 and 40.');
@@ -101,20 +102,20 @@ export class Game {
     this.history.splice(this.history.length-amount);this._restore(this.history[this.history.length-1]);
     this._seen=new Set(this.history.map(s=>keyOf(s.board)));return true;
   }
+  // Passes made by each colour so far, from the history: index 1 is black, 2 is white.
+  passCounts() {
+    const counts=[0,0,0];
+    for(let i=1;i<this.history.length;i++) if(this.history[i].lastMove===null) counts[this.history[i-1].turn]++;
+    return counts;
+  }
   score() {
-    const seen=new Set(); let territoryBlack=0,territoryWhite=0,neutral=0,stonesBlack=0,stonesWhite=0;
+    const owners=territoryOwners(this.topology.neighbors,this.board); let territoryBlack=0,territoryWhite=0,neutral=0,stonesBlack=0,stonesWhite=0;
     for(let i=0;i<this.board.length;i++) {
-      if(this.board[i]===1){stonesBlack++;continue;}
-      if(this.board[i]===2){stonesWhite++;continue;}
-      if(seen.has(i))continue;
-      const region=[i], border=new Set();seen.add(i);
-      for(let j=0;j<region.length;j++) for(const n of this.topology.neighbors[region[j]]) {
-        if(this.board[n])border.add(this.board[n]);
-        else if(!seen.has(n)){seen.add(n);region.push(n);}
-      }
-      if(border.size===1 && border.has(1))territoryBlack+=region.length;
-      else if(border.size===1 && border.has(2))territoryWhite+=region.length;
-      else neutral+=region.length;
+      if(this.board[i]===1)stonesBlack++;
+      else if(this.board[i]===2)stonesWhite++;
+      else if(owners[i]===1)territoryBlack++;
+      else if(owners[i]===2)territoryWhite++;
+      else neutral++;
     }
     const black=stonesBlack+territoryBlack,white=stonesWhite+territoryWhite+this.komi;
     return {black,white,territoryBlack,territoryWhite,neutral,stonesBlack,stonesWhite,winner:black===white?0:black>white?1:2,margin:Math.abs(black-white)};

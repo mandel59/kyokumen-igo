@@ -65,9 +65,12 @@ let coverage=new Float32Array(0);
 // readable on pale wood, white stones and black stones alike. Widths are CSS pixels; ring radii
 // are fractions of the stone radius (inside a stone's rim, or around an empty point).
 export const MARKER={outline:[38,54,44],selected:[255,207,75],hover:[250,248,240],neighbor:[86,200,178],width:{active:[4.6,2.6],neighbor:[3.6,1.8]},onStone:.78,aroundPoint:1.18};
+// Board marks, shared by the 3D board and both maps. Shapes tell the marks apart (a dot, a cross, a ring
+// on stones, a square on empty points); sizes are fractions of the stone radius.
+export const MARKS={alive:[88,164,240],dead:[226,72,72],atari:[255,150,40],territory:{1:[30,42,38],2:[246,242,228]},outline:[38,54,44],aliveDot:.17,deadArm:.3,atariRing:.62,territorySquare:.42};
 export const markerColor=(id,selected,hover)=>id===selected?MARKER.selected:id===hover?MARKER.hover:MARKER.neighbor;
 
-export function renderSurface({topology,board,lastMove=null,orientation,rotX,rotY,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false}) {
+export function renderSurface({topology,board,lastMove=null,orientation,rotX,rotY,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false,marks=null}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
   const matrix=orientationMatrix(orientation??(rotX===undefined?defaultOrientation(topology.kind):orientationFromEuler(rotX,rotY)));
@@ -195,6 +198,45 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     }
     flush(board[lastMove]===1?[226,201,145]:[81,104,83]);
   }
+  // marks.alive / dead / atari / territory are per-point arrays (territory holds the owner colour); any may be absent.
+  // Stone marks lie on the curved crown like the last-move ring and share its occlusion; territory squares lie on the board.
+  function drawMarks(){
+    const px=pixelRatio,radiusPx=stoneRadius(topology)*scale,dot=Math.max(1.6*px,radiusPx*MARKS.aliveDot),groups={alive:[],dead:[],atari:[]};
+    for(let index=0;index<board.length;index++)if(board[index]&&(marks.alive?.[index]||marks.dead?.[index]||marks.atari?.[index])){
+      const {center,normal,tangent,bitangent,radius,halfHeight}=stoneGeometry(topology,index);
+      const at=(x,y)=>project(add(add(add(center,tangent,radius*x),bitangent,radius*y),normal,halfHeight*Math.sqrt(Math.max(0,1-x*x-y*y))+.001));
+      if(marks.atari?.[index])for(let i=0,prev;i<=32;i++){const a=i*TAU/32,next=at(MARKS.atariRing*Math.cos(a),MARKS.atariRing*Math.sin(a));if(prev)groups.atari.push([prev,next]);prev=next;}
+      // The dot is a few concentric rings, each point at its own crown height: a single depth would sink the
+      // outer part of the dot into a tilted stone.
+      if(marks.alive?.[index]){const c=at(0,0);groups.alive.push([c,c]);for(const ring of [.35,.7]){const r=ring*dot/radiusPx;for(let i=0,prev;i<=16;i++){const a=i*TAU/16,next=at(r*Math.cos(a),r*Math.sin(a));if(prev)groups.alive.push([prev,next]);prev=next;}}}
+      if(marks.dead?.[index])for(const side of [-1,1])for(let k=0,prev;k<=6;k++){const t=(k/3-1)*MARKS.deadArm,next=at(t,side*t);if(prev)groups.dead.push([prev,next]);prev=next;}
+    }
+    for(const [name,lineWidth] of [['atari',1.1*px],['alive',dot*.4],['dead',1.4*px]]){
+      for(const [color,extra] of [[MARKS.outline,.9*px],[MARKS[name],0]]){
+        for(const [a,b] of groups[name])stroke(a,b,lineWidth+extra,.001);
+        flush(color);
+      }
+    }
+    function fill(a,b,c,color){
+      const area=(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);if(Math.abs(area)<1e-8)return;
+      for(let y=Math.max(0,Math.floor(Math.min(a.y,b.y,c.y)));y<=Math.min(height-1,Math.ceil(Math.max(a.y,b.y,c.y)));y++)
+        for(let x=Math.max(0,Math.floor(Math.min(a.x,b.x,c.x)));x<=Math.min(width-1,Math.ceil(Math.max(a.x,b.x,c.x)));x++){
+          const qx=x+.5,qy=y+.5,wa=((b.x-qx)*(c.y-qy)-(b.y-qy)*(c.x-qx))/area,wb=((c.x-qx)*(a.y-qy)-(c.y-qy)*(a.x-qx))/area,wc=1-wa-wb;
+          if(wa<0||wb<0||wc<0)continue;
+          const i=y*width+x;if(wa*a.z+wb*b.z+wc*c.z+.004<depth[i])continue;
+          const o=i*4;pixels[o]=color[0];pixels[o+1]=color[1];pixels[o+2]=color[2];pixels[o+3]=255;
+        }
+    }
+    if(marks.territory)for(let index=0;index<board.length;index++){
+      const owner=marks.territory[index];if(!owner||board[index]||rotate(surfaceNormal(topology.kind,topology.vertices[index])).z<=0)continue;
+      const {tangent,bitangent,radius}=stoneGeometry(topology,index),p=topology.vertices[index];
+      for(const [scaleUp,color] of [[1.3,MARKS.outline],[1,MARKS.territory[owner]]]){
+        const half=radius*MARKS.territorySquare*scaleUp,corner=(sx,sy)=>{const q=onSurface(add(add(p,tangent,sx*half),bitangent,sy*half));return project(add(q,surfaceNormal(topology.kind,q),.004));};
+        const [a,b,c,d]=[corner(-1,-1),corner(1,-1),corner(1,1),corner(-1,1)];fill(a,b,c,color);fill(a,c,d,color);
+      }
+    }
+  }
+  if(marks)drawMarks();
   const visibleCounts=new Uint32Array(board.length);for(let i=0;i<owners.length;i++)if(owners[i]>=0)visibleCounts[owners[i]]++;
   for(const p of points)p.visible=visibleCounts[p.i]>0;
   function pick(x,y,tolerance=12){

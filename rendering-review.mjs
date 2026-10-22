@@ -56,3 +56,35 @@ for(const kind of ['sphere','torus']){
  ppm(`${kind}-highlight-selected-hover`,{...f,pixels:highlighted});console.log(JSON.stringify({highlightBoard:kind,changedPixels:changed,changedSurfacePixels:changedBoard,selected,hover,hidden:hidden.i}));
 }
 console.log('Independent readable highlight / hidden selection / unrelated-owner clipping checks passed.');
+// Board marks: each mark has its own colour and appears only when asked for, only on the side facing
+// the viewer, and never changes depth or which point a pixel picks.
+{
+ const {MARKS}=await import('./dist/surface-renderer.js');
+ const has=(frame,color)=>{for(let i=0;i<frame.pixels.length;i+=4)if(frame.pixels[i]===color[0]&&frame.pixels[i+1]===color[1]&&frame.pixels[i+2]===color[2]&&frame.pixels[i+3]===255)return true;return false;};
+ for(const kind of ['sphere','torus']){
+  const topology=createTopology(kind,kind==='sphere'?4:9),n=topology.vertices.length,options={topology,rotX:-.65,rotY:.57,width,height,scale,centerX,centerY};
+  const empty=renderSurface({...options,board:new Int8Array(n)}),front=empty.points.filter(p=>p.visible).sort((a,b)=>b.z-a.z),back=empty.points.find(p=>!p.visible);
+  // Well separated front points: two black stones, two white stones, two empty points.
+  const picks=[],far=p=>picks.every(q=>Math.hypot(p.x-q.x,p.y-q.y)>40);for(const p of front)if(far(p))picks.push(p);
+  assert(picks.length>=6,`${kind} has room for six marks`);
+  const [aliveAt,deadAt,atariAt,whiteAt,blackArea,whiteArea]=picks.map(p=>p.i),board=new Int8Array(n);
+  board[aliveAt]=1;board[deadAt]=2;board[atariAt]=1;board[whiteAt]=2;
+  const plain=renderSurface({...options,board});
+  const marks=(spec)=>{const m={alive:new Uint8Array(n),dead:new Uint8Array(n),atari:new Uint8Array(n),territory:new Uint8Array(n)};for(const [name,points,value=1] of spec)for(const p of points)m[name][p]=value;return m;};
+  const all=renderSurface({...options,board,marks:marks([['alive',[aliveAt]],['dead',[deadAt]],['atari',[atariAt,whiteAt]],['territory',[blackArea],1],['territory',[whiteArea],2]])});
+  assert.deepEqual(all.owners,plain.owners,`${kind} marks never change what a pixel picks`);assert.deepEqual(all.depth,plain.depth,`${kind} marks never write depth`);
+  for(const [name,color] of [['alive',MARKS.alive],['dead',MARKS.dead],['atari',MARKS.atari],['black territory',MARKS.territory[1]],['white territory',MARKS.territory[2]]]){
+   assert(!has(plain,color),`${kind} ${name} colour is absent without marks`);assert(has(all,color),`${kind} ${name} mark is drawn`);
+  }
+  // Each kind of mark is independent of the others.
+  for(const [name,spec,color] of [['alive',[['alive',[aliveAt]]],MARKS.alive],['dead',[['dead',[deadAt]]],MARKS.dead],['atari',[['atari',[atariAt]]],MARKS.atari],['territory',[['territory',[blackArea],1]],MARKS.territory[1]]]){
+   const only=renderSurface({...options,board,marks:marks(spec)});assert(has(only,color),`${kind} ${name} alone`);
+   for(const [other,otherColor] of [['alive',MARKS.alive],['dead',MARKS.dead],['atari',MARKS.atari]])if(other!==name)assert(!has(only,otherColor),`${kind} ${name} alone draws no ${other}`);
+  }
+  // Marks on the far side of the board are hidden by it; absent marks are free.
+  const hidden=renderSurface({...options,board,marks:marks([['territory',[back.i],1]])});assert.deepEqual(hidden.pixels,plain.pixels,`${kind} far-side territory is hidden`);
+  assert.deepEqual(renderSurface({...options,board,marks:marks([])}).pixels,plain.pixels,`${kind} empty marks draw nothing`);
+  assert.equal(all.pick(empty.points[blackArea].x,empty.points[blackArea].y),blackArea,`${kind} a territory square still picks its point`);
+ }
+ console.log('Board marks: shapes and colours, independence, far-side clipping, and unchanged depth and picking on both boards.');
+}
