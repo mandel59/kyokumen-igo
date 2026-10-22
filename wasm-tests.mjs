@@ -77,16 +77,20 @@ async function workerFor(mode) {
     wasm:fileURLToPath(new URL('./dist/ai-engine.wasm',import.meta.url))}});
   await once(worker,'message');
   let id=0;
-  return {worker,async request(position){
-    const response=once(worker,'message');
+  // The worker also announces its backend once loaded; that message is not a reply.
+  const infos=[];
+  return {worker,infos,async request(position){
     worker.postMessage({id:++id,position});
-    const [result]=await response;
-    assert.equal(result.id,id);
-    return result;
+    for(;;){
+      const [result]=await once(worker,'message');
+      if(result.type==='info'){infos.push(result);continue;}
+      assert.equal(result.id,id);
+      return result;
+    }
   }};
 }
 for(const mode of ['wasm','missing','corrupt','unsupported']) {
-  const {worker,request}=await workerFor(mode);
+  const {worker,infos,request}=await workerFor(mode);
   try {
     for(let i=0;i<2;i++) {
       const response=await request(empty);
@@ -99,6 +103,7 @@ for(const mode of ['wasm','missing','corrupt','unsupported']) {
     assert.match(invalid.error,/Illegal AI history/);
     const recovered=await request(empty);
     assert.equal(recovered.backend,mode==='wasm'?'wasm':'generated-js','invalid input does not switch a healthy backend');
+    assert.deepEqual(infos.map(({type,backend,error})=>({type,backend,error})),[{type:'info',backend:mode==='wasm'?'wasm':'generated-js',error:undefined}],'the page is told once which backend loaded');
   } finally {await worker.terminate();}
 }
 console.log('Production Worker passed: WASM selection/reuse, 404/corrupt/unsupported fallbacks and recovery after invalid input.');
