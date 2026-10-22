@@ -23,7 +23,7 @@ cargo run --manifest-path tools/ai-tuner/Cargo.toml --release -- tune
 cargo run --manifest-path tools/ai-tuner/Cargo.toml --release -- parity tools/ai-tuner/target/v1-parity.json --count 300
 ```
 
-この CLI の legacy は v1-original、tuned は v1-tuned-20261020 です。評価係数は src/ai.rs の Params、JS の同じ係数は dist/engine.js の AI_WEIGHTS にあります。現在の固定局面は [tests/fixtures/ai/v1-parity.json](../../tests/fixtures/ai/v1-parity.json) です。係数を変更する場合は JS と Rust、固定局面を明示的に更新して一致を確認します。
+この CLI の legacy は v1-original、tuned は v1-tuned-20261020 です。評価係数は src/ai.rs の Params、比較用 JS の同じ係数は legacy-v1.mjs の AI_WEIGHTS にあります。現在の固定局面は [tests/fixtures/ai/v1-parity.json](../../tests/fixtures/ai/v1-parity.json) です。係数を変更する場合は JS と Rust、固定局面を明示的に更新して一致を確認します。
 
 ## Kyokugo AI v2
 
