@@ -304,7 +304,7 @@ for(const name of MARK_KEYS)$(MARK_CONTROLS[name]).onchange=()=>changeDisplay(()
 for(const value of Object.keys(COUNTERS))$('counter_'+value).onchange=()=>changeDisplay(()=>{display.counter=value;});
 $('displayOpen').onclick=()=>{syncDisplay();$('displayDialog').showModal();};
 for(const id of ['displayClose','displayDone'])$(id).onclick=()=>$('displayDialog').close();
-const tutorialTitles=['石を置く','石を取る','端のない盤','盤を見渡す','終局と勝敗'];
+const tutorialTitles=['石を置く','石を取る','つながった石','盤を見渡す','端のない盤','終局と勝敗'];
 let tutorialStep=0;
 function showTutorialStep(next){
  tutorialStep=Math.max(0,Math.min(tutorialTitles.length-1,next));
