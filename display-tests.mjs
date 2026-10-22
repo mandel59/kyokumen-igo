@@ -14,7 +14,7 @@ for (const move of [at(2, 3), at(3, 3), at(4, 3), null, at(3, 2), null]) play(mo
 assert.deepEqual(counters(), {captures: [0, 0], capturesAndPasses: [2, 0], stones: [3, 1], area: [3, 1]}, 'white\'s two passes count for black');
 play(at(3, 4));
 assert.equal(game.captures[1], 1);
-assert.deepEqual(counters(), {captures: [1, 0], capturesAndPasses: [3, 0], stones: [4, 0], area: [49, 0]}, 'area adds the territory, komi stays out');
+assert.deepEqual(counters(), {captures: [1, 0], capturesAndPasses: [3, 0], stones: [4, 0], area: [49, 0]}, 'area adds the territory; with every white stone captured it is the whole board');
 play(null);
 play(null);
 assert.equal(game.ended, true);
@@ -24,6 +24,17 @@ assert.deepEqual(counters(), {captures: [1, 0], capturesAndPasses: [4, 1], stone
 game.undo(2);
 assert.deepEqual(game.passCounts(), [0, 0, 2]);
 assert.deepEqual(counters().capturesAndPasses, [3, 0]);
+// A single stone does not own the board; the area score itself is unchanged.
+{
+  const g = new Game(createTopology('torus', 7), 0);
+  g.play(0);
+  assert.deepEqual(counterValues(g, 'area'), [0, 1, 0], 'the first stone does not own the board');
+  assert.equal(g.score().territoryBlack, 48, 'the score keeps its plain definition');
+  g.pass(); g.play(1);
+  assert.deepEqual(counterValues(g, 'area').slice(1), [49, 0], 'two stones: the rest is theirs again');
+  g.play(24);
+  assert.deepEqual(counterValues(g, 'area').slice(1), [2, 1], 'neutral once white has a stone');
+}
 // A neutral point is in neither area; each side's area is what the score counts.
 {
   const g = new Game(createTopology('torus', 7), 0);

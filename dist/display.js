@@ -1,3 +1,5 @@
+import {shownTerritory} from './board-analysis.js';
+
 // How the board and the counters are shown. These choices belong to the viewer, not to a game:
 // they never change a game's rules or record, so they are saved on their own.
 export const DISPLAY_KEY = 'surface-go:display:v1';
@@ -13,6 +15,7 @@ export const DEFAULT_DISPLAY = {marks: {alive: false, dead: false, atari: false,
 export const marksShown = display => MARK_KEYS.some(key => display.marks[key]);
 
 // Counts for black and white (index 1 and 2) under one counter choice. Komi is not included.
+// The area count uses the territory the board shows, so it can differ from the score early on.
 export function counterValues(game, counter) {
   const captures = game.captures;
   if (counter === 'capturesAndPasses') {
@@ -20,8 +23,9 @@ export function counterValues(game, counter) {
     return [0, captures[1] + passes[2], captures[2] + passes[1]];
   }
   if (counter === 'stones' || counter === 'area') {
-    const score = game.score();
-    return counter === 'stones' ? [0, score.stonesBlack, score.stonesWhite] : [0, score.stonesBlack + score.territoryBlack, score.stonesWhite + score.territoryWhite];
+    const owners = counter === 'area' ? shownTerritory(game.topology.neighbors, game.board) : new Uint8Array(game.board.length), counts = [0, 0, 0];
+    for (let i = 0; i < game.board.length; i++) counts[game.board[i] || owners[i]]++;
+    return [0, counts[1], counts[2]];
   }
   return [0, captures[1], captures[2]];
 }

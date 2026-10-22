@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {createTopology, Game} from './dist/engine.js';
-import {analyzeBoard, territoryOwners} from './dist/board-analysis.js';
+import {analyzeBoard, shownTerritory, territoryOwners} from './dist/board-analysis.js';
 
 const torus = createTopology('torus', 7), n = torus.vertices.length;
 const at = (u, v) => (u % 7) * 7 + (v % 7);
@@ -32,9 +32,15 @@ function positioned(topology, b, turn = 1) {
 
 // Territory is the empty region enclosed by one colour, exactly as the area score counts it.
 {
-  const single = analyzeBoard(torus, board({1: [10]}));
-  assert.equal(points(single.territory).length, n - 1, 'a lone stone owns the whole empty torus');
-  assert.ok(points(single.territory).every(p => single.territory[p] === 1));
+  // The plain definition gives a lone stone the whole empty torus, which the screen does not show.
+  assert.equal(points(territoryOwners(torus.neighbors, board({1: [10]}))).length, n - 1);
+  assert.deepEqual(points(analyzeBoard(torus, board({1: [10]})).territory), [], 'no territory after the first move');
+  assert.deepEqual(points(analyzeBoard(torus, board({2: [10]})).territory), [], 'whichever colour it is');
+  assert.equal(points(analyzeBoard(torus, board({1: [10, 11]})).territory).length, n - 2, 'a colour that has emptied the board of the other owns it');
+  // With more stones on the board, enclosure decides.
+  const walled = analyzeBoard(torus, board({1: [...Array(n).keys()].filter(p => p !== 0 && p !== 24), 2: [24]}));
+  assert.deepEqual(points(walled.territory), [0]);assert.equal(walled.territory[0], 1);
+  assert.deepEqual(shownTerritory(torus.neighbors, new Int8Array(n)), new Uint8Array(n));
   const shared = analyzeBoard(torus, board({1: [10], 2: [40]}));
   assert.deepEqual(points(shared.territory), [], 'a region touching both colours is nobody\'s');
   assert.deepEqual(points(analyzeBoard(torus, new Int8Array(n)).territory), [], 'an empty board has no territory');
@@ -133,10 +139,13 @@ for (const [kind, size] of [['sphere', 3], ['sphere', 4], ['sphere', 5], ['torus
         else assert.ok(!a.alive[i] && !a.dead[i] && !a.atari[i], 'marks sit on stones');
         assert.ok(!(a.alive[i] && a.dead[i]) && !(a.alive[i] && a.atari[i]), 'alive stones are neither dead nor in atari');
       }
-      assert.equal(points(a.territory).filter(i => a.territory[i] === 1).length, score.territoryBlack);
-      assert.equal(points(a.territory).filter(i => a.territory[i] === 2).length, score.territoryWhite);
-      assert.equal(game.board.length - points(a.territory).length - score.stonesBlack - score.stonesWhite, score.neutral);
-      assert.deepEqual(a.territory, territoryOwners(topology.neighbors, game.board));
+      if (score.stonesBlack + score.stonesWhite === 1) assert.deepEqual(points(a.territory), [], 'a single stone owns nothing');
+      else {
+        assert.equal(points(a.territory).filter(i => a.territory[i] === 1).length, score.territoryBlack);
+        assert.equal(points(a.territory).filter(i => a.territory[i] === 2).length, score.territoryWhite);
+        assert.equal(game.board.length - points(a.territory).length - score.stonesBlack - score.stonesWhite, score.neutral);
+        assert.deepEqual(a.territory, territoryOwners(topology.neighbors, game.board));
+      }
       // Whole chains are marked together.
       for (const [flag, name] of [[a.alive, 'alive'], [a.dead, 'dead'], [a.atari, 'atari']]) for (let i = 0; i < game.board.length; i++) if (flag[i]) {
         for (const q of topology.neighbors[i]) if (game.board[q] === game.board[i]) assert.ok(flag[q], name + ' covers the chain');

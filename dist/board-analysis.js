@@ -28,6 +28,15 @@ export function territoryOwners(neighbors, board, regions = emptyRegions(neighbo
   return owners;
 }
 
+// Territory as the screen shows it. With a single stone on the board nobody owns any: after the first
+// move the whole board would otherwise read as that stone's territory. (A board emptied of one colour
+// by captures keeps the plain reading: there the whole board really is the other colour's.)
+// The area score keeps the plain definition (territoryOwners).
+export function shownTerritory(neighbors, board, regions) {
+  if (board.reduce((count, stone) => count + (stone ? 1 : 0), 0) === 1) return new Uint8Array(board.length);
+  return territoryOwners(neighbors, board, regions);
+}
+
 function chainsOf(neighbors, board) {
   const chainAt = new Int32Array(board.length).fill(-1), chains = [];
   for (let start = 0; start < board.length; start++) {
@@ -91,7 +100,7 @@ function stonesWithoutRoom(neighbors, board, color, passAliveStones) {
 }
 
 // Per point: alive (pass-alive stone), dead (stone proved unable to live), atari (stone in a chain
-// with one liberty) as 0/1, and territory (owner colour of an enclosed empty point).
+// with one liberty) as 0/1, and territory (owner colour of an enclosed empty point, see shownTerritory).
 export function analyzeBoard(topology, board) {
   const {neighbors} = topology, n = board.length;
   const {chainAt, chains} = chainsOf(neighbors, board), regions = emptyRegions(neighbors, board);
@@ -103,5 +112,5 @@ export function analyzeBoard(topology, board) {
     if (chains[id].liberties.size === 1) atari[p] = 1;
   }
   for (const color of [1, 2]) for (const p of stonesWithoutRoom(neighbors, board, color, alive)) dead[p] = 1;
-  return {alive, dead, atari, territory: territoryOwners(neighbors, board, regions)};
+  return {alive, dead, atari, territory: shownTerritory(neighbors, board, regions)};
 }
