@@ -455,24 +455,25 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
 // The information dialog is split into tabs: one panel at a time, switched by click or arrow keys, never touching the game.
 {
  const before=JSON.stringify(['moveCount','turnText','status'].map(id=>el(id).textContent));
- const state=()=>[0,1,2,3].map(i=>[el('aboutPanel'+i).inert,String(el('aboutTab'+i).tabIndex)].join(':')).join(' ');
+ const state=()=>[0,1,2,3,4].map(i=>[el('aboutPanel'+i).inert,String(el('aboutTab'+i).tabIndex)].join(':')).join(' ');
  el('aboutOpen').onclick();
  // The stub has no HTML attributes, so the default tab is checked in the markup.
- assert.deepEqual([0,1,2,3].map(i=>(html.match(new RegExp('<section id="aboutPanel'+i+'"[^>]*>'))[0]).includes(' inert')),[false,true,true,true],'first tab shows by default');
- el('aboutTab0').onclick();assert.equal(state(),'false:0 true:-1 true:-1 true:-1');
- el('aboutTab2').onclick();assert.equal(state(),'true:-1 true:-1 false:0 true:-1');
+ assert.deepEqual([0,1,2,3,4].map(i=>(html.match(new RegExp('<section id="aboutPanel'+i+'"[^>]*>'))[0]).includes(' inert')),[false,true,true,true,true],'first tab shows by default');
+ el('aboutTab0').onclick();assert.equal(state(),'false:0 true:-1 true:-1 true:-1 true:-1');
+ el('aboutTab2').onclick();assert.equal(state(),'true:-1 true:-1 false:0 true:-1 true:-1');
  const key=(i,name)=>{let prevented=false;el('aboutTab'+i).onkeydown({key:name,preventDefault(){prevented=true;}});return prevented;};
- assert.equal(key(2,'ArrowRight'),true);assert.equal(state(),'true:-1 true:-1 true:-1 false:0');assert.equal(document.activeElement,el('aboutTab3'));
- key(3,'ArrowRight');assert.equal(state(),'false:0 true:-1 true:-1 true:-1','arrows wrap around');
- key(0,'ArrowLeft');assert.equal(state(),'true:-1 true:-1 true:-1 false:0');
- key(3,'Home');assert.equal(state(),'false:0 true:-1 true:-1 true:-1');key(0,'End');assert.equal(state(),'true:-1 true:-1 true:-1 false:0');
- assert.equal(key(3,'Tab'),false,'other keys are left alone');
+ assert.equal(key(2,'ArrowRight'),true);assert.equal(state(),'true:-1 true:-1 true:-1 false:0 true:-1');assert.equal(document.activeElement,el('aboutTab3'));
+ key(3,'ArrowRight');assert.equal(state(),'true:-1 true:-1 true:-1 true:-1 false:0');assert.equal(document.activeElement,el('aboutTab4'));
+ key(4,'ArrowRight');assert.equal(state(),'false:0 true:-1 true:-1 true:-1 true:-1','arrows wrap around');
+ key(0,'ArrowLeft');assert.equal(state(),'true:-1 true:-1 true:-1 true:-1 false:0');
+ key(4,'Home');assert.equal(state(),'false:0 true:-1 true:-1 true:-1 true:-1');key(0,'End');assert.equal(state(),'true:-1 true:-1 true:-1 true:-1 false:0');
+ assert.equal(key(4,'Tab'),false,'other keys are left alone');
  el('aboutTab1').onclick();assert.equal(el('aboutDialog').open,true);el('aboutDone').onclick();
  assert.equal(JSON.stringify(['moveCount','turnText','status'].map(id=>el(id).textContent)),before);
  el('aboutTab0').onclick();
  // Every panel is in the dialog, and exactly one tab per panel.
  const aboutHTML=html.slice(html.indexOf('<dialog id="aboutDialog"'),html.indexOf('</dialog>',html.indexOf('<dialog id="aboutDialog"')));
- assert.equal([...aboutHTML.matchAll(/role="tabpanel"/g)].length,4);assert.equal([...aboutHTML.matchAll(/role="tab"/g)].length,4);
+ assert.equal([...aboutHTML.matchAll(/role="tabpanel"/g)].length,5);assert.equal([...aboutHTML.matchAll(/role="tab"/g)].length,5);
  console.log('About tabs passed: one panel at a time, click and arrow/Home/End navigation, game untouched.');
 }
 

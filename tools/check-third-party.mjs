@@ -5,6 +5,9 @@ import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
 const root=new URL('../',import.meta.url),read=p=>readFileSync(new URL(p,root));
 const json=p=>JSON.parse(read(p)),sha=p=>createHash('sha256').update(read(p)).digest('hex');
+const catalog=json('docs/third-party/catalog.json'),project=catalog.projectSourceLicense;
+assert.deepEqual(read(project.distributionFile),read(project.licenseFile),'Refresh the published project license');
+assert.deepEqual(json('dist/third-party-catalog.json').projectSourceLicense,project,'Refresh the published project license metadata');
 const sources=json('dist/licenses/sources.json');
 for(const entry of sources.notices){assert.ok(entry.url);assert.equal(sha('dist/licenses/'+entry.path),entry.sha256,entry.path);}
 const rust=json('dist/licenses/rust/manifest.json');
@@ -25,6 +28,7 @@ for(const file of ['THIRD_PARTY.md','dist/third-party.html']){
  for(const [,link]of links)if(!/^https?:|^#/.test(link))assert.ok(existsSync(new URL(link.split('#')[0],new URL(file,root))),file+': '+link);
 }
 assert.match(read('dist/index.html').toString(),/href="third-party.html"/);
+assert.ok(read('dist/index.html').toString().includes('href="'+project.distributionFile.slice(5)+'"'),'App must link to its source license');
 if(process.argv.includes('--prepared')){
  const vendor='dist/vendor/onnxruntime/',npm='tools/ai-gnn/node_modules/onnxruntime-web/';
  for(const [copy,original]of [['LICENSE','onnxruntime-LICENSE.txt'],['ThirdPartyNotices.txt','onnxruntime-ThirdPartyNotices.txt']])

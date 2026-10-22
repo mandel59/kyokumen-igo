@@ -365,7 +365,7 @@ function dialogTabs(prefix,count){
   };
  }
 }
-dialogTabs('about',4);dialogTabs('display',2);
+dialogTabs('about',5);dialogTabs('display',2);
 $('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('aboutTutorial').onclick=()=>{$('aboutDialog').close();$('rulesOpen').onclick();};$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
 
 const restored=loadSavedGame();

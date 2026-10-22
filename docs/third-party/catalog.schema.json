@@ -8,6 +8,7 @@
     "schemaVersion",
     "checkedOn",
     "repository",
+    "projectSourceLicense",
     "scope",
     "entries",
     "inventoryFiles",
@@ -33,6 +34,17 @@
     },
     "scope": {
       "type": "string"
+    },
+    "projectSourceLicense": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["licenseExpression", "licenseFile", "distributionFile", "scope"],
+      "properties": {
+        "licenseExpression": {"type": "string"},
+        "licenseFile": {"type": "string"},
+        "distributionFile": {"type": "string"},
+        "scope": {"type": "string"}
+      }
     },
     "entries": {
       "type": "array",
