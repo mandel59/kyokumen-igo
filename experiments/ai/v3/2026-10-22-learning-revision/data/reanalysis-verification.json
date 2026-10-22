@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "role": "Preflight only; not used in study training or model selection",
+  "positions": 49,
+  "selected": 13,
+  "samePositionsAndOutcomes": true,
+  "commonValidationTargetsIdentical": true,
+  "policyTargetsNormalizedAndLegal": true,
+  "searchBudgetsVerified": true
+}

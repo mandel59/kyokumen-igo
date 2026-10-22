@@ -6,7 +6,7 @@ use gnn::{ACTIONS,GLOBALS,CHANNELS,POINTS};
 
 struct Engine {
     topology: Topology, sphere: bool, komi: f64, moves: Vec<i32>, search: mcts::Search,
-    ids: Vec<u32>, x: Vec<f32>, globals: Vec<f32>, masks: Vec<f32>, legal: Vec<f32>, policy: Vec<f32>,
+    ids: Vec<u32>, x: Vec<f32>, globals: Vec<f32>, masks: Vec<f32>, legal: Vec<f32>, policy: Vec<f32>, statistics: Vec<f32>,
 }
 thread_local! {static ENGINE: RefCell<Option<Engine>>=const {RefCell::new(None)};}
 fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i8>>)> {
@@ -18,6 +18,16 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
     Some((game,past))
 }
 #[no_mangle] pub extern "C" fn v3_version()->u32 {3}
+#[no_mangle] pub extern "C" fn v3_set_fpu(mode:u32,root_noise:u32)->i32 {
+    ENGINE.with(|slot| {let mut slot=slot.borrow_mut();let Some(e)=slot.as_mut()else{return -2;};
+        if root_noise>1||!e.search.set_fpu(mode,root_noise!=0){-2}else{0}
+    })
+}
+#[no_mangle] pub extern "C" fn v3_statistics()->*const f32 {
+    ENGINE.with(|slot| {let mut slot=slot.borrow_mut();let Some(e)=slot.as_mut()else{return std::ptr::null();};
+        e.statistics=e.search.statistics();e.statistics.as_ptr()
+    })
+}
 #[no_mangle] pub extern "C" fn v3_set_endgame(enabled:u32)->i32 {
     ENGINE.with(|slot| {let mut slot=slot.borrow_mut();let Some(e)=slot.as_mut()else{return -2;};
         if enabled>1||!e.search.set_endgame(enabled!=0){-2}else{0}
@@ -49,7 +59,7 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
         let topology=Topology::new(if kind==0 {Kind::Sphere}else{Kind::Torus},size);
         if restore(&topology,komi,&moves).is_none() {return -3;}
         *slot.borrow_mut()=Some(Engine {topology,sphere:kind==0,komi,moves,search:mcts::Search::new(seed as u64),
-            ids:vec![],x:vec![],globals:vec![],masks:vec![],legal:vec![],policy:vec![0.;ACTIONS]});
+            ids:vec![],x:vec![],globals:vec![],masks:vec![],legal:vec![],policy:vec![0.;ACTIONS],statistics:vec![]});
         0
     })
 }

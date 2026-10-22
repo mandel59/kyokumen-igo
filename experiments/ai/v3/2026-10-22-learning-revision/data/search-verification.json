@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "positions": 24,
+  "boards": 6,
+  "baselineModeExactParity": true,
+  "fpuVariantsFiniteAndLegal": true
+}

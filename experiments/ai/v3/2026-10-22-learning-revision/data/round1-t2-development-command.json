@@ -1,0 +1,35 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/match.mjs",
+    "--a",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t2",
+    "--b",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/baseline-model",
+    "--a-fpu",
+    "1",
+    "--b-fpu",
+    "1",
+    "--pairs",
+    "8",
+    "--simulations",
+    "128",
+    "--seed",
+    "2026102240",
+    "--output",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t2-development.json"
+  ],
+  "started": "2026-10-22T01:44:00.637Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "6f53a3a9dd52df0f7f817351f86e63c576517e99740632831be3cdb05462952c",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/selfplay.mjs": "1ce5cee77fbc7f6c7ecb84dcc9e756f94e02aa61cf25fe92065aed3e75f9c4fd",
+    "tools/ai-gnn/reanalyze.mjs": "c0b57c00e728d79fa4c82d5986a53ef4c55ce38df97a918ffbe6158057ce95c0",
+    "tools/ai-gnn/match.mjs": "78c87f687c9585c952a88edcea34b9e67f15035b6950a9e58284a034108b370b",
+    "dist/ai-v3-search.js": "5ac8f49985d05eb0411edf7bcb967664cf114d060b015942c780c815960c80f3",
+    "dist/ai-v3.wasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+  },
+  "finished": "2026-10-22T01:56:24.757Z",
+  "elapsedSeconds": 744.12,
+  "exitCode": 0
+}

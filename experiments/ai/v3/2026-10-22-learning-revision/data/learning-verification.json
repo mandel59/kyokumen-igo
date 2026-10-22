@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "role": "Test fixtures only; excluded from study training and selection",
+  "cudaLearningAndExportPassed": true,
+  "strictCommonTargetsPassed": true,
+  "savedCheckpoints": [
+    0,
+    1
+  ],
+  "singleRecipeBudgetOptimizationPassed": true,
+  "validationPolicyRows": 13,
+  "validationValueRows": 49
+}

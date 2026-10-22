@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "pairedSampling": true,
+  "deterministic": true,
+  "inconsistentPairsRejected": true,
+  "cappedMatchesNotBootstrapped": true
+}

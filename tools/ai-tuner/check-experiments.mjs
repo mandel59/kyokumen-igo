@@ -16,7 +16,7 @@ if(process.argv.includes('--artifacts')){
 }
 const catalog=JSON.parse(fs.readFileSync(path.join(archive,'catalog.json'),'utf8'));
 assert.equal(catalog.schemaVersion,1);
-const ids=new Set(),registered=new Set();let artifacts=0;
+const ids=new Set(),registered=new Set(),archivedFiles=new Set();let artifacts=0;
 for(const e of catalog.experiments){
  assert.ok(!ids.has(e.id),'duplicate ID '+e.id);ids.add(e.id);
  const dir=path.resolve(archive,e.path);assert.ok(dir.startsWith(archive+path.sep));
@@ -28,16 +28,25 @@ for(const e of catalog.experiments){
  if(m.source?.patch)assert.ok(m.artifacts.some(a=>a.path===m.source.patch),'source patch not archived');
  assert.ok(Array.isArray(m.variants)&&m.variants.length>0);
  assert.ok(fs.existsSync(path.join(dir,'README.md')));
+ if(m.plan){
+  assert.equal(m.plan.path,'plan.json');assert.match(m.plan.sha256,/^[a-f0-9]{64}$/);
+  assert.equal(sha(path.join(dir,m.plan.path)),m.plan.sha256,'plan changed in '+e.id);
+ }
  const expected=files(path.join(dir,'data')).map(p=>relative(dir,p)).sort();
  assert.deepEqual(m.artifacts.map(a=>a.path).sort(),expected,'unlisted or missing artifact in '+e.id);
  for(const a of m.artifacts){
   const p=path.resolve(dir,a.path);assert.ok(p.startsWith(path.join(dir,'data')+path.sep));
   assert.match(a.sha256,/^[a-f0-9]{64}$/);assert.equal(sha(p),a.sha256,e.id+': '+a.path);artifacts++;
+  archivedFiles.add(p);
  }
 }
-for(const p of files(archive).filter(p=>path.basename(p)==='manifest.json'))assert.ok(registered.has(p),'unregistered manifest '+p);
+// A model package or source snapshot can have its own manifest; it must be a hashed artifact.
+for(const p of files(archive).filter(p=>path.basename(p)==='manifest.json'))assert.ok(registered.has(p)||archivedFiles.has(p),'unregistered manifest '+p);
 const docs=[path.join(repo,'README.md'),path.join(repo,'tools/ai-tuner/README.md'),
- ...files(path.join(repo,'docs/ai')),...files(archive),...files(path.join(repo,'tests/fixtures/ai'))].filter(p=>p.endsWith('.md'));
+ ...files(path.join(repo,'docs/ai')),
+ // Archived source Markdown keeps links relative to its original location; verify its hash instead.
+ ...files(archive).filter(p=>!relative(archive,p).split('/').includes('data')),
+ ...files(path.join(repo,'tests/fixtures/ai'))].filter(p=>p.endsWith('.md'));
 let links=0;
 for(const doc of docs){
  const text=fs.readFileSync(doc,'utf8').replace(/\x60{3}[\s\S]*?\x60{3}/g,'');

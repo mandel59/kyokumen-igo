@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "selectedAt": "2026-10-22T02:39:41.088Z",
+  "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+  "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "fpu": 1,
+  "generation": 1,
+  "recipe": 0,
+  "developmentEligible": true,
+  "source": "second-generation.json"
+}

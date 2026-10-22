@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "experiments": [
+    {
+      "id": "v1/2026-10-20-tuning",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 の係数調整",
+      "path": "v1/2026-10-20-tuning/"
+    },
+    {
+      "id": "v1/2026-10-21-wasm-benchmark",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 の JS / WASM 比較",
+      "path": "v1/2026-10-21-wasm-benchmark/"
+    },
+    {
+      "id": "v1/2026-10-21-komi",
+      "architecture": "v1",
+      "title": "Kyokugo AI v1 のコミ評価",
+      "path": "v1/2026-10-21-komi/"
+    },
+    {
+      "id": "v2/2026-10-21-initial",
+      "architecture": "v2",
+      "title": "Kyokugo AI v2 の導入とコミ再検証",
+      "path": "v2/2026-10-21-initial/"
+    },
+    {
+      "id": "v2/2026-10-21-tuning",
+      "architecture": "v2",
+      "title": "Kyokugo AI v2 の係数調整と盤別採用",
+      "path": "v2/2026-10-21-tuning/"
+    },
+    {
+      "id": "v3/2026-10-21-initial",
+      "architecture": "v3",
+      "title": "Kyokugo AI v3 GNN / WebGPU",
+      "path": "v3/2026-10-21-initial/"
+    },
+    {
+      "id": "v3/2026-10-21-strength",
+      "architecture": "v3",
+      "title": "Kyokugo AI v3 retraining and diagnostic matches",
+      "path": "v3/2026-10-21-strength/"
+    },
+    {
+      "id": "v3/2026-10-22-tactics",
+      "architecture": "v3",
+      "title": "Avoid useless invasions while retaining sacrifices",
+      "path": "v3/2026-10-22-tactics/"
+    },
+    {
+      "id": "v3/2026-10-22-endgame",
+      "architecture": "v3",
+      "title": "Pass after defeat is certified by enemy living stones",
+      "path": "v3/2026-10-22-endgame/"
+    },
+    {
+      "id": "v3/2026-10-22-inference",
+      "architecture": "v3",
+      "title": "Sparse fused WebGPU kernels and actual-batch CPU inference",
+      "path": "v3/2026-10-22-inference/"
+    },
+    {
+      "id": "v3/2026-10-22-learning",
+      "architecture": "v3",
+      "title": "Selfplay curriculum, balanced fine-tuning and rejected candidates",
+      "path": "v3/2026-10-22-learning/"
+    },
+    {
+      "id": "v3/2026-10-22-learning-revision",
+      "architecture": "v3",
+      "title": "Normal-position selection, controlled search teachers and iterative selfplay",
+      "path": "v3/2026-10-22-learning-revision/"
+    },
+    {
+      "id": "v2/2026-10-22-endgame",
+      "architecture": "v2",
+      "title": "Share Benson certificates and pass after proven defeat in v2",
+      "path": "v2/2026-10-22-endgame/"
+    }
+  ]
+}

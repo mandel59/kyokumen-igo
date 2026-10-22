@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "started": "2026-10-22T01:57:21.158Z",
+  "status": "ready-for-final-evaluation",
+  "recipe": 0,
+  "fpu": 1,
+  "previous": {
+    "recipe": 0,
+    "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+    "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "selectedEpoch": 8,
+    "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+    "initialSelection": {
+      "loss": 2.9959747791290283,
+      "unweightedLoss": 2.9850109665826503,
+      "policyTop1": 0.41336390435637077,
+      "policyTop5": 0.8057648214870619,
+      "policyKL": 1.7101512600311168,
+      "wdlAccuracy": 0.6753822291158874,
+      "wdlBrier": 0.37590848118456405,
+      "wdlCE": 0.5355303320788555,
+      "scoreMAE": 32.65658237314425,
+      "ownershipAccuracy": 0.7105676375020773,
+      "passRecall": 0.8108108108108109,
+      "passPrecision": 0.8,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "selection": {
+      "loss": 2.957813262939453,
+      "unweightedLoss": 2.9595582380068692,
+      "policyTop1": 0.4091057975761546,
+      "policyTop5": 0.812643301670488,
+      "policyKL": 1.701357559419014,
+      "wdlAccuracy": 0.6807001994238866,
+      "wdlBrier": 0.36924706122417184,
+      "wdlCE": 0.532172573502936,
+      "scoreMAE": 30.797827110569465,
+      "ownershipAccuracy": 0.7157746544704188,
+      "passRecall": 0.7837837837837838,
+      "passPrecision": 0.7160493827160493,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "eligible": true,
+    "score": 63,
+    "capped": 0,
+    "boards": [
+      {
+        "board": "sphere3",
+        "score": 13
+      },
+      {
+        "board": "sphere4",
+        "score": 12
+      },
+      {
+        "board": "sphere5",
+        "score": 12
+      },
+      {
+        "board": "torus7",
+        "score": 9
+      },
+      {
+        "board": "torus9",
+        "score": 10
+      },
+      {
+        "board": "torus11",
+        "score": 7
+      }
+    ]
+  },
+  "selfplay": {
+    "schemaVersion": 1,
+    "positions": 20196,
+    "capped": 0,
+    "completedGames": 192,
+    "seed": 2026102222,
+    "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "searchHash": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+    "fpu": 1,
+    "boards": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "attempted": 32,
+        "completed": 32,
+        "capped": 0
+      }
+    ]
+  },
+  "candidate": {
+    "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round2-model",
+    "sha256": "fb407dd91e71d5a8a92392106ee78ca017cb94cc611af3059f0684e391fb1c87",
+    "selectedEpoch": 12,
+    "selection": {
+      "loss": 3.0174477100372314,
+      "unweightedLoss": 3.1220877318089557,
+      "policyTop1": 0.4675682444277486,
+      "policyTop5": 0.8269471575256699,
+      "policyKL": 1.370283738730278,
+      "wdlAccuracy": 0.713125845737483,
+      "wdlBrier": 0.37838270966601056,
+      "wdlCE": 0.6019873509387687,
+      "scoreMAE": 26.463369956329192,
+      "ownershipAccuracy": 0.7250270179488559,
+      "passRecall": 0.7708333333333334,
+      "passPrecision": 0.7184466019417476,
+      "positions": 8129,
+      "policyPositions": 3993
+    },
+    "eligible": false,
+    "score": 48,
+    "boards": [
+      {
+        "board": "sphere3",
+        "score": 10
+      },
+      {
+        "board": "sphere4",
+        "score": 8
+      },
+      {
+        "board": "sphere5",
+        "score": 10
+      },
+      {
+        "board": "torus7",
+        "score": 9
+      },
+      {
+        "board": "torus9",
+        "score": 6
+      },
+      {
+        "board": "torus11",
+        "score": 5
+      }
+    ]
+  },
+  "selected": {
+    "recipe": 0,
+    "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+    "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "selectedEpoch": 8,
+    "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+    "initialSelection": {
+      "loss": 2.9959747791290283,
+      "unweightedLoss": 2.9850109665826503,
+      "policyTop1": 0.41336390435637077,
+      "policyTop5": 0.8057648214870619,
+      "policyKL": 1.7101512600311168,
+      "wdlAccuracy": 0.6753822291158874,
+      "wdlBrier": 0.37590848118456405,
+      "wdlCE": 0.5355303320788555,
+      "scoreMAE": 32.65658237314425,
+      "ownershipAccuracy": 0.7105676375020773,
+      "passRecall": 0.8108108108108109,
+      "passPrecision": 0.8,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "selection": {
+      "loss": 2.957813262939453,
+      "unweightedLoss": 2.9595582380068692,
+      "policyTop1": 0.4091057975761546,
+      "policyTop5": 0.812643301670488,
+      "policyKL": 1.701357559419014,
+      "wdlAccuracy": 0.6807001994238866,
+      "wdlBrier": 0.36924706122417184,
+      "wdlCE": 0.532172573502936,
+      "scoreMAE": 30.797827110569465,
+      "ownershipAccuracy": 0.7157746544704188,
+      "passRecall": 0.7837837837837838,
+      "passPrecision": 0.7160493827160493,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "eligible": true,
+    "score": 63,
+    "capped": 0,
+    "boards": [
+      {
+        "board": "sphere3",
+        "score": 13
+      },
+      {
+        "board": "sphere4",
+        "score": 12
+      },
+      {
+        "board": "sphere5",
+        "score": 12
+      },
+      {
+        "board": "torus7",
+        "score": 9
+      },
+      {
+        "board": "torus9",
+        "score": 10
+      },
+      {
+        "board": "torus11",
+        "score": 7
+      }
+    ]
+  },
+  "generation": 1,
+  "finished": "2026-10-22T02:39:41.088Z"
+}

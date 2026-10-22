@@ -16,6 +16,50 @@ def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
 
 
 class TrainingTests(unittest.TestCase):
+    def test_replay_generations_keep_half_the_selfplay_mass_despite_unequal_counts(self):
+        records=[item('teacher') for _ in range(3)]
+        for generation,count in [(1,6),(2,30)]:
+            for i in range(count):
+                r=item('self-'+str(generation),source='selfplay')
+                r['record']['replayGeneration']=generation;r['policy_weight']=float(i==0)
+                records.append(r)
+        weights=sampling_weights(records,.5,True)
+        prepared=Prepared(records,{('torus',7):torch.eye(160)},'cpu',True);prepared.balance_policy(weights)
+        for generation in [1,2]:
+            indices=[i for i,r in enumerate(records) if r['record'].get('replayGeneration')==generation]
+            self.assertAlmostEqual(sum(weights[i] for i in indices),.25)
+            self.assertAlmostEqual(sum(weights[i]*prepared.policy_weight[i].item() for i in indices),.25)
+
+    def test_nonfinite_evaluation_cannot_select_a_checkpoint(self):
+        torch.set_num_threads(2);model=GraphNet().eval()
+        with torch.no_grad():model.passing[-1].bias.fill_(float('nan'))
+        data=Prepared([item('a')],{('torus',7):torch.eye(160)},'cpu')
+        with self.assertRaisesRegex(ValueError,'Nonfinite validation'):
+            data.evaluate(model,1,common=True)
+
+    def test_common_selection_ignores_certified_roots_training_targets_and_anchor(self):
+        torch.set_num_threads(2);torch.manual_seed(8);model=GraphNet().eval()
+        a=item('normal');a['selection_policy']=torch.nn.functional.one_hot(torch.tensor(7),161).float()
+        first=Prepared([a],{('torus',7):torch.eye(160)},'cpu')
+        expected=first.evaluate(model,2,common=True)
+        b=item('normal');b['policy']=torch.nn.functional.one_hot(torch.tensor(2),161).float();b['selection_policy']=a['selection_policy']
+        certified=item('forced',score=-40);certified['record']['decisionReason']='certified-loss'
+        second=Prepared([b,certified],{('torus',7):torch.eye(160)},'cpu')
+        second.anchor_policy(GraphNet().eval(),2,100.)
+        actual=second.evaluate(model,2,common=True)
+        self.assertEqual(actual,expected)
+
+    def test_policy_subsampling_preserves_each_source_mass(self):
+        records=[item('teacher',source='teacher') for _ in range(4)]+[item('self',source='selfplay') for _ in range(8)]
+        for i,r in enumerate(records):
+            r['policy_weight']=float(i<4 or i==4 or i==7)
+        weights=sampling_weights(records,.5)
+        prepared=Prepared(records,{('torus',7):torch.eye(160)},'cpu');prepared.balance_policy(weights)
+        for source in ['teacher','selfplay']:
+            mass=sum(w*prepared.policy_weight[i].item() for i,(w,r) in enumerate(zip(weights,records)) if r['record']['source']==source)
+            self.assertAlmostEqual(mass,.5)
+        self.assertEqual(prepared.policy_weight[5].item(),0.)
+
     def test_pinned_split_never_promotes_old_training_games_to_validation(self):
         records=[item(game) for game in ['old-train','old-val']+[f'new-{i}' for i in range(10)]]
         train,val=split_games(records,42,dict(trainGames=['old-train'],validationGames=['old-val']))

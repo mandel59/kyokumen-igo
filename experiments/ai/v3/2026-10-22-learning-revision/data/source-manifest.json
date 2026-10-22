@@ -1,0 +1,272 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "69caea83f6d32e1b6d3cddba70f0b49916b68b40",
+  "captured": "2026-10-22T10:28:24.656Z",
+  "patch": {
+    "path": "experiments/ai/v3/2026-10-22-learning-revision/data/source.patch",
+    "sha256": "8e1c299df259e4a241fff4e1604a441fc984648180e5a2d2743da063d18d88ec"
+  },
+  "sources": [
+    {
+      "path": "THIRD_PARTY.md",
+      "sha256": "92e704e2f43275c34d94ee440828a68c2f1dbccf083c151e25c896d8b1908703",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\THIRD_PARTY.md"
+    },
+    {
+      "path": "dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\ai-v3-inference.js"
+    },
+    {
+      "path": "dist/ai-v3-search.js",
+      "sha256": "5ac8f49985d05eb0411edf7bcb967664cf114d060b015942c780c815960c80f3",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\ai-v3-search.js"
+    },
+    {
+      "path": "dist/ai-v3.js",
+      "sha256": "235461d6c9f9a5b4627fedaac72dd93485fcc8d5767fae7073fa4471c5259129",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\ai-v3.js"
+    },
+    {
+      "path": "dist/ai-v3.wasm",
+      "sha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\ai-v3.wasm"
+    },
+    {
+      "path": "dist/models/v3/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\models\\v3\\manifest.json"
+    },
+    {
+      "path": "dist/models/v3/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\models\\v3\\model.onnx"
+    },
+    {
+      "path": "dist/models/v3/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\models\\v3\\weights.f32"
+    },
+    {
+      "path": "dist/third-party-catalog.json",
+      "sha256": "7618187c9c84ed16f6b99adf5b2d7f535383054a14d994b94963bb35f931a4fc",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\third-party-catalog.json"
+    },
+    {
+      "path": "dist/third-party.html",
+      "sha256": "0da9fc96b9914f01cc6b9d2644b41d9696c74bf54427760e8385dd01452b9238",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\dist\\third-party.html"
+    },
+    {
+      "path": "docs/ai/architectures/v3.md",
+      "sha256": "a2194256cd136c5cd84d4b968e810a3d6f91eb01c583b1fae9ad70f2c1a588e3",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\docs\\ai\\architectures\\v3.md"
+    },
+    {
+      "path": "docs/third-party/catalog.json",
+      "sha256": "746d86afb336f9f1afcd65296da4a328dd813c36ffa509517837d7056bde5170",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\docs\\third-party\\catalog.json"
+    },
+    {
+      "path": "experiments/ai/README.md",
+      "sha256": "0754b2a1ab9a47aafaef326940031bde5b85538e7a006a27953cf2aa2e75fafb",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\experiments\\ai\\README.md"
+    },
+    {
+      "path": "experiments/ai/catalog.json",
+      "sha256": "8631fd33e59661ec898b522386f0e7a3b6d2fda0f0c8cc58e798601246b54469",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\experiments\\ai\\catalog.json"
+    },
+    {
+      "path": "experiments/ai/v3/2026-10-22-learning-revision/README.md",
+      "sha256": "e6ea5ded2c8ee2eee57a655d10dc1a72aca21ed8952f6e71dbe7c83b1e0d13e9",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\experiments\\ai\\v3\\2026-10-22-learning-revision\\README.md"
+    },
+    {
+      "path": "experiments/ai/v3/2026-10-22-learning-revision/plan.json",
+      "sha256": "4eb3a1d9b6718c715a4000f448d483c81dfa3915a662db48bb409d3ef815d28b",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\experiments\\ai\\v3\\2026-10-22-learning-revision\\plan.json"
+    },
+    {
+      "path": "tests/fixtures/ai/v3-golden.json",
+      "sha256": "f1f151b35792fc1f77ab098af6e80a64f723200de30e21238184789d3b03d066",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tests\\fixtures\\ai\\v3-golden.json"
+    },
+    {
+      "path": "tools/ai-gnn/README.md",
+      "sha256": "462c9d013acf70cbe4437f0e8aa925cba35b438e77cb942912f927e46246c04e",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\README.md"
+    },
+    {
+      "path": "tools/ai-gnn/annotate-corpus.mjs",
+      "sha256": "2fc1d4578bc546cbb09ddffd5533154795dbd5c4ba380586e95552884379f897",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\annotate-corpus.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/archive-study.mjs",
+      "sha256": "2d142ed9936c856ad5232181333e3399528ffc81e76a7175aca2d7e678311b06",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\archive-study.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/audit-teacher-targets.mjs",
+      "sha256": "003e66e301bbed97b80e77431471853788d88c06ca15547d43d93cbba27a97f5",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\audit-teacher-targets.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/browser-match.mjs",
+      "sha256": "3cf3787fae05fb494edf57e449678b5213f9bb076f5d83c6f885170293a1d641",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\browser-match.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/build.mjs",
+      "sha256": "cffb4b2540c20bbd10a51dcb373c2630ff8b8cacebad5f871cabe9d61ec44fa6",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\build.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/compare-teachers.mjs",
+      "sha256": "0298f9cf129c63b925c8914f635142eb8f50ac068fc69a11de2718554ab655ee",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\compare-teachers.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/diagnose-search.mjs",
+      "sha256": "c0bb278df4e27e24717e7e2c5e3ef784daec045cb11b55b502f909d9507c182e",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\diagnose-search.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/filter-teacher-policy.mjs",
+      "sha256": "69085f2de49652dba433ddd6623cccd5de9f26c94730e3e606f96bed76e9e88d",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\filter-teacher-policy.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/finish-study.mjs",
+      "sha256": "ebb8a9d300d8ca646c0244f9488e29b36e40880bca9dcbcb388f5ad86670f91e",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\finish-study.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/match-statistics.mjs",
+      "sha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\match-statistics.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/match.mjs",
+      "sha256": "78c87f687c9585c952a88edcea34b9e67f15035b6950a9e58284a034108b370b",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\match.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/measure-learning.py",
+      "sha256": "e462173d6feb2ed846d59f7245d44a4c997dcca90dbb2a61595dfcceb483511d",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\measure-learning.py"
+    },
+    {
+      "path": "tools/ai-gnn/prepare-split.py",
+      "sha256": "a57fc357d6da26413c2fa46895e9b41a40cd7316199177ea05b595386054d936",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\prepare-split.py"
+    },
+    {
+      "path": "tools/ai-gnn/reanalyze.mjs",
+      "sha256": "c0b57c00e728d79fa4c82d5986a53ef4c55ce38df97a918ffbe6158057ce95c0",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\reanalyze.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/run-final-evaluation.mjs",
+      "sha256": "1a6db8f33b0a0e4cb2af5e1b858e5257758b6524c382cfe530cc5357d4fa5353",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\run-final-evaluation.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/run-learning-study.mjs",
+      "sha256": "085d93309d2a03d7d931f339adda2c2b8665d9f6afb82013a2472f5ece22258e",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\run-learning-study.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/run-search-study.mjs",
+      "sha256": "68d0456a609d096dc962c97256f9c34578d750a81568d0de3ca5271a25673216",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\run-search-study.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/run-second-generation.mjs",
+      "sha256": "6c9b4bb6081926f0457e016e73142570976776ef10c703ea18fc2c01aa436415",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\run-second-generation.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/selfplay.mjs",
+      "sha256": "1ce5cee77fbc7f6c7ecb84dcc9e756f94e02aa61cf25fe92065aed3e75f9c4fd",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\selfplay.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/study-commands.mjs",
+      "sha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\study-commands.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/summarize-search.mjs",
+      "sha256": "270dce589c470e2f1024e4d88126e7c20da21816bb9b0121140881259eaa1cfa",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\summarize-search.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/tag-generation.mjs",
+      "sha256": "d8e7d2cbfa184c7e2780624cd0cbfa437b29954bb2f224af77d3f86a8fad7955",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\tag-generation.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/test-match-statistics.mjs",
+      "sha256": "348c5f1d87c11b76093d2c3a9f9ea5076eebd097f3a6f11453f1b5ed152f361f",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\test-match-statistics.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/test-reanalysis.mjs",
+      "sha256": "d84b7f6d32f67505f7cd4115c0455f0c7c77ccee5bb7828c7a2224bc7d87ff66",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\test-reanalysis.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/test-search-study.mjs",
+      "sha256": "6e6605d35dea88a60fc39684326f0f0965a1041e4570bf29741d42bdcfe1a924",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\test-search-study.mjs"
+    },
+    {
+      "path": "tools/ai-gnn/test_training.py",
+      "sha256": "18d61bf823b3a8fc3a99eea41b56e755b0eed37f4691aa981d1cc3bcbb3aa1aa",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\test_training.py"
+    },
+    {
+      "path": "tools/ai-gnn/train.py",
+      "sha256": "6f53a3a9dd52df0f7f817351f86e63c576517e99740632831be3cdb05462952c",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\train.py"
+    },
+    {
+      "path": "tools/ai-gnn/verify-preprocessing.mjs",
+      "sha256": "8a122657edbf6ff1d867aab8db0c8ccc614abee17a123628d5d31b29fc900a36",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-gnn\\verify-preprocessing.mjs"
+    },
+    {
+      "path": "tools/ai-tuner/check-experiments.mjs",
+      "sha256": "bcddc265d74027900a3b3211ffff5efc55c2cd894f49d7a2ed773c4014205391",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-tuner\\check-experiments.mjs"
+    },
+    {
+      "path": "tools/ai-tuner/src/gnn-wasm.rs",
+      "sha256": "367859c170743316c7196bacb2eee8e8ef1b223e6458fa218a2bdd58b87fd4cd",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-tuner\\src\\gnn-wasm.rs"
+    },
+    {
+      "path": "tools/ai-tuner/src/mcts.rs",
+      "sha256": "415dffd907a4f87abd7251b59510c75482cda5103f37eb738f3635aabc0d106e",
+      "snapshot": "experiments\\ai\\v3\\2026-10-22-learning-revision\\data\\source\\tools\\ai-tuner\\src\\mcts.rs"
+    }
+  ],
+  "compressedArtifacts": [
+    {
+      "path": "experiments/ai/v3/2026-10-22-learning-revision/data/search-s1.json.gz",
+      "sha256": "7883831ef440aa8f7e244bd4b162aa3247c28ca8a8bddc2df9881e4180100d6f",
+      "uncompressedSha256": "62827b479f2fd5f966f444cb9130c58c0f6eab152f50c75f66fbf5745731e6a4",
+      "bytes": 57012748,
+      "compressedBytes": 4061811
+    },
+    {
+      "path": "experiments/ai/v3/2026-10-22-learning-revision/data/search-s2.json.gz",
+      "sha256": "0d6ef9731a58afd7ebaad41f0a62b7101987fa4e8989263cf7cf7eb2ec0d227e",
+      "uncompressedSha256": "2c3d13f40b4188652d73509ddd48067193aa3b94d1b21b2da2b6e8c2db6de01b",
+      "bytes": 54013603,
+      "compressedBytes": 3661486
+    }
+  ]
+}

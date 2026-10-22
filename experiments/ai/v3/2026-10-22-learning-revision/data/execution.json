@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "started": "2026-10-22T00:47:24.422Z",
+  "planSha256": "8b1cb91d2befd3ce099ff25d2c320ad5ca18d584997cef958653bd7bb491bf55",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "6f53a3a9dd52df0f7f817351f86e63c576517e99740632831be3cdb05462952c",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/selfplay.mjs": "1ce5cee77fbc7f6c7ecb84dcc9e756f94e02aa61cf25fe92065aed3e75f9c4fd",
+    "tools/ai-gnn/reanalyze.mjs": "c0b57c00e728d79fa4c82d5986a53ef4c55ce38df97a918ffbe6158057ce95c0",
+    "tools/ai-gnn/match.mjs": "78c87f687c9585c952a88edcea34b9e67f15035b6950a9e58284a034108b370b",
+    "dist/ai-v3-search.js": "c6ee8f0ea7e665bbed4ffeee96bebeb959cc37adc438dc6fdc616f901b4dd2e7",
+    "dist/ai-v3.wasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+  },
+  "stages": {
+    "measurement": "passed",
+    "search": "completed",
+    "teacher_and_first_training": "completed"
+  },
+  "promoted": false,
+  "search": {
+    "started": "2026-10-21T23:58:08.813Z",
+    "baselineModel": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+    "baselineWasm": "2e1f8cb111efc5ff4454ae0570b9df773ec8609056e7602d17ff6a53190b9eea",
+    "candidateWasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+    "finishedSearch": "2026-10-22T00:29:06.816Z",
+    "results": [
+      {
+        "mode": 1,
+        "score": 56,
+        "capped": 0,
+        "boards": [
+          {
+            "board": "sphere3",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "sphere4",
+            "score": 11,
+            "games": 16
+          },
+          {
+            "board": "sphere5",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "torus7",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "torus9",
+            "score": 11,
+            "games": 16
+          },
+          {
+            "board": "torus11",
+            "score": 9,
+            "games": 16
+          }
+        ],
+        "eligible": true
+      },
+      {
+        "mode": 2,
+        "score": 51,
+        "capped": 0,
+        "boards": [
+          {
+            "board": "sphere3",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "sphere4",
+            "score": 8,
+            "games": 16
+          },
+          {
+            "board": "sphere5",
+            "score": 8,
+            "games": 16
+          },
+          {
+            "board": "torus7",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "torus9",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "torus11",
+            "score": 12,
+            "games": 16
+          }
+        ],
+        "eligible": false
+      }
+    ],
+    "selectedFpu": 1,
+    "rule": "S1/S2のうち開発得点最大を選ぶ。54/96点以上、各盤6/16点以上、機能検証通過を満たさなければS0を使う。これを独立した強さの証明とは扱わない。",
+    "status": "ready-for-selfplay",
+    "teacherBudget": {
+      "score": 37,
+      "games": 48,
+      "capped": 0,
+      "passed": true
+    },
+    "finished": "2026-10-22T00:46:52.283Z"
+  },
+  "status": "ready-for-second-generation",
+  "selfplay": {
+    "schemaVersion": 1,
+    "positions": 10253,
+    "capped": 0,
+    "completedGames": 96,
+    "seed": 2026102220,
+    "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+    "searchHash": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+    "fpu": 1,
+    "boards": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "attempted": 16,
+        "completed": 16,
+        "capped": 0
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "recipe": 0,
+      "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "selectedEpoch": 8,
+      "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+      "initialSelection": {
+        "loss": 2.9959747791290283,
+        "unweightedLoss": 2.9850109665826503,
+        "policyTop1": 0.41336390435637077,
+        "policyTop5": 0.8057648214870619,
+        "policyKL": 1.7101512600311168,
+        "wdlAccuracy": 0.6753822291158874,
+        "wdlBrier": 0.37590848118456405,
+        "wdlCE": 0.5355303320788555,
+        "scoreMAE": 32.65658237314425,
+        "ownershipAccuracy": 0.7105676375020773,
+        "passRecall": 0.8108108108108109,
+        "passPrecision": 0.8,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "selection": {
+        "loss": 2.957813262939453,
+        "unweightedLoss": 2.9595582380068692,
+        "policyTop1": 0.4091057975761546,
+        "policyTop5": 0.812643301670488,
+        "policyKL": 1.701357559419014,
+        "wdlAccuracy": 0.6807001994238866,
+        "wdlBrier": 0.36924706122417184,
+        "wdlCE": 0.532172573502936,
+        "scoreMAE": 30.797827110569465,
+        "ownershipAccuracy": 0.7157746544704188,
+        "passRecall": 0.7837837837837838,
+        "passPrecision": 0.7160493827160493,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "eligible": true,
+      "score": 63,
+      "capped": 0,
+      "boards": [
+        {
+          "board": "sphere3",
+          "score": 13
+        },
+        {
+          "board": "sphere4",
+          "score": 12
+        },
+        {
+          "board": "sphere5",
+          "score": 12
+        },
+        {
+          "board": "torus7",
+          "score": 9
+        },
+        {
+          "board": "torus9",
+          "score": 10
+        },
+        {
+          "board": "torus11",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "recipe": 1,
+      "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t1",
+      "sha256": "ecb43014af0668b5cdc9b8624ad6879791eda23b9c7be7e34160637378babc25",
+      "selectedEpoch": 8,
+      "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+      "initialSelection": {
+        "loss": 2.9959747791290283,
+        "unweightedLoss": 2.9850109665826503,
+        "policyTop1": 0.41336390435637077,
+        "policyTop5": 0.8057648214870619,
+        "policyKL": 1.7101512600311168,
+        "wdlAccuracy": 0.6753822291158874,
+        "wdlBrier": 0.37590848118456405,
+        "wdlCE": 0.5355303320788555,
+        "scoreMAE": 32.65658237314425,
+        "ownershipAccuracy": 0.7105676375020773,
+        "passRecall": 0.8108108108108109,
+        "passPrecision": 0.8,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "selection": {
+        "loss": 2.9524052143096924,
+        "unweightedLoss": 2.9535608069742967,
+        "policyTop1": 0.40583033082214215,
+        "policyTop5": 0.8119882083196855,
+        "policyKL": 1.69355465551302,
+        "wdlAccuracy": 0.68047861732772,
+        "wdlBrier": 0.36944224389091235,
+        "wdlCE": 0.5324516068164192,
+        "scoreMAE": 30.785768197429647,
+        "ownershipAccuracy": 0.7154073345404941,
+        "passRecall": 0.7837837837837838,
+        "passPrecision": 0.6987951807228916,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "eligible": true,
+      "score": 62,
+      "capped": 0,
+      "boards": [
+        {
+          "board": "sphere3",
+          "score": 11
+        },
+        {
+          "board": "sphere4",
+          "score": 10
+        },
+        {
+          "board": "sphere5",
+          "score": 9
+        },
+        {
+          "board": "torus7",
+          "score": 11
+        },
+        {
+          "board": "torus9",
+          "score": 10
+        },
+        {
+          "board": "torus11",
+          "score": 11
+        }
+      ]
+    },
+    {
+      "recipe": 2,
+      "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t2",
+      "sha256": "9f3b95111f0f8b4a1171c4579c7b6fe048e04ad730af8ffb01f407680b3eacd6",
+      "selectedEpoch": 12,
+      "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+      "initialSelection": {
+        "loss": 2.9959747791290283,
+        "unweightedLoss": 2.9850109665826503,
+        "policyTop1": 0.41336390435637077,
+        "policyTop5": 0.8057648214870619,
+        "policyKL": 1.7101512600311168,
+        "wdlAccuracy": 0.6753822291158874,
+        "wdlBrier": 0.37590848118456405,
+        "wdlCE": 0.5355303320788555,
+        "scoreMAE": 32.65658237314425,
+        "ownershipAccuracy": 0.7105676375020773,
+        "passRecall": 0.8108108108108109,
+        "passPrecision": 0.8,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "selection": {
+        "loss": 2.9394900798797607,
+        "unweightedLoss": 2.9444281191142254,
+        "policyTop1": 0.40648542417294464,
+        "policyTop5": 0.8123157549950868,
+        "policyKL": 1.691912443958811,
+        "wdlAccuracy": 0.6855750055395524,
+        "wdlBrier": 0.3693787878853451,
+        "wdlCE": 0.5325189037225793,
+        "scoreMAE": 30.833235237092843,
+        "ownershipAccuracy": 0.7157630776714492,
+        "passRecall": 0.7837837837837838,
+        "passPrecision": 0.7837837837837838,
+        "positions": 4513,
+        "policyPositions": 3053
+      },
+      "eligible": true,
+      "score": 59,
+      "capped": 0,
+      "boards": [
+        {
+          "board": "sphere3",
+          "score": 10
+        },
+        {
+          "board": "sphere4",
+          "score": 10
+        },
+        {
+          "board": "sphere5",
+          "score": 13
+        },
+        {
+          "board": "torus7",
+          "score": 10
+        },
+        {
+          "board": "torus9",
+          "score": 10
+        },
+        {
+          "board": "torus11",
+          "score": 6
+        }
+      ]
+    }
+  ],
+  "selected": {
+    "recipe": 0,
+    "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+    "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "selectedEpoch": 8,
+    "selectionCorpusSha256": "9eed03f0ae7a10030c477c2e43d14bbbaa3775a48a5cac7ba7c69b7f9016b5db",
+    "initialSelection": {
+      "loss": 2.9959747791290283,
+      "unweightedLoss": 2.9850109665826503,
+      "policyTop1": 0.41336390435637077,
+      "policyTop5": 0.8057648214870619,
+      "policyKL": 1.7101512600311168,
+      "wdlAccuracy": 0.6753822291158874,
+      "wdlBrier": 0.37590848118456405,
+      "wdlCE": 0.5355303320788555,
+      "scoreMAE": 32.65658237314425,
+      "ownershipAccuracy": 0.7105676375020773,
+      "passRecall": 0.8108108108108109,
+      "passPrecision": 0.8,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "selection": {
+      "loss": 2.957813262939453,
+      "unweightedLoss": 2.9595582380068692,
+      "policyTop1": 0.4091057975761546,
+      "policyTop5": 0.812643301670488,
+      "policyKL": 1.701357559419014,
+      "wdlAccuracy": 0.6807001994238866,
+      "wdlBrier": 0.36924706122417184,
+      "wdlCE": 0.532172573502936,
+      "scoreMAE": 30.797827110569465,
+      "ownershipAccuracy": 0.7157746544704188,
+      "passRecall": 0.7837837837837838,
+      "passPrecision": 0.7160493827160493,
+      "positions": 4513,
+      "policyPositions": 3053
+    },
+    "eligible": true,
+    "score": 63,
+    "capped": 0,
+    "boards": [
+      {
+        "board": "sphere3",
+        "score": 13
+      },
+      {
+        "board": "sphere4",
+        "score": 12
+      },
+      {
+        "board": "sphere5",
+        "score": 12
+      },
+      {
+        "board": "torus7",
+        "score": 9
+      },
+      {
+        "board": "torus9",
+        "score": 10
+      },
+      {
+        "board": "torus11",
+        "score": 7
+      }
+    ]
+  },
+  "finished": "2026-10-22T01:56:24.760Z"
+}

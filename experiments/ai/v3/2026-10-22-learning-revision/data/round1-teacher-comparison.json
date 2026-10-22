@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "role": "Teacher-shape diagnostics on identical roots; no model selection",
+  "positions": 10253,
+  "selected": 2558,
+  "sharedInputOutcomeAndEligibilitySha256": "8064f0d216626495ff193224cb5ed0b699b4b477c119ec08907574ca7ef80f04",
+  "groups": {
+    "all": {
+      "positions": 2558,
+      "rawVsNoiseFreeDisagreements": 101,
+      "noiseFree128Vs512Disagreements": 468,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.163209487475295,
+          "maxProbability": 0.3082751148118928,
+          "support": 16.53557466770915,
+          "lowConfidence": 0.5019546520719312
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.077882914601154,
+          "maxProbability": 0.3182952116717576,
+          "support": 14.903440187646599,
+          "lowConfidence": 0.46677091477716964
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.9874476339223979,
+          "maxProbability": 0.3682083094855181,
+          "support": 19.307271305707584,
+          "lowConfidence": 0.36903831118060987
+        }
+      ]
+    },
+    "opening": {
+      "positions": 1168,
+      "rawVsNoiseFreeDisagreements": 101,
+      "noiseFree128Vs512Disagreements": 139,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.5729587280221033,
+          "maxProbability": 0.22657964103025932,
+          "support": 22.31763698630137,
+          "lowConfidence": 0.6823630136986302
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.386087689141929,
+          "maxProbability": 0.24852433946136743,
+          "support": 18.743150684931507,
+          "lowConfidence": 0.6053082191780822
+        },
+        {
+          "recipe": 2,
+          "entropy": 2.3588237128913714,
+          "maxProbability": 0.2801428161408395,
+          "support": 24.756849315068493,
+          "lowConfidence": 0.5171232876712328
+        }
+      ]
+    },
+    "sphere3": {
+      "positions": 248,
+      "rawVsNoiseFreeDisagreements": 24,
+      "noiseFree128Vs512Disagreements": 72,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.1234963421473054,
+          "maxProbability": 0.3150294041561504,
+          "support": 15.879032258064516,
+          "lowConfidence": 0.5362903225806451
+        },
+        {
+          "recipe": 1,
+          "entropy": 1.9761757589482196,
+          "maxProbability": 0.3308483011900417,
+          "support": 13.016129032258064,
+          "lowConfidence": 0.4959677419354839
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.8288530374651746,
+          "maxProbability": 0.39984810538589954,
+          "support": 17.346774193548388,
+          "lowConfidence": 0.3346774193548387
+        }
+      ]
+    },
+    "middle": {
+      "positions": 1112,
+      "rawVsNoiseFreeDisagreements": 0,
+      "noiseFree128Vs512Disagreements": 320,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 1.8733546739296933,
+          "maxProbability": 0.3626001524678666,
+          "support": 11.974820143884893,
+          "lowConfidence": 0.3462230215827338
+        },
+        {
+          "recipe": 1,
+          "entropy": 1.8733546739296933,
+          "maxProbability": 0.3626001524678666,
+          "support": 11.974820143884893,
+          "lowConfidence": 0.3462230215827338
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.707798611842039,
+          "maxProbability": 0.43932063283278144,
+          "support": 15.318345323741006,
+          "lowConfidence": 0.2302158273381295
+        }
+      ]
+    },
+    "late": {
+      "positions": 278,
+      "rawVsNoiseFreeDisagreements": 0,
+      "noiseFree128Vs512Disagreements": 9,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 1.601092364108514,
+          "maxProbability": 0.43421350151514837,
+          "support": 10.485611510791367,
+          "lowConfidence": 0.3669064748201439
+        },
+        {
+          "recipe": 1,
+          "entropy": 1.601092364108514,
+          "maxProbability": 0.43421350151514837,
+          "support": 10.485611510791367,
+          "lowConfidence": 0.3669064748201439
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.5457298365036753,
+          "maxProbability": 0.4537608010841788,
+          "support": 12.366906474820144,
+          "lowConfidence": 0.302158273381295
+        }
+      ]
+    },
+    "sphere4": {
+      "positions": 452,
+      "rawVsNoiseFreeDisagreements": 10,
+      "noiseFree128Vs512Disagreements": 83,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.121321424034362,
+          "maxProbability": 0.3103929832907377,
+          "support": 15.776548672566372,
+          "lowConfidence": 0.4889380530973451
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.03941804943988,
+          "maxProbability": 0.321147787656668,
+          "support": 14.141592920353983,
+          "lowConfidence": 0.4469026548672566
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.9635450979557207,
+          "maxProbability": 0.37016773507394624,
+          "support": 18.579646017699115,
+          "lowConfidence": 0.3473451327433628
+        }
+      ]
+    },
+    "sphere5": {
+      "positions": 663,
+      "rawVsNoiseFreeDisagreements": 10,
+      "noiseFree128Vs512Disagreements": 89,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.0917324004023836,
+          "maxProbability": 0.3252277414273712,
+          "support": 15.355957767722474,
+          "lowConfidence": 0.45248868778280543
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.0258658688001936,
+          "maxProbability": 0.3333285194266795,
+          "support": 14.161387631975867,
+          "lowConfidence": 0.4238310708898944
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.9819524782418616,
+          "maxProbability": 0.36698399754985606,
+          "support": 18.986425339366516,
+          "lowConfidence": 0.34841628959276016
+        }
+      ]
+    },
+    "torus7": {
+      "positions": 253,
+      "rawVsNoiseFreeDisagreements": 16,
+      "noiseFree128Vs512Disagreements": 66,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.1186023475038316,
+          "maxProbability": 0.31446350869453943,
+          "support": 15.853754940711463,
+          "lowConfidence": 0.4782608695652174
+        },
+        {
+          "recipe": 1,
+          "entropy": 1.9885412213786682,
+          "maxProbability": 0.32978894658710645,
+          "support": 13.411067193675889,
+          "lowConfidence": 0.4189723320158103
+        },
+        {
+          "recipe": 2,
+          "entropy": 1.8182042835070982,
+          "maxProbability": 0.4010410232859638,
+          "support": 16.41501976284585,
+          "lowConfidence": 0.3359683794466403
+        }
+      ]
+    },
+    "torus9": {
+      "positions": 379,
+      "rawVsNoiseFreeDisagreements": 22,
+      "noiseFree128Vs512Disagreements": 81,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.2650107143651135,
+          "maxProbability": 0.28419466352085326,
+          "support": 18.448548812664907,
+          "lowConfidence": 0.5883905013192612
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.179101674998208,
+          "maxProbability": 0.29367504750518497,
+          "support": 16.759894459102902,
+          "lowConfidence": 0.554089709762533
+        },
+        {
+          "recipe": 2,
+          "entropy": 2.068717604002843,
+          "maxProbability": 0.3497915667798714,
+          "support": 20.532981530343008,
+          "lowConfidence": 0.43007915567282323
+        }
+      ]
+    },
+    "torus11": {
+      "positions": 563,
+      "rawVsNoiseFreeDisagreements": 19,
+      "noiseFree128Vs512Disagreements": 77,
+      "recipes": [
+        {
+          "recipe": 0,
+          "entropy": 2.250020348696465,
+          "maxProbability": 0.2970653379577515,
+          "support": 17.841918294849023,
+          "lowConfidence": 0.5079928952042628
+        },
+        {
+          "recipe": 1,
+          "entropy": 2.18683199668938,
+          "maxProbability": 0.30418067117143904,
+          "support": 16.641207815275312,
+          "lowConfidence": 0.48312611012433393
+        },
+        {
+          "recipe": 2,
+          "entropy": 2.1043143184501245,
+          "maxProbability": 0.35178319040560174,
+          "support": 21.607460035523978,
+          "lowConfidence": 0.3996447602131439
+        }
+      ]
+    }
+  }
+}

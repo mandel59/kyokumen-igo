@@ -10,12 +10,14 @@ export async function createV3AI(options={}){
   if(!adjacencies.has(key))adjacencies.set(key,adjacencyFor(createTopology(position.kind,position.size)));
   return adjacencies.get(key);
  }
- let inference;
+ let inference,configuredFpu=0;
  try{
   inference=await createV3Inference(options);
+  configuredFpu=options.fpu??inference.manifest.search?.fpu??0;
+  if(!Number.isInteger(configuredFpu)||configuredFpu<0||configuredFpu>2)throw new Error('Invalid v3 FPU configuration');
   // Compile kernels during initialization; the Worker keeps serving v2 meanwhile.
   const warm={kind:'torus',size:7,komi:6.5,moves:new Int32Array()};
-  search.start(warm);const leaves=search.collect(1);
+  search.start(warm,{fpu:configuredFpu});const leaves=search.collect(1);
   search.submit(leaves,await inference.evaluate(leaves,adjacencyForPosition(warm)));
   search.cancel();
  }catch(error){search.dispose();await inference?.dispose();throw error;}
@@ -27,7 +29,7 @@ export async function createV3AI(options={}){
    if(!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(maxSimulations)||maxSimulations<1)throw new Error('Invalid v3 search budget');
    busy=true;const generation=cancelled;
    try{
-    search.start(position,{seed});const adjacency=adjacencyForPosition(position);
+    search.start(position,{seed,fpu:configuredFpu});const adjacency=adjacencyForPosition(position);
     const start=performance.now();let batches=0,lastBatchMs=0;
     while(search.result().simulations<maxSimulations){
      const remaining=budgetMs-(performance.now()-start);

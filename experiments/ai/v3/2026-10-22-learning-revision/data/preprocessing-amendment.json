@@ -1,0 +1,15 @@
+{
+  "stage": "measurement, before any candidate training",
+  "recordedAt": "2026-10-22T00:51:45.459Z",
+  "reason": "Uniform-prior replay found 160 of 15,387 normal v2 targets outside the existing v3 root rule mask.",
+  "change": "Set policyEligible=false for these targets in all T0/T1/T2 candidates. Preserve WDL/score/ownership labels and normalize policy source mass as planned.",
+  "decisionUses": "Current-position rule mask only; no game outcomes or candidate results.",
+  "trialsAndHyperparametersChanged": false,
+  "positions": 16365,
+  "excluded": 160,
+  "input": "experiments/ai/v3/2026-10-22-learning-revision/data/teacher-annotated-unfiltered.jsonl.gz",
+  "inputSha256": "6899c4144d70e191879a765509224a2a3f08dd529dd0d67c4c76ffd06ee86310",
+  "output": "experiments/ai/v3/2026-10-22-learning-revision/data/teacher-annotated.jsonl.gz",
+  "outputSha256": "7aa841c152c568774d8e414a723ca253d603542ad104487cfef3451f0bd4b887",
+  "originalPlanSha256": "8b1cb91d2befd3ce099ff25d2c320ad5ca18d584997cef958653bd7bb491bf55"
+}

@@ -1,0 +1,117 @@
+// Paired matches in a real Worker using the application's WebGPU player and time budget.
+import {createServer} from 'node:http';
+import {readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {resolve,sep,extname} from 'node:path';
+import {cpus} from 'node:os';
+import {chromium} from 'playwright-core';
+import {matchStatistics} from './match-statistics.mjs';
+const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
+const root=resolve('.'),models={a:resolve(arg('--a')),b:resolve(arg('--b','dist/models/v3'))},output=arg('--output');
+if(!args.includes('--a')||!output)throw new Error('Expected --a MODEL --output FILE');
+const wasm={a:resolve('dist/ai-v3.wasm'),b:resolve(arg('--b-wasm','experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
+const mime={'.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
+const server=createServer((req,res)=>{
+ try{
+  const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+  if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Kyokugo AI evaluation</title>');return;}
+  if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
+  let path;
+  if(name==='/wasm/a'||name==='/wasm/b')path=wasm[name.at(-1)];
+  else if(/^\/models\/[ab]\//.test(name)){
+   const side=name[8],base=models[side];path=resolve(base,name.slice(10));
+   if(!path.startsWith(base+sep))throw new Error('Invalid model path');
+  }else{
+   path=resolve(root,'.'+name);if(!name.startsWith('/dist/')||!path.startsWith(root+sep))throw new Error('Invalid asset path');
+  }
+  if(!existsSync(path)){res.writeHead(404);res.end();return;}
+  res.setHeader('content-type',mime[extname(path)]??'application/octet-stream');res.end(readFileSync(path));
+ }catch{res.writeHead(400);res.end();}
+});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const base='http://127.0.0.1:'+server.address().port;
+const browser=await chromium.launch({executablePath:process.env.EDGE_PATH??'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--enable-unsafe-webgpu','--no-first-run']});
+try{
+ const page=await browser.newPage();await page.goto(base);
+ await page.exposeFunction('studyProgress',report=>{writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Browser games',report.boards.reduce((s,b)=>s+b.games.length,0));});
+ const report=await page.evaluate(async config=>{
+  const run=async function(config){
+   const {base,seed,pairs,budgetMs,fpu}=config;
+   const {Game,createTopology}=await import(base+'/dist/engine.js');
+   const {aiPosition}=await import(base+'/dist/ai-position.js');
+   const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
+   const {createV3AI}=await import(base+'/dist/ai-v3.js');
+   const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
+   const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]];
+   const manifest={};for(const side of['a','b'])manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
+   const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:budgetMs,komi:6.5,openingMoves:4,
+    models:{a:manifest.a.sha256,b:manifest.b.sha256},fpu,boards:[],inferenceTimings:[],condition:'Same Worker, sequential turns, actual application WebGPU player; fixed time, max 4096 visits, early stop on certified loss.'};
+   const load=side=>async()=>{const r=await fetch(base+'/wasm/'+side);if(!r.ok)throw new Error('Missing WASM');return r.arrayBuffer();};
+   const native={};for(const side of['a','b']){
+    native[side]=await createV3Inference({manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu'});
+    if(native[side].backend!=='webgpu'||native[side].runtime!=='wgsl')throw new Error('Dedicated WebGPU required');
+   }
+   const encoder=await createV3Search({load:load('a')}),allTimes={a:[],b:[]};
+   const p95=a=>a.slice().sort((x,y)=>x-y)[Math.ceil(a.length*.95)-1];
+   try{
+    for(const[kind,size]of boards){
+     const game=new Game(createTopology(kind,size),6.5),leaves=[];
+     for(let b=0;b<8;b++){
+      encoder.start(aiPosition(game));leaves.push(encoder.collect(1));encoder.cancel();
+      const legal=Array.from(game.board,(_,p)=>p).filter(p=>game.analyze(p).ok);game.play(legal[(b*17+3)%legal.length]);
+     }
+     const adjacency=adjacencyFor(game.topology);
+     for(const count of[1,4,8]){
+      const request={count};for(const key of['x','mask','global_features'])request[key]=Float32Array.from(leaves.slice(0,count).flatMap(l=>Array.from(l[key])));
+      for(const side of['a','b'])for(let i=0;i<5;i++)await native[side].evaluate(request,adjacency);
+      const times={a:[],b:[]};
+      for(let round=0;round<3;round++)for(const side of round%2?['b','a']:['a','b'])for(let i=0;i<20;i++){
+       const start=performance.now();await native[side].evaluate(request,adjacency);const dt=performance.now()-start;times[side].push(dt);allTimes[side].push(dt);
+      }
+      report.inferenceTimings.push({board:kind+size,batch:count,aP95:p95(times.a),bP95:p95(times.b),ratio:p95(times.a)/p95(times.b)});
+     }
+    }
+   }finally{encoder.dispose();for(const v of Object.values(native))await v.dispose();}
+   report.warmInference={aP95:p95(allTimes.a),bP95:p95(allTimes.b),ratio:p95(allTimes.a)/p95(allTimes.b),samplesPerModel:allTimes.a.length};
+   const players={};for(const side of['a','b'])players[side]=await createV3AI({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
+   let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
+   try{
+    for(const[kind,size]of boards){
+     const topology=createTopology(kind,size),board={kind,size,games:[],pairScores:[]};report.boards.push(board);
+     for(let pair=0;pair<pairs;pair++){
+      const opening=new Game(topology,6.5),moves=[];
+      for(let k=0;k<4;k++){const legal=Array.from(opening.board,(_,p)=>p).filter(p=>opening.analyze(p).ok),move=legal[random()%legal.length];opening.play(move);moves.push(move);}
+      const turnSeeds=Array.from({length:topology.vertices.length*20},random);let score=0,completed=0;
+      for(const aColor of[1,2]){
+       const game=new Game(topology,6.5);for(const move of moves)game.play(move);
+       const metrics={a:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0},b:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0}};
+       while(!game.ended&&game.moves<turnSeeds.length){
+        const side=game.turn===aColor?'a':'b',start=performance.now();
+        const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],budgetMs,maxSimulations:4096});
+        if(result.backend!=='v3-webgpu')throw new Error('Unexpected CPU fallback during timed match');
+        const m=metrics[side];m.turns++;m.ms+=performance.now()-start;m.simulations+=result.simulations;
+        if(result.move===null)m.passes++;if(result.provenLoss)m.certifiedLossPasses++;
+        if(!(result.move===null?game.pass():game.play(result.move)).ok)throw new Error('Illegal browser move');
+       }
+       const margin=game.score(),aScore=game.ended?(margin.winner===0?.5:margin.winner===aColor?1:0):null;
+       if(aScore!==null){score+=aScore;completed++;}
+       board.games.push({pair,aColor,ended:game.ended,aScore,marginForA:(margin.black-margin.white)*(aColor===1?1:-1),metrics,moves:game.history.slice(1).map(s=>s.lastMove??-1)});
+       self.postMessage({kind:'progress',report});
+      }
+      board.pairScores.push(completed===2?score/2:null);
+     }
+    }
+   }finally{for(const player of Object.values(players))await player.dispose();}
+   return report;
+  };
+  return await new Promise((resolve,reject)=>{
+   const blob=new Blob(['self.onmessage=async event=>{try{const report=await ('+run.toString()+')(event.data);self.postMessage({kind:"done",report});}catch(error){self.postMessage({kind:"error",message:error.stack});}};'],{type:'text/javascript'});
+   const url=URL.createObjectURL(blob),worker=new Worker(url);URL.revokeObjectURL(url);
+   let pending=Promise.resolve();
+   worker.onmessage=event=>{const r=event.data;if(r.kind==='progress'){pending=pending.then(()=>window.studyProgress(r.report));pending.catch(reject);}else if(r.kind==='done'){worker.terminate();pending.then(()=>resolve(r.report),reject);}else{worker.terminate();reject(new Error(r.message));}};
+   worker.onerror=event=>{worker.terminate();reject(new Error(event.message));};worker.postMessage(config);
+  });
+ },{base,seed:Number(arg('--seed','2026102252')),pairs:Number(arg('--pairs','4')),budgetMs:Number(arg('--budget-ms','300')),fpu:{a:Number(arg('--a-fpu','0')),b:Number(arg('--b-fpu','0'))}});
+ report.role=arg('--role','evaluation');
+ report.summary=matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(report.seed+1)))});report.environment={browser:browser.version(),node:process.version,cpu:cpus()[0].model};
+ writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({summary:report.summary,warmInference:report.warmInference}));
+}finally{await browser.close();await new Promise(r=>server.close(r));}

@@ -43,6 +43,8 @@
 
 [Node 依存目録](docs/third-party/node-packages.json) は 35 件、[Python 環境目録](docs/third-party/python-packages.json) は 17 件です。版・ライセンス・ロックファイルの SHA-256 を記録しています。
 
+- David J. Wu, [Accelerating Self-Play Learning in Go (2019)](https://arxiv.org/html/1902.10565v5)：AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。
+
 - D. B. Benson, [Life in the game of Go (1976)](https://doi.org/10.1016/S0020-0255(76)90554-5)：無条件生存の固定点。
 
 - D. Silver et al., [Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm (2017)](https://arxiv.org/abs/1712.01815)：PUCT、自己対局の訪問分布、探索時のノイズ。

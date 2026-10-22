@@ -1,0 +1,23 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/replay-endgame.mjs",
+    "--model",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+    "--output",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0-endgame.json"
+  ],
+  "started": "2026-10-22T01:16:40.110Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "6f53a3a9dd52df0f7f817351f86e63c576517e99740632831be3cdb05462952c",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/selfplay.mjs": "1ce5cee77fbc7f6c7ecb84dcc9e756f94e02aa61cf25fe92065aed3e75f9c4fd",
+    "tools/ai-gnn/reanalyze.mjs": "c0b57c00e728d79fa4c82d5986a53ef4c55ce38df97a918ffbe6158057ce95c0",
+    "tools/ai-gnn/match.mjs": "78c87f687c9585c952a88edcea34b9e67f15035b6950a9e58284a034108b370b",
+    "dist/ai-v3-search.js": "c6ee8f0ea7e665bbed4ffeee96bebeb959cc37adc438dc6fdc616f901b4dd2e7",
+    "dist/ai-v3.wasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+  },
+  "finished": "2026-10-22T01:16:40.639Z",
+  "elapsedSeconds": 0.529,
+  "exitCode": 0
+}

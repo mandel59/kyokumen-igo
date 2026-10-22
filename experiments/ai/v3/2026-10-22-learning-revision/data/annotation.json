@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "inputs": [
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261110.jsonl.gz",
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261111.jsonl.gz",
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261112.jsonl.gz",
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261113.jsonl.gz",
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261114.jsonl.gz",
+    "C:\\Users\\mande\\ws\\kyokumen-igo\\experiments\\ai\\v3\\2026-10-21-strength\\data\\data-20261115.jsonl.gz",
+    "experiments/ai/v3/2026-10-22-learning/data/selfplay.jsonl.gz",
+    "experiments/ai/v3/2026-10-22-learning/data/cleanup.jsonl.gz"
+  ],
+  "positions": 26621,
+  "games": 240,
+  "decisions": {
+    "normal": 15384,
+    "tactics-pruned": 9796,
+    "certified-loss": 1441
+  },
+  "recoveredTeacherDiversifications": 214,
+  "verifiedRoots": 26444,
+  "archivedCertificates": 177
+}

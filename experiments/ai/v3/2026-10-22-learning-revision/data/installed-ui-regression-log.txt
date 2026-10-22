@@ -1,0 +1,4 @@
+360x640 canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.
+Persistent AI Worker UI tests passed: minimum 400 ms turn, immediate slow replies, compact transfer, reuse, cancellation during delay, stale responses and error/illegal-move fallback.
+Draw UI passed: zero/integer komi, neutral result, share/replay and undo.
+SNS card metadata checks passed.

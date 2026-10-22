@@ -7,6 +7,7 @@ export function validateManifest(m){
  if(!m||m.architecture!=='v3'||m.featureVersion!==1||m.points!==160||m.channels!==32||m.globals!==8||
   m.hidden!==64||m.blocks!==6||m.status!=='experimental'||!Number.isInteger(m.parameters)||m.parameters<100000||m.parameters>150000||
   !/^[a-f0-9]{64}$/.test(m.sha256)||m.model!=='model.onnx'||!(m.trainPositions>0))throw new Error('Incompatible v3 model manifest');
+ if(m.search!==undefined&&(!m.search||typeof m.search!=='object'||!Number.isInteger(m.search.fpu)||m.search.fpu<0||m.search.fpu>2))throw new Error('Invalid v3 search manifest');
 }
 function validateFeatures(request,adjacency,batchSize){
  const count=request.count;

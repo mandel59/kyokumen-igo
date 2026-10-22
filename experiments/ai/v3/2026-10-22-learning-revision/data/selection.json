@@ -1,0 +1,378 @@
+{
+  "schemaVersion": 1,
+  "started": "2026-10-22T02:40:16.296Z",
+  "candidate": {
+    "schemaVersion": 1,
+    "selectedAt": "2026-10-22T02:39:41.088Z",
+    "model": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0",
+    "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "fpu": 1,
+    "generation": 1,
+    "recipe": 0,
+    "developmentEligible": true,
+    "source": "second-generation.json"
+  },
+  "status": "accepted-in-experimental-slot",
+  "promoted": true,
+  "primary": {
+    "games": 384,
+    "completed": 384,
+    "capped": 0,
+    "wins": 231,
+    "draws": 0,
+    "losses": 153,
+    "score": 231,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 64,
+        "score": 36,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          1,
+          0,
+          1,
+          1,
+          1,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 64,
+        "score": 38,
+        "pairScores": [
+          0,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0,
+          1,
+          1,
+          0,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 64,
+        "score": 45,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          1,
+          1,
+          1,
+          0,
+          0.5,
+          1,
+          0.5,
+          0,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 64,
+        "score": 34,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          1,
+          0.5,
+          0
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 64,
+        "score": 38,
+        "pairScores": [
+          1,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          1,
+          0,
+          1,
+          0.5,
+          1,
+          0,
+          1,
+          0,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          1,
+          1,
+          0,
+          0.5,
+          0
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 64,
+        "score": 40,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0,
+          0.5,
+          1,
+          0.5
+        ]
+      }
+    ],
+    "scoreRate": 0.6015625,
+    "pairedBootstrap": {
+      "seed": 2026102251,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.5546875,
+        0.6484375
+      ]
+    }
+  },
+  "primaryPassed": true,
+  "browser": {
+    "summary": {
+      "games": 48,
+      "completed": 48,
+      "capped": 0,
+      "wins": 32,
+      "draws": 0,
+      "losses": 16,
+      "score": 32,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 5,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 5,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            1,
+            0.5,
+            0.5,
+            0
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            0.5,
+            1,
+            1
+          ]
+        }
+      ],
+      "scoreRate": 0.6666666666666666,
+      "pairedBootstrap": {
+        "seed": 2026102253,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.5625,
+          0.7708333333333334
+        ]
+      }
+    },
+    "warmInference": {
+      "aP95": 4.100000023841858,
+      "bP95": 4.100000023841858,
+      "ratio": 1,
+      "samplesPerModel": 1080
+    },
+    "environment": {
+      "browser": "155.0.4283.62",
+      "node": "v26.12.1",
+      "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+    }
+  },
+  "browserPassed": true,
+  "installationPackage": "experiments/ai/v3/2026-10-22-learning-revision/data/accepted-model",
+  "finished": "2026-10-22T03:52:20.439Z"
+}

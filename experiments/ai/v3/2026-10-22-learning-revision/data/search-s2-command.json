@@ -1,0 +1,32 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/match.mjs",
+    "--a",
+    "dist/models/v3",
+    "--b",
+    "dist/models/v3",
+    "--pairs",
+    "8",
+    "--seed",
+    "2026102210",
+    "--simulations",
+    "128",
+    "--output",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/search-s2.json",
+    "--a-fpu",
+    "2",
+    "--b-fpu",
+    "0",
+    "--b-wasm",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm",
+    "--diagnostics",
+    "true"
+  ],
+  "provenance": {
+    "started": "2026-10-21T23:58:08.813Z",
+    "baselineModel": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+    "baselineWasm": "2e1f8cb111efc5ff4454ae0570b9df773ec8609056e7602d17ff6a53190b9eea",
+    "candidateWasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+  }
+}

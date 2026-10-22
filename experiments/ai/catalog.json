@@ -68,6 +68,12 @@
       "path": "v3/2026-10-22-learning/"
     },
     {
+      "id": "v3/2026-10-22-learning-revision",
+      "architecture": "v3",
+      "title": "Normal-position selection, controlled search teachers and iterative selfplay",
+      "path": "v3/2026-10-22-learning-revision/"
+    },
+    {
       "id": "v2/2026-10-22-endgame",
       "architecture": "v2",
       "title": "Share Benson certificates and pass after proven defeat in v2",

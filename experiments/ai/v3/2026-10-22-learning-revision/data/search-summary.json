@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 1,
+  "selection": {
+    "started": "2026-10-21T23:58:08.813Z",
+    "baselineModel": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+    "baselineWasm": "2e1f8cb111efc5ff4454ae0570b9df773ec8609056e7602d17ff6a53190b9eea",
+    "candidateWasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+    "finishedSearch": "2026-10-22T00:29:06.816Z",
+    "results": [
+      {
+        "mode": 1,
+        "score": 56,
+        "capped": 0,
+        "boards": [
+          {
+            "board": "sphere3",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "sphere4",
+            "score": 11,
+            "games": 16
+          },
+          {
+            "board": "sphere5",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "torus7",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "torus9",
+            "score": 11,
+            "games": 16
+          },
+          {
+            "board": "torus11",
+            "score": 9,
+            "games": 16
+          }
+        ],
+        "eligible": true
+      },
+      {
+        "mode": 2,
+        "score": 51,
+        "capped": 0,
+        "boards": [
+          {
+            "board": "sphere3",
+            "score": 9,
+            "games": 16
+          },
+          {
+            "board": "sphere4",
+            "score": 8,
+            "games": 16
+          },
+          {
+            "board": "sphere5",
+            "score": 8,
+            "games": 16
+          },
+          {
+            "board": "torus7",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "torus9",
+            "score": 7,
+            "games": 16
+          },
+          {
+            "board": "torus11",
+            "score": 12,
+            "games": 16
+          }
+        ],
+        "eligible": false
+      }
+    ],
+    "selectedFpu": 1,
+    "rule": "S1/S2のうち開発得点最大を選ぶ。54/96点以上、各盤6/16点以上、機能検証通過を満たさなければS0を使う。これを独立した強さの証明とは扱わない。",
+    "status": "ready-for-selfplay",
+    "teacherBudget": {
+      "score": 37,
+      "games": 48,
+      "capped": 0,
+      "passed": true
+    },
+    "finished": "2026-10-22T00:46:52.283Z"
+  },
+  "reports": {
+    "search-s1": {
+      "role": "development; used for search selection",
+      "a": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 1,
+        "visits": 128,
+        "wasmSha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+      },
+      "b": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 0,
+        "visits": 128,
+        "wasmSha256": "2e1f8cb111efc5ff4454ae0570b9df773ec8609056e7602d17ff6a53190b9eea"
+      },
+      "games": 96,
+      "completed": 96,
+      "capped": 0,
+      "wins": 56,
+      "draws": 0,
+      "losses": 40,
+      "score": 56,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 16,
+          "score": 7,
+          "pairScores": [
+            1,
+            1,
+            0,
+            0.5,
+            0.5,
+            0,
+            0,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 16,
+          "score": 11,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0,
+            1,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 16,
+          "score": 9,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0.5,
+            1,
+            0,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 16,
+          "score": 9,
+          "pairScores": [
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 16,
+          "score": 11,
+          "pairScores": [
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 16,
+          "score": 9,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            0,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.5833333333333334,
+      "pairedBootstrap": {
+        "seed": 2026102213,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.5,
+          0.6666666666666666
+        ]
+      }
+    },
+    "search-s2": {
+      "role": "development; used for search selection",
+      "a": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 2,
+        "visits": 128,
+        "wasmSha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+      },
+      "b": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 0,
+        "visits": 128,
+        "wasmSha256": "2e1f8cb111efc5ff4454ae0570b9df773ec8609056e7602d17ff6a53190b9eea"
+      },
+      "games": 96,
+      "completed": 96,
+      "capped": 0,
+      "wins": 51,
+      "draws": 0,
+      "losses": 45,
+      "score": 51,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 16,
+          "score": 9,
+          "pairScores": [
+            0.5,
+            0,
+            1,
+            1,
+            1,
+            0.5,
+            0,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 16,
+          "score": 8,
+          "pairScores": [
+            0.5,
+            0,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 16,
+          "score": 8,
+          "pairScores": [
+            1,
+            0,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 16,
+          "score": 7,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0,
+            0.5,
+            0.5,
+            0,
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 16,
+          "score": 7,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0,
+            0,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 16,
+          "score": 12,
+          "pairScores": [
+            1,
+            1,
+            1,
+            0,
+            0.5,
+            1,
+            1,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.53125,
+      "pairedBootstrap": {
+        "seed": 2026102214,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.4375,
+          0.625
+        ]
+      }
+    },
+    "teacher-budget": {
+      "role": "predeclared budget gate using selected search and frozen weights",
+      "a": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 1,
+        "visits": 512,
+        "wasmSha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+      },
+      "b": {
+        "model": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+        "tactics": "safe",
+        "fpu": 1,
+        "visits": 128,
+        "wasmSha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+      },
+      "games": 48,
+      "completed": 48,
+      "capped": 0,
+      "wins": 37,
+      "draws": 0,
+      "losses": 11,
+      "score": 37,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            0.5,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 6,
+          "pairScores": [
+            0.5,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 6,
+          "pairScores": [
+            1,
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            1,
+            0,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.7708333333333334,
+      "pairedBootstrap": {
+        "seed": 2026102215,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.6666666666666666,
+          0.875
+        ]
+      }
+    }
+  },
+  "elapsed": {
+    "searchSeconds": 1858.003,
+    "teacherBudgetSeconds": 1065.467
+  },
+  "interpretation": "Paired bootstrap describes this fixed board/opponent/opening scheme. Search variants were compared for selection; this is not the final learning evaluation."
+}

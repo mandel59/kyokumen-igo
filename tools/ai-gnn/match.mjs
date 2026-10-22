@@ -1,5 +1,6 @@
 // Reproducible colour-swapped diagnostic matches; fixed visits are not equal wall time.
 import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {createTopology,Game} from '../../dist/engine.js';
 import {aiPosition} from '../../dist/ai-position.js';
 import {createWasmAI} from '../../dist/ai-wasm.js';
@@ -11,25 +12,30 @@ const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[arg
 const pairs=Number(arg('--pairs','1')),simulations=Number(arg('--simulations','128')),seed=Number(arg('--seed','20261101'));
 if(!Number.isInteger(pairs)||pairs<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid match options');
 const bytes=readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url));
-async function player(model,tactics){
+async function player(model,tactics,side){
  if(model==='v2'){
   const ai=await createWasmAI({load:async()=>readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url))});
   return {name:'v2-deployed',async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
  }
- const search=await createV3Search({load:async()=>bytes}),inference=await createNodeInference(model);
- return {name:inference.manifest.sha256+':tactics='+tactics,async choose(position,seed,adjacency){
-  search.start(position,{seed,tactics:tactics!=='none'});let root;
-  while(search.result().simulations<simulations){
+ const wasm=arg('--'+side+'-wasm',null),loaded=wasm?readFileSync(wasm):bytes;
+ const fpu=Number(arg('--'+side+'-fpu','0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
+ if(!Number.isInteger(fpu)||fpu<0||fpu>2||!Number.isInteger(visits)||visits<2)throw new Error('Invalid per-player search configuration');
+ const search=await createV3Search({load:async()=>loaded}),inference=await createNodeInference(model);
+ const config={model:inference.manifest.sha256,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
+ return {name:inference.manifest.sha256+':tactics='+tactics+':fpu='+fpu,config,async choose(position,seed,adjacency){
+  search.start(position,{seed,tactics:tactics!=='none',fpu});let root,stalled=0;
+  while(search.result().simulations<visits){
    const leaves=search.collect();if(!root&&leaves.count)root=leaves;
    if(leaves.count)search.submit(leaves,await inference.evaluate(leaves,adjacency));
+   if(!leaves.count){if(++stalled>16)throw new Error('Stalled match search');}else stalled=0;
    if(search.result().provenLoss)break;
   }
-  return {...search.result(),root};
+  return {...search.result({diagnostics:arg('--diagnostics','false')==='true'}),root};
  },async dispose(){search.dispose();await inference.dispose();}};
 }
 let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
-const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe')),b=await player(arg('--b','v2'),arg('--b-tactics','safe'));
-const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,
+const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a'),b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');
+const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
  condition:'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
 const output=arg('--output','tools/ai-gnn/target/match.json');
 try{
@@ -46,12 +52,13 @@ try{
    for(const aColor of [1,2]){
     const game=new Game(topology,6.5);for(const move of moves)game.play(move);
     const stats=()=>({turns:0,ms:0,simulations:0,passes:0,losingPasses:0,earlyPasses:0,certifiedLossPasses:0,uncertifiedLosingPasses:0,selfAtaris:0,eyeFills:0,missedCaptures:0});
-    const metrics={a:stats(),b:stats()};
+    const metrics={a:stats(),b:stats()},searchDiagnostics=[];
     while(!game.ended&&game.moves<turnSeeds.length){
      const side=game.turn===aColor?'a':'b',actor=side==='a'?a:b,m=metrics[side];
      const start=performance.now(),result=await actor.choose(aiPosition(game),turnSeeds[game.moves],adjacency);m.ms+=performance.now()-start;
      m.turns++;m.simulations+=result.simulations??0;
      const score=game.score(),move=result.move;
+     if(result.diagnostics)searchDiagnostics.push({ply:game.moves,side,decisionReason:result.decisionReason,...result.diagnostics});
      if(move===null){
       m.passes++;if(game.moves<topology.vertices.length/2)m.earlyPasses++;
       if(result.provenLoss)m.certifiedLossPasses++;
@@ -67,7 +74,7 @@ try{
     }
     const score=game.score(),aScore=game.ended?(score.winner===0?.5:score.winner===aColor?1:0):null;
     if(aScore!==null){pairScore+=aScore;completed++;}
-    board.games.push({pair,aColor,ended:game.ended,aScore,marginForA:(score.black-score.white)*(aColor===1?1:-1),metrics,
+    board.games.push({pair,aColor,ended:game.ended,aScore,marginForA:(score.black-score.white)*(aColor===1?1:-1),metrics,searchDiagnostics,
      moves:game.history.slice(1).map(s=>s.lastMove??-1)});
     console.log(kind,size,'pair',pair,'A colour',aColor,'score',aScore,'margin',board.games.at(-1).marginForA,'moves',game.moves);
     writeFileSync(output,JSON.stringify(report,null,2)+'\n');

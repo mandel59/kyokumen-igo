@@ -112,3 +112,20 @@ node tools/ai-gnn/match.mjs --a tools/ai-gnn/target/candidate --b v2 --pairs 2 -
 v3 の戦術チェックは既定で有効です。同じモデルで有無を比較する場合は `--a-tactics safe --b-tactics none` を指定します。根の特徴抽出・戦術チェックのみの開発用計測は `node tools/ai-gnn/bench-tactics.mjs` で実行できます。
 
 相手の生き石だけで逆転不能と確認できる局面ではパスを選びます。`createV3Search().start(position,{endgame:false})` でこの判断だけを無効化できます。`node tools/ai-gnn/replay-endgame.mjs --output tools/ai-gnn/target/endgame-replay.json` は報告された実棋譜の同じ局面・モデル・seed を使い、この判断の有無を比較します。`tactics` と `endgame` は独立した開発用設定です。
+
+## 通常局面を使う学習・選抜
+
+[改修・学習計画](../../experiments/ai/v3/2026-10-22-learning-revision/plan.json)では、固定した重みで探索を比較してから、同一局面の教師だけを変えて学習します。`run-search-study.mjs`、`run-learning-study.mjs`、`run-second-generation.mjs`、`run-final-evaluation.mjs` はこの実験の設定・停止条件を実行し、コマンド、ハッシュ、ログ、棋譜を実験ディレクトリへ保存します。保存済みの実行記録は上書きしません。
+
+`annotate-corpus.mjs` は対局を再生して特徴量と合法手を照合し、`decisionReason` を `normal`、`tactics-pruned`、`certified-loss` に分類します。旧 v2 教師の実着手は次の盤面から復元し、教師の推奨手と区別します。`audit-teacher-targets.mjs` と `filter-teacher-policy.mjs` は既存の根のルール制約で選べない教師の着手損失を除き、勝敗・得点・所有のラベルを保持します。
+
+学習データの `policyEligible` は着手学習の対象を示す真偽値です。`validationPolicy` には候補間で共通の検証教師を入れます。`reanalyze.mjs` は進行度ごとに抽出した同じ局面から、元の128訪問、ノイズなし128訪問、ノイズなし512訪問の教師を生成します。第2世代は `--recipe` と `--validation-manifest` で必要な教師を指定できます。
+
+- `--normal-training` は負け確定局面を全ての学習損失から除きます。
+- `--normal-selection` は通常局面と共通教師で選抜し、旧方策へのKL正則化を選抜値に含めません。
+- `--normalize-policy` は対象局面を抽出した後も、教師と自己対局の着手損失の比率を保ちます。
+- `--require-validation-policy` は自己対局の検証対象に共通教師がなければ停止します。
+- `--checkpoint-every 4 --best-validation` はepoch 0と4の倍数のEMAチェックポイントを保存し、その中から選びます。
+- `--balance-generations --balanced` は `replayGeneration` ごとの自己対局比率を均等にします。
+
+`match.mjs` の `--a-fpu` / `--b-fpu` は未探索手の評価を0・親の平均値・親の平均値からの減点に切り替えます。`--a-wasm` / `--b-wasm` と `--a-simulations` / `--b-simulations` で比較条件を固定できます。`browser-match.mjs` は実際のWorkerとWebGPUで同時間の対戦を行います。学習の効果は同じ探索による固定訪問数の対戦で測り、ブラウザでの動作・速度と分けて記録します。

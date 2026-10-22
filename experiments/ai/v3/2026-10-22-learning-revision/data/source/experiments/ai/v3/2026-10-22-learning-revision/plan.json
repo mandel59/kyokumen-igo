@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "status": "planned",
+  "created": "2026-10-22",
+  "purpose": "探索の改修効果と学習の効果を分離し、通常局面の方策を改善する。負け確定後のパス学習による損失低下をモデル選択から除く。",
+  "baseline": {
+    "sourceCommit": "69caea83f6d32e1b6d3cddba70f0b49916b68b40",
+    "modelSha256": "e04f00bacc18ebf813095420ea015f2950de37aa8eaadc83b715b6fc126115f5",
+    "checkpoint": "experiments/ai/v3/2026-10-21-strength/data/weights.pt",
+    "previousExperiment": "experiments/ai/v3/2026-10-22-learning/data/summary.json",
+    "architecture": {
+      "hidden": 64,
+      "blocks": 6,
+      "parameters": 120905,
+      "featureAbi": 1
+    },
+    "search": {
+      "unvisitedQ": 0,
+      "puct": 1.5,
+      "leafBatchCapacity": 8
+    },
+    "rule": "比較対象のソース、WASM、モデル、設定をハッシュ付きで保存する。各比較で変更対象以外を固定する。"
+  },
+  "observations": {
+    "candidateBValidationLoss": {
+      "initial": 2.2065841,
+      "selected": 2.1055504
+    },
+    "candidateBValidationWithoutCertifiedLoss": {
+      "initial": 2.1092329,
+      "selected": 2.1132624
+    },
+    "candidateBCertifiedShareOfLossImprovement": 1.0391931,
+    "candidateBExcludedSelfplayOpeningFraction": 0.8000574,
+    "selfplayOpeningSingleVisitPolicyMass": 0.2055946,
+    "candidateBFinal": {
+      "wins": 19,
+      "losses": 29,
+      "pairedBootstrapInterval95": [
+        0.2708333,
+        0.5208333
+      ]
+    },
+    "interpretation": "選抜指標の問題は集計で確認済み。未探索Q、ノイズ、探索予算が棋力に及ぼす影響は比較実験で確認する。"
+  },
+  "stages": [
+    {
+      "id": "measurement",
+      "dependsOn": [],
+      "changes": [
+        "局面のdecisionReasonを明記する。通常、負け確定による強制パス、その他のルール制約を区別し、旧データは再生して分類する。",
+        "通常局面、負け確定局面、盤、進行度別に方策KL・Top1、勝敗CE・Brier、得点MAE、パスprecision/recallを出す。",
+        "最終結果と対応する全手順を保存し、ゲーム単位の集計と対局単位の検証分割を再現できるようにする。",
+        "学習用の損失と選抜用の共通検証指標を分離する。選抜には強制パス局面と旧方策へのKL正則化を含めない。",
+        "各候補のepoch 0/4/8/12を保存する。異なる教師変換を使う候補も同じ検証教師で比較する。",
+        "対戦ツールでプレイヤー別の探索設定・WASMを指定できるようにし、実際に使った設定とハッシュを結果に記録する。"
+      ],
+      "completion": [
+        "旧候補Bについて全損失の改善と通常局面の非改善を再現する。",
+        "強制パス局面を追加しても選抜指標が変わらないことを確認する。",
+        "方策学習対象の割合が変わっても、意図した教師/自己対局の方策損失比率を保つことを確認する。",
+        "対局の枝が学習・検証をまたがず、正規化後の教師分布が合法手にのみ確率を持つことを確認する。"
+      ]
+    },
+    {
+      "id": "search",
+      "dependsOn": [
+        "measurement"
+      ],
+      "frozenWeights": "baseline",
+      "variants": [
+        {
+          "id": "S0",
+          "unvisitedQ": "0"
+        },
+        {
+          "id": "S1",
+          "unvisitedQ": "parentMeanValue"
+        },
+        {
+          "id": "S2",
+          "unvisitedQ": "parentMeanValue - 0.2 * sqrt(visitedPriorMass)"
+        }
+      ],
+      "valueConvention": "parentMeanValueは親の手番から見た実訪問の平均値。予約による仮想損失を含めない。子のQと同じ視点にそろえる。S2も自己対局のノイズ付き根では減算係数を0とする。",
+      "development": {
+        "seed": 2026102210,
+        "opponent": "S0 with baseline weights",
+        "pairsPerBoard": 8,
+        "gamesPerVariant": 96,
+        "visits": 128
+      },
+      "diagnostics": [
+        "根の訪問数分布",
+        "1訪問の手への確率質量",
+        "未探索手への移動頻度",
+        "勝勢・劣勢・序盤別の傾向",
+        "計算時間",
+        "合法性とパス判定"
+      ],
+      "selection": "S1/S2のうち開発得点最大を選ぶ。54/96点以上、各盤6/16点以上、機能検証通過を満たさなければS0を使う。これを独立した強さの証明とは扱わない。",
+      "teacherBudgetCheck": {
+        "seed": 2026102211,
+        "pairsPerBoard": 4,
+        "games": 48,
+        "comparison": "選んだ探索と同じbaseline重みを使い、512 visits対128 visitsを比較する。",
+        "gate": "512側が24/48点未満なら深い探索の教師化を止め、探索・価値評価を調べる。24点以上でも教師の優越性が証明されたとは扱わない。"
+      }
+    },
+    {
+      "id": "teacher_and_first_training",
+      "dependsOn": [
+        "search"
+      ],
+      "selfplay": {
+        "seed": 2026102220,
+        "model": "baseline",
+        "search": "selected search variant",
+        "gamesPerBoard": 16,
+        "totalGames": 96,
+        "visits": 128,
+        "komi": [
+          0,
+          3.5,
+          6.5,
+          9.5
+        ],
+        "rootNoise": {
+          "fraction": 0.25,
+          "concentration": 10
+        },
+        "actionTemperature": "既存設定を固定する。探索ノイズは対局の多様性に使い、再解析時には除く。",
+        "excludeCappedGames": true
+      },
+      "reanalysis": {
+        "selectionSeed": 2026102221,
+        "positionFraction": 0.25,
+        "selection": "各対局・進行度から、訪問集中度と無関係に通常局面を抽出する。検証側でも同じ規則を使い、全候補で局面IDを共通にする。",
+        "budgets": [
+          128,
+          512
+        ],
+        "rootNoise": false,
+        "frozenTeacher": "baseline weights and selected search",
+        "outcomeLabels": "勝敗・得点・所有は元対局の結果。再解析で置き換えるのは方策教師のみ。",
+        "provenance": [
+          "gameId",
+          "positionId",
+          "ply",
+          "decisionReason",
+          "generatorModelHash",
+          "searchHash",
+          "searchConfig",
+          "requestedVisits",
+          "completedVisits",
+          "rawVisits",
+          "rootPriors",
+          "rootNoiseApplied"
+        ]
+      },
+      "variants": [
+        {
+          "id": "T0",
+          "policyTarget": "抽出した同じ局面の元の128 visits分布。序盤はノイズの影響を含む。"
+        },
+        {
+          "id": "T1",
+          "policyTarget": "同じ局面をノイズなし128 visitsで再解析した分布。T0との比較でノイズ除去を調べる。"
+        },
+        {
+          "id": "T2",
+          "policyTarget": "同じ局面をノイズなし512 visitsで再解析した分布。T1との比較で探索予算を調べる。"
+        }
+      ],
+      "training": {
+        "seed": 2026102230,
+        "resume": "baseline for every variant",
+        "epochs": 12,
+        "batchSize": 128,
+        "device": "cuda",
+        "learningRate": 0.0001,
+        "minimumLearningRate": 0.00001,
+        "cosine": true,
+        "emaDecay": 0.99,
+        "policyTemperature": 1,
+        "minimumPolicyConfidence": 0,
+        "teacherMass": 0.5,
+        "selfplayMass": 0.5,
+        "policyAnchorWeight": 0.5,
+        "policyAnchor": "baseline, on normal policy-eligible positions only",
+        "certifiedLossTrainingWeight": 0,
+        "policyRows": "自己対局の方策学習は全候補で同一の抽出局面。旧v2教師は通常局面を使う。勝敗・得点・所有は全通常局面を使う。",
+        "normalization": "方策の対象行だけで教師/自己対局の比率を50/50に正規化する。勝敗・補助損失も対象集合内で50/50にする。",
+        "auxiliaryWeights": {
+          "wdl": 1,
+          "score": 0.5,
+          "ownership": 0.5
+        },
+        "balance": "既存の盤・対局・対局内三分割を維持する。進行度別の診断はply/Nでも出す。"
+      },
+      "validation": {
+        "split": "旧教師の固定分割を維持する。新規対局は盤ごとに固定した対局IDで約20%を検証用にし、派生データも親と同じ側に置く。",
+        "commonPolicyTarget": "全候補共通のノイズなし512 visits分布。旧v2教師側は元の教師を固定する。",
+        "checkpointScore": "通常局面で方策CE + 勝敗CE + 0.5得点Huber + 0.5所有CE。各項を対象集合内で教師/自己対局50/50にする。強制パスとanchor正則化を含めない。",
+        "selection": "epoch 0/4/8/12のうち共通検証指標が最良の重みを各候補1個だけ開発対戦へ出す。epoch 0は更新なしとして区別する。"
+      },
+      "development": {
+        "seed": 2026102240,
+        "pairsPerBoard": 8,
+        "gamesPerCandidate": 96,
+        "visits": 128,
+        "opponent": "baseline weights with the same selected search",
+        "selection": "得点最大の候補を選ぶ。54/96点以上、各盤6/16点以上、機能検証通過を満たす場合のみ次世代へ進める。複数候補の比較を行った開発結果として記録する。",
+        "failureAction": "全候補が不通過なら世代反復を止める。方策と価値の寄与を別々の完全なNN出力で比較し、原因を絞る。異なるtrunkのヘッドだけを単純に入れ替えない。"
+      }
+    },
+    {
+      "id": "second_generation",
+      "dependsOn": [
+        "teacher_and_first_training"
+      ],
+      "maximumTotalGenerations": 2,
+      "selfplay": {
+        "seed": 2026102222,
+        "gamesPerBoard": 32,
+        "totalGames": 192,
+        "visits": 128,
+        "model": "first-generation accepted candidate"
+      },
+      "policyReanalysis": {
+        "selectionSeed": 2026102223,
+        "positionFraction": 0.25,
+        "recipe": "第一世代の採用レシピを固定し、必要な予算だけ再解析する。"
+      },
+      "replayMix": {
+        "teacher": 0.5,
+        "selfplay": 0.5,
+        "withinSelfplayLatestGeneration": 0.5,
+        "withinSelfplayPreviousGenerations": 0.5
+      },
+      "training": {
+        "seed": 2026102231,
+        "resume": "first-generation accepted candidate",
+        "epochs": 12,
+        "otherSettings": "第一世代と同じ。学習率や損失係数の同時変更を行わない。"
+      },
+      "validation": "新世代も約20%の対局を検証用として固定する。その世代の候補と更新前重みを同じ蓄積検証集合で比較する。異なる検証集合の損失を直接比較しない。",
+      "development": {
+        "seed": 2026102241,
+        "pairsPerBoard": 8,
+        "games": 96,
+        "visits": 128,
+        "opponent": "first-generation accepted candidate with the same search"
+      },
+      "selection": "54/96点以上、各盤6/16点以上、機能検証通過なら第二世代を採用する。それ以外は第一世代を最終候補とする。"
+    },
+    {
+      "id": "final_evaluation",
+      "dependsOn": [
+        "second_generation"
+      ],
+      "candidate": "開発評価で選んだ重み1個。最終開始局面を生成する前にハッシュを確定する。",
+      "primary": {
+        "seed": 2026102250,
+        "pairsPerBoard": 32,
+        "games": 384,
+        "visits": 128,
+        "komi": 6.5,
+        "openingMoves": 4,
+        "opponent": "baseline weights",
+        "search": "両者とも同じselected search。学習による改善を測る。",
+        "bootstrap": {
+          "seed": 2026102251,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true
+        },
+        "promotionGuard": {
+          "minimumScore": 212,
+          "minimumBoardScore": 28,
+          "gamesPerBoard": 64,
+          "pairedBootstrapLower95StrictlyAbove": 0.5,
+          "maximumCappedGames": 0
+        }
+      },
+      "browser": {
+        "seed": 2026102252,
+        "pairsPerBoard": 4,
+        "games": 48,
+        "budgetMsPerMove": 300,
+        "comparison": "新モデル+選んだ探索 対 baselineモデル+元の探索。実際のWorkerとWebGPUを使う。",
+        "role": "統合時の動作・計算時間・棋譜の確認。48局の結果だけで同時間の優越性は主張しない。",
+        "promotionGuard": {
+          "minimumScore": 24,
+          "maximumCappedGames": 0,
+          "maximumRelativeWarmInferenceP95": 1.1
+        },
+        "inferenceChecks": [
+          "全6盤",
+          "実バッチ1/4/8",
+          "PyTorch/ONNX/WebGPUの出力一致",
+          "WASMへのフォールバック",
+          "キャンセル",
+          "合法手",
+          "既存の死に石・パス判定の回帰"
+        ]
+      },
+      "failureAction": "採用条件を満たさなければ配信モデルを維持する。最終結果を見て閾値や候補を変更しない。追加実験を行う場合は計画を追記し、新しい最終開始局面を用意する。"
+    }
+  ],
+  "deferredExperiments": [
+    "方策教師のpruningとforced playouts。まずノイズなし再解析と探索予算の比較を終える。実施する場合は同一探索ログからraw/pruned両方を作り、pruningだけの差を比較する。",
+    "モデルの幅・層数、入力ABI、量子化、推論カーネルの変更。教師と選抜の問題を直した後に別実験として扱う。"
+  ],
+  "execution": {
+    "python": "uv run --project tools/ai-gnn --extra cuda python ...",
+    "estimatedFirstCycleHours": [
+      2,
+      3
+    ],
+    "estimatedFullComputeHours": [
+      4,
+      8
+    ],
+    "estimateBasis": "前回の96局自己対局約13.5分、24局開発対戦約3.6分、48局最終対戦約6.9分から概算。改修時間を含まない。第二世代の有無、教師レシピ、ブラウザ対戦で変わる。",
+    "budgetRule": "まずmeasurementとsearchを完了し、そこで実測した時間で残りの計算予算を更新する。試行数を増やす場合は結果を見る前に計画へ追記する。",
+    "artifacts": [
+      "実行前の計画と追記履歴",
+      "ソースcommitと差分",
+      "モデルと探索のハッシュ",
+      "対局単位の分割",
+      "全候補の設定・チェックポイント・ログ",
+      "元の訪問数と教師変換",
+      "棄却候補を含む対戦棋譜",
+      "盤・進行度別の集計",
+      "推論検証",
+      "採用・不採用の理由"
+    ],
+    "thirdParty": "参考にしたソフトウェアと実装の由来をdocs/third-party/catalog.jsonに記録する。コードを移植する場合は移植箇所と対象版を特定し、既存のLICENSE・通知生成手順に含める。"
+  },
+  "references": [
+    {
+      "title": "Accelerating Self-Play Learning in Go",
+      "url": "https://arxiv.org/html/1902.10565v5",
+      "usedFor": [
+        "親評価に基づく未探索手の初期評価",
+        "探索用の訪問分布と方策教師の分離",
+        "方策教師の深さと対局数の計算資源配分"
+      ]
+    }
+  ],
+  "amendments": [
+    {
+      "stage": "measurement, before any candidate training",
+      "recordedAt": "2026-10-22T00:51:45.459Z",
+      "reason": "Uniform-prior replay found 160 of 15,387 normal v2 targets outside the existing v3 root rule mask.",
+      "change": "Set policyEligible=false for these targets in all T0/T1/T2 candidates. Preserve WDL/score/ownership labels and normalize policy source mass as planned.",
+      "decisionUses": "Current-position rule mask only; no game outcomes or candidate results.",
+      "trialsAndHyperparametersChanged": false,
+      "positions": 16365,
+      "excluded": 160,
+      "input": "experiments/ai/v3/2026-10-22-learning-revision/data/teacher-annotated-unfiltered.jsonl.gz",
+      "inputSha256": "6899c4144d70e191879a765509224a2a3f08dd529dd0d67c4c76ffd06ee86310",
+      "output": "experiments/ai/v3/2026-10-22-learning-revision/data/teacher-annotated.jsonl.gz",
+      "outputSha256": "7aa841c152c568774d8e414a723ca253d603542ad104487cfef3451f0bd4b887",
+      "originalPlanSha256": "8b1cb91d2befd3ce099ff25d2c320ad5ca18d584997cef958653bd7bb491bf55"
+    }
+  ]
+}

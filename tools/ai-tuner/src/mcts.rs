@@ -19,10 +19,25 @@ pub struct Search {
     pub loss_margin: f64,
     tactics: bool,
     endgame: bool,
+    fpu: u32,
+    root_noise: bool,
+    unvisited_selections: u32,
 }
 impl Search {
     pub fn new(seed: u64) -> Self {
-        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true }
+        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0 }
+    }
+    pub fn set_fpu(&mut self, mode: u32, root_noise: bool) -> bool {
+        if mode > 2 || self.completed != 0 || !self.pending.is_empty() { return false; }
+        self.fpu = mode; self.root_noise = root_noise; true
+    }
+    fn unvisited_q(&self, p: usize) -> f32 {
+        if self.fpu == 0 { return 0.; }
+        let node = &self.nodes[p];
+        let parent = node.sum / node.visits.max(1) as f32;
+        if self.fpu == 1 || (p == 0 && self.root_noise) { return parent; }
+        let mass: f32 = node.edges.iter().filter(|e|e.child.is_some_and(|c|self.nodes[c].visits>0)).map(|e|e.prior).sum();
+        parent - 0.2 * mass.sqrt()
     }
     pub fn set_tactics(&mut self, enabled: bool) -> bool {
         if self.completed != 0 || !self.pending.is_empty() { return false; }
@@ -82,9 +97,10 @@ impl Search {
                 }
                 let node = &self.nodes[p];
                 let scale = ((node.visits + node.reserved + 1) as f32).sqrt();
+                let unvisited_q = self.unvisited_q(p);
                 let mut best = 0; let mut best_score = f32::NEG_INFINITY;
                 for (k,e) in node.edges.iter().enumerate() {
-                    let (n,q) = e.child.map_or((0,0.), |c| {
+                    let (n,q) = e.child.map_or((0,unvisited_q), |c| {
                         let child = &self.nodes[c];
                         (child.visits + child.reserved, -(child.sum + child.reserved as f32) / (child.visits + child.reserved).max(1) as f32)
                     });
@@ -92,6 +108,7 @@ impl Search {
                     if score > best_score { best = k; best_score = score; }
                 }
                 let action = self.nodes[p].edges[best].action;
+                if self.nodes[p].edges[best].child.is_none() { self.unvisited_selections += 1; }
                 gnn::remember(&mut boards, &game.board);
                 assert!(if action == PASS {game.pass()} else {game.play(action, &mut scratch)});
                 let child = match self.nodes[p].edges[best].child {
@@ -142,6 +159,21 @@ impl Search {
         else { for e in &self.nodes[0].edges {result[e.action]=e.prior;} }
         result
     }
+    pub fn statistics(&self) -> Vec<f32> {
+        let root = &self.nodes[0];
+        let mut out = vec![0.; 3 + ACTIONS*3];
+        out[0] = root.sum / root.visits.max(1) as f32;
+        out[1] = self.unvisited_selections as f32; out[2] = root.visits as f32;
+        for e in &root.edges {
+            out[3+ACTIONS+e.action] = e.prior;
+            if let Some(c) = e.child {
+                let child = &self.nodes[c];
+                out[3+e.action] = child.visits as f32;
+                out[3+ACTIONS*2+e.action] = -child.sum / child.visits.max(1) as f32;
+            }
+        }
+        out
+    }
     pub fn best(&self) -> i32 {
         let policy = self.policy();
         let action = self.nodes[0].edges.iter().max_by(|a,b|policy[a.action].total_cmp(&policy[b.action])).map_or(PASS,|e|e.action);
@@ -153,6 +185,20 @@ impl Search {
 mod tests {
     use super::*;
     use crate::board::{Topology,Kind};
+    #[test]
+    fn fpu_uses_parent_perspective_without_virtual_loss() {
+        let mut s = Search::new(4);
+        assert!(s.set_fpu(2,false));
+        s.nodes[0].visits=2; s.nodes[0].sum=-1.4; s.nodes[0].reserved=99;
+        s.nodes.push(Node {visits:1, ..Node::default()});
+        s.nodes[0].edges.push(Edge {action:0, prior:0.25, child:Some(1)});
+        assert!((s.unvisited_q(0)+0.8).abs()<1e-6);
+        s.root_noise=true; assert!((s.unvisited_q(0)+0.7).abs()<1e-6);
+        s.fpu=1; assert!((s.unvisited_q(0)+0.7).abs()<1e-6);
+        s.fpu=0; assert_eq!(s.unvisited_q(0),0.);
+        assert!(!s.set_fpu(3,false));
+        s.completed=1; assert!(!s.set_fpu(1,false));
+    }
     #[test]
     fn reservations_validation_and_exact_terminal_signs() {
         for komi in [-6.5,0.,6.5] {

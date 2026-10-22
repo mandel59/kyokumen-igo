@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "positions": 20196,
+  "capped": 0,
+  "completedGames": 192,
+  "seed": 2026102222,
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "searchHash": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+  "fpu": 1,
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "attempted": 32,
+      "completed": 32,
+      "capped": 0
+    }
+  ]
+}

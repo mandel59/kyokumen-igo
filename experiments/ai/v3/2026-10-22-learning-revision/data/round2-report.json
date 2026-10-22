@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "input": "experiments/ai/v3/2026-10-22-learning-revision/data/round2-selfplay.jsonl.gz",
+  "seed": 2026102223,
+  "fpu": 1,
+  "recipes": [
+    0
+  ],
+  "teacherModel": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "searchHash": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+  "positions": 20196,
+  "eligible": 19438,
+  "selected": 5047,
+  "games": 192,
+  "selectedByPhase": {
+    "opening": 2336,
+    "middle": 2229,
+    "late": 482
+  },
+  "excludedCertified": 758,
+  "budgetPositions": {
+    "128": 0,
+    "512": 940
+  }
+}
