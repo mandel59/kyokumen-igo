@@ -343,7 +343,22 @@ async function shareRecord(){
 $('shareRecord').onclick=shareRecord;$('replayPrev').onclick=()=>showReplayStep(game.moves-1);$('replayNext').onclick=()=>showReplayStep(game.moves+1);$('replaySlider').oninput=()=>showReplayStep(Number($('replaySlider').value));$('replayClose').onclick=closeReplay;window.onhashchange=openSharedRecord;
 // Starting a new game from a shared record still replaces the player's own saved game.
 function confirmReset(){const own=replay?replay.own.game:game;return!own.moves||confirm(replay?'自分の対局を終了して、新しい対局を始めますか？':own.ended?'新しい対局を始めますか？ 棋譜をシェアしていない場合、終局した対局は残りません。':'今の対局を終了して、新しい対局を始めますか？');}
-$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=syncChoices;$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('aboutTutorial').onclick=()=>{$('aboutDialog').close();$('rulesOpen').onclick();};$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
+$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=syncChoices;
+// About tabs: the selected tab stays selected while the dialog is closed. Arrow keys, Home and End move between tabs.
+const ABOUT_TABS=4;
+function showAboutTab(next,focus=false){
+ for(let i=0;i<ABOUT_TABS;i++){$('aboutPanel'+i).inert=i!==next;$('aboutTab'+i).setAttribute('aria-selected',String(i===next));$('aboutTab'+i).tabIndex=i===next?0:-1;}
+ if(focus)$('aboutTab'+next).focus();
+}
+for(let i=0;i<ABOUT_TABS;i++){
+ $('aboutTab'+i).onclick=()=>showAboutTab(i);
+ $('aboutTab'+i).onkeydown=e=>{
+  const next={ArrowRight:(i+1)%ABOUT_TABS,ArrowLeft:(i+ABOUT_TABS-1)%ABOUT_TABS,Home:0,End:ABOUT_TABS-1}[e.key];
+  if(next===undefined)return;
+  e.preventDefault();showAboutTab(next,true);
+ };
+}
+$('aboutOpen').onclick=()=>$('aboutDialog').showModal();for(const id of ['aboutClose','aboutDone'])$(id).onclick=()=>$('aboutDialog').close();$('aboutTutorial').onclick=()=>{$('aboutDialog').close();$('rulesOpen').onclick();};$('rulesOpen').onclick=()=>{showTutorialStep(0);$('rulesDialog').showModal();};$('rulesClose').onclick=()=>$('rulesDialog').close();$('rulesPrev').onclick=()=>showTutorialStep(tutorialStep-1);$('rulesDone').onclick=()=>{if(tutorialStep<tutorialTitles.length-1)showTutorialStep(tutorialStep+1);else $('rulesDialog').close();};$('settingsOpen').onclick=()=>{syncSettings();$('settingsDialog').showModal();};$('settingsClose').onclick=()=>{syncSettings();$('settingsDialog').close();};$('viewToggle').onclick=()=>{mapView=!mapView;syncView();update();};
 
 const restored=loadSavedGame();
 if(restored.state){

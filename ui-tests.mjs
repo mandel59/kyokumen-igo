@@ -152,7 +152,7 @@ assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,t
 el('rulesClose').onclick();assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);
 // Tutorial is five one-idea pages, each with a figure, bounded navigation and a read-only live game.
 assert.match(html,/<dialog id="rulesDialog" aria-labelledby="rulesTitle">/);
-assert.match(html,/<details class="about-details"><summary>盤の構造と表示<\/summary>/);
+assert.doesNotMatch(html,/about-details/);
 const tutorialHTML=html.slice(html.indexOf('<dialog id="rulesDialog"'),html.indexOf('<dialog id="aboutDialog"'));
 assert.doesNotMatch(tutorialHTML,/スーパーコウ|正距方位|ニューラル|標準/);
 assert.match(html.slice(html.indexOf('<dialog id="aboutDialog"')),/位置的スーパーコウ/);
@@ -449,4 +449,28 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  el('markTerritory').checked=false;el('markTerritory').onchange();el('counter_captures').checked=true;el('counter_captures').onchange();
  el('replayClose').onclick();delete window.location;delete window.history;delete window.localStorage;
  console.log('Display settings UI passed: marks and counters switch at once in the board and map, follow replay steps, leave the game untouched, and are saved.');
+}
+
+// The information dialog is split into tabs: one panel at a time, switched by click or arrow keys, never touching the game.
+{
+ const before=JSON.stringify(['moveCount','turnText','status'].map(id=>el(id).textContent));
+ const state=()=>[0,1,2,3].map(i=>[el('aboutPanel'+i).inert,String(el('aboutTab'+i).tabIndex)].join(':')).join(' ');
+ el('aboutOpen').onclick();
+ // The stub has no HTML attributes, so the default tab is checked in the markup.
+ assert.deepEqual([0,1,2,3].map(i=>(html.match(new RegExp('<section id="aboutPanel'+i+'"[^>]*>'))[0]).includes(' inert')),[false,true,true,true],'first tab shows by default');
+ el('aboutTab0').onclick();assert.equal(state(),'false:0 true:-1 true:-1 true:-1');
+ el('aboutTab2').onclick();assert.equal(state(),'true:-1 true:-1 false:0 true:-1');
+ const key=(i,name)=>{let prevented=false;el('aboutTab'+i).onkeydown({key:name,preventDefault(){prevented=true;}});return prevented;};
+ assert.equal(key(2,'ArrowRight'),true);assert.equal(state(),'true:-1 true:-1 true:-1 false:0');assert.equal(document.activeElement,el('aboutTab3'));
+ key(3,'ArrowRight');assert.equal(state(),'false:0 true:-1 true:-1 true:-1','arrows wrap around');
+ key(0,'ArrowLeft');assert.equal(state(),'true:-1 true:-1 true:-1 false:0');
+ key(3,'Home');assert.equal(state(),'false:0 true:-1 true:-1 true:-1');key(0,'End');assert.equal(state(),'true:-1 true:-1 true:-1 false:0');
+ assert.equal(key(3,'Tab'),false,'other keys are left alone');
+ el('aboutTab1').onclick();assert.equal(el('aboutDialog').open,true);el('aboutDone').onclick();
+ assert.equal(JSON.stringify(['moveCount','turnText','status'].map(id=>el(id).textContent)),before);
+ el('aboutTab0').onclick();
+ // Every panel is in the dialog, and exactly one tab per panel.
+ const aboutHTML=html.slice(html.indexOf('<dialog id="aboutDialog"'),html.indexOf('</dialog>',html.indexOf('<dialog id="aboutDialog"')));
+ assert.equal([...aboutHTML.matchAll(/role="tabpanel"/g)].length,4);assert.equal([...aboutHTML.matchAll(/role="tab"/g)].length,4);
+ console.log('About tabs passed: one panel at a time, click and arrow/Home/End navigation, game untouched.');
 }
