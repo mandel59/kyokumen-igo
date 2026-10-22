@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {chooseMove as legacyChooseMove} from './tools/ai-tuner/legacy-v1.mjs';
 const html=readFileSync(new URL('./dist/index.html',import.meta.url),'utf8'),css=readFileSync(new URL('./dist/style.css',import.meta.url),'utf8');const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 let painted=null,paintCount=0;
 const noop=()=>{};const context=new Proxy({createImageData:(width,height)=>({width,height,data:new Uint8ClampedArray(width*height*4)}),putImageData:image=>{painted=image;paintCount++;},createRadialGradient:()=>({addColorStop:noop})},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
@@ -302,7 +303,7 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  };
  const answer=(worker,request=worker.requests.at(-1),wait=true)=>{
   const game=restoreAIPosition(request.position);
-  worker.onmessage({data:{id:request.id,move:engine.chooseMove(game,{random:()=>0}),backend:'wasm'}});
+  worker.onmessage({data:{id:request.id,move:legacyChooseMove(game,{random:()=>0}),backend:'wasm'}});
   if(wait)advance(400);
  };
  reset();el('pass').onclick();await tick();
@@ -322,7 +323,7 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  advance(500);pendingHandler({data:{id:pending.id,move:0}});
  assert.equal(el('moveCount').textContent,'2 手','undo cancels a reply that is already waiting to be applied');
  reset();el('pass').onclick();await tick();
- const failed=instances.at(-1);failed.onerror();advance(400);
+ const failed=instances.at(-1);failed.onerror();await tick();advance(400);
  assert.equal(failed.terminated,true);assert.equal(el('moveCount').textContent,'2 手','Worker error falls back to JS');
  reset();el('pass').onclick();await tick();
  const cancelled=instances.at(-1),cancelledHandler=cancelled.onmessage,cancelledRequest=cancelled.requests.at(-1);
@@ -338,7 +339,7 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  assert.equal(scheduled.size,0);
  reset();el('pass').onclick();await tick();
  const invalid=instances.at(-1);
- invalid.onmessage({data:{id:invalid.requests.at(-1).id,move:-17}});advance(400);
+ invalid.onmessage({data:{id:invalid.requests.at(-1).id,move:-17}});await tick();advance(400);
  assert.equal(invalid.terminated,true);assert.equal(el('moveCount').textContent,'2 手','JS rejects invalid Worker moves and falls back');
  reset();delete globalThis.Worker;
  globalThis.setTimeout=realTimeout;globalThis.clearTimeout=realClearTimeout;Date.now=realNow;

@@ -11,7 +11,7 @@
 | ソフトウェア | 利用形態・ライセンス | 用途・変更点・告知 |
 | --- | --- | --- |
 | [KataGo](https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp) | 実装を参照 / MIT | AI v2 / v3 の Benson 生存判定で calculateAreaForPla を参照。 曲面の隣接グラフ向けに連・空領域・vital 関係を実装。 Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository. [KataGo-LICENSE.txt](dist/licenses/KataGo-LICENSE.txt) |
-| [SplitMix64 2015](https://prng.di.unimi.it/splitmix.c) | WASM に組み込み / Public domain（利用許諾付き） | AI の乱数生成とコミ検証の seed 生成。 Rust と JavaScript BigInt へ翻訳。 状態のインスタンス化、seed 混合、標本化補助を追加。 Written in 2015 by Sebastiano Vigna (vigna@acm.org) [SplitMix64-NOTICE.txt](dist/licenses/SplitMix64-NOTICE.txt) |
+| [SplitMix64 2015](https://prng.di.unimi.it/splitmix.c) | JS / WASM を配信 / Public domain（利用許諾付き） | AI の乱数生成とコミ検証の seed 生成。 Rust と JavaScript BigInt へ翻訳。 状態のインスタンス化、seed 混合、標本化補助を追加。 Written in 2015 by Sebastiano Vigna (vigna@acm.org) [SplitMix64-NOTICE.txt](dist/licenses/SplitMix64-NOTICE.txt) |
 | [Mulberry32 2017](https://gist.github.com/tommyettinger/46a874533244883189143505d203312c) | 開発時に利用 / Public domain / CC0 | 共有カードの再現可能な盤面生成。 JavaScript の変数名を変更し、seeded() クロージャに整理。 Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com) / JavaScript implementation by bryc [Mulberry32-NOTICE.txt](dist/licenses/Mulberry32-NOTICE.txt) |
 
 ## 配信に含まれる実行基盤
@@ -19,7 +19,7 @@
 | ソフトウェア | 利用形態・ライセンス | 用途・変更点・告知 |
 | --- | --- | --- |
 | [ONNX Runtime Web / Common 1.30.0](https://github.com/microsoft/onnxruntime/tree/v1.30.0/js) | JS / WASM を配信 / MIT | AI v3 の ONNX WebGPU / WASM 推論。 上流 npm の JS・WASM を配置し、WASM を gzip 圧縮。 Copyright (c) Microsoft Corporation [onnxruntime-LICENSE.txt](dist/licenses/onnxruntime-LICENSE.txt)、[onnxruntime-ThirdPartyNotices.txt](dist/licenses/onnxruntime-ThirdPartyNotices.txt) |
-| [Rust standard library 1.99.1](https://github.com/rust-lang/rust/tree/1.99.1) | WASM に組み込み / MIT OR Apache-2.0 | ai-engine.wasm と ai-v3.wasm に静的リンク。  The Rust Project Developers [COPYRIGHT-library.html](dist/licenses/rust/COPYRIGHT-library.html)、[manifest.json](dist/licenses/rust/manifest.json) |
+| [Rust standard library 1.99.1](https://github.com/rust-lang/rust/tree/1.99.1) | JS / WASM を配信 / MIT OR Apache-2.0 | ai-engine.wasm・ai-v3.wasmに静的リンク。v2のJS変換物にも含む。  The Rust Project Developers [COPYRIGHT-library.html](dist/licenses/rust/COPYRIGHT-library.html)、[manifest.json](dist/licenses/rust/manifest.json) |
 
 ## 学習・検証・制作・配信ツール
 
@@ -38,10 +38,11 @@
 | [Pango](https://github.com/GNOME/pango/blob/main/meson.build) | 開発時に利用 / LGPL-2.1-or-later | ImageMagick を通した文字描画。    |
 | [Noto Sans JP](https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE) | 開発時に利用 / OFL-1.1 | 共有カードの文字をラスター画像へ描画。    |
 | [Wrangler / Workers SDK 4.151.3](https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT) | 開発時に利用 / MIT | 静的サイトの配信。    |
+| [Binaryen / wasm2js 132.0.0](https://github.com/WebAssembly/binaryen/tree/version_132) | JS / WASM を配信 / Apache-2.0 | v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。 Copyright 2015 WebAssembly Community Group participants [Binaryen-LICENSE.txt](dist/licenses/Binaryen-LICENSE.txt) |
 
 ## 推移依存と手法の一次資料
 
-[Node 依存目録](docs/third-party/node-packages.json) は 35 件、[Python 環境目録](docs/third-party/python-packages.json) は 17 件です。版・ライセンス・ロックファイルの SHA-256 を記録しています。
+[Node 依存目録](docs/third-party/node-packages.json) は 36 件、[Python 環境目録](docs/third-party/python-packages.json) は 17 件です。版・ライセンス・ロックファイルの SHA-256 を記録しています。
 
 - David J. Wu, [Accelerating Self-Play Learning in Go (2019)](https://arxiv.org/html/1902.10565v5)：AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。
 

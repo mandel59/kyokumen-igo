@@ -3,7 +3,8 @@ import {readFileSync} from 'node:fs';
 import {Worker} from 'node:worker_threads';
 import {once} from 'node:events';
 import {fileURLToPath} from 'node:url';
-import {createTopology,Game,chooseMove,AI_WEIGHTS} from './dist/engine.js';
+import {createTopology,Game} from './dist/engine.js';
+import {chooseMove,AI_WEIGHTS} from './tools/ai-tuner/legacy-v1.mjs';
 import {aiPosition,restoreAIPosition} from './dist/ai-position.js';
 import {createWasmAI} from './dist/ai-wasm.js';
 
@@ -89,7 +90,7 @@ for(const mode of ['wasm','missing','corrupt','unsupported']) {
   try {
     for(let i=0;i<2;i++) {
       const response=await request(empty);
-      assert.equal(response.backend,mode==='wasm'?'wasm':'js');
+      assert.equal(response.backend,mode==='wasm'?'wasm':'generated-js');
       assert.equal(response.error,undefined);
       assert.equal(restoreAIPosition(empty).analyze(response.move).ok,true);
       assert.equal(response.loads,mode==='unsupported'?0:1,'WASM is loaded only once');
@@ -97,7 +98,7 @@ for(const mode of ['wasm','missing','corrupt','unsupported']) {
     const invalid=await request({...empty,moves:Int32Array.from([0,0])});
     assert.match(invalid.error,/Illegal AI history/);
     const recovered=await request(empty);
-    assert.equal(recovered.backend,'js','runtime failure keeps a usable JS fallback');
+    assert.equal(recovered.backend,mode==='wasm'?'wasm':'generated-js','invalid input does not switch a healthy backend');
   } finally {await worker.terminate();}
 }
 console.log('Production Worker passed: WASM selection/reuse, 404/corrupt/unsupported fallbacks and recovery after invalid input.');

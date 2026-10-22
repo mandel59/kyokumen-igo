@@ -9,10 +9,10 @@
 | Kyokugo AI v1 | src/ai.rs、src/main.rs、src/tune.rs / cargo run | 一手評価、係数調整、対戦、固定局面の生成 |
 | Kyokugo AI v2 | src/search.rs、search-tune.rs | 4 手探索、候補の調整、対戦 |
 | 共通 | src/board.rs、src/rng.rs | グラフ盤・合法手・得点・乱数 |
-| 配信 | src/wasm.rs、build-wasm.mjs | v1 / v2 を含む WASM の生成 |
+| 配信 | src/wasm.rs、build-wasm.mjs | v1 / v2を含むWASMと、同じWASMからのJS生成（build-js.mjs） |
 | 記録管理 | experiment-paths.mjs、check-experiments.mjs | 実験の場所、再集計の出力、記録の整合確認 |
 
-以後のコマンドはリポジトリ直下から実行します。外部 Rust クレートや npm パッケージは不要です。実行結果とビルド出力は Git 管理外の target/ へ置きます。
+以後のコマンドはリポジトリ直下から実行します。外部Rustクレートは不要です。配信用JSの生成には固定版Binaryenを使うため、初回は `npm ci --prefix tools/ai-tuner` を実行します。対戦や集計だけならBinaryenは不要です。実行結果とビルド出力は Git 管理外の target/ へ置きます。
 
 ## Kyokugo AI v1
 
@@ -77,6 +77,7 @@ node tools/ai-tuner/build-wasm.mjs
 node tools/ai-tuner/build-wasm.mjs --check
 node search-tests.mjs
 node wasm-tests.mjs
+node generated-js-tests.mjs
 ```
 
 新しい係数の配信時は、回帰テストが参照する実験も採用結果に合わせて更新します。

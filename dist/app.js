@@ -1,4 +1,5 @@
-import {createTopology,Game,chooseMove} from './engine.js';
+import {createTopology,Game} from './engine.js';
+import {createJSAI} from './ai-js.js';
 import {aiPosition} from './ai-position.js';
 import {KOMI_MIN,KOMI_MAX,KOMI_STEP} from './komi.js';
 import {renderSurface,highlightSurface,MARKER,MARKS,markerColor} from './surface-renderer.js';
@@ -18,6 +19,7 @@ let touchInput=!!coarsePointer?.matches;
 const inputWords=()=>touchInput?{rotate:'スワイプ',place:'タップ'}:{rotate:'ドラッグ',place:'クリック'};
 function persist(){return replay?true:saveGame(game,settings,{mapView,orientation});}
 let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrientation('sphere'),selected=null,hover=null,screen=[],thinking=false,worker=null,requestId=0,timer=null,drag=null,keyboardIndex=0;
+let fallbackAI=null;
 // Viewer choices (board marks, counter), saved apart from the game. Marks are derived from the position alone.
 let display=loadDisplay(),analysisKey='',analysis=null,mapMarks=null;
 function boardMarks(){
@@ -165,6 +167,17 @@ function scheduleAI(){
    if(remaining>0)timer=setTimeout(finish,remaining);
    else finish();
   };
+  const fallback=async()=>{
+   try{
+    fallbackAI??=createJSAI().catch(error=>{fallbackAI=null;throw error;});
+    const ai=await fallbackAI;
+    if(id!==requestId||!thinking||answered)return;
+    handle(ai.chooseMove(aiPosition(game),{depth:4}));
+   }catch{
+    if(id!==requestId||!thinking||answered)return;
+    answered=true;thinking=false;update('AIを実行できませんでした。待った、または新しい対局を選んでください。');
+   }
+  };
   try{
    if(!worker){
     const workerURL=new URL('./ai-worker.js',import.meta.url);
@@ -175,24 +188,24 @@ function scheduleAI(){
     worker=new Worker(workerURL,{type:'module'});
    }
    const activeWorker=worker;
-   const fallback=()=>{
+   const workerFallback=()=>{
     if(id!==requestId||worker!==activeWorker)return;
-    activeWorker.terminate();worker=null;handle(chooseMove(game));
+    activeWorker.terminate();worker=null;void fallback();
    };
    activeWorker.onmessage=e=>{
     if(id!==requestId||worker!==activeWorker||e.data.id!==id||!thinking)return;
-    if(e.data.error){fallback();return;}
+    if(e.data.error){workerFallback();return;}
     // The UI's JS rules remain authoritative, including positional superko.
-    if(e.data.move!==null&&!game.analyze(e.data.move).ok){fallback();return;}
+    if(e.data.move!==null&&!game.analyze(e.data.move).ok){workerFallback();return;}
     handle(e.data.move);
    };
-   activeWorker.onerror=fallback;
-   activeWorker.onmessageerror=fallback;
+   activeWorker.onerror=workerFallback;
+   activeWorker.onmessageerror=workerFallback;
    const position=aiPosition(game);
    activeWorker.postMessage({id,position},[position.moves.buffer]);
   }catch{
    if(worker){worker.terminate();worker=null;}
-   handle(chooseMove(game));
+   void fallback();
   }
  },0);
 }

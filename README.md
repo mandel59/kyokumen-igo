@@ -52,9 +52,11 @@ python3 -m http.server --directory dist 8000
 | `dist/orientation.js` | クォータニオンによる画面基準の回転と旧保存形式の姿勢変換 |
 | `dist/surface-renderer.js` | 盤面・碁石の奥行きバッファ描画、盤ごとに寸法を揃えた碁石、可視部分に対応した選択判定・強調表示 |
 | `dist/board-analysis.js` / `dist/display.js` | 表示用の盤面解析（活き石・死に石・アタリ・地）と、表示設定・カウンター |
-| `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点、簡易 AI |
-| `dist/ai-worker.js` / `dist/ai-wasm.js` / `dist/ai-engine.wasm` | 再利用する Worker 内で Rust / WASM による AI 計算。利用できない場合は JS で継続 |
-| `dist/ai-position.js` | Worker に渡す着手履歴と、JS フォールバック用の局面復元 |
+| `dist/engine.js` | 盤のグラフ生成、合法手・取り・反復禁止・得点 |
+| `dist/ai-worker.js` / `dist/ai-v2.js` | Workerの再利用と、WASM / 生成JSの実行切り替え |
+| `dist/ai-api.js` / `dist/ai-wasm.js` / `dist/ai-js.js` | WASM版と生成JS版で共有するv2の呼び出し処理 |
+| `dist/ai-engine.wasm` / `dist/ai-engine.generated.js` | 同じRustから作るWASMとJS。生成JSは必要時だけ取得 |
+| `dist/ai-position.js` | Workerに渡す着手履歴と、検証用の局面復元 |
 | `dist/sphere-projection.js` | 二半球の正距方位投影、境界での辺の切り分け |
 | `dist/record.js` | 棋譜リンクの符号化と、ルールに沿った再生による検証 |
 | `dist/persistence.js` | ブラウザへの自動保存、合法手の再生による保存内容の検証・復元 |
@@ -74,7 +76,7 @@ python3 -m http.server --directory dist 8000
 
 ### WASM 実装
 
-AI の着手計算は Rust / WASM を使います。画面操作、保存・棋譜、実際の着手検証は JS が担当します。配布済みの `dist/` には WASM を含むため、起動時のビルドは不要です。WASM や Worker を利用できない場合は JS 版で対局を続けます。
+AIの着手計算はRustからビルドしたWASMを使います。WASMを利用できない場合は同じWASMから生成したJS版v2へ切り替え、Workerが使えない場合も同じ生成JSを画面側で実行します。画面操作、保存・棋譜、実際の着手検証はJSが担当します。配布済みの `dist/` にはWASMと生成JSを含むため、起動時のビルドは不要です。
 
 WASM 化の範囲、Worker の再利用、ビルド手順は [アプリ用 WASM AI](docs/ai/wasm.md) を参照してください。Rust の実装を変更した場合は `node tools/ai-tuner/build-wasm.mjs` で配信物を更新します。
 
@@ -85,6 +87,7 @@ Node.js 24 で動作確認しています。外部パッケージは不要です
 ```sh
 node tests.mjs
 node wasm-tests.mjs
+node generated-js-tests.mjs
 node search-tests.mjs
 node v3-tests.mjs
 node komi-tests.mjs

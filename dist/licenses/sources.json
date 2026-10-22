@@ -34,6 +34,11 @@
       "url": "https://github.com/bryc/code/blob/master/jshash/PRNGs.md",
       "gitBlobSha": "5b58125493d8043cc416bd035b8f24fa8843e006",
       "sha256": "788c64f0b7ef381b429124f1e78b97ec5e90290f48d32176833f9ef43960b8c6"
+    },
+    {
+      "path": "Binaryen-LICENSE.txt",
+      "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
+      "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
     }
   ]
 }

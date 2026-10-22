@@ -1,0 +1,653 @@
+{
+  "schemaVersion": 1,
+  "environment": {
+    "browser": "155.0.4283.62",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "scenarios": [
+    {
+      "mode": "normal",
+      "generatedLoads": 0,
+      "backend": "wasm"
+    },
+    {
+      "mode": "missing",
+      "generatedLoads": 1,
+      "backend": "generated-js"
+    },
+    {
+      "mode": "corrupt",
+      "generatedLoads": 1,
+      "backend": "generated-js"
+    },
+    {
+      "mode": "unsupported",
+      "generatedLoads": 1,
+      "backend": "generated-js"
+    },
+    {
+      "mode": "no-worker",
+      "generatedLoads": 1,
+      "backend": "main-thread-generated-js"
+    },
+    {
+      "mode": "worker-error",
+      "generatedLoads": 1,
+      "backend": "main-thread-generated-js"
+    },
+    {
+      "mode": "generated-failure",
+      "generatedLoads": 1,
+      "backend": "main-thread-generated-js"
+    },
+    {
+      "mode": "cancel-load",
+      "generatedLoads": 1,
+      "backend": "main-thread-generated-js"
+    }
+  ],
+  "sizes": {
+    "ai-engine.wasm": {
+      "bytes": 62360,
+      "gzipBytes": 24049,
+      "sha256": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45"
+    },
+    "ai-engine.generated.js": {
+      "bytes": 435752,
+      "gzipBytes": 63318,
+      "sha256": "a5fd1333911077d26368cc157068cfd36d0efd3b3ded0b258aa4c326857ed4e3"
+    }
+  },
+  "performance": {
+    "wasmInitMs": 5.099999904632568,
+    "jsInitMs": 11.5,
+    "depth": 4,
+    "positions": 18,
+    "rounds": 3,
+    "summary": {
+      "wasm": {
+        "samples": 54,
+        "meanMs": 5.749999986754523,
+        "p95Ms": 10.799999952316284
+      },
+      "js": {
+        "samples": 54,
+        "meanMs": 35.112962974442375,
+        "p95Ms": 96.10000002384186
+      }
+    },
+    "samples": {
+      "wasm": [
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 2.799999952316284
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 3.299999952316284
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 2.700000047683716
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 8.599999904632568
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 4
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 4.099999904632568
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 8.700000047683716
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 10.799999952316284
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 11.399999976158142
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 3.5
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 5.100000023841858
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 2.6999999284744263
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 3.100000023841858
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 6.799999952316284
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 4.899999976158142
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 4.799999952316284
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 10.799999952316284
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 7.900000095367432
+        },
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 2.899999976158142
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 4.299999952316284
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 2.3000000715255737
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 7
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 4.700000047683716
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 5.200000047683716
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 8.899999976158142
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 9.700000047683716
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 10.600000023841858
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 3.0999999046325684
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 5.300000071525574
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 2.6999999284744263
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 2.799999952316284
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 6.799999952316284
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 5.199999928474426
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 4.199999928474426
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 10.5
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 8.100000023841858
+        },
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 3
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 3.399999976158142
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 3.1999999284744263
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 5.900000095367432
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 3.5
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 4.099999904632568
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 8.299999952316284
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 9.600000023841858
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 10.899999976158142
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 3.100000023841858
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 4.299999952316284
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 2.799999952316284
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 3
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 7
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 4.700000047683716
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 4.300000071525574
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 10.299999952316284
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 8.799999952316284
+        }
+      ],
+      "js": [
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 31.899999976158142
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 20.600000023841858
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 11.100000023841858
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 68.20000004768372
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 19.200000047683716
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 15.5
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 99.5
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 48.10000002384186
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 40.5
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 29.800000071525574
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 35.89999997615814
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 9.100000023841858
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 33
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 32.200000047683716
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 17.5
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 46.200000047683716
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 55.5
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 30.09999990463257
+        },
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 29.300000071525574
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 17.600000023841858
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 8.899999976158142
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 71.79999995231628
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 25.600000023841858
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 20.799999952316284
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 111.19999992847443
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 46.5
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 39.299999952316284
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 31.200000047683716
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 29
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 9.100000023841858
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 31.200000047683716
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 30.700000047683716
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 17.800000071525574
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 47.700000047683716
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 49.700000047683716
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 29.299999952316284
+        },
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "elapsedMs": 28.800000071525574
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "elapsedMs": 16
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "elapsedMs": 9.5
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "elapsedMs": 65.29999995231628
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "elapsedMs": 16.200000047683716
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "elapsedMs": 14.700000047683716
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "elapsedMs": 96.10000002384186
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "elapsedMs": 47.10000002384186
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "elapsedMs": 39.39999997615814
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "elapsedMs": 32
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "elapsedMs": 28.800000071525574
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "elapsedMs": 9
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "elapsedMs": 31.600000023841858
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "elapsedMs": 31
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "elapsedMs": 16.59999990463257
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "elapsedMs": 46.10000002384186
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "elapsedMs": 48.60000002384186
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "elapsedMs": 28.700000047683716
+        }
+      ]
+    }
+  },
+  "recordedOn": "2026-10-22",
+  "condition": "One desktop browser run; all six boards, three phases, depth 4, seed 42, one warmup per position/backend, three alternating-order rounds. Timings exclude module initialization and do not predict phone latency.",
+  "compiler": "binaryen 132.0.0 / wasm2js --all-features -O",
+  "sourceSha256": {
+    "dist/ai-engine.wasm": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45",
+    "dist/ai-engine.generated.js": "a5fd1333911077d26368cc157068cfd36d0efd3b3ded0b258aa4c326857ed4e3",
+    "dist/ai-api.js": "b027c22a06b64dffee2cf6811ed44c90b86f1273ea8fb9ab4720dc334d5f2a27",
+    "dist/ai-js.js": "caa187cf35c9a58b270eef3716762f228055d12d30daa2617003a7b294ab4ffe",
+    "dist/ai-v2.js": "c6ffe40f826c06d826477b9256d61de37154e9fe514d80e69b65ac70542c8539",
+    "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+    "dist/ai-worker.js": "37d5e6a76c9ba8fc7f63efaaf4c22b21b39c23547c16b5fc035955b5d1f5df13",
+    "dist/ai-benchmark-positions.json": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895",
+    "tools/ai-tuner/package-lock.json": "234cb9e518b82277961d2bbfdfd1ebf7db0d5deb095b0e42dfbca954f110979d",
+    "tools/ai-tuner/build-js.mjs": "2c508d40f95605d80dc3ddfe76e346ed06cab4b37164cd52fad7fb0723219dfd",
+    "tools/ai-gnn/test-generated-js-browser.mjs": "565d1872b258bc7f4705179805bfea643b34880c81c43e4082bea56a730f76fd"
+  },
+  "verificationCommands": [
+    "node generated-js-tests.mjs",
+    "node wasm-tests.mjs",
+    "node search-tests.mjs",
+    "node v3-tests.mjs",
+    "node ui-tests.mjs",
+    "node tools/ai-gnn/test-generated-js-browser.mjs",
+    "node tools/ai-tuner/build-wasm.mjs --check",
+    "node tools/check-third-party.mjs --prepared"
+  ],
+  "moveComparisons": 1248
+}

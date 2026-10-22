@@ -12,11 +12,11 @@ assert.match(rust.version,/^rustc \d+\.\d+/);
 assert.ok(rust.version.startsWith('rustc '+json('docs/third-party/catalog.json').entries.find(e=>e.id==='rust-stdlib').version+' '),'Update the Rust catalog version');
 for(const entry of rust.files)assert.equal(sha('dist/licenses/rust/'+entry.path),entry.sha256,entry.path);
 const node=json('docs/third-party/node-packages.json'),python=json('docs/third-party/python-packages.json');
-for(const inventory of [node,python])assert.equal(sha(inventory.source),inventory.sourceSha256,'Refresh inventory: '+inventory.source);
-const lock=json(node.source),entries=Object.entries(lock.packages).filter(([path])=>path);
+for(const inventory of [...(node.sources??[node]),python])assert.equal(sha(inventory.source),inventory.sourceSha256,'Refresh inventory: '+inventory.source);
+const lock=json(node.source),entries=(node.sources??[node]).flatMap(({source})=>Object.entries(json(source).packages).filter(([path])=>path).map(([path,entry])=>[path,entry,source]));
 assert.equal(node.packages.length,entries.length);
-for(const [path,entry]of entries){
- const name=path.replace(/^node_modules\//,''),item=node.packages.find(p=>p.name===name);
+for(const [path,entry,source]of entries){
+ const name=path.replace(/^node_modules\//,''),item=node.packages.find(p=>p.name===name&&(p.source??node.source)===source);
  assert.ok(item,name);assert.equal(item.version,entry.version,name);assert.equal(item.license,entry.license,name);
 }
 assert.equal(lock.packages['node_modules/onnxruntime-web'].version,sources.versions.onnxruntime);

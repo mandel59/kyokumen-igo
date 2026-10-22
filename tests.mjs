@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {createTopology,Game,chooseMove,AI_WEIGHTS} from './dist/engine.js';
+import {createTopology,Game} from './dist/engine.js';
+import {chooseMove,AI_WEIGHTS} from './tools/ai-tuner/legacy-v1.mjs';
 function fixture(stones,turn=1,size=7) {
   const g=new Game(createTopology('torus',size));
   for(const [i,c] of stones)g.board[i]=c;

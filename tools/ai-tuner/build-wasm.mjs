@@ -30,3 +30,6 @@ if(process.argv.includes('--check')) {
   writeFileSync(output,bytes);
   console.log('Built dist/ai-engine.wasm ('+bytes.length+' bytes).');
 }
+const js=spawnSync(process.execPath,[fileURLToPath(new URL('build-js.mjs',root)),...(process.argv.includes('--check')?['--check']:[])],{stdio:'inherit'});
+if(js.error)throw js.error;
+if(js.status!==0)process.exit(js.status??1);

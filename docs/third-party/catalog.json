@@ -56,7 +56,7 @@
       "notices": [
         "dist/licenses/SplitMix64-NOTICE.txt"
       ],
-      "distribution": "wasm",
+      "distribution": "runtime-files",
       "copyrightNotices": [
         "Written in 2015 by Sebastiano Vigna (vigna@acm.org)"
       ],
@@ -151,7 +151,7 @@
       "category": "runtime",
       "relationship": "static-link",
       "licenseExpression": "MIT OR Apache-2.0",
-      "usage": "ai-engine.wasm と ai-v3.wasm に静的リンク。",
+      "usage": "ai-engine.wasm・ai-v3.wasmに静的リンク。v2のJS変換物にも含む。",
       "files": [
         "tools/ai-tuner/build-wasm.mjs",
         "tools/ai-gnn/build.mjs"
@@ -163,7 +163,7 @@
         "dist/licenses/rust/COPYRIGHT-library.html",
         "dist/licenses/rust/manifest.json"
       ],
-      "distribution": "wasm",
+      "distribution": "runtime-files",
       "copyrightNotices": [
         "The Rust Project Developers"
       ],
@@ -541,6 +541,42 @@
         "ref": "4.151.3",
         "gitBlobSha": null
       }
+    },
+    {
+      "id": "binaryen",
+      "name": "Binaryen / wasm2js",
+      "version": "132.0.0",
+      "category": "tool",
+      "relationship": "build-tool",
+      "licenseExpression": "Apache-2.0",
+      "usage": "v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。",
+      "files": [
+        "tools/ai-tuner/build-js.mjs",
+        "dist/ai-engine.generated.js"
+      ],
+      "urls": [
+        "https://github.com/WebAssembly/binaryen/tree/version_132",
+        "https://github.com/AssemblyScript/binaryen.js"
+      ],
+      "notices": [
+        "dist/licenses/Binaryen-LICENSE.txt"
+      ],
+      "distribution": "runtime-files",
+      "copyrightNotices": [
+        "Copyright 2015 WebAssembly Community Group participants"
+      ],
+      "modifications": [
+        "生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。"
+      ],
+      "provenance": {
+        "kind": "package",
+        "evidence": [
+          "tools/ai-tuner/package-lock.json",
+          "tools/ai-tuner/build-js.mjs"
+        ],
+        "ref": "version_132",
+        "gitBlobSha": null
+      }
     }
   ],
   "inventoryFiles": {
@@ -576,6 +612,11 @@
       "url": "https://github.com/bryc/code/blob/master/jshash/PRNGs.md",
       "gitBlobSha": "5b58125493d8043cc416bd035b8f24fa8843e006",
       "sha256": "788c64f0b7ef381b429124f1e78b97ec5e90290f48d32176833f9ef43960b8c6"
+    },
+    {
+      "path": "dist/licenses/Binaryen-LICENSE.txt",
+      "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
+      "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
     }
   ],
   "references": [

@@ -5,7 +5,8 @@ import {readFileSync, writeFileSync} from 'node:fs';
 import os from 'node:os';
 import {outputPath,writeReport} from './experiment-paths.mjs';
 import {fileURLToPath} from 'node:url';
-import {createTopology, Game, chooseMove, AI_WEIGHTS} from '../../dist/engine.js';
+import {createTopology, Game} from '../../dist/engine.js';
+import {chooseMove, AI_WEIGHTS} from './legacy-v1.mjs';
 
 const here = new URL('./', import.meta.url);
 const fixture = JSON.parse(readFileSync(new URL('../../tests/fixtures/ai/v1-parity.json', here), 'utf8'));

@@ -4,7 +4,8 @@ import {writeFileSync,mkdtempSync,rmSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {createTopology,Game,chooseMove} from '../dist/engine.js';
+import {createTopology,Game} from '../dist/engine.js';
+import {chooseMove} from './ai-tuner/legacy-v1.mjs';
 import {renderSurface} from '../dist/surface-renderer.js';
 
 const dist=new URL('../dist/',import.meta.url),out=name=>new URL(name,dist).pathname.replace(/^\/([A-Za-z]:)/,'$1');
