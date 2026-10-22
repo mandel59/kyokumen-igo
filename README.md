@@ -148,6 +148,7 @@ Cloudflare の対象アカウントにログインし、リポジトリのルー
 
 ```sh
 npx --yes wrangler@4.151.3 login
+node tools/write-revision.mjs
 npx --yes wrangler@4.151.3 deploy --dry-run
 npx --yes wrangler@4.151.3 deploy
 ```

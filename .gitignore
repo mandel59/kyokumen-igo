@@ -11,6 +11,7 @@ node_modules/
 __pycache__/
 tools/ai-gnn/target/
 dist/vendor/onnxruntime/
+dist/revision.txt
 *.log
 coverage/
 playwright-report/
