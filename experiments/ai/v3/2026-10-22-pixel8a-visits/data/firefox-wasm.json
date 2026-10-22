@@ -1,0 +1,61 @@
+{
+  "schemaVersion":1,
+  "targetMs":300,
+  "margin":0.8,
+  "modelSha256":"8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "userAgent":"Mozilla/5.0 (Android 17; Mobile; rv:158.0) Gecko/158.0 Firefox/158.0",
+  "backend":"v3-wasm",
+  "initializationMs":3600,
+  "fixtureSource":"v3/2026-10-22-vs-v2, primary-browser.json, first game of each board",
+  "repeats":2,
+  "runs":[
+    {
+      "visits":8,"p95Ms":47,"worstBoardP95Ms":51,
+      "perBoard":[
+        {"board":"sphere3","p95Ms":39,"samples":6},
+        {"board":"sphere4","p95Ms":47,"samples":6},
+        {"board":"sphere5","p95Ms":51,"samples":6},
+        {"board":"torus7","p95Ms":46,"samples":6},
+        {"board":"torus9","p95Ms":47,"samples":6},
+        {"board":"torus11","p95Ms":36,"samples":6}
+      ],"sampleCount":36,"excludedCertifiedLoss":0
+    },
+    {
+      "visits":16,"p95Ms":80,"worstBoardP95Ms":81,
+      "perBoard":[
+        {"board":"sphere3","p95Ms":72,"samples":6},
+        {"board":"sphere4","p95Ms":75,"samples":6},
+        {"board":"sphere5","p95Ms":81,"samples":6},
+        {"board":"torus7","p95Ms":80,"samples":6},
+        {"board":"torus9","p95Ms":68,"samples":6},
+        {"board":"torus11","p95Ms":62,"samples":6}
+      ],"sampleCount":36,"excludedCertifiedLoss":0
+    },
+    {
+      "visits":32,"p95Ms":129,"worstBoardP95Ms":135,
+      "perBoard":[
+        {"board":"sphere3","p95Ms":126,"samples":6},
+        {"board":"sphere4","p95Ms":126,"samples":6},
+        {"board":"sphere5","p95Ms":135,"samples":6},
+        {"board":"torus7","p95Ms":116,"samples":6},
+        {"board":"torus9","p95Ms":114,"samples":6},
+        {"board":"torus11","p95Ms":120,"samples":6}
+      ],"sampleCount":36,"excludedCertifiedLoss":0
+    },
+    {
+      "visits":64,"p95Ms":244,"worstBoardP95Ms":245,
+      "perBoard":[
+        {"board":"sphere3","p95Ms":243,"samples":6},
+        {"board":"sphere4","p95Ms":241,"samples":6},
+        {"board":"sphere5","p95Ms":233,"samples":6},
+        {"board":"torus7","p95Ms":245,"samples":6},
+        {"board":"torus9","p95Ms":244,"samples":6},
+        {"board":"torus11","p95Ms":244,"samples":6}
+      ],"sampleCount":36,"excludedCertifiedLoss":0
+    }
+  ],
+  "recommendedVisits":32,
+  "method":"End-to-end chooseMove in a Worker; all six boards, opening/middle/late archived positions; per-board P95 and 20% timing margin. No time cutoff or automatic setting changes.",
+  "elapsedMs":19992,
+  "finished":"2026-10-22T13:40:38.807Z"
+}

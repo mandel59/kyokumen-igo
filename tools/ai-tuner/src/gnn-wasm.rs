@@ -64,11 +64,20 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
     })
 }
 #[no_mangle] pub extern "C" fn v3_collect(batch:usize)->i32 {
+    collect(batch,None)
+}
+#[no_mangle] pub extern "C" fn v3_collect_limited(batch:usize,remaining:u32)->i32 {
+    collect(batch,Some(remaining))
+}
+fn collect(batch:usize,remaining:Option<u32>)->i32 {
     ENGINE.with(|slot| {
         let mut slot=slot.borrow_mut(); let Some(e)=slot.as_mut() else{return -2;};
         if !(1..=8).contains(&batch)||!e.ids.is_empty() {return -2;}
         let (game,past)=restore(&e.topology,e.komi,&e.moves).unwrap();
-        let leaves=e.search.collect(&game,&past,e.sphere,batch);
+        let leaves=match remaining {
+            Some(limit)=>e.search.collect_limited(&game,&past,e.sphere,batch,limit),
+            None=>e.search.collect(&game,&past,e.sphere,batch),
+        };
         e.x.clear();e.globals.clear();e.masks.clear();e.legal.clear();
         for leaf in leaves {
             e.ids.push(leaf.id);e.x.extend(leaf.features.x);e.globals.extend(leaf.features.global);

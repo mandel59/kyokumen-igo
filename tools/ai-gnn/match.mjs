@@ -14,8 +14,9 @@ if(!Number.isInteger(pairs)||pairs<1||!Number.isInteger(simulations)||simulation
 const bytes=readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url));
 async function player(model,tactics,side){
  if(model==='v2'){
-  const ai=await createWasmAI({load:async()=>readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url))});
-  return {name:'v2-deployed',async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
+  const loaded=readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url));
+  const ai=await createWasmAI({load:async()=>loaded});
+  return {name:'v2-deployed',config:{architecture:'v2',depth:4,wasmSha256:createHash('sha256').update(loaded).digest('hex')},async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
  }
  const wasm=arg('--'+side+'-wasm',null),loaded=wasm?readFileSync(wasm):bytes;
  const fpu=Number(arg('--'+side+'-fpu','0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));

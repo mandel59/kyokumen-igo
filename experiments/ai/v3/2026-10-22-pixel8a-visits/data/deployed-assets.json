@@ -1,0 +1,194 @@
+{
+  "baseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+  "workerVersion": "1f093dd8-dd7a-4aa0-9967-b8abbefdb830",
+  "files": [
+    {
+      "path": "ai-benchmark-page.js",
+      "sha256": "4a27347e544b691aa5f91dcd82872aaeddd5b888267749aaefa358f71945560d"
+    },
+    {
+      "path": "ai-benchmark-positions.json",
+      "sha256": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895"
+    },
+    {
+      "path": "ai-benchmark-worker.js",
+      "sha256": "0496c0cbbc3663bb4b232f9b9b6ff0075a49e473de3dbdbb9dc3879f2f6382cd"
+    },
+    {
+      "path": "ai-benchmark.html",
+      "sha256": "e7d7166e7ce40ea790de0b434490b90c5138577dd95cffaa1171ac90d6341e13"
+    },
+    {
+      "path": "ai-benchmark.js",
+      "sha256": "e33ab647db92a7a4c265b0ef9ac02823a6424c1a935f16a13c8b3c5ad76c4b44"
+    },
+    {
+      "path": "ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "ai-v3-search.js",
+      "sha256": "7cd12275af1a00312cc1eb673fdb06b01bb8876b8cbc29daab4c796f4a3a6746"
+    },
+    {
+      "path": "ai-v3-webgpu.js",
+      "sha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "path": "ai-v3.js",
+      "sha256": "3603501426639412674055b655bb4e66aaedba66da503323932c2e950c004c6f"
+    },
+    {
+      "path": "ai-v3.wasm",
+      "sha256": "ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216"
+    },
+    {
+      "path": "board-analysis.js",
+      "sha256": "eb24998ca2f5c98dadebcd3765355b865bf26447ad4e4a1b22164a1552e87897"
+    },
+    {
+      "path": "engine.js",
+      "sha256": "31f77f547006cfb46e5aea29e0db7b13bcbcdd4dc4bad33a023e08179214042c"
+    },
+    {
+      "path": "index.html",
+      "sha256": "e7d7166e7ce40ea790de0b434490b90c5138577dd95cffaa1171ac90d6341e13"
+    },
+    {
+      "path": "licenses/KataGo-LICENSE.txt",
+      "sha256": "770f21e95cfc982b19b2b17366b23b502925e4c882e409036ea00fff488cedd6"
+    },
+    {
+      "path": "licenses/Mulberry32-NOTICE.txt",
+      "sha256": "788c64f0b7ef381b429124f1e78b97ec5e90290f48d32176833f9ef43960b8c6"
+    },
+    {
+      "path": "licenses/onnxruntime-LICENSE.txt",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "licenses/onnxruntime-ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
+    },
+    {
+      "path": "licenses/rust/COPYRIGHT-library.html",
+      "sha256": "5647be074c8edf7339fd863055923a8fc80bc5610a8d4661ec3b767b9d392c27"
+    },
+    {
+      "path": "licenses/rust/licenses/Apache-2.0.txt",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff"
+    },
+    {
+      "path": "licenses/rust/licenses/BSD-2-Clause.txt",
+      "sha256": "f32fb3b417a194167cfad068223fc975ba96c5960513a10f66a3c28720aec1df"
+    },
+    {
+      "path": "licenses/rust/licenses/CC-BY-SA-4.0.txt",
+      "sha256": "23ee78c8bae49cf08ea2f0c84945c66b987ebe4520881fb51b3dad4fb43d07c2"
+    },
+    {
+      "path": "licenses/rust/licenses/GCC-exception-3.1.txt",
+      "sha256": "a3966c9410ef94a1efbfa9ec04e9c1994026a70623fbf0885ce36737bfba3b54"
+    },
+    {
+      "path": "licenses/rust/licenses/GPL-2.0-only.txt",
+      "sha256": "54b212ba1f97f6948fa5486239ab505dd820b02e50cbfd296b4062c8609a70af"
+    },
+    {
+      "path": "licenses/rust/licenses/GPL-3.0-or-later.txt",
+      "sha256": "05315fce6c35f79b8a35454828995fa26336f235895ac64557abc028f4ffcea2"
+    },
+    {
+      "path": "licenses/rust/licenses/ISC.txt",
+      "sha256": "0ff61769b238634e042ab759dddfd104a8e69d091e3600ae3410e401a6164381"
+    },
+    {
+      "path": "licenses/rust/licenses/LLVM-exception.txt",
+      "sha256": "e34c58338bd89d43e709e226610d8f32b3e3c47f4ad9a99a8dc1d4ac7842488e"
+    },
+    {
+      "path": "licenses/rust/licenses/MIT.txt",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0"
+    },
+    {
+      "path": "licenses/rust/licenses/NCSA.txt",
+      "sha256": "39cb0234065c92b9e6cee3830cbb52b1aa289aa8fe9ba2e66730fec5cf05c630"
+    },
+    {
+      "path": "licenses/rust/licenses/OFL-1.1.txt",
+      "sha256": "8eea8287e5876b539670cadb82e99f9a7afddec6f6730811be1daf25d2e9bcfd"
+    },
+    {
+      "path": "licenses/rust/licenses/Unicode-3.0.txt",
+      "sha256": "f5062c9a188d81dfe66b56db4182dcf9e4b17c0d9b0d311a8e20b3a1b075c443"
+    },
+    {
+      "path": "licenses/rust/manifest.json",
+      "sha256": "872ba9dff12f812c5b9062bc3113e9abdd4c90ac1b460a4c314096167747e3ba"
+    },
+    {
+      "path": "licenses/sources.json",
+      "sha256": "1f4b9ac5a4f39172f818b55f9753a8003bb8409624f6666e7a6ffef073d12a32"
+    },
+    {
+      "path": "licenses/SplitMix64-NOTICE.txt",
+      "sha256": "99637b862616ceefc20f7b18f37c433ff3109754e44affffd364ad92b00cf8b4"
+    },
+    {
+      "path": "models/v3/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "models/v3/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "models/v3/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "third-party-catalog.json",
+      "sha256": "7618187c9c84ed16f6b99adf5b2d7f535383054a14d994b94963bb35f931a4fc"
+    },
+    {
+      "path": "third-party.html",
+      "sha256": "0da9fc96b9914f01cc6b9d2644b41d9696c74bf54427760e8385dd01452b9238"
+    },
+    {
+      "path": "vendor/onnxruntime/LICENSE",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c"
+    },
+    {
+      "path": "vendor/onnxruntime/ort-wasm-simd-threaded.asyncify.mjs",
+      "sha256": "3d1c85995364bb643302fc6fd877a0c3ba5ae72401815e0f24828a53d9191e28"
+    },
+    {
+      "path": "vendor/onnxruntime/ort-wasm-simd-threaded.asyncify.wasm.gz",
+      "sha256": "dee6a22f1b499db967b51ef10adffc9bfc18822052cda2940312b211393a92a7"
+    },
+    {
+      "path": "vendor/onnxruntime/ort-wasm-simd-threaded.mjs",
+      "sha256": "e13f7f94fc51b4ca72b12faeb1ee95f4ace6dfbc8939bc718aabdc0a27c4299b"
+    },
+    {
+      "path": "vendor/onnxruntime/ort-wasm-simd-threaded.wasm.gz",
+      "sha256": "1343a4784585d71bd214ebf8dbfe35a59469bf2e992e8672db40f61967d36ce6"
+    },
+    {
+      "path": "vendor/onnxruntime/ort.wasm.min.mjs",
+      "sha256": "219e6a1fc8a9938268d18efca3c91d310bd2f4a59bbd13744df5b2b7fc6cee3b"
+    },
+    {
+      "path": "vendor/onnxruntime/ort.webgpu.min.mjs",
+      "sha256": "3dffff71811bc13a3a3d9591c57ca5ee5735b8f5f3eaf789510b02bb040ae3a0"
+    },
+    {
+      "path": "vendor/onnxruntime/ThirdPartyNotices.txt",
+      "sha256": "143764b952fdb1a7c69ce653bfba74a7744d6a8a573bfb73e235fba356c83de3"
+    }
+  ]
+}

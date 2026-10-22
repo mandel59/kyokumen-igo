@@ -1,6 +1,6 @@
 # Kyokugo AI v3 開発
 
-64 チャネル・6 ブロック、120,905 パラメータのグラフ NN と、Rust / WASM のバッチ MCTS です。[仕様](../../docs/ai/architectures/v3.md)、[再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md)、[初期検証](../../experiments/ai/v3/2026-10-21-initial/README.md) を参照してください。固定探索回数の診断で改善を確認したモデルを実験用に配置しています。同じ実時間でのブラウザ比較は未実施です。
+64 チャネル・6 ブロック、120,905 パラメータのグラフ NN と、Rust / WASM のバッチ MCTS です。[仕様](../../docs/ai/architectures/v3.md)、[再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md)、[初期検証](../../experiments/ai/v3/2026-10-21-initial/README.md) を参照してください。固定探索回数の診断で改善を確認したモデルを実験用に配置しています。現在の[共通64訪問の実ブラウザー評価](../../experiments/ai/v3/2026-10-22-fixed64-strength/README.md)では、現行v2に76勝20敗でした。
 
 ## セットアップと試走
 
@@ -18,7 +18,11 @@ node tools/ai-gnn/build.mjs
 uv run --project tools/ai-gnn python -m http.server --directory dist 8000
 ```
 
-`http://localhost:8000/?ai=v3` を開きます。CPU 推論は `?ai=v3&backend=wasm`。初期化中の手番は v2 が担当します。通常の URL は v2 のままです。
+`http://localhost:8000/?ai=v3` を開きます。CPU 推論は `?ai=v3&backend=wasm`。v3指定時は初期化を待ってから着手し、初期化・実行に失敗した場合はv2へフォールバックします。通常の URL は v2 のままです。
+
+ブラウザー版v3は標準で1手64訪問まで探索し、端末の速度による時間打ち切りは行いません。Pixel 8aの[実測結果](../../experiments/ai/v3/2026-10-22-pixel8a-visits/README.md)から、PC・スマートフォン共通で64訪問に設定しています。敗北確定時は早期パスします。`createV3AI().chooseMove(position,{maxSimulations})` で訪問数を指定でき、比較ツール向けに `budgetMs` を明示した場合だけ時間制限も併用できます。
+
+端末間で訪問数を揃えたまま待ち時間を調整するには、基準端末で [計測ページ](../../dist/ai-benchmark.html) を開きます。全6盤の序盤・中盤・終盤18局面をWorkerで測り、最も遅い盤のP95が300ms以内になる訪問数を候補として表示します。300ms目標に400msまでの余裕を含めるため、追加の余裕は差し引きません。計測ページは設定を変更せず、結果を自動送信しません。実機の結果を確認してから、全端末共通の `V3_DEFAULT_SIMULATIONS` を変更します。WebGPUの実機計測はHTTPSまたは端末自身のlocalhostで行います。
 
 `prepare.mjs` は固定バージョンの ONNX Runtime Web とライセンスを `dist/vendor/onnxruntime/` に用意します。この生成ディレクトリは Git 管理外です。v3 を配信する際も事前に prepare を実行し、生成物を含めて `dist/` を配信します。推論時に外部 CDN や AI サーバーへ接続しません。
 
@@ -72,6 +76,7 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/train.py --data t
 
 ```powershell
 node v3-tests.mjs
+node --experimental-vm-modules tools/ai-gnn/test-player.mjs
 uv run --project tools/ai-gnn python tools/ai-gnn/test_model.py
 uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/test_training.py
 node tools/ai-gnn/test-selfplay.mjs
@@ -102,6 +107,12 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py 
 従来の `node tests.mjs`、`node wasm-tests.mjs`、`node search-tests.mjs`、`node ui-tests.mjs` なども継続して実行します。
 
 ## 棋力の診断対戦
+
+ブラウザーの固定訪問数で比較する場合は、実Worker・WebGPUで対戦する `browser-match.mjs --simulations` を使います。通常手は指定訪問数に厳密に一致し、敗北確定時だけ早期パスします。`--budget-ms` とは併用できません。[64訪問の評価](../../experiments/ai/v3/2026-10-22-fixed64-strength/README.md)は全6盤・先後交換96局です。
+
+```powershell
+node tools/ai-gnn/browser-match.mjs --a dist/models/v3 --b v2 --pairs 8 --simulations 64 --a-fpu 1 --seed 2026102260 --output tools/ai-gnn/target/browser-fixed64.json
+```
 
 ```powershell
 node tools/ai-gnn/match.mjs --a tools/ai-gnn/target/candidate --b v2 --pairs 2 --simulations 128 --seed 20261140 --output tools/ai-gnn/target/match.json

@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-pixel8a-visits",
+  "architecture": "v3",
+  "title": "Pixel 8a Chrome and Firefox calibration of a shared 64-visit browser budget",
+  "source": {
+    "baseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+    "patch": "data/source.patch",
+    "snapshot": "data/source/"
+  },
+  "variants": [
+    "v3:8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a:webgpu",
+    "v3:8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a:wasm"
+  ],
+  "result": {
+    "path": "data/summary.json",
+    "selectedVisits": 64
+  },
+  "notes": [
+    "User-provided Pixel 8a measurements; all fields of both shared JSON reports preserved.",
+    "The original 240ms selection is superseded by the user-confirmed 300ms criterion. No second timing margin.",
+    "The source snapshot and deployment hashes identify the measured code before changing its default from 512 to 64."
+  ],
+  "artifacts": [
+    {
+      "path": "data/chrome-webgpu.json",
+      "sha256": "cac65bca7baddde2ca88a65f63652457d0ddc231fbde521d9ee5a999c6598e41"
+    },
+    {
+      "path": "data/deployed-assets.json",
+      "sha256": "367adf593dd37aeb266d366ceb599c1b492dd16324cc30027943a80371d3f77b"
+    },
+    {
+      "path": "data/deployment.json",
+      "sha256": "35e5e9597b544dd9e44bb54aa75ad14b099e2c7b0acdd3360f70f6b97132f430"
+    },
+    {
+      "path": "data/derive.mjs",
+      "sha256": "18ffefcdb862a2413cddbb3823efc2c243bbe091cd5e25c88a9b7e1488d3cbf2"
+    },
+    {
+      "path": "data/firefox-wasm.json",
+      "sha256": "ff09c62e1242d452d5053fc451f616b371c421bf5e97a3d31f17adb6b6a3486a"
+    },
+    {
+      "path": "data/implementation-validation.json",
+      "sha256": "5549081f8da2080ec2c8bd1a0c64ebbaee88ed52c1cdf7bfdd1e3fdcc99ae9b1"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "438832c9780d8be309c3eefaabfe03e2e6019875bda9c2ff813775b718b0f3ed"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark-page.js",
+      "sha256": "4a27347e544b691aa5f91dcd82872aaeddd5b888267749aaefa358f71945560d"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark-positions.json",
+      "sha256": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark-worker.js",
+      "sha256": "0496c0cbbc3663bb4b232f9b9b6ff0075a49e473de3dbdbb9dc3879f2f6382cd"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark.html",
+      "sha256": "e7d7166e7ce40ea790de0b434490b90c5138577dd95cffaa1171ac90d6341e13"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark.js",
+      "sha256": "e33ab647db92a7a4c265b0ef9ac02823a6424c1a935f16a13c8b3c5ad76c4b44"
+    },
+    {
+      "path": "data/source/dist/ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "data/source/dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/source/dist/ai-v3-search.js",
+      "sha256": "7cd12275af1a00312cc1eb673fdb06b01bb8876b8cbc29daab4c796f4a3a6746"
+    },
+    {
+      "path": "data/source/dist/ai-v3-webgpu.js",
+      "sha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "path": "data/source/dist/ai-v3.js",
+      "sha256": "3603501426639412674055b655bb4e66aaedba66da503323932c2e950c004c6f"
+    },
+    {
+      "path": "data/source/dist/ai-v3.wasm",
+      "sha256": "ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216"
+    },
+    {
+      "path": "data/source/dist/board-analysis.js",
+      "sha256": "eb24998ca2f5c98dadebcd3765355b865bf26447ad4e4a1b22164a1552e87897"
+    },
+    {
+      "path": "data/source/dist/engine.js",
+      "sha256": "31f77f547006cfb46e5aea29e0db7b13bcbcdd4dc4bad33a023e08179214042c"
+    },
+    {
+      "path": "data/source/dist/models/v3/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "877333b0ad6d5a42366667345997cec429ebfe4df3c0817315d518b29d784e8c"
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+diff --git a/experiments/ai/README.md b/experiments/ai/README.md
+index 23ce991..c736a18 100644
+--- a/experiments/ai/README.md
++++ b/experiments/ai/README.md
+@@ -18,6 +18,7 @@
+ | v3/2026-10-22-inference | 専用 WebGPU・CPU の実バッチ推論と速度比較 | [記録](v3/2026-10-22-inference/README.md) |
+ | v3/2026-10-22-learning | 自己対局教材・追加学習・不採用候補の評価 | [記録](v3/2026-10-22-learning/README.md) |
+ | v3/2026-10-22-learning-revision | 通常局面での選抜・探索教師の比較・独立評価を通過した重み | [記録](v3/2026-10-22-learning-revision/README.md) |
++| v3/2026-10-22-vs-v2 | 現行v3 WebGPUとv2 WASMの対戦・計算時間比較 | [記録](v3/2026-10-22-vs-v2/README.md) |
+ | v2/2026-10-22-endgame | 生存・敗北確定判定の共通化と v2 のパス改善 | [記録](v2/2026-10-22-endgame/README.md) |
+ 
+ 機械可読の索引は [catalog.json](catalog.json) です。各実験は README（報告）、manifest.json（識別情報・出所・データハッシュ）、data/（結果・計画・ログ）を持ちます。
+diff --git a/experiments/ai/catalog.json b/experiments/ai/catalog.json
+index 7261ce3..3b5f8d8 100644
+--- a/experiments/ai/catalog.json
++++ b/experiments/ai/catalog.json
+@@ -73,6 +73,12 @@
+       "title": "Normal-position selection, controlled search teachers and iterative selfplay",
+       "path": "v3/2026-10-22-learning-revision/"
+     },
++    {
++      "id": "v3/2026-10-22-vs-v2",
++      "architecture": "v3",
++      "title": "Current application v3 WebGPU versus deployed v2 WASM",
++      "path": "v3/2026-10-22-vs-v2/"
++    },
+     {
+       "id": "v2/2026-10-22-endgame",
+       "architecture": "v2",
+diff --git a/tools/ai-gnn/browser-match.mjs b/tools/ai-gnn/browser-match.mjs
+index bc7c6d2..8bb5711 100644
+--- a/tools/ai-gnn/browser-match.mjs
++++ b/tools/ai-gnn/browser-match.mjs
+@@ -3,12 +3,22 @@ import {createServer} from 'node:http';
+ import {readFileSync,writeFileSync,existsSync} from 'node:fs';
+ import {resolve,sep,extname} from 'node:path';
+ import {cpus} from 'node:os';
++import {createHash} from 'node:crypto';
+ import {chromium} from 'playwright-core';
+ import {matchStatistics} from './match-statistics.mjs';
+ const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
+ const root=resolve('.'),models={a:resolve(arg('--a')),b:resolve(arg('--b','dist/models/v3'))},output=arg('--output');
++const v2Opponent=arg('--b')==='v2',sides=v2Opponent?['a']:['a','b'];
+ if(!args.includes('--a')||!output)throw new Error('Expected --a MODEL --output FILE');
+-const wasm={a:resolve('dist/ai-v3.wasm'),b:resolve(arg('--b-wasm','experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
++if(existsSync(output))throw new Error('Output already exists: '+output);
++const pairs=Number(arg('--pairs','4')),budgetMs=Number(arg('--budget-ms','300')),seed=Number(arg('--seed','2026102252'));
++const selectedBoard=arg('--board','all');
++if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
++ !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
++const wasm={a:resolve('dist/ai-v3.wasm'),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
++const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
++if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
++const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+ const mime={'.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
+ const server=createServer((req,res)=>{
+  try{
+@@ -35,18 +45,22 @@ try{
+  await page.exposeFunction('studyProgress',report=>{writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Browser games',report.boards.reduce((s,b)=>s+b.games.length,0));});
+  const report=await page.evaluate(async config=>{
+   const run=async function(config){
+-   const {base,seed,pairs,budgetMs,fpu}=config;
++   const {base,seed,pairs,budgetMs,fpu,v2Opponent,sides,selectedBoard}=config;
+    const {Game,createTopology}=await import(base+'/dist/engine.js');
+    const {aiPosition}=await import(base+'/dist/ai-position.js');
+    const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
+    const {createV3AI}=await import(base+'/dist/ai-v3.js');
++   const {createWasmAI}=await import(base+'/dist/ai-wasm.js');
+    const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
+-   const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]];
+-   const manifest={};for(const side of['a','b'])manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
++   const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].filter(([kind,size])=>selectedBoard==='all'||kind+size===selectedBoard);
++   const manifest={};for(const side of sides)manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
+    const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:budgetMs,komi:6.5,openingMoves:4,
+-    models:{a:manifest.a.sha256,b:manifest.b.sha256},fpu,boards:[],inferenceTimings:[],condition:'Same Worker, sequential turns, actual application WebGPU player; fixed time, max 4096 visits, early stop on certified loss.'};
++    models:{a:manifest.a.sha256,b:v2Opponent?'v2-deployed':manifest.b.sha256},fpu,boards:[],inferenceTimings:[],
++    configurations:{a:{architecture:'v3',backend:'webgpu',budgetMs,maxSimulations:4096,fpu:fpu.a},b:v2Opponent?{architecture:'v2',backend:'wasm',depth:4}:{architecture:'v3',backend:'webgpu',budgetMs,maxSimulations:4096,fpu:fpu.b}},
++    condition:v2Opponent?'Current application configurations: v3 WebGPU with 300ms default budget versus deployed v2 WASM depth 4. Same Worker, sequential turns; actual compute time is measured, not equalized.':'Same Worker, sequential turns, actual application WebGPU player; fixed time, max 4096 visits, early stop on certified loss.'};
++   if(v2Opponent)report.condition=report.condition.replace('300ms',budgetMs+'ms');
+    const load=side=>async()=>{const r=await fetch(base+'/wasm/'+side);if(!r.ok)throw new Error('Missing WASM');return r.arrayBuffer();};
+-   const native={};for(const side of['a','b']){
++   const native={};for(const side of sides){
+     native[side]=await createV3Inference({manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu'});
+     if(native[side].backend!=='webgpu'||native[side].runtime!=='wgsl')throw new Error('Dedicated WebGPU required');
+    }
+@@ -62,17 +76,21 @@ try{
+      const adjacency=adjacencyFor(game.topology);
+      for(const count of[1,4,8]){
+       const request={count};for(const key of['x','mask','global_features'])request[key]=Float32Array.from(leaves.slice(0,count).flatMap(l=>Array.from(l[key])));
+-      for(const side of['a','b'])for(let i=0;i<5;i++)await native[side].evaluate(request,adjacency);
++      for(const side of sides)for(let i=0;i<5;i++)await native[side].evaluate(request,adjacency);
+       const times={a:[],b:[]};
+-      for(let round=0;round<3;round++)for(const side of round%2?['b','a']:['a','b'])for(let i=0;i<20;i++){
++      for(let round=0;round<3;round++)for(const side of round%2?sides.slice().reverse():sides)for(let i=0;i<20;i++){
+        const start=performance.now();await native[side].evaluate(request,adjacency);const dt=performance.now()-start;times[side].push(dt);allTimes[side].push(dt);
+       }
+-      report.inferenceTimings.push({board:kind+size,batch:count,aP95:p95(times.a),bP95:p95(times.b),ratio:p95(times.a)/p95(times.b)});
++      report.inferenceTimings.push({board:kind+size,batch:count,aP95:p95(times.a),bP95:v2Opponent?null:p95(times.b),ratio:v2Opponent?null:p95(times.a)/p95(times.b)});
+      }
+     }
+    }finally{encoder.dispose();for(const v of Object.values(native))await v.dispose();}
+-   report.warmInference={aP95:p95(allTimes.a),bP95:p95(allTimes.b),ratio:p95(allTimes.a)/p95(allTimes.b),samplesPerModel:allTimes.a.length};
+-   const players={};for(const side of['a','b'])players[side]=await createV3AI({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
++   report.warmInference={aP95:p95(allTimes.a),bP95:v2Opponent?null:p95(allTimes.b),ratio:v2Opponent?null:p95(allTimes.a)/p95(allTimes.b),samplesPerModel:allTimes.a.length};
++   const players={};for(const side of sides)players[side]=await createV3AI({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
++   if(v2Opponent){
++    const ai=await createWasmAI({load:load('b')});
++    players.b={async chooseMove(position,{seed}){return{move:ai.chooseMove(position,{depth:4,seed}),backend:'v2-wasm'};},async dispose(){ai.dispose();}};
++   }
+    let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
+    try{
+     for(const[kind,size]of boards){
+@@ -83,18 +101,19 @@ try{
+       const turnSeeds=Array.from({length:topology.vertices.length*20},random);let score=0,completed=0;
+       for(const aColor of[1,2]){
+        const game=new Game(topology,6.5);for(const move of moves)game.play(move);
+-       const metrics={a:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0},b:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0}};
++       const metrics={a:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0},b:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0}},turnMetrics=[];
+        while(!game.ended&&game.moves<turnSeeds.length){
+         const side=game.turn===aColor?'a':'b',start=performance.now();
+         const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],budgetMs,maxSimulations:4096});
+-        if(result.backend!=='v3-webgpu')throw new Error('Unexpected CPU fallback during timed match');
+-        const m=metrics[side];m.turns++;m.ms+=performance.now()-start;m.simulations+=result.simulations;
++        if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
++        const elapsedMs=performance.now()-start,m=metrics[side];m.turns++;m.ms+=elapsedMs;m.simulations+=result.simulations??0;
++        turnMetrics.push({ply:game.moves,side,elapsedMs,simulations:result.simulations??null,backend:result.backend,move:result.move,provenLoss:result.provenLoss??null});
+         if(result.move===null)m.passes++;if(result.provenLoss)m.certifiedLossPasses++;
+         if(!(result.move===null?game.pass():game.play(result.move)).ok)throw new Error('Illegal browser move');
+        }
+        const margin=game.score(),aScore=game.ended?(margin.winner===0?.5:margin.winner===aColor?1:0):null;
+        if(aScore!==null){score+=aScore;completed++;}
+-       board.games.push({pair,aColor,ended:game.ended,aScore,marginForA:(margin.black-margin.white)*(aColor===1?1:-1),metrics,moves:game.history.slice(1).map(s=>s.lastMove??-1)});
++       board.games.push({pair,aColor,ended:game.ended,aScore,marginForA:(margin.black-margin.white)*(aColor===1?1:-1),metrics,turnMetrics,moves:game.history.slice(1).map(s=>s.lastMove??-1)});
+        self.postMessage({kind:'progress',report});
+       }
+       board.pairScores.push(completed===2?score/2:null);
+@@ -110,8 +129,9 @@ try{
+    worker.onmessage=event=>{const r=event.data;if(r.kind==='progress'){pending=pending.then(()=>window.studyProgress(r.report));pending.catch(reject);}else if(r.kind==='done'){worker.terminate();pending.then(()=>resolve(r.report),reject);}else{worker.terminate();reject(new Error(r.message));}};
+    worker.onerror=event=>{worker.terminate();reject(new Error(event.message));};worker.postMessage(config);
+   });
+- },{base,seed:Number(arg('--seed','2026102252')),pairs:Number(arg('--pairs','4')),budgetMs:Number(arg('--budget-ms','300')),fpu:{a:Number(arg('--a-fpu','0')),b:Number(arg('--b-fpu','0'))}});
++ },{base,seed,pairs,budgetMs,fpu,v2Opponent,sides,selectedBoard});
+  report.role=arg('--role','evaluation');
+  report.summary=matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(report.seed+1)))});report.environment={browser:browser.version(),node:process.version,cpu:cpus()[0].model};
++ report.provenance={wasm:{a:hash(wasm.a),b:hash(wasm.b)},sources:Object.fromEntries(['tools/ai-gnn/browser-match.mjs','dist/engine.js','dist/ai-position.js','dist/ai-wasm.js','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js'].map(p=>[p,hash(p)]))};
+  writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({summary:report.summary,warmInference:report.warmInference}));
+ }finally{await browser.close();await new Promise(r=>server.close(r));}
+diff --git a/tools/ai-gnn/match.mjs b/tools/ai-gnn/match.mjs
+index 691fb75..eac57cb 100644
+--- a/tools/ai-gnn/match.mjs
++++ b/tools/ai-gnn/match.mjs
+@@ -14,8 +14,9 @@ if(!Number.isInteger(pairs)||pairs<1||!Number.isInteger(simulations)||simulation
+ const bytes=readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url));
+ async function player(model,tactics,side){
+  if(model==='v2'){
+-  const ai=await createWasmAI({load:async()=>readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url))});
+-  return {name:'v2-deployed',async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
++  const loaded=readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url));
++  const ai=await createWasmAI({load:async()=>loaded});
++  return {name:'v2-deployed',config:{architecture:'v2',depth:4,wasmSha256:createHash('sha256').update(loaded).digest('hex')},async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
+  }
+  const wasm=arg('--'+side+'-wasm',null),loaded=wasm?readFileSync(wasm):bytes;
+  const fpu=Number(arg('--'+side+'-fpu','0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
+diff --git a/tools/ai-gnn/run-v2-comparison.mjs b/tools/ai-gnn/run-v2-comparison.mjs
+new file mode 100644
+index 0000000..6f3e1c8
+--- /dev/null
++++ b/tools/ai-gnn/run-v2-comparison.mjs
+@@ -0,0 +1,34 @@
++// Freeze current application configurations before the declared v2/v3 comparison.
++import assert from 'node:assert/strict';
++import {readFileSync,writeFileSync,existsSync,mkdirSync,copyFileSync} from 'node:fs';
++import {createHash} from 'node:crypto';
++import {execFileSync} from 'node:child_process';
++import {runStudyCommand} from './study-commands.mjs';
++const directory='experiments/ai/v3/2026-10-22-vs-v2',data=directory+'/data';
++const plan=JSON.parse(readFileSync(directory+'/plan.json','utf8'));
++mkdirSync(data,{recursive:true});
++if(existsSync(data+'/execution.json'))throw new Error('Comparison already has an execution record');
++const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
++const paths=['dist/engine.js','dist/ai-position.js','dist/ai-engine.wasm','dist/ai-wasm.js','dist/ai-v3.wasm',
++ 'dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js','dist/models/v3/manifest.json','dist/models/v3/model.onnx','dist/models/v3/weights.f32',
++ 'tools/ai-gnn/match.mjs','tools/ai-gnn/browser-match.mjs','tools/ai-gnn/match-statistics.mjs','tools/ai-gnn/run-v2-comparison.mjs'];
++const hashes=Object.fromEntries(paths.map(p=>[p,hash(p)]));
++assert.equal(execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),plan.sourceBaseCommit);
++assert.equal(hashes['dist/models/v3/model.onnx'],plan.modelSha256);
++assert.equal(hashes['dist/ai-engine.wasm'],plan.wasmSha256.v2);assert.equal(hashes['dist/ai-v3.wasm'],plan.wasmSha256.v3);
++const state={schemaVersion:1,started:new Date().toISOString(),status:'primary',baseCommit:plan.sourceBaseCommit,
++ planSha256:hash(directory+'/plan.json'),hashes,selectionOrPromotion:false};
++const save=()=>writeFileSync(data+'/execution.json',JSON.stringify(state,null,2)+'\n');
++const unchanged=()=>{for(const[p,h]of Object.entries(hashes))assert.equal(hash(p),h,'Configuration changed: '+p);};
++copyFileSync('tools/ai-gnn/target/v3-vs-v2/preflight.json',data+'/preflight.json');save();
++try{
++ unchanged();
++ await runStudyCommand(data,'primary-browser',process.execPath,['tools/ai-gnn/browser-match.mjs','--a',plan.v3.model,'--b','v2',
++  '--pairs',String(plan.primary.pairsPerBoard),'--budget-ms',String(plan.primary.v3BudgetMs),'--seed',String(plan.primary.seed),
++  '--bootstrap-seed',String(plan.primary.bootstrapSeed),'--a-fpu',String(plan.v3.fpu),'--output',data+'/primary-browser.json']);
++ unchanged();state.status='secondary';save();
++ await runStudyCommand(data,'secondary-fixed',process.execPath,['tools/ai-gnn/match.mjs','--a',plan.v3.model,'--b','v2',
++  '--a-fpu',String(plan.v3.fpu),'--pairs',String(plan.secondary.pairsPerBoard),'--simulations',String(plan.secondary.v3Visits),
++  '--seed',String(plan.secondary.seed),'--output',data+'/secondary-fixed.json']);
++ unchanged();state.status='ready-for-summary';state.finished=new Date().toISOString();save();console.log(state.status);
++}catch(error){state.status='error';state.error=error.stack;save();throw error;}
+diff --git a/tools/ai-gnn/finish-v2-comparison.mjs b/tools/ai-gnn/finish-v2-comparison.mjs
+new file mode 100644
+index 0000000..80b57f8
+--- /dev/null
++++ b/tools/ai-gnn/finish-v2-comparison.mjs
+@@ -0,0 +1,98 @@
++// Summarize the completed, predeclared comparison without rerunning or selecting players.
++import assert from 'node:assert/strict';
++import {readFileSync,writeFileSync,mkdirSync,readdirSync,existsSync} from 'node:fs';
++import {createHash} from 'node:crypto';
++import {spawnSync} from 'node:child_process';
++import {join,relative,resolve} from 'node:path';
++import {Game,createTopology} from '../../dist/engine.js';
++import {matchStatistics} from './match-statistics.mjs';
++const directory='experiments/ai/v3/2026-10-22-vs-v2',data=directory+'/data';
++const read=p=>JSON.parse(readFileSync(p,'utf8')),hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
++const plan=read(directory+'/plan.json'),execution=read(data+'/execution.json');
++assert.equal(execution.status,'ready-for-summary');assert.equal(hash(directory+'/plan.json'),execution.planSha256);
++if(existsSync(data+'/summary.json'))throw new Error('Completed summary already exists');
++for(const[p,h]of Object.entries(execution.hashes))assert.equal(hash(p),h,'Configuration changed: '+p);
++const primary=read(data+'/primary-browser.json'),secondary=read(data+'/secondary-fixed.json');
++assert.equal(primary.models.a,plan.modelSha256);assert.equal(primary.models.b,'v2-deployed');
++assert.equal(primary.fpu.a,plan.v3.fpu);assert.equal(primary.configurations.b.depth,4);
++assert.equal(primary.provenance.wasm.a,plan.wasmSha256.v3);assert.equal(primary.provenance.wasm.b,plan.wasmSha256.v2);
++assert.equal(secondary.aConfig.model,plan.modelSha256);assert.equal(secondary.aConfig.fpu,plan.v3.fpu);
++assert.equal(secondary.aConfig.wasmSha256,plan.wasmSha256.v3);assert.equal(secondary.bConfig.wasmSha256,plan.wasmSha256.v2);
++const primaryStats=matchStatistics(primary,{seed:plan.primary.bootstrapSeed,iterations:plan.statistics.iterations});
++assert.deepEqual(primaryStats,primary.summary);assert.equal(primaryStats.games,plan.primary.games);
++const secondaryStats=matchStatistics(secondary,{seed:plan.secondary.bootstrapSeed,iterations:plan.statistics.iterations});
++assert.equal(secondaryStats.games,plan.secondary.games);
++let replays=0;
++for(const report of[primary,secondary])for(const board of report.boards)for(const record of board.games){
++ const game=new Game(createTopology(board.kind,board.size),report.komi);
++ for(const move of record.moves)assert.ok((move===-1?game.pass():game.play(move)).ok,'Illegal replay move');
++ assert.equal(game.ended,record.ended);const score=game.score();
++ assert.equal((score.black-score.white)*(record.aColor===1?1:-1),record.marginForA);
++ const aScore=game.ended?(score.winner===0?.5:score.winner===record.aColor?1:0):null;
++ assert.equal(aScore,record.aScore);replays++;
++}
++const quantile=(values,p)=>values.slice().sort((a,b)=>a-b)[Math.ceil(values.length*p)-1];
++const distribution=values=>({count:values.length,meanMs:values.reduce((s,v)=>s+v,0)/values.length,medianMs:quantile(values,.5),p95Ms:quantile(values,.95),totalMs:values.reduce((s,v)=>s+v,0)});
++const timing={};
++for(const side of['a','b']){
++ const turns=primary.boards.flatMap(b=>b.games).flatMap(g=>g.turnMetrics).filter(t=>t.side===side);
++ timing[side==='a'?'v3':'v2']=distribution(turns.map(t=>t.elapsedMs));
++}
++timing.v3WithoutCertifiedLoss=distribution(primary.boards.flatMap(b=>b.games).flatMap(g=>g.turnMetrics).filter(t=>t.side==='a'&&!t.provenLoss).map(t=>t.elapsedMs));
++const summary={schemaVersion:1,id:plan.id,finished:execution.finished,sourceBaseCommit:execution.baseCommit,modelSha256:plan.modelSha256,
++ primary:{role:plan.primary.role,configurations:primary.configurations,statistics:primaryStats,timing,environment:primary.environment},
++ secondary:{role:plan.secondary.role,configurations:{v3:secondary.aConfig,v2:secondary.bConfig},statistics:secondaryStats,
++  meanComputeMs:{v3:secondary.summary.metrics.a_ms/secondary.summary.metrics.a_turns,v2:secondary.summary.metrics.b_ms/secondary.summary.metrics.b_turns}},
++ elapsedSeconds:{primary:read(data+'/primary-browser-command.json').elapsedSeconds,secondary:read(data+'/secondary-fixed-command.json').elapsedSeconds},
++ verification:{replayedGames:replays,allMovesLegal:true,allScoresMatch:true,configurationsUnchanged:true},
++ limits:['Current application configurations, not equal compute time: v2 depth 4 has no deadline interface.',
++  'Fixed six boards, komi 6.5, sampled four-move openings, one device; no human-rank estimate.',
++  'v2 API exposes move and elapsed time, not MCTS visits or proof flags. Its zero visit/proof counters in raw metrics mean unavailable.',
++  'Per-board samples are smaller than the aggregate; do not infer an ordering of board-specific improvements.'],
++ promotion:false};
++writeFileSync(data+'/summary.json',JSON.stringify(summary,null,2)+'\n');
++const pct=n=>(100*n).toFixed(1)+'%',fmt=n=>n.toFixed(2),interval=s=>s.pairedBootstrap?s.pairedBootstrap.interval95.map(pct).join('〜'):'打ち切りを含むため算出せず';
++const boardRows=primaryStats.boards.map((b,i)=>'| '+b.board+' | '+b.score+' / '+b.games+' | '+secondaryStats.boards[i].score+' / '+secondaryStats.boards[i].games+' |').join('\n');
++const direction=primaryStats.pairedBootstrap?.interval95[0]>.5?'この評価条件ではv3がv2を上回りました。':primaryStats.pairedBootstrap?.interval95[1]<.5?'この評価条件ではv2がv3を上回りました。':'今回の標本では全体の優劣を確定できませんでした。';
++writeFileSync(directory+'/README.md',[
++ '# 現行v2とv3の強さの比較','',
++ direction+'実Workerで現行アプリの設定を比較し、v3は'+primaryStats.wins+'勝'+primaryStats.losses+'敗'+primaryStats.draws+'分、得点率'+pct(primaryStats.scoreRate)+'でした。打ち切りは'+primaryStats.capped+'局、先後交換ペアによる95%信頼区間は'+interval(primaryStats)+'です。','',
++ '## 評価条件','',
++ 'v3は現行重み`'+plan.modelSha256+'`、親平均FPU、WebGPU、1手300ms・最大4096訪問です。v2は現行配信WASM・盤別係数・深さ4です。双方ともアプリと同じ合法手・終盤判定を使います。v2は時間制限型ではないため、同じ計算時間という比較ではありません。UIの最低表示待ち400ms、描画、初期化、メッセージ転送は着手計算時間に含めません。','',
++ '全6盤、コミ6.5、ランダムな合法4手から開始し、同じ開始配置と手数別seedで先後を交換しました。主比較は各盤8ペア・計96局、seed '+plan.primary.seed+'、v3/v2を同一Worker内で交互に呼び出しています。他の計算ジョブを同時実行していません。補助比較はCPU ONNXのv3を128訪問、v2を深さ4に固定し、各盤4ペア・計48局、seed '+plan.secondary.seed+'で実行しました。訪問数とalpha-betaの深さは同じ探索量を表しません。','',
++ '## 対戦結果','',
++ '| 盤 | 実ブラウザでのv3得点 | 固定128訪問のv3得点 |','| --- | ---: | ---: |',boardRows,'',
++ '主比較：'+primaryStats.wins+'勝'+primaryStats.losses+'敗'+primaryStats.draws+'分、'+pct(primaryStats.scoreRate)+'、95%区間'+interval(primaryStats)+'。補助比較：'+secondaryStats.wins+'勝'+secondaryStats.losses+'敗'+secondaryStats.draws+'分、'+pct(secondaryStats.scoreRate)+'、95%区間'+interval(secondaryStats)+'、打ち切り'+secondaryStats.capped+'局。区間は盤別層化、先後交換ペアを単位とする10,000回bootstrapです。','',
++ '## 計算時間と実行環境','',
++ '| 現行アプリ構成 | 全着手の平均 | 中央値 | P95 |','| --- | ---: | ---: | ---: |',
++ '| v3 WebGPU | '+fmt(timing.v3.meanMs)+'ms | '+fmt(timing.v3.medianMs)+'ms | '+fmt(timing.v3.p95Ms)+'ms |',
++ '| v2 WASM深さ4 | '+fmt(timing.v2.meanMs)+'ms | '+fmt(timing.v2.medianMs)+'ms | '+fmt(timing.v2.p95Ms)+'ms |','',
++ '敗北確定で即時パスする手も上表に含みます。v3でその手を除いた平均は'+fmt(timing.v3WithoutCertifiedLoss.meanMs)+'msです。v2 APIは証明フラグや訪問数を返さないため、それらを比較しません。','',
++ 'ブラウザ'+primary.environment.browser+'、Node '+primary.environment.node+'、CPU '+primary.environment.cpu.trim()+'。主比較は'+fmt(summary.elapsedSeconds.primary/60)+'分、補助比較は'+fmt(summary.elapsedSeconds.secondary/60)+'分でした。v3の全着手でWebGPU経路を検証しています。盤別の標本は全体より小さく、他の端末・コミ・人間への段級位には直接換算しません。','',
++ '## 保存データと検証','',
++ '[事前計画](plan.json)、[実行とハッシュ](data/execution.json)、[集計](data/summary.json)、[実ブラウザ全棋譜](data/primary-browser.json)、[固定訪問数の全棋譜](data/secondary-fixed.json)、[ソース差分](data/source.patch)、[全成果物目録](manifest.json)を保存しています。全'+replays+'局を再生し、合法手・終局・得点・勝敗が一致しました。勝敗を見て条件・重み・局数を変えることや、モデルの採用・配信切り替えは行っていません。','',
++ '実行コードの基準は`'+plan.sourceBaseCommit+'`です。各`*-command.json`のcommand・argsが実際のコマンドです。追試は同じ入力と設定で新しい出力先へ保存し、既存結果は上書きしません。比較用の`run-v2-comparison.mjs`は今回の固定パスを持ち、実行済み記録があると停止します。','',
++ '```powershell','node tools/ai-tuner/check-experiments.mjs','```',''
++].join('\n'));
++const scope=['tools/ai-gnn/browser-match.mjs','tools/ai-gnn/match.mjs','tools/ai-gnn/run-v2-comparison.mjs',
++ 'tools/ai-gnn/finish-v2-comparison.mjs','experiments/ai/catalog.json','experiments/ai/README.md',directory+'/README.md',directory+'/plan.json'];
++const git=args=>{const r=spawnSync('git',args,{encoding:'utf8',maxBuffer:32*1024*1024});assert.equal(r.status,0,r.stderr);return r.stdout;};
++const untracked=new Set(git(['ls-files','--others','--exclude-standard']).trim().split('\n'));
++let patch=git(['diff','--binary',plan.sourceBaseCommit,'--',...scope]);
++for(const p of scope)if(untracked.has(p)){
++ const r=spawnSync('git',['diff','--no-index','--binary','--','/dev/null',p],{encoding:'utf8',maxBuffer:32*1024*1024});assert.ok([0,1].includes(r.status),r.stderr);patch+=r.stdout;
++}
++writeFileSync(data+'/source.patch',patch);
++const sources=[];
++for(const p of new Set([...scope,...Object.keys(execution.hashes)])){
++ const snapshot=join(data,'source',p);mkdirSync(resolve(snapshot,'..'),{recursive:true});writeFileSync(snapshot,readFileSync(p));sources.push({path:p,sha256:hash(p),snapshot});
++}
++writeFileSync(data+'/source-manifest.json',JSON.stringify({baseCommit:plan.sourceBaseCommit,patchSha256:hash(data+'/source.patch'),sources},null,2)+'\n');
++const artifacts=[];
++function walk(dir){for(const e of readdirSync(dir,{withFileTypes:true})){const p=join(dir,e.name);if(e.isDirectory())walk(p);else artifacts.push({path:relative(directory,p).replaceAll('\\','/'),sha256:hash(p)});}}
++walk(data);artifacts.sort((a,b)=>a.path.localeCompare(b.path));
++const manifest={schemaVersion:1,id:plan.id,architecture:'v3',title:'Current application v3 WebGPU versus deployed v2 WASM',
++ source:{baseCommit:plan.sourceBaseCommit,patch:'data/source.patch'},plan:{path:'plan.json',sha256:execution.planSha256},
++ variants:['v3:'+plan.modelSha256,'v2:'+plan.wasmSha256.v2],result:{path:'data/summary.json',promotion:false},artifacts};
++writeFileSync(directory+'/manifest.json',JSON.stringify(manifest,null,2)+'\n');
++console.log(JSON.stringify({primary:primaryStats,secondary:secondaryStats,timing,replayed:replays,artifacts:artifacts.length}));
+diff --git a/experiments/ai/v3/2026-10-22-vs-v2/README.md b/experiments/ai/v3/2026-10-22-vs-v2/README.md
+new file mode 100644
+index 0000000..ae326b7
+--- /dev/null
++++ b/experiments/ai/v3/2026-10-22-vs-v2/README.md
+@@ -0,0 +1,43 @@
++# 現行v2とv3の強さの比較
++
++この評価条件ではv3がv2を上回りました。実Workerで現行アプリの設定を比較し、v3は91勝5敗0分、得点率94.8%でした。打ち切りは0局、先後交換ペアによる95%信頼区間は91.7%〜97.9%です。
++
++## 評価条件
++
++v3は現行重み`8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a`、親平均FPU、WebGPU、1手300ms・最大4096訪問です。v2は現行配信WASM・盤別係数・深さ4です。双方ともアプリと同じ合法手・終盤判定を使います。v2は時間制限型ではないため、同じ計算時間という比較ではありません。UIの最低表示待ち400ms、描画、初期化、メッセージ転送は着手計算時間に含めません。
++
++全6盤、コミ6.5、ランダムな合法4手から開始し、同じ開始配置と手数別seedで先後を交換しました。主比較は各盤8ペア・計96局、seed 2026102260、v3/v2を同一Worker内で交互に呼び出しています。他の計算ジョブを同時実行していません。補助比較はCPU ONNXのv3を128訪問、v2を深さ4に固定し、各盤4ペア・計48局、seed 2026102261で実行しました。訪問数とalpha-betaの深さは同じ探索量を表しません。
++
++## 対戦結果
++
++| 盤 | 実ブラウザでのv3得点 | 固定128訪問のv3得点 |
++| --- | ---: | ---: |
++| sphere3 | 16 / 16 | 7 / 8 |
++| sphere4 | 16 / 16 | 6 / 8 |
++| sphere5 | 12 / 16 | 8 / 8 |
++| torus7 | 16 / 16 | 6 / 8 |
++| torus9 | 16 / 16 | 7 / 8 |
++| torus11 | 15 / 16 | 7 / 8 |
++
++主比較：91勝5敗0分、94.8%、95%区間91.7%〜97.9%。補助比較：41勝7敗0分、85.4%、95%区間77.1%〜93.8%、打ち切り0局。区間は盤別層化、先後交換ペアを単位とする10,000回bootstrapです。
++
++## 計算時間と実行環境
++
++| 現行アプリ構成 | 全着手の平均 | 中央値 | P95 |
++| --- | ---: | ---: | ---: |
++| v3 WebGPU | 292.72ms | 298.70ms | 300.80ms |
++| v2 WASM深さ4 | 5.32ms | 4.90ms | 11.60ms |
++
++敗北確定で即時パスする手も上表に含みます。v3でその手を除いた平均は292.78msです。v2 APIは証明フラグや訪問数を返さないため、それらを比較しません。
++
++ブラウザ155.0.4283.62、Node v26.12.1、CPU AMD Ryzen 7 3700X 8-Core Processor。主比較は24.04分、補助比較は3.37分でした。v3の全着手でWebGPU経路を検証しています。盤別の標本は全体より小さく、他の端末・コミ・人間への段級位には直接換算しません。
++
++## 保存データと検証
++
++[事前計画](plan.json)、[実行とハッシュ](data/execution.json)、[集計](data/summary.json)、[実ブラウザ全棋譜](data/primary-browser.json)、[固定訪問数の全棋譜](data/secondary-fixed.json)、[ソース差分](data/source.patch)、[全成果物目録](manifest.json)を保存しています。全144局を再生し、合法手・終局・得点・勝敗が一致しました。勝敗を見て条件・重み・局数を変えることや、モデルの採用・配信切り替えは行っていません。
++
++実行コードの基準は`495eefd7053241764892ad1cea95a9258b66198e`です。各`*-command.json`のcommand・argsが実際のコマンドです。追試は同じ入力と設定で新しい出力先へ保存し、既存結果は上書きしません。比較用の`run-v2-comparison.mjs`は今回の固定パスを持ち、実行済み記録があると停止します。
++
++```powershell
++node tools/ai-tuner/check-experiments.mjs
++```
+diff --git a/experiments/ai/v3/2026-10-22-vs-v2/plan.json b/experiments/ai/v3/2026-10-22-vs-v2/plan.json
+new file mode 100644
+index 0000000..72d15ef
+--- /dev/null
++++ b/experiments/ai/v3/2026-10-22-vs-v2/plan.json
+@@ -0,0 +1,16 @@
++{
++  "schemaVersion": 1,
++  "id": "v3/2026-10-22-vs-v2",
++  "purpose": "Compare current application v3 and v2 without tuning or changing either player.",
++  "sourceBaseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
++  "wasmSha256": {"v2": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45", "v3": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"},
++  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
++  "v3": {"model": "dist/models/v3", "fpu": 1, "tactics": true, "endgame": true},
++  "v2": {"wasm": "dist/ai-engine.wasm", "depth": 4, "weights": "current deployed board-specific weights", "endgame": true},
++  "common": {"boards": ["sphere3", "sphere4", "sphere5", "torus7", "torus9", "torus11"], "komi": 6.5, "openingMoves": 4, "opening": "random legal moves; same opening and per-ply seeds for each colour-swapped pair", "maximumMoves": "20 times board vertices", "cappedGames": "report explicitly; do not turn into losses, wins or draws"},
++  "primary": {"role": "current application configuration strength", "environment": "actual browser Worker", "v3Backend": "dedicated WebGPU", "v3BudgetMs": 300, "v3MaximumSimulations": 4096, "v2Backend": "WASM", "v2Depth": 4, "equalComputeTime": false, "pairsPerBoard": 8, "games": 96, "seed": 2026102260, "bootstrapSeed": 2026102262},
++  "secondary": {"role": "fixed-visits CPU diagnostic; not equal time or equal node counts", "v3Backend": "CPU ONNX plus WASM MCTS", "v3Visits": 128, "v2Backend": "WASM", "v2Depth": 4, "pairsPerBoard": 4, "games": 48, "seed": 2026102261, "bootstrapSeed": 2026102263},
++  "statistics": {"unit": "colour-swapped opening pair", "stratifiedByBoard": true, "iterations": 10000, "interval": 0.95, "report": ["overall and per-board score", "wins/draws/losses/caps", "compute time per turn", "paired interval", "full move records"]},
++  "execution": {"order": ["short functionality preflight on separate seed", "primary with no concurrent compute job", "secondary", "replay and summarize all games"], "preflightSeed": 2026102269, "selectionOrPromotion": false, "tuning": false, "stopRule": "complete declared counts; do not add games based on results", "python": "use uv if Python is needed", "archive": "hash settings, source patch, binaries/model identifiers, reports and exact command records in a new experiment; preserve older studies"},
++  "interpretation": "Primary answers how the current application configurations compare on this device. v2 has no deadline or deeper-than-4 interface, so no equal-compute-time claim. Six boards and sampled openings do not establish a human rank or strength on other devices."
++}

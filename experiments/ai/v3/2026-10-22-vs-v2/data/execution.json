@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "started": "2026-10-22T12:16:17.836Z",
+  "status": "ready-for-summary",
+  "baseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+  "planSha256": "f4d41e81857f0c64672347d88c0223f9eee73179cb7372d7ca4f4ea3e84734b8",
+  "hashes": {
+    "dist/engine.js": "31f77f547006cfb46e5aea29e0db7b13bcbcdd4dc4bad33a023e08179214042c",
+    "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+    "dist/ai-engine.wasm": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45",
+    "dist/ai-wasm.js": "321154473c5c7b8c1ed76d4310db548c463665d9c73116bf2834bd03384b2b47",
+    "dist/ai-v3.wasm": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a",
+    "dist/ai-v3.js": "235461d6c9f9a5b4627fedaac72dd93485fcc8d5767fae7073fa4471c5259129",
+    "dist/ai-v3-search.js": "5ac8f49985d05eb0411edf7bcb967664cf114d060b015942c780c815960c80f3",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/models/v3/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "dist/models/v3/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "dist/models/v3/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+    "tools/ai-gnn/match.mjs": "cb190a511e8fdedff9b7680d51f1da7f875141e87f7d2e1ed4443785ed3ff19c",
+    "tools/ai-gnn/browser-match.mjs": "10f64f6724c6f53a03e8b746062395147970a56505072cc0ab1c0b1d14386a08",
+    "tools/ai-gnn/match-statistics.mjs": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997",
+    "tools/ai-gnn/run-v2-comparison.mjs": "5aeb2a8ab362669717fb4d4cc857d960bec6f075c599e7b0356b346a18e7c745"
+  },
+  "selectionOrPromotion": false,
+  "finished": "2026-10-22T12:43:42.673Z"
+}

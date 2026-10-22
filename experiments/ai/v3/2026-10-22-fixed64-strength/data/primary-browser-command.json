@@ -1,0 +1,38 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/browser-match.mjs",
+    "--a",
+    "dist/models/v3",
+    "--b",
+    "v2",
+    "--simulations",
+    "64",
+    "--a-fpu",
+    "1",
+    "--pairs",
+    "8",
+    "--seed",
+    "2026102260",
+    "--bootstrap-seed",
+    "2026102292",
+    "--output",
+    "experiments/ai/v3/2026-10-22-fixed64-strength/data/primary-browser.json"
+  ],
+  "started": "2026-10-22T14:07:10.547Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "6f53a3a9dd52df0f7f817351f86e63c576517e99740632831be3cdb05462952c",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/node-inference.mjs": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a",
+    "tools/ai-gnn/match.mjs": "cb190a511e8fdedff9b7680d51f1da7f875141e87f7d2e1ed4443785ed3ff19c",
+    "tools/ai-gnn/selfplay.mjs": "1ce5cee77fbc7f6c7ecb84dcc9e756f94e02aa61cf25fe92065aed3e75f9c4fd",
+    "tools/ai-gnn/reanalyze.mjs": "c0b57c00e728d79fa4c82d5986a53ef4c55ce38df97a918ffbe6158057ce95c0",
+    "dist/ai-v3-search.js": "7cd12275af1a00312cc1eb673fdb06b01bb8876b8cbc29daab4c796f4a3a6746",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/ai-v3.wasm": "ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216"
+  },
+  "finished": "2026-10-22T14:10:31.860Z",
+  "elapsedSeconds": 201.313,
+  "exitCode": 0
+}

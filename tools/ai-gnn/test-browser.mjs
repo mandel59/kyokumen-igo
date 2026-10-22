@@ -43,7 +43,7 @@ try{
  const result=await page.evaluate(async(base)=>{
   const run=async function({base,backend}){
    const {createV3Inference}=await import(base+'/dist/ai-v3-inference.js');
-   const {createV3AI}=await import(base+'/dist/ai-v3.js');
+   const {createV3AI,V3_DEFAULT_SIMULATIONS}=await import(base+'/dist/ai-v3.js');
    const {Game,createTopology}=await import(base+'/dist/engine.js');
    const {decodeRecord}=await import(base+'/dist/record.js');
    const {aiPosition}=await import(base+'/dist/ai-position.js');
@@ -124,11 +124,14 @@ try{
    const turns=[];
    for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
     const position={kind,size,komi:6.5,moves:new Int32Array()};
-    const chosen=await player.chooseMove(position,{budgetMs:100,maxSimulations:128,seed:3});
+    const chosen=await player.chooseMove(position,{seed:3});
+    if(chosen.simulations!==V3_DEFAULT_SIMULATIONS)throw new Error('Default visit budget changed on '+backend+' '+kind+size+': '+chosen.simulations);
     const game=new Game(createTopology(kind,size));
     if(chosen.move!==null&&!game.analyze(chosen.move).ok)throw new Error('Illegal neural move');
     turns.push({kind,size,simulations:chosen.simulations,elapsedMs:chosen.elapsedMs,batches:chosen.batches});
    }
+   const odd=await player.chooseMove({kind:'torus',size:7,komi:6.5,moves:new Int32Array()},{maxSimulations:17,seed:3});
+   if(odd.simulations!==17)throw new Error('Batch overshot odd visit budget: '+odd.simulations);
    const pocket={kind:'torus',size:7,komi:6.5,moves:Int32Array.from([-1,16,-1,30,-1,22,-1,17,-1,31,-1,18,-1,32,-1,26])};
    const pocketResult=await player.chooseMove(pocket,{budgetMs:100,maxSimulations:64,seed:3});
    if(pocketResult.move===24||pocketResult.avoidedInvasions<1)throw new Error('Doomed pocket invasion was not guarded');
@@ -148,7 +151,7 @@ try{
     }
     if(!(move===null?replay.pass():replay.play(move)).ok)throw new Error('Invalid reported game');
    }
-   const waiting=player.chooseMove({kind:'torus',size:7,komi:6.5,moves:new Int32Array()},{budgetMs:1000});
+   const waiting=player.chooseMove({kind:'torus',size:7,komi:6.5,moves:new Int32Array()});
    player.cancel();let cancelled=false;try{await waiting;}catch(error){cancelled=/cancelled/.test(error.message);}
    if(!cancelled)throw new Error('Cancellation did not reject the stale result');
    await player.dispose();
@@ -165,7 +168,7 @@ try{
    worker.onerror=e=>{worker.terminate();reject(new Error(e.message));};worker.postMessage({base,backend});
   });
   const cpu=await runWorker('wasm'),gpu=await runWorker('webgpu');
-  // Verify the actual production Worker switches from v2 to ready v3.
+  // The actual production Worker must wait for v3 even on its first turn.
   const worker=new Worker(base+'/dist/ai-worker.js?ai=v3',{type:'module'});
   let production;
   try{
@@ -182,6 +185,8 @@ try{
  assert.equal(result.cpu.selected,'wasm');assert.equal(result.gpu.selected,'webgpu');
  assert.equal(result.cpu.runtime,'wasm');assert.equal(result.gpu.runtime,'wgsl');assert.equal(result.gpu.gpuChecksumFallback,true);assert.equal(result.gpu.gpuExecutionFallback,true);
  assert.equal(result.production.backend,'v3-webgpu');assert.equal(result.production.error,undefined);
+ assert.equal(result.production.id,1,'First v3 turn must wait for initialization instead of using v2');
+ assert.equal(result.production.simulations,64,'Production Worker must use the Pixel 8a-calibrated shared visit budget');
  result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model,
   modelSha256:JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json'))).sha256};
  if(process.argv.includes('--output'))writeFileSync(process.argv[process.argv.indexOf('--output')+1],JSON.stringify(result,null,2)+'\n');

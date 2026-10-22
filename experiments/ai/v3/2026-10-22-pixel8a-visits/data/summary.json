@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "referenceDevice": "Pixel 8a",
+  "deviceProvenance": "Identified by the user; both reports pasted into chat.",
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "policy": {
+    "sameBudgetOnAllDevices": true,
+    "targetMs": 300,
+    "headroomReferenceMs": 400,
+    "additionalMargin": 1,
+    "selection": "Largest measured visit budget whose worst-board P95 is at most 300ms in both reported browsers."
+  },
+  "selectedVisits": 64,
+  "measuredVisits": [
+    8,
+    16,
+    32,
+    64
+  ],
+  "reports": [
+    {
+      "file": "chrome-webgpu.json",
+      "sha256": "cac65bca7baddde2ca88a65f63652457d0ddc231fbde521d9ee5a999c6598e41",
+      "backend": "v3-webgpu",
+      "finished": "2026-10-22T13:44:17.881Z",
+      "originallyReportedVisits": 32,
+      "recommendedVisits": 64,
+      "p95Ms": 268.69999998807907,
+      "worstBoardP95Ms": 269.80000001192093,
+      "initializationMs": 1678.5,
+      "elapsedMs": 20052.100000023842
+    },
+    {
+      "file": "firefox-wasm.json",
+      "sha256": "ff09c62e1242d452d5053fc451f616b371c421bf5e97a3d31f17adb6b6a3486a",
+      "backend": "v3-wasm",
+      "finished": "2026-10-22T13:40:38.807Z",
+      "originallyReportedVisits": 32,
+      "recommendedVisits": 64,
+      "p95Ms": 244,
+      "worstBoardP95Ms": 245,
+      "initializationMs": 3600,
+      "elapsedMs": 19992
+    }
+  ],
+  "limitations": [
+    "Only one run per browser on one user-provided Pixel 8a; power/thermal conditions were not recorded.",
+    "Each board has six samples per budget, so the reported nearest-rank P95 equals the maximum of those six samples.",
+    "Per-move raw samples were omitted by the original sharing UI; per-board P95 and counts are preserved.",
+    "The original benchmark stopped at 64 because of the superseded 240ms threshold. Higher budgets were not measured.",
+    "This is latency calibration. Strength at 64 visits was not measured by this experiment."
+  ]
+}

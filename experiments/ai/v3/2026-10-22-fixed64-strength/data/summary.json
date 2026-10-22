@@ -1,0 +1,412 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-fixed64-strength",
+  "sourceBaseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "configurations": {
+    "a": {
+      "architecture": "v3",
+      "backend": "webgpu",
+      "budgetMs": null,
+      "maxSimulations": 64,
+      "fpu": 1
+    },
+    "b": {
+      "architecture": "v2",
+      "backend": "wasm",
+      "depth": 4
+    }
+  },
+  "statistics": {
+    "games": 96,
+    "completed": 96,
+    "capped": 0,
+    "wins": 76,
+    "draws": 0,
+    "losses": 20,
+    "score": 76,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 16,
+        "score": 11,
+        "pairScores": [
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 16,
+        "score": 14,
+        "pairScores": [
+          1,
+          1,
+          0.5,
+          1,
+          1,
+          1,
+          0.5,
+          1
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 16,
+        "score": 13,
+        "pairScores": [
+          0,
+          1,
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 16,
+        "score": 13,
+        "pairScores": [
+          1,
+          1,
+          1,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          1
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 16,
+        "score": 12,
+        "pairScores": [
+          1,
+          0.5,
+          1,
+          1,
+          0.5,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 16,
+        "score": 13,
+        "pairScores": [
+          1,
+          0.5,
+          0.5,
+          1,
+          1,
+          1,
+          0.5,
+          1
+        ]
+      }
+    ],
+    "scoreRate": 0.7916666666666666,
+    "pairedBootstrap": {
+      "seed": 2026102292,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.7083333333333334,
+        0.8645833333333334
+      ]
+    }
+  },
+  "boards": [
+    {
+      "board": "sphere3",
+      "games": 16,
+      "score": 11,
+      "pairScores": [
+        1,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        1,
+        1,
+        0.5
+      ],
+      "wins": 11,
+      "draws": 0,
+      "losses": 5,
+      "capped": 0,
+      "historical300msScore": 16
+    },
+    {
+      "board": "sphere4",
+      "games": 16,
+      "score": 14,
+      "pairScores": [
+        1,
+        1,
+        0.5,
+        1,
+        1,
+        1,
+        0.5,
+        1
+      ],
+      "wins": 14,
+      "draws": 0,
+      "losses": 2,
+      "capped": 0,
+      "historical300msScore": 16
+    },
+    {
+      "board": "sphere5",
+      "games": 16,
+      "score": 13,
+      "pairScores": [
+        0,
+        1,
+        0.5,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "wins": 13,
+      "draws": 0,
+      "losses": 3,
+      "capped": 0,
+      "historical300msScore": 12
+    },
+    {
+      "board": "torus7",
+      "games": 16,
+      "score": 13,
+      "pairScores": [
+        1,
+        1,
+        1,
+        0.5,
+        1,
+        0.5,
+        0.5,
+        1
+      ],
+      "wins": 13,
+      "draws": 0,
+      "losses": 3,
+      "capped": 0,
+      "historical300msScore": 16
+    },
+    {
+      "board": "torus9",
+      "games": 16,
+      "score": 12,
+      "pairScores": [
+        1,
+        0.5,
+        1,
+        1,
+        0.5,
+        1,
+        1,
+        0
+      ],
+      "wins": 12,
+      "draws": 0,
+      "losses": 4,
+      "capped": 0,
+      "historical300msScore": 16
+    },
+    {
+      "board": "torus11",
+      "games": 16,
+      "score": 13,
+      "pairScores": [
+        1,
+        0.5,
+        0.5,
+        1,
+        1,
+        1,
+        0.5,
+        1
+      ],
+      "wins": 13,
+      "draws": 0,
+      "losses": 3,
+      "capped": 0,
+      "historical300msScore": 15
+    }
+  ],
+  "timing": {
+    "v3": {
+      "count": 4999,
+      "meanMs": 33.90624124857396,
+      "medianMs": 33.89999997615814,
+      "p95Ms": 40.60000002384186
+    },
+    "v3WithoutCertifiedLoss": {
+      "count": 4980,
+      "meanMs": 34.020341365763464,
+      "medianMs": 33.90000009536743,
+      "p95Ms": 40.60000002384186
+    },
+    "v2": {
+      "count": 4988,
+      "meanMs": 4.8919206093145355,
+      "medianMs": 4.5,
+      "p95Ms": 10.600000023841858
+    }
+  },
+  "elapsedSeconds": 201.313,
+  "environment": {
+    "browser": "155.0.4283.62",
+    "node": "v26.12.1",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "verification": {
+    "replayedGames": 98,
+    "allMovesLegal": true,
+    "allScoresMatch": true,
+    "ordinaryV3TurnsAtExactly64Visits": 4980,
+    "certifiedLossTurns": 19,
+    "sameHistoricalOpeningGames": 96,
+    "inputsUnchanged": true
+  },
+  "historical300ms": {
+    "path": "experiments/ai/v3/2026-10-22-vs-v2/data/primary-browser.json",
+    "sha256": "1087d1af5a79dbb2569a6e46c8436c30341d78fee8902fa80977aa6c6559274b",
+    "statistics": {
+      "games": 96,
+      "completed": 96,
+      "capped": 0,
+      "wins": 91,
+      "draws": 0,
+      "losses": 5,
+      "score": 91,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 16,
+          "score": 12,
+          "pairScores": [
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 16,
+          "score": 15,
+          "pairScores": [
+            1,
+            1,
+            1,
+            0.5,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "scoreRate": 0.9479166666666666,
+      "pairedBootstrap": {
+        "seed": 2026102262,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.9166666666666666,
+          0.9791666666666666
+        ]
+      }
+    },
+    "interpretation": "Historical context with the same openings, not a head-to-head 64-versus-300ms match; the search implementation changed to enforce exact visits."
+  },
+  "limits": [
+    "96 games with paired openings on six fixed boards, komi 6.5, v2 depth 4; not equal compute time or a human rank estimate.",
+    "Only eight opening pairs per board; per-board outcomes are diagnostic.",
+    "Dedicated WebGPU on one PC, with every ordinary v3 turn verified at exactly 64 visits. Small numerical differences on other inference backends may change play."
+  ],
+  "promotion": false
+}

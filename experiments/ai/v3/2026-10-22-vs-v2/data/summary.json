@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-vs-v2",
+  "finished": "2026-10-22T12:43:42.673Z",
+  "sourceBaseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "primary": {
+    "role": "current application configuration strength",
+    "configurations": {
+      "a": {
+        "architecture": "v3",
+        "backend": "webgpu",
+        "budgetMs": 300,
+        "maxSimulations": 4096,
+        "fpu": 1
+      },
+      "b": {
+        "architecture": "v2",
+        "backend": "wasm",
+        "depth": 4
+      }
+    },
+    "statistics": {
+      "games": 96,
+      "completed": 96,
+      "capped": 0,
+      "wins": 91,
+      "draws": 0,
+      "losses": 5,
+      "score": 91,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 16,
+          "score": 12,
+          "pairScores": [
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 16,
+          "score": 16,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 16,
+          "score": 15,
+          "pairScores": [
+            1,
+            1,
+            1,
+            0.5,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "scoreRate": 0.9479166666666666,
+      "pairedBootstrap": {
+        "seed": 2026102262,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.9166666666666666,
+          0.9791666666666666
+        ]
+      }
+    },
+    "timing": {
+      "v3": {
+        "count": 4817,
+        "meanMs": 292.72283579072246,
+        "medianMs": 298.6999999284744,
+        "p95Ms": 300.8000000715256,
+        "totalMs": 1410045.90000391
+      },
+      "v2": {
+        "count": 4792,
+        "meanMs": 5.322454089886557,
+        "medianMs": 4.899999976158142,
+        "p95Ms": 11.599999904632568,
+        "totalMs": 25505.19999873638
+      },
+      "v3WithoutCertifiedLoss": {
+        "count": 4816,
+        "meanMs": 292.78266196096456,
+        "medianMs": 298.6999999284744,
+        "p95Ms": 300.8000000715256,
+        "totalMs": 1410041.3000040054
+      }
+    },
+    "environment": {
+      "browser": "155.0.4283.62",
+      "node": "v26.12.1",
+      "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+    }
+  },
+  "secondary": {
+    "role": "fixed-visits CPU diagnostic; not equal time or equal node counts",
+    "configurations": {
+      "v3": {
+        "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+        "tactics": "safe",
+        "fpu": 1,
+        "visits": 128,
+        "wasmSha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+      },
+      "v2": {
+        "architecture": "v2",
+        "depth": 4,
+        "wasmSha256": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45"
+      }
+    },
+    "statistics": {
+      "games": 48,
+      "completed": 48,
+      "capped": 0,
+      "wins": 41,
+      "draws": 0,
+      "losses": 7,
+      "score": 41,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 6,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 8,
+          "pairScores": [
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 6,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            1,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 7,
+          "pairScores": [
+            1,
+            0.5,
+            1,
+            1
+          ]
+        }
+      ],
+      "scoreRate": 0.8541666666666666,
+      "pairedBootstrap": {
+        "seed": 2026102263,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.7708333333333334,
+          0.9375
+        ]
+      }
+    },
+    "meanComputeMs": {
+      "v3": 77.6861094841927,
+      "v2": 5.874342540744109
+    }
+  },
+  "elapsedSeconds": {
+    "primary": 1442.509,
+    "secondary": 202.315
+  },
+  "verification": {
+    "replayedGames": 144,
+    "allMovesLegal": true,
+    "allScoresMatch": true,
+    "configurationsUnchanged": true
+  },
+  "limits": [
+    "Current application configurations, not equal compute time: v2 depth 4 has no deadline interface.",
+    "Fixed six boards, komi 6.5, sampled four-move openings, one device; no human-rank estimate.",
+    "v2 API exposes move and elapsed time, not MCTS visits or proof flags. Its zero visit/proof counters in raw metrics mean unavailable.",
+    "Per-board samples are smaller than the aggregate; do not infer an ordering of board-specific improvements."
+  ],
+  "promotion": false
+}

@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-vs-v2",
+  "architecture": "v3",
+  "title": "Current application v3 WebGPU versus deployed v2 WASM",
+  "source": {
+    "baseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+    "patch": "data/source.patch"
+  },
+  "plan": {
+    "path": "plan.json",
+    "sha256": "f4d41e81857f0c64672347d88c0223f9eee73179cb7372d7ca4f4ea3e84734b8"
+  },
+  "variants": [
+    "v3:8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "v2:86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45"
+  ],
+  "result": {
+    "path": "data/summary.json",
+    "promotion": false
+  },
+  "artifacts": [
+    {
+      "path": "data/execution.json",
+      "sha256": "2352c408d25c4e4d878e5913cf0dc3a2c70129229010c4f047fa756b65339c90"
+    },
+    {
+      "path": "data/gnn-compatibility-command.json",
+      "sha256": "df7f345b3631e7942b777cebceff7e9e82c542b97fddd84ead9d8189446f7ed2"
+    },
+    {
+      "path": "data/gnn-compatibility-log.txt",
+      "sha256": "2503386fec5be75b96846d01f9e87814ab68de3e1f5099522880c97daf57fd04"
+    },
+    {
+      "path": "data/gnn-compatibility.json",
+      "sha256": "7f89bdb7ec0dd9a95c4d1d0d6150d0da52258433bf0bfba6e1aa92680cf0205f"
+    },
+    {
+      "path": "data/preflight.json",
+      "sha256": "25c0e34d7702ada6ef917719e53fe5b70eb4159d88c46e76775a696d3bdf2ae7"
+    },
+    {
+      "path": "data/primary-browser-command.json",
+      "sha256": "e79ea20278a8a14c9ae5f6b4bab2e47c566703acef46d4e5ab54024205d6447f"
+    },
+    {
+      "path": "data/primary-browser-log.txt",
+      "sha256": "ef42b95a351f89444b5f52ab7cdc75aa66dd2000ef6012dd3b5e9bf865861183"
+    },
+    {
+      "path": "data/primary-browser.json",
+      "sha256": "1087d1af5a79dbb2569a6e46c8436c30341d78fee8902fa80977aa6c6559274b"
+    },
+    {
+      "path": "data/secondary-fixed-command.json",
+      "sha256": "96bddcafbe7b5deeb3e13586db6724ab401aa898fe76423094845bcd6d427e5b"
+    },
+    {
+      "path": "data/secondary-fixed-log.txt",
+      "sha256": "f36c4b564d29e721e458350fa0adde8fcb3796da5b1908dd0c4ec2301fd8b8a2"
+    },
+    {
+      "path": "data/secondary-fixed.json",
+      "sha256": "e394f281cbc3123b2424267628badccb7741fe52bf386528edb6a31f614bd920"
+    },
+    {
+      "path": "data/source-manifest.json",
+      "sha256": "be5ae19907f0c7e8274d4f5dcfbf804775e22cbe195384ec49988f12e3f76d2c"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "7d0efaf31388065cfd420a3c2b31b93d4d65f03ac3a2bbdaae96594dcdc68f28"
+    },
+    {
+      "path": "data/source/dist/ai-engine.wasm",
+      "sha256": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45"
+    },
+    {
+      "path": "data/source/dist/ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "data/source/dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/source/dist/ai-v3-search.js",
+      "sha256": "5ac8f49985d05eb0411edf7bcb967664cf114d060b015942c780c815960c80f3"
+    },
+    {
+      "path": "data/source/dist/ai-v3.js",
+      "sha256": "235461d6c9f9a5b4627fedaac72dd93485fcc8d5767fae7073fa4471c5259129"
+    },
+    {
+      "path": "data/source/dist/ai-v3.wasm",
+      "sha256": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"
+    },
+    {
+      "path": "data/source/dist/ai-wasm.js",
+      "sha256": "321154473c5c7b8c1ed76d4310db548c463665d9c73116bf2834bd03384b2b47"
+    },
+    {
+      "path": "data/source/dist/engine.js",
+      "sha256": "31f77f547006cfb46e5aea29e0db7b13bcbcdd4dc4bad33a023e08179214042c"
+    },
+    {
+      "path": "data/source/dist/models/v3/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/source/dist/models/v3/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "data/source/dist/models/v3/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "data/source/experiments/ai/catalog.json",
+      "sha256": "b3a7572765123a9e504d6b9b0c0ca3787c98d403412f077406db89ea93897700"
+    },
+    {
+      "path": "data/source/experiments/ai/README.md",
+      "sha256": "d8ba30252e432c43cd89577a75c7b953b317577af0f021a8b88161a76ca8f481"
+    },
+    {
+      "path": "data/source/experiments/ai/v3/2026-10-22-vs-v2/plan.json",
+      "sha256": "f4d41e81857f0c64672347d88c0223f9eee73179cb7372d7ca4f4ea3e84734b8"
+    },
+    {
+      "path": "data/source/experiments/ai/v3/2026-10-22-vs-v2/README.md",
+      "sha256": "08f478749d0f3efef0e6dfdb98761f912ef33e48ad0f5a1bd5155001f146c2c8"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-match.mjs",
+      "sha256": "10f64f6724c6f53a03e8b746062395147970a56505072cc0ab1c0b1d14386a08"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/finish-v2-comparison.mjs",
+      "sha256": "f1e5b24c2d0dc9a1eb3250682a2e2190a076517d487ef45177ef74809173ca28"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/match-statistics.mjs",
+      "sha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/match.mjs",
+      "sha256": "cb190a511e8fdedff9b7680d51f1da7f875141e87f7d2e1ed4443785ed3ff19c"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/run-v2-comparison.mjs",
+      "sha256": "5aeb2a8ab362669717fb4d4cc857d960bec6f075c599e7b0356b346a18e7c745"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "7c8007941c833a9f59508e94bc18f97a3029cd1bc76d1cc9c9df84a5444c522f"
+    }
+  ]
+}

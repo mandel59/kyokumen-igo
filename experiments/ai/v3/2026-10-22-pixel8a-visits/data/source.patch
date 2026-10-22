@@ -1,0 +1,445 @@
+diff --git a/dist/ai-v3-search.js b/dist/ai-v3-search.js
+index 4f76b19..d01fee4 100644
+--- a/dist/ai-v3-search.js
++++ b/dist/ai-v3-search.js
+@@ -2,7 +2,7 @@
+ import {validateAIPosition} from './ai-position.js';
+ export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
+ export async function createV3Search({load=async()=>{
+- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=21ec6eda31c0',import.meta.url));
++ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=ef392c214c83',import.meta.url));
+  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
+ }}={}) {
+  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;
+@@ -25,10 +25,11 @@ export async function createV3Search({load=async()=>{
+     (api.v3_set_fpu&&api.v3_set_fpu(fpu,rootNoise?1:0)))throw new Error('Invalid v3 FPU configuration');
+    position={...next,moves:Int32Array.from(next.moves)};
+   },
+-  collect(batch=V3.batch){
++  collect(batch=V3.batch,remainingVisits){
+    check();if(!position)throw new Error('Start v3 search first');if(pending)throw new Error('v3 batch still pending');
+    if(!Number.isInteger(batch)||batch<1||batch>8)throw new Error('Invalid v3 batch size');
+-   const count=api.v3_collect(batch);if(count<0)throw new Error('v3 collect failed');
++   if(remainingVisits!==undefined&&(!Number.isInteger(remainingVisits)||remainingVisits<1||remainingVisits>0xffffffff||!api.v3_collect_limited))throw new Error('Invalid v3 visit limit or incompatible WASM');
++   const count=remainingVisits===undefined?api.v3_collect(batch):api.v3_collect_limited(batch,remainingVisits);if(count<0)throw new Error('v3 collect failed');
+    const request={generation,count,ids:read(4,count,Uint32Array),x:read(0,count*160*32),
+     global_features:read(1,count*8),mask:read(2,count*160),legal:read(3,count*161)};
+    if(count)pending={generation,ids:request.ids.slice()};return request;
+diff --git a/dist/ai-v3.js b/dist/ai-v3.js
+index 9468882..8113c79 100644
+--- a/dist/ai-v3.js
++++ b/dist/ai-v3.js
+@@ -2,6 +2,8 @@ import {createTopology} from './engine.js';
+ import {createV3Search} from './ai-v3-search.js';
+ import {createV3Inference,adjacencyFor} from './ai-v3-inference.js';
+ 
++export const V3_DEFAULT_SIMULATIONS=512;
++
+ export async function createV3AI(options={}){
+  const search=await createV3Search(options);
+  const adjacencies=new Map();
+@@ -24,19 +26,24 @@ export async function createV3AI(options={}){
+  let cancelled=0,busy=false;
+  return {
+   get backend(){return 'v3-'+inference.backend;},
+-  async chooseMove(position,{seed=0,budgetMs=300,maxSimulations=4096}={}){
++  async chooseMove(position,{seed=0,budgetMs,maxSimulations=V3_DEFAULT_SIMULATIONS}={}){
+    if(busy)throw new Error('v3 search already running');
+-   if(!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(maxSimulations)||maxSimulations<1)throw new Error('Invalid v3 search budget');
++   if((budgetMs!==undefined&&(!Number.isFinite(budgetMs)||budgetMs<=0))||!Number.isInteger(maxSimulations)||maxSimulations<1||maxSimulations>0xffffffff)throw new Error('Invalid v3 search budget');
+    busy=true;const generation=cancelled;
+    try{
+     search.start(position,{seed,fpu:configuredFpu});const adjacency=adjacencyForPosition(position);
+-    const start=performance.now();let batches=0,lastBatchMs=0;
++    const start=performance.now();let batches=0,lastBatchMs=0,stalled=0;
+     while(search.result().simulations<maxSimulations){
+-     const remaining=budgetMs-(performance.now()-start);
+-     if(batches&&remaining<Math.max(1,lastBatchMs))break;
++     if(budgetMs!==undefined&&batches&&budgetMs-(performance.now()-start)<Math.max(1,lastBatchMs))break;
+      if(generation!==cancelled)throw new Error('v3 cancelled');
+-     const leaves=search.collect(inference.batchSize);
+-     if(!leaves.count){if(!search.result().simulations)break;await new Promise(r=>setTimeout(r,0));continue;}
++     const completed=search.result().simulations,remaining=maxSimulations-completed;
++     const leaves=search.collect(Math.min(inference.batchSize,remaining),remaining);
++     if(!leaves.count){
++      const next=search.result().simulations;if(!next)break;
++      if(next===completed){if(++stalled>=16)throw new Error('v3 search stalled');}else stalled=0;
++      await new Promise(r=>setTimeout(r,0));continue;
++     }
++     stalled=0;
+      const batchStart=performance.now();const evaluation=await inference.evaluate(leaves,adjacency);
+      if(generation!==cancelled)throw new Error('v3 cancelled');
+      search.submit(leaves,evaluation);batches++;lastBatchMs=performance.now()-batchStart;
+diff --git a/dist/ai-v3.wasm b/dist/ai-v3.wasm
+index 2944393e3f439419e1f5e2490cf8ae44583def17..7435a404fa8376a6407bd02af694e246be216dbb 100644
+GIT binary patch
+delta 12461
+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
+T1TSZxti!Lb*nX^A^hW*<5Sz@0
+
+delta 12343
+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
+
+diff --git a/dist/ai-worker.js b/dist/ai-worker.js
+index dd48097..8f1cbe7 100644
+--- a/dist/ai-worker.js
++++ b/dist/ai-worker.js
+@@ -16,9 +16,11 @@ self.onmessage=async({data})=>{
+   try {
+     if(data.type==='cancel'){v3?.cancel();return;}
+     const ai=await ready;
+-    let move,backend='js';
++    // An explicit v3 game waits for its model; startup speed must not choose a different player.
++    if(v3Ready)await v3Ready;
++    let move,simulations,backend='js';
+     if(v3&&!v3Failed){
+-      try{const result=await v3.chooseMove(data.position,{seed:(Math.random()*4294967296)>>>0});move=result.move;backend=result.backend;}
++      try{const result=await v3.chooseMove(data.position,{seed:(Math.random()*4294967296)>>>0});move=result.move;simulations=result.simulations;backend=result.backend;}
+       catch(error){v3Failed=true;console.warn('v3 search failed:',error.message);}
+     }
+     if(backend==='js'&&ai&&!wasmFailed) {
+@@ -26,7 +28,7 @@ self.onmessage=async({data})=>{
+       catch {wasmFailed=true;}
+     }
+     if(backend==='js')move=chooseMove(restoreAIPosition(data.position));
+-    self.postMessage({id:data.id,move,backend});
++    self.postMessage({id:data.id,move,backend,...(simulations===undefined?{}:{simulations})});
+   } catch(error) {
+     self.postMessage({id:data.id,error:error.message});
+   }
+diff --git a/tools/ai-tuner/src/gnn-wasm.rs b/tools/ai-tuner/src/gnn-wasm.rs
+index 2476482..b2b3155 100644
+--- a/tools/ai-tuner/src/gnn-wasm.rs
++++ b/tools/ai-tuner/src/gnn-wasm.rs
+@@ -64,11 +64,20 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
+     })
+ }
+ #[no_mangle] pub extern "C" fn v3_collect(batch:usize)->i32 {
++    collect(batch,None)
++}
++#[no_mangle] pub extern "C" fn v3_collect_limited(batch:usize,remaining:u32)->i32 {
++    collect(batch,Some(remaining))
++}
++fn collect(batch:usize,remaining:Option<u32>)->i32 {
+     ENGINE.with(|slot| {
+         let mut slot=slot.borrow_mut(); let Some(e)=slot.as_mut() else{return -2;};
+         if !(1..=8).contains(&batch)||!e.ids.is_empty() {return -2;}
+         let (game,past)=restore(&e.topology,e.komi,&e.moves).unwrap();
+-        let leaves=e.search.collect(&game,&past,e.sphere,batch);
++        let leaves=match remaining {
++            Some(limit)=>e.search.collect_limited(&game,&past,e.sphere,batch,limit),
++            None=>e.search.collect(&game,&past,e.sphere,batch),
++        };
+         e.x.clear();e.globals.clear();e.masks.clear();e.legal.clear();
+         for leaf in leaves {
+             e.ids.push(leaf.id);e.x.extend(leaf.features.x);e.globals.extend(leaf.features.global);
+diff --git a/tools/ai-tuner/src/mcts.rs b/tools/ai-tuner/src/mcts.rs
+index 77bf689..29d2f1e 100644
+--- a/tools/ai-tuner/src/mcts.rs
++++ b/tools/ai-tuner/src/mcts.rs
+@@ -56,13 +56,18 @@ impl Search {
+         self.completed += 1;
+     }
+     pub fn collect(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize) -> Vec<Leaf> {
++        self.collect_limited(root,past,sphere,batch,u32::MAX)
++    }
++    pub fn collect_limited(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize, remaining: u32) -> Vec<Leaf> {
+         assert!(self.pending.is_empty(), "submit or cancel the outstanding batch first");
+         let mut leaves = vec![];
+         if root.ended { return leaves; }
++        let limit = self.completed.saturating_add(remaining);
+         let mut scratch = Scratch::new(root.board.len());
+         // Bounded CPU work, including runs that repeatedly reach terminal positions.
+         for _ in 0..batch.clamp(1,8)*16 {
+-            if leaves.len() == batch.clamp(1,8) { break; }
++            // Pending neural evaluations and exact terminal backups both consume visits.
++            if leaves.len() == batch.clamp(1,8) || self.completed.saturating_add(self.pending.len() as u32) >= limit { break; }
+             let mut game = root.clone(); let mut boards = past.to_vec();
+             let mut path = vec![0];
+             for _ in 0..256 {
+@@ -186,6 +191,25 @@ mod tests {
+     use super::*;
+     use crate::board::{Topology,Kind};
+     #[test]
++    fn visit_limit_counts_neural_leaves_and_exact_terminal_backups() {
++        let t=Topology::new(Kind::Torus,7);let mut g=Game::new(&t,6.5);g.pass();
++        for budget in [1,2,7,8,9,17,128,512] {
++            let mut s=Search::new(3);let mut calls=0;
++            while s.completed<budget {
++                let leaves=s.collect_limited(&g,&[vec![0;49]],false,8,budget-s.completed);
++                assert!(s.completed+leaves.len() as u32<=budget);
++                let ids:Vec<_>=leaves.iter().map(|l|l.id).collect();
++                let mut eval=vec![-10.;ids.len()*(ACTIONS+1)];
++                for e in eval.chunks_exact_mut(ACTIONS+1) {e[PASS]=10.;e[ACTIONS]=0.;}
++                if !ids.is_empty(){s.submit(&ids,&eval).unwrap();}
++                calls+=1;assert!(calls<budget+10);
++            }
++            assert_eq!(s.completed,budget);
++            assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
++            assert!(s.collect_limited(&g,&[],false,8,0).is_empty());assert_eq!(s.completed,budget);
++        }
++    }
++    #[test]
+     fn fpu_uses_parent_perspective_without_virtual_loss() {
+         let mut s = Search::new(4);
+         assert!(s.set_fpu(2,false));

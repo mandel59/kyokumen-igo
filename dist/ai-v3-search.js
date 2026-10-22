@@ -2,7 +2,7 @@
 import {validateAIPosition} from './ai-position.js';
 export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
 export async function createV3Search({load=async()=>{
- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=21ec6eda31c0',import.meta.url));
+ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=ef392c214c83',import.meta.url));
  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
 }}={}) {
  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;
@@ -25,10 +25,11 @@ export async function createV3Search({load=async()=>{
     (api.v3_set_fpu&&api.v3_set_fpu(fpu,rootNoise?1:0)))throw new Error('Invalid v3 FPU configuration');
    position={...next,moves:Int32Array.from(next.moves)};
   },
-  collect(batch=V3.batch){
+  collect(batch=V3.batch,remainingVisits){
    check();if(!position)throw new Error('Start v3 search first');if(pending)throw new Error('v3 batch still pending');
    if(!Number.isInteger(batch)||batch<1||batch>8)throw new Error('Invalid v3 batch size');
-   const count=api.v3_collect(batch);if(count<0)throw new Error('v3 collect failed');
+   if(remainingVisits!==undefined&&(!Number.isInteger(remainingVisits)||remainingVisits<1||remainingVisits>0xffffffff||!api.v3_collect_limited))throw new Error('Invalid v3 visit limit or incompatible WASM');
+   const count=remainingVisits===undefined?api.v3_collect(batch):api.v3_collect_limited(batch,remainingVisits);if(count<0)throw new Error('v3 collect failed');
    const request={generation,count,ids:read(4,count,Uint32Array),x:read(0,count*160*32),
     global_features:read(1,count*8),mask:read(2,count*160),legal:read(3,count*161)};
    if(count)pending={generation,ids:request.ids.slice()};return request;

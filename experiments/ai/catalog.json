@@ -74,6 +74,24 @@
       "path": "v3/2026-10-22-learning-revision/"
     },
     {
+      "id": "v3/2026-10-22-vs-v2",
+      "architecture": "v3",
+      "title": "Current application v3 WebGPU versus deployed v2 WASM",
+      "path": "v3/2026-10-22-vs-v2/"
+    },
+    {
+      "id": "v3/2026-10-22-fixed64-strength",
+      "architecture": "v3",
+      "title": "Actual browser 64-visit v3 versus current v2 depth 4",
+      "path": "v3/2026-10-22-fixed64-strength/"
+    },
+    {
+      "id": "v3/2026-10-22-pixel8a-visits",
+      "architecture": "v3",
+      "title": "Pixel 8a Chrome and Firefox calibration of a shared 64-visit browser budget",
+      "path": "v3/2026-10-22-pixel8a-visits/"
+    },
+    {
       "id": "v2/2026-10-22-endgame",
       "architecture": "v2",
       "title": "Share Benson certificates and pass after proven defeat in v2",

@@ -1,0 +1,19 @@
+{
+  "url": "https://kyokugo-pixel8a-20261022.mandel59.workers.dev/ai-benchmark.html",
+  "version": "1f093dd8-dd7a-4aa0-9967-b8abbefdb830",
+  "referenceDevice": "Pixel 8a",
+  "targetMs": 300,
+  "margin": 0.8,
+  "measuredOnReferenceDevice": false,
+  "files": {
+    "ai-benchmark.html": "e7d7166e7ce40ea790de0b434490b90c5138577dd95cffaa1171ac90d6341e13",
+    "ai-benchmark.js": "e33ab647db92a7a4c265b0ef9ac02823a6424c1a935f16a13c8b3c5ad76c4b44",
+    "ai-benchmark-worker.js": "0496c0cbbc3663bb4b232f9b9b6ff0075a49e473de3dbdbb9dc3879f2f6382cd",
+    "ai-benchmark-page.js": "4a27347e544b691aa5f91dcd82872aaeddd5b888267749aaefa358f71945560d",
+    "ai-benchmark-positions.json": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895",
+    "ai-v3.js": "3603501426639412674055b655bb4e66aaedba66da503323932c2e950c004c6f",
+    "ai-v3-search.js": "7cd12275af1a00312cc1eb673fdb06b01bb8876b8cbc29daab4c796f4a3a6746",
+    "ai-v3.wasm": "ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216",
+    "models/v3/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+  }
+}

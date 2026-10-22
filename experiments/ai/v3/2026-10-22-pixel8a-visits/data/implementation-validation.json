@@ -1,0 +1,127 @@
+{
+  "scope": "Desktop implementation checks after Pixel 8a calibration; these are not additional phone timings.",
+  "commands": [
+    "node --experimental-vm-modules tools/ai-gnn/test-player.mjs",
+    "node v3-tests.mjs",
+    "node tools/ai-gnn/test-browser.mjs --output tools/ai-gnn/target/pixel8a-64-browser.json",
+    "node tools/ai-gnn/test-device-benchmark.mjs"
+  ],
+  "allPassed": true,
+  "production": {
+    "id": 1,
+    "move": 4,
+    "backend": "v3-webgpu",
+    "simulations": 64
+  },
+  "environment": {
+    "node": "v26.12.1",
+    "browser": "155.0.4283.62",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+  },
+  "cpuTurns": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "simulations": 64,
+      "elapsedMs": 129.39999997615814,
+      "batches": 9
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "simulations": 64,
+      "elapsedMs": 153.39999997615814,
+      "batches": 9
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "simulations": 64,
+      "elapsedMs": 153,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "simulations": 64,
+      "elapsedMs": 152.19999992847443,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "simulations": 64,
+      "elapsedMs": 148.79999995231628,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "simulations": 64,
+      "elapsedMs": 151.39999997615814,
+      "batches": 9
+    }
+  ],
+  "gpuTurns": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "simulations": 64,
+      "elapsedMs": 36.60000002384186,
+      "batches": 9
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "simulations": 64,
+      "elapsedMs": 32.199999928474426,
+      "batches": 9
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "simulations": 64,
+      "elapsedMs": 34.10000002384186,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "simulations": 64,
+      "elapsedMs": 30.600000023841858,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "simulations": 64,
+      "elapsedMs": 32.39999997615814,
+      "batches": 9
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "simulations": 64,
+      "elapsedMs": 30.299999952316284,
+      "batches": 9
+    }
+  ],
+  "calibrationSiteDeployment": {
+    "url": "https://kyokugo-pixel8a-20261022.mandel59.workers.dev/ai-benchmark.html",
+    "version": "e1f15b32-d58a-4c94-9b54-1877f0b52e00",
+    "referenceDevice": "Pixel 8a",
+    "targetMs": 300,
+    "margin": 1,
+    "measuredOnReferenceDevice": true,
+    "measurementArchive": "experiments/ai/v3/2026-10-22-pixel8a-visits",
+    "sharedVisits": 64,
+    "files": {
+      "ai-benchmark.html": "a0fce9b2315325c8a185ed42ba4516c6ee66ef308c930fd1690707298931aa7e",
+      "ai-benchmark.js": "a5b52e4575356868989c5a386fea1897bc2e24b79602f901677bb9aa85c012f7",
+      "ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    }
+  }
+}

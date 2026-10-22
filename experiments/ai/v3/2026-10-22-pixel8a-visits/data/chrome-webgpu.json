@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "targetMs": 300,
+  "margin": 0.8,
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Mobile Safari/537.36",
+  "backend": "v3-webgpu",
+  "initializationMs": 1678.5,
+  "fixtureSource": "v3/2026-10-22-vs-v2, primary-browser.json, first game of each board",
+  "repeats": 2,
+  "runs": [
+    {
+      "visits": 8, "p95Ms": 54.700000047683716, "worstBoardP95Ms": 56,
+      "perBoard": [
+        {"board":"sphere3","p95Ms":56,"samples":6},
+        {"board":"sphere4","p95Ms":50.69999998807907,"samples":6},
+        {"board":"sphere5","p95Ms":45.89999997615814,"samples":6},
+        {"board":"torus7","p95Ms":54.700000047683716,"samples":6},
+        {"board":"torus9","p95Ms":42.09999996423721,"samples":6},
+        {"board":"torus11","p95Ms":52.19999998807907,"samples":6}
+      ], "sampleCount":36, "excludedCertifiedLoss":0
+    },
+    {
+      "visits":16, "p95Ms":99.60000002384186, "worstBoardP95Ms":109.19999998807907,
+      "perBoard": [
+        {"board":"sphere3","p95Ms":63.60000002384186,"samples":6},
+        {"board":"sphere4","p95Ms":91.79999995231628,"samples":6},
+        {"board":"sphere5","p95Ms":109.19999998807907,"samples":6},
+        {"board":"torus7","p95Ms":99.60000002384186,"samples":6},
+        {"board":"torus9","p95Ms":68.79999995231628,"samples":6},
+        {"board":"torus11","p95Ms":79.39999997615814,"samples":6}
+      ], "sampleCount":36, "excludedCertifiedLoss":0
+    },
+    {
+      "visits":32, "p95Ms":157.30000001192093, "worstBoardP95Ms":175.80000001192093,
+      "perBoard": [
+        {"board":"sphere3","p95Ms":140.89999997615814,"samples":6},
+        {"board":"sphere4","p95Ms":153.39999997615814,"samples":6},
+        {"board":"sphere5","p95Ms":175.80000001192093,"samples":6},
+        {"board":"torus7","p95Ms":149.89999997615814,"samples":6},
+        {"board":"torus9","p95Ms":146,"samples":6},
+        {"board":"torus11","p95Ms":149,"samples":6}
+      ], "sampleCount":36, "excludedCertifiedLoss":0
+    },
+    {
+      "visits":64, "p95Ms":268.69999998807907, "worstBoardP95Ms":269.80000001192093,
+      "perBoard": [
+        {"board":"sphere3","p95Ms":269.80000001192093,"samples":6},
+        {"board":"sphere4","p95Ms":267.5,"samples":6},
+        {"board":"sphere5","p95Ms":266.69999998807907,"samples":6},
+        {"board":"torus7","p95Ms":254.79999995231628,"samples":6},
+        {"board":"torus9","p95Ms":250.60000002384186,"samples":6},
+        {"board":"torus11","p95Ms":261.69999998807907,"samples":6}
+      ], "sampleCount":36, "excludedCertifiedLoss":0
+    }
+  ],
+  "recommendedVisits":32,
+  "method":"End-to-end chooseMove in a Worker; all six boards, opening/middle/late archived positions; per-board P95 and 20% timing margin. No time cutoff or automatic setting changes.",
+  "elapsedMs":20052.100000023842,
+  "finished":"2026-10-22T13:44:17.881Z"
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion":1,
+  "id":"v3/2026-10-22-fixed64-strength",
+  "purpose":"Measure the Pixel 8a-calibrated shared 64-visit configuration against current v2 without tuning either player.",
+  "sourceBaseCommit":"495eefd7053241764892ad1cea95a9258b66198e",
+  "modelSha256":"8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "wasmSha256":{"v3":"ef392c214c83d26ee4e3177e9d58ed7aeed968b55d7d1c8c1dd16f949c31b216","v2":"86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45"},
+  "players":{"v3":{"model":"dist/models/v3","backend":"dedicated WebGPU in real browser Worker","visits":64,"timeCutoff":false,"fpu":1,"tactics":true,"endgame":true},"v2":{"backend":"deployed WASM","depth":4,"endgame":true}},
+  "common":{"boards":["sphere3","sphere4","sphere5","torus7","torus9","torus11"],"komi":6.5,"openingMoves":4,"opening":"Random legal moves, shared between a colour-swapped pair; same per-ply seeds as the previous 300ms evaluation.","maximumMoves":"20 times board vertices","cappedGames":"Report separately; do not replace with wins, draws or losses."},
+  "evaluation":{"pairsPerBoard":8,"games":96,"seed":2026102260,"bootstrapSeed":2026102292,"bootstrapIterations":10000,"preflightBoard":"sphere3","preflightPairs":1,"preflightSeed":2026102299,"preflightExcludedFromEvaluation":true},
+  "historicalReference":"experiments/ai/v3/2026-10-22-vs-v2/data/primary-browser.json",
+  "statistics":{"unit":"colour-swapped opening pair","stratifiedByBoard":true,"report":["wins/draws/losses/caps","overall and per-board score","paired bootstrap 95% interval","per-turn visits and times","replay-verified complete move records"]},
+  "execution":{"stopRule":"Complete 96 declared games regardless of results; no tuning, model selection or promotion.","concurrency":"One browser study at a time, no concurrent compute jobs.","source":"Pin hashes and snapshot the exact measured source and model before execution; fail if the inputs change.","python":"Use uv if Python is needed."},
+  "interpretation":"Measures 64-visit application v3 against v2 depth 4. This is not equal compute time, a human rank estimate, or a head-to-head comparison with the older 300ms v3. Historical 300ms results are context only."
+}

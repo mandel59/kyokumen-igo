@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>AIの探索速度を測る</title>
+<style>
+:root{color-scheme:light dark;font-family:system-ui,sans-serif}body{max-width:42rem;margin:2rem auto;padding:0 1rem;line-height:1.7}h1{font-size:1.5rem}button{font:inherit;padding:.65rem 1rem;margin:.4rem .4rem .4rem 0;cursor:pointer}table{width:100%;border-collapse:collapse;margin:1rem 0}th,td{text-align:right;padding:.5rem;border-bottom:1px solid #888}th:first-child,td:first-child{text-align:left}textarea{box-sizing:border-box;width:100%;min-height:12rem;font:12px monospace}#recommendation{font-size:1.25rem;font-weight:700}small{display:block}button:disabled{cursor:default}output{display:block}
+</style></head><body>
+<h1>AIの探索速度を測る</h1>
+<p>Pixel 8aで、1手約300msを目標にできる共通の訪問数を調べます。PC側にも同じ訪問数を設定するための測定です。</p>
+<p>画面を開いたまま「測定を始める」を押してください。初期化後、全6盤の序盤・中盤・終盤を測ります。所要時間は約1分です。このページでは対局の設定を変更しません。</p>
+<button id="start">測定を始める</button><button id="stop" disabled>中止</button>
+<p id="status" role="status" aria-live="polite">測定待ち</p>
+<output id="recommendation"></output>
+<table><thead><tr><th>訪問数</th><th>全体P95</th><th>最も遅い盤のP95</th></tr></thead><tbody id="rows"></tbody></table>
+<small>候補は、最も遅い盤でもP95が300ms以内だった訪問数です。300msという目標に待ち時間400msまでの余裕を含めているため、追加の余裕は差し引きません。発熱や省電力状態でも変動するため、常に300ms以下を保証する値ではありません。</small>
+<h2>測定結果</h2><p>測定が終わったら結果をコピーして、チャットへ貼り付けてください。</p>
+<button id="copy" disabled>結果をコピー</button><textarea id="result" readonly aria-label="コピー用の測定結果"></textarea>
+<p><a href="./third-party.html">第三者ソフトウェアとライセンス</a></p>
+<script type="module" src="./ai-benchmark-page.js"></script></body></html>

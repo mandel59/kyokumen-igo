@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-22-vs-v2",
+  "purpose": "Compare current application v3 and v2 without tuning or changing either player.",
+  "sourceBaseCommit": "495eefd7053241764892ad1cea95a9258b66198e",
+  "wasmSha256": {"v2": "86fd6ff8b8bc2667f41577b25477ee35c2d654e16357d97331b1bdc030c08f45", "v3": "21ec6eda31c0943ca1d951bab8769616e70486736dc564605efcd413031f215a"},
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "v3": {"model": "dist/models/v3", "fpu": 1, "tactics": true, "endgame": true},
+  "v2": {"wasm": "dist/ai-engine.wasm", "depth": 4, "weights": "current deployed board-specific weights", "endgame": true},
+  "common": {"boards": ["sphere3", "sphere4", "sphere5", "torus7", "torus9", "torus11"], "komi": 6.5, "openingMoves": 4, "opening": "random legal moves; same opening and per-ply seeds for each colour-swapped pair", "maximumMoves": "20 times board vertices", "cappedGames": "report explicitly; do not turn into losses, wins or draws"},
+  "primary": {"role": "current application configuration strength", "environment": "actual browser Worker", "v3Backend": "dedicated WebGPU", "v3BudgetMs": 300, "v3MaximumSimulations": 4096, "v2Backend": "WASM", "v2Depth": 4, "equalComputeTime": false, "pairsPerBoard": 8, "games": 96, "seed": 2026102260, "bootstrapSeed": 2026102262},
+  "secondary": {"role": "fixed-visits CPU diagnostic; not equal time or equal node counts", "v3Backend": "CPU ONNX plus WASM MCTS", "v3Visits": 128, "v2Backend": "WASM", "v2Depth": 4, "pairsPerBoard": 4, "games": 48, "seed": 2026102261, "bootstrapSeed": 2026102263},
+  "statistics": {"unit": "colour-swapped opening pair", "stratifiedByBoard": true, "iterations": 10000, "interval": 0.95, "report": ["overall and per-board score", "wins/draws/losses/caps", "compute time per turn", "paired interval", "full move records"]},
+  "execution": {"order": ["short functionality preflight on separate seed", "primary with no concurrent compute job", "secondary", "replay and summarize all games"], "preflightSeed": 2026102269, "selectionOrPromotion": false, "tuning": false, "stopRule": "complete declared counts; do not add games based on results", "python": "use uv if Python is needed", "archive": "hash settings, source patch, binaries/model identifiers, reports and exact command records in a new experiment; preserve older studies"},
+  "interpretation": "Primary answers how the current application configurations compare on this device. v2 has no deadline or deeper-than-4 interface, so no equal-compute-time claim. Six boards and sampled openings do not establish a human rank or strength on other devices."
+}

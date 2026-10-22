@@ -16,9 +16,11 @@ self.onmessage=async({data})=>{
   try {
     if(data.type==='cancel'){v3?.cancel();return;}
     const ai=await ready;
-    let move,backend='js';
+    // An explicit v3 game waits for its model; startup speed must not choose a different player.
+    if(v3Ready)await v3Ready;
+    let move,simulations,backend='js';
     if(v3&&!v3Failed){
-      try{const result=await v3.chooseMove(data.position,{seed:(Math.random()*4294967296)>>>0});move=result.move;backend=result.backend;}
+      try{const result=await v3.chooseMove(data.position,{seed:(Math.random()*4294967296)>>>0});move=result.move;simulations=result.simulations;backend=result.backend;}
       catch(error){v3Failed=true;console.warn('v3 search failed:',error.message);}
     }
     if(backend==='js'&&ai&&!wasmFailed) {
@@ -26,7 +28,7 @@ self.onmessage=async({data})=>{
       catch {wasmFailed=true;}
     }
     if(backend==='js')move=chooseMove(restoreAIPosition(data.position));
-    self.postMessage({id:data.id,move,backend});
+    self.postMessage({id:data.id,move,backend,...(simulations===undefined?{}:{simulations})});
   } catch(error) {
     self.postMessage({id:data.id,error:error.message});
   }

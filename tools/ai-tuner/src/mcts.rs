@@ -56,13 +56,18 @@ impl Search {
         self.completed += 1;
     }
     pub fn collect(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize) -> Vec<Leaf> {
+        self.collect_limited(root,past,sphere,batch,u32::MAX)
+    }
+    pub fn collect_limited(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize, remaining: u32) -> Vec<Leaf> {
         assert!(self.pending.is_empty(), "submit or cancel the outstanding batch first");
         let mut leaves = vec![];
         if root.ended { return leaves; }
+        let limit = self.completed.saturating_add(remaining);
         let mut scratch = Scratch::new(root.board.len());
         // Bounded CPU work, including runs that repeatedly reach terminal positions.
         for _ in 0..batch.clamp(1,8)*16 {
-            if leaves.len() == batch.clamp(1,8) { break; }
+            // Pending neural evaluations and exact terminal backups both consume visits.
+            if leaves.len() == batch.clamp(1,8) || self.completed.saturating_add(self.pending.len() as u32) >= limit { break; }
             let mut game = root.clone(); let mut boards = past.to_vec();
             let mut path = vec![0];
             for _ in 0..256 {
@@ -185,6 +190,25 @@ impl Search {
 mod tests {
     use super::*;
     use crate::board::{Topology,Kind};
+    #[test]
+    fn visit_limit_counts_neural_leaves_and_exact_terminal_backups() {
+        let t=Topology::new(Kind::Torus,7);let mut g=Game::new(&t,6.5);g.pass();
+        for budget in [1,2,7,8,9,17,128,512] {
+            let mut s=Search::new(3);let mut calls=0;
+            while s.completed<budget {
+                let leaves=s.collect_limited(&g,&[vec![0;49]],false,8,budget-s.completed);
+                assert!(s.completed+leaves.len() as u32<=budget);
+                let ids:Vec<_>=leaves.iter().map(|l|l.id).collect();
+                let mut eval=vec![-10.;ids.len()*(ACTIONS+1)];
+                for e in eval.chunks_exact_mut(ACTIONS+1) {e[PASS]=10.;e[ACTIONS]=0.;}
+                if !ids.is_empty(){s.submit(&ids,&eval).unwrap();}
+                calls+=1;assert!(calls<budget+10);
+            }
+            assert_eq!(s.completed,budget);
+            assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
+            assert!(s.collect_limited(&g,&[],false,8,0).is_empty());assert_eq!(s.completed,budget);
+        }
+    }
     #[test]
     fn fpu_uses_parent_perspective_without_virtual_loss() {
         let mut s = Search::new(4);
