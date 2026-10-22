@@ -79,7 +79,7 @@ python3 -m http.server --directory dist 8000
 | [LICENSE](LICENSE) | 自作ソースコードに適用する MIT-0 の本文 |
 | [THIRD_PARTY.md](THIRD_PARTY.md) | 第三者ソフトウェア・参考実装・文献の目録と更新手順 |
 | [JSON 目録](docs/third-party/catalog.json) | 自作ソースのライセンス情報と第三者目録の機械可読な正本 |
-| [配信用のライセンス表示](dist/third-party.html) | アプリから参照するライセンス案内・第三者告知へのリンク |
+| [配信用のライセンス表示](dist/credits.html) | アプリから参照するライセンス案内・第三者告知へのリンク |
 
 配信物には [MIT-0 本文のコピー](dist/LICENSE.txt)、第三者の告知全文、[目録 JSON](dist/third-party-catalog.json) を含めています。配信用の文書と目録は `node tools/third-party.mjs --write` で生成し、引数なしで正本との一致を確認します。
 

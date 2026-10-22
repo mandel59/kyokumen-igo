@@ -14,7 +14,7 @@ const inScope=p=>/^tools\/ai-gnn\/[^/]+\.(mjs|py|md|toml|json|lock)$/.test(p)||
  ['tools/ai-tuner/src/mcts.rs','tools/ai-tuner/src/gnn-wasm.rs','tools/ai-tuner/check-experiments.mjs',
   'experiments/ai/catalog.json','experiments/ai/README.md',directory+'/README.md',
   'THIRD_PARTY.md','docs/third-party/catalog.json','docs/ai/architectures/v3.md',
-  'dist/third-party-catalog.json','dist/third-party.html','dist/licenses/index.html','tests/fixtures/ai/v3-golden.json',directory+'/plan.json'].includes(p)||
+  'dist/third-party-catalog.json','dist/credits.html','dist/licenses/index.html','tests/fixtures/ai/v3-golden.json',directory+'/plan.json'].includes(p)||
  p.startsWith('dist/ai-v3')||p.startsWith('dist/models/v3/');
 const sources=[];
 for(const path of [...paths].sort()){

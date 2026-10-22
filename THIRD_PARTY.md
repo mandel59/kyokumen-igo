@@ -6,7 +6,7 @@
 
 正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-22。参考実装、配信するライブラリ、開発ツールと文献の一覧。
 
-配信用の表示は [第三者ライセンス](dist/third-party.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
+配信用の表示は [ライセンスと参考ソフトウェア](dist/credits.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
 
 ## 参考にした実装・移植したコード
 

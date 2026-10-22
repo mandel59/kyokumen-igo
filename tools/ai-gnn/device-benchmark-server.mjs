@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 const assets=fileURLToPath(new URL('../../dist/',import.meta.url));
 const pages=new Set(['ai-benchmark.html','ai-benchmark-page.js','ai-benchmark-worker.js','ai-benchmark.js','ai-benchmark-positions.json',
  'engine.js','board-analysis.js','ai-position.js','ai-v3.js','ai-v3-search.js','ai-v3-inference.js','ai-v3-webgpu.js','ai-v3.wasm',
- 'models/v3/manifest.json','models/v3/model.onnx','models/v3/weights.f32','third-party.html','third-party-catalog.json']);
+ 'models/v3/manifest.json','models/v3/model.onnx','models/v3/weights.f32','credits.html','third-party-catalog.json']);
 export const benchmarkAssets=pages;
 export function createDeviceBenchmarkServer(){
  return createServer((request,response)=>{

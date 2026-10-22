@@ -23,11 +23,11 @@ for(const [path,entry,source]of entries){
  assert.ok(item,name);assert.equal(item.version,entry.version,name);assert.equal(item.license,entry.license,name);
 }
 assert.equal(lock.packages['node_modules/onnxruntime-web'].version,sources.versions.onnxruntime);
-for(const file of ['THIRD_PARTY.md','dist/third-party.html']){
+for(const file of ['THIRD_PARTY.md','dist/credits.html']){
  const text=read(file).toString(),links=file.endsWith('.md')?[...text.matchAll(/\]\(([^)]+)\)/g)]:[...text.matchAll(/href="([^"]+)"/g)];
  for(const [,link]of links)if(!/^https?:|^#/.test(link))assert.ok(existsSync(new URL(link.split('#')[0],new URL(file,root))),file+': '+link);
 }
-assert.match(read('dist/index.html').toString(),/href="third-party.html"/);
+assert.match(read('dist/index.html').toString(),/href="credits.html"/);
 assert.ok(read('dist/index.html').toString().includes('href="'+project.distributionFile.slice(5)+'"'),'App must link to its source license');
 if(process.argv.includes('--prepared')){
  const vendor='dist/vendor/onnxruntime/',npm='tools/ai-gnn/node_modules/onnxruntime-web/';
