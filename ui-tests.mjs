@@ -234,27 +234,27 @@ assert.equal(el('settingsDialog').open,false);assert.equal(el('replayControls').
 assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('moveCount').textContent,'0 手');assert.equal(window.location.hash,'');
 // A record shows its board as a summary; the board tabs are hidden and do nothing.
 openSmallRecord();
-assert.equal(el('kindTabs').hidden,true);assert.equal(el('sizeTabs').hidden,true);assert.equal(el('boardSummary').hidden,false);assert.equal(el('boardSummary').textContent,'球面 · 小 · 56 交点');
+assert.equal(el('kindTabs').inert,true);assert.equal(el('sizeTabs').inert,true);assert.equal(el('boardSummary').hidden,false);assert.equal(el('boardSummary').textContent,'球面 · 小 · 56 交点');
 globalThis.confirm=()=>{throw new Error('locked tabs must not ask');};
 el('torusTab').onclick();el('sizeLarge').onclick();assert.equal(el('replayControls').hidden,false);assert.equal(el('topologyName').textContent,'球面盤');
 el('replayClose').onclick();assert.equal(window.location.hash,'');
 delete window.location;delete window.history;
 // Before the first move, size tabs start a new game on the same shape; shape tabs keep the size on screen.
-assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('kindTabs').hidden,false);assert.equal(el('boardSummary').hidden,true);
+assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('kindTabs').inert,false);assert.equal(el('boardSummary').hidden,true);
 el('sizeSmall').onclick();el('torusTab').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS');
 // From the first move until the game ends, the tabs give way to the summary and a tap changes nothing.
 el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');
-assert.equal(el('kindTabs').hidden,true);assert.equal(el('sizeTabs').hidden,true);assert.equal(el('boardSummary').textContent,'トーラス · 小 · 7 × 7');
+assert.equal(el('kindTabs').inert,true);assert.equal(el('sizeTabs').inert,true);assert.equal(el('boardSummary').textContent,'トーラス · 小 · 7 × 7');
 el('sizeLarge').onclick();el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS');assert.equal(el('moveCount').textContent,'1 手');
 // Undoing back to the empty board makes the tabs available again.
 globalThis.confirm=()=>true;
-el('undo').onclick();assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('kindTabs').hidden,false);
+el('undo').onclick();assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('kindTabs').inert,false);
 el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'121 INTERSECTIONS');assert.equal(el('moveCount').textContent,'0 手');
 el('sphereTab').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSECTIONS');assert.equal(el('topologyName').textContent,'球面盤');
 el('sizeStandard').onclick();assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS');
 // After the game ends the tabs return, and leaving the finished game asks first.
 const opponentBefore=el('opponent').value;el('settingsOpen').onclick();el('opponent').value='human';el('newGame').onclick();
-el('board').events.keydown({key:'Enter',preventDefault:noop});el('pass').onclick();el('pass').onclick();assert.equal(el('kindTabs').hidden,false);assert.equal(el('boardSummary').hidden,true);
+el('board').events.keydown({key:'Enter',preventDefault:noop});el('pass').onclick();el('pass').onclick();assert.equal(el('kindTabs').inert,false);assert.equal(el('boardSummary').hidden,true);
 let asked='';globalThis.confirm=text=>{asked=text;return false;};el('sizeLarge').onclick();assert.match(asked,/終局した対局は残りません/);assert.equal(el('nodeCount').textContent,'98 INTERSECTIONS','declined');
 globalThis.confirm=()=>true;el('sizeLarge').onclick();assert.equal(el('nodeCount').textContent,'152 INTERSECTIONS');
 el('settingsOpen').onclick();el('opponent').value=opponentBefore;el('size').value='4';el('newGame').onclick();

@@ -304,7 +304,7 @@ function syncSettings(){
 const boardLocked=()=>!!replay||game.moves>0&&!game.ended;
 function syncBoardTabs(){
   const locked=boardLocked(),ordinal=BOARD_SIZES[kind].indexOf(game.topology.size);
-  $('kindTabs').hidden=locked;$('sizeTabs').hidden=locked;$('boardSummary').hidden=!locked;
+  $('kindTabs').inert=locked;$('sizeTabs').inert=locked;$('boardSummary').hidden=!locked;
   $('boardSummary').textContent=`${kind==='sphere'?'球面':'トーラス'} · ${['小','標準','大'][ordinal]} · ${SIZE_DETAILS[kind][ordinal]}`;
 }
 // Board tabs start a new game on the board they pick, keeping the other choice that is on screen

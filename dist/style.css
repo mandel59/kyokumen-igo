@@ -17,7 +17,11 @@
 .replay{display:flex;flex-direction:column;gap:6px;margin-top:5px}.replay-steps{display:flex;align-items:center;gap:8px}.replay-steps button{min-width:44px;padding:0 12px}#replaySlider{flex:1;min-width:0;width:auto;height:44px;margin:0;accent-color:var(--green)}@media(orientation:landscape) and (max-height:539px){.replay{margin-top:auto}}
 
 /* Size tabs sit beside the shape tabs; where the bar is too narrow, the view buttons wrap to a second row. */
-.board-top{flex-wrap:wrap;row-gap:0;height:auto;min-height:52px;flex-basis:auto}.board-top .size-tabs{border-left:1px solid #ae9b7466;padding-left:6px}.size-tabs button{min-width:44px;padding:0 12px}.view-controls{margin-left:auto}
+.board-top{flex-wrap:wrap;row-gap:0;height:auto;min-height:52px;flex-basis:auto}/* The summary of a game in progress takes the shape tabs' place without leaving the layout, so the bar keeps its height. */
+.kind-slot{position:relative;display:flex;align-items:center}
+.board-top .tabs[inert]{visibility:hidden}
+.kind-slot .board-summary{position:absolute;left:0;top:0;bottom:0;min-height:0;padding:0 6px}
+.board-top .size-tabs{border-left:1px solid #ae9b7466;padding-left:6px}.size-tabs button{min-width:44px;padding:0 12px}.view-controls{margin-left:auto}
 .board-summary{display:flex;align-items:center;min-height:44px;padding:0 6px;font-size:13px;color:#59614c;white-space:nowrap}@media(orientation:landscape) and (max-height:539px){.board-top{height:auto;min-height:44px;flex-basis:auto}}
 
 /* Settings: segmented choices and a komi stepper instead of drop-downs. */
