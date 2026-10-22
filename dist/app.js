@@ -22,8 +22,8 @@ let kind='sphere',game,settings={opponent:'ai',human:1},orientation=defaultOrien
 let display=loadDisplay(),analysisKey='',analysis=null,mapMarks=null;
 function boardMarks(){
   if(!marksShown(display))return null;
-  const key=kind+game.board.join('');
-  if(key!==analysisKey){analysis=analyzeBoard(game.topology,game.board);analysisKey=key;}
+  const key=kind+game.lastMove+game.board.join('');
+  if(key!==analysisKey){analysis=analyzeBoard(game.topology,game.board,game.lastMove);analysisKey=key;}
   return Object.fromEntries(MARK_KEYS.map(name=>[name,display.marks[name]?analysis[name]:null]));
 }
 function renderCounters(){

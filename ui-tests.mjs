@@ -434,9 +434,12 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  el('viewToggle').onclick();assert.ok(squares.includes(rgb(MARKS.territory[1])),'map draws territory squares in the owner colour');assert.ok(squares.includes(rgb(MARKS.outline)));
  el('viewToggle').onclick();
  delete context.fillRect;delete context.arc;
- // A lone first stone does not own the whole board, in the marks or in the area count.
+ // A lone first stone owns nothing until the other side passes; then the whole board is shown as its territory.
  {const lone=new engine.Game(torusTopology,6.5);lone.play(0);lone.pass();lone.pass();open(lone);
-  assert.equal(shown('blackCount'),'1');assert.equal(has(MARKS.territory[1]),false);
+  const step=n=>{el('replaySlider').value=String(n);el('replaySlider').oninput();};
+  step(1);assert.equal(shown('blackCount'),'1');assert.equal(has(MARKS.territory[1]),false);
+  step(2);assert.equal(shown('blackCount'),'49');assert.equal(has(MARKS.territory[1]),true);
+  step(3);assert.equal(shown('blackCount'),'49');
   el('replayClose').onclick();open(capture);assert.equal(shown('blackCount'),'49');assert.equal(has(MARKS.territory[1]),true);}
  // Dialog dismissal changes nothing, and the choices come back from storage.
  el('displayDone').onclick();assert.equal(el('displayDialog').open,false);el('displayOpen').onclick();el('displayClose').onclick();

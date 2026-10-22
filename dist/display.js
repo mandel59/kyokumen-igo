@@ -23,7 +23,7 @@ export function counterValues(game, counter) {
     return [0, captures[1] + passes[2], captures[2] + passes[1]];
   }
   if (counter === 'stones' || counter === 'area') {
-    const owners = counter === 'area' ? shownTerritory(game.topology.neighbors, game.board) : new Uint8Array(game.board.length), counts = [0, 0, 0];
+    const owners = counter === 'area' ? shownTerritory(game.topology.neighbors, game.board, game.lastMove) : new Uint8Array(game.board.length), counts = [0, 0, 0];
     for (let i = 0; i < game.board.length; i++) counts[game.board[i] || owners[i]]++;
     return [0, counts[1], counts[2]];
   }

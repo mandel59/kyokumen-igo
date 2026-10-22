@@ -24,14 +24,31 @@ assert.deepEqual(counters(), {captures: [1, 0], capturesAndPasses: [4, 1], stone
 game.undo(2);
 assert.deepEqual(game.passCounts(), [0, 0, 2]);
 assert.deepEqual(counters().capturesAndPasses, [3, 0]);
-// A single stone does not own the board; the area score itself is unchanged.
+// A lone stone owns nothing until the other side has passed; then the whole board is its area, which
+// is the result one more pass would give. The area score itself is never changed by this.
+for (const [color, other] of [[1, 2], [2, 1]]) {
+  const g = new Game(createTopology('torus', 7), 0);
+  if (color === 2) g.pass();
+  g.play(0);
+  const area = () => counterValues(g, 'area').slice(1);
+  assert.deepEqual(area(), color === 1 ? [1, 0] : [0, 1], 'right after the first stone');
+  assert.equal(g.score()[color === 1 ? 'territoryBlack' : 'territoryWhite'], 48, 'the score keeps its plain definition');
+  g.pass();
+  assert.deepEqual(area(), color === 1 ? [49, 0] : [0, 49], 'after the other side passes');
+  g.pass();
+  assert.equal(g.ended, true);
+  assert.deepEqual(area(), color === 1 ? [49, 0] : [0, 49]);
+  assert.equal(g.score().winner, color, 'and that is how the game ends');
+  g.undo();
+  assert.deepEqual(area(), color === 1 ? [49, 0] : [0, 49], 'undoing to the pass');
+  g.undo();
+  assert.deepEqual(area(), color === 1 ? [1, 0] : [0, 1], 'undoing to the first stone');
+}
+// With a second stone on the board territory counts as usual, and neutral points belong to nobody.
 {
   const g = new Game(createTopology('torus', 7), 0);
-  g.play(0);
-  assert.deepEqual(counterValues(g, 'area'), [0, 1, 0], 'the first stone does not own the board');
-  assert.equal(g.score().territoryBlack, 48, 'the score keeps its plain definition');
-  g.pass(); g.play(1);
-  assert.deepEqual(counterValues(g, 'area').slice(1), [49, 0], 'two stones: the rest is theirs again');
+  g.play(0); g.pass(); g.play(1);
+  assert.deepEqual(counterValues(g, 'area').slice(1), [49, 0]);
   g.play(24);
   assert.deepEqual(counterValues(g, 'area').slice(1), [2, 1], 'neutral once white has a stone');
 }

@@ -32,10 +32,16 @@ function positioned(topology, b, turn = 1) {
 
 // Territory is the empty region enclosed by one colour, exactly as the area score counts it.
 {
-  // The plain definition gives a lone stone the whole empty torus, which the screen does not show.
+  // The plain definition gives a lone stone the whole empty torus. Right after it is placed the screen
+  // shows none, and once the other side has passed (no last move) it shows the whole board.
   assert.equal(points(territoryOwners(torus.neighbors, board({1: [10]}))).length, n - 1);
-  assert.deepEqual(points(analyzeBoard(torus, board({1: [10]})).territory), [], 'no territory after the first move');
-  assert.deepEqual(points(analyzeBoard(torus, board({2: [10]})).territory), [], 'whichever colour it is');
+  assert.deepEqual(points(analyzeBoard(torus, board({1: [10]}), 10).territory), [], 'nothing right after the first move');
+  assert.deepEqual(points(analyzeBoard(torus, board({2: [10]}), 10).territory), [], 'whichever colour it is');
+  for (const color of [1, 2]) {
+    const answered = analyzeBoard(torus, board({[color]: [10]}), null);
+    assert.equal(points(answered.territory).length, n - 1, 'the whole board once the other side has passed');
+    assert.ok(points(answered.territory).every(p => answered.territory[p] === color));
+  }
   assert.equal(points(analyzeBoard(torus, board({1: [10, 11]})).territory).length, n - 2, 'a colour that has emptied the board of the other owns it');
   // With more stones on the board, enclosure decides.
   const walled = analyzeBoard(torus, board({1: [...Array(n).keys()].filter(p => p !== 0 && p !== 24), 2: [24]}));
@@ -133,13 +139,13 @@ for (const [kind, size] of [['sphere', 3], ['sphere', 4], ['sphere', 5], ['torus
       const legal = [...Array(game.board.length).keys()].filter(i => !game.board[i] && game.analyze(i).ok);
       if (!legal.length || random(30) === 0) game.pass(); else game.play(legal[random(legal.length)]);
       if (move % 17) continue;
-      const a = analyzeBoard(topology, game.board), score = game.score();
+      const a = analyzeBoard(topology, game.board, game.lastMove), score = game.score();
       for (let i = 0; i < game.board.length; i++) {
         if (game.board[i]) assert.equal(a.territory[i], 0, 'stones are not territory');
         else assert.ok(!a.alive[i] && !a.dead[i] && !a.atari[i], 'marks sit on stones');
         assert.ok(!(a.alive[i] && a.dead[i]) && !(a.alive[i] && a.atari[i]), 'alive stones are neither dead nor in atari');
       }
-      if (score.stonesBlack + score.stonesWhite === 1) assert.deepEqual(points(a.territory), [], 'a single stone owns nothing');
+      if (score.stonesBlack + score.stonesWhite === 1 && game.lastMove !== null) assert.deepEqual(points(a.territory), [], 'a single stone just placed owns nothing');
       else {
         assert.equal(points(a.territory).filter(i => a.territory[i] === 1).length, score.territoryBlack);
         assert.equal(points(a.territory).filter(i => a.territory[i] === 2).length, score.territoryWhite);
