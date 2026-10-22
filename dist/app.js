@@ -152,10 +152,17 @@ function workerInfo(source,data){
   if(!data.error){reportBackend(data.backend);return;}
   source.terminate();worker=null;mainThreadAI().catch(()=>{});
 }
+// Phones run v3 on WASM; ?backend=webgpu asks for WebGPU anyway, ?backend=wasm forces WASM anywhere.
+function v3UsesWasm(){
+  const requested=aiQuery?.get('backend');
+  if(requested)return requested==='wasm';
+  const nav=globalThis.navigator;
+  return nav?.userAgentData?.mobile??/Android|iPhone|iPod|Mobile/i.test(nav?.userAgent??'');
+}
 function ensureWorker(){
   if(worker)return worker;
   const url=new URL('./ai-worker.js',import.meta.url);
-  if(aiInfo.ai==='v3')url.search='ai=v3'+(aiQuery.get('backend')==='wasm'?'&backend=wasm':'');
+  if(aiInfo.ai==='v3')url.search='ai=v3'+(v3UsesWasm()?'&backend=wasm':'');
   const started=new Worker(url,{type:'module'});
   started.onmessage=e=>{if(e.data.type==='info')workerInfo(started,e.data);};
   started.onerror=()=>{if(worker!==started||thinking)return;started.terminate();worker=null;mainThreadAI().catch(()=>{});};
