@@ -6,6 +6,7 @@ import {renderSurface,highlightSurface,MARKER,MARKS,markerColor} from './surface
 import {analyzeBoard} from './board-analysis.js';
 import {COUNTERS,MARK_KEYS,counterValues,loadDisplay,marksShown,saveDisplay} from './display.js';
 import {sphereProjection} from './sphere-projection.js';
+import {AI_CHOICES,loadAIChoice,saveAIChoice} from './ai-choice.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
 import {encodeRecord,decodeRecord} from './record.js';
@@ -25,9 +26,13 @@ const aiQuery=globalThis.location?.search?new URLSearchParams(globalThis.locatio
 const AI_NAMES={v2:'Kyokugo AI v2',v3:'Kyokugo AI v3（実験版）'};
 const AI_BACKENDS={wasm:'WebAssembly','generated-js':'JavaScript（WebAssembly を使えないため）','v3-webgpu':'WebGPU','v3-wasm':'WebAssembly'};
 const AI_DESCRIPTIONS={v2:$('aiDescription').textContent,v3:'実験中のニューラルネットワーク AI です。局面を評価するモデルを端末内で動かし、モンテカルロ木探索で着手を選びます。'};
-let aiInfo={ai:aiQuery?.get('ai')==='v3'?'v3':'v2',backend:null,mainThread:false,failed:false};
+// ?ai=v2 or ?ai=v3 overrides the saved choice for this page load.
+let aiChoice=AI_CHOICES.includes(aiQuery?.get('ai'))?aiQuery.get('ai'):loadAIChoice(),workerChoice=null;
+let aiInfo={ai:aiChoice,backend:null,mainThread:false,failed:false};
 function renderAIInfo(){
   const {ai,backend,mainThread,failed}=aiInfo;
+  for(const choice of AI_CHOICES)$('aiChoice_'+choice).checked=aiChoice===choice;
+  $('aiNote').hidden=!(backend&&ai!==aiChoice);
   $('aiName').textContent=AI_NAMES[ai];$('aiDescription').textContent=AI_DESCRIPTIONS[ai];
   $('aiBackend').textContent=failed?'読み込めませんでした':backend?(AI_BACKENDS[backend]??backend)+(mainThread?'（Web Worker を使えないため画面側で実行）':''):'読み込み中…';
 }
@@ -144,7 +149,8 @@ function resize(){
 // Only a search in flight needs stopping; an idle worker stays loaded, and a stopped one is replaced at once.
 function cancelAI(){const searching=thinking;requestId++;clearTimeout(timer);timer=null;thinking=false;if(searching&&worker){worker.terminate();worker=null;startAIWorker();}}
 function mainThreadAI(){
-  fallbackAI??=createJSAI().then(ai=>{if(!worker)reportBackend(ai.backend,true);return ai;},error=>{fallbackAI=null;if(!worker)setAIInfo({failed:true});throw error;});
+  fallbackAI??=createJSAI().catch(error=>{fallbackAI=null;throw error;});
+  fallbackAI.then(ai=>{if(!worker)reportBackend(ai.backend,true);},()=>{if(!worker)setAIInfo({failed:true});});
   return fallbackAI;
 }
 function workerInfo(source,data){
@@ -160,15 +166,26 @@ function v3UsesWasm(){
   return nav?.userAgentData?.mobile??/Android|iPhone|iPod|Mobile/i.test(nav?.userAgent??'');
 }
 function ensureWorker(){
+  if(worker&&workerChoice!==aiChoice){worker.terminate();worker=null;}
   if(worker)return worker;
   const url=new URL('./ai-worker.js',import.meta.url);
-  if(aiInfo.ai==='v3')url.search='ai=v3'+(v3UsesWasm()?'&backend=wasm':'');
+  if(aiChoice==='v3')url.search='ai=v3'+(v3UsesWasm()?'&backend=wasm':'');
   const started=new Worker(url,{type:'module'});
   started.onmessage=e=>{if(e.data.type==='info')workerInfo(started,e.data);};
   started.onerror=()=>{if(worker!==started||thinking)return;started.terminate();worker=null;mainThreadAI().catch(()=>{});};
-  worker=started;setAIInfo({backend:null,mainThread:false,failed:false});
+  worker=started;workerChoice=aiChoice;setAIInfo({backend:null,mainThread:false,failed:false});
   return started;
 }
+// A search in flight is restarted with the newly chosen AI.
+function chooseAI(choice){
+  if(choice===aiChoice)return;
+  const searching=thinking;
+  aiChoice=choice;saveAIChoice(choice);
+  setAIInfo({ai:choice,backend:null,mainThread:false,failed:false});
+  cancelAI();startAIWorker();
+  if(searching)scheduleAI();
+}
+for(const choice of AI_CHOICES)$('aiChoice_'+choice).onchange=()=>chooseAI(choice);
 function startAIWorker(){try{ensureWorker();}catch{mainThreadAI().catch(()=>{});}}
 function canPlay(){return!replay&&!game.ended&&!thinking&&(settings.opponent==='human'||game.turn===settings.human);}
 const resultText=s=>s.winner?(s.winner===1?'黒':'白')+'の '+s.margin+' 目勝ち':'引き分け';

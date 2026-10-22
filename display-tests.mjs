@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {createTopology, Game} from './dist/engine.js';
+import {AI_CHOICE_KEY,DEFAULT_AI,loadAIChoice,saveAIChoice} from './dist/ai-choice.js';
 import {COUNTERS, DEFAULT_DISPLAY, DISPLAY_KEY, MARK_KEYS, counterValues, loadDisplay, normalizeDisplay, saveDisplay} from './dist/display.js';
 
 // Black captures the white stone at (3, 3) of a 7 × 7 torus; white passes three times and black once.
@@ -85,5 +86,15 @@ for (const raw of ['', '{', 'null', '[]', '7', '"area"', '{"marks":5}', '{"marks
 }
 assert.deepEqual(normalizeDisplay({marks: {alive: true, extra: true}, counter: 'stones', other: 1}), {marks: {alive: true, dead: false, atari: false, territory: false}, counter: 'stones'}, 'unknown fields are dropped');
 assert.deepEqual(MARK_KEYS, ['alive', 'dead', 'atari', 'territory']);
+
+// The chosen AI is saved on its own, and anything but a known choice means the default.
+{
+  const storage=memory();
+  assert.equal(DEFAULT_AI,'v2');assert.equal(loadAIChoice(storage),'v2');assert.equal(loadAIChoice(),'v2','no storage in this environment');
+  assert.equal(saveAIChoice('v3',storage),true);assert.equal(loadAIChoice(storage),'v3');assert.deepEqual(JSON.parse(storage.items.get(AI_CHOICE_KEY)),{ai:'v3'});
+  assert.equal(saveAIChoice('v9',storage),true);assert.equal(loadAIChoice(storage),'v2','an unknown choice is not stored as such');
+  assert.equal(saveAIChoice('v3',{setItem(){throw new Error('quota');}}),false);
+  for(const raw of ['','{','null','"v3"','{"ai":3}','{"ai":["v3"]}','{"ai":"__proto__"}'])assert.equal(loadAIChoice({getItem:()=>raw}),'v2',raw);
+}
 
 console.log('Display tests passed: counters (captures, captures + opponent passes, stones, stones + territory) through undo, and display settings storage, defaults and corrupt data.');

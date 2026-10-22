@@ -296,7 +296,7 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
   }
  };
  globalThis.Worker=class {
-  constructor(){this.requests=[];this.terminated=false;instances.push(this);}
+  constructor(url){this.url=String(url);this.requests=[];this.terminated=false;instances.push(this);}
   postMessage(data,transfer){this.requests.push(structuredClone(data,{transfer}));}
   terminate(){this.terminated=true;}
  };
@@ -333,6 +333,22 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  assert.equal(instances.length,before+1,'a stopped worker is replaced at once, so the AI stays loaded');assert.equal(instances.at(-1).terminated,false);
  assert.equal(String(el('aiBackend').textContent),'読み込み中…','the replacement reports again once loaded');
  instances.at(-1).onmessage({data:{type:'info',backend:'wasm'}});assert.equal(String(el('aiBackend').textContent),'WebAssembly');
+ // Choosing the AI replaces the idle worker with one for the new choice.
+ {
+  const idle=instances.at(-1),count=instances.length;
+  assert.equal(el('aiChoice_v2').checked,true);assert.doesNotMatch(idle.url,/ai=v3/);assert.equal(el('aiNote').hidden,true);
+  el('aiChoice_v3').checked=true;el('aiChoice_v3').onchange();
+  assert.equal(idle.terminated,true);assert.equal(instances.length,count+1);assert.match(instances.at(-1).url,/ai=v3/);
+  assert.equal(el('aiChoice_v2').checked,false);assert.equal(String(el('aiName').textContent),'Kyokugo AI v3（実験版）');assert.equal(String(el('aiBackend').textContent),'読み込み中…');
+  instances.at(-1).onmessage({data:{type:'info',backend:'wasm'}});
+  assert.equal(String(el('aiName').textContent),'Kyokugo AI v2');assert.equal(el('aiNote').hidden,false,'v3 failed to load, so v2 is named as the one playing');
+  instances.at(-1).onmessage({data:{type:'info',backend:'v3-wasm'}});
+  assert.equal(String(el('aiName').textContent),'Kyokugo AI v3（実験版）');assert.equal(el('aiNote').hidden,true);
+  const v3Worker=instances.at(-1);
+  el('aiChoice_v2').checked=true;el('aiChoice_v2').onchange();
+  assert.equal(v3Worker.terminated,true);assert.doesNotMatch(instances.at(-1).url,/ai=v3/);
+  instances.at(-1).onmessage({data:{type:'info',backend:'wasm'}});
+ }
  advance(500);pendingHandler({data:{id:pending.id,move:0}});
  assert.equal(el('moveCount').textContent,'2 手','undo cancels a reply that is already waiting to be applied');
  reset();el('pass').onclick();await tick();
