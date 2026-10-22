@@ -152,6 +152,10 @@ assert.match(aboutHTML,/棋譜のリンクには、盤・コミ・全手順/);
 for(let wait=0;wait<100&&/読み込み中/.test(String(el('aiBackend').textContent));wait++)await new Promise(r=>setTimeout(r,20));
 assert.equal(String(el('aiName').textContent),'Kyokugo AI v2');
 assert.match(String(el('aiBackend').textContent),/^JavaScript.*Web Worker を使えないため/,'this device runs the JS version on the page');
+// v3 needs a Worker, so without one it cannot be chosen.
+assert.equal(el('aiChoice_v3').disabled,true);assert.equal(el('aiChoice_v2').disabled,false);assert.match(String(el('aiV3Note').textContent),/使えません/);
+el('aiChoice_v3').checked=true;el('aiChoice_v3').onchange();
+assert.equal(el('aiChoice_v2').checked,true,'the choice stays v2');assert.equal(String(el('aiName').textContent),'Kyokugo AI v2');
 el('aboutOpen').onclick();el('aboutTutorial').onclick();
 assert.equal(el('aboutDialog').open,false);assert.equal(el('rulesDialog').open,true);assert.match(el('rulesProgress').textContent,/^1 \/ 6/);
 el('rulesClose').onclick();assert.equal(infoState(),beforeInfo);assert.equal(paintCount,beforeInfoPaints);
@@ -336,7 +340,7 @@ console.log(viewport.width+'x'+viewport.height+' canvas simulation: UI integrati
  // Choosing the AI replaces the idle worker with one for the new choice.
  {
   const idle=instances.at(-1),count=instances.length;
-  assert.equal(el('aiChoice_v2').checked,true);assert.doesNotMatch(idle.url,/ai=v3/);assert.equal(el('aiNote').hidden,true);
+  assert.equal(el('aiChoice_v2').checked,true);assert.equal(el('aiChoice_v3').disabled,false,'v3 is offered once Workers exist');assert.doesNotMatch(idle.url,/ai=v3/);assert.equal(el('aiNote').hidden,true);
   el('aiChoice_v3').checked=true;el('aiChoice_v3').onchange();
   assert.equal(idle.terminated,true);assert.equal(instances.length,count+1);assert.match(instances.at(-1).url,/ai=v3/);
   assert.equal(el('aiChoice_v2').checked,false);assert.equal(String(el('aiName').textContent),'Kyokugo AI v3（実験版）');assert.equal(String(el('aiBackend').textContent),'読み込み中…');

@@ -7,6 +7,7 @@ import {analyzeBoard} from './board-analysis.js';
 import {COUNTERS,MARK_KEYS,counterValues,loadDisplay,marksShown,saveDisplay} from './display.js';
 import {sphereProjection} from './sphere-projection.js';
 import {AI_CHOICES,loadAIChoice,saveAIChoice} from './ai-choice.js';
+import {v3Supported} from './ai-support.js';
 import {loadSavedGame,saveGame} from './persistence.js';
 import {defaultOrientation,rotateByDrag} from './orientation.js';
 import {encodeRecord,decodeRecord} from './record.js';
@@ -27,11 +28,15 @@ const AI_NAMES={v2:'Kyokugo AI v2',v3:'Kyokugo AI v3（実験版）'};
 const AI_BACKENDS={wasm:'WebAssembly','generated-js':'JavaScript（WebAssembly を使えないため）','v3-webgpu':'WebGPU','v3-wasm':'WebAssembly'};
 const AI_DESCRIPTIONS={v2:$('aiDescription').textContent,v3:'実験中のニューラルネットワーク AI です。局面を評価するモデルを端末内で動かし、モンテカルロ木探索で着手を選びます。'};
 // ?ai=v2 or ?ai=v3 overrides the saved choice for this page load.
+const aiAvailable=choice=>choice!=='v3'||v3Supported();
 let aiChoice=AI_CHOICES.includes(aiQuery?.get('ai'))?aiQuery.get('ai'):loadAIChoice(),workerChoice=null;
+// A device that cannot run v3 plays v2 whatever was asked for or saved earlier.
+if(!aiAvailable(aiChoice))aiChoice='v2';
 let aiInfo={ai:aiChoice,backend:null,mainThread:false,failed:false};
 function renderAIInfo(){
   const {ai,backend,mainThread,failed}=aiInfo;
-  for(const choice of AI_CHOICES)$('aiChoice_'+choice).checked=aiChoice===choice;
+  for(const choice of AI_CHOICES){$('aiChoice_'+choice).checked=aiChoice===choice;$('aiChoice_'+choice).disabled=!aiAvailable(choice);}
+  $('aiV3Note').textContent=aiAvailable('v3')?'初回に数 MB を取得':'この端末では使えません';
   $('aiNote').hidden=!(backend&&ai!==aiChoice);
   $('aiName').textContent=AI_NAMES[ai];$('aiDescription').textContent=AI_DESCRIPTIONS[ai];
   $('aiBackend').textContent=failed?'読み込めませんでした':backend?(AI_BACKENDS[backend]??backend)+(mainThread?'（Web Worker を使えないため画面側で実行）':''):'読み込み中…';
@@ -178,7 +183,7 @@ function ensureWorker(){
 }
 // A search in flight is restarted with the newly chosen AI.
 function chooseAI(choice){
-  if(choice===aiChoice)return;
+  if(choice===aiChoice||!aiAvailable(choice))return;
   const searching=thinking;
   aiChoice=choice;saveAIChoice(choice);
   setAIInfo({ai:choice,backend:null,mainThread:false,failed:false});

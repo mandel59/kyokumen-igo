@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createTopology, Game} from './dist/engine.js';
 import {AI_CHOICE_KEY,DEFAULT_AI,loadAIChoice,saveAIChoice} from './dist/ai-choice.js';
+import {v3Supported} from './dist/ai-support.js';
 import {COUNTERS, DEFAULT_DISPLAY, DISPLAY_KEY, MARK_KEYS, counterValues, loadDisplay, normalizeDisplay, saveDisplay} from './dist/display.js';
 
 // Black captures the white stone at (3, 3) of a 7 × 7 torus; white passes three times and black once.
@@ -95,6 +96,15 @@ assert.deepEqual(MARK_KEYS, ['alive', 'dead', 'atari', 'territory']);
   assert.equal(saveAIChoice('v9',storage),true);assert.equal(loadAIChoice(storage),'v2','an unknown choice is not stored as such');
   assert.equal(saveAIChoice('v3',{setItem(){throw new Error('quota');}}),false);
   for(const raw of ['','{','null','"v3"','{"ai":3}','{"ai":["v3"]}','{"ai":"__proto__"}'])assert.equal(loadAIChoice({getItem:()=>raw}),'v2',raw);
+}
+
+// v3 is offered only where a Worker and SIMD-capable WebAssembly exist.
+{
+  assert.equal(v3Supported({Worker(){},WebAssembly}),true,'this Node has SIMD');
+  assert.equal(v3Supported({WebAssembly}),false,'no Worker');
+  assert.equal(v3Supported({Worker(){}}),false,'no WebAssembly');
+  assert.equal(v3Supported({Worker(){},WebAssembly:{validate:()=>false}}),false,'no SIMD');
+  assert.equal(v3Supported({Worker(){},WebAssembly:{validate(){throw new Error('x');}}}),false);
 }
 
 console.log('Display tests passed: counters (captures, captures + opponent passes, stones, stones + territory) through undo, and display settings storage, defaults and corrupt data.');
