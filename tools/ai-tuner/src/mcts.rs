@@ -81,17 +81,25 @@ impl Search {
                 if !self.nodes[p].expanded {
                     let features = gnn::encode(&game, &boards, sphere);
                     let mut legal = features.legal.clone();
-                    if self.tactics && path.len() == 1 {
-                        let avoided = tactics::avoid_isolated_invasions(&game, &legal);
-                        self.avoided = avoided.len();
-                        for p in avoided { legal[p] = false; }
-                    }
-                    if self.endgame && path.len() == 1 {
-                        self.loss_margin = endgame::proven_loss_margin(&game);
-                        if self.loss_margin > 0. {
-                            // Stop futile continuations, including extensions of existing
-                            // dead groups. Re-evaluate the certificate on each real turn.
+                    if path.len() == 1 {
+                        if endgame::wins_by_passing(&game) {
+                            // The exact winning result takes priority over neural policy
+                            // and value, even when optional endgame pruning is disabled.
                             legal.iter_mut().enumerate().for_each(|(a,v)|*v=a==PASS);
+                        } else {
+                            if self.tactics {
+                                let avoided = tactics::avoid_isolated_invasions(&game, &legal);
+                                self.avoided = avoided.len();
+                                for p in avoided { legal[p] = false; }
+                            }
+                            if self.endgame {
+                                self.loss_margin = endgame::proven_loss_margin(&game);
+                                if self.loss_margin > 0. {
+                                    // Stop futile continuations, including extensions of existing
+                                    // dead groups. Re-evaluate the certificate on each real turn.
+                                    legal.iter_mut().enumerate().for_each(|(a,v)|*v=a==PASS);
+                                }
+                            }
                         }
                     }
                     let id = self.next_id; self.next_id += 1;

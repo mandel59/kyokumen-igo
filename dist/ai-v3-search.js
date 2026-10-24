@@ -2,7 +2,7 @@
 import {validateAIPosition} from './ai-position.js';
 export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
 export async function createV3Search({load=async()=>{
- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=ef392c214c83',import.meta.url));
+ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=302b894edc6d',import.meta.url));
  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
 }}={}) {
  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;

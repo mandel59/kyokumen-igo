@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
-import {createTopology} from '../../dist/engine.js';
+import {Game,createTopology} from '../../dist/engine.js';
+import {aiPosition} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 const source=readFileSync(new URL('../../dist/ai-v3.js',import.meta.url),'utf8');
@@ -32,6 +33,16 @@ try{
  assert.equal(a.simulations,64);assert.equal(b.simulations,64);assert.ok(b.elapsedMs>300);
  assert.equal(a.move,b.move);assert.deepEqual(a.policy,b.policy);
  for(const maxSimulations of[1,2,7,8,9,17,128,512])assert.equal((await fast.chooseMove(position,{seed:3,maxSimulations})).simulations,maxSimulations);
+ for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]])for(const colour of [1,2]){
+  const game=new Game(createTopology(kind,size),0),moves=colour===1?[0,2,5,-1]:[0,2,-1];
+  for(const move of moves)assert.equal((move<0?game.pass():game.play(move)).ok,true);
+  const score=game.score();game.komi=score.black-score.white+(colour===1?-0.5:0.5);
+  for(const maxSimulations of [1,64]){
+   const result=await fast.chooseMove(aiPosition(game),{seed:3,maxSimulations});
+   assert.equal(result.move,null,'player accepts the immediate win despite a policy favouring board moves');
+   assert.equal(result.policy[160],1);assert.equal(result.simulations,maxSimulations);
+  }
+ }
  const timed=await slow.chooseMove(position,{seed:3,maxSimulations:512,budgetMs:100});
  assert.equal(timed.simulations,1,'Explicit time limit remains available for benchmarks');
  for(const maxSimulations of[0,-1,1.5,NaN,Infinity,0x100000000])await assert.rejects(fast.chooseMove(position,{maxSimulations}),/budget/);

@@ -1,4 +1,4 @@
-//! Shared Benson life certificates and sufficient bounds for a lost root.
+//! Shared immediate winning passes, Benson life certificates and lost-root bounds.
 //! Used by v2 alpha-beta, v3 PUCT and v3 invasion filtering.
 //! Benson reference: KataGo cpp/game/board.cpp, calculateAreaForPla.
 //! Copyright 2025 David J Wu and/or other authors; MIT notice retained in
@@ -6,6 +6,14 @@
 use crate::board::Game;
 
 pub(crate) struct PassAlive { pub(crate) stones: Vec<bool>, pub(crate) vital: Vec<bool> }
+
+/// Accept a win now instead of searching for a possibly larger winning margin.
+/// A second pass ends the game without changing its board or komi.
+pub fn wins_by_passing(game: &Game) -> bool {
+    if game.ended||game.passes!=1 {return false;}
+    let (black,white)=game.score();
+    if game.turn==1 {black>white}else{white>black}
+}
 
 /// Empty vital regions and stones of pass-alive chains, using the conservative
 /// empty-region form of Benson's fixed point. Large enclosures are NOT marked
@@ -68,6 +76,11 @@ pub(crate) fn pass_alive(game: &Game, enemy: i8) -> PassAlive {
 /// Only Benson-certified stones count: raw area, captures and NN estimates do not.
 /// A positive margin is a sufficient loss certificate under life-preserving play,
 /// not a claim that every losing position can be recognized.
+/// This also guarantees a loss if both players pass immediately: the opponent's
+/// current area is at least E (their certified living stones), and ours is at
+/// most N-E. Thus the same strict bound already implies a loss in Game::score(),
+/// including komi. Passes change neither the board nor komi, so no extra scoring
+/// check is needed before forcing a pass.
 pub fn proven_loss_margin(game: &Game) -> f64 {
     let enemy=pass_alive(game,3-game.turn).stones.into_iter().filter(|&v|v).count() as f64;
     let komi=if game.turn==1 {game.komi}else{-game.komi};

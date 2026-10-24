@@ -80,6 +80,25 @@ function forcePolicy(game,target,tactics=true,endgame=false){
  const policy=new Float32Array(161).fill(-100);policy[target]=100;
  ai.submit(batch,{policy,wdl:Float32Array.from([100,0,-100])});return ai.result();
 }
+// Take an immediate win even when the neural policy insists on another move.
+for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+ for(const colour of [1,2])for(const precedingPass of [true,false])for(const margin of [0.5,0,-0.5]){
+  const moves=colour===1?[0,2,5]:[0,2];moves.push(precedingPass?-1:8);
+  const game=fixture(kind,size,moves,0),score=game.score();
+  game.komi=score.black-score.white+(colour===1?-margin:margin);
+  assert.equal(game.turn,colour);assert.equal(game.passes,precedingPass?1:0);
+  const target=Array.from(game.board,(_,p)=>p).find(p=>game.analyze(p).ok);
+  assert.notEqual(target,undefined);
+  const before=JSON.stringify(game.toJSON()),result=forcePolicy(game,target,false,false);
+  if(precedingPass&&margin>0){
+   assert.equal(result.move,null,'a winning second pass overrides neural policy on '+kind+size+' colour '+colour);
+   assert.equal(result.policy[160],1);assert.equal(result.provenLoss,false);
+   const ended=Game.fromJSON(game.toJSON());assert.equal(ended.pass().ok,true);
+   assert.equal(ended.ended,true);assert.equal(ended.score().winner,colour);
+  }else assert.equal(result.move,target,'first passes, draws and losses must remain searchable');
+  assert.equal(JSON.stringify(game.toJSON()),before);
+ }
+}
 for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
  const topology=createTopology(kind,size);
  const target=topology.neighbors.findIndex(ns=>ns.length===4&&ns.every(p=>topology.neighbors[p].length===4));
@@ -113,6 +132,9 @@ assert.equal(forcePolicy(oneEye,17).move,17,'an unsettled one-eye enclosure rema
 const largeEnclosure=whiteEnclosure([8,9,10,15,16,17,22,23,24,40,45]);
 assert.equal(forcePolicy(largeEnclosure,16).move,16,'large enclosed regions are not automatically dead');
 const snapback=fixture('torus',7,[38,16,9,17,15,18,10,23,11,25,19,30,22,32,26,-1,29,-1,37,-1,39,-1,33,-1]);
+// Keep the tactical fixture drawn; otherwise the preceding pass already offers a win.
+const snapbackScore=snapback.score();snapback.komi+=snapbackScore.black-snapbackScore.white;
+assert.equal(snapback.score().winner,0);
 assert.equal(snapback.analyze(24).liberties,1);assert.equal(snapback.analyze(24).captured,0);
 assert.equal(forcePolicy(snapback,24).move,24,'a sacrificial snapback remains searchable');
 snapback.play(24);assert.equal(snapback.analyze(31).captured,1);snapback.play(31);
@@ -143,4 +165,4 @@ for(const game of [oneEye,sparseAlive,escaping,snapback,capturing]){
  ai.start(aiPosition(game));const leaves=ai.collect(1);assert.equal(ai.result().provenLoss,false,'unsettled enemy stones cannot certify a loss');ai.cancel();
 }
 ai.dispose();ai.dispose();assert.throws(()=>ai.start(aiPosition(ko)),/disposed/);
-console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');
+console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');

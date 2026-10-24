@@ -130,7 +130,8 @@ pub fn choose_search(game:&Game,depth:u32,seed:u32)->(Option<usize>,Stats) {
 pub fn choose_with_params(game:&Game,depth:u32,seed:u32,params:&Params)->(Option<usize>,Stats) {
     let mut stats=Stats::default();
     if game.ended {return (None,stats);}
-    // Only a certified lost root skips alpha-beta; inner evaluations stay unchanged.
+    if endgame::wins_by_passing(game) {return (None,stats);}
+    // A certified lost root also skips alpha-beta; inner evaluations stay unchanged.
     if endgame::proven_loss_margin(game)>0. {return (None,stats);}
     let mut scratch=Scratch::new(game.topology.len());
     let mut random=Rng::new(seed as u64);
@@ -170,6 +171,27 @@ mod tests {
         let t=Topology::new(Kind::Torus,7);
         assert_eq!(choose_search(&position(&t,6.5,&[-1]),4,1).0,None);
         assert!(choose_search(&position(&t,-6.5,&[-1]),4,1).0.is_some());
+    }
+    #[test]
+    fn immediate_winning_pass_takes_priority_on_all_boards_and_for_both_colours() {
+        for (kind,size) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),(Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11)] {
+            let t=Topology::new(kind,size);
+            for colour in [1,2] {for preceding_pass in [true,false] {for margin in [0.5,0.,-0.5] {
+                let mut moves=if colour==1 {vec![0,2,5]}else{vec![0,2]};
+                moves.push(if preceding_pass {-1}else{8});
+                let mut game=position(&t,0.,&moves);let (black,white)=game.score();
+                game.komi=black-white+if colour==1 {-margin}else{margin};
+                assert_eq!(game.turn,colour);
+                for depth in 1..=4 {
+                    let (chosen,stats)=choose_search(&game,depth,3);
+                    if preceding_pass&&margin>0. {
+                        assert_eq!(chosen,None);assert_eq!(stats.nodes,0);
+                        let mut ended=game.clone();assert!(ended.pass());assert!(ended.ended);
+                        let (black,white)=ended.score();assert_eq!(black>white,colour==1);
+                    } else {assert!(stats.nodes>0,"non-winning or first passes must still search");}
+                }
+            }}}
+        }
     }
     #[test]
     fn captures_atari_and_preserves_the_root_position() {
