@@ -1,0 +1,32 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/browser-match.mjs",
+    "--a",
+    "dist/models/v3",
+    "--b",
+    "dist/models/v3",
+    "--a-wasm",
+    "tools/ai-gnn/target/tactical-shortlist/slots1.wasm",
+    "--b-wasm",
+    "tools/ai-gnn/target/tactical-shortlist/baseline.wasm",
+    "--pairs",
+    "4",
+    "--simulations",
+    "64",
+    "--a-fpu",
+    "1",
+    "--b-fpu",
+    "1",
+    "--seed",
+    "2026102611",
+    "--role",
+    "development",
+    "--output",
+    "tools/ai-gnn/target/tactical-shortlist/slots1-development.json"
+  ],
+  "started": "2026-10-25T09:04:13.830Z",
+  "exitCode": 0,
+  "finished": "2026-10-25T09:06:53.992Z",
+  "elapsedSeconds": 160.152
+}

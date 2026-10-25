@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "input": "tools/ai-gnn/target/onpolicy-distillation/selfplay.jsonl",
+  "inputSha256": "64462ff9b6a4c0ba83722d0c1029416740f879c993e56bfb96b0e7e7b9b2cb35",
+  "role": "diagnostic on previously generated training selfplay, not current development/evaluation",
+  "eligible": 6291,
+  "hasTactics": 1318,
+  "potentialPromotions": {
+    "slots1": 1095,
+    "slots2": 1134
+  },
+  "examples": [
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-0",
+      "board": "sphere3",
+      "ply": 57,
+      "action": 16,
+      "captured": 10,
+      "saved": 0,
+      "prior": 0.0031049808021634817,
+      "higherPriorActions": 10
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-0",
+      "board": "sphere3",
+      "ply": 59,
+      "action": 16,
+      "captured": 10,
+      "saved": 0,
+      "prior": 0.0032689059153199196,
+      "higherPriorActions": 12
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 26,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.002664677333086729,
+      "higherPriorActions": 20
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 28,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.003240247955545783,
+      "higherPriorActions": 16
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 30,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.003432024735957384,
+      "higherPriorActions": 15
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 32,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.004791432060301304,
+      "higherPriorActions": 13
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 34,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.008110543712973595,
+      "higherPriorActions": 14
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 36,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.012673850171267986,
+      "higherPriorActions": 14
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 38,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.01497656386345625,
+      "higherPriorActions": 13
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 40,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.014349134638905525,
+      "higherPriorActions": 11
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 42,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.012397998943924904,
+      "higherPriorActions": 11
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 44,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.021423805505037308,
+      "higherPriorActions": 9
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-2",
+      "board": "sphere3",
+      "ply": 46,
+      "action": 31,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.01853199303150177,
+      "higherPriorActions": 8
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-4",
+      "board": "sphere3",
+      "ply": 29,
+      "action": 40,
+      "captured": 0,
+      "saved": 2,
+      "prior": 0.0010887030512094498,
+      "higherPriorActions": 17
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-4",
+      "board": "sphere3",
+      "ply": 54,
+      "action": 51,
+      "captured": 1,
+      "saved": 0,
+      "prior": 0.0038662529550492764,
+      "higherPriorActions": 8
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-4",
+      "board": "sphere3",
+      "ply": 56,
+      "action": 51,
+      "captured": 1,
+      "saved": 0,
+      "prior": 0.006712779402732849,
+      "higherPriorActions": 9
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-4",
+      "board": "sphere3",
+      "ply": 58,
+      "action": 31,
+      "captured": 14,
+      "saved": 0,
+      "prior": 0.004985317587852478,
+      "higherPriorActions": 8
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-6",
+      "board": "sphere3",
+      "ply": 36,
+      "action": 19,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.017345020547509193,
+      "higherPriorActions": 11
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-6",
+      "board": "sphere3",
+      "ply": 37,
+      "action": 12,
+      "captured": 4,
+      "saved": 0,
+      "prior": 0.03435652703046799,
+      "higherPriorActions": 8
+    },
+    {
+      "gameId": "selfplay-8e5b41e3974c-2026102601-sphere3-6",
+      "board": "sphere3",
+      "ply": 38,
+      "action": 19,
+      "captured": 3,
+      "saved": 0,
+      "prior": 0.02616269700229168,
+      "higherPriorActions": 10
+    }
+  ]
+}

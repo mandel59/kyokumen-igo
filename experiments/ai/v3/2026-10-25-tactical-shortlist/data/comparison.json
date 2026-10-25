@@ -1,0 +1,188 @@
+[
+  {
+    "variant": "slots1",
+    "summary": {
+      "games": 48,
+      "completed": 48,
+      "capped": 0,
+      "wins": 24,
+      "draws": 0,
+      "losses": 24,
+      "score": 24,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.5,
+      "pairedBootstrap": {
+        "seed": 2026102612,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.5,
+          0.5
+        ]
+      }
+    },
+    "identicalColourSwapTrajectories": 24,
+    "pairs": 24
+  },
+  {
+    "variant": "slots2",
+    "summary": {
+      "games": 48,
+      "completed": 48,
+      "capped": 0,
+      "wins": 24,
+      "draws": 0,
+      "losses": 24,
+      "score": 24,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.5,
+      "pairedBootstrap": {
+        "seed": 2026102612,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.5,
+          0.5
+        ]
+      }
+    },
+    "identicalColourSwapTrajectories": 24,
+    "pairs": 24
+  }
+]

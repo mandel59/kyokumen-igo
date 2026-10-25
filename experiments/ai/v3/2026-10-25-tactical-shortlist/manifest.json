@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-tactical-shortlist",
+  "architecture": "v3",
+  "title": "Tactical root shortlist without changing priors",
+  "source": {
+    "baseCommit": "174605da46f66200cdd2d2a173aa633b0b5941cd",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "slots1",
+    "slots2"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "cb5169df106a392d2433a65797db32baa86a77e5774e7340de60714ead09cd9c"
+  },
+  "notes": [
+    "Both variants24/48; stopped at development gate.",
+    "No deployed source,binary or model change."
+  ],
+  "artifacts": [
+    {
+      "path": "data/1-verification.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/2-verification.log",
+      "sha256": "edc01f11eb04dc799100bdc576f6b310124e3834431540902d2a8bbf5117285d"
+    },
+    {
+      "path": "data/3-verification.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/4-verification.log",
+      "sha256": "9fb227d624633bcedb3474b449ec2e78c0c72a303993dfa4ccff3854920a0c8d"
+    },
+    {
+      "path": "data/5-verification.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/6-verification.log",
+      "sha256": "edc01f11eb04dc799100bdc576f6b310124e3834431540902d2a8bbf5117285d"
+    },
+    {
+      "path": "data/7-verification.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/8-verification.log",
+      "sha256": "9fb227d624633bcedb3474b449ec2e78c0c72a303993dfa4ccff3854920a0c8d"
+    },
+    {
+      "path": "data/aborted-slots1-development-command.json",
+      "sha256": "02be1769053e15d821f620cfea16faafb2ba9d7b0ee70325b0bf3f82af5ab2ec"
+    },
+    {
+      "path": "data/aborted-slots1-development.log",
+      "sha256": "6eeced1268bdeb31a74ec9e04ffe3ed8c47be51c2fb82d59dece1fbc4e40aaf3"
+    },
+    {
+      "path": "data/adoption.json",
+      "sha256": "98d768a2a11fb7eb0e70f3313d8843f2c7578449f00f071db7b55962a60b6dbd"
+    },
+    {
+      "path": "data/baseline-mcts.rs",
+      "sha256": "dbaa2821c7655ed6e41d207f7b6bc2c55161acd995a2caf65cdf9e0a04598f7f"
+    },
+    {
+      "path": "data/baseline.wasm",
+      "sha256": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c"
+    },
+    {
+      "path": "data/builds.json",
+      "sha256": "9733815c21a5edcca2f802dbcacd62fe941cbe07864a91ce130ed7977d4761ea"
+    },
+    {
+      "path": "data/comparison.json",
+      "sha256": "7431810e00f893dd92d560b7c983121641b6ddd5bbf085c4d6914b323981495c"
+    },
+    {
+      "path": "data/coverage.json",
+      "sha256": "4c7b670b10b9b14609579f12cb1760044b36b11c97d53f1f49a2f34acef22dc2"
+    },
+    {
+      "path": "data/coverage.mjs",
+      "sha256": "0d1a581ec6ed6c5c6b385ffa3cc7c03dc8f28286b326dfd5e977eeeeb51f76ce"
+    },
+    {
+      "path": "data/evaluate.mjs",
+      "sha256": "d69255f28f62b9b01269ed409d5c060db991d531469404437cd91de6c8724143"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "3a8abb329f1afc1d57893b073cec2422cebbf7dc66a89896911fe82213f46155"
+    },
+    {
+      "path": "data/slots1-development-command.json",
+      "sha256": "0a20aac001658b300a2e8d69ea44e28b771b79fdd10db69013da03a9b36fe190"
+    },
+    {
+      "path": "data/slots1-development.json.gz",
+      "sha256": "9767ddc4f3c5e2750a89c0bdf5ab113f6c427cf956d040ebc11748b8d8480bd2"
+    },
+    {
+      "path": "data/slots1-development.log",
+      "sha256": "1a3118d76fcf64ca9efcd62f22ee17a95ae162e9ac4b11e7b6f8b1a6a25d0cc6"
+    },
+    {
+      "path": "data/slots1-mcts.rs",
+      "sha256": "4fabbca256fda6eb2f3e94f90e546997d331357d72f0a358588217f658bb3729"
+    },
+    {
+      "path": "data/slots1.wasm",
+      "sha256": "d5139e46e39ffea6be5201a5e4f561543932c718de412e2e5b3731279be9b497"
+    },
+    {
+      "path": "data/slots2-development-command.json",
+      "sha256": "61519843adf7f4fcdc53379fa459c43077f1e4f3f4d31f6ed4ba5a8a33d00001"
+    },
+    {
+      "path": "data/slots2-development.json.gz",
+      "sha256": "b74fae13968ba34ef5d399f1a54a020b45f222befada460a97a85f308507ec87"
+    },
+    {
+      "path": "data/slots2-development.log",
+      "sha256": "cfaf586bbe1902c9bc8c932bdc2b55d0d2e4922db0fc3be172ee97ac87572758"
+    },
+    {
+      "path": "data/slots2-mcts.rs",
+      "sha256": "4b029e30a5b05551c0e8d2cd35295d6a577c513a42124a5b17b484264ea93c0b"
+    },
+    {
+      "path": "data/slots2.wasm",
+      "sha256": "341557a7133cb274aef50672aa8b58060b945e61a779caa8a77fbca99e4bf2e1"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "a8151d7ad173f1aa5495c03b7e87990f0bbfb6814ee9a4898c07641f718df2f6"
+    },
+    {
+      "path": "data/verification-commands.json",
+      "sha256": "bd8978b0fef989d26ae4b0d743eaacb0a246402a1cf45deceb861c30294e3c1f"
+    }
+  ]
+}

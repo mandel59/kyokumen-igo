@@ -6,6 +6,7 @@ use crate::{tactics,endgame};
 
 const MAX_NODES: usize = 8192;
 const HALVING_ACTIONS: usize = 8;
+const ROOT_Q_SCALE: f32 = 0.4;
 struct RootPlan {active: Vec<usize>, targets: Vec<u32>, final_round: bool}
 #[derive(Default)]
 struct Node {
@@ -211,7 +212,7 @@ impl Search {
     }
     fn halving_scale(&self) -> f32 {
         let max_visits=self.nodes[0].edges.iter().filter_map(|e|e.child).map(|c|self.nodes[c].visits).max().unwrap_or(0);
-        (50.+max_visits as f32)*0.1
+        (50.+max_visits as f32)*ROOT_Q_SCALE
     }
     fn halving_score(&self, edge: usize, scale: f32) -> f32 {
         let root=&self.nodes[0];let e=&root.edges[edge];

@@ -1,0 +1,143 @@
+diff --git a/tools/ai-tuner/src/mcts.rs b/tools/ai-tuner/src/mcts.rs
+index 96356eb..5fbedaa 100644
+--- a/tools/ai-tuner/src/mcts.rs
++++ b/tools/ai-tuner/src/mcts.rs
+@@ -6,6 +6,7 @@ use crate::{tactics,endgame};
+ 
+ const MAX_NODES: usize = 8192;
+ const HALVING_ACTIONS: usize = 8;
++const ROOT_TACTICAL_SLOTS: usize = 1;
+ struct RootPlan {active: Vec<usize>, targets: Vec<u32>, final_round: bool}
+ #[derive(Default)]
+ struct Node {
+@@ -24,11 +25,12 @@ pub struct Search {
+     fpu: u32,
+     root_noise: bool,
+     unvisited_selections: u32,
++    root_tactical: Vec<u32>,
+     root_budget: u32, root_initialized: bool, root_plan: Option<RootPlan>,
+ }
+ impl Search {
+     pub fn new(seed: u64) -> Self {
+-        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0, root_budget: 0, root_initialized: false, root_plan: None }
++        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0, root_tactical: vec![0;ACTIONS], root_budget: 0, root_initialized: false, root_plan: None }
+     }
+     pub fn set_fpu(&mut self, mode: u32, root_noise: bool) -> bool {
+         if mode > 2 || self.completed != 0 || !self.pending.is_empty() { return false; }
+@@ -144,6 +146,9 @@ impl Search {
+                             }
+                         }
+                     }
++                    if path.len()==1 && self.tactics && self.root_budget!=u32::MAX && self.root_budget>=3 {
++                        self.root_tactical=Self::tactical_priorities(&game,&features,&legal);
++                    }
+                     let id = self.next_id; self.next_id += 1;
+                     for &q in &path { self.nodes[q].reserved += 1; }
+                     self.nodes[p].pending = true;
+@@ -206,6 +211,45 @@ impl Search {
+         }
+         Ok(())
+     }
++    // Only simple, legal, non-self-atari tactics compete for the protected slots.
++    // These are search candidates, never forced moves or exact value proofs.
++    fn tactical_priorities(game: &Game, features: &Features, legal: &[bool]) -> Vec<u32> {
++        let n=game.board.len();let mut scores=vec![0;ACTIONS];
++        for p in 0..n {
++            if legal[p] && features.x[p*gnn::CHANNELS+29]>=0.25 {
++                scores[p]=(features.x[p*gnn::CHANNELS+28].powi(2)*n as f32).round() as u32;
++            }
++        }
++        let mut seen=vec![false;n];let mut scratch=Scratch::new(n);
++        for p in 0..n {
++            if game.board[p]!=game.turn || seen[p] || features.x[p*gnn::CHANNELS+3]<0.5 {continue;}
++            if scratch.group(&game.board,&game.topology.neighbors,p)!=1 {continue;}
++            let size=scratch.stones.len() as u32;let mut liberty=None;
++            for &q in &scratch.stones {
++                seen[q]=true;
++                for &r in &game.topology.neighbors[q] {if game.board[r]==0 {liberty=Some(r);}}
++            }
++            if let Some(q)=liberty {
++                if legal[q] && features.x[q*gnn::CHANNELS+29]>=0.25 {scores[q]+=size;}
++            }
++        }
++        scores
++    }
++    fn initial_candidates(&self) -> Vec<usize> {
++        let edges=&self.nodes[0].edges;
++        let mut ordered:Vec<_>=(0..edges.len()).filter(|&i|self.viable(0,&edges[i])).collect();
++        ordered.sort_by(|&a,&b|edges[b].prior.total_cmp(&edges[a].prior));
++        let count=HALVING_ACTIONS.min(self.halving_remaining() as usize).min(ordered.len());
++        let mut tactical:Vec<_>=ordered.iter().copied().filter(|&i|self.root_tactical[edges[i].action]>0).collect();
++        tactical.sort_by(|&a,&b|self.root_tactical[edges[b].action].cmp(&self.root_tactical[edges[a].action]).then_with(||edges[b].prior.total_cmp(&edges[a].prior)));
++        tactical.truncate(ROOT_TACTICAL_SLOTS.min(count));
++        let mut active=ordered[..count].to_vec();
++        for &i in &tactical {
++            if active.contains(&i) {continue;}
++            if let Some(k)=active.iter().rposition(|e|!tactical.contains(e)) {active[k]=i;}
++        }
++        active.sort_by(|&a,&b|edges[b].prior.total_cmp(&edges[a].prior));active
++    }
+     fn halving_remaining(&self) -> u32 {
+         self.root_budget.saturating_sub(self.completed.saturating_add(self.pending.len() as u32))
+     }
+@@ -240,9 +284,7 @@ impl Search {
+         let scale=self.halving_scale();
+         if !self.root_initialized {
+             self.root_initialized=true;
+-            let mut active:Vec<_>=(0..self.nodes[0].edges.len()).filter(|&i|self.viable(0,&self.nodes[0].edges[i])).collect();
+-            active.sort_by(|&a,&b|self.nodes[0].edges[b].prior.total_cmp(&self.nodes[0].edges[a].prior));
+-            active.truncate(HALVING_ACTIONS.min(self.halving_remaining() as usize));
++            let active=self.initial_candidates();
+             if active.len()>1 {self.root_plan=Some(self.allocate_halving(active));}
+         }
+         loop {
+@@ -332,6 +374,49 @@ mod tests {
+     use super::*;
+     use crate::board::{Topology,Kind};
+     #[test]
++    fn tactical_shortlist_finds_low_prior_captures_and_atari_extensions_on_every_board() {
++        for (kind,size,sphere) in [(Kind::Sphere,3,true),(Kind::Sphere,4,true),(Kind::Sphere,5,true),(Kind::Torus,7,false),(Kind::Torus,9,false),(Kind::Torus,11,false)] {
++            let t=Topology::new(kind,size);let adjacent=t.neighbors[0].clone();let target=*adjacent.last().unwrap();
++            for rescue in [false,true] {
++                let mut g=Game::new(&t,6.5);let mut scratch=Scratch::new(t.len());
++                if rescue {
++                    assert!(g.play(0,&mut scratch));
++                    for (i,&q) in adjacent[..adjacent.len()-1].iter().enumerate() {if i>0 {assert!(g.pass());}assert!(g.play(q,&mut scratch));}
++                }else{
++                    assert!(g.play(adjacent[0],&mut scratch));assert!(g.play(0,&mut scratch));
++                    for &q in &adjacent[1..adjacent.len()-1] {assert!(g.play(q,&mut scratch));assert!(g.pass());}
++                    // With a degree-three origin it is already black to move.
++                }
++                assert_eq!(g.turn,1);let f=gnn::encode(&g,&[],sphere);
++                assert!(f.legal[target]);assert!(f.x[target*gnn::CHANNELS+29]>=0.25);
++                let scores=Search::tactical_priorities(&g,&f,&f.legal);assert_eq!(scores[target],1);
++                let mut masked=f.legal.clone();masked[target]=false;assert_eq!(Search::tactical_priorities(&g,&f,&masked)[target],0);
++                let mut s=Search::new(31);assert!(s.set_fpu(1,false));
++                let root=s.collect_limited(&g,&[],sphere,8,64);assert_eq!(root.len(),1);
++                let mut evaluation=vec![0.;ACTIONS+1];evaluation[target]=-20.;evaluation[PASS]=-20.;
++                s.submit(&[root[0].id],&evaluation).unwrap();
++                let mut ranked:Vec<_>=s.nodes[0].edges.iter().collect();ranked.sort_by(|a,b|b.prior.total_cmp(&a.prior));
++                assert!(!ranked[..8].iter().any(|e|e.action==target));
++                let pending=s.collect_limited(&g,&[],sphere,8,63);assert!(!pending.is_empty());
++                let plan=s.root_plan.as_ref().unwrap();assert_eq!(plan.active.len(),8);
++                assert!(plan.active.iter().any(|&i|s.nodes[0].edges[i].action==target));s.cancel();
++                while s.completed<64 {let b=s.collect_limited(&g,&[],sphere,8,64-s.completed);let ids=b.iter().map(|l|l.id).collect::<Vec<_>>();if !ids.is_empty(){s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();}}
++                assert_eq!(s.completed,64);assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
++            }
++        }
++    }
++    #[test]
++    fn tactical_slots_do_not_force_self_atari_or_displace_other_protected_moves() {
++        let t=Topology::new(Kind::Torus,7);let g=Game::new(&t,6.5);let mut f=gnn::encode(&g,&[],false);
++        f.x[28]=1.;f.x[29]=0.125;assert_eq!(Search::tactical_priorities(&g,&f,&f.legal)[0],0);
++        let mut s=Search::new(3);s.root_budget=64;s.completed=1;s.nodes[0].expanded=true;
++        s.nodes[0].edges=(0..12).map(|i|Edge{action:i,prior:1./(i+1) as f32,child:None}).collect();
++        s.root_tactical[0]=10;s.root_tactical[11]=2;
++        let active=s.initial_candidates();assert_eq!(active.len(),8);assert!(active.contains(&0));
++        assert_eq!(active.contains(&11),ROOT_TACTICAL_SLOTS>=2);
++        s.root_tactical.fill(0);assert_eq!(s.initial_candidates(),(0..8).collect::<Vec<_>>());
++    }
++    #[test]
+     fn proofs_preserve_unknown_replies_and_prefer_wins_over_visit_counts() {
+         for second in [None,Some(-1.),Some(0.),Some(1.)] {
+             let mut s=Search::new(1);

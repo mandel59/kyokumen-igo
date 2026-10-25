@@ -138,6 +138,18 @@
       "architecture": "v3",
       "title": "現行探索による自己対局からの蒸留",
       "path": "v3/2026-10-25-onpolicy-distillation/"
+    },
+    {
+      "id": "v3/2026-10-25-tactical-shortlist",
+      "architecture": "v3",
+      "title": "根の戦術候補1枠・2枠の比較と不採用",
+      "path": "v3/2026-10-25-tactical-shortlist/"
+    },
+    {
+      "id": "v3/2026-10-25-root-value-scale",
+      "architecture": "v3",
+      "title": "根の探索評価値の重み0.2・0.4の比較",
+      "path": "v3/2026-10-25-root-value-scale/"
     }
   ]
 }

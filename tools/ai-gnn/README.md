@@ -108,7 +108,7 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py 
 
 ## 固定予算の根の探索と速度比較
 
-現在のアプリは同じ64訪問の中で根の最大8候補を逐次半減し、内部はPUCTで探索します。モデルは変更せず、独立192局で従来探索に117勝75敗でした。[計画・全棋譜・速度・採用結果](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を保存しています。
+現在のアプリは同じ64訪問の中で根の最大8候補を逐次半減し、内部はPUCTで探索します。逐次半減の導入時はモデルを固定した独立192局で従来探索に117勝75敗でした。[計画・全棋譜・速度・採用結果](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を保存しています。
 
 実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。自己対局・再解析は有限予算の逐次半減探索とFPU 1を既定にし、指定訪問数を厳守します。診断用match.mjsと残り数なしのcollect(batch)は従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
 
@@ -167,3 +167,5 @@ node tools/ai-gnn/test-training-search.mjs
 ```
 
 `train.py --balanced --policy-surprise-fraction 0.5` は、自己対局の各世代・盤ごとの質量を保ちながら、半分を元のサンプリング、半分を `KL(探索方策 || NN事前分布)` に比例させます。教師データと検証用重みは変えず、方策対象外の局面の重点度は0です。すべて0なら元の重みを維持します。実験ではノイズを除いた再解析の値を使います。
+
+根の比較式の評価値倍率は0.4です。[倍率の比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)で同じ64訪問・同じモデルの独立対戦と速度基準を通過しました。

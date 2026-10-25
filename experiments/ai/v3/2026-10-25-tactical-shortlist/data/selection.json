@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "name": "slots1",
+      "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "selectedEpoch": 8,
+      "summary": {
+        "games": 48,
+        "completed": 48,
+        "capped": 0,
+        "wins": 24,
+        "draws": 0,
+        "losses": 24,
+        "score": 24,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5,
+        "pairedBootstrap": {
+          "seed": 2026102612,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.5
+          ]
+        }
+      }
+    },
+    {
+      "name": "slots2",
+      "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "selectedEpoch": 8,
+      "summary": {
+        "games": 48,
+        "completed": 48,
+        "capped": 0,
+        "wins": 24,
+        "draws": 0,
+        "losses": 24,
+        "score": 24,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5,
+        "pairedBootstrap": {
+          "seed": 2026102612,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.5
+          ]
+        }
+      }
+    }
+  ],
+  "selected": "slots1",
+  "passes": false,
+  "reason": "Largest development score; ties prefer one tactical slot; require >=27/48 before independent evaluation"
+}

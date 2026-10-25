@@ -1,0 +1,20 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/bench-search.mjs",
+    "--a-wasm",
+    "tools/ai-gnn/target/root-value-scale/q4.wasm",
+    "--b-wasm",
+    "tools/ai-gnn/target/root-value-scale/baseline.wasm",
+    "--a-model",
+    "dist/models/v3",
+    "--b-model",
+    "dist/models/v3",
+    "--output",
+    "tools/ai-gnn/target/root-value-scale/speed.json"
+  ],
+  "started": "2026-10-25T09:17:34.151Z",
+  "exitCode": 0,
+  "finished": "2026-10-25T09:18:38.431Z",
+  "elapsedSeconds": 64.271
+}

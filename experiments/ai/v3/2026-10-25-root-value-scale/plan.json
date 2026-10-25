@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "174605da46f66200cdd2d2a173aa633b0b5941cd",
+  "hypothesis": "Increase the weight of searched Q relative to NN log prior in root sequential halving, with the same8 candidates and64 visits. Tactical shortlist tests made no move changes; this study independently changes only the root Q scale.",
+  "baselineModel": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "baselineSearch": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "formula": "log(prior)+ROOT_Q_SCALE*(50+maximum root child visits)*Q",
+  "baselineScale": 0.1,
+  "variants": [
+    {
+      "name": "q2",
+      "scale": 0.2
+    },
+    {
+      "name": "q4",
+      "scale": 0.4
+    }
+  ],
+  "development": {
+    "seed": 2026102621,
+    "pairsPerBoard": 4,
+    "gamesPerVariant": 48
+  },
+  "selection": "Highest development score; tie prefers0.2. Require>=27/48 and no caps/illegal to continue. Single global configuration.",
+  "evaluation": {
+    "seed": 2026102622,
+    "bootstrapSeed": 2026102623,
+    "pairsPerBoard": 16,
+    "games": 192
+  },
+  "strengthGate": "paired95% bootstrap lower>0.5; eachboard>=12/32; no caps/illegal",
+  "speedGate": "same18 roots,2warmups7repetitions CPU/WASM+WebGPU; overallP95<=1.05 and everyboard<=1.10",
+  "unchanged": "model64x6/120905params, features ABI1, searchABI3, root8, internalPUCT1.5/FPU1, proof/pass/pruning, strict64visits except certified loss",
+  "installation": "only after all gates plus browser verification; no site deployment"
+}

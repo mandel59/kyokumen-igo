@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "174605da46f66200cdd2d2a173aa633b0b5941cd",
+  "hypothesis": "Reserve up to1 or2 of eight root candidates for the highest immediate capture or atari-extension scores. Keep NN priors and root halving rankings unchanged; same64 visits and same network.",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "baselineSearch": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "variants": [
+    1,
+    2
+  ],
+  "shortlist": "Rank legal unpruned actions with post-move liberties>=2 by captured stones + friendly atari stones saved by extension, tie NN prior, then seeded root order. Protect best1/2 globally, including those already within top8. Replace lowest-prior unprotected candidates only when needed; total<=8. Pass/proof/endgame masks remain authoritative. Infinite PUCT and tactics-disabled search unchanged.",
+  "development": {
+    "seed": 2026102611,
+    "pairsPerBoard": 4,
+    "gamesPerVariant": 48
+  },
+  "selection": "highest development score; tie prefers1 slot; require>=27/48 and no capped/illegal before holdout. No per-board configuration.",
+  "evaluation": {
+    "seed": 2026102612,
+    "bootstrapSeed": 2026102613,
+    "pairsPerBoard": 16,
+    "games": 192
+  },
+  "strengthGate": "paired95% bootstrap lower>0.5; everyboard>=12/32; no caps or illegal moves",
+  "speedGate": "same18 fixedroots CPU/WASM+WebGPU,2warmups7repetitions, overallP95<=1.05 baseline and everyboard<=1.10",
+  "budget": "unchanged network64x6/120905parameters, exact64 visits except certified-loss early pass",
+  "installation": "only after strength,speed,browser+regression gates; no site deployment in this study"
+}

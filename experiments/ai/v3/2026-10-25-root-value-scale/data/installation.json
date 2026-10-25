@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "installed": true,
+  "selected": "q4",
+  "scale": 0.4,
+  "wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+  "source": "b216cddc7e8eed311c15291f2f65686a830f907f59c445cab00b11c1d4ed9872",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "tests": [
+    "v3-tests.mjs",
+    "test-browser.mjs"
+  ],
+  "visits": 64
+}
