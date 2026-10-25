@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "games": 48,
+  "positions": 4719,
+  "boards": {
+    "sphere3": 8,
+    "sphere4": 8,
+    "sphere5": 8,
+    "torus7": 8,
+    "torus9": 8,
+    "torus11": 8
+  },
+  "uniqueOrigins": true,
+  "allGamesReplayed": true,
+  "allLabelsConsistent": true,
+  "allPoliciesLegal": true,
+  "allNormalBudgetsExact": true,
+  "sameRows": null,
+  "sameGames": null,
+  "pairedFingerprint": "82abde4321dd1777c4ee01816b67ff7f0c2fe9d635e99a5860d3dfcb88c0b51a",
+  "inputs": {
+    "tools/ai-gnn/target/teacher-distillation-pilot/control64.jsonl.gz": "d19a29f4ac21f9806a0335c19af668060f1f265adc8b4cacb35b7bdd9dcbe152",
+    "tools/ai-gnn/target/teacher-distillation-pilot/games.jsonl.gz": "fb68f94516ff57b209a1fef9441e560159ec7ed99c364b90cca689e566d5a962",
+    "tools/ai-gnn/target/teacher-distillation-pilot/game-split.json": "bd66b18eb8487d2702563e30e6e32fc4606f5803ec44dbc47033f7aa604eb923",
+    "tools/ai-gnn/target/teacher-distillation-pilot/teacher4096.jsonl.gz": "b3ae292df840bf89d67e851990b874d9bd3a169a82ebd8e7116dc635a513228a"
+  },
+  "scriptSha256": "de6c7b586c24a2cc09cff21a5e27c4e3b6996e2ba9f206b3080aad32ed93b72f"
+}

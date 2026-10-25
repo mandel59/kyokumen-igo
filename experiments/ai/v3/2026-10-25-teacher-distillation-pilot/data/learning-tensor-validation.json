@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "positions": 4719,
+  "changedTrainingPolicies": 4535,
+  "sharedTrainingTensors": true,
+  "sharedSamplingWeightsAndOrder": true,
+  "trainPositions": 3562,
+  "validationPositions": 1157,
+  "trainGames": 36,
+  "validationGames": 12,
+  "commonTensorSha256": "eb8ebef63e2202a73f9960d9cc59f433308d8bb25fe6a72dfb93a453b10e8076",
+  "inputs": {
+    "tools/ai-gnn/target/teacher-distillation-pilot/control64.jsonl.gz": "d19a29f4ac21f9806a0335c19af668060f1f265adc8b4cacb35b7bdd9dcbe152",
+    "tools/ai-gnn/target/teacher-distillation-pilot/teacher4096.jsonl.gz": "b3ae292df840bf89d67e851990b874d9bd3a169a82ebd8e7116dc635a513228a",
+    "tools/ai-gnn/target/teacher-distillation-pilot/game-split.json": "bd66b18eb8487d2702563e30e6e32fc4606f5803ec44dbc47033f7aa604eb923"
+  }
+}

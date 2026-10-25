@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "25b9c5019b36ee3f07b1361ad0ba81a7834790d8",
+  "frozenAt": "2026-10-25T13:32:49.963Z",
+  "registeredPlanSha256": "4f9f8f77c2bba691a838a5ddf837f14444afcc874fbd9737caad83efa2b54959",
+  "sourceHashes": {
+    "tools/ai-gnn/browser-data-host.mjs": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936",
+    "tools/ai-gnn/browser-data-worker.mjs": "bc57aac452a3e2e397b587351cab18126b28fc2b8b96da35fcc8b51db5c08bb8",
+    "tools/ai-gnn/selfplay-records.mjs": "bfdc9d22885ef906336a4eccd35bd05d297feb9937ee1504a9dbbf6b8fbc9035",
+    "tools/ai-gnn/browser-selfplay.mjs": "7c63f6df7871d196c526d9938ff13b0682efc41c52b13a74e43f61ab2bc0f5fa",
+    "tools/ai-gnn/browser-reanalyze.mjs": "f0bf980bcbafd2f7483b4e301269aad12cfde3ff1b4dd9d2a5073da157e90783",
+    "tools/ai-gnn/verify-pooled-search.mjs": "96dd738928ae95eec31d0bd817cdd5d7c9405cd3707d23c63759efcd8f5ccad5",
+    "tools/ai-gnn/audit-distillation-data.mjs": "de6c7b586c24a2cc09cff21a5e27c4e3b6996e2ba9f206b3080aad32ed93b72f",
+    "tools/ai-gnn/pooled-inference.mjs": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3",
+    "tools/ai-gnn/training-search.mjs": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+    "tools/ai-gnn/selfplay-policy.mjs": "b9017b83fc10a6fb9505b556c0c1fcbaa13fd4f2c89c3a07ecd8f499fa4ef67f",
+    "tools/ai-gnn/train.py": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+    "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+    "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+  },
+  "inputHashes": {
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/teacher-profile.json": "e08e77400358dda628d1feccd6a1837281bb8a07d9dc2c5f429c6c188ff598e9",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/all.wasm": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/sh8.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512",
+    "tools/ai-gnn/train.py": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/training-search.mjs": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+    "tools/ai-gnn/pooled-inference.mjs": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3",
+    "tools/ai-gnn/teacher-budget-statistics.mjs": "d79a987d691d2f9c1f3be377c297808b2bac1cb838914913482ded7ca6979f58",
+    "experiments/ai/plans/v3-teacher-distillation/game-split.json": "bd66b18eb8487d2702563e30e6e32fc4606f5803ec44dbc47033f7aa604eb923"
+  },
+  "topologiesSha256": "5ff58f6e06c6ec78ee1c760c55be60280e9ac726fe0c0bc55dc61683d6577513",
+  "scheduler": "Six concurrent browser processes, one board each; eight independent games/search roots per process, up to64 pooled positions per inference; never changes per-search max8 leaves or RNG."
+}

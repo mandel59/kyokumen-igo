@@ -1,0 +1,261 @@
+{
+  "schemaVersion": 1,
+  "passes": true,
+  "rule": "Both comparisons: scoreRate>=0.60, corrected97.5% lower>0.50, everyboard>=8/16, no caps/illegal. Do not pool the two comparisons or call them independent replications.",
+  "comparisons": [
+    {
+      "opponent": "baseline",
+      "summary": {
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 66,
+        "draws": 0,
+        "losses": 30,
+        "score": 66,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              0,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 12,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1,
+              0,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 10,
+            "pairScores": [
+              0.5,
+              1,
+              0,
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              1,
+              0.5,
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.6875,
+        "pairedBootstrap": {
+          "seed": 2026102707,
+          "iterations": 20000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.6041666666666666,
+            0.7708333333333334
+          ],
+          "interval97_5": [
+            0.59375,
+            0.78125
+          ],
+          "multiplicity": "Bonferroni two preregistered comparisons, familywise95% approximate coverage"
+        }
+      },
+      "validation": {
+        "games": 96,
+        "turns": 9089,
+        "allMovesLegal": true,
+        "allResultsReplayed": true,
+        "normalBudgetsExact": true
+      }
+    },
+    {
+      "opponent": "control64",
+      "summary": {
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 66,
+        "draws": 0,
+        "losses": 30,
+        "score": 66,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              0,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 12,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1,
+              0,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 10,
+            "pairScores": [
+              0.5,
+              1,
+              0,
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              1,
+              0.5,
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.6875,
+        "pairedBootstrap": {
+          "seed": 2026102707,
+          "iterations": 20000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.6041666666666666,
+            0.7708333333333334
+          ],
+          "interval97_5": [
+            0.59375,
+            0.78125
+          ],
+          "multiplicity": "Bonferroni two preregistered comparisons, familywise95% approximate coverage"
+        }
+      },
+      "validation": {
+        "games": 96,
+        "turns": 9089,
+        "allMovesLegal": true,
+        "allResultsReplayed": true,
+        "normalBudgetsExact": true
+      }
+    }
+  ]
+}

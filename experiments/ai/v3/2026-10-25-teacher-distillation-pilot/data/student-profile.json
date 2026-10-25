@@ -1,0 +1,451 @@
+{
+  "schemaVersion": 1,
+  "status": "research-qualified-distilled-student",
+  "model": "student-teacher4096/manifest.json",
+  "modelSha256": "e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df",
+  "weightsSha256": "6ecd1a870e51681b99f443f0218ce8e6e7516e8bdd6d45d964a4f846454b7151",
+  "wasm": "baseline.wasm",
+  "wasmSha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+  "featureVersion": 1,
+  "searchABI": 3,
+  "hidden": 64,
+  "blocks": 6,
+  "parameters": 120905,
+  "search": {
+    "maxSimulations": 64,
+    "fpu": 1,
+    "rootCandidates": 8,
+    "rootQScale": 0.4
+  },
+  "training": {
+    "teacherVisits": 4096,
+    "teacherRootCandidates": "all eligible",
+    "selfplayGames": 48,
+    "trainGames": 36,
+    "validationGames": 12,
+    "selectedEpoch": 8,
+    "commonCorpusSha256": "9ca6658f269097ea5ae0bc60a4af157a79e9ff7ebe3a76e9e766e621d1b0fcf8"
+  },
+  "qualification": {
+    "development": [
+      {
+        "opponent": "baseline",
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 66,
+        "draws": 0,
+        "losses": 30,
+        "score": 66,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              0,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 12,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1,
+              0,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 10,
+            "pairScores": [
+              0.5,
+              1,
+              0,
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              1,
+              0.5,
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.6875,
+        "pairedBootstrap": {
+          "seed": 2026102707,
+          "iterations": 20000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.6041666666666666,
+            0.7708333333333334
+          ],
+          "interval97_5": [
+            0.59375,
+            0.78125
+          ],
+          "multiplicity": "Bonferroni two preregistered comparisons, familywise95% approximate coverage"
+        }
+      },
+      {
+        "opponent": "control64",
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 66,
+        "draws": 0,
+        "losses": 30,
+        "score": 66,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              0,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 12,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1,
+              0,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 10,
+            "pairScores": [
+              0.5,
+              1,
+              0,
+              0.5,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              1,
+              0.5,
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 13,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              1,
+              0.5,
+              0.5,
+              1,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.6875,
+        "pairedBootstrap": {
+          "seed": 2026102707,
+          "iterations": 20000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.6041666666666666,
+            0.7708333333333334
+          ],
+          "interval97_5": [
+            0.59375,
+            0.78125
+          ],
+          "multiplicity": "Bonferroni two preregistered comparisons, familywise95% approximate coverage"
+        }
+      }
+    ],
+    "opponentsIdentical": true,
+    "independentConfirmation": {
+      "games": 192,
+      "completed": 192,
+      "capped": 0,
+      "wins": 138,
+      "draws": 0,
+      "losses": 54,
+      "score": 138,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 32,
+          "score": 20,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 32,
+          "score": 27,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            0.5,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 32,
+          "score": 27,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            1,
+            1,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 32,
+          "score": 21,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0,
+            0.5,
+            1,
+            1,
+            0.5,
+            1,
+            1,
+            0
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 32,
+          "score": 23,
+          "pairScores": [
+            0.5,
+            1,
+            1,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 32,
+          "score": 20,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            1,
+            1,
+            1,
+            1,
+            0.5,
+            0,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0
+          ]
+        }
+      ],
+      "scoreRate": 0.71875,
+      "pairedBootstrap": {
+        "seed": 2026102717,
+        "iterations": 20000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.6666666666666666,
+          0.7708333333333334
+        ]
+      }
+    },
+    "latency": [
+      {
+        "backend": "wasm",
+        "baselineP95Ms": 219.29999999701977,
+        "studentP95Ms": 211.19999998807907,
+        "p95Ratio": 0.9630642954443649,
+        "maxPerBoardP95Ratio": 1.0733903646842125,
+        "passes": true
+      },
+      {
+        "backend": "webgpu",
+        "baselineP95Ms": 39.79999999701977,
+        "studentP95Ms": 38.70000000298023,
+        "p95Ratio": 0.972361809192917,
+        "maxPerBoardP95Ratio": 1.0323529410011627,
+        "passes": true
+      }
+    ]
+  },
+  "browserAdopted": false,
+  "deployed": false,
+  "note": "Paths resolve relative to this profile. Development opponents share identical weights and are not independent replications. Confirmation uses fresh seeds. Latency measured on the recorded desktop only."
+}

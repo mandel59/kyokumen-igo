@@ -1,0 +1,37 @@
+diff --git a/experiments/ai/README.md b/experiments/ai/README.md
+index 7272033..9271697 100644
+--- a/experiments/ai/README.md
++++ b/experiments/ai/README.md
+@@ -70,3 +70,5 @@
+ [4,096訪問の教師探索と現行64訪問の比較](v3/2026-10-25-teacher-budget-4096/README.md)を保存しました。
+ 
+ 次の作業計画：[強い教師から現行サイズのv3への蒸留パイロット](plans/v3-teacher-distillation/README.md)（計画済み・未実行）。
++
++[強い教師から現行サイズへの蒸留パイロット](v3/2026-10-25-teacher-distillation-pilot/README.md)の実行結果を保存しました。
+diff --git a/experiments/ai/catalog.json b/experiments/ai/catalog.json
+index cde8c12..dc2e240 100644
+--- a/experiments/ai/catalog.json
++++ b/experiments/ai/catalog.json
+@@ -174,6 +174,12 @@
+       "architecture": "v3",
+       "title": "4,096訪問の8候補・全候補探索と現行64訪問の比較",
+       "path": "v3/2026-10-25-teacher-budget-4096/"
++    },
++    {
++      "id": "v3/2026-10-25-teacher-distillation-pilot",
++      "architecture": "v3",
++      "title": "強い教師から同容量v3への対応蒸留パイロット",
++      "path": "v3/2026-10-25-teacher-distillation-pilot/"
+     }
+   ]
+ }
+diff --git a/tools/ai-gnn/README.md b/tools/ai-gnn/README.md
+index 9695c4a..6af3592 100644
+--- a/tools/ai-gnn/README.md
++++ b/tools/ai-gnn/README.md
+@@ -206,3 +206,5 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
+ [4,096訪問の教師探索比較](../../experiments/ai/v3/2026-10-25-teacher-budget-4096/README.md)では、8候補・全候補を現行64訪問と各96局で比較しました。`teacher-budget-statistics.mjs` は盤ごとの黒白ペアを再標本化し、通常95%区間と2候補の比較を補正した97.5%区間を返します。
+ 
+ 次期作業は[教師データ生成と蒸留の計画](../../experiments/ai/plans/v3-teacher-distillation/README.md)に固定しました。48局の自己対局と同一局面の64/4,096訪問再解析から始め、同容量の2生徒で教師データの効果を比較します。未実行の計画です。
++
++`browser-selfplay.mjs` と `browser-reanalyze.mjs` は、固定した対局specからの集約WebGPU生成と同一局面の対応再解析を行います。`audit-distillation-data.mjs` は全対局・ラベル・対応入力を監査し、`validate_paired_training.py` は学習テンソルと分割・サンプリングを照合します。[実行記録](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)にCLI・入力・出力・停止条件を保存しています。

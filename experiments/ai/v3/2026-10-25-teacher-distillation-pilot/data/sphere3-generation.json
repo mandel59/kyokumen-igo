@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "operation": "selfplay",
+  "mode": "pooled",
+  "visits": 4096,
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "plannedGames": 8,
+  "positions": 504,
+  "capped": 0,
+  "completed": 8,
+  "games": [
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3710702379:sphere3:0",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 67,
+      "actualVisits": 270337
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3693924760:sphere3:1",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 67,
+      "actualVisits": 270337
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3744257617:sphere3:2",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 52,
+      "actualVisits": 208897
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3727479998:sphere3:3",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 67,
+      "actualVisits": 270337
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3777812855:sphere3:4",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 62,
+      "actualVisits": 253952
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3761035236:sphere3:5",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 64,
+      "actualVisits": 258049
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3811368093:sphere3:6",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 68,
+      "actualVisits": 274433
+    },
+    {
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3794590474:sphere3:7",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 57,
+      "actualVisits": 233472
+    }
+  ],
+  "pooling": {
+    "requests": 242466,
+    "positions": 1933223,
+    "batches": 59432,
+    "maxBatch": 64,
+    "graphs": 1
+  },
+  "passes": true,
+  "environment": {
+    "browser": "156.0.4314.42",
+    "node": "v26.12.1"
+  },
+  "provenance": {
+    "sources": {
+      "tools/ai-gnn/browser-data-host.mjs": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936",
+      "tools/ai-gnn/browser-data-worker.mjs": "bc57aac452a3e2e397b587351cab18126b28fc2b8b96da35fcc8b51db5c08bb8",
+      "tools/ai-gnn/selfplay-records.mjs": "bfdc9d22885ef906336a4eccd35bd05d297feb9937ee1504a9dbbf6b8fbc9035",
+      "tools/ai-gnn/training-search.mjs": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+      "tools/ai-gnn/selfplay-policy.mjs": "b9017b83fc10a6fb9505b556c0c1fcbaa13fd4f2c89c3a07ecd8f499fa4ef67f",
+      "tools/ai-gnn/pooled-inference.mjs": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3",
+      "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+      "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+      "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+      "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+      "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    "wasms": {
+      "teacher": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+    },
+    "modelFiles": {
+      "manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+      "model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    }
+  },
+  "inputs": {
+    "spec": "tools/ai-gnn/target/teacher-distillation-pilot/spec-sphere3.json",
+    "specSha256": "093eee249a70536355d6dae6b41798a1e54469f85722aebe3310f302764dd8cb",
+    "wasmSha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+  },
+  "outputs": {
+    "rows": {
+      "path": "tools/ai-gnn/target/teacher-distillation-pilot/sphere3-selfplay.jsonl.gz",
+      "sha256": "c13646bdb6e6eb4e9f73cde49382483787e01bb9346c12ad1a62977b73bf57e7"
+    },
+    "games": {
+      "path": "tools/ai-gnn/target/teacher-distillation-pilot/sphere3-games.jsonl.gz",
+      "sha256": "a4ef78371d01692a39e92def1a0fb539fe7b377484355ae239c31a312b974fb1"
+    }
+  },
+  "cliSha256": "7c63f6df7871d196c526d9938ff13b0682efc41c52b13a74e43f61ab2bc0f5fa"
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "games": 12,
+  "positions": 1228,
+  "boards": {
+    "sphere3": 2,
+    "sphere4": 2,
+    "sphere5": 2,
+    "torus7": 2,
+    "torus9": 2,
+    "torus11": 2
+  },
+  "uniqueOrigins": true,
+  "allGamesReplayed": true,
+  "allLabelsConsistent": true,
+  "allPoliciesLegal": true,
+  "allNormalBudgetsExact": true,
+  "sameRows": true,
+  "sameGames": true,
+  "pairedFingerprint": null,
+  "inputs": {
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-pooled.jsonl.gz": "63edf71e70ccab9ababf054166b1c12de566afae73a9ef3eb350c5a938c40c08",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-pooled-games.jsonl.gz": "f9cfd3522fbf5c1731f07404b71ac828a4fbabcb2b242ba5e1072c3f9b183542",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-spec.json": "3677d558e28f693838160bd5debbdaea9b47d569acd181b1e92c4b031e645671",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-serial.jsonl.gz": "63edf71e70ccab9ababf054166b1c12de566afae73a9ef3eb350c5a938c40c08",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-serial-games.jsonl.gz": "f9cfd3522fbf5c1731f07404b71ac828a4fbabcb2b242ba5e1072c3f9b183542"
+  },
+  "scriptSha256": "de6c7b586c24a2cc09cff21a5e27c4e3b6996e2ba9f206b3080aad32ed93b72f"
+}

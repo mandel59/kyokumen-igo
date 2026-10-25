@@ -205,4 +205,6 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
 
 [4,096訪問の教師探索比較](../../experiments/ai/v3/2026-10-25-teacher-budget-4096/README.md)では、8候補・全候補を現行64訪問と各96局で比較しました。`teacher-budget-statistics.mjs` は盤ごとの黒白ペアを再標本化し、通常95%区間と2候補の比較を補正した97.5%区間を返します。
 
-次期作業は[教師データ生成と蒸留の計画](../../experiments/ai/plans/v3-teacher-distillation/README.md)に固定しました。48局の自己対局と同一局面の64/4,096訪問再解析から始め、同容量の2生徒で教師データの効果を比較します。未実行の計画です。
+[教師データ生成と蒸留の登録計画](../../experiments/ai/plans/v3-teacher-distillation/README.md)は実行済みです。48局の自己対局と同一局面の64/4,096訪問再解析から、同容量の2生徒で教師データの効果を比較し、強教師生徒が独立対局・速度を含む全基準を通過しました。登録JSONは事前計画として保持しています。
+
+`browser-selfplay.mjs` と `browser-reanalyze.mjs` は、固定した対局specからの集約WebGPU生成と同一局面の対応再解析を行います。`audit-distillation-data.mjs` は全対局・ラベル・対応入力を監査し、`validate_paired_training.py` は学習テンソルと分割・サンプリングを照合します。[実行記録](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)にCLI・入力・出力・停止条件を保存しています。

@@ -1,0 +1,17 @@
+{
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/manifest.json": "fa6cc45aa26f0271ec5765bbc090b109029926a6dcdc348817b6d08b3e97946a",
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/model.onnx": "e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df",
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/weights.f32": "6ecd1a870e51681b99f443f0218ce8e6e7516e8bdd6d45d964a4f846454b7151",
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-control64/manifest.json": "2d971dcd5aaa40549926110c63ad07202e1a7f5e98d7c241af09574eb7c4fa52",
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-control64/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "tools/ai-gnn/target/teacher-distillation-pilot/student-control64/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+  "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+  "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+  "tools/ai-gnn/browser-match.mjs": "bf9ddc41690418963bd7410a3f2a20bc49368831fe0fd5b848d0feca29c14e3c",
+  "tools/ai-gnn/offline-player.mjs": "f30f8eb4ad529fcdbfa910ecb5fa03833d2de5a333fb83b10ce24bf6e3ad7093",
+  "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+  "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+  "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+  "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/sh8.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39"
+}

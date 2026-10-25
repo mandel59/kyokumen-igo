@@ -1,0 +1,9 @@
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3907934777:torus11:1
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3891157158:torus11:0
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3958267634:torus11:4
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3874379539:torus11:3
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3857601920:torus11:2
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3941490015:torus11:7
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3924712396:torus11:6
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3975045253:torus11:5
+{"completed":8,"positions":1011,"capped":0,"passes":true,"pooling":{"requests":499514,"positions":3983754,"batches":111030,"maxBatch":64,"graphs":1}}

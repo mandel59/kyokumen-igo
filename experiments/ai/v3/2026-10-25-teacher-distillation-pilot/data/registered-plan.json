@@ -1,0 +1,309 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-teacher-distillation-pilot",
+  "status": "planned-not-executed",
+  "date": "2026-10-25",
+  "baseCommit": "87df780903b4913a08d70254b76b107104e36b6e",
+  "objective": "Test whether a qualified4096-visit offline teacher improves the unchanged-size student at64 visits; separate teacher-data effect from extra training.",
+  "workspace": "tools/ai-gnn/target/teacher-distillation-pilot",
+  "teacherProfile": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/teacher-profile.json",
+  "teacher": {
+    "modelDirectory": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model",
+    "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "wasm": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/all.wasm",
+    "wasmSha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940",
+    "visits": 4096,
+    "fpu": 1,
+    "rootQScale": 0.4,
+    "rootCandidates": "all eligible actions",
+    "backend": "webgpu-wgsl"
+  },
+  "baseline": {
+    "modelDirectory": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model",
+    "checkpoint": "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt",
+    "wasm": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/sh8.wasm",
+    "visits": 64,
+    "fpu": 1,
+    "rootCandidates": 8,
+    "hidden": 64,
+    "blocks": 6,
+    "parameters": 120905
+  },
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3"
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7"
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9"
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11"
+    }
+  ],
+  "preflight": {
+    "requiredImplementation": [
+      {
+        "proposedPath": "tools/ai-gnn/browser-selfplay.mjs",
+        "status": "not-implemented",
+        "purpose": "Deterministic per-game RNG, pooled WebGPU teacher selfplay and complete-game labels."
+      },
+      {
+        "proposedPath": "tools/ai-gnn/browser-reanalyze.mjs",
+        "status": "not-implemented",
+        "purpose": "Replay the same saved roots and produce paired noise-free64/4096-visit labels."
+      }
+    ],
+    "reuse": [
+      "pooled-inference.mjs",
+      "training-search.mjs",
+      "selfplay-policy.mjs",
+      "train.py",
+      "browser-match.mjs",
+      "teacher-budget-statistics.mjs"
+    ],
+    "pool": {
+      "capacity": 64,
+      "maxLeavesPerSearch": 8,
+      "graphsMustMatch": true
+    },
+    "checks": [
+      "Reuse the all-six-board bit-equivalence test.",
+      "Extend ordinary-versus-pooled search equivalence to4096 visits on fixed roots of every board.",
+      "Complete12 canary games (two per board) at65 visits; verify every move and label.",
+      "RNG must depend on game seed, not concurrent scheduling; compare serial and pooled canary trajectories.",
+      "Freeze code/inputs and all game IDs before48-game data generation."
+    ],
+    "failure": "Stop on semantic mismatch. Infrastructure retries must use the same seed and retain attempt records; never replace a bad-outcome or capped game.",
+    "canarySeed": 2026102680
+  },
+  "corpus": {
+    "gamesPerBoard": 8,
+    "games": 48,
+    "visits": 4096,
+    "komi": 6.5,
+    "seed": 2026102681,
+    "perGameSeed": "FNV1a32(`${seed}|${kind}|${size}|${gameIndex}`), zero maps to1; store all48 derived seeds before execution.",
+    "gameId": "teacher-distill-v1:{model12}:{search12}:4096:{seed}:{kind}{size}:{gameIndex}",
+    "positionId": "{originGameId}:{ply}",
+    "rootExploration": {
+      "fraction": 0.25,
+      "totalDirichletConcentration": 10,
+      "untilPly": "min(24,points/2)"
+    },
+    "moveTemperature": "1 before min(18,points/3),0.25 until points/2, then0",
+    "moveCap": "20*points",
+    "completionGate": "All48 games must end legally with consistent WDL/score/ownership. A cap fails the data-generation stage; save completed games and logs without replacing capped games.",
+    "split": {
+      "trainGameIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "validationGameIndices": [
+        6,
+        7
+      ],
+      "trainGames": 36,
+      "validationGames": 12,
+      "unit": "whole origin game, fixed per board before collection",
+      "policy": "All positions and relabelings from one origin game stay in one partition. Earlier192 teacher-screen games are not training data.",
+      "manifest": "experiments/ai/plans/v3-teacher-distillation/game-split.json"
+    },
+    "gameIdSeedField": "derived per-game seed, as fixed in game-split.json"
+  },
+  "reanalysis": {
+    "roots": "Every saved pre-move root in the48 completed games; no outcome-based filtering or phase subsampling.",
+    "seed": 2026102682,
+    "perRootSeed": "FNV1a32(`${seed}|${originGameId}|${ply}`); same seed for both recipes.",
+    "rootNoise": false,
+    "recipes": [
+      {
+        "name": "control64",
+        "wasm": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/sh8.wasm",
+        "visits": 64
+      },
+      {
+        "name": "teacher4096",
+        "wasm": "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/all.wasm",
+        "visits": 4096
+      }
+    ],
+    "target": "0.75*searchPolicy+0.25*noise-free legal NN prior for each recipe.",
+    "commonValidationPolicy": "teacher4096 smoothed target for both arms; record as validationPolicy.",
+    "sharedPolicyEligibility": "Eligible iff neither search reports provenLoss. Use the same policyEligible and decisionReason on both arms; retain WDL/score/ownership even when policy supervision is excluded.",
+    "retain": [
+      "origin game and complete move history",
+      "position features and legal mask",
+      "played action and search seed",
+      "raw search policy and noise-free prior",
+      "raw per-action visits/Q/priors and root NN WDL",
+      "terminal WDL, score and ownership",
+      "requested/actual visits, model/WASM/code hashes"
+    ],
+    "comparabilityGate": "Identical ordered position IDs, features, masks, legality, outcomes, split, common validation targets and eligibility across arms; only the training policy recipe differs."
+  },
+  "training": {
+    "arms": [
+      "control64",
+      "teacher4096"
+    ],
+    "architecture": "Same64x6/120905-parameter GraphNet as baseline; no large teacher model in this pilot.",
+    "resume": "same frozen baseline checkpoint for both arms",
+    "seed": 2026102683,
+    "epochs": 8,
+    "batchSize": 32,
+    "learningRate": 0.00003,
+    "minimumLearningRate": 0.000003,
+    "schedule": "cosine",
+    "optimizer": "existing AdamW,weightDecay1e-4,gradientClip5",
+    "emaDecay": 0.99,
+    "sampling": "same source/board/game/thirds balance and sampled index order for both arms",
+    "checkpointEvery": 4,
+    "selection": "Minimum common normal-position validation loss at epochs0,4,8; anchors excluded. No later checkpoint/seed search on this holdout.",
+    "flags": [
+      "--balanced",
+      "--normal-selection",
+      "--normalize-policy",
+      "--require-validation-policy",
+      "--checkpoint-every 4",
+      "--best-validation",
+      "--cosine",
+      "--ema-decay 0.99"
+    ],
+    "normalTraining": false,
+    "gate": {
+      "candidate": "teacher4096 arm only; control is a matched extra-training comparator, not another selected candidate.",
+      "selectedEpochMustExceed": 0,
+      "commonLoss": "lower than baseline epoch0 on identical validation roots",
+      "maxGlobalWdlBrierRatioVsBaseline": 1.05,
+      "maxPerBoardCommonLossRatioVsBaseline": 1.1,
+      "other": "All outputs finite; architectures/search/features unchanged. Save all checkpoints and metrics. Gate failure stops strength testing.",
+      "metricCorpus": "Shared normal held-out roots using common teacher validationPolicy and shared eligibility.",
+      "globalMetricFields": "selectionMetrics versus initialSelectionMetrics",
+      "boardMetricFields": "validationGroups[board/*] versus initialValidationGroups[board/*]"
+    }
+  },
+  "strength": {
+    "development": {
+      "comparisons": [
+        {
+          "a": "teacher4096 student",
+          "b": "frozen baseline"
+        },
+        {
+          "a": "teacher4096 student",
+          "b": "control64 student"
+        }
+      ],
+      "visitsPerPlayer": 64,
+      "search": "frozen production sh8 WASM, FPU1, Qscale0.4 for both players",
+      "pairsPerBoard": 8,
+      "gamesPerComparison": 96,
+      "totalGames": 192,
+      "seedsByBoard": {
+        "sphere3": 2026102701,
+        "sphere4": 2026102702,
+        "sphere5": 2026102703,
+        "torus7": 2026102704,
+        "torus9": 2026102705,
+        "torus11": 2026102706
+      },
+      "bootstrapSeed": 2026102707,
+      "bootstrapIterations": 20000,
+      "selectionGate": "Both comparisons: scoreRate>=0.60, corrected97.5% lower>0.50, everyboard>=8/16, no caps/illegal. Do not pool the two comparisons or call them independent replications.",
+      "note": "Same opening pairs may be shared across opponents; inference accounts for pairing within each comparison. If control selected epoch0, report baseline/control identity explicitly."
+    },
+    "confirmation": {
+      "condition": "Only after both development comparisons pass; freeze the same candidate with no retuning.",
+      "opponent": "frozen baseline",
+      "visitsPerPlayer": 64,
+      "pairsPerBoard": 16,
+      "games": 192,
+      "seedsByBoard": {
+        "sphere3": 2026102711,
+        "sphere4": 2026102712,
+        "sphere5": 2026102713,
+        "torus7": 2026102714,
+        "torus9": 2026102715,
+        "torus11": 2026102716
+      },
+      "bootstrapSeed": 2026102717,
+      "bootstrapIterations": 20000,
+      "gate": "scoreRate>=0.55, paired95% lower>0.50, everyboard>=16/32, no caps/illegal.",
+      "note": "One frozen candidate, fresh opening seeds; report per-board point gates as observations, not a non-inferiority proof."
+    }
+  },
+  "performance": {
+    "condition": "Only after strength confirmation; ordinary application inference/search, not pooled inference.",
+    "sameArchitectureAndVisits": true,
+    "roots": 18,
+    "warmups": 2,
+    "repetitions": 7,
+    "backends": [
+      "CPU/WASM",
+      "WebGPU"
+    ],
+    "gate": "paired P95 ratio candidate/baseline<=1.05 overall and<=1.10 on every board",
+    "reference": "experiments/ai/v3/2026-10-25-root-value-scale/plan.json"
+  },
+  "outputs": [
+    "raw complete selfplay games and dataset",
+    "both paired relabeled corpora and fixed split manifest",
+    "both selected student packages and saved checkpoints",
+    "all validation/group metrics and common-corpus fingerprint",
+    "development and conditional confirmation reports",
+    "conditional latency report",
+    "exact executed source, commands, environment, hashes and final decision"
+  ],
+  "stopRules": [
+    "Any illegal move, inconsistent label, split leakage or source/hash drift stops the stage.",
+    "Capped games are retained in reports and fail qualification; do not resample replacements.",
+    "No interim efficacy stopping or repeated arena looks to change training/selection.",
+    "Do not silently add completed-Q targets, larger models or extra hyperparameters; register a new study if needed."
+  ],
+  "nonGoals": [
+    "No browser model/WASM installation,main merge or deployment.",
+    "No claim that teacher win rate predicts distilled-student strength.",
+    "No GNN/Attention capacity sweep or completed-Q target arm in this first controlled pilot."
+  ],
+  "nextAction": "Implement and validate pooled WebGPU selfplay and paired reanalysis before generating the48-game corpus.",
+  "inputHashes": {
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/teacher-profile.json": "e08e77400358dda628d1feccd6a1837281bb8a07d9dc2c5f429c6c188ff598e9",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/baseline-model/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/all.wasm": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940",
+    "experiments/ai/v3/2026-10-25-teacher-budget-4096/data/sh8.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+    "experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512",
+    "tools/ai-gnn/train.py": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/training-search.mjs": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+    "tools/ai-gnn/pooled-inference.mjs": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3",
+    "tools/ai-gnn/teacher-budget-statistics.mjs": "d79a987d691d2f9c1f3be377c297808b2bac1cb838914913482ded7ca6979f58",
+    "experiments/ai/plans/v3-teacher-distillation/game-split.json": "bd66b18eb8487d2702563e30e6e32fc4606f5803ec44dbc47033f7aa604eb923"
+  }
+}

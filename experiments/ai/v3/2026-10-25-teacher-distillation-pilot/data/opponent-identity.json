@@ -1,0 +1,7 @@
+{
+  "controlSelectedEpoch": 0,
+  "baselineAndControlWeightsIdentical": true,
+  "baselineWeightsSha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+  "controlWeightsSha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+  "note": "If identical, the two development comparisons share one effective opponent; do not pool or interpret as independent replications. Confirmation uses fresh seeds."
+}

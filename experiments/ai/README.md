@@ -69,4 +69,6 @@
 
 [4,096訪問の教師探索と現行64訪問の比較](v3/2026-10-25-teacher-budget-4096/README.md)を保存しました。
 
-次の作業計画：[強い教師から現行サイズのv3への蒸留パイロット](plans/v3-teacher-distillation/README.md)（計画済み・未実行）。
+登録計画：[強い教師から現行サイズのv3への蒸留パイロット](plans/v3-teacher-distillation/README.md)（実行済み・全基準通過）。
+
+[強い教師から現行サイズへの蒸留パイロット](v3/2026-10-25-teacher-distillation-pilot/README.md)の実行結果を保存しました。

@@ -1,0 +1,9 @@
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3744257617:sphere3:2
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3794590474:sphere3:7
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3777812855:sphere3:4
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3761035236:sphere3:5
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3710702379:sphere3:0
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3727479998:sphere3:3
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3693924760:sphere3:1
+Finished teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:3811368093:sphere3:6
+{"completed":8,"positions":504,"capped":0,"passes":true,"pooling":{"requests":242466,"positions":1933223,"batches":59432,"maxBatch":64,"graphs":1}}

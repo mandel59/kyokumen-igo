@@ -1,0 +1,7 @@
+{
+  "reason": "Set planned FPU1 for ordinary application and latency evaluation; neural weights are unchanged.",
+  "beforeManifestSha256": "58e20b329598df4605346602923b15aa1cf9c2705a5544eaea18633756280301",
+  "afterManifestSha256": "2d971dcd5aaa40549926110c63ad07202e1a7f5e98d7c241af09574eb7c4fa52",
+  "onnxSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "weightsSha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+}

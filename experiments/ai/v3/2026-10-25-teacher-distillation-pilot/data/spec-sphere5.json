@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "seed": 2026102681,
+  "games": [
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 0,
+      "seed": 269605405,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:269605405:sphere5:0",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 1,
+      "seed": 252827786,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:252827786:sphere5:1",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 2,
+      "seed": 236050167,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:236050167:sphere5:2",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 3,
+      "seed": 219272548,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:219272548:sphere5:3",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 4,
+      "seed": 202494929,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:202494929:sphere5:4",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 5,
+      "seed": 185717310,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:185717310:sphere5:5",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 6,
+      "seed": 168939691,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:168939691:sphere5:6",
+      "komi": 6.5,
+      "partition": "validation"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "gameIndex": 7,
+      "seed": 152162072,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:152162072:sphere5:7",
+      "komi": 6.5,
+      "partition": "validation"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Reanalyzed 1/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:620408946:sphere3:0
+Reanalyzed 2/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:637186565:sphere3:1
+Reanalyzed 3/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1662244803:sphere4:0
+Reanalyzed 4/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1645467184:sphere4:1
+Reanalyzed 5/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:33700600:sphere5:0
+Reanalyzed 6/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:50478219:sphere5:1
+Reanalyzed 7/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1915038542:torus7:0
+Reanalyzed 8/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1931816161:torus7:1
+Reanalyzed 9/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:3517338964:torus9:0
+Reanalyzed 10/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:3534116583:torus9:1
+Reanalyzed 11/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:2984121479:torus11:0
+Reanalyzed 12/12 teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:2967343860:torus11:1
+{"games":12,"positions":1228,"eligible":1219,"pooling":{"requests":21793,"positions":153641,"batches":2633,"maxBatch":64,"graphs":6}}

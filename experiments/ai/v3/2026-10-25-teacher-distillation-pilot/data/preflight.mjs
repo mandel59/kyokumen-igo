@@ -1,0 +1,4 @@
+import fs from 'node:fs';import {runStudyCommand} from '../../study-commands.mjs';
+const p=JSON.parse(fs.readFileSync('experiments/ai/plans/v3-teacher-distillation/plan.json')),d=p.workspace;
+await runStudyCommand(d,'verify-search4096',process.execPath,['tools/ai-gnn/verify-pooled-search.mjs','--model',p.teacher.modelDirectory,'--control-wasm',p.baseline.wasm,'--teacher-wasm',p.teacher.wasm,'--output',d+'/search4096-equivalence.json']);
+for(const mode of ['pooled','serial'])await runStudyCommand(d,'canary-'+mode,process.execPath,['tools/ai-gnn/browser-selfplay.mjs','--spec',d+'/canary-spec.json','--model',p.teacher.modelDirectory,'--wasm',p.teacher.wasm,'--mode',mode,'--concurrency',mode==='pooled'?'2':'1','--simulations','65','--output',d+'/canary-'+mode+'.jsonl.gz','--games-output',d+'/canary-'+mode+'-games.jsonl.gz','--report',d+'/canary-'+mode+'-report.json']);

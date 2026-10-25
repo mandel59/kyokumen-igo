@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "positions": 1228,
+  "changedTrainingPolicies": 1169,
+  "sharedTrainingTensors": true,
+  "sharedSamplingWeightsAndOrder": true,
+  "trainPositions": 597,
+  "validationPositions": 631,
+  "trainGames": 6,
+  "validationGames": 6,
+  "commonTensorSha256": "66feeafaf9ddf434de5a094366b289325461bd47f02be536357831e21b7fc5f6",
+  "inputs": {
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-control64.jsonl.gz": "d449909d2288b582684ce02524d700212a770a93484d4ca382026d8a82e55a85",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-teacher65.jsonl.gz": "ae3bc4bacc8ee1da36e40a3d4e46aa27d441dfc2436005d2770265d98f26c2e1",
+    "tools/ai-gnn/target/teacher-distillation-pilot/canary-split.json": "2c5aabf90fa19423187056ab4bd095ec128ff09c8cd3580ce18919f9fa93e7b7"
+  }
+}

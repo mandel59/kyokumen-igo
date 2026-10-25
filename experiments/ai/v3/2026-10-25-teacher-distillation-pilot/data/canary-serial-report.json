@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "operation": "selfplay",
+  "mode": "serial",
+  "visits": 65,
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "plannedGames": 12,
+  "positions": 1228,
+  "capped": 0,
+  "completed": 12,
+  "games": [
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:620408946:sphere3:0",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 59,
+      "actualVisits": 3835
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:637186565:sphere3:1",
+      "board": "sphere3",
+      "ended": true,
+      "plies": 64,
+      "actualVisits": 4096
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1662244803:sphere4:0",
+      "board": "sphere4",
+      "ended": true,
+      "plies": 104,
+      "actualVisits": 6696
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1645467184:sphere4:1",
+      "board": "sphere4",
+      "ended": true,
+      "plies": 108,
+      "actualVisits": 6956
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:33700600:sphere5:0",
+      "board": "sphere5",
+      "ended": true,
+      "plies": 165,
+      "actualVisits": 10661
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:50478219:sphere5:1",
+      "board": "sphere5",
+      "ended": true,
+      "plies": 163,
+      "actualVisits": 10595
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1915038542:torus7:0",
+      "board": "torus7",
+      "ended": true,
+      "plies": 62,
+      "actualVisits": 3966
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:1931816161:torus7:1",
+      "board": "torus7",
+      "ended": true,
+      "plies": 64,
+      "actualVisits": 4096
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:3517338964:torus9:0",
+      "board": "torus9",
+      "ended": true,
+      "plies": 85,
+      "actualVisits": 5525
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:3534116583:torus9:1",
+      "board": "torus9",
+      "ended": true,
+      "plies": 102,
+      "actualVisits": 6566
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:2984121479:torus11:0",
+      "board": "torus11",
+      "ended": true,
+      "plies": 122,
+      "actualVisits": 7866
+    },
+    {
+      "gameId": "teacher-canary-v1:8e5b41e3974c:1ff2d06a137c:65:2967343860:torus11:1",
+      "board": "torus11",
+      "ended": true,
+      "plies": 130,
+      "actualVisits": 8386
+    }
+  ],
+  "pooling": null,
+  "passes": true,
+  "environment": {
+    "browser": "156.0.4314.42",
+    "node": "v26.12.1"
+  },
+  "provenance": {
+    "sources": {
+      "tools/ai-gnn/browser-data-host.mjs": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936",
+      "tools/ai-gnn/browser-data-worker.mjs": "bc57aac452a3e2e397b587351cab18126b28fc2b8b96da35fcc8b51db5c08bb8",
+      "tools/ai-gnn/selfplay-records.mjs": "bfdc9d22885ef906336a4eccd35bd05d297feb9937ee1504a9dbbf6b8fbc9035",
+      "tools/ai-gnn/training-search.mjs": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+      "tools/ai-gnn/selfplay-policy.mjs": "b9017b83fc10a6fb9505b556c0c1fcbaa13fd4f2c89c3a07ecd8f499fa4ef67f",
+      "tools/ai-gnn/pooled-inference.mjs": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3",
+      "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+      "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+      "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+      "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+      "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    "wasms": {
+      "teacher": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+    },
+    "modelFiles": {
+      "manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+      "model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    }
+  },
+  "inputs": {
+    "spec": "tools/ai-gnn/target/teacher-distillation-pilot/canary-spec.json",
+    "specSha256": "3677d558e28f693838160bd5debbdaea9b47d569acd181b1e92c4b031e645671",
+    "wasmSha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+  },
+  "outputs": {
+    "rows": {
+      "path": "tools/ai-gnn/target/teacher-distillation-pilot/canary-serial.jsonl.gz",
+      "sha256": "63edf71e70ccab9ababf054166b1c12de566afae73a9ef3eb350c5a938c40c08"
+    },
+    "games": {
+      "path": "tools/ai-gnn/target/teacher-distillation-pilot/canary-serial-games.jsonl.gz",
+      "sha256": "f9cfd3522fbf5c1731f07404b71ac828a4fbabcb2b242ba5e1072c3f9b183542"
+    }
+  },
+  "cliSha256": "7c63f6df7871d196c526d9938ff13b0682efc41c52b13a74e43f61ab2bc0f5fa"
+}

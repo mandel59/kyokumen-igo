@@ -1,0 +1,13 @@
+Verified control64 sphere3 4096
+Verified control64 sphere4 4096
+Verified control64 sphere5 4096
+Verified control64 torus7 4096
+Verified control64 torus9 4096
+Verified control64 torus11 4096
+Verified teacher4096 sphere3 4096
+Verified teacher4096 sphere4 4096
+Verified teacher4096 sphere5 4096
+Verified teacher4096 torus7 4096
+Verified teacher4096 torus9 4096
+Verified teacher4096 torus11 4096
+{"positions":24,"allBitIdentical":true}

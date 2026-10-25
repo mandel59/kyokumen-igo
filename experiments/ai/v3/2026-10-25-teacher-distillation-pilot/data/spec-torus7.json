@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "seed": 2026102681,
+  "games": [
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 0,
+      "seed": 359397197,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:359397197:torus7:0",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 1,
+      "seed": 342619578,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:342619578:torus7:1",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 2,
+      "seed": 325841959,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:325841959:torus7:2",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 3,
+      "seed": 309064340,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:309064340:torus7:3",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 4,
+      "seed": 292286721,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:292286721:torus7:4",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 5,
+      "seed": 275509102,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:275509102:torus7:5",
+      "komi": 6.5,
+      "partition": "train"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 6,
+      "seed": 258731483,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:258731483:torus7:6",
+      "komi": 6.5,
+      "partition": "validation"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "gameIndex": 7,
+      "seed": 241953864,
+      "gameId": "teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:241953864:torus7:7",
+      "komi": 6.5,
+      "partition": "validation"
+    }
+  ]
+}

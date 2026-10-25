@@ -1,0 +1,4 @@
+import {runDataWorker,options,newOutputs,saveReport,hash} from './browser-data-host.mjs';
+const arg=options(),output=arg('--output'),model=arg('--model'),control=arg('--control-wasm'),teacher=arg('--teacher-wasm');newOutputs([output]);if(!model||!control||!teacher)throw Error('Missing search-equivalence inputs');
+const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].map(([kind,size])=>({kind,size,key:kind+size})),recipes=[{name:'control64',visits:4096},{name:'teacher4096',visits:4096}];
+const report=await runDataWorker({model,wasms:{control64:control,teacher4096:teacher},config:{operation:'verify',boards,recipes},async onEvent(e){console.log(e.message);}});report.cliSha256=hash('tools/ai-gnn/verify-pooled-search.mjs');saveReport(output,report);console.log(JSON.stringify({positions:report.rows.length*2,allBitIdentical:report.allBitIdentical}));

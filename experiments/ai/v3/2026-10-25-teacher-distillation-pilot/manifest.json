@@ -1,0 +1,1042 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-teacher-distillation-pilot",
+  "architecture": "v3",
+  "title": "Paired supervision distillation from a qualified offline teacher",
+  "source": {
+    "baseCommit": "25b9c5019b36ee3f07b1361ad0ba81a7834790d8",
+    "patch": "data/source.patch",
+    "untrackedToolSnapshots": "data/source/tools/ai-gnn"
+  },
+  "variants": [
+    "control64",
+    "teacher4096"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "4f9f8f77c2bba691a838a5ddf837f14444afcc874fbd9737caad83efa2b54959"
+  },
+  "notes": [
+    "Predeclared48-game corpus and36/12 origin-game split.",
+    "Same roots and common validation targets for both student arms; conditional validation/strength/latency gates.",
+    "No production installation,main merge or deployment."
+  ],
+  "artifacts": [
+    {
+      "path": "data/archive-pilot.mjs",
+      "sha256": "91793e19cc56adb7e204aa9cd98c014a3783e079b3fa593f984241c5e8f103a0"
+    },
+    {
+      "path": "data/audit-canary-command.json",
+      "sha256": "1210b0ee479ab951701c8b5168a5ff1301cf9c29e2267aa17665544933ad5d77"
+    },
+    {
+      "path": "data/audit-canary-log.txt",
+      "sha256": "8a30a06ec41a3db0747e07231e5b574e67e9d7b8dc915b7767d076cd83acf5ee"
+    },
+    {
+      "path": "data/audit-canary-paired-command.json",
+      "sha256": "2968851ba3f22e0f0faf75d6ea34442b957e90c54c4b1553795bb48fc07a481f"
+    },
+    {
+      "path": "data/audit-canary-paired-log.txt",
+      "sha256": "1c2c2793c7db2258b8a1ebdc6483ad6bbc293ac16225e91c8f149904110b72e5"
+    },
+    {
+      "path": "data/audit-paired-command.json",
+      "sha256": "c2381811f82cea2e281f3847dcb7caebd6a143745e7643fdb54e2c78f13e5174"
+    },
+    {
+      "path": "data/audit-paired-log.txt",
+      "sha256": "3e848f70fe25fbf5eb3738143e88887940f61d77da6d0192e0b9514efc4ffb15"
+    },
+    {
+      "path": "data/audit-selfplay-command.json",
+      "sha256": "9af2d113eeea7450bd205a3d8af0b7b5998e371efbd9d7c9b0586d144dd4c0de"
+    },
+    {
+      "path": "data/audit-selfplay-log.txt",
+      "sha256": "9688444e6bb9805611da1832b567b6b2c811647fbae44eef8e5af4cf2ca0f658"
+    },
+    {
+      "path": "data/baseline-model/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/baseline-model/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "data/baseline-model/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "data/baseline-weights.pt",
+      "sha256": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512"
+    },
+    {
+      "path": "data/baseline.wasm",
+      "sha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39"
+    },
+    {
+      "path": "data/canary-audit.json",
+      "sha256": "5010d8fab6fbaa36aa0386936ff9cb72a5baa32b5e5383399929bc41a998d347"
+    },
+    {
+      "path": "data/canary-control64.jsonl.gz",
+      "sha256": "d449909d2288b582684ce02524d700212a770a93484d4ca382026d8a82e55a85"
+    },
+    {
+      "path": "data/canary-learning-tensors.json",
+      "sha256": "541eb590e54c05ec579d87e1f270839a50b56a679abf101e736d1f25d75b17cc"
+    },
+    {
+      "path": "data/canary-learning-tensors.log",
+      "sha256": "259c285647b73005a7ca0ca52ec77ca650e0298a745099c9ceacd6d6288c322a"
+    },
+    {
+      "path": "data/canary-paired-audit.json",
+      "sha256": "e2fc0e6d16302828af5807721bf8edf502f9920d5c089dced8154cdf57f12422"
+    },
+    {
+      "path": "data/canary-paired-command.json",
+      "sha256": "d15ccbd8fe72f5d2d88a858f2a588ad6c4d3e8df06a6212a1663e676846744b3"
+    },
+    {
+      "path": "data/canary-paired-log.txt",
+      "sha256": "21a58a414bb33a621ee1f61a924ec33d8571b973236a267b22591395edf47fc3"
+    },
+    {
+      "path": "data/canary-paired-report.json",
+      "sha256": "9d0452a55449e8e1e0f03042790daaa67722dd77ca588a3d23179d330ba334b8"
+    },
+    {
+      "path": "data/canary-pooled-command.json",
+      "sha256": "9ad542a123ae2a7f858346f5624e47cc81e7792453c3fffe2d74b29b9dde7f9a"
+    },
+    {
+      "path": "data/canary-pooled-games.jsonl.gz",
+      "sha256": "f9cfd3522fbf5c1731f07404b71ac828a4fbabcb2b242ba5e1072c3f9b183542"
+    },
+    {
+      "path": "data/canary-pooled-log.txt",
+      "sha256": "17932bb91954b18cd69c92d9f6f9f57dbaae340e070ab5acceb61abed04b85ae"
+    },
+    {
+      "path": "data/canary-pooled-report.json",
+      "sha256": "e752f972e20119a2612e3f74ed336f07c1f62b55a8e39068fc2987d2e22d4762"
+    },
+    {
+      "path": "data/canary-pooled.jsonl.gz",
+      "sha256": "63edf71e70ccab9ababf054166b1c12de566afae73a9ef3eb350c5a938c40c08"
+    },
+    {
+      "path": "data/canary-serial-command.json",
+      "sha256": "f99acadb0c45369e4b3e864201a05725fce21b6aac4e981a8d1a1302e62eeb18"
+    },
+    {
+      "path": "data/canary-serial-games.jsonl.gz",
+      "sha256": "f9cfd3522fbf5c1731f07404b71ac828a4fbabcb2b242ba5e1072c3f9b183542"
+    },
+    {
+      "path": "data/canary-serial-log.txt",
+      "sha256": "f0b5f964052dc7086bdc4f9611da15e62fff8aba6816f343974329e6ff88b7ac"
+    },
+    {
+      "path": "data/canary-serial-report.json",
+      "sha256": "b18b6a09c581c634a497efb5fd91f6950450c1693cea00ef78e49bb64e4cb0b0"
+    },
+    {
+      "path": "data/canary-serial.jsonl.gz",
+      "sha256": "63edf71e70ccab9ababf054166b1c12de566afae73a9ef3eb350c5a938c40c08"
+    },
+    {
+      "path": "data/canary-spec.json",
+      "sha256": "3677d558e28f693838160bd5debbdaea9b47d569acd181b1e92c4b031e645671"
+    },
+    {
+      "path": "data/canary-split.json",
+      "sha256": "2c5aabf90fa19423187056ab4bd095ec128ff09c8cd3580ce18919f9fa93e7b7"
+    },
+    {
+      "path": "data/canary-teacher65.jsonl.gz",
+      "sha256": "ae3bc4bacc8ee1da36e40a3d4e46aa27d441dfc2436005d2770265d98f26c2e1"
+    },
+    {
+      "path": "data/confirmation-baseline-aggregate.json",
+      "sha256": "91806a575896b9c1855cc850626df17f623dd5219290e252d82c80299ab28011"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere3-command.json",
+      "sha256": "614b2cd410d3a9507a42b1a47fad553eb3e4198cb3e29bd50d586477c94db789"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere3-log.txt",
+      "sha256": "c6bc5b47bbac78c116842cefe0c14412de0de4f253b5911af1575e12e674c514"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere3.json",
+      "sha256": "b4ec34290c1c8cac45345fc4ccc18afbeb381d95a40e2e0dda9fb8dc31774284"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere4-command.json",
+      "sha256": "c6ea1e9f9b0c68beb485c54f2c16b23c479771f7e268bf74e72760f046439179"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere4-log.txt",
+      "sha256": "0b4bb4952c72fe459702cedac4584a012ca28eb7af2638a943c2d9d66121ee35"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere4.json",
+      "sha256": "5c702753892a46a8e28c87714e1b9fbca269e9036d747fa02044b2e12545e0e5"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere5-command.json",
+      "sha256": "0ce23cb139ef3520d38af785977fe7a7bb3485452c6804649dd7b75eb0eb9f57"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere5-log.txt",
+      "sha256": "672924ca513e62a08b66d100173e59a2559050cc3ccdf973d5a95fafe83e2529"
+    },
+    {
+      "path": "data/confirmation-baseline-sphere5.json",
+      "sha256": "0bb0a1cadef6e0a50fc01810d3d935a9b0958e954a9da0de7f29b69ef2f6b7d4"
+    },
+    {
+      "path": "data/confirmation-baseline-torus11-command.json",
+      "sha256": "8e39f8e9b738cab4ce4ff8665b64b26d6762507b702af34a8363f42f7c8c1f09"
+    },
+    {
+      "path": "data/confirmation-baseline-torus11-log.txt",
+      "sha256": "fb545fdc6eb37d1cb22de752a14269c76d20a4a7f34627faa9815a7a9efb57fa"
+    },
+    {
+      "path": "data/confirmation-baseline-torus11.json",
+      "sha256": "86916f1ada019a679c04697e3bfff36d066a891e86b75e2dc7f4f7ca601495a0"
+    },
+    {
+      "path": "data/confirmation-baseline-torus7-command.json",
+      "sha256": "eb4712c6d604a38ef31c3d41bae2016b79acac4af8beb25b9d37c3ee9ed7f3b1"
+    },
+    {
+      "path": "data/confirmation-baseline-torus7-log.txt",
+      "sha256": "408c446586343b43de134df5bc8baf60b8aa1e58943af6a1b0e0e1e3dd96c2ab"
+    },
+    {
+      "path": "data/confirmation-baseline-torus7.json",
+      "sha256": "9c3e5f32f3680b6ec26e5bbedfa6bc40f8b28601fab109827510a00dd53ccbc2"
+    },
+    {
+      "path": "data/confirmation-baseline-torus9-command.json",
+      "sha256": "22c6a59f3b516a9617973b3774a6ca712c9f5f8156b26ff6b8b511cc60b877a5"
+    },
+    {
+      "path": "data/confirmation-baseline-torus9-log.txt",
+      "sha256": "6085c617c17b84fe8d60c421bc117fddec913eb81a315e6e76012e40e0477299"
+    },
+    {
+      "path": "data/confirmation-baseline-torus9.json",
+      "sha256": "ef4be13e2da5e2b1a1e4088510928af519a75a861dfa87da4daa82d79917193d"
+    },
+    {
+      "path": "data/confirmation-decision.json",
+      "sha256": "927790c0d818f9df43c2812ca2c33c0fddde748f478e4e599b1b86a00f49d3da"
+    },
+    {
+      "path": "data/control64.jsonl.gz",
+      "sha256": "d19a29f4ac21f9806a0335c19af668060f1f265adc8b4cacb35b7bdd9dcbe152"
+    },
+    {
+      "path": "data/development-baseline-aggregate.json",
+      "sha256": "11553d0fba7746be572851d1168a8d14fb6da7a31040c0ffdbecbd2637d71cdd"
+    },
+    {
+      "path": "data/development-baseline-sphere3-command.json",
+      "sha256": "e4d3c84c43ce5ad95c2fcd3b0f118100e064cba56772d95ca0492ce6a3acb9e8"
+    },
+    {
+      "path": "data/development-baseline-sphere3-log.txt",
+      "sha256": "77a5bca8e9345cb2c657908e86b1caeb17d7fc25c586597b0a9824c345f3bd82"
+    },
+    {
+      "path": "data/development-baseline-sphere3.json",
+      "sha256": "b1b614876af4358ba38a99ef6a6e2a54364b90c2a7c025fac5804194985e521b"
+    },
+    {
+      "path": "data/development-baseline-sphere4-command.json",
+      "sha256": "6f3b8c1c4f21d47617477d4bc1f9399cb5228e4dd0e9ef65daa035204cb5704d"
+    },
+    {
+      "path": "data/development-baseline-sphere4-log.txt",
+      "sha256": "37be0af33227b312da3b89e43e29a0f7a5ab555af2a93e3cf85f37a312f8ac26"
+    },
+    {
+      "path": "data/development-baseline-sphere4.json",
+      "sha256": "088b256c8550829f2e185192f8ce7ebb29ab2604435839b81146d6826fe65e09"
+    },
+    {
+      "path": "data/development-baseline-sphere5-command.json",
+      "sha256": "fbb3f2bde0b5df9fd5fa5e6c9c4dfddf8da2b89778d885ffd8e83064a3fdc730"
+    },
+    {
+      "path": "data/development-baseline-sphere5-log.txt",
+      "sha256": "a58a2c9eb8686654df14a82e1b3d250f5793b39e7f919803f08cdc9d5f74965e"
+    },
+    {
+      "path": "data/development-baseline-sphere5.json",
+      "sha256": "7a8cb27677b8b90f8e0742f98ee4a21decbb8ba02a49ce09672ebe8bd9544c50"
+    },
+    {
+      "path": "data/development-baseline-torus11-command.json",
+      "sha256": "df14a20631b084ee3e12d13a7290a9846cb515142339b498c2b7c48f9697d64f"
+    },
+    {
+      "path": "data/development-baseline-torus11-log.txt",
+      "sha256": "5766addf3d8e31f763b8c09d2ddbca5e3de835b28e8cd90834871be868c262ed"
+    },
+    {
+      "path": "data/development-baseline-torus11.json",
+      "sha256": "5279c23a95deb7a7311f085a660ba0c1055fc4dc92ea1c9b06c1fd9498051529"
+    },
+    {
+      "path": "data/development-baseline-torus7-command.json",
+      "sha256": "1cdb8123a0e8139e972580d8ec71321fa5f59f8f19ffd66641b492a608800424"
+    },
+    {
+      "path": "data/development-baseline-torus7-log.txt",
+      "sha256": "f72b77f13ba3fbac8ce172bf0b351c80e8a6b247156154ac44c05943be8b640c"
+    },
+    {
+      "path": "data/development-baseline-torus7.json",
+      "sha256": "88aa8f2b884ba656f8fb43c131d9700e8c904d701b8fa8d5af27e6fabdd9300f"
+    },
+    {
+      "path": "data/development-baseline-torus9-command.json",
+      "sha256": "90b6babbe148d2e1663414b3f483bad5b07523f26195f76e28c3534872e126f6"
+    },
+    {
+      "path": "data/development-baseline-torus9-log.txt",
+      "sha256": "8f0003893583cbf6b6d4d5498fa55efa7bdf3c81f9e00ae775fc4f47897d1c50"
+    },
+    {
+      "path": "data/development-baseline-torus9.json",
+      "sha256": "e1fce49812c1745b2c34127f2ce94f9483584e3a6ccbbe895e7d064d8b2867d3"
+    },
+    {
+      "path": "data/development-control64-aggregate.json",
+      "sha256": "aa6036248091b980735f253fe195a2f695f993575e6afa10cba1acf82a8b2acf"
+    },
+    {
+      "path": "data/development-control64-sphere3-command.json",
+      "sha256": "4058e59aca21b55ae3d1ddba8dccf9d8339071f65b45d74ee2372ea2f84015e9"
+    },
+    {
+      "path": "data/development-control64-sphere3-log.txt",
+      "sha256": "09d316ae9e64b8dd3fc4d46b30b403c0514db693347a733edf1841d82fb91d66"
+    },
+    {
+      "path": "data/development-control64-sphere3.json",
+      "sha256": "fb8b3b6559c3c8c353ccdfa3b4aa25cfd20b9658a681b24b9353de5b4c672b1b"
+    },
+    {
+      "path": "data/development-control64-sphere4-command.json",
+      "sha256": "1b9dda0f608b4219cb8507986155e094239977650524355a2fbb18f76f803c30"
+    },
+    {
+      "path": "data/development-control64-sphere4-log.txt",
+      "sha256": "6af029a1585f3c55764782c8c760f2c4a1dfd78a536743b5b24fef6dffa41e11"
+    },
+    {
+      "path": "data/development-control64-sphere4.json",
+      "sha256": "fa213c554dbabfeb81283653b296dc8990a67219ec9758aecf7237cee9975996"
+    },
+    {
+      "path": "data/development-control64-sphere5-command.json",
+      "sha256": "d0d72ff11e2b1c74ef18d39dd6311203076ea362bd1de2320b357789cc4bab99"
+    },
+    {
+      "path": "data/development-control64-sphere5-log.txt",
+      "sha256": "8c5e2f447db4f3468e808510efa169d2ddd09a0f06ecc940f569db57afbca1ea"
+    },
+    {
+      "path": "data/development-control64-sphere5.json",
+      "sha256": "f0be9624061a74ee800a8a37d83376bd3891f54c95ff6228b4b00276d3abe1b5"
+    },
+    {
+      "path": "data/development-control64-torus11-command.json",
+      "sha256": "f052fdaacea198a9edba53ef7ebbb1f8257e53d8a7a2f3f4e171a109961edd80"
+    },
+    {
+      "path": "data/development-control64-torus11-log.txt",
+      "sha256": "3a0e141337117621ca4dcf960b87091bf6c62c445a3762c1db80790f9f5039ba"
+    },
+    {
+      "path": "data/development-control64-torus11.json",
+      "sha256": "894c9d1e788f74051eda1aa696646f58bc81085e9fcf0081c09f3c729a9475fa"
+    },
+    {
+      "path": "data/development-control64-torus7-command.json",
+      "sha256": "32bc49231517c3cfc1e72c37c18eb43fe9a1006fdedb2c8b00a0223124c3a1d8"
+    },
+    {
+      "path": "data/development-control64-torus7-log.txt",
+      "sha256": "63173fbd3a14d387027ce58655f586a32e53ad72885be83cc0cd79f290559fba"
+    },
+    {
+      "path": "data/development-control64-torus7.json",
+      "sha256": "a7f65f85e9afcb81391e4c7820dde1b35b354afeec8dff21aaf4d18409564f0a"
+    },
+    {
+      "path": "data/development-control64-torus9-command.json",
+      "sha256": "40f97b1e0f43b75ebeb2527819ae8cc407945aab820a00ac22ed2eeddda16854"
+    },
+    {
+      "path": "data/development-control64-torus9-log.txt",
+      "sha256": "8f0003893583cbf6b6d4d5498fa55efa7bdf3c81f9e00ae775fc4f47897d1c50"
+    },
+    {
+      "path": "data/development-control64-torus9.json",
+      "sha256": "986e95add9852662dba16811274f8702f4df19df83022cf4d7bf6c1c85bdadc8"
+    },
+    {
+      "path": "data/development-decision.json",
+      "sha256": "3107b6a9e8bf146f42e1f7cf57ef03d04f5ea72ee78c973cc294de0928aa93cc"
+    },
+    {
+      "path": "data/execution-freeze.json",
+      "sha256": "20dd086d923ea17fc6db5e923cdb31aa33be9db673c57f9542c716556302eafd"
+    },
+    {
+      "path": "data/game-split.json",
+      "sha256": "bd66b18eb8487d2702563e30e6e32fc4606f5803ec44dbc47033f7aa604eb923"
+    },
+    {
+      "path": "data/games.jsonl.gz",
+      "sha256": "fb68f94516ff57b209a1fef9441e560159ec7ed99c364b90cca689e566d5a962"
+    },
+    {
+      "path": "data/generate-sphere3-command.json",
+      "sha256": "3cd40b9c96d6e0688c69ab1cb7f92be8e6bd9c7f19be197de6ec109ec0537ecc"
+    },
+    {
+      "path": "data/generate-sphere3-log.txt",
+      "sha256": "e676928f8be3ab200bfe117d154cad729535b5c68097c308ca5564e83394c6b3"
+    },
+    {
+      "path": "data/generate-sphere4-command.json",
+      "sha256": "962890f90b3cc2a15ed5d514d296f66ae1e8df40d8800df892672dd2effb44e7"
+    },
+    {
+      "path": "data/generate-sphere4-log.txt",
+      "sha256": "352799730095f99fe847780e17715fee293ab1875cf237e79953b05c7cb0d0ed"
+    },
+    {
+      "path": "data/generate-sphere5-command.json",
+      "sha256": "3d9f3afaced302050058461101b9968c72224583c94ca6bb021ba8065da401ce"
+    },
+    {
+      "path": "data/generate-sphere5-log.txt",
+      "sha256": "f5620cd73b8ff934436e04c2840e0c43d637c0075d1d14e6579fe084767e45d2"
+    },
+    {
+      "path": "data/generate-torus11-command.json",
+      "sha256": "c8c22e9ba0b19b843b0e85e0a046e5e50b0c3b1f52027a8819d581b835f8d8f8"
+    },
+    {
+      "path": "data/generate-torus11-log.txt",
+      "sha256": "4f8d925f552bc4073c77cb34c4a9876ef759c5781a0bdc23ecdb0bbfd581dd11"
+    },
+    {
+      "path": "data/generate-torus7-command.json",
+      "sha256": "f7b56db8ddec013c02a66165389f7fcc58b80ef8001638d354a07fc69fa92a43"
+    },
+    {
+      "path": "data/generate-torus7-log.txt",
+      "sha256": "fd7255aea806c026876f9ee3680c826714b47f6c305562b61f5e46b46d4433b8"
+    },
+    {
+      "path": "data/generate-torus9-command.json",
+      "sha256": "6b12283e57895b6313a3708cb7a1d1af18421b2cfe135e92bdc893315c590092"
+    },
+    {
+      "path": "data/generate-torus9-log.txt",
+      "sha256": "80b999a7120dde07ca50a7c91fc4ff4bb82b44eafdf6089a221033256a7dd487"
+    },
+    {
+      "path": "data/latency-command.json",
+      "sha256": "378146a79fad401f16f6403b15dd327e30577e14d28b1978c69cc8ff6abe9472"
+    },
+    {
+      "path": "data/latency-log.txt",
+      "sha256": "889c98ceaa8da72101cc07f8b91ec7345712ab79edd47e68c67fae3da3b9a571"
+    },
+    {
+      "path": "data/latency.json",
+      "sha256": "2c0f2503ec5584caeb4e154672164c7e79e9384edf988343148417c1c4762e3e"
+    },
+    {
+      "path": "data/learning-tensor-validation.json",
+      "sha256": "47831b560feb5b817c7bf47245de679df3cc1a391739037d2f178032b2d8132d"
+    },
+    {
+      "path": "data/monitor-evaluation.mjs",
+      "sha256": "acc155433d67578d3bd7d5d64856094510755e394ba48e440ebbc49d4b46d5e3"
+    },
+    {
+      "path": "data/monitor.mjs",
+      "sha256": "9437b609164d4603f495541af3b7d6dc0fcede9bb6286990f9979a12a02e622f"
+    },
+    {
+      "path": "data/opponent-identity.json",
+      "sha256": "39ec5144115d340428319c26d7b53694c05ece829e436f5e37f4aec4c7f93682"
+    },
+    {
+      "path": "data/paired-audit.json",
+      "sha256": "afeb1d6e7615b0d2d58db103219de84261c09644e1925988ea7f480b2f1ec8e9"
+    },
+    {
+      "path": "data/preflight-paired.mjs",
+      "sha256": "db76bfd1105f839261ca6799af72e8e07113c59ffe3c022b055ec6d11734f162"
+    },
+    {
+      "path": "data/preflight.mjs",
+      "sha256": "313a400a86779741cffd9f06dcc4be7f1752297855f04119e75021f56fd50ef3"
+    },
+    {
+      "path": "data/record-unit-validation.log",
+      "sha256": "b96b12126254d471c68a5baf5c9cbf31ea244291e42f636ef32f9dd55835eb74"
+    },
+    {
+      "path": "data/registered-plan.json",
+      "sha256": "4f9f8f77c2bba691a838a5ddf837f14444afcc874fbd9737caad83efa2b54959"
+    },
+    {
+      "path": "data/relabel-sphere3-command.json",
+      "sha256": "fa1f76cf5a19cde9cd6a194f3eb68fb05856195b2d1f373a68fcbb8d5673b12c"
+    },
+    {
+      "path": "data/relabel-sphere3-log.txt",
+      "sha256": "aace3f73343678a51913c41f595859a63046d10026e5d10c03c301ccc1d38700"
+    },
+    {
+      "path": "data/relabel-sphere4-command.json",
+      "sha256": "c3ff407ccab1ce9b560845ccba8c660edbeaffe90d4a13606f59b6e3e514ac1c"
+    },
+    {
+      "path": "data/relabel-sphere4-log.txt",
+      "sha256": "75d9e493ebff77e4c3bb5860c4eb26ab926ae7274a27dad2a4eb5bbddc27920b"
+    },
+    {
+      "path": "data/relabel-sphere5-command.json",
+      "sha256": "a176399b1d67bb5766cec8b3a37b711505f768920de098c90cb70394b969b0ca"
+    },
+    {
+      "path": "data/relabel-sphere5-log.txt",
+      "sha256": "762023c7f954f133008c484187a4a12b01cc8ae865f95fddec4769c009087d27"
+    },
+    {
+      "path": "data/relabel-torus11-command.json",
+      "sha256": "a3c4fb54fc62729db54b7218eb05145caf9ac05b49817ef45580bc089dca4a45"
+    },
+    {
+      "path": "data/relabel-torus11-log.txt",
+      "sha256": "87a0e69f5793d72cb7d0ae98e5914c0f9e532b4c02828ed839f48b564df85fc2"
+    },
+    {
+      "path": "data/relabel-torus7-command.json",
+      "sha256": "7db5e5f49d740423e42ad27dcacf3565d41062c21ba18e0e82b2ea899c1e8518"
+    },
+    {
+      "path": "data/relabel-torus7-log.txt",
+      "sha256": "0ecb6c1b2a7f39659aaf42c3449b510276f1ae22607cebb23bb37236fb125fdf"
+    },
+    {
+      "path": "data/relabel-torus9-command.json",
+      "sha256": "732e5defb0634bf4aa072330842b795ab951c27ced6ffe159517ea405bcd7ed9"
+    },
+    {
+      "path": "data/relabel-torus9-log.txt",
+      "sha256": "a6e7adb99371f281b2277360fd0f1810140160f96f5c240348fb8f6a35585e75"
+    },
+    {
+      "path": "data/run-data.mjs",
+      "sha256": "f1099463aa91f3ff80ee1f81535c77672b308a491583bf42007e075c294229a9"
+    },
+    {
+      "path": "data/run-evaluation.mjs",
+      "sha256": "9d177e99ac588632ded5bf4ab9a9576b7114275a62c653d4773c143d7e3a72cf"
+    },
+    {
+      "path": "data/run-strength.mjs",
+      "sha256": "3d4fd8904348b0aeff75a58bea94ac33f17d54f5e92229168d094afc72714cd9"
+    },
+    {
+      "path": "data/run-training.mjs",
+      "sha256": "6e4e8f598b8698621f772930089d45afacabc8bb87b3ec8123e876ef137f55c9"
+    },
+    {
+      "path": "data/search4096-equivalence.json",
+      "sha256": "dfcb6f3e4fdd85e75bae4cdbd7ca3d90810519e3bcf8742b3fd4a291aa0a1f36"
+    },
+    {
+      "path": "data/selfplay-audit.json",
+      "sha256": "0db122109b2c87d65d2ea6532789c78799ede968f94a1b872e5cc6e8a5f5ba4e"
+    },
+    {
+      "path": "data/selfplay.jsonl.gz",
+      "sha256": "c61a3f0fb47bccc3a3b76271b508e195ff8b465b053f4155ab2208e780385418"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "d90c7f1f288f26cafc13a5590937aadfd624b896d65ed9f07ecee08648251249"
+    },
+    {
+      "path": "data/source/dist/ai-benchmark-positions.json",
+      "sha256": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895"
+    },
+    {
+      "path": "data/source/dist/ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "data/source/dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/source/dist/ai-v3-search.js",
+      "sha256": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c"
+    },
+    {
+      "path": "data/source/dist/ai-v3-webgpu.js",
+      "sha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "path": "data/source/dist/ai-v3.js",
+      "sha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    },
+    {
+      "path": "data/source/dist/ai-worker.js",
+      "sha256": "4578c9a48c7e5ccf17de123a6fc047e8b642df69c739f3ffac446640883951d2"
+    },
+    {
+      "path": "data/source/dist/engine.js",
+      "sha256": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e"
+    },
+    {
+      "path": "data/source/dist/record.js",
+      "sha256": "c330a96db37566b0698ab16e121dac2adb60929e9a48605e1db7d076dedddc33"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/audit-distillation-data.mjs",
+      "sha256": "de6c7b586c24a2cc09cff21a5e27c4e3b6996e2ba9f206b3080aad32ed93b72f"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/bench-search.mjs",
+      "sha256": "d5896798e8d8f2bade89fefc3cc175fa29e509a1dd95427efa5f1815793fcdfd"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-data-host.mjs",
+      "sha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-data-worker.mjs",
+      "sha256": "bc57aac452a3e2e397b587351cab18126b28fc2b8b96da35fcc8b51db5c08bb8"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-match.mjs",
+      "sha256": "bf9ddc41690418963bd7410a3f2a20bc49368831fe0fd5b848d0feca29c14e3c"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-reanalyze.mjs",
+      "sha256": "f0bf980bcbafd2f7483b4e301269aad12cfde3ff1b4dd9d2a5073da157e90783"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-selfplay.mjs",
+      "sha256": "7c63f6df7871d196c526d9938ff13b0682efc41c52b13a74e43f61ab2bc0f5fa"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/export_webgpu.py",
+      "sha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/match-statistics.mjs",
+      "sha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/model.py",
+      "sha256": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/pooled-inference.mjs",
+      "sha256": "f5c77aead8c9859df911f91b1d55d51aa2ef1bb708422d1420955fe1d49979d3"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/selfplay-policy.mjs",
+      "sha256": "b9017b83fc10a6fb9505b556c0c1fcbaa13fd4f2c89c3a07ecd8f499fa4ef67f"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/selfplay-records.mjs",
+      "sha256": "bfdc9d22885ef906336a4eccd35bd05d297feb9937ee1504a9dbbf6b8fbc9035"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/study-commands.mjs",
+      "sha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/teacher-budget-statistics.mjs",
+      "sha256": "d79a987d691d2f9c1f3be377c297808b2bac1cb838914913482ded7ca6979f58"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/test-browser.mjs",
+      "sha256": "3e67f688a00b3abe192441e12844528ce21e433130d896ea64adde8ac88cb0bc"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/test-selfplay-records.mjs",
+      "sha256": "2bf954ae4b3b34219fc6c9ead1b39d5a61ff163faac41a22d89faa008d62ead2"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/train.py",
+      "sha256": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/training-search.mjs",
+      "sha256": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/validate_paired_training.py",
+      "sha256": "e472f15de5be7508cbbde8feb086c274c782d2d3d69340b20868709c176e36e7"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/verify-pooled-search.mjs",
+      "sha256": "96dd738928ae95eec31d0bd817cdd5d7c9405cd3707d23c63759efcd8f5ccad5"
+    },
+    {
+      "path": "data/spec-sphere3.json",
+      "sha256": "093eee249a70536355d6dae6b41798a1e54469f85722aebe3310f302764dd8cb"
+    },
+    {
+      "path": "data/spec-sphere4.json",
+      "sha256": "4719e53ff57eae72e94f3c7a353403d322d249932a81a96b551d0e4c23fee8cc"
+    },
+    {
+      "path": "data/spec-sphere5.json",
+      "sha256": "32db5516304cf076d167b2905ce41310f4ad60bb0d50a62f921c5c537164c5cf"
+    },
+    {
+      "path": "data/spec-torus11.json",
+      "sha256": "01aa07f1f19565f5d8ea55ab11992c0aac7ba10138a402b47e6a4c79de8343b7"
+    },
+    {
+      "path": "data/spec-torus7.json",
+      "sha256": "abfdd3094c352c6500dc0f847ad09bded28f663acff83bef851546be963fcbc4"
+    },
+    {
+      "path": "data/spec-torus9.json",
+      "sha256": "593d5eb0edae3fe011d75a4ce8842c8ac399970d10840007489067698dd6bea8"
+    },
+    {
+      "path": "data/sphere3-control64.jsonl.gz",
+      "sha256": "8dcbc38f7e3a5d53016808cdf3baf5805d93472deeff48c1d0a56810d80c2164"
+    },
+    {
+      "path": "data/sphere3-games.jsonl.gz",
+      "sha256": "a4ef78371d01692a39e92def1a0fb539fe7b377484355ae239c31a312b974fb1"
+    },
+    {
+      "path": "data/sphere3-generation.json",
+      "sha256": "0e7198467fec77b1a54b20c1450b1d6d6913dc9749124914b39c2148d3460203"
+    },
+    {
+      "path": "data/sphere3-reanalysis.json",
+      "sha256": "9ebddf4e8c642713a31ee3067cf02a904bdb5e29548665c2b72e94258884ab38"
+    },
+    {
+      "path": "data/sphere3-selfplay.jsonl.gz",
+      "sha256": "c13646bdb6e6eb4e9f73cde49382483787e01bb9346c12ad1a62977b73bf57e7"
+    },
+    {
+      "path": "data/sphere3-teacher4096.jsonl.gz",
+      "sha256": "3e6a3112aba7d23aab4b30fc896f80ec2ea1c2de469233fd1e61cb1d1aa9447c"
+    },
+    {
+      "path": "data/sphere4-control64.jsonl.gz",
+      "sha256": "7d151fc889563df03ceaffc9a7971dd93790da676a1bd89139d3fc9b10070995"
+    },
+    {
+      "path": "data/sphere4-games.jsonl.gz",
+      "sha256": "a717d4551db484f316e14ce5e59d556a97034ebb39c92cbcc9f84723fe77a9f9"
+    },
+    {
+      "path": "data/sphere4-generation.json",
+      "sha256": "1080e4ac8306f971a68b0333831489d83bd5a62ad07ddc47b1d5b96bcc0e0b0f"
+    },
+    {
+      "path": "data/sphere4-reanalysis.json",
+      "sha256": "5ac4ca900b22d6198daf6abdcf508fa40bf05e024a9499f08cfb31d604244576"
+    },
+    {
+      "path": "data/sphere4-selfplay.jsonl.gz",
+      "sha256": "2faa9944ac54a7ead2a2b4c16c496d6ed618b61eb88ebe20d068d86226189bbe"
+    },
+    {
+      "path": "data/sphere4-teacher4096.jsonl.gz",
+      "sha256": "94aa37c71952ece8838734c4459a1b7dd9a1cdbc9a1ec9f899b2e58ef47d9301"
+    },
+    {
+      "path": "data/sphere5-control64.jsonl.gz",
+      "sha256": "21cf045012f3c4376f4f54329a1e76d4178cfc1124cdb3569a10bfe669439c35"
+    },
+    {
+      "path": "data/sphere5-games.jsonl.gz",
+      "sha256": "d0b47718235721d6c6f48a78ddc0e30f32b2ac48a05302e741a63ca25caac5ea"
+    },
+    {
+      "path": "data/sphere5-generation.json",
+      "sha256": "7760b0932f6e26667bb0faa9482268547a7ac20efdf77a87a14f267997509262"
+    },
+    {
+      "path": "data/sphere5-reanalysis.json",
+      "sha256": "cb119c36bb29a01e8238dcaed45da42346b96075136a7156d334a6d14fef2ecd"
+    },
+    {
+      "path": "data/sphere5-selfplay.jsonl.gz",
+      "sha256": "e58f7be4f6c94de1cec920e8d3032005e2c1f8826e2ef7fb9a87e1194966ac99"
+    },
+    {
+      "path": "data/sphere5-teacher4096.jsonl.gz",
+      "sha256": "82665fb2d85c9831e7d57961fe3a985aa3cf6cea939daa53fd69c7b06fde4762"
+    },
+    {
+      "path": "data/strength-input-freeze.json",
+      "sha256": "b394c1b368e5ebf7260bad588b78ec9e5cc7f0a260b81d444d50aeaaeed7cca7"
+    },
+    {
+      "path": "data/strength-stages-command.json",
+      "sha256": "0dcb594a90cea6e2327f9640562d8902b5ac7a129ac6099d7dad0f5c16ae47dc"
+    },
+    {
+      "path": "data/strength-stages-log.txt",
+      "sha256": "4f7fa129276d1c097e7f8ce4fe6858beb8884a014d5a0acec8b0e6180cdb6ec4"
+    },
+    {
+      "path": "data/student-browser-validation-command.json",
+      "sha256": "b9576704e694f3936917b0e6c5b9038fd58de85e3de63a98742abaf90ea9fb85"
+    },
+    {
+      "path": "data/student-browser-validation-log.txt",
+      "sha256": "e2c6a2cf66b16087a1f02e94cccfff7cf51a804641f4cb665afd7c688449ab52"
+    },
+    {
+      "path": "data/student-browser-validation.json",
+      "sha256": "9ba2da005104e3385816bf4dadaff2d671301421f1e3f952921a19140d49d867"
+    },
+    {
+      "path": "data/student-control64/epoch-00.pt",
+      "sha256": "edd339487d554c4fddd2add1bb2b916164751c8eaa9ed6677c521e5a847f1cb3"
+    },
+    {
+      "path": "data/student-control64/epoch-04.pt",
+      "sha256": "a008fb553195fb04c5e661778ae9bf26d4322659324ab226051e3507c582f394"
+    },
+    {
+      "path": "data/student-control64/epoch-08.pt",
+      "sha256": "3c46fc501ef7fcd2834fadd1cbf86f440aa1977ee8dab80bfe4da2f7898b7d8c"
+    },
+    {
+      "path": "data/student-control64/golden.json",
+      "sha256": "7f166e1d7941ddbd2d9539e1ee3859b5b944abf6efee144da66609e1b86b2f7f"
+    },
+    {
+      "path": "data/student-control64/manifest.json",
+      "sha256": "2d971dcd5aaa40549926110c63ad07202e1a7f5e98d7c241af09574eb7c4fa52"
+    },
+    {
+      "path": "data/student-control64/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "data/student-control64/packaging.json",
+      "sha256": "54d6e5a11d064d1ff8542c2ee493875b4655ff4b0d181399f19b53e7ee8a6193"
+    },
+    {
+      "path": "data/student-control64/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "data/student-control64/weights.pt",
+      "sha256": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512"
+    },
+    {
+      "path": "data/student-profile.json",
+      "sha256": "9269e0ef75f9f66568065d500ba1160310ed65b90c347ad58dce48f54f8c6c33"
+    },
+    {
+      "path": "data/student-teacher4096/epoch-00.pt",
+      "sha256": "edd339487d554c4fddd2add1bb2b916164751c8eaa9ed6677c521e5a847f1cb3"
+    },
+    {
+      "path": "data/student-teacher4096/epoch-04.pt",
+      "sha256": "4f6f82f6b2cf32202336583f9d378d2f79dd9320a272726c582d7194813bb1e2"
+    },
+    {
+      "path": "data/student-teacher4096/epoch-08.pt",
+      "sha256": "615d73c0ef776e2af173bdeefe3f3aebeaeafb6e6fbcb31af344a520cb268240"
+    },
+    {
+      "path": "data/student-teacher4096/golden.json",
+      "sha256": "a23be4de97b81232be306a3241c6f75295dab035d6a0410999549242adce418d"
+    },
+    {
+      "path": "data/student-teacher4096/manifest.json",
+      "sha256": "fa6cc45aa26f0271ec5765bbc090b109029926a6dcdc348817b6d08b3e97946a"
+    },
+    {
+      "path": "data/student-teacher4096/model.onnx",
+      "sha256": "e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df"
+    },
+    {
+      "path": "data/student-teacher4096/packaging.json",
+      "sha256": "2221ae3db9f73e2e318a3ce79fb028a2cc9556d4b7e206a374103117e1201eb7"
+    },
+    {
+      "path": "data/student-teacher4096/weights.f32",
+      "sha256": "6ecd1a870e51681b99f443f0218ce8e6e7516e8bdd6d45d964a4f846454b7151"
+    },
+    {
+      "path": "data/student-teacher4096/weights.pt",
+      "sha256": "d365bf8381d77bdc22d6236b74f8e2766aa786c8c7b0abe2ab935226a283172f"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "f60a654f8f1cffb9c62fc23f6d5a6ee469948e6ca673010c075abc42d180e520"
+    },
+    {
+      "path": "data/teacher-profile.json",
+      "sha256": "e08e77400358dda628d1feccd6a1837281bb8a07d9dc2c5f429c6c188ff598e9"
+    },
+    {
+      "path": "data/teacher.wasm",
+      "sha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+    },
+    {
+      "path": "data/teacher4096.jsonl.gz",
+      "sha256": "b3ae292df840bf89d67e851990b874d9bd3a169a82ebd8e7116dc635a513228a"
+    },
+    {
+      "path": "data/topologies.json",
+      "sha256": "5ff58f6e06c6ec78ee1c760c55be60280e9ac726fe0c0bc55dc61683d6577513"
+    },
+    {
+      "path": "data/torus11-control64.jsonl.gz",
+      "sha256": "bb2647dbcb93045c62a92cba42a5a0f40448f912dff1c03327e2be92f00792ed"
+    },
+    {
+      "path": "data/torus11-games.jsonl.gz",
+      "sha256": "45feb5404c58c6baf2c0f5b4854f35ac07b032abfc27a964219188d708eda36e"
+    },
+    {
+      "path": "data/torus11-generation.json",
+      "sha256": "3f448f8d6dce233ac7000c9e56eaaa709790710fa51288a488b0a31794334571"
+    },
+    {
+      "path": "data/torus11-reanalysis.json",
+      "sha256": "81ac68f159632a2afaa086aa37931c78048c739ba275d4c35a043376754a29bf"
+    },
+    {
+      "path": "data/torus11-selfplay.jsonl.gz",
+      "sha256": "0bdb511b4d3a952404d734189f9a3970e80bf261214fb551010a5a3bd395fc28"
+    },
+    {
+      "path": "data/torus11-teacher4096.jsonl.gz",
+      "sha256": "c4da412793419c6d8a90c9bbea9c1568b5db06e23d0b1d152e429d9eaa0c60ac"
+    },
+    {
+      "path": "data/torus7-control64.jsonl.gz",
+      "sha256": "eb4495c37aa1f368aebfd0606a04822e190c6761d149508e4dff96be18a4ec1a"
+    },
+    {
+      "path": "data/torus7-games.jsonl.gz",
+      "sha256": "88fcb2ab03f720a651c837548b61fbf77f23bc781146d3adfaf1b2d2f4654af7"
+    },
+    {
+      "path": "data/torus7-generation.json",
+      "sha256": "74eb3bef6de28a53abe16ff7dbfcdd9800ebbde1aacae2a38b797ce800761d10"
+    },
+    {
+      "path": "data/torus7-reanalysis.json",
+      "sha256": "df21f9fbdf53b3ae466894903a036086f296b164ce7bfea1de23aa7a216da0ad"
+    },
+    {
+      "path": "data/torus7-selfplay.jsonl.gz",
+      "sha256": "8bb6bd458dd010e815d7959fd8aef061baece7f292f383db8541dbceb791b296"
+    },
+    {
+      "path": "data/torus7-teacher4096.jsonl.gz",
+      "sha256": "52bf9b8a0cf9e731480ddcdf8e06cdaa6b25dbc9df64e63125f6ecf0292b602e"
+    },
+    {
+      "path": "data/torus9-control64.jsonl.gz",
+      "sha256": "8eed0198ff34d66d5fa26cc95c3998ea3c693be162b3fd7c88d92db8ec4aded5"
+    },
+    {
+      "path": "data/torus9-games.jsonl.gz",
+      "sha256": "ba425df6552644fedf5c2a67f39bfc9e8bfff7f4f017a2abfbc6dcf6317f02ee"
+    },
+    {
+      "path": "data/torus9-generation.json",
+      "sha256": "5fa43f4f641189b19e45ed72764a507f5877dd2a68788d4066f778a6ffc10a16"
+    },
+    {
+      "path": "data/torus9-reanalysis.json",
+      "sha256": "e52aef2490275c7e95d99255e775820a02540502118f3799ba114644f7e6ac3d"
+    },
+    {
+      "path": "data/torus9-selfplay.jsonl.gz",
+      "sha256": "9268f7ae6e28b87d8aee554d843ae6dfa2a98ee19963e07742128993a7d852b3"
+    },
+    {
+      "path": "data/torus9-teacher4096.jsonl.gz",
+      "sha256": "e19900d8cf93011e13867e01288d885d1c6bd04416001fa7b488d90499fa5ee3"
+    },
+    {
+      "path": "data/train-control64-command.json",
+      "sha256": "bee8844ac10747d4bf489a8c11044b05b69c9a2b40c0274e6c3cb9c0065e88e9"
+    },
+    {
+      "path": "data/train-control64-log.txt",
+      "sha256": "90d745c3f04bb5fe4d2ccdc086466192ea2ec06d1be258276d3c5de03ba4e6e5"
+    },
+    {
+      "path": "data/train-teacher4096-command.json",
+      "sha256": "898b8dde09301898bdc9cba95ba164f7613938399101ea1c668ef15ef53815f4"
+    },
+    {
+      "path": "data/train-teacher4096-log.txt",
+      "sha256": "2fe0394dddf11c603c508c9bed4c53f821bc88eb022a9f0d5a4e5a3074681448"
+    },
+    {
+      "path": "data/training-decision.json",
+      "sha256": "e4f925e076d1fc85b1ef3dc75707fba45e7af26283bea007243d982368c557c0"
+    },
+    {
+      "path": "data/training-source-freeze.json",
+      "sha256": "1c327607873a271748291e6c576cf92aa4e8b22a87dfd6c40ecf7b0ca50ad55b"
+    },
+    {
+      "path": "data/validate-learning-tensors-command.json",
+      "sha256": "15b6c8519421d086600a35669ddd038ad2ad8fe38d33dff834eb52e07d020448"
+    },
+    {
+      "path": "data/validate-learning-tensors-log.txt",
+      "sha256": "d335dff17d311cbabc692c2c398d66f140e4eace678145528f1d3e01f459d62c"
+    },
+    {
+      "path": "data/verify-search4096-command.json",
+      "sha256": "1c15c5552d248c9fcda39c74b298ace6526939e7646c659c24d995e1377f982c"
+    },
+    {
+      "path": "data/verify-search4096-log.txt",
+      "sha256": "77e75adf61495683981862b44ccbf2c024a00f50ac8aca81fb42af2045e7b2c5"
+    }
+  ]
+}

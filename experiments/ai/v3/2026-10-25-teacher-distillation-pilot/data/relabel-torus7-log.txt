@@ -1,0 +1,9 @@
+Reanalyzed 1/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:359397197:torus7:0
+Reanalyzed 2/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:342619578:torus7:1
+Reanalyzed 3/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:325841959:torus7:2
+Reanalyzed 4/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:309064340:torus7:3
+Reanalyzed 5/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:292286721:torus7:4
+Reanalyzed 6/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:275509102:torus7:5
+Reanalyzed 7/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:258731483:torus7:6
+Reanalyzed 8/8 teacher-distill-v1:8e5b41e3974c:1ff2d06a137c:4096:241953864:torus7:7
+{"games":8,"positions":452,"eligible":445,"pooling":{"requests":223837,"positions":1780591,"batches":56450,"maxBatch":64,"graphs":1}}
