@@ -18,7 +18,7 @@ v2 の深さ 1〜3 手の試走は、v2 の探索量を減らした比較条件�
 
 通常はKyokugo AI v2をWorker内のWASMで実行します。WASMを利用できない場合は同じRustから生成したJS版v2へ切り替え、Workerを利用できない場合も同じ生成JSを画面側で実行します。手書きJS版v1は比較・検証用であり、アプリからは呼びません。
 
-v3 は `?ai=v3` で試す実験実装です。[学習改修](../../experiments/ai/v3/2026-10-22-learning-revision/README.md)で採用した重みと、[64訪問の根の逐次半減探索](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を使います。逐次半減の導入時はモデルと訪問数を固定した独立192局で従来探索に117勝75敗でした。[セットアップと学習手順](../../tools/ai-gnn/README.md)を参照してください。
+v3は `?ai=v3` で試す実験実装です。[4,096訪問教師から蒸留した小型モデル](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)と、根の逐次半減探索を使います。同じ64訪問で更新前v3に138勝54敗（独立192局）となり、全6盤の勝率とCPU/WASM・WebGPUの速度基準を通過しました。[セットアップと学習手順](../../tools/ai-gnn/README.md)を参照してください。
 
 | 盤 | アーキテクチャ | v2 の係数 |
 | --- | --- | --- |
@@ -53,3 +53,5 @@ tests/fixtures/ai/         回帰テストで使う固定局面
 [現行探索による自己対局からの蒸留](../../experiments/ai/v3/2026-10-25-onpolicy-distillation/README.md)では、新しい探索で生成した自己対局から再学習を評価しました。独立した採用条件を満たさず、配信モデルは維持しています。
 
 [根の探索評価値の重みの比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)では、同じ64訪問で採用条件を満たした探索へ更新しました。
+
+[4,096訪問教師からの蒸留](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)では、採用条件を通過した同容量の生徒モデルをv3へ採用しました。ブラウザーの探索は64訪問です。
