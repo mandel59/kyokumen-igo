@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "baseline": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "variants": [
+    {
+      "name": "balanced",
+      "sha256": "66f52e799e510661755e94ae9aa5a3682bbbdb8c23eecf4a2ee3348ce24bcb74",
+      "selectedEpoch": 16,
+      "seconds": 177.355,
+      "parameters": 120905,
+      "trainingPositions": 36552,
+      "validationPositions": 8129,
+      "initial": {
+        "loss": 2.86350679397583,
+        "unweightedLoss": 2.7170847140638457,
+        "policyTop1": 0.3975438596491228,
+        "policyTop5": 0.8150877192982456,
+        "policyKL": 1.9210277891995613,
+        "wdlAccuracy": 0.6952884733669578,
+        "wdlBrier": 0.3934363563322672,
+        "wdlCE": 0.6331223834996617,
+        "scoreMAE": 26.702246586295978,
+        "ownershipAccuracy": 0.7224743683878706,
+        "passRecall": 0.5677966101694916,
+        "passPrecision": 0.7282608695652174,
+        "positions": 8129,
+        "policyPositions": 2850
+      },
+      "selected": {
+        "loss": 2.5237865447998047,
+        "unweightedLoss": 2.3798082098044038,
+        "policyTop1": 0.3975438596491228,
+        "policyTop5": 0.8221052631578948,
+        "policyKL": 1.8874686472039475,
+        "wdlAccuracy": 0.7062369295116251,
+        "wdlBrier": 0.3854491526767591,
+        "wdlCE": 0.6154312131911982,
+        "scoreMAE": 26.44536343646205,
+        "ownershipAccuracy": 0.7234376561731147,
+        "passRecall": 0.7711864406779662,
+        "passPrecision": 0.6594202898550725,
+        "positions": 8129,
+        "policyPositions": 2850
+      },
+      "surpriseFraction": 0,
+      "selectionCorpusSha256": "8852f17c057c21c5dfd6f2af0c30efd9fd60978d2b92b0d8c3e887ffbc43c18b"
+    },
+    {
+      "name": "surprise",
+      "sha256": "b3c261c704bab955d16ececa388d68e9b3ff9f623a0ca05cff71a9ed9360555c",
+      "selectedEpoch": 16,
+      "seconds": 174.57,
+      "parameters": 120905,
+      "trainingPositions": 36552,
+      "validationPositions": 8129,
+      "initial": {
+        "loss": 2.86350679397583,
+        "unweightedLoss": 2.7170847140638457,
+        "policyTop1": 0.3975438596491228,
+        "policyTop5": 0.8150877192982456,
+        "policyKL": 1.9210277891995613,
+        "wdlAccuracy": 0.6952884733669578,
+        "wdlBrier": 0.3934363563322672,
+        "wdlCE": 0.6331223834996617,
+        "scoreMAE": 26.702246586295978,
+        "ownershipAccuracy": 0.7224743683878706,
+        "passRecall": 0.5677966101694916,
+        "passPrecision": 0.7282608695652174,
+        "positions": 8129,
+        "policyPositions": 2850
+      },
+      "selected": {
+        "loss": 2.4995195865631104,
+        "unweightedLoss": 2.3486411016883997,
+        "policyTop1": 0.3971929824561404,
+        "policyTop5": 0.8221052631578948,
+        "policyKL": 1.8815981359649123,
+        "wdlAccuracy": 0.7111575839586665,
+        "wdlBrier": 0.38258833151371635,
+        "wdlCE": 0.6169699989043855,
+        "scoreMAE": 26.452062061754212,
+        "ownershipAccuracy": 0.7228587344499631,
+        "passRecall": 0.8220338983050848,
+        "passPrecision": 0.6554054054054054,
+        "positions": 8129,
+        "policyPositions": 2850
+      },
+      "surpriseFraction": 0.5,
+      "selectionCorpusSha256": "8852f17c057c21c5dfd6f2af0c30efd9fd60978d2b92b0d8c3e887ffbc43c18b"
+    }
+  ]
+}

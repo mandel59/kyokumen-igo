@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sets": [
+    {
+      "original": "experiments/ai/v3/2026-10-22-learning-revision/data/round2-previous.jsonl.gz",
+      "originalSha256": "ade6a794217d9a3731347a21194065b530202c1d0e8b88cb4d04893eab6f038e",
+      "output": "previous-complete.jsonl.gz",
+      "outputSha256": "424d667ad0993f158ebc644e0bd8a1771c660d327d795edba21a797c6ca52923",
+      "overlay": "previous-targets.json.gz",
+      "overlaySha256": "3a1af809b9ee5344c3cf5c37b1d69de239bb4433132e2ab40012d1fb98373da1",
+      "targets": 521
+    },
+    {
+      "original": "experiments/ai/v3/2026-10-22-learning-revision/data/round2-latest.jsonl.gz",
+      "originalSha256": "bff2e868984061b1c5f8cfee4da05f21b9a87de5a3cd95a6fc79ef0579c31871",
+      "output": "latest-complete.jsonl.gz",
+      "outputSha256": "c6a185b72504ff4297d17a6517d6dcd972466d6897547c5625f2ec13d925639a",
+      "overlay": "latest-targets.json.gz",
+      "overlaySha256": "c1099e59e07c0dc95376d5833c3c88351fad82d46ea1ae641b3b73422d583882",
+      "targets": 1039
+    }
+  ]
+}

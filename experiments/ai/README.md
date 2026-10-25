@@ -27,6 +27,8 @@
 | v3/2026-10-25-batch-search | 64訪問の評価待ち重複回避・予約値平均・独立192局の不採用評価 | [記録](v3/2026-10-25-batch-search/README.md) |
 | v3/2026-10-25-value-calibration | 着手方策を固定した勝敗ヘッド学習・独立192局の不採用評価 | [記録](v3/2026-10-25-value-calibration/README.md) |
 | v3/2026-10-25-root-halving | 同じ64訪問で根の逐次半減を採用・独立192局117勝75敗・速度維持 | [記録](v3/2026-10-25-root-halving/README.md) |
+| v3/2026-10-25-search-distillation | 現行探索の蒸留・重点学習の比較 | [記録](v3/2026-10-25-search-distillation/README.md) |
+| v3/2026-10-25-onpolicy-distillation | 現行探索の自己対局から再学習 | [記録](v3/2026-10-25-onpolicy-distillation/README.md) |
 
 機械可読の索引は [catalog.json](catalog.json) です。各実験は README（報告）、manifest.json（識別情報・出所・データハッシュ）、data/（結果・計画・ログ）を持ちます。
 

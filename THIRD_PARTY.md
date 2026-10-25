@@ -62,6 +62,8 @@
 
 - Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver, [Policy improvement by planning with Gumbel (2022)](https://openreview.net/forum?id=bERaNdoegnO)：AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。
 
+- David J. Wu and KataGo contributors, [Other Methods Implemented in KataGo: Policy Surprise Weighting (2020)](https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting)：AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。
+
 ## 更新と検証
 
 自作ソースコードのライセンス本文はルートの LICENSE、適用範囲と配信先は catalog.json の projectSourceLicense で管理します。配信用の本文は正本からコピーし、第三者目録や告知とは分けて検証します。WASM や生成 JS に含まれる第三者コードの告知も維持します。

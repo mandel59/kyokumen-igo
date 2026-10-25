@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "input": "experiments/ai/v3/2026-10-22-learning-revision/data/round2-latest.jsonl.gz",
+  "inputSha256": "bff2e868984061b1c5f8cfee4da05f21b9a87de5a3cd95a6fc79ef0579c31871",
+  "seed": 2026102591,
+  "perPhase": 2,
+  "visits": 64,
+  "fpu": 1,
+  "searchHash": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "games": 192,
+  "positions": 20196,
+  "selected": 1039,
+  "excludedCertified": 758,
+  "boards": {
+    "sphere3": {
+      "games": 32,
+      "positions": 2074,
+      "selected": 178
+    },
+    "sphere4": {
+      "games": 32,
+      "positions": 3418,
+      "selected": 169
+    },
+    "sphere5": {
+      "games": 32,
+      "positions": 5288,
+      "selected": 176
+    },
+    "torus7": {
+      "games": 32,
+      "positions": 1918,
+      "selected": 168
+    },
+    "torus9": {
+      "games": 32,
+      "positions": 3007,
+      "selected": 172
+    },
+    "torus11": {
+      "games": 32,
+      "positions": 4491,
+      "selected": 176
+    }
+  }
+}

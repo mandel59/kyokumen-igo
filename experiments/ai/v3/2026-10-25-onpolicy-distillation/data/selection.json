@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "name": "candidate",
+      "model": "9e057bc479602d73637362c1817b9b9fc62d2f24d86ec8fa023fb3dbdedc5fca",
+      "selectedEpoch": 16,
+      "summary": {
+        "games": 48,
+        "completed": 48,
+        "capped": 0,
+        "wins": 28,
+        "draws": 0,
+        "losses": 20,
+        "score": 28,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 8,
+            "score": 6,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              0,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0,
+              0.5,
+              0.5,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.5833333333333334,
+        "pairedBootstrap": {
+          "seed": 2026102604,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4791666666666667,
+            0.6875
+          ]
+        }
+      }
+    }
+  ],
+  "selected": "candidate",
+  "passes": true,
+  "reason": "Single preselected candidate; require >=27/48 before independent evaluation"
+}

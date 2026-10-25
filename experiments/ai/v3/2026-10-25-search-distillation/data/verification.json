@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "command": "node tools/ai-gnn/test-training-search.mjs",
+      "exitCode": 0,
+      "covers": "all six boards, exact2/63/64/65 halving visits and 65PUCT visits, legal smoothed targets, finite KL, stable softmax"
+    },
+    {
+      "command": "node tools/ai-gnn/test-selfplay.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "tools/ai-gnn/.venv/Scripts/python.exe -m unittest discover -s tools/ai-gnn -p test_training.py",
+      "exitCode": 0,
+      "tests": 13
+    },
+    {
+      "command": "node --experimental-vm-modules tools/ai-gnn/test-player.mjs",
+      "exitCode": 0
+    },
+    {
+      "command": "node .../data/rebuild-data.mjs FRESH_DIRECTORY",
+      "exitCode": 0,
+      "covers": "both generated training datasets reconstructed byte-for-byte, gzip SHA256 verified"
+    },
+    {
+      "command": "node tools/ai-gnn/test-browser.mjs --model tools/ai-gnn/target/search-distillation/balanced --output tools/ai-gnn/target/search-distillation/browser-verification.json",
+      "exitCode": 0,
+      "covers": "CPU/WebGPU golden and batch parity, six-board64 visits, cancellation, fallback on intentionally corrupted GPU checksum/execution, first production Worker turn id1"
+    }
+  ],
+  "notes": [
+    "First refresh attempt stopped at signed zero score assertion after 29 games. Numeric zero equality fixed; discarded partial output and regenerated with identical seed. No candidate was trained from the partial output.",
+    "No mobile hardware measurement; any speed comparison is the documented desktop paired benchmark.",
+    "Final refresh tool derives policyOrigin from --simulations instead of the original hardcoded 64 label. Defaults and all generated data are identical. Original executed generator source is preserved separately.",
+    "Browser verification ran during independent fixed-visit matches after the isolated paired speed benchmark completed. Match turn elapsed timings are not used for speed adoption."
+  ]
+}

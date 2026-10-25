@@ -141,6 +141,30 @@ def sampling_weights(records, selfplay_mass=.7, balance_generations=False):
     return weights
 
 
+def surprise_weights(records, base, fraction):
+    """Keep each source/generation/board mass, retaining at least half its base replay."""
+    if not math.isfinite(fraction) or not 0 <= fraction <= .5:
+        raise ValueError('Invalid surprise fraction')
+    if len(base) != len(records) or any(not math.isfinite(w) or w < 0 for w in base):
+        raise ValueError('Invalid base sampling weights')
+    result = list(base)
+    groups = {}
+    for i, item in enumerate(records):
+        r = item['record']
+        if r['source'] == 'selfplay':
+            surprise = float(r.get('policySurprise', 0.))
+            if not math.isfinite(surprise) or surprise < 0:
+                raise ValueError('Invalid policy surprise')
+            groups.setdefault((r.get('replayGeneration', 0),r['kind'],r['size']), []).append((i,surprise if r.get('policyEligible', True) else 0.))
+    for entries in groups.values():
+        mass = sum(base[i] for i,_ in entries)
+        surprised = sum(base[i]*v for i,v in entries)
+        if surprised > 0:
+            for i,v in entries:
+                result[i] = (1-fraction)*base[i]+fraction*mass*base[i]*v/surprised
+    return result
+
+
 def dataset_summary(records):
     return {source:dict(positions=sum(r['record']['source']==source for r in records),
         games=len({r['record']['gameId'] for r in records if r['record']['source']==source}))
@@ -367,7 +391,10 @@ def main():
     parser.add_argument('--checkpoint-every',type=int,default=0,help='Save EMA checkpoints and select only these epochs plus epoch zero')
     parser.add_argument('--balance-generations',action='store_true',help='Equal selfplay generation mass within the selfplay source')
     parser.add_argument('--require-validation-policy',action='store_true',help='Require explicit common policy targets for eligible selfplay validation roots')
+    parser.add_argument('--policy-surprise-fraction',type=float,default=0.,help='Within-domain training replay fraction proportional to policy surprise; maximum 0.5')
     args = parser.parse_args()
+    if not math.isfinite(args.policy_surprise_fraction) or not 0 <= args.policy_surprise_fraction <= .5 or (args.policy_surprise_fraction and not args.balanced):
+        parser.error('Surprise weighting requires --balanced and fraction in [0,0.5]')
     if args.balance_generations and not args.balanced:
         parser.error('--balance-generations requires --balanced')
     if args.epochs < 1 or args.batch_size < 1 or not 0 < args.selfplay_mass < 1 or not 0 <= args.ema_decay < 1 or args.checkpoint_every<0:
@@ -428,6 +455,8 @@ def main():
         prepared_validation.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
         del teacher
     train_weights = sampling_weights(train,args.selfplay_mass,args.balance_generations) if args.balanced else None
+    if args.policy_surprise_fraction:
+        train_weights = surprise_weights(train,train_weights,args.policy_surprise_fraction)
     validation_weights = sampling_weights(validation,args.selfplay_mass,args.balance_generations) if args.balanced else None
     selection_digest=hashlib.sha256()
     for i,r in sorted(enumerate(validation),key=lambda pair:(pair[1]['record']['kind'],pair[1]['record']['size'],pair[1]['record']['gameId'],pair[1]['record'].get('ply',0))):
@@ -528,7 +557,7 @@ def main():
             policyAnchorSha256=hashlib.sha256(Path(args.policy_anchor).read_bytes()).hexdigest() if args.policy_anchor else None,policyAnchorWeight=args.policy_anchor_weight,
             trainable=args.trainable,trainableParameters=sum(p.numel() for p in trainable_parameters),
             normalTraining=args.normal_training,normalSelection=args.normal_selection,normalizePolicy=args.normalize_policy,checkpointEvery=args.checkpoint_every,
-            balanceGenerations=args.balance_generations,
+            balanceGenerations=args.balance_generations,policySurpriseFraction=args.policy_surprise_fraction,
             requireValidationPolicy=args.require_validation_policy,
             selectionMetrics=selected_metrics,
             initialSelectionMetrics=initial_selection,

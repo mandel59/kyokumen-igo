@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "ebb82610d4b0b5966038801ef5d43d088d91a059",
+  "hypothesis": "Distill deployed finite-budget root halving into unchanged 64x6 network; compare balanced replay with and without policy-surprise sampling.",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "data": {
+    "inputs": [
+      "round2-previous",
+      "round2-latest"
+    ],
+    "seed": 2026102591,
+    "selection": "two uniformly sampled normal positions per game phase, without replacement; replay every game and assert features/legal masks/outcome",
+    "visits": 64,
+    "fpu": 1,
+    "noise": false,
+    "target": "0.75 halving recommendation + 0.25 clean legal NN prior; play recommendation remains unmodified",
+    "surprise": "KL(halving recommendation || clean prior), weighted only in training within source/generation/board; half base sampling and half surprise, retain domain masses",
+    "split": "Pinned round2 split, no promotion of old training games"
+  },
+  "training": {
+    "variants": [
+      0,
+      0.5
+    ],
+    "seed": 2026102592,
+    "epochs": 16,
+    "checkpointEvery": 4,
+    "learningRate": 0.00003,
+    "minimumLearningRate": 0.000003,
+    "ema": 0.99,
+    "selfplayMass": 0.6,
+    "policyAnchorWeight": 0.5,
+    "selection": "minimum normal common-target validation loss among epoch0/4/8/12/16; no match-based epoch selection"
+  },
+  "development": {
+    "seed": 2026102593,
+    "pairsPerBoard": 4,
+    "selection": "highest score; tie prefers unweighted; require >=27/48 and no caps/illegal before holdout"
+  },
+  "evaluation": {
+    "seed": 2026102594,
+    "pairsPerBoard": 16,
+    "games": 192,
+    "bootstrapSeed": 2026102595
+  },
+  "strengthGate": "paired 95% CI lower >0.5; each board >=12/32; no caps/illegal",
+  "speedGate": "paired fixed18 roots, 2warmups7repetitions CPU/WASM+WebGPU; overallP95<=1.05 baseline and eachboard<=1.10",
+  "adoption": "only adopt model if all gates pass; retain 64visits and exact deployed search; no deployment in this study"
+}

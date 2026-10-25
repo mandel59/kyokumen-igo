@@ -1,0 +1,454 @@
+diff --git a/THIRD_PARTY.md b/THIRD_PARTY.md
+index 9a6f41e..12a8423 100644
+--- a/THIRD_PARTY.md
++++ b/THIRD_PARTY.md
+@@ -62,6 +62,8 @@
+ 
+ - Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver, [Policy improvement by planning with Gumbel (2022)](https://openreview.net/forum?id=bERaNdoegnO)：AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。
+ 
++- David J. Wu and KataGo contributors, [Other Methods Implemented in KataGo: Policy Surprise Weighting (2020)](https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting)：AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。
++
+ ## 更新と検証
+ 
+ 自作ソースコードのライセンス本文はルートの LICENSE、適用範囲と配信先は catalog.json の projectSourceLicense で管理します。配信用の本文は正本からコピーし、第三者目録や告知とは分けて検証します。WASM や生成 JS に含まれる第三者コードの告知も維持します。
+diff --git a/dist/credits.html b/dist/credits.html
+index d9e6c45..d8dd73d 100644
+--- a/dist/credits.html
++++ b/dist/credits.html
+@@ -4,4 +4,4 @@
+ <p><a href="./">曲面囲碁へ戻る</a></p><h1>ライセンスと参考ソフトウェア</h1><p>確認日：2026-10-25。<a href="third-party-catalog.json">機械可読の目録（JSON）</a>。<a href="https://github.com/mandel59/kyokumen-igo/blob/main/THIRD_PARTY.md">ソースリポジトリの目録</a>。</p><section><h2>アプリのソースコード</h2><p>自作ソースコードのライセンスは <a href="LICENSE.txt">MIT-0（全文）</a>です。</p><p>このアプリと開発・学習・検証ツールの自作ソースコード。第三者に由来するコードや同梱ライブラリには、それぞれのライセンスが適用されます。</p><p>コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。</p><p>WASM や生成 JS に含まれる第三者コードにも、以下のライセンスと告知が適用されます。</p></section>
+ <section><h2>参考にした実装・移植したコード</h2><ul><li><strong>KataGo</strong><p>AI v2 / v3 の Benson 生存判定で calculateAreaForPla を参照。 曲面の隣接グラフ向けに連・空領域・vital 関係を実装。</p><p>実装を参照。ライセンス：MIT。 <a href="licenses/KataGo-LICENSE.txt">KataGo-LICENSE.txt</a></p><p>Copyright 2025 David J Wu (&quot;lightvector&quot;) and/or other authors of the content in this repository.</p><p><a href="https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp">出典 1</a></p></li><li><strong>SplitMix64 2015</strong><p>AI の乱数生成とコミ検証の seed 生成。 Rust と JavaScript BigInt へ翻訳。 状態のインスタンス化、seed 混合、標本化補助を追加。</p><p>JS / WASM を配信。ライセンス：Public domain（利用許諾付き）。 <a href="licenses/SplitMix64-NOTICE.txt">SplitMix64-NOTICE.txt</a></p><p>Written in 2015 by Sebastiano Vigna (vigna@acm.org)</p><p><a href="https://prng.di.unimi.it/splitmix.c">出典 1</a></p></li><li><strong>Mulberry32 2017</strong><p>共有カードの再現可能な盤面生成。 JavaScript の変数名を変更し、seeded() クロージャに整理。</p><p>開発時に利用。ライセンス：Public domain / CC0。 <a href="licenses/Mulberry32-NOTICE.txt">Mulberry32-NOTICE.txt</a></p><p>Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com)</p><p>JavaScript implementation by bryc</p><p><a href="https://gist.github.com/tommyettinger/46a874533244883189143505d203312c">出典 1</a> / <a href="https://github.com/bryc/code/blob/master/jshash/PRNGs.md#mulberry32">出典 2</a></p></li></ul></section>
+ <section><h2>配信に含まれる実行基盤</h2><ul><li><strong>ONNX Runtime Web / Common 1.30.0</strong><p>AI v3 の ONNX WebGPU / WASM 推論。 上流 npm の JS・WASM を配置し、WASM を gzip 圧縮。</p><p>JS / WASM を配信。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p>Copyright (c) Microsoft Corporation</p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js">出典 1</a></p></li><li><strong>Rust standard library 1.99.1</strong><p>ai-engine.wasm・ai-v3.wasmに静的リンク。v2のJS変換物にも含む。 </p><p>JS / WASM を配信。ライセンス：MIT OR Apache-2.0。 <a href="licenses/rust/COPYRIGHT-library.html">COPYRIGHT-library.html</a> <a href="licenses/rust/manifest.json">manifest.json</a></p><p>The Rust Project Developers</p><p><a href="https://github.com/rust-lang/rust/tree/1.99.1">出典 1</a></p></li></ul></section>
+-<section><h2>学習・検証・制作・配信ツール</h2><ul><li><strong>PyTorch 2.14.1+cu130</strong><p>GNN の学習。 </p><p>開発時に利用。ライセンス：Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT。</p><p><a href="https://github.com/pytorch/pytorch">出典 1</a></p></li><li><strong>NumPy 2.5.4</strong><p>学習・出力時の数値配列処理。 </p><p>開発時に利用。ライセンス：BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0。</p><p><a href="https://github.com/numpy/numpy">出典 1</a></p></li><li><strong>ONNX 1.23.2</strong><p>モデルの出力・検査。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/onnx/onnx">出典 1</a></p></li><li><strong>ONNX Script 0.7.2</strong><p>ONNX 出力の補助。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://microsoft.github.io/onnxscript/">出典 1</a></p></li><li><strong>ONNX Runtime Node 1.30.0</strong><p>自己対局と推論比較。 </p><p>開発時に利用。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js/node">出典 1</a></p></li><li><strong>Playwright Core 1.56.1</strong><p>実ブラウザによる回帰検証。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/microsoft/playwright">出典 1</a></p></li><li><strong>uv 0.12.23</strong><p>Python 環境と依存の管理。 </p><p>開発時に利用。ライセンス：MIT OR Apache-2.0。</p><p><a href="https://github.com/astral-sh/uv">出典 1</a></p></li><li><strong>Node.js 26.12.1</strong><p>開発・検証スクリプトの実行。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://nodejs.org/">出典 1</a></p></li><li><strong>Python 3.12.14</strong><p>学習スクリプトとローカル HTTP サーバーの実行。 </p><p>開発時に利用。ライセンス：PSF-2.0。</p><p><a href="https://www.python.org/">出典 1</a></p></li><li><strong>ImageMagick 7.1.2-34</strong><p>共有カードとアイコンの生成。 </p><p>開発時に利用。ライセンス：ImageMagick。</p><p><a href="https://github.com/ImageMagick/ImageMagick/blob/main/LICENSE">出典 1</a></p></li><li><strong>Pango</strong><p>ImageMagick を通した文字描画。 </p><p>開発時に利用。ライセンス：LGPL-2.1-or-later。</p><p><a href="https://github.com/GNOME/pango/blob/main/meson.build">出典 1</a> / <a href="https://github.com/GNOME/pango/blob/main/COPYING">出典 2</a></p></li><li><strong>Noto Sans JP</strong><p>共有カードの文字をラスター画像へ描画。 </p><p>開発時に利用。ライセンス：OFL-1.1。</p><p><a href="https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE">出典 1</a></p></li><li><strong>Wrangler / Workers SDK 4.151.3</strong><p>静的サイトの配信。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT">出典 1</a></p></li><li><strong>OpenAI Codex</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/openai/codex">出典 1</a></p></li><li><strong>Claude Code</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：提供元の利用条件。</p><p><a href="https://www.anthropic.com/claude-code">出典 1</a></p></li><li><strong>Binaryen / wasm2js 132.0.0</strong><p>v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。</p><p>JS / WASM を配信。ライセンス：Apache-2.0。 <a href="licenses/Binaryen-LICENSE.txt">Binaryen-LICENSE.txt</a></p><p>Copyright 2015 WebAssembly Community Group participants</p><p><a href="https://github.com/WebAssembly/binaryen/tree/version_132">出典 1</a> / <a href="https://github.com/AssemblyScript/binaryen.js">出典 2</a></p></li></ul></section><section><h2>手法の一次資料</h2><ul><li>David J. Wu: <a href="https://arxiv.org/html/1902.10565v5">Accelerating Self-Play Learning in Go (2019)</a> — AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。</li><li>D. B. Benson: <a href="https://doi.org/10.1016/S0020-0255(76)90554-5">Life in the game of Go (1976)</a> — 無条件生存の固定点。</li><li>D. Silver et al.: <a href="https://arxiv.org/abs/1712.01815">Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm (2017)</a> — PUCT、自己対局の訪問分布、探索時のノイズ。</li><li>G. Marsaglia and W. W. Tsang: <a href="https://doi.org/10.1145/358407.358414">A simple method for generating gamma variables (2000)</a> — Dirichlet ノイズのための Gamma 乱数。</li><li>G. Marsaglia: <a href="https://doi.org/10.18637/jss.v008.i14">Xorshift RNGs (2003)</a> — 検証・自己対局の seed 付き乱数。</li><li>Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver: <a href="https://openreview.net/forum?id=bERaNdoegnO">Policy improvement by planning with Gumbel (2022)</a> — AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。</li></ul></section></main></body></html>
++<section><h2>学習・検証・制作・配信ツール</h2><ul><li><strong>PyTorch 2.14.1+cu130</strong><p>GNN の学習。 </p><p>開発時に利用。ライセンス：Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT。</p><p><a href="https://github.com/pytorch/pytorch">出典 1</a></p></li><li><strong>NumPy 2.5.4</strong><p>学習・出力時の数値配列処理。 </p><p>開発時に利用。ライセンス：BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0。</p><p><a href="https://github.com/numpy/numpy">出典 1</a></p></li><li><strong>ONNX 1.23.2</strong><p>モデルの出力・検査。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/onnx/onnx">出典 1</a></p></li><li><strong>ONNX Script 0.7.2</strong><p>ONNX 出力の補助。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://microsoft.github.io/onnxscript/">出典 1</a></p></li><li><strong>ONNX Runtime Node 1.30.0</strong><p>自己対局と推論比較。 </p><p>開発時に利用。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js/node">出典 1</a></p></li><li><strong>Playwright Core 1.56.1</strong><p>実ブラウザによる回帰検証。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/microsoft/playwright">出典 1</a></p></li><li><strong>uv 0.12.23</strong><p>Python 環境と依存の管理。 </p><p>開発時に利用。ライセンス：MIT OR Apache-2.0。</p><p><a href="https://github.com/astral-sh/uv">出典 1</a></p></li><li><strong>Node.js 26.12.1</strong><p>開発・検証スクリプトの実行。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://nodejs.org/">出典 1</a></p></li><li><strong>Python 3.12.14</strong><p>学習スクリプトとローカル HTTP サーバーの実行。 </p><p>開発時に利用。ライセンス：PSF-2.0。</p><p><a href="https://www.python.org/">出典 1</a></p></li><li><strong>ImageMagick 7.1.2-34</strong><p>共有カードとアイコンの生成。 </p><p>開発時に利用。ライセンス：ImageMagick。</p><p><a href="https://github.com/ImageMagick/ImageMagick/blob/main/LICENSE">出典 1</a></p></li><li><strong>Pango</strong><p>ImageMagick を通した文字描画。 </p><p>開発時に利用。ライセンス：LGPL-2.1-or-later。</p><p><a href="https://github.com/GNOME/pango/blob/main/meson.build">出典 1</a> / <a href="https://github.com/GNOME/pango/blob/main/COPYING">出典 2</a></p></li><li><strong>Noto Sans JP</strong><p>共有カードの文字をラスター画像へ描画。 </p><p>開発時に利用。ライセンス：OFL-1.1。</p><p><a href="https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE">出典 1</a></p></li><li><strong>Wrangler / Workers SDK 4.151.3</strong><p>静的サイトの配信。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT">出典 1</a></p></li><li><strong>OpenAI Codex</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/openai/codex">出典 1</a></p></li><li><strong>Claude Code</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：提供元の利用条件。</p><p><a href="https://www.anthropic.com/claude-code">出典 1</a></p></li><li><strong>Binaryen / wasm2js 132.0.0</strong><p>v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。</p><p>JS / WASM を配信。ライセンス：Apache-2.0。 <a href="licenses/Binaryen-LICENSE.txt">Binaryen-LICENSE.txt</a></p><p>Copyright 2015 WebAssembly Community Group participants</p><p><a href="https://github.com/WebAssembly/binaryen/tree/version_132">出典 1</a> / <a href="https://github.com/AssemblyScript/binaryen.js">出典 2</a></p></li></ul></section><section><h2>手法の一次資料</h2><ul><li>David J. Wu: <a href="https://arxiv.org/html/1902.10565v5">Accelerating Self-Play Learning in Go (2019)</a> — AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。</li><li>D. B. Benson: <a href="https://doi.org/10.1016/S0020-0255(76)90554-5">Life in the game of Go (1976)</a> — 無条件生存の固定点。</li><li>D. Silver et al.: <a href="https://arxiv.org/abs/1712.01815">Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm (2017)</a> — PUCT、自己対局の訪問分布、探索時のノイズ。</li><li>G. Marsaglia and W. W. Tsang: <a href="https://doi.org/10.1145/358407.358414">A simple method for generating gamma variables (2000)</a> — Dirichlet ノイズのための Gamma 乱数。</li><li>G. Marsaglia: <a href="https://doi.org/10.18637/jss.v008.i14">Xorshift RNGs (2003)</a> — 検証・自己対局の seed 付き乱数。</li><li>Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver: <a href="https://openreview.net/forum?id=bERaNdoegnO">Policy improvement by planning with Gumbel (2022)</a> — AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。</li><li>David J. Wu and KataGo contributors: <a href="https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting">Other Methods Implemented in KataGo: Policy Surprise Weighting (2020)</a> — AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。</li></ul></section></main></body></html>
+diff --git a/dist/third-party-catalog.json b/dist/third-party-catalog.json
+index 119be20..ac9dcb5 100644
+--- a/dist/third-party-catalog.json
++++ b/dist/third-party-catalog.json
+@@ -726,6 +726,14 @@
+       "year": 2022,
+       "url": "https://openreview.net/forum?id=bERaNdoegnO",
+       "usage": "AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。"
++    },
++    {
++      "id": "katago-policy-surprise",
++      "title": "Other Methods Implemented in KataGo: Policy Surprise Weighting",
++      "authors": "David J. Wu and KataGo contributors",
++      "year": 2020,
++      "url": "https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting",
++      "usage": "AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。"
+     }
+   ],
+   "resolvedInventories": {
+diff --git a/docs/ai/README.md b/docs/ai/README.md
+index dbdffb7..cd14250 100644
+--- a/docs/ai/README.md
++++ b/docs/ai/README.md
+@@ -47,3 +47,7 @@ tests/fixtures/ai/         回帰テストで使う固定局面
+ ```
+ 
+ 実験報告は各実験の README に置き、仕様書から参照します。過去の測定値を現行仕様に混ぜず、同じ日に複数の実験を追加できる形にしています。
++
++[逐次半減探索の蒸留・重点学習の比較](../../experiments/ai/v3/2026-10-25-search-distillation/README.md)では、新しい教師生成と2候補の再学習を評価しました。独立した採用条件を満たさず、配信モデルは維持しています。
++
++[現行探索による自己対局からの蒸留](../../experiments/ai/v3/2026-10-25-onpolicy-distillation/README.md)では、新しい探索で生成した自己対局から再学習を評価しました。独立した採用条件を満たさず、配信モデルは維持しています。
+diff --git a/docs/ai/architectures/v3.md b/docs/ai/architectures/v3.md
+index 0846d8f..d019da9 100644
+--- a/docs/ai/architectures/v3.md
++++ b/docs/ai/architectures/v3.md
+@@ -137,3 +137,5 @@ WebGPU は専用 WGSL を優先します。1 点につき最大 4 個の隣接
+ 同じ実時間での対 v2 評価、さらに多くの自己対局、モバイル端末の検証が必要です。連ノード、本格的な局所戦術探索、FP16、Graph Capture、着手・巻き戻しによる高速化は未実装です。
+ 
+ [AI の入口](../README.md)
++
++自己対局・再解析も有限予算探索とFPU 1を既定にし、実戦の探索に揃えます。学習用の方策は探索結果75%と元の合法手事前分布25%を混ぜます。保存対局の再解析と方策サプライズによる重点学習は[学習ツール](../../../tools/ai-gnn/README.md#探索を学習へ反映する)に記載しています。配信モデルを更新するには独立対戦と速度の採用条件を満たす必要があります。
+diff --git a/docs/third-party/catalog.json b/docs/third-party/catalog.json
+index d4f09cb..714220b 100644
+--- a/docs/third-party/catalog.json
++++ b/docs/third-party/catalog.json
+@@ -727,6 +727,14 @@
+       "year": 2022,
+       "url": "https://openreview.net/forum?id=bERaNdoegnO",
+       "usage": "AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。"
++    },
++    {
++      "id": "katago-policy-surprise",
++      "title": "Other Methods Implemented in KataGo: Policy Surprise Weighting",
++      "authors": "David J. Wu and KataGo contributors",
++      "year": 2020,
++      "url": "https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting",
++      "usage": "AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。"
+     }
+   ]
+ }
+diff --git a/tools/ai-gnn/README.md b/tools/ai-gnn/README.md
+index d82cd32..7dc955e 100644
+--- a/tools/ai-gnn/README.md
++++ b/tools/ai-gnn/README.md
+@@ -110,7 +110,7 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py
+ 
+ 現在のアプリは同じ64訪問の中で根の最大8候補を逐次半減し、内部はPUCTで探索します。モデルは変更せず、独立192局で従来探索に117勝75敗でした。[計画・全棋譜・速度・採用結果](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を保存しています。
+ 
+-実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。残り数なしのcollect(batch)を使う既存のmatch.mjs・selfplay.mjs・reanalyze.mjsは従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
++実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。自己対局・再解析は有限予算の逐次半減探索とFPU 1を既定にし、指定訪問数を厳守します。診断用match.mjsと残り数なしのcollect(batch)は従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
+ 
+ bench-search.mjs は同一18局面・seedで順序を交互にし、CPU/WASMとWebGPUの待ち時間・バッチ数を比較します。--a-wasm / --b-wasm、--a-model / --b-modelで候補と基準を指定でき、--outputには新しいJSONを渡します。test-browser.mjs の --wasmでも配信用ファイルに触れず候補を検証できます。
+ 
+@@ -154,3 +154,16 @@ v3 の戦術チェックは既定で有効です。同じモデルで有無を
+ - `--balance-generations --balanced` は `replayGeneration` ごとの自己対局比率を均等にします。
+ 
+ `match.mjs` の `--a-fpu` / `--b-fpu` は未探索手の評価を0・親の平均値・親の平均値からの減点に切り替えます。`--a-wasm` / `--b-wasm` と `--a-simulations` / `--b-simulations` で比較条件を固定できます。`browser-match.mjs` は実際のWorkerとWebGPUで同時間の対戦を行います。学習の効果は同じ探索による固定訪問数の対戦で測り、ブラウザでの動作・速度と分けて記録します。
++
++## 探索を学習へ反映する
++
++自己対局の着手は探索の方策から温度付きで選びます。学習する方策は探索結果75%とノイズを加える前の合法手NN事前分布25%を混ぜ、最終2候補だけへの偏りを抑えます。これは今回評価する平滑化の仮説です。旧PUCTで教材を作る場合は `--search-mode puct --fpu 0` を明示できます。過去実験の厳密な再現には各アーカイブのソースを使います。
++
++`refresh-search-targets.mjs` は保存済みの完全な自己対局を再現し、各局・序中終盤から既定で2局面ずつ抽出します。現行モデル・64訪問・FPU 1・ノイズなしで教師を作り直し、全手順・特徴量・合法手・最終結果を照合します。既存の分割に対応するgameIdは保持します。出力は新しいパスが必要です。
++
++```powershell
++node tools/ai-gnn/refresh-search-targets.mjs --input INPUT.jsonl.gz --output tools/ai-gnn/target/refreshed.jsonl.gz --seed 2026102591
++node tools/ai-gnn/test-training-search.mjs
++```
++
++`train.py --balanced --policy-surprise-fraction 0.5` は、自己対局の各世代・盤ごとの質量を保ちながら、半分を元のサンプリング、半分を `KL(探索方策 || NN事前分布)` に比例させます。教師データと検証用重みは変えず、方策対象外の局面の重点度は0です。すべて0なら元の重みを維持します。実験ではノイズを除いた再解析の値を使います。
+diff --git a/tools/ai-gnn/reanalyze.mjs b/tools/ai-gnn/reanalyze.mjs
+index 9b57905..4fce9bc 100644
+--- a/tools/ai-gnn/reanalyze.mjs
++++ b/tools/ai-gnn/reanalyze.mjs
+@@ -11,9 +11,11 @@ import {createV3Search} from '../../dist/ai-v3-search.js';
+ import {adjacencyFor} from '../../dist/ai-v3-inference.js';
+ import {createNodeInference} from './node-inference.mjs';
+ import {createRandom} from './selfplay-policy.mjs';
++import {runTrainingSearch,trainingTarget} from './training-search.mjs';
+ const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
+-const input=arg('--input'),prefix=arg('--output-prefix'),seed=Number(arg('--seed','2026102221')),fpu=Number(arg('--fpu','0'));
++const input=arg('--input'),prefix=arg('--output-prefix'),seed=Number(arg('--seed','2026102221')),fpu=Number(arg('--fpu','1')),searchMode=arg('--search-mode','halving');
+ const requestedRecipe=arg('--recipe','all'),recipes=requestedRecipe==='all'?[0,1,2]:[Number(requestedRecipe)];
++if(!['halving','puct'].includes(searchMode))throw new Error('Invalid search mode');
+ if(!recipes.every(r=>[0,1,2].includes(r)))throw new Error('Invalid teacher recipe');
+ const validationManifest=arg('--validation-manifest'),validationIds=validationManifest?new Set(JSON.parse(readFileSync(validationManifest,'utf8')).validationGames):null;
+ if(!input||!prefix||!Number.isInteger(seed)||![0,1,2].includes(fpu))throw new Error('Expected --input, --output-prefix, --seed and --fpu');
+@@ -21,18 +23,12 @@ const random=createRandom(seed),inference=await createNodeInference(arg('--model
+ const wasm=readFileSync('dist/ai-v3.wasm'),searchHash=createHash('sha256').update(wasm).digest('hex');
+ const search=await createV3Search({load:async()=>wasm});
+ const outputs=recipes.map(recipe=>{const file=createWriteStream(prefix+'-t'+recipe+'.jsonl.gz'),gzip=createGzip();gzip.pipe(file);return{recipe,file,gzip};});
+-const report={schemaVersion:1,input,seed,fpu,recipes,teacherModel:inference.manifest.sha256,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
++const report={schemaVersion:1,input,seed,fpu,searchMode,recipes,teacherModel:inference.manifest.sha256,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
+ async function evaluate(game,visits,searchSeed){
+- search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:false});let root,stalled=0;
+- const adjacency=adjacencyFor(game.topology);
+- while(search.result().simulations<visits){
+-  const leaves=search.collect(8);if(!root&&leaves.count)root=leaves;
+-  if(leaves.count){search.submit(leaves,await inference.evaluate(leaves,adjacency));stalled=0;}
+-  else if(++stalled>16)throw new Error('Stalled reanalysis');
+-  if(search.result().provenLoss)break;
+- }
+- return {root,...search.result({diagnostics:true})};
++ search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:false});
++ return runTrainingSearch(search,inference,adjacencyFor(game.topology),{visits,mode:searchMode});
+ }
++
+ async function family(rows){
+  if(!rows.length)return;
+  const first=rows[0],n=first.x.length/32,game=new Game(createTopology(first.kind,first.size),Math.round(-first.global[0]*n*2)/2),selected=new Set();
+@@ -65,8 +61,8 @@ async function family(rows){
+    const recipe=output.recipe;
+    const target=recipe===1?low:recipe===2?high:null;
+    const result={...r,policyEligible:chosen,policy:chosen&&target?Array.from(target.policy):r.policy,
+-    ...(chosen&&high?{validationPolicy:Array.from(high.policy)}:{}),policyOrigin:recipe===0?'original-noisy-128':'noise-free-'+(recipe===1?128:512),
+-    ...(chosen?{targetSearch:{model:inference.manifest.sha256,wasm:searchHash,fpu,seed:r.searchSeed,noise:recipe===0?r.rootNoiseApplied:false,
++    ...(chosen&&high?{validationPolicy:Array.from(high.policy)}:{}),policyOrigin:recipe===0?'original-record':searchMode+'-noise-free-'+(recipe===1?128:512),
++    ...(chosen?{targetSearch:{model:inference.manifest.sha256,wasm:searchHash,mode:searchMode,fpu,seed:r.searchSeed,noise:recipe===0?r.rootNoiseApplied:false,
+       requestedVisits:recipe===0?r.requestedVisits:recipe===1?128:512,completedVisits:target?.simulations??r.visits,
+       diagnostics:target?.diagnostics??r.searchDiagnostics}}:{})};
+    if(!output.gzip.write(JSON.stringify(result)+'\n'))await once(output.gzip,'drain');
+diff --git a/tools/ai-gnn/selfplay.mjs b/tools/ai-gnn/selfplay.mjs
+index 5346819..cf59d54 100644
+--- a/tools/ai-gnn/selfplay.mjs
++++ b/tools/ai-gnn/selfplay.mjs
+@@ -8,9 +8,11 @@ import {createV3Search} from '../../dist/ai-v3-search.js';
+ import {adjacencyFor} from '../../dist/ai-v3-inference.js';
+ import {createNodeInference} from './node-inference.mjs';
+ import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
++import {runTrainingSearch,trainingTarget} from './training-search.mjs';
+ const args=process.argv.slice(2),value=(flag,fallback)=>args.includes(flag)?args[args.indexOf(flag)+1]:fallback;
+ const games=Number(value('--games','2')),simulations=Number(value('--simulations','64')),seed=Number(value('--seed','20261022'));
+-const fpu=Number(value('--fpu','0'));
++const fpu=Number(value('--fpu','1')),searchMode=value('--search-mode','halving');
++if(!['halving','puct'].includes(searchMode))throw new Error('Invalid search mode');
+ if(!Number.isInteger(fpu)||fpu<0||fpu>2)throw new Error('Invalid FPU');
+ if(!Number.isInteger(games)||games<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid selfplay options');
+ const random=createRandom(seed);
+@@ -29,24 +31,17 @@ try{
+    while(!game.ended&&game.moves<game.board.length*20){
+     const searchSeed=(random()*4294967296)>>>0,rootNoiseApplied=game.moves<Math.min(24,game.board.length/2);
+     search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:rootNoiseApplied});
+-    let root,stalled=0;
+-    while(search.result().simulations<simulations){
+-     const batch=search.collect(8);
+-     if(!root&&batch.count)root=batch;
+-     if(!batch.count){if(++stalled>16)throw new Error('Stalled selfplay search');continue;}stalled=0;
+-     const evaluation=await inference.evaluate(batch,adjacency);
+-     if(rootNoiseApplied&&search.result().simulations===0)exploreRoot(evaluation.policy,batch.legal,random);
+-     search.submit(batch,evaluation);
+-     if(search.result().provenLoss)break;
+-    }
+-    const result=search.result({diagnostics:true});let move=result.move;
++    const result=await runTrainingSearch(search,inference,adjacency,{visits:simulations,mode:searchMode,
++     onRoot:(evaluation,batch)=>{if(rootNoiseApplied)exploreRoot(evaluation.policy,batch.legal,random);}});
++    const {root,prior}=result;let move=result.move;
++    const target=trainingTarget(result.policy,prior);
+     const temperature=game.moves<Math.min(18,game.board.length/3)?1:game.moves<game.board.length/2?.25:0;
+     const action=sampleVisits(result.policy,random,temperature);move=action===160?null:action;
+     samples.push({x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),
+-     legal:Array.from(root.legal,Boolean),policy:Array.from(result.policy),turn:game.turn,ply:game.moves,
++     legal:Array.from(root.legal,Boolean),policy:target.policy,validationPolicy:Array.from(result.policy),policySurprise:target.policySurprise,policyOrigin:searchMode,priorMix:.25,turn:game.turn,ply:game.moves,
+      action,playedAction:action,visits:result.simulations,source:'selfplay',decisionReason:result.decisionReason,
+      policyEligible:!result.provenLoss,generatorModelHash:inference.manifest.sha256,searchHash,searchSeed,
+-     rootNoiseApplied,requestedVisits:simulations,searchConfig:{fpu,tactics:true,endgame:true,puct:1.5},searchDiagnostics:result.diagnostics});
++     rootNoiseApplied,requestedVisits:simulations,searchConfig:{mode:searchMode,fpu,tactics:true,endgame:true,puct:1.5},searchDiagnostics:result.diagnostics});
+     if(!(move===null?game.pass():game.play(move)).ok)throw new Error('Illegal MCTS move');
+    }
+    if(!game.ended){capped++;boardReport.capped++;continue;}
+@@ -70,7 +65,7 @@ try{
+   }
+  }
+ }finally{search.dispose();await inference.dispose();out.end();await once(out,'finish');}
+-const report={schemaVersion:1,positions:written,capped,completedGames,seed,model:inference.manifest.sha256,searchHash,fpu,boards:boardReports};
++const report={schemaVersion:1,positions:written,capped,completedGames,seed,model:inference.manifest.sha256,searchHash,fpu,searchMode,boards:boardReports};
+ if(value('--report'))writeFileSync(value('--report'),JSON.stringify(report,null,2)+'\n');
+ console.log(JSON.stringify(report));
+ if(args.includes('--require-complete')&&capped)throw new Error('Selfplay hit the move cap; completed games were saved but the study must stop');
+diff --git a/tools/ai-gnn/test_training.py b/tools/ai-gnn/test_training.py
+index 78ec286..dcd2752 100644
+--- a/tools/ai-gnn/test_training.py
++++ b/tools/ai-gnn/test_training.py
+@@ -5,7 +5,7 @@ import tempfile
+ import unittest
+ import torch
+ from model import GraphNet
+-from train import Prepared, load_data, loss_for, sampling_weights, split_games
++from train import Prepared, load_data, loss_for, sampling_weights, split_games, surprise_weights
+ 
+ 
+ def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
+@@ -16,6 +16,23 @@ def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
+ 
+ 
+ class TrainingTests(unittest.TestCase):
++    def test_surprise_keeps_domain_mass_and_uniform_floor(self):
++        records=[item('teacher')]+[item('s'+str(i),source='selfplay') for i in range(4)]
++        for i,r in enumerate(records):
++            r['record'].update(replayGeneration=i%2,policySurprise=float(i==4)*10)
++        base=sampling_weights(records,.6,True)
++        weighted=surprise_weights(records,base,.5)
++        self.assertEqual(weighted[0],base[0])
++        self.assertGreater(weighted[4],base[4])
++        self.assertTrue(all(w>=.5*b for w,b in zip(weighted,base)))
++        for generation in [0,1]:
++            ix=[i for i,r in enumerate(records) if r['record']['source']=='selfplay' and r['record']['replayGeneration']==generation]
++            self.assertAlmostEqual(sum(weighted[i] for i in ix),sum(base[i] for i in ix))
++        records[4]['record']['policyEligible']=False
++        self.assertEqual(surprise_weights(records,base,.5),base)
++        records[4]['record']['policySurprise']=float('nan')
++        with self.assertRaises(ValueError):surprise_weights(records,base,.5)
++
+     def test_replay_generations_keep_half_the_selfplay_mass_despite_unequal_counts(self):
+         records=[item('teacher') for _ in range(3)]
+         for generation,count in [(1,6),(2,30)]:
+diff --git a/tools/ai-gnn/train.py b/tools/ai-gnn/train.py
+index 413aa7b..49cb0da 100644
+--- a/tools/ai-gnn/train.py
++++ b/tools/ai-gnn/train.py
+@@ -141,6 +141,30 @@ def sampling_weights(records, selfplay_mass=.7, balance_generations=False):
+     return weights
+ 
+ 
++def surprise_weights(records, base, fraction):
++    """Keep each source/generation/board mass, retaining at least half its base replay."""
++    if not math.isfinite(fraction) or not 0 <= fraction <= .5:
++        raise ValueError('Invalid surprise fraction')
++    if len(base) != len(records) or any(not math.isfinite(w) or w < 0 for w in base):
++        raise ValueError('Invalid base sampling weights')
++    result = list(base)
++    groups = {}
++    for i, item in enumerate(records):
++        r = item['record']
++        if r['source'] == 'selfplay':
++            surprise = float(r.get('policySurprise', 0.))
++            if not math.isfinite(surprise) or surprise < 0:
++                raise ValueError('Invalid policy surprise')
++            groups.setdefault((r.get('replayGeneration', 0),r['kind'],r['size']), []).append((i,surprise if r.get('policyEligible', True) else 0.))
++    for entries in groups.values():
++        mass = sum(base[i] for i,_ in entries)
++        surprised = sum(base[i]*v for i,v in entries)
++        if surprised > 0:
++            for i,v in entries:
++                result[i] = (1-fraction)*base[i]+fraction*mass*base[i]*v/surprised
++    return result
++
++
+ def dataset_summary(records):
+     return {source:dict(positions=sum(r['record']['source']==source for r in records),
+         games=len({r['record']['gameId'] for r in records if r['record']['source']==source}))
+@@ -367,7 +391,10 @@ def main():
+     parser.add_argument('--checkpoint-every',type=int,default=0,help='Save EMA checkpoints and select only these epochs plus epoch zero')
+     parser.add_argument('--balance-generations',action='store_true',help='Equal selfplay generation mass within the selfplay source')
+     parser.add_argument('--require-validation-policy',action='store_true',help='Require explicit common policy targets for eligible selfplay validation roots')
++    parser.add_argument('--policy-surprise-fraction',type=float,default=0.,help='Within-domain training replay fraction proportional to policy surprise; maximum 0.5')
+     args = parser.parse_args()
++    if not math.isfinite(args.policy_surprise_fraction) or not 0 <= args.policy_surprise_fraction <= .5 or (args.policy_surprise_fraction and not args.balanced):
++        parser.error('Surprise weighting requires --balanced and fraction in [0,0.5]')
+     if args.balance_generations and not args.balanced:
+         parser.error('--balance-generations requires --balanced')
+     if args.epochs < 1 or args.batch_size < 1 or not 0 < args.selfplay_mass < 1 or not 0 <= args.ema_decay < 1 or args.checkpoint_every<0:
+@@ -428,6 +455,8 @@ def main():
+         prepared_validation.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
+         del teacher
+     train_weights = sampling_weights(train,args.selfplay_mass,args.balance_generations) if args.balanced else None
++    if args.policy_surprise_fraction:
++        train_weights = surprise_weights(train,train_weights,args.policy_surprise_fraction)
+     validation_weights = sampling_weights(validation,args.selfplay_mass,args.balance_generations) if args.balanced else None
+     selection_digest=hashlib.sha256()
+     for i,r in sorted(enumerate(validation),key=lambda pair:(pair[1]['record']['kind'],pair[1]['record']['size'],pair[1]['record']['gameId'],pair[1]['record'].get('ply',0))):
+@@ -528,7 +557,7 @@ def main():
+             policyAnchorSha256=hashlib.sha256(Path(args.policy_anchor).read_bytes()).hexdigest() if args.policy_anchor else None,policyAnchorWeight=args.policy_anchor_weight,
+             trainable=args.trainable,trainableParameters=sum(p.numel() for p in trainable_parameters),
+             normalTraining=args.normal_training,normalSelection=args.normal_selection,normalizePolicy=args.normalize_policy,checkpointEvery=args.checkpoint_every,
+-            balanceGenerations=args.balance_generations,
++            balanceGenerations=args.balance_generations,policySurpriseFraction=args.policy_surprise_fraction,
+             requireValidationPolicy=args.require_validation_policy,
+             selectionMetrics=selected_metrics,
+             initialSelectionMetrics=initial_selection,
+diff --git a/tools/ai-gnn/training-search.mjs b/tools/ai-gnn/training-search.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/training-search.mjs
+@@ -0,0 +1,31 @@
++// Shared offline search contract: match the application's finite visit budget.
++export function legalPrior(logits,legal){
++ const max=Math.max(...Array.from(logits,(v,i)=>legal[i]?v:-Infinity));
++ const result=Array.from(logits,(v,i)=>legal[i]?Math.exp(v-max):0),sum=result.reduce((a,b)=>a+b,0);
++ if(!(sum>0)||!Number.isFinite(sum))throw new Error('Invalid root prior');
++ return result.map(v=>v/sum);
++}
++export function trainingTarget(policy,prior,priorMix=.25){
++ if(!Number.isFinite(priorMix)||priorMix<0||priorMix>1||policy.length!==prior.length)throw new Error('Invalid prior mixture');
++ const valid=a=>a.every(v=>Number.isFinite(v)&&v>=0)&&Math.abs(a.reduce((s,v)=>s+v,0)-1)<1e-5;
++ if(!valid(Array.from(policy))||!valid(prior))throw new Error('Invalid training distribution');
++ const surprise=Array.from(policy).reduce((s,v,i)=>s+(v>0?v*Math.log(v/Math.max(1e-30,prior[i])):0),0);
++ return {policy:Array.from(policy,(v,i)=>(1-priorMix)*v+priorMix*prior[i]),policySurprise:Math.max(0,surprise)};
++}
++export async function runTrainingSearch(search,inference,adjacency,{visits,mode='halving',onRoot}={}){
++ if(!Number.isInteger(visits)||visits<1||!['halving','puct'].includes(mode))throw new Error('Invalid training search');
++ let root,prior,stalled=0;
++ while(search.result().simulations<visits){
++  const remaining=visits-search.result().simulations;
++  const leaves=search.collect(Math.min(8,remaining),mode==='halving'?remaining:undefined);
++  if(leaves.count){
++   const evaluation=await inference.evaluate(leaves,adjacency);
++   if(!root){root=leaves;prior=legalPrior(evaluation.policy.subarray(0,161),leaves.legal.subarray(0,161));onRoot?.(evaluation,leaves);}
++   search.submit(leaves,evaluation);stalled=0;
++  }else if(++stalled>16)throw new Error('Stalled training search');
++  if(search.result().provenLoss)break;
++ }
++ const result=search.result({diagnostics:true});
++ if(!result.provenLoss&&result.simulations!==visits)throw new Error('Training visit budget mismatch');
++ return {root,prior,...result};
++}
+diff --git a/tools/ai-gnn/refresh-search-targets.mjs b/tools/ai-gnn/refresh-search-targets.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/refresh-search-targets.mjs
+@@ -0,0 +1,63 @@
++// Replay complete saved games and distill the currently deployed search, without using match evaluation games.
++import assert from 'node:assert/strict';
++import {createReadStream,createWriteStream,readFileSync,writeFileSync,existsSync} from 'node:fs';
++import {createGunzip,createGzip} from 'node:zlib';
++import {createInterface} from 'node:readline';
++import {once} from 'node:events';
++import {createHash} from 'node:crypto';
++import {Game,createTopology} from '../../dist/engine.js';
++import {aiPosition} from '../../dist/ai-position.js';
++import {createV3Search} from '../../dist/ai-v3-search.js';
++import {adjacencyFor} from '../../dist/ai-v3-inference.js';
++import {createNodeInference} from './node-inference.mjs';
++import {createRandom} from './selfplay-policy.mjs';
++import {runTrainingSearch,trainingTarget} from './training-search.mjs';
++const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
++const input=arg('--input'),output=arg('--output'),seed=Number(arg('--seed','2026102591')),perPhase=Number(arg('--per-phase','2'));
++const visits=Number(arg('--simulations','64')),fpu=Number(arg('--fpu','1'));
++if(!input||!output||existsSync(output)||existsSync(output+'.report.json')||!Number.isInteger(seed)||!Number.isInteger(perPhase)||perPhase<1||!Number.isInteger(visits)||visits<2||![0,1,2].includes(fpu))throw new Error('Invalid refresh options or existing output');
++const random=createRandom(seed),inference=await createNodeInference(arg('--model','dist/models/v3'));
++const wasm=readFileSync(arg('--wasm','dist/ai-v3.wasm')),searchHash=createHash('sha256').update(wasm).digest('hex');
++const search=await createV3Search({load:async()=>wasm}),file=createWriteStream(output),gzip=createGzip();gzip.pipe(file);
++const report={schemaVersion:1,input,inputSha256:createHash('sha256').update(readFileSync(input)).digest('hex'),seed,perPhase,visits,fpu,searchHash,model:inference.manifest.sha256,games:0,positions:0,selected:0,excludedCertified:0,boards:{}};
++async function family(rows){
++ if(!rows.length)return;
++ const first=rows[0],n=first.x.length/32,game=new Game(createTopology(first.kind,first.size),Math.round(-first.global[0]*n*2)/2),selected=new Set(),phases=new Map();
++ for(let i=0;i<rows.length;i++){
++  const r=rows[i];assert.equal(r.ply,i);assert.equal(r.source,'selfplay');
++  if(r.decisionReason==='certified-loss'){report.excludedCertified++;continue;}
++  const phase=r.ply<n/2?'opening':r.ply<n?'middle':'late';
++  if(!phases.has(phase))phases.set(phase,[]);phases.get(phase).push(i);
++ }
++ for(const indices of phases.values()){
++  for(let k=indices.length-1;k>0;k--){const j=Math.floor(random()*(k+1));[indices[k],indices[j]]=[indices[j],indices[k]];}
++  for(const i of indices.slice(0,perPhase))selected.add(i);
++ }
++ const board=first.kind+first.size;report.boards[board]??={games:0,positions:0,selected:0};
++ for(const r of rows){
++  const chosen=selected.has(r.ply);let target;
++  if(chosen){
++   search.start(aiPosition(game),{seed:r.searchSeed,fpu,rootNoise:false});
++   const result=await runTrainingSearch(search,inference,adjacencyFor(game.topology),{visits});
++   assert.ok(!result.provenLoss,'Previously normal root became certified loss');assert.ok(result.root);
++   assert.ok(r.x.every((v,k)=>Math.abs(v-result.root.x[k])<2e-5),'Replayed root differs');
++   assert.deepEqual(Array.from(result.root.legal,Boolean),r.legal);
++   target={...trainingTarget(result.policy,result.prior),validationPolicy:Array.from(result.policy),
++    policyOrigin:'halving-'+visits+'-clean-prior-mix',priorMix:.25,targetSearch:{model:inference.manifest.sha256,wasm:searchHash,mode:'halving',fpu,seed:r.searchSeed,noise:false,requestedVisits:visits,completedVisits:result.simulations,diagnostics:result.diagnostics}};
++   report.selected++;report.boards[board].selected++;
++  }
++  const record={...r,policyEligible:chosen,policySurprise:0,...target};
++  if(!gzip.write(JSON.stringify(record)+'\n'))await once(gzip,'drain');
++  const action=r.playedAction??r.action;assert.ok((action===160?game.pass():game.play(action)).ok);
++  report.positions++;report.boards[board].positions++;
++ }
++ assert.equal(game.ended,true);const score=game.score();
++ for(const r of rows){const turn=r.ply%2?2:1;assert.equal(r.wdl,score.winner===0?1:score.winner===turn?0:2);assert.ok(r.score===(score.black-score.white)*(turn===1?1:-1));}
++ report.games++;report.boards[board].games++;console.log('Refreshed',report.games,first.gameId,report.selected,'targets');
++}
++try{
++ const source=createReadStream(input),stream=input.endsWith('.gz')?source.pipe(createGunzip()):source;let rows=[];
++ for await(const line of createInterface({input:stream,crlfDelay:Infinity})){const r=JSON.parse(line);if(rows.length&&r.gameId!==rows[0].gameId){await family(rows);rows=[];}rows.push(r);}
++ await family(rows);
++}finally{search.dispose();await inference.dispose();gzip.end();await once(file,'finish');}
++writeFileSync(output+'.report.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+diff --git a/tools/ai-gnn/test-training-search.mjs b/tools/ai-gnn/test-training-search.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/test-training-search.mjs
+@@ -0,0 +1,23 @@
++import assert from 'node:assert/strict';
++import {readFileSync} from 'node:fs';
++import {createV3Search} from '../../dist/ai-v3-search.js';
++import {Game,createTopology} from '../../dist/engine.js';
++import {aiPosition} from '../../dist/ai-position.js';
++import {runTrainingSearch,trainingTarget,legalPrior} from './training-search.mjs';
++const inference={async evaluate(batch){return {policy:Float32Array.from({length:batch.count*161},(_,i)=>Math.sin(i%161)),wdl:new Float32Array(batch.count*3)};}};
++const search=await createV3Search({load:async()=>readFileSync('dist/ai-v3.wasm')});
++try{
++ for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]])for(const visits of[2,63,64,65]){
++  const game=new Game(createTopology(kind,size),6.5);search.start(aiPosition(game),{fpu:1});
++  const r=await runTrainingSearch(search,inference,null,{visits});assert.equal(r.simulations,visits);assert.ok(r.root);assert.ok(r.prior);
++  const target=trainingTarget(r.policy,r.prior);assert.ok(Math.abs(target.policy.reduce((a,b)=>a+b,0)-1)<1e-6);
++  for(let i=0;i<161;i++){if(!r.root.legal[i])assert.equal(target.policy[i],0);assert.ok(target.policy[i]>=.25*r.prior[i]-1e-7);}
++  assert.ok(Number.isFinite(target.policySurprise));if(visits>=63)assert.ok(Array.from(r.policy).filter(v=>v>0).length<=2);
++ }
++ const game=new Game(createTopology('torus',7),6.5);search.start(aiPosition(game),{fpu:0});
++ const legacy=await runTrainingSearch(search,inference,null,{visits:65,mode:'puct'});assert.equal(legacy.simulations,65);
++ assert.deepEqual(legalPrior(Float32Array.of(1000,0,1000),[1,0,1]),[.5,0,.5]);
++ assert.equal(trainingTarget([.5,.5],[.5,.5]).policySurprise,0);
++ assert.throws(()=>trainingTarget([1,0],[.5,.5],NaN));
++}finally{search.dispose();}
++console.log('Training search: all six boards, exact odd/even budgets, halving support, legal smoothed targets and finite surprise passed.');

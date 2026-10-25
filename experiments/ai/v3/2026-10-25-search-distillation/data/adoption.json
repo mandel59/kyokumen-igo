@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "selected": "balanced",
+  "model": "66f52e799e510661755e94ae9aa5a3682bbbdb8c23eecf4a2ee3348ce24bcb74",
+  "passes": false,
+  "summary": {
+    "games": 192,
+    "completed": 192,
+    "capped": 0,
+    "wins": 93,
+    "draws": 0,
+    "losses": 99,
+    "score": 93,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 32,
+        "score": 15,
+        "pairScores": [
+          1,
+          0,
+          0,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0,
+          0,
+          0.5,
+          1,
+          0
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 32,
+        "score": 15,
+        "pairScores": [
+          0,
+          0,
+          1,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 32,
+        "score": 12,
+        "pairScores": [
+          0.5,
+          0.5,
+          0,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 32,
+        "score": 16,
+        "pairScores": [
+          1,
+          0,
+          0,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          1,
+          1,
+          1,
+          0,
+          0.5,
+          0,
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 32,
+        "score": 16,
+        "pairScores": [
+          0.5,
+          1,
+          0.5,
+          0,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 32,
+        "score": 19,
+        "pairScores": [
+          0,
+          1,
+          0.5,
+          0,
+          1,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          1,
+          0.5,
+          1,
+          1,
+          0.5
+        ]
+      }
+    ],
+    "scoreRate": 0.484375,
+    "pairedBootstrap": {
+      "seed": 2026102595,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.4114583333333333,
+        0.5572916666666666
+      ]
+    }
+  },
+  "speedPasses": true
+}

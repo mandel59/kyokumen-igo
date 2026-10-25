@@ -1,0 +1,23 @@
+{
+  "command": "node",
+  "args": [
+    "tools/ai-gnn/selfplay.mjs",
+    "--model",
+    "dist/models/v3",
+    "--games",
+    "16",
+    "--simulations",
+    "64",
+    "--fpu",
+    "1",
+    "--seed",
+    "2026102601",
+    "--output",
+    "tools/ai-gnn/target/onpolicy-distillation/selfplay.jsonl",
+    "--report",
+    "tools/ai-gnn/target/onpolicy-distillation/selfplay-report.json",
+    "--require-complete"
+  ],
+  "recordedAt": "2026-10-25T07:34:40.936Z",
+  "note": "Exact executed command; recorded while generation was in progress, not a start timestamp"
+}

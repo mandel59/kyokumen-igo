@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "sharedToolRegression": "../../2026-10-25-search-distillation/data/verification.json",
+  "generation": {
+    "command": "generation-command.json",
+    "report": "selfplay-report.json",
+    "completedGames": 96,
+    "positions": 9575,
+    "capped": 0
+  },
+  "training": "The trainer validated every record for legal normalized policy, features, ownership/outcome/score consistency and explicit common validation targets before fitting. Training audit confirms fixed historical split, no game overlap, finite same-shape tensors and all64 tensors updated.",
+  "inferenceBudget": 64,
+  "modelParameters": 120905,
+  "notes": [
+    "Previous rejected evaluation games were not used in this corpus.",
+    "Desktop paired speed comparison is the speed gate; no new mobile measurement.",
+    "Browser functional verification ran during fixed-visit evaluation after isolated speed measurement. Its intentional checksum/execution failures verify fallback; match turn elapsed timings are not the speed gate."
+  ],
+  "browser": {
+    "command": "node tools/ai-gnn/test-browser.mjs --model tools/ai-gnn/target/onpolicy-distillation/candidate --output tools/ai-gnn/target/onpolicy-distillation/browser-verification.json",
+    "exitCode": 0,
+    "report": "browser-verification.json",
+    "model": "9e057bc479602d73637362c1817b9b9fc62d2f24d86ec8fa023fb3dbdedc5fca",
+    "production": {
+      "id": 1,
+      "move": 27,
+      "backend": "v3-webgpu",
+      "simulations": 64
+    },
+    "maxHeadDifference": 0.0000019073486328125
+  }
+}

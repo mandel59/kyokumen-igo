@@ -126,6 +126,18 @@
       "architecture": "v3",
       "title": "Adopted eight-action root sequential halving at unchanged 64 visits",
       "path": "v3/2026-10-25-root-halving/"
+    },
+    {
+      "id": "v3/2026-10-25-search-distillation",
+      "architecture": "v3",
+      "title": "逐次半減探索の蒸留と方策サプライズ重点学習",
+      "path": "v3/2026-10-25-search-distillation/"
+    },
+    {
+      "id": "v3/2026-10-25-onpolicy-distillation",
+      "architecture": "v3",
+      "title": "現行探索による自己対局からの蒸留",
+      "path": "v3/2026-10-25-onpolicy-distillation/"
     }
   ]
 }

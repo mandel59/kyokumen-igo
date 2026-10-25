@@ -11,9 +11,11 @@ import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 import {createNodeInference} from './node-inference.mjs';
 import {createRandom} from './selfplay-policy.mjs';
+import {runTrainingSearch,trainingTarget} from './training-search.mjs';
 const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
-const input=arg('--input'),prefix=arg('--output-prefix'),seed=Number(arg('--seed','2026102221')),fpu=Number(arg('--fpu','0'));
+const input=arg('--input'),prefix=arg('--output-prefix'),seed=Number(arg('--seed','2026102221')),fpu=Number(arg('--fpu','1')),searchMode=arg('--search-mode','halving');
 const requestedRecipe=arg('--recipe','all'),recipes=requestedRecipe==='all'?[0,1,2]:[Number(requestedRecipe)];
+if(!['halving','puct'].includes(searchMode))throw new Error('Invalid search mode');
 if(!recipes.every(r=>[0,1,2].includes(r)))throw new Error('Invalid teacher recipe');
 const validationManifest=arg('--validation-manifest'),validationIds=validationManifest?new Set(JSON.parse(readFileSync(validationManifest,'utf8')).validationGames):null;
 if(!input||!prefix||!Number.isInteger(seed)||![0,1,2].includes(fpu))throw new Error('Expected --input, --output-prefix, --seed and --fpu');
@@ -21,18 +23,12 @@ const random=createRandom(seed),inference=await createNodeInference(arg('--model
 const wasm=readFileSync('dist/ai-v3.wasm'),searchHash=createHash('sha256').update(wasm).digest('hex');
 const search=await createV3Search({load:async()=>wasm});
 const outputs=recipes.map(recipe=>{const file=createWriteStream(prefix+'-t'+recipe+'.jsonl.gz'),gzip=createGzip();gzip.pipe(file);return{recipe,file,gzip};});
-const report={schemaVersion:1,input,seed,fpu,recipes,teacherModel:inference.manifest.sha256,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
+const report={schemaVersion:1,input,seed,fpu,searchMode,recipes,teacherModel:inference.manifest.sha256,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
 async function evaluate(game,visits,searchSeed){
- search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:false});let root,stalled=0;
- const adjacency=adjacencyFor(game.topology);
- while(search.result().simulations<visits){
-  const leaves=search.collect(8);if(!root&&leaves.count)root=leaves;
-  if(leaves.count){search.submit(leaves,await inference.evaluate(leaves,adjacency));stalled=0;}
-  else if(++stalled>16)throw new Error('Stalled reanalysis');
-  if(search.result().provenLoss)break;
- }
- return {root,...search.result({diagnostics:true})};
+ search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:false});
+ return runTrainingSearch(search,inference,adjacencyFor(game.topology),{visits,mode:searchMode});
 }
+
 async function family(rows){
  if(!rows.length)return;
  const first=rows[0],n=first.x.length/32,game=new Game(createTopology(first.kind,first.size),Math.round(-first.global[0]*n*2)/2),selected=new Set();
@@ -65,8 +61,8 @@ async function family(rows){
    const recipe=output.recipe;
    const target=recipe===1?low:recipe===2?high:null;
    const result={...r,policyEligible:chosen,policy:chosen&&target?Array.from(target.policy):r.policy,
-    ...(chosen&&high?{validationPolicy:Array.from(high.policy)}:{}),policyOrigin:recipe===0?'original-noisy-128':'noise-free-'+(recipe===1?128:512),
-    ...(chosen?{targetSearch:{model:inference.manifest.sha256,wasm:searchHash,fpu,seed:r.searchSeed,noise:recipe===0?r.rootNoiseApplied:false,
+    ...(chosen&&high?{validationPolicy:Array.from(high.policy)}:{}),policyOrigin:recipe===0?'original-record':searchMode+'-noise-free-'+(recipe===1?128:512),
+    ...(chosen?{targetSearch:{model:inference.manifest.sha256,wasm:searchHash,mode:searchMode,fpu,seed:r.searchSeed,noise:recipe===0?r.rootNoiseApplied:false,
       requestedVisits:recipe===0?r.requestedVisits:recipe===1?128:512,completedVisits:target?.simulations??r.visits,
       diagnostics:target?.diagnostics??r.searchDiagnostics}}:{})};
    if(!output.gzip.write(JSON.stringify(result)+'\n'))await once(output.gzip,'drain');

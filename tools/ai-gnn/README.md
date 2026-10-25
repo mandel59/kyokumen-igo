@@ -110,7 +110,7 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py 
 
 現在のアプリは同じ64訪問の中で根の最大8候補を逐次半減し、内部はPUCTで探索します。モデルは変更せず、独立192局で従来探索に117勝75敗でした。[計画・全棋譜・速度・採用結果](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を保存しています。
 
-実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。残り数なしのcollect(batch)を使う既存のmatch.mjs・selfplay.mjs・reanalyze.mjsは従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
+実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。自己対局・再解析は有限予算の逐次半減探索とFPU 1を既定にし、指定訪問数を厳守します。診断用match.mjsと残り数なしのcollect(batch)は従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
 
 bench-search.mjs は同一18局面・seedで順序を交互にし、CPU/WASMとWebGPUの待ち時間・バッチ数を比較します。--a-wasm / --b-wasm、--a-model / --b-modelで候補と基準を指定でき、--outputには新しいJSONを渡します。test-browser.mjs の --wasmでも配信用ファイルに触れず候補を検証できます。
 
@@ -154,3 +154,16 @@ v3 の戦術チェックは既定で有効です。同じモデルで有無を�
 - `--balance-generations --balanced` は `replayGeneration` ごとの自己対局比率を均等にします。
 
 `match.mjs` の `--a-fpu` / `--b-fpu` は未探索手の評価を0・親の平均値・親の平均値からの減点に切り替えます。`--a-wasm` / `--b-wasm` と `--a-simulations` / `--b-simulations` で比較条件を固定できます。`browser-match.mjs` は実際のWorkerとWebGPUで同時間の対戦を行います。学習の効果は同じ探索による固定訪問数の対戦で測り、ブラウザでの動作・速度と分けて記録します。
+
+## 探索を学習へ反映する
+
+自己対局の着手は探索の方策から温度付きで選びます。学習する方策は探索結果75%とノイズを加える前の合法手NN事前分布25%を混ぜ、最終2候補だけへの偏りを抑えます。これは今回評価する平滑化の仮説です。旧PUCTで教材を作る場合は `--search-mode puct --fpu 0` を明示できます。過去実験の厳密な再現には各アーカイブのソースを使います。
+
+`refresh-search-targets.mjs` は保存済みの完全な自己対局を再現し、各局・序中終盤から既定で2局面ずつ抽出します。現行モデル・64訪問・FPU 1・ノイズなしで教師を作り直し、全手順・特徴量・合法手・最終結果を照合します。既存の分割に対応するgameIdは保持します。出力は新しいパスが必要です。
+
+```powershell
+node tools/ai-gnn/refresh-search-targets.mjs --input INPUT.jsonl.gz --output tools/ai-gnn/target/refreshed.jsonl.gz --seed 2026102591
+node tools/ai-gnn/test-training-search.mjs
+```
+
+`train.py --balanced --policy-surprise-fraction 0.5` は、自己対局の各世代・盤ごとの質量を保ちながら、半分を元のサンプリング、半分を `KL(探索方策 || NN事前分布)` に比例させます。教師データと検証用重みは変えず、方策対象外の局面の重点度は0です。すべて0なら元の重みを維持します。実験ではノイズを除いた再解析の値を使います。

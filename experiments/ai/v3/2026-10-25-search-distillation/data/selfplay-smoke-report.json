@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "positions": 127,
+  "capped": 0,
+  "completedGames": 2,
+  "seed": 2026102590,
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "searchHash": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "fpu": 1,
+  "searchMode": "halving",
+  "boards": [
+    {
+      "kind": "torus",
+      "size": 7,
+      "attempted": 2,
+      "completed": 2,
+      "capped": 0
+    }
+  ]
+}

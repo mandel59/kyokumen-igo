@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "parameters": 120905,
+  "selectedEpoch": 16,
+  "trainPositions": 20551,
+  "validationPositions": 4357,
+  "initial": {
+    "loss": 2.7719204425811768,
+    "unweightedLoss": 2.770491226402915,
+    "policyTop1": 0.5331485331485332,
+    "policyTop5": 0.8544698544698545,
+    "policyKL": 1.609064480646512,
+    "wdlAccuracy": 0.6956621528574707,
+    "wdlBrier": 0.3716202184971741,
+    "wdlCE": 0.5361869414519739,
+    "scoreMAE": 29.596453982097774,
+    "ownershipAccuracy": 0.6910669634532075,
+    "passRecall": 0.6509433962264151,
+    "passPrecision": 0.6272727272727273,
+    "positions": 4357,
+    "policyPositions": 4329
+  },
+  "selected": {
+    "loss": 2.6400232315063477,
+    "unweightedLoss": 2.7032583611860224,
+    "policyTop1": 0.5313005313005313,
+    "policyTop5": 0.8583968583968584,
+    "policyKL": 1.5439558022565836,
+    "wdlAccuracy": 0.6968097314666054,
+    "wdlBrier": 0.37249180108876523,
+    "wdlCE": 0.5413245410582109,
+    "scoreMAE": 31.189658882258435,
+    "ownershipAccuracy": 0.6898745575546534,
+    "passRecall": 0.660377358490566,
+    "passPrecision": 0.5932203389830508,
+    "positions": 4357,
+    "policyPositions": 4329
+  },
+  "selectionCorpusSha256": "857a402ccf18b89282c919d2aa2ef674d9c899ed50138764d09aad5d651135da"
+}

@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "node": "v26.12.1",
+  "os": "10.0.26300",
+  "platform": "win32",
+  "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti, 621.01",
+  "python": "PyTorch version and CUDA device are recorded in candidate manifests",
+  "baselineCommit": "ebb82610d4b0b5966038801ef5d43d088d91a059"
+}

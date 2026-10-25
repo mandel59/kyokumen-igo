@@ -727,6 +727,14 @@
       "year": 2022,
       "url": "https://openreview.net/forum?id=bERaNdoegnO",
       "usage": "AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。"
+    },
+    {
+      "id": "katago-policy-surprise",
+      "title": "Other Methods Implemented in KataGo: Policy Surprise Weighting",
+      "authors": "David J. Wu and KataGo contributors",
+      "year": 2020,
+      "url": "https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting",
+      "usage": "AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。"
     }
   ]
 }

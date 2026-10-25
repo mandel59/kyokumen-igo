@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "input": "tools/ai-gnn/target/search-distillation/selfplay-smoke.jsonl",
+  "seed": 2026102590,
+  "fpu": 1,
+  "searchMode": "halving",
+  "recipes": [
+    1
+  ],
+  "teacherModel": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "searchHash": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "positions": 127,
+  "eligible": 125,
+  "selected": 33,
+  "games": 2,
+  "selectedByPhase": {
+    "opening": 14,
+    "middle": 12,
+    "late": 7
+  },
+  "excludedCertified": 2,
+  "budgetPositions": {
+    "128": 33,
+    "512": 33
+  }
+}

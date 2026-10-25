@@ -5,7 +5,7 @@ import tempfile
 import unittest
 import torch
 from model import GraphNet
-from train import Prepared, load_data, loss_for, sampling_weights, split_games
+from train import Prepared, load_data, loss_for, sampling_weights, split_games, surprise_weights
 
 
 def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
@@ -16,6 +16,23 @@ def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
 
 
 class TrainingTests(unittest.TestCase):
+    def test_surprise_keeps_domain_mass_and_uniform_floor(self):
+        records=[item('teacher')]+[item('s'+str(i),source='selfplay') for i in range(4)]
+        for i,r in enumerate(records):
+            r['record'].update(replayGeneration=i%2,policySurprise=float(i==4)*10)
+        base=sampling_weights(records,.6,True)
+        weighted=surprise_weights(records,base,.5)
+        self.assertEqual(weighted[0],base[0])
+        self.assertGreater(weighted[4],base[4])
+        self.assertTrue(all(w>=.5*b for w,b in zip(weighted,base)))
+        for generation in [0,1]:
+            ix=[i for i,r in enumerate(records) if r['record']['source']=='selfplay' and r['record']['replayGeneration']==generation]
+            self.assertAlmostEqual(sum(weighted[i] for i in ix),sum(base[i] for i in ix))
+        records[4]['record']['policyEligible']=False
+        self.assertEqual(surprise_weights(records,base,.5),base)
+        records[4]['record']['policySurprise']=float('nan')
+        with self.assertRaises(ValueError):surprise_weights(records,base,.5)
+
     def test_replay_generations_keep_half_the_selfplay_mass_despite_unequal_counts(self):
         records=[item('teacher') for _ in range(3)]
         for generation,count in [(1,6),(2,30)]:

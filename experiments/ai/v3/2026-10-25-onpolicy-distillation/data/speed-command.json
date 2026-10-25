@@ -1,0 +1,20 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/bench-search.mjs",
+    "--a-wasm",
+    "dist/ai-v3.wasm",
+    "--b-wasm",
+    "dist/ai-v3.wasm",
+    "--a-model",
+    "tools/ai-gnn/target/onpolicy-distillation/candidate",
+    "--b-model",
+    "dist/models/v3",
+    "--output",
+    "tools/ai-gnn/target/onpolicy-distillation/speed.json"
+  ],
+  "started": "2026-10-25T07:43:24.911Z",
+  "exitCode": 0,
+  "finished": "2026-10-25T07:44:25.999Z",
+  "elapsedSeconds": 61.08
+}

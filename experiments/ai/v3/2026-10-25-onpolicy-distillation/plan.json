@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "ebb82610d4b0b5966038801ef5d43d088d91a059",
+  "hypothesis": "On-policy selfplay with deployed root halving provides outcomes consistent with its search-improved policy, unlike relabelled older PUCT games. Distill into unchanged network at unchanged inference speed.",
+  "priorStudy": "v3/2026-10-25-search-distillation:93/192, rejected; no evaluation games reused for training",
+  "baselineModel": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "search": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "generation": {
+    "seed": 2026102601,
+    "gamesPerBoard": 16,
+    "games": 96,
+    "visits": 64,
+    "fpu": 1,
+    "rootNoise": "existing Dirichlet0.25/concentration10 early only",
+    "temperature": "existing1/.25/0 by game phase",
+    "komi": [
+      0,
+      3.5,
+      6.5,
+      9.5
+    ],
+    "requireComplete": true,
+    "target": "75% search policy +25% clean NN prior; unmodified search policy as common validation target; all normal roots policy eligible"
+  },
+  "training": {
+    "seed": 2026102602,
+    "epochs": 16,
+    "checkpointEvery": 4,
+    "batchSize": 128,
+    "learningRate": 0.00003,
+    "minimumLearningRate": 0.000003,
+    "ema": 0.99,
+    "selfplayMass": 0.6,
+    "policyAnchor": 0.25,
+    "policySurpriseFraction": 0,
+    "split": "Pinned old teacher game split; stratified fixed20% new selfplay games per board, no trajectory overlap",
+    "selection": "minimum common normal validation loss at epoch0/4/8/12/16; epoch0 eligible"
+  },
+  "development": {
+    "seed": 2026102603,
+    "pairsPerBoard": 4,
+    "minimumScore": 27,
+    "games": 48
+  },
+  "evaluation": {
+    "seed": 2026102604,
+    "pairsPerBoard": 16,
+    "games": 192,
+    "bootstrapSeed": 2026102605
+  },
+  "strengthGate": "paired95% CI lower>0.5; eachboard>=12/32; no caps/illegal",
+  "speedGate": "same18 roots; 2warmups7repetitions CPU/WASM and WebGPU; aggregateP95<=1.05 and everyboard<=1.10 baseline",
+  "installation": "Only if strength+speed+browser verification pass; same64x6/120905params/64visits; no site deployment in this study"
+}

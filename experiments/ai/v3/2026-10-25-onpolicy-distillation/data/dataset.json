@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "path": "selfplay.jsonl.gz",
+  "sha256": "28df2d4afd7fa243440bb5c1645a3a36fee57fd9f507498d889c3453697abde9",
+  "uncompressedSha256": "64462ff9b6a4c0ba83722d0c1029416740f879c993e56bfb96b0e7e7b9b2cb35",
+  "bytes": 134654134,
+  "compressedBytes": 14876450,
+  "originalTrainingPath": "tools/ai-gnn/target/onpolicy-distillation/selfplay.jsonl",
+  "positions": 9575,
+  "games": 96
+}

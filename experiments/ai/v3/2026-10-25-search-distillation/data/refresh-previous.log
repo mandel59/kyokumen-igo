@@ -1,0 +1,49 @@
+Refreshed 1 selfplay-e04f00bacc18-2026102220-sphere3-0 6 targets
+Refreshed 2 selfplay-e04f00bacc18-2026102220-sphere3-1 10 targets
+Refreshed 3 selfplay-e04f00bacc18-2026102220-sphere3-2 16 targets
+Refreshed 4 selfplay-e04f00bacc18-2026102220-sphere3-3 22 targets
+Refreshed 5 selfplay-e04f00bacc18-2026102220-sphere3-4 28 targets
+Refreshed 6 selfplay-e04f00bacc18-2026102220-sphere3-5 34 targets
+Refreshed 7 selfplay-e04f00bacc18-2026102220-sphere3-6 40 targets
+Refreshed 8 selfplay-e04f00bacc18-2026102220-sphere3-7 44 targets
+Refreshed 9 selfplay-e04f00bacc18-2026102220-sphere3-8 50 targets
+Refreshed 10 selfplay-e04f00bacc18-2026102220-sphere3-9 55 targets
+Refreshed 11 selfplay-e04f00bacc18-2026102220-sphere3-10 59 targets
+Refreshed 12 selfplay-e04f00bacc18-2026102220-sphere3-11 64 targets
+Refreshed 13 selfplay-e04f00bacc18-2026102220-sphere3-12 70 targets
+Refreshed 14 selfplay-e04f00bacc18-2026102220-sphere3-13 75 targets
+Refreshed 15 selfplay-e04f00bacc18-2026102220-sphere3-14 79 targets
+Refreshed 16 selfplay-e04f00bacc18-2026102220-sphere3-15 83 targets
+Refreshed 17 selfplay-e04f00bacc18-2026102220-sphere4-0 89 targets
+Refreshed 18 selfplay-e04f00bacc18-2026102220-sphere4-1 94 targets
+Refreshed 19 selfplay-e04f00bacc18-2026102220-sphere4-2 100 targets
+Refreshed 20 selfplay-e04f00bacc18-2026102220-sphere4-3 106 targets
+Refreshed 21 selfplay-e04f00bacc18-2026102220-sphere4-4 112 targets
+Refreshed 22 selfplay-e04f00bacc18-2026102220-sphere4-5 118 targets
+Refreshed 23 selfplay-e04f00bacc18-2026102220-sphere4-6 124 targets
+Refreshed 24 selfplay-e04f00bacc18-2026102220-sphere4-7 130 targets
+Refreshed 25 selfplay-e04f00bacc18-2026102220-sphere4-8 136 targets
+Refreshed 26 selfplay-e04f00bacc18-2026102220-sphere4-9 140 targets
+Refreshed 27 selfplay-e04f00bacc18-2026102220-sphere4-10 146 targets
+Refreshed 28 selfplay-e04f00bacc18-2026102220-sphere4-11 152 targets
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 0
+- -0
+
+    at family (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/refresh-search-targets.mjs:55:116)
+    at async file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/refresh-search-targets.mjs:60:146 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 0,
+  expected: -0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.12.1

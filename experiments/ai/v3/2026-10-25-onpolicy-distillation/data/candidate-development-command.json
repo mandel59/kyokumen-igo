@@ -1,0 +1,32 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/browser-match.mjs",
+    "--a",
+    "tools/ai-gnn/target/onpolicy-distillation/candidate",
+    "--b",
+    "dist/models/v3",
+    "--a-wasm",
+    "dist/ai-v3.wasm",
+    "--b-wasm",
+    "dist/ai-v3.wasm",
+    "--pairs",
+    "4",
+    "--simulations",
+    "64",
+    "--a-fpu",
+    "1",
+    "--b-fpu",
+    "1",
+    "--seed",
+    "2026102603",
+    "--role",
+    "development",
+    "--output",
+    "tools/ai-gnn/target/onpolicy-distillation/candidate-development.json"
+  ],
+  "started": "2026-10-25T07:40:48.850Z",
+  "exitCode": 0,
+  "finished": "2026-10-25T07:43:24.905Z",
+  "elapsedSeconds": 156.04
+}

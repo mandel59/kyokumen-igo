@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "name": "balanced",
+      "model": "66f52e799e510661755e94ae9aa5a3682bbbdb8c23eecf4a2ee3348ce24bcb74",
+      "selectedEpoch": 16,
+      "summary": {
+        "games": 48,
+        "completed": 48,
+        "capped": 0,
+        "wins": 27,
+        "draws": 0,
+        "losses": 21,
+        "score": 27,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              0.5,
+              1,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 8,
+            "score": 6,
+            "pairScores": [
+              0.5,
+              1,
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              1,
+              0.5,
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              0.5,
+              0.5,
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 8,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              0.5,
+              0,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              0.5,
+              1,
+              0,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5625,
+        "pairedBootstrap": {
+          "seed": 2026102594,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4583333333333333,
+            0.6666666666666666
+          ]
+        }
+      }
+    },
+    {
+      "name": "surprise",
+      "model": "b3c261c704bab955d16ececa388d68e9b3ff9f623a0ca05cff71a9ed9360555c",
+      "selectedEpoch": 16,
+      "summary": {
+        "games": 48,
+        "completed": 48,
+        "capped": 0,
+        "wins": 27,
+        "draws": 0,
+        "losses": 21,
+        "score": 27,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              0.5,
+              1,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 8,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              0.5,
+              0,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 8,
+            "score": 4,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 8,
+            "score": 7,
+            "pairScores": [
+              1,
+              0.5,
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 8,
+            "score": 5,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 8,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              0.5,
+              0,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5625,
+        "pairedBootstrap": {
+          "seed": 2026102594,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4375,
+            0.6666666666666666
+          ]
+        }
+      }
+    }
+  ],
+  "selected": "balanced",
+  "passes": true,
+  "reason": "Largest development score; ties prefer balanced; require >=27/48 before independent evaluation"
+}
