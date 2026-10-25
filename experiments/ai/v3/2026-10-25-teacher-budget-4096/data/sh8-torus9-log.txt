@@ -1,0 +1,17 @@
+Browser games 1
+Browser games 2
+Browser games 3
+Browser games 4
+Browser games 5
+Browser games 6
+Browser games 7
+Browser games 8
+Browser games 9
+Browser games 10
+Browser games 11
+Browser games 12
+Browser games 13
+Browser games 14
+Browser games 15
+Browser games 16
+{"summary":{"games":16,"completed":16,"capped":0,"wins":10,"draws":0,"losses":6,"score":10,"boards":[{"board":"torus9","games":16,"score":10,"pairScores":[0.5,0,1,1,1,0.5,0.5,0.5]}],"scoreRate":0.625,"pairedBootstrap":{"seed":2026102667,"iterations":10000,"unit":"colour-swapped opening pair","stratifiedByBoard":true,"interval95":[0.375,0.875]}},"warmInference":{"aP95":4.5999999940395355,"bP95":4.600000008940697,"ratio":0.9999999967606171,"samplesPerModel":180}}

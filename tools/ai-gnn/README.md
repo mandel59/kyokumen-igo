@@ -200,3 +200,7 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
 大型教師の対戦は `match.mjs --player offline --a-teacher PACKAGE --a-device cuda --b dist/models/v3 --simulations 1024 --pairs 2 --output REPORT.json` で実行できます。相手も教師の場合は `--b-teacher PACKAGE --b-device cuda` を指定します。教師を指定した側の `--a` / `--b` は併記しません。`--a-wasm` / `--b-wasm`、プレイヤー別の訪問数も使えます。既存の `match.mjs` の既定PUCT動作は維持し、有限予算の逐次半減を使う場合は `--player offline` を明示します。固定訪問数の対戦であり、速度が等しいという意味ではありません。
 
 [既存9,575局面を使う教師容量の比較](../../experiments/ai/v3/2026-10-25-teacher-capacity/README.md)では、同じ対局分割・4epochで小型・大型GNN・Attention併用モデルを検証しました。保存した実験用パッケージは、その記録のrestore-package.pyから復元できます。
+
+`pooled-inference.mjs` は後段の研究データ生成用に、同じグラフの独立した推論要求を最大64局面へまとめます。各探索クライアントのバッチは最大8葉です。`createPooledV3Inference(...).createClient()` を各プレイヤーへ渡し、全プレイヤーを破棄してからプール本体をdisposeします。通常推論との全6盤のビット同値性は `node tools/ai-gnn/validate-pooled-webgpu.mjs --output NEW_REPORT.json` で検証できます。今回の192局の強さ比較には使っていません。
+
+[4,096訪問の教師探索比較](../../experiments/ai/v3/2026-10-25-teacher-budget-4096/README.md)では、8候補・全候補を現行64訪問と各96局で比較しました。`teacher-budget-statistics.mjs` は盤ごとの黒白ペアを再標本化し、通常95%区間と2候補の比較を補正した97.5%区間を返します。

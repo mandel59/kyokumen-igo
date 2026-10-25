@@ -1,0 +1,39 @@
+diff --git a/experiments/ai/README.md b/experiments/ai/README.md
+index 1a7b072..1591779 100644
+--- a/experiments/ai/README.md
++++ b/experiments/ai/README.md
+@@ -66,3 +66,5 @@
+ [同予算の教師探索比較と大型モデルの動作検証](v3/2026-10-25-teacher-search/README.md)を保存しました。教師の採用・ブラウザーへの反映はしていません。
+ 
+ [教師モデルの容量を増やした学習比較](v3/2026-10-25-teacher-capacity/README.md)を保存しました。
++
++[4,096訪問の教師探索と現行64訪問の比較](v3/2026-10-25-teacher-budget-4096/README.md)を保存しました。
+diff --git a/experiments/ai/catalog.json b/experiments/ai/catalog.json
+index 01812fa..cde8c12 100644
+--- a/experiments/ai/catalog.json
++++ b/experiments/ai/catalog.json
+@@ -168,6 +168,12 @@
+       "architecture": "v3",
+       "title": "同条件の小型・大型GNN・Attention教師学習パイロット",
+       "path": "v3/2026-10-25-teacher-capacity/"
++    },
++    {
++      "id": "v3/2026-10-25-teacher-budget-4096",
++      "architecture": "v3",
++      "title": "4,096訪問の8候補・全候補探索と現行64訪問の比較",
++      "path": "v3/2026-10-25-teacher-budget-4096/"
+     }
+   ]
+ }
+diff --git a/tools/ai-gnn/README.md b/tools/ai-gnn/README.md
+index e4b0c95..54e087c 100644
+--- a/tools/ai-gnn/README.md
++++ b/tools/ai-gnn/README.md
+@@ -200,3 +200,7 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
+ 大型教師の対戦は `match.mjs --player offline --a-teacher PACKAGE --a-device cuda --b dist/models/v3 --simulations 1024 --pairs 2 --output REPORT.json` で実行できます。相手も教師の場合は `--b-teacher PACKAGE --b-device cuda` を指定します。教師を指定した側の `--a` / `--b` は併記しません。`--a-wasm` / `--b-wasm`、プレイヤー別の訪問数も使えます。既存の `match.mjs` の既定PUCT動作は維持し、有限予算の逐次半減を使う場合は `--player offline` を明示します。固定訪問数の対戦であり、速度が等しいという意味ではありません。
+ 
+ [既存9,575局面を使う教師容量の比較](../../experiments/ai/v3/2026-10-25-teacher-capacity/README.md)では、同じ対局分割・4epochで小型・大型GNN・Attention併用モデルを検証しました。保存した実験用パッケージは、その記録のrestore-package.pyから復元できます。
++
++`pooled-inference.mjs` は後段の研究データ生成用に、同じグラフの独立した推論要求を最大64局面へまとめます。各探索クライアントのバッチは最大8葉です。`createPooledV3Inference(...).createClient()` を各プレイヤーへ渡し、全プレイヤーを破棄してからプール本体をdisposeします。通常推論との全6盤のビット同値性は `node tools/ai-gnn/validate-pooled-webgpu.mjs --output NEW_REPORT.json` で検証できます。今回の192局の強さ比較には使っていません。
++
++[4,096訪問の教師探索比較](../../experiments/ai/v3/2026-10-25-teacher-budget-4096/README.md)では、8候補・全候補を現行64訪問と各96局で比較しました。`teacher-budget-statistics.mjs` は盤ごとの黒白ペアを再標本化し、通常95%区間と2候補の比較を補正した97.5%区間を返します。

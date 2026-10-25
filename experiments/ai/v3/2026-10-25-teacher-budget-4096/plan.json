@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-teacher-budget-4096",
+  "date": "2026-10-25",
+  "baseCommit": "607a6c343464129ae6efc3d0ae94db2933ff5e9a",
+  "purpose": "Test whether4096 visits create a reliably stronger offline teacher than the deployed64-visit search. No browser adoption.",
+  "model": "dist/models/v3",
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "baselineFiles": {
+    "dist/ai-v3.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+    "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/models/v3/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "dist/models/v3/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "dist/models/v3/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+  },
+  "sourceHashes": {
+    "tools/ai-gnn/browser-match.mjs": "bf9ddc41690418963bd7410a3f2a20bc49368831fe0fd5b848d0feca29c14e3c",
+    "tools/ai-gnn/offline-player.mjs": "f30f8eb4ad529fcdbfa910ecb5fa03833d2de5a333fb83b10ce24bf6e3ad7093",
+    "tools/ai-gnn/match-statistics.mjs": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997",
+    "tools/ai-gnn/study-commands.mjs": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+    "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+    "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+  },
+  "wasmHashes": {
+    "sh8": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+    "all": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+  },
+  "variants": [
+    "sh8",
+    "all"
+  ],
+  "visits": {
+    "a": 4096,
+    "b": 64
+  },
+  "baseline": "sh8",
+  "fpu": {
+    "a": 1,
+    "b": 1
+  },
+  "rootQScale": 0.4,
+  "internalPuct": 1.5,
+  "komi": 6.5,
+  "openingMoves": 4,
+  "pairsPerBoard": 8,
+  "gamesPerBoard": 16,
+  "gamesPerVariant": 96,
+  "totalGames": 192,
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3",
+      "seed": 2026102661
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4",
+      "seed": 2026102662
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "seed": 2026102663
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "seed": 2026102664
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9",
+      "seed": 2026102665
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11",
+      "seed": 2026102666
+    }
+  ],
+  "bootstrap": {
+    "seed": 2026102667,
+    "iterations": 20000,
+    "unit": "colour-swapped opening pair, stratified by board",
+    "intervals": [
+      0.95,
+      0.975
+    ],
+    "multiplicity": "Two candidate comparisons: use two-sided97.5% intervals for Bonferroni familywise95% coverage; percentile-bootstrap approximation, not an exact test."
+  },
+  "gate": "Candidate must finish all96 games legally with no caps, score>=0.60, adjusted97.5% lower>0.50, and eachboard score>=8/16. Choose highest score among qualifying candidates, tie sh8. No repeated looks or early efficacy stopping.",
+  "execution": "12 board/variant shards with six concurrent browser processes on one GPU. Same board seed and colour-swapped openings across variants; fixed visits, no time cutoff. Timing under contention is not a speed benchmark.",
+  "interpretation": "Strength relative to this frozen64-visit opponent only. No strongest-teacher, equal-compute, student-improvement or topology-wide non-regression proof. If no candidate passes, no teacher-data expansion or distillation from these candidates."
+}

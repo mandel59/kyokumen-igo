@@ -1,0 +1,1 @@
+Pooled inference: per-client batch limits, equal graphs merged, different graphs separated, output splitting/auxiliary, concurrency guards, disposal and fatal errors passed.

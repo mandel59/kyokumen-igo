@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "status": "qualified-offline-teacher-candidate",
+  "model": "baseline-model/manifest.json",
+  "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "wasm": "all.wasm",
+  "wasmSha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940",
+  "backend": "webgpu",
+  "runtime": "wgsl",
+  "search": {
+    "maxSimulations": 4096,
+    "fpu": 1,
+    "rootCandidates": "all eligible actions after existing pruning",
+    "rootQScale": 0.4,
+    "internalPuct": 1.5
+  },
+  "qualification": {
+    "opponent": {
+      "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "wasmSha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+      "maxSimulations": 64,
+      "fpu": 1
+    },
+    "games": 96,
+    "wins": 77,
+    "losses": 19,
+    "scoreRate": 0.8020833333333334,
+    "interval97_5": [
+      0.7083333333333334,
+      0.8854166666666666
+    ],
+    "perBoard": [
+      {
+        "board": "sphere3",
+        "games": 16,
+        "score": 12,
+        "pairScores": [
+          0.5,
+          1,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          1
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 16,
+        "score": 12,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 16,
+        "score": 15,
+        "pairScores": [
+          1,
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 16,
+        "score": 14,
+        "pairScores": [
+          1,
+          0.5,
+          1,
+          1,
+          0.5,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 16,
+        "score": 12,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          0,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 16,
+        "score": 12,
+        "pairScores": [
+          0,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          0.5
+        ]
+      }
+    ]
+  },
+  "pooling": {
+    "optional": true,
+    "maxCombinedPositions": 64,
+    "maxLeavesPerSearch": 8,
+    "bitIdenticalOnAllSixBoards": true
+  },
+  "studentDistillationTested": false,
+  "browserAdopted": false,
+  "note": "Paths resolve relative to this profile. Stronger than the frozen64-visit opponent in this screen; not a strongest-teacher or direct4k-versus4k proof."
+}

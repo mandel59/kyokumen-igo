@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "reason": "Use exact rational percentile ranks, avoiding binary rounding at95/97.5% boundaries. No match parameters or games changed. Reaggregate all frozen reports after the runner exits.",
+  "executedRunnerSha256": "ab7edb2c06220e96ee86a68fc439c6c23229cecd3923aae71133b4595c36cc1d",
+  "initialStatisticsSha256": "45254ecb8693d94c99cb573a7a6d30eb764450b711a3bed6fbde7d2cefb65363",
+  "finalStatisticsSha256": "d79a987d691d2f9c1f3be377c297808b2bac1cb838914913482ded7ca6979f58",
+  "cappedReportHandling": "Capped games are replayed and recorded as automatic gate failures; omit confidence intervals instead of filtering games or failing to archive results."
+}

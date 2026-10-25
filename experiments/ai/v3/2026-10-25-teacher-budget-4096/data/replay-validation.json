@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "games": 192,
+  "turns": 18107,
+  "allGamesReplayedLegally": true,
+  "cappedGames": 0,
+  "endedOutcomesAndCapFlagsMatch": true,
+  "openingPairsMatchAcrossVariants": true,
+  "allMarginsOutcomesMatch": true,
+  "exactNormalBudgets": true,
+  "allBackendsWebGPU": true,
+  "inputRuntimeHashesMatch": true,
+  "allCommandsExitedZero": true,
+  "analysisReaggregatedWithExactPercentileRanks": true
+}

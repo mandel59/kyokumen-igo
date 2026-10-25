@@ -168,6 +168,12 @@
       "architecture": "v3",
       "title": "同条件の小型・大型GNN・Attention教師学習パイロット",
       "path": "v3/2026-10-25-teacher-capacity/"
+    },
+    {
+      "id": "v3/2026-10-25-teacher-budget-4096",
+      "architecture": "v3",
+      "title": "4,096訪問の8候補・全候補探索と現行64訪問の比較",
+      "path": "v3/2026-10-25-teacher-budget-4096/"
     }
   ]
 }

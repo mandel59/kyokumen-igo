@@ -1,0 +1,581 @@
+{
+  "schemaVersion": 1,
+  "rows": [
+    {
+      "mode": "sh8",
+      "board": "sphere3",
+      "budget": 65,
+      "visited": 8,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere3",
+      "budget": 1024,
+      "visited": 8,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere3",
+      "budget": 4096,
+      "visited": 8,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere4",
+      "budget": 65,
+      "visited": 8,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere4",
+      "budget": 1024,
+      "visited": 8,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere4",
+      "budget": 4096,
+      "visited": 8,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere5",
+      "budget": 65,
+      "visited": 8,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere5",
+      "budget": 1024,
+      "visited": 8,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "sphere5",
+      "budget": 4096,
+      "visited": 8,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus7",
+      "budget": 65,
+      "visited": 8,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus7",
+      "budget": 1024,
+      "visited": 8,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus7",
+      "budget": 4096,
+      "visited": 8,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus9",
+      "budget": 65,
+      "visited": 8,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus9",
+      "budget": 1024,
+      "visited": 8,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus9",
+      "budget": 4096,
+      "visited": 8,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus11",
+      "budget": 65,
+      "visited": 8,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus11",
+      "budget": 1024,
+      "visited": 8,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "sh8",
+      "board": "torus11",
+      "budget": 4096,
+      "visited": 8,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere3",
+      "budget": 65,
+      "visited": 32,
+      "available": 50,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere3",
+      "budget": 1024,
+      "visited": 32,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere3",
+      "budget": 4096,
+      "visited": 32,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere4",
+      "budget": 65,
+      "visited": 32,
+      "available": 92,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere4",
+      "budget": 1024,
+      "visited": 32,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere4",
+      "budget": 4096,
+      "visited": 32,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere5",
+      "budget": 65,
+      "visited": 32,
+      "available": 146,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere5",
+      "budget": 1024,
+      "visited": 32,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "sphere5",
+      "budget": 4096,
+      "visited": 32,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus7",
+      "budget": 65,
+      "visited": 32,
+      "available": 43,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "torus7",
+      "budget": 1024,
+      "visited": 32,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus7",
+      "budget": 4096,
+      "visited": 32,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus9",
+      "budget": 65,
+      "visited": 32,
+      "available": 75,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "torus9",
+      "budget": 1024,
+      "visited": 32,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus9",
+      "budget": 4096,
+      "visited": 32,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus11",
+      "budget": 65,
+      "visited": 32,
+      "available": 115,
+      "support": 4
+    },
+    {
+      "mode": "sh32",
+      "board": "torus11",
+      "budget": 1024,
+      "visited": 32,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "sh32",
+      "board": "torus11",
+      "budget": 4096,
+      "visited": 32,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere3",
+      "budget": 65,
+      "visited": 50,
+      "available": 50,
+      "support": 25
+    },
+    {
+      "mode": "all",
+      "board": "sphere3",
+      "budget": 1024,
+      "visited": 50,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere3",
+      "budget": 4096,
+      "visited": 50,
+      "available": 50,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere4",
+      "budget": 65,
+      "visited": 64,
+      "available": 92,
+      "support": 64
+    },
+    {
+      "mode": "all",
+      "board": "sphere4",
+      "budget": 1024,
+      "visited": 92,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere4",
+      "budget": 4096,
+      "visited": 92,
+      "available": 92,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere5",
+      "budget": 65,
+      "visited": 64,
+      "available": 146,
+      "support": 64
+    },
+    {
+      "mode": "all",
+      "board": "sphere5",
+      "budget": 1024,
+      "visited": 146,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "sphere5",
+      "budget": 4096,
+      "visited": 146,
+      "available": 146,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus7",
+      "budget": 65,
+      "visited": 43,
+      "available": 43,
+      "support": 22
+    },
+    {
+      "mode": "all",
+      "board": "torus7",
+      "budget": 1024,
+      "visited": 43,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus7",
+      "budget": 4096,
+      "visited": 43,
+      "available": 43,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus9",
+      "budget": 65,
+      "visited": 64,
+      "available": 75,
+      "support": 64
+    },
+    {
+      "mode": "all",
+      "board": "torus9",
+      "budget": 1024,
+      "visited": 75,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus9",
+      "budget": 4096,
+      "visited": 75,
+      "available": 75,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus11",
+      "budget": 65,
+      "visited": 64,
+      "available": 115,
+      "support": 64
+    },
+    {
+      "mode": "all",
+      "board": "torus11",
+      "budget": 1024,
+      "visited": 115,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "all",
+      "board": "torus11",
+      "budget": 4096,
+      "visited": 115,
+      "available": 115,
+      "support": 2
+    },
+    {
+      "mode": "puct",
+      "board": "sphere3",
+      "budget": 65,
+      "visited": 49,
+      "available": 50,
+      "support": 49
+    },
+    {
+      "mode": "puct",
+      "board": "sphere3",
+      "budget": 1024,
+      "visited": 49,
+      "available": 50,
+      "support": 49
+    },
+    {
+      "mode": "puct",
+      "board": "sphere3",
+      "budget": 4096,
+      "visited": 50,
+      "available": 50,
+      "support": 50
+    },
+    {
+      "mode": "puct",
+      "board": "sphere4",
+      "budget": 65,
+      "visited": 64,
+      "available": 92,
+      "support": 64
+    },
+    {
+      "mode": "puct",
+      "board": "sphere4",
+      "budget": 1024,
+      "visited": 91,
+      "available": 92,
+      "support": 91
+    },
+    {
+      "mode": "puct",
+      "board": "sphere4",
+      "budget": 4096,
+      "visited": 91,
+      "available": 92,
+      "support": 91
+    },
+    {
+      "mode": "puct",
+      "board": "sphere5",
+      "budget": 65,
+      "visited": 64,
+      "available": 146,
+      "support": 64
+    },
+    {
+      "mode": "puct",
+      "board": "sphere5",
+      "budget": 1024,
+      "visited": 145,
+      "available": 146,
+      "support": 145
+    },
+    {
+      "mode": "puct",
+      "board": "sphere5",
+      "budget": 4096,
+      "visited": 145,
+      "available": 146,
+      "support": 145
+    },
+    {
+      "mode": "puct",
+      "board": "torus7",
+      "budget": 65,
+      "visited": 42,
+      "available": 43,
+      "support": 42
+    },
+    {
+      "mode": "puct",
+      "board": "torus7",
+      "budget": 1024,
+      "visited": 42,
+      "available": 43,
+      "support": 42
+    },
+    {
+      "mode": "puct",
+      "board": "torus7",
+      "budget": 4096,
+      "visited": 43,
+      "available": 43,
+      "support": 43
+    },
+    {
+      "mode": "puct",
+      "board": "torus9",
+      "budget": 65,
+      "visited": 64,
+      "available": 75,
+      "support": 64
+    },
+    {
+      "mode": "puct",
+      "board": "torus9",
+      "budget": 1024,
+      "visited": 74,
+      "available": 75,
+      "support": 74
+    },
+    {
+      "mode": "puct",
+      "board": "torus9",
+      "budget": 4096,
+      "visited": 75,
+      "available": 75,
+      "support": 75
+    },
+    {
+      "mode": "puct",
+      "board": "torus11",
+      "budget": 65,
+      "visited": 64,
+      "available": 115,
+      "support": 64
+    },
+    {
+      "mode": "puct",
+      "board": "torus11",
+      "budget": 1024,
+      "visited": 114,
+      "available": 115,
+      "support": 114
+    },
+    {
+      "mode": "puct",
+      "board": "torus11",
+      "budget": 4096,
+      "visited": 114,
+      "available": 115,
+      "support": 114
+    }
+  ]
+}
