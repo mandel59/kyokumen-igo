@@ -204,3 +204,5 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
 `pooled-inference.mjs` は後段の研究データ生成用に、同じグラフの独立した推論要求を最大64局面へまとめます。各探索クライアントのバッチは最大8葉です。`createPooledV3Inference(...).createClient()` を各プレイヤーへ渡し、全プレイヤーを破棄してからプール本体をdisposeします。通常推論との全6盤のビット同値性は `node tools/ai-gnn/validate-pooled-webgpu.mjs --output NEW_REPORT.json` で検証できます。今回の192局の強さ比較には使っていません。
 
 [4,096訪問の教師探索比較](../../experiments/ai/v3/2026-10-25-teacher-budget-4096/README.md)では、8候補・全候補を現行64訪問と各96局で比較しました。`teacher-budget-statistics.mjs` は盤ごとの黒白ペアを再標本化し、通常95%区間と2候補の比較を補正した97.5%区間を返します。
+
+次期作業は[教師データ生成と蒸留の計画](../../experiments/ai/plans/v3-teacher-distillation/README.md)に固定しました。48局の自己対局と同一局面の64/4,096訪問再解析から始め、同容量の2生徒で教師データの効果を比較します。未実行の計画です。

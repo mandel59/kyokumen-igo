@@ -68,3 +68,5 @@
 [教師モデルの容量を増やした学習比較](v3/2026-10-25-teacher-capacity/README.md)を保存しました。
 
 [4,096訪問の教師探索と現行64訪問の比較](v3/2026-10-25-teacher-budget-4096/README.md)を保存しました。
+
+次の作業計画：[強い教師から現行サイズのv3への蒸留パイロット](plans/v3-teacher-distillation/README.md)（計画済み・未実行）。
