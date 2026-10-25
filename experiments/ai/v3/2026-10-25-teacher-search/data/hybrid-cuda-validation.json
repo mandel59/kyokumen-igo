@@ -1,0 +1,48 @@
+{
+  "directory": "tools/ai-gnn/target/teacher-search-study/hybrid-teacher",
+  "device": "cuda",
+  "manifest": {
+    "format": "offline-teacher-v1",
+    "status": "untrained-bootstrap",
+    "config": {
+      "hidden": 384,
+      "blocks": 6,
+      "attention_blocks": 12,
+      "heads": 8,
+      "policy_width": 128,
+      "value_width": 256,
+      "max_distance": 32
+    },
+    "parameters": 25222585,
+    "weights": "weights.pt",
+    "sha256": "57d0bead7f0e3211b31eecb3a1afca74b378ad9503e992c90addad1139dcffe3",
+    "tensorSha256": "bc9bce5686ff986ff09da458424bf110020efe2a963388937b15b923d17bb0d0",
+    "sourceCheckpointSha256": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512",
+    "seed": 2026102651,
+    "noise": 0.001,
+    "features": {
+      "points": 160,
+      "channels": 32,
+      "globals": 8
+    },
+    "search": {
+      "fpu": 1
+    },
+    "bootstrapMaxErrors": [
+      0.0000019073486328125,
+      5.960464477539063e-8,
+      3.725290298461914e-9,
+      4.76837158203125e-7
+    ],
+    "warning": "Capacity expansion only. Playing strength must be established after training and independent matches."
+  },
+  "bootstrapGoldenMaxErrors": {
+    "policy": 0.000001430511474609375,
+    "wdl": 2.384185791015625e-7,
+    "score": 1.1175870895385742e-8,
+    "ownership": 4.76837158203125e-7
+  },
+  "concurrentRequests": true,
+  "errorRecovery": true,
+  "allSixBoards65Visits": true
+}

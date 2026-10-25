@@ -1,0 +1,17 @@
+
+running 12 tests
+test mcts::tests::fpu_uses_parent_perspective_without_virtual_loss ... ok
+test mcts::tests::halving_recommends_value_instead_of_the_most_visited_action ... ok
+test mcts::tests::proofs_preserve_unknown_replies_and_prefer_wins_over_visit_counts ... ok
+test tactics::tests::unknown_open_extensions_are_retained_and_zero_budget_is_unknown ... ok
+test tactics::tests::benson_requires_two_regions_and_does_not_condemn_large_enclosures ... ok
+test tactics::tests::rejects_one_and_two_liberty_pockets_without_mutating_position ... ok
+test mcts::tests::pending_leaf_does_not_block_other_available_evaluations ... ok
+test mcts::tests::visit_limit_counts_neural_leaves_and_exact_terminal_backups ... ok
+test mcts::tests::halving_cancellation_and_incremental_budget_extensions_keep_progress ... ok
+test endgame::tests::certified_loss_bound_respects_both_colours_komi_and_draws_on_all_boards ... ok
+test mcts::tests::halving_respects_odd_budgets_and_releases_all_reservations ... ok
+test mcts::tests::reservations_validation_and_exact_terminal_signs ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+

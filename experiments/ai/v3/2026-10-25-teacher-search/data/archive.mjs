@@ -1,0 +1,113 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import zlib from 'node:zlib';
+import {spawnSync} from 'node:child_process';
+const src='tools/ai-gnn/target/teacher-search-study',dest='experiments/ai/v3/2026-10-25-teacher-search';
+if(fs.existsSync(dest))throw Error('Archive already exists');
+fs.mkdirSync(dest+'/data',{recursive:true});
+const hash=data=>crypto.createHash('sha256').update(data).digest('hex');
+function copy(a,b){fs.mkdirSync(path.dirname(b),{recursive:true});fs.copyFileSync(a,b);}
+function tree(a,b){for(const entry of fs.readdirSync(a,{withFileTypes:true})){if(entry.isDirectory())tree(a+'/'+entry.name,b+'/'+entry.name);else copy(a+'/'+entry.name,b+'/'+entry.name);}}
+function gzip(a,b){fs.writeFileSync(b,zlib.gzipSync(fs.readFileSync(a),{level:9}));}
+copy(src+'/plan.json',dest+'/plan.json');
+for(const e of fs.readdirSync(src,{withFileTypes:true})){
+ if(!e.isFile())continue;
+ const n=e.name;
+ if(n==='plan.json'||n.endsWith('.exe')||n.endsWith('.pdb'))continue;
+ if(['dev-all.json','dev-sh32.json','dev-puct.json','equivalence.json','native-match-smoke.json','training-smoke.jsonl','native-selfplay-smoke.jsonl'].includes(n))gzip(src+'/'+n,dest+'/data/'+n+'.gz');
+ else if(/\.(json|mjs|log|txt|wasm)$/.test(n))copy(src+'/'+n,dest+'/data/'+n);
+}
+for(const mode of ['sh8','sh32','all','puct'])tree(src+'/'+mode+'-source',dest+'/data/'+mode+'-source');
+tree(src+'/cpu-executed-source',dest+'/data/cpu-executed-source');
+for(const name of ['clone-teacher','gnn-teacher','hybrid-teacher','gnn-training-smoke','hybrid-training-smoke'])for(const file of ['teacher.json','training.json'])if(fs.existsSync(src+'/'+name+'/'+file))copy(src+'/'+name+'/'+file,dest+'/data/teacher-packages/'+name+'/'+file);
+const reports=['sh32','all','puct'].map(mode=>({mode,...JSON.parse(fs.readFileSync(src+'/dev-'+mode+'.json'))}));
+const sourcePaths=new Set(['tools/ai-gnn/study-commands.mjs','tools/ai-gnn/test-offline-player.mjs','tools/ai-gnn/test-training-search.mjs','tools/ai-gnn/test-selfplay.mjs','tools/ai-gnn/selfplay-policy.mjs','tools/ai-gnn/selfplay.mjs','tools/ai-gnn/training-search.mjs','tools/ai-gnn/train_teacher.py','tools/ai-gnn/teacher_model.py','tools/ai-gnn/teacher_package.py','tools/ai-gnn/teacher_server.py','tools/ai-gnn/teacher-inference.mjs','tools/ai-gnn/test_teacher_model.py','tools/ai-gnn/test-teacher-inference.mjs','tools/ai-gnn/match.mjs','tools/ai-gnn/match-statistics.mjs','tools/ai-gnn/train.py','tools/ai-gnn/model.py','tools/ai-gnn/node-inference.mjs']);
+for(const r of reports)for(const [p,sha]of Object.entries(r.provenance.sources)){if(hash(fs.readFileSync(p))!==sha)throw Error('Arena runtime source changed: '+p);sourcePaths.add(p);}
+const native=JSON.parse(fs.readFileSync(src+'/native-match-smoke.json'));
+for(const p of Object.keys(native.provenance.sources))sourcePaths.add(p);
+for(const p of sourcePaths)copy(p,dest+'/data/source/'+p);
+// runStudyCommand inventories some tools that were not imported by browser matches.
+// Preserve that starting inventory separately; browser reports identify the actual runtime imports.
+for(const [p,sha]of Object.entries(JSON.parse(fs.readFileSync(src+'/dev-all-command.json')).toolHashes)){
+ let bytes=fs.readFileSync(p);
+ if(hash(bytes)!==sha){const r=spawnSync('git',['show','HEAD:'+p],{maxBuffer:20e6});if(r.status!==0)throw Error('git show failed '+p);bytes=r.stdout;}
+ if(hash(bytes)!==sha)throw Error('Unrecoverable starting inventory: '+p);
+ const target=dest+'/data/start-inventory/'+p;fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,bytes);
+}
+const diff=spawnSync('git',['diff','--binary','HEAD','--','tools/ai-gnn','experiments/ai/README.md','experiments/ai/catalog.json'],{maxBuffer:20e6});if(diff.status!==0)throw Error('git diff failed');fs.writeFileSync(dest+'/data/source.patch',diff.stdout);
+const selection=JSON.parse(fs.readFileSync(src+'/selection.json'));
+const summary={schemaVersion:1,comparisons:reports.map(r=>({mode:r.mode,...r.summary,elapsedSeconds:JSON.parse(fs.readFileSync(src+'/dev-'+r.mode+'-command.json')).elapsedSeconds})),selection,productionFilesUnchanged:true,teacherAdopted:false,browserAdopted:false,modelValidationOnly:true};
+fs.writeFileSync(dest+'/data/summary.json',JSON.stringify(summary,null,2)+'\n');
+const pct=x=>(100*x).toFixed(1),rows=reports.map(r=>`| ${r.mode} | ${r.summary.wins}勝${r.summary.losses}敗 | ${r.summary.pairedBootstrap.interval95.map(pct).join('–')}% |`).join('\n');
+const boards=['sphere3','sphere4','sphere5','torus7','torus9','torus11'];
+const boardRows=boards.map(board=>'| '+board+' | '+reports.map(r=>r.summary.boards.find(b=>b.board===board).score+'/4').join(' | ')+' |').join('\n');
+const readme=`# 同予算の教師探索比較と大型教師モデルの動作検証
+
+現行ネットワークを固定し、両者1,024訪問で探索方式を比較しました。全候補探索は15勝9敗でしたが、事前に決めた確認試験への進出基準を満たさず、教師の採用には至っていません。並行して、大型GNNとグラフ構造を使うAttention教師の初期化・CPU/CUDA推論・学習・自己対局・対戦の経路を整備しました。大型モデルの棋力向上を実証した試験ではありません。
+
+ブランチはresearch/offline-teacher、基準はd45d63d5be5598df595d4290c3c20bd04310d7d4です。dist/と本番Rustソースは変更せず、配信・モデル昇格は行っていません。前回の[予備調査](../2026-10-25-offline-teacher/README.md)から続く研究です。
+
+## 探索を同じ予算で比較
+
+[事前計画](plan.json)の通り、同じモデル8e5b41e3974c、FPU1、内部PUCT1.5、逐次半減の根Q係数0.4、コミ6.5、最初のランダム合法4手を使用しました。全6盤各2組、同じ開始局面を黒白入れ替えの24局です。各候補は同一seed2026102641で、基準sh8の1,024訪問と対戦しました。
+
+| 方式 | 対sh8・1,024訪問 | ペア95%区間 |
+| --- | --- | --- |
+${rows}
+
+sh32は根候補32手、allは適格な根候補すべて（最大161手）の逐次半減です。puctは根も通常PUCTとし、返す方策も訪問分布に変わります。幅だけの変更ではありません。いずれも既存の枝刈り・確定判定を維持し、allも枝刈り前の全合法手を必ず探索するという意味ではありません。全72局が終局し、違法手・上限打ち切りはありませんでした。
+
+| 盤 | sh32 | all | puct |
+| --- | --- | --- | --- |
+${boardRows}
+
+[選択結果](data/selection.json)ではallが最高得点でした。ただし17勝以上、ペア95%下限50%超、各盤1勝以上という進出基準を満たしません。独立48局の確認試験は計画通り実施していません。3候補から選んだ開発成績であり、全候補探索の優位性や「最強」を示す結果ではありません。sh32は球面3で0勝4敗、トーラス7・9で各4勝0敗という盤ごとの差があり、総得点だけで選べません。
+
+区間は盤ごとに黒白ペアを再標本化した10,000回のブートストラップです。各盤2ペアしかなく、区間の解像度・安定性は限定的です。3候補の対局は同じGPU上で同時実行しました。固定訪問数なので時間による打ち切りはありませんが、壁時計時間は競合を含み、速度比較には使えません。全手の訪問数・手順・バックエンドを[完全レポート](data/dev-all.json.gz)、[sh32](data/dev-sh32.json.gz)、[puct](data/dev-puct.json.gz)に残しています。
+
+## 大型モデルの実装と検証
+
+| 容量 | 構成 | パラメータ | 状態 |
+| --- | --- | --- | --- |
+| 大型GNN | 幅256、GNN20層 | 5,544,713 | 未学習の関数保存初期化 |
+| Attention併用 | 幅384、GNN6層＋Attention12層、8heads | 25,222,585 | 未学習の関数保存初期化 |
+
+既存の幅64・6層から、重みの複製と入力側の正規化で幅を広げます。重複入力に対して和が0になる小さな摂動を加え、出力を保ちながら学習時の対称性を崩します。追加GNN層とAttention層は残差分岐の最終射影を0にし、恒等写像から始めます。policy・WDL・得点・所有権の4出力を維持します。
+
+Attentionは正規化したQ/K/Vによる全点間の参照に、グラフ最短距離と同じ自石の連・相手石の連・空点領域の学習バイアスを加えます。頂点番号に依存する位置埋め込みはありません。CPUで距離・連を前処理し、TorchのCPU/CUDAで推論します。距離表は盤とマスクごとにキャッシュします。これは本ゲーム向けに実装した仮説で、標準囲碁のKataGoやGraphormerそのものの移植ではありません。参考は[KataGo v1.17.0](https://github.com/lightvector/KataGo/releases/tag/v1.17.0)、[Graphormer](https://arxiv.org/abs/2106.05234)です。標準囲碁の結果を球面・トーラスでの実証に読み替えません。
+
+実施した検証は次の通りです。
+
+- [モデル単体](data/model-validation.json)：同容量で元モデルと完全一致。幅拡張・層追加でも4出力の最大誤差は約0.000002。新規Attentionの重みが有効な状態で頂点置換への対応と有限勾配を確認しました。
+- [GNN CPU](data/gnn-cpu-validation.json)・[CUDA](data/gnn-cuda-validation.json)、[Attention CPU](data/hybrid-cpu-validation.json)・[CUDA](data/hybrid-cuda-validation.json)：golden誤差、並行リクエスト、エラー後の復帰、全6盤の65訪問・合法手・正規化方策を確認しました。CUDA試験は探索比較終了後に実行しました。
+- [探索モード](data/mode-validation.json)：全6盤×4方式×65/1,024/4,096訪問で訪問数・合法手・方策を検証しました。方式による根の探索範囲も確認しました。
+- [プレイヤー同値性](data/equivalence-summary.json)：アプリ版と研究プレイヤーで黒白2局・112手の手順、訪問数、勝敗が完全一致しました。時間の差は統制した速度試験ではありません。
+- [自己対局](data/native-selfplay-smoke.json)・[ラベル検査](data/native-label-validation.json)：元と同容量のTorchモデルで球面3の1局を65訪問で完走し、58局面の合法方策・得点・勝敗・所有権の一致を確認しました。
+- [ネイティブ対戦](data/native-match-smoke.json.gz)：同じ小型モデルをTorchとONNXに分けた黒白2局を65訪問で完走し、1勝1敗。大きな教師の棋力評価ではありません。[異常系](data/native-error-validation.json)では改変チェックサムの拒否、相手読込失敗時の教師プロセス解放も確認しました。
+
+専用プレイヤーではUI向けのタイマー待機を省き、訪問数を必須にしています。学習探索の停止判定も直し、確定勝ちを推論なしでバックアップして訪問数が増えている間は停止扱いにしません。全6盤の勝ちとなる2連続パス局面を4,096訪問で回帰検証しました。
+
+## 少量学習は経路の動作確認
+
+既存の[自己対局データ](../2026-10-25-onpolicy-distillation/data/selfplay.jsonl.gz)から各盤2局×最初の4局面、計48局面を抽出しました。24局面で1epoch学習し、対局の重ならない24局面で選択しました。GNNとAttentionの両方でCPU学習・勾配・保存・再読込を確認しました。
+
+| モデル | 初期検証損失 | 選択後 | 用途 |
+| --- | --- | --- | --- |
+| GNN | 5.35863 | 5.22836 | 学習経路の動作検証 |
+| Attention | 5.35862 | 5.29340 | 学習経路の動作検証 |
+
+損失の減少は棋力の改善を示しません。例えばGNNの検証WDL正解率は0.708から0.500へ下がり、方策top1も下がっています。この小さなデータから学習済み教師として採用せず、実対局も行っていません。詳細は[GNN](data/teacher-packages/gnn-training-smoke/training.json)、[Attention](data/teacher-packages/hybrid-training-smoke/training.json)に保存しました。
+
+## 保存・再現と次の判断
+
+実行コマンドは[再現手順](../../../..//tools/ai-gnn/README.md)とdata内の*-command.json、run.mjs、各build.jsonにあります。run.mjsはtargetへ出力するため、履歴を上書きしない新しい作業ディレクトリで再実行します。起動時の汎用ツール一覧はdata/start-inventory、実対局で読み込んだソースはdata/sourceに保存しました。少量CPU学習のtraining.json内のsourceSha256は、改行を整える前のdata/cpu-executed-sourceに対応します。ネイティブ対戦のmatch.mjsも同フォルダの実行時版に対応し、その後の変更は起動失敗時の後始末と来歴の追加です。
+
+初期化パッケージの設定・重みハッシュ・テンソルハッシュはdata/teacher-packagesに保存しました。大きな重み本体はignoredのtools/ai-gnn/target/teacher-search-studyに残し、重複した約22MB・101MBの未学習重みは履歴へ収録していません。元チェックポイントは[確定済みweights.pt](../2026-10-22-learning-revision/data/round1-t0/weights.pt)です。teacher_package.pyのpresetとseed2026102651、noise0.001で再構築でき、バイナリ保存形式の差はtensorSha256でも確認できます。GPU環境は[記録](data/torch-environment.json)のRTX5060Ti、約16GiB、Torch2.14.1+cu130です。
+
+次は独立した大きな自己対局データで大型モデルを学習し、全候補探索を含む高予算設定と固定した基準を新しいseedで対戦させます。蒸留では教師自身の対局成績と、生徒の対局成績を別に測ります。全候補のcompleted-Qからの方策目標、状態アーカイブからの分岐自己対局、複数教師の合議は次の研究候補で、今回の実装・棋力実証には含みません。[前回の設計案](../2026-10-25-offline-teacher/README.md)も参照してください。
+`;
+// Four parents from experiment dir reaches the repository root.
+fs.writeFileSync(dest+'/README.md',readme.replace('../../../..//tools','../../../../tools'));
+fs.writeFileSync(dest+'/manifest.json',JSON.stringify({schemaVersion:1,id:'v3/2026-10-25-teacher-search',architecture:'v3',title:'Equal-budget teacher search and native large-model validation',source:{baseCommit:'d45d63d5be5598df595d4290c3c20bd04310d7d4',patch:'data/source.patch',untrackedToolSnapshots:'data/source/tools/ai-gnn'},variants:['sh32','all','puct'],plan:{path:'plan.json',sha256:hash(fs.readFileSync(dest+'/plan.json'))},notes:['No candidate passed the development gate; confirmation was not run.','Large models are untrained bootstraps. Tiny training is pipeline validation only, not strength evidence.','No production assets/source changed, no deployment.','Exact executed CPU source precedes newline formatting; native match source also precedes startup-cleanup/provenance additions.','Large package weights remain ignored locally; package configs/tensor hashes and source checkpoint enable rebuilding.'],artifacts:[]},null,2)+'\n');
+console.log(dest);

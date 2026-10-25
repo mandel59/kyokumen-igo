@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "games": 2,
+  "turns": 112,
+  "budgets": {
+    "a": 65,
+    "b": 64
+  },
+  "allExact": true
+}

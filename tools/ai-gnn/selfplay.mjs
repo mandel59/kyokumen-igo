@@ -7,6 +7,7 @@ import {aiPosition} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 import {createNodeInference} from './node-inference.mjs';
+import {createTeacherInference} from './teacher-inference.mjs';
 import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
 import {runTrainingSearch,trainingTarget} from './training-search.mjs';
 const args=process.argv.slice(2),value=(flag,fallback)=>args.includes(flag)?args[args.indexOf(flag)+1]:fallback;
@@ -16,9 +17,12 @@ if(!['halving','puct'].includes(searchMode))throw new Error('Invalid search mode
 if(!Number.isInteger(fpu)||fpu<0||fpu>2)throw new Error('Invalid FPU');
 if(!Number.isInteger(games)||games<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid selfplay options');
 const random=createRandom(seed);
-const inference=await createNodeInference(value('--model','tools/ai-gnn/target/model'));
+if(value('--teacher-package')&&args.includes('--model'))throw new Error('Choose either --model or --teacher-package');
 const wasm=readFileSync(value('--wasm','dist/ai-v3.wasm')),searchHash=createHash('sha256').update(wasm).digest('hex');
 const search=await createV3Search({load:async()=>wasm});
+let inference;
+try{inference=value('--teacher-package')?await createTeacherInference({directory:value('--teacher-package'),device:value('--device','cuda')}):await createNodeInference(value('--model','tools/ai-gnn/target/model'));}
+catch(error){search.dispose();throw error;}
 const out=createWriteStream(value('--output','tools/ai-gnn/target/selfplay.jsonl'));
 let written=0,capped=0,completedGames=0;const boardReports=[];
 try{
@@ -40,7 +44,7 @@ try{
     samples.push({x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),
      legal:Array.from(root.legal,Boolean),policy:target.policy,validationPolicy:Array.from(result.policy),policySurprise:target.policySurprise,policyOrigin:searchMode,priorMix:.25,turn:game.turn,ply:game.moves,
      action,playedAction:action,visits:result.simulations,source:'selfplay',decisionReason:result.decisionReason,
-     policyEligible:!result.provenLoss,generatorModelHash:inference.manifest.sha256,searchHash,searchSeed,
+     policyEligible:!result.provenLoss,generatorModelHash:inference.manifest.sha256,generatorFormat:inference.manifest.format??'v3-onnx',searchHash,searchSeed,
      rootNoiseApplied,requestedVisits:simulations,searchConfig:{mode:searchMode,fpu,tactics:true,endgame:true,puct:1.5},searchDiagnostics:result.diagnostics});
     if(!(move===null?game.pass():game.play(move)).ok)throw new Error('Illegal MCTS move');
    }

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-offline-teacher",
+  "architecture": "v3",
+  "title": "Offline teacher research and frozen-network search scaling pilots",
+  "source": {
+    "baseCommit": "d45d63d5be5598df595d4290c3c20bd04310d7d4",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "sh8-256",
+    "sh32-1024"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "413a0da86737b231146b2368b1148956fa48946cafae6f79ae245f9afe224e04"
+  },
+  "notes": [
+    "Exploratory24-game pilots; no strongest-teacher or student-improvement claim.",
+    "No browser assets or production source changed; no deployment.",
+    "Larger GNN/GraphTransformer are research proposals, not trained models."
+  ],
+  "artifacts": [
+    {
+      "path": "data/architecture-proposals.json",
+      "sha256": "4cfd56ad8be2188411fecb4a51f332c016cee5c59b67991758ab03ecfc613eb1"
+    },
+    {
+      "path": "data/baseline-model/golden.json",
+      "sha256": "f1f151b35792fc1f77ab098af6e80a64f723200de30e21238184789d3b03d066"
+    },
+    {
+      "path": "data/baseline-model/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/baseline-model/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "data/baseline-model/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "data/browser-match.mjs",
+      "sha256": "191cef13e7d5bfe7229c7c41d3c662d602c13c6d30f0cb2cde2fc5b40cc0389b"
+    },
+    {
+      "path": "data/budget-validation-source.mjs",
+      "sha256": "5a09263b1b6dae01e4f545dded03bb75b9e79b79130ca500a80722484e202878"
+    },
+    {
+      "path": "data/budget-validation-summary.json",
+      "sha256": "6e612af15a4662175bbfebffbff1499b03491e96749ce86486f1a93d554037b5"
+    },
+    {
+      "path": "data/budget-validation.json",
+      "sha256": "90940c8c52805412aa875f7c9d0b7125f0275935bfa5775bf0c74ac019eadd01"
+    },
+    {
+      "path": "data/budget-validation.log",
+      "sha256": "59c6b33262137163ef31ec62291a681096f46634dfab86573c95405918df0080"
+    },
+    {
+      "path": "data/build-commands.json",
+      "sha256": "b0d7c5b63b68b50b557d3db12404419763211ea812f04edc7bd27c7de45e9270"
+    },
+    {
+      "path": "data/native-tests.log",
+      "sha256": "32bdbe09d539de478edfa5a65c66048bfc1a76a1f81b4fe5101d95f6a6bebd1f"
+    },
+    {
+      "path": "data/options-validation.json",
+      "sha256": "d2d236a4492c3d86c4f106be164ece3cdbc6d278dfcc2a8b9f5b1d955e1d8ad4"
+    },
+    {
+      "path": "data/research-sources.json",
+      "sha256": "2bafc1a735012a6fc982dd4a382cde686586cba454e2c73ce021ef1bd1fc516d"
+    },
+    {
+      "path": "data/run-pilots.mjs",
+      "sha256": "10a6bcbe6d86471bbd818793838d06275725be59e4092dad16ad90f83c4a8e71"
+    },
+    {
+      "path": "data/sh32-1024-command.json",
+      "sha256": "9fd4377e775fc8f9fb3aa78f641bd4156944bdb5435c33fc44da3550d3e84bdf"
+    },
+    {
+      "path": "data/sh32-1024-log.txt",
+      "sha256": "fe3ca3bb58f8dc3c83804ce75136518a42146e59bdb9173692af60dd20e9574c"
+    },
+    {
+      "path": "data/sh32-1024.json.gz",
+      "sha256": "7b7d4abcbafdbfe8e821f2f6cb75b5f904c460caf2bf18089e8525c86a67b9de"
+    },
+    {
+      "path": "data/sh32.wasm",
+      "sha256": "e9ee9ec8a9fe1a1fbbc5164fadeda859749d9084599a14dcf94a497a8d1719ff"
+    },
+    {
+      "path": "data/sh8-256-command.json",
+      "sha256": "dee2b19911f1c319e87d37559beee2e0988537c4497ed6d5ce3d44481e62543a"
+    },
+    {
+      "path": "data/sh8-256-log.txt",
+      "sha256": "67c5915c0115da9af08c75129c923513cc72b46ef606e2e84dc8685c5a8938de"
+    },
+    {
+      "path": "data/sh8-256.json.gz",
+      "sha256": "d1e400a8141b54016937c59dd41c98b9d6ac02d1a8cfa66eb1a323642dd76c19"
+    },
+    {
+      "path": "data/sh8.wasm",
+      "sha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "7e3aecb38072ff760963d4b5519e6776c47605bb0d68f8af8d34c71cffe7e1f9"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "37592bc1b8ad15524e6543a0a3e1cdf7db8197bba5f16796f8d787319d4b80c6"
+    },
+    {
+      "path": "data/teacher-source/ai.rs",
+      "sha256": "8be6e629a0479cc4518e8580cca8f23b4afc55f4f002396e165b76a56c79f87b"
+    },
+    {
+      "path": "data/teacher-source/board.rs",
+      "sha256": "e9a89ab68b48699d7d7f297fd95656ce11d8d9f35f6d9569c2d01bb04744fb18"
+    },
+    {
+      "path": "data/teacher-source/endgame.rs",
+      "sha256": "d8d892ebc50d68803dbba313217806fcdaa3b7e1f4ca416f99ffe30e8ac025e3"
+    },
+    {
+      "path": "data/teacher-source/gnn-wasm.rs",
+      "sha256": "ebb56f1492676b8eac0e0a39264610c476f7e5ce051c014c27fcd4703bf681ff"
+    },
+    {
+      "path": "data/teacher-source/gnn.rs",
+      "sha256": "8f1056fc5f9598f3e99a1aae5fba2ec89c9e3d98a5ebba0fcbbaf231dba80704"
+    },
+    {
+      "path": "data/teacher-source/main.rs",
+      "sha256": "a190ea43e958bade526be0ed8831d0157c79629fb0a07bb734b77a19bcf90709"
+    },
+    {
+      "path": "data/teacher-source/mcts.rs",
+      "sha256": "6ea270a1508e15c9f8e701c97da6bbb74c18dae4806ce61338372bfcf04ca2d8"
+    },
+    {
+      "path": "data/teacher-source/rng.rs",
+      "sha256": "a10292d8dd75a8f5bb2376ddb750176b3398263e7d9baf111c5dec73e21ae104"
+    },
+    {
+      "path": "data/teacher-source/search.rs",
+      "sha256": "839b73522ee9d2ffa767da3ecf9cf4705ed9fbfd07dbcd589d40f16420bffbf8"
+    },
+    {
+      "path": "data/teacher-source/tactics.rs",
+      "sha256": "00a78d193ef85e9293de6403ec3efe20aae1993befba3c5e2966bdf01ec2a203"
+    },
+    {
+      "path": "data/teacher-source/tune.rs",
+      "sha256": "e8c8a30e89e8d7706f22b80910708b8d6c99281f812fb3b24b40f5076915f1ef"
+    },
+    {
+      "path": "data/teacher-source/wasm.rs",
+      "sha256": "16a2a74c2ff0a74742c1265f1909b27234c2b307e507e0375c2b69f7702269a0"
+    },
+    {
+      "path": "data/teacher-validation.json",
+      "sha256": "6c3b1257cdbbc9914d73b3f521fe7f53483ebc6c66c41e96bfa23e976c685c0f"
+    },
+    {
+      "path": "data/topology-diagnostics.json",
+      "sha256": "026661e4623fe64e583d618176f0a019a620e577180fb7d938e372f18abd7231"
+    },
+    {
+      "path": "data/topology-diagnostics.mjs",
+      "sha256": "631aa480cf765e4b5856c9110d68efb9758e30555d18524999c19ab7c1473bc6"
+    },
+    {
+      "path": "data/validate-teacher.mjs",
+      "sha256": "c390cdbfbbdb7161dd23b5e81b6b36c97160af74d9c7e5a8e3a0c871129da780"
+    }
+  ]
+}

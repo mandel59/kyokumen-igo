@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "positions": 58,
+  "capped": 0,
+  "completedGames": 1,
+  "seed": 2026102653,
+  "model": "55eb1ef2b1b4fb8eae129abd4fd7b5d102dfcb4e759f31b81a9a4f6cfaf599e2",
+  "searchHash": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+  "fpu": 1,
+  "searchMode": "halving",
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "attempted": 1,
+      "completed": 1,
+      "capped": 0
+    }
+  ]
+}

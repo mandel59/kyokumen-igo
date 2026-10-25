@@ -1,0 +1,50 @@
+{
+  "commands": [
+    {
+      "command": "rustc",
+      "args": [
+        "--edition",
+        "2021",
+        "--test",
+        "-A",
+        "dead_code",
+        "tools/ai-gnn/target/teacher-search-study/all-source/gnn-wasm.rs",
+        "-o",
+        "tools/ai-gnn/target/teacher-search-study/all-tests.exe"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": "tools/ai-gnn/target/teacher-search-study/all-tests.exe",
+      "args": [],
+      "exitCode": 0
+    },
+    {
+      "command": "rustc",
+      "args": [
+        "--edition",
+        "2021",
+        "-C",
+        "opt-level=3",
+        "-A",
+        "dead_code",
+        "--target",
+        "wasm32-unknown-unknown",
+        "--crate-type",
+        "cdylib",
+        "-C",
+        "lto=fat",
+        "-C",
+        "panic=abort",
+        "-C",
+        "strip=symbols",
+        "tools/ai-gnn/target/teacher-search-study/all-source/gnn-wasm.rs",
+        "-o",
+        "tools/ai-gnn/target/teacher-search-study/all.wasm"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "sourceSha256": "16741bac2eb06a3c24c24305bf09421c6d3ab4c4ab9e744f6427ed0f321ef4b7",
+  "wasmSha256": "1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940"
+}

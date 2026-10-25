@@ -1,0 +1,35 @@
+{
+  "format": "offline-teacher-v1",
+  "status": "untrained-bootstrap",
+  "config": {
+    "hidden": 64,
+    "blocks": 6,
+    "attention_blocks": 0,
+    "heads": 8,
+    "policy_width": 32,
+    "value_width": 64,
+    "max_distance": 32
+  },
+  "parameters": 120905,
+  "weights": "weights.pt",
+  "sha256": "55eb1ef2b1b4fb8eae129abd4fd7b5d102dfcb4e759f31b81a9a4f6cfaf599e2",
+  "tensorSha256": "34def93e7a4f07364ed7690fa59ed3f4145ceb90cce07cd17db0317cc9aa7f74",
+  "sourceCheckpointSha256": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512",
+  "seed": 2026102651,
+  "noise": 0.001,
+  "features": {
+    "points": 160,
+    "channels": 32,
+    "globals": 8
+  },
+  "search": {
+    "fpu": 1
+  },
+  "bootstrapMaxErrors": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "warning": "Capacity expansion only. Playing strength must be established after training and independent matches."
+}

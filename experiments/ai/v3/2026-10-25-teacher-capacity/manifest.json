@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-teacher-capacity",
+  "architecture": "v3",
+  "title": "Controlled supervised teacher-capacity pilot",
+  "source": {
+    "baseCommit": "d45d63d5be5598df595d4290c3c20bd04310d7d4",
+    "patch": "data/source.patch",
+    "untrackedToolSnapshots": "data/source/tools/ai-gnn"
+  },
+  "variants": [
+    "clone",
+    "gnn",
+    "hybrid"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "80867c9bc6d6f5f378f9fffd937bd7f9d9e29efbd0a57244ede0e2e5ffb841ca"
+  },
+  "notes": [
+    "Four-epoch archived-data capacity pilot, not strongest-teacher training or student distillation.",
+    "Full selected native checkpoints archived as gzip with decompressed checksums verified.",
+    "No production asset/source change or deployment."
+  ],
+  "artifacts": [
+    {
+      "path": "data/bootstrap-packages/clone/teacher.json",
+      "sha256": "dcad628dfd7dda5f0a86d11f51266e1dfb7286033f2b99a9db185d36714ef12c"
+    },
+    {
+      "path": "data/bootstrap-packages/gnn/teacher.json",
+      "sha256": "66d368128c536f745cdaf9ff191adf36ae3c31b37aa82351de7a8231bf5b30c2"
+    },
+    {
+      "path": "data/bootstrap-packages/hybrid/teacher.json",
+      "sha256": "34d7d4d37d11a8ae98f0dc158cf950e2929ba0aef0ef8243fe6f4708a8f07c93"
+    },
+    {
+      "path": "data/packages/clone/teacher.json",
+      "sha256": "bbc0f8ca27f2e805948fa15ddd2c0942ade7094ca9dc04ea4a66890f84d107df"
+    },
+    {
+      "path": "data/packages/clone/training.json",
+      "sha256": "6dc24e0e99c6b26a0b3c2c6eb696c9ec2727b5e651022f955bb54eff23adf72b"
+    },
+    {
+      "path": "data/packages/clone/weights.pt.gz",
+      "sha256": "2dda7284a72b99e98a421cc4eb0d907df1c1493a39c9ccf194bd3eadeb4b5019"
+    },
+    {
+      "path": "data/packages/gnn/teacher.json",
+      "sha256": "a0489cd4f1e26c1ff6389f39438c24af7e3ae279714d39799bce8d7f0cf25d73"
+    },
+    {
+      "path": "data/packages/gnn/training.json",
+      "sha256": "a9b6e7e70fe668dea87b2f3b7b0b465aaef4510746272feb4a2d0bb95e0a95d5"
+    },
+    {
+      "path": "data/packages/gnn/weights.pt.gz",
+      "sha256": "05e994bd94cd32ec0b2ba6da23acd2b9fa7bf9cb8e826d8cdb3438594f24f73d"
+    },
+    {
+      "path": "data/packages/hybrid/teacher.json",
+      "sha256": "17746cffa2e4e8f21fc4589e013474120bfabf629b07c4e732a33505f3328052"
+    },
+    {
+      "path": "data/packages/hybrid/training.json",
+      "sha256": "cea13a014812a0f76ece765998fee7567d3049d9a14ff65f7f818bf981cfbc8a"
+    },
+    {
+      "path": "data/packages/hybrid/weights.pt.gz",
+      "sha256": "3edc711e994a000595646d87a6dd1c03db35a9cd4ba1b8bf1d12e6ed65a1d948"
+    },
+    {
+      "path": "data/restore-package.py",
+      "sha256": "b1ecf68b06c9d73e5eef3e331a18525fa70e4e92e466837b02b36a6ac3daf505"
+    },
+    {
+      "path": "data/run.mjs",
+      "sha256": "f12ede3885fe70588a8f601ea009b514c0663e905fc87823ce3364b857d04980"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "cc29662a79156179dab1f45976b59066c3426e04e10a0f2f51984b82a8d67748"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "b3cbd938dbc1cb655c1a74fd988a59c999b2a5202bd99e7e9fa07b19f6974e2e"
+    },
+    {
+      "path": "data/source/dist/ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "data/source/dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/source/dist/ai-v3-search.js",
+      "sha256": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c"
+    },
+    {
+      "path": "data/source/dist/ai-v3.wasm",
+      "sha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39"
+    },
+    {
+      "path": "data/source/dist/engine.js",
+      "sha256": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/match-statistics.mjs",
+      "sha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/match.mjs",
+      "sha256": "17987b91d2774948764eeb548f95e959522e9dde26a7a8415174b989e7d65fd5"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/model.py",
+      "sha256": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/node-inference.mjs",
+      "sha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/offline-player.mjs",
+      "sha256": "edf7af30aed4832a3d8eb4a52e65ac430c29a81b7b68e70033e74a0751f8390f"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/pyproject.toml",
+      "sha256": "79ca8ca1296d10f570d55c484a9bd0a60f8913e69f625965b0763a54795ac537"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/study-commands.mjs",
+      "sha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/teacher-inference.mjs",
+      "sha256": "49694d3e3b20e24c5523dab28686e79a61b3afd95d381dd84cc7d766fe5f94f4"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/teacher_model.py",
+      "sha256": "94bf3d6d938dc09b3dd50a0bafb2fd8ebd0a1db8ff309bc16879d0389571b1e9"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/teacher_package.py",
+      "sha256": "dec73669a2e8ab1bba4783b3c0a5e97b5999c8ef32845829153be26639064098"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/teacher_server.py",
+      "sha256": "94ee11ee53878867d0aaf38be4b4e43af7de3d6eb0f8b0d9003e42073a92da43"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/train.py",
+      "sha256": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/train_teacher.py",
+      "sha256": "ebe26ef986de36e404fe564a73a07b4a7b4339abfc59517ee9c0f3137e874c1f"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/uv.lock",
+      "sha256": "0e0fdb2a1a972dd7c2b7effb797de2feef1a0f975178a64e98826618548b340b"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "ada30a8e13e979dff9124f9c1e01009b30076d28a5abbda89ae9330a8b179538"
+    },
+    {
+      "path": "data/topologies.json",
+      "sha256": "59feb55f76681da1fa2ffbfe6df15a3274325cce70ff878f2eaeb687ddd04762"
+    },
+    {
+      "path": "data/torch-environment.json",
+      "sha256": "b05356691026c2f265b771be0188b82beb1560324d8005e03a518a50be9f5ae9"
+    },
+    {
+      "path": "data/train-clone-command.json",
+      "sha256": "e825d850cce62def95584476270eaf0c7533763a288b47d5b4e9b1ff5e811afa"
+    },
+    {
+      "path": "data/train-clone-log.txt",
+      "sha256": "de6957a797bfcf3e2448d9d6a4f5938039d7fe8975f5e5514f65e90cc4a19a20"
+    },
+    {
+      "path": "data/train-gnn-command.json",
+      "sha256": "588752b0f0008757a0ddb2b72549bd2daf17295e70673199e80591337df3560c"
+    },
+    {
+      "path": "data/train-gnn-log.txt",
+      "sha256": "2f495356904b84718cfc9d97cf18e7b1aecad47829be6d77a4c385dfd49448e8"
+    },
+    {
+      "path": "data/train-hybrid-command.json",
+      "sha256": "3fff9e81f5ee627bd164bff483aaae73900b9dc1a4f45c765dac1e375a03ef82"
+    },
+    {
+      "path": "data/train-hybrid-log.txt",
+      "sha256": "c1248de1783d7ebd0baddb6427e6e4133d95f3af6cda8bda0941ce58a9d1ad12"
+    },
+    {
+      "path": "data/validation.json",
+      "sha256": "66cec95c7b6347ff8c15654b83b22d5dcf60a62126ddcde34561c15871367560"
+    }
+  ]
+}

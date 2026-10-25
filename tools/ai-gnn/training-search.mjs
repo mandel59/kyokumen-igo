@@ -16,13 +16,14 @@ export async function runTrainingSearch(search,inference,adjacency,{visits,mode=
  if(!Number.isInteger(visits)||visits<1||!['halving','puct'].includes(mode))throw new Error('Invalid training search');
  let root,prior,stalled=0;
  while(search.result().simulations<visits){
-  const remaining=visits-search.result().simulations;
+  const completed=search.result().simulations,remaining=visits-completed;
   const leaves=search.collect(Math.min(8,remaining),mode==='halving'?remaining:undefined);
   if(leaves.count){
    const evaluation=await inference.evaluate(leaves,adjacency);
    if(!root){root=leaves;prior=legalPrior(evaluation.policy.subarray(0,161),leaves.legal.subarray(0,161));onRoot?.(evaluation,leaves);}
-   search.submit(leaves,evaluation);stalled=0;
-  }else if(++stalled>16)throw new Error('Stalled training search');
+   search.submit(leaves,evaluation);
+  }
+  if(search.result().simulations===completed){if(++stalled>16)throw new Error('Stalled training search');}else stalled=0;
   if(search.result().provenLoss)break;
  }
  const result=search.result({diagnostics:true});

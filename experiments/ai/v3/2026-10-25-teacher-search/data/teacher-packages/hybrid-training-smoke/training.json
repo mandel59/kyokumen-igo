@@ -1,0 +1,208 @@
+{
+  "seed": 2026102652,
+  "epochs": 1,
+  "batchSize": 2,
+  "learningRate": 0.0001,
+  "device": "cpu",
+  "torchVersion": "2.14.1+cu130",
+  "selection": "Minimum balanced held-out-game loss including epoch0; strength requires separate matches",
+  "selectedEpoch": 1,
+  "initialValidation": {
+    "loss": 5.3586249351501465,
+    "unweightedLoss": 5.455150604248047,
+    "policyTop1": 0.16666666666666666,
+    "policyTop5": 0.375,
+    "policyKL": 2.2637497584025064,
+    "wdlAccuracy": 0.7083333333333334,
+    "wdlBrier": 0.48756174246470135,
+    "wdlCE": 0.688004732131958,
+    "scoreMAE": 18.610211690266926,
+    "ownershipAccuracy": 0.4475176731745402,
+    "passRecall": 0.0,
+    "passPrecision": 0.0,
+    "positions": 24,
+    "policyPositions": 24
+  },
+  "selectedValidation": {
+    "loss": 5.293400764465332,
+    "unweightedLoss": 5.376118977864583,
+    "policyTop1": 0.08333333333333333,
+    "policyTop5": 0.2916666666666667,
+    "policyKL": 2.1240059534708657,
+    "wdlAccuracy": 0.4583333333333333,
+    "wdlBrier": 0.5262283484141032,
+    "wdlCE": 0.7193716367085775,
+    "scoreMAE": 26.214449564615887,
+    "ownershipAccuracy": 0.4752485752105713,
+    "passRecall": 0.0,
+    "passPrecision": 0.0,
+    "positions": 24,
+    "policyPositions": 24
+  },
+  "validationByBoard": {
+    "sphere3": {
+      "loss": 3.763765335083008,
+      "unweightedLoss": 4.001154899597168,
+      "policyTop1": 0.0,
+      "policyTop5": 0.75,
+      "policyKL": 1.3106725215911865,
+      "wdlAccuracy": 1.0,
+      "wdlBrier": 0.3372349739074707,
+      "wdlCE": 0.5285416841506958,
+      "scoreMAE": 4.364992141723633,
+      "ownershipAccuracy": 0.5044642686843872,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    },
+    "sphere4": {
+      "loss": 5.233095169067383,
+      "unweightedLoss": 5.335370063781738,
+      "policyTop1": 0.25,
+      "policyTop5": 0.5,
+      "policyKL": 2.069138526916504,
+      "wdlAccuracy": 0.0,
+      "wdlBrier": 0.689553439617157,
+      "wdlCE": 0.8850256204605103,
+      "scoreMAE": 11.745832443237305,
+      "ownershipAccuracy": 0.5,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    },
+    "sphere5": {
+      "loss": 5.941224575042725,
+      "unweightedLoss": 5.96981954574585,
+      "policyTop1": 0.0,
+      "policyTop5": 0.0,
+      "policyKL": 2.8292388916015625,
+      "wdlAccuracy": 0.75,
+      "wdlBrier": 0.3550891578197479,
+      "wdlCE": 0.5428096055984497,
+      "scoreMAE": 10.791786193847656,
+      "ownershipAccuracy": 0.5,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    },
+    "torus7": {
+      "loss": 4.824692249298096,
+      "unweightedLoss": 4.996384620666504,
+      "policyTop1": 0.25,
+      "policyTop5": 0.5,
+      "policyKL": 1.4788174629211426,
+      "wdlAccuracy": 0.0,
+      "wdlBrier": 0.7215259671211243,
+      "wdlCE": 0.9202818274497986,
+      "scoreMAE": 48.74871063232422,
+      "ownershipAccuracy": 0.4642857015132904,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    },
+    "torus9": {
+      "loss": 6.171217441558838,
+      "unweightedLoss": 6.152400016784668,
+      "policyTop1": 0.0,
+      "policyTop5": 0.0,
+      "policyKL": 2.3983888626098633,
+      "wdlAccuracy": 0.0,
+      "wdlBrier": 0.7076510190963745,
+      "wdlCE": 0.9037647247314453,
+      "scoreMAE": 63.83916091918945,
+      "ownershipAccuracy": 0.37654322385787964,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    },
+    "torus11": {
+      "loss": 5.826402187347412,
+      "unweightedLoss": 5.801583290100098,
+      "policyTop1": 0.0,
+      "policyTop5": 0.0,
+      "policyKL": 2.6577792167663574,
+      "wdlAccuracy": 1.0,
+      "wdlBrier": 0.3463152050971985,
+      "wdlCE": 0.5358058214187622,
+      "scoreMAE": 17.79621696472168,
+      "ownershipAccuracy": 0.5061982870101929,
+      "passRecall": 0.0,
+      "passPrecision": 0.0,
+      "positions": 4,
+      "policyPositions": 4
+    }
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "trainLoss": 5.729894399642944,
+      "validation": {
+        "loss": 5.293400764465332,
+        "unweightedLoss": 5.376118977864583,
+        "policyTop1": 0.08333333333333333,
+        "policyTop5": 0.2916666666666667,
+        "policyKL": 2.1240059534708657,
+        "wdlAccuracy": 0.4583333333333333,
+        "wdlBrier": 0.5262283484141032,
+        "wdlCE": 0.7193716367085775,
+        "scoreMAE": 26.214449564615887,
+        "ownershipAccuracy": 0.4752485752105713,
+        "passRecall": 0.0,
+        "passPrecision": 0.0,
+        "positions": 24,
+        "policyPositions": 24
+      },
+      "learningRate": 0.0001
+    }
+  ],
+  "dataSources": {
+    "train": {
+      "selfplay": {
+        "positions": 24,
+        "games": 6
+      }
+    },
+    "validation": {
+      "selfplay": {
+        "positions": 24,
+        "games": 6
+      }
+    }
+  },
+  "trainGames": [
+    "selfplay-8e5b41e3974c-2026102601-sphere3-0",
+    "selfplay-8e5b41e3974c-2026102601-sphere4-0",
+    "selfplay-8e5b41e3974c-2026102601-sphere5-0",
+    "selfplay-8e5b41e3974c-2026102601-torus11-0",
+    "selfplay-8e5b41e3974c-2026102601-torus7-0",
+    "selfplay-8e5b41e3974c-2026102601-torus9-0"
+  ],
+  "validationGames": [
+    "selfplay-8e5b41e3974c-2026102601-sphere3-1",
+    "selfplay-8e5b41e3974c-2026102601-sphere4-1",
+    "selfplay-8e5b41e3974c-2026102601-sphere5-1",
+    "selfplay-8e5b41e3974c-2026102601-torus11-1",
+    "selfplay-8e5b41e3974c-2026102601-torus7-1",
+    "selfplay-8e5b41e3974c-2026102601-torus9-1"
+  ],
+  "dataSha256": {
+    "tools\\ai-gnn\\target\\teacher-search-study\\training-smoke.jsonl": "53482d467942faba9650f4ed8ffad18afb9b1104b8895d22f82169c1d9d91cb3"
+  },
+  "topologiesSha256": "59feb55f76681da1fa2ffbfe6df15a3274325cce70ff878f2eaeb687ddd04762",
+  "splitManifestSha256": null,
+  "sourcePackageManifestSha256": "34d7d4d37d11a8ae98f0dc158cf950e2929ba0aef0ef8243fe6f4708a8f07c93",
+  "optimizer": "Fresh AdamW, weightDecay1e-4, clip5, cosine to0.1x; no optimizer resume",
+  "sampling": "source/board/game/thirds, selfplay mass0.7 when mixed",
+  "sourceSha256": {
+    "train_teacher.py": "53b408e86359b728109cd058fce922078cff13a185e43c4929f0d62055b1ec6f",
+    "teacher_model.py": "af87f9ef8bfe66149ff957f8c02213610c06721a3f9f1f9898101ca680cf9bd4",
+    "teacher_package.py": "40b1c21ea92e4833b39ec89728cd2b8cb016c0ffba938f38f4ded57f9653e4fe",
+    "train.py": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a",
+    "model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd"
+  }
+}

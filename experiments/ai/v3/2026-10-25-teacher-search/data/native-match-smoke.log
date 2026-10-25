@@ -1,0 +1,3 @@
+sphere 3 pair 0 A colour 1 score 0 margin -4.5 moves 69
+sphere 3 pair 0 A colour 2 score 1 margin 4.5 moves 69
+{"games":2,"completed":2,"capped":0,"score":1,"metrics":{"a_turns":65,"a_ms":5472.6003999999975,"a_simulations":4225,"a_passes":6,"a_losingPasses":1,"a_earlyPasses":0,"a_certifiedLossPasses":0,"a_uncertifiedLosingPasses":1,"a_selfAtaris":1,"a_eyeFills":3,"a_missedCaptures":2,"b_turns":65,"b_ms":2950.919900000008,"b_simulations":4225,"b_passes":6,"b_losingPasses":1,"b_earlyPasses":0,"b_certifiedLossPasses":0,"b_uncertifiedLosingPasses":1,"b_selfAtaris":1,"b_eyeFills":3,"b_missedCaptures":2},"scoreRate":0.5,"wins":1,"draws":0,"losses":1,"boards":[{"board":"sphere3","games":2,"score":1,"pairScores":[0.5]}]}

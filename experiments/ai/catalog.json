@@ -150,6 +150,24 @@
       "architecture": "v3",
       "title": "根の探索評価値の重み0.2・0.4の比較",
       "path": "v3/2026-10-25-root-value-scale/"
+    },
+    {
+      "id": "v3/2026-10-25-offline-teacher",
+      "architecture": "v3",
+      "title": "計算量制約を外した教師AIの調査と探索予備比較",
+      "path": "v3/2026-10-25-offline-teacher/"
+    },
+    {
+      "id": "v3/2026-10-25-teacher-search",
+      "architecture": "v3",
+      "title": "同予算の教師探索比較と大型GNN・Attention教師の動作検証",
+      "path": "v3/2026-10-25-teacher-search/"
+    },
+    {
+      "id": "v3/2026-10-25-teacher-capacity",
+      "architecture": "v3",
+      "title": "同条件の小型・大型GNN・Attention教師学習パイロット",
+      "path": "v3/2026-10-25-teacher-capacity/"
     }
   ]
 }

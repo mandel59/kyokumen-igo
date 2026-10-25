@@ -1,0 +1,3 @@
+Browser games 1
+Browser games 2
+{"summary":{"games":2,"completed":2,"capped":0,"wins":1,"draws":0,"losses":1,"score":1,"boards":[{"board":"torus7","games":2,"score":1,"pairScores":[0.5]}],"scoreRate":0.5},"warmInference":{"aP95":4.5999999940395355,"bP95":4.5,"ratio":1.0222222208976746,"samplesPerModel":180}}

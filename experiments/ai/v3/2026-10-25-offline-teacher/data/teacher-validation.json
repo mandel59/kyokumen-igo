@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "rows": [
+    {
+      "board": "sphere3",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 33
+    },
+    {
+      "board": "sphere3",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 33
+    },
+    {
+      "board": "sphere4",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 33
+    },
+    {
+      "board": "sphere4",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 77
+    },
+    {
+      "board": "sphere5",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 33
+    },
+    {
+      "board": "sphere5",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 77
+    },
+    {
+      "board": "torus7",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 33
+    },
+    {
+      "board": "torus7",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 33
+    },
+    {
+      "board": "torus9",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 77
+    },
+    {
+      "board": "torus9",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 77
+    },
+    {
+      "board": "torus11",
+      "visits": 65,
+      "visitedRootActions": 32,
+      "policySupport": 4,
+      "move": 33
+    },
+    {
+      "board": "torus11",
+      "visits": 1024,
+      "visitedRootActions": 32,
+      "policySupport": 2,
+      "move": 77
+    }
+  ]
+}

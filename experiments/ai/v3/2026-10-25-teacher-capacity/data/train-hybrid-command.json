@@ -1,0 +1,40 @@
+{
+  "command": "tools/ai-gnn/.venv/Scripts/python.exe",
+  "args": [
+    "tools/ai-gnn/train_teacher.py",
+    "--package",
+    "tools/ai-gnn/target/teacher-search-study/hybrid-teacher",
+    "--data",
+    "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/selfplay.jsonl.gz",
+    "--split-manifest",
+    "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/candidate/manifest.json",
+    "--output",
+    "tools/ai-gnn/target/teacher-capacity-study/hybrid",
+    "--epochs",
+    "4",
+    "--batch-size",
+    "32",
+    "--learning-rate",
+    "0.0001",
+    "--seed",
+    "2026102655",
+    "--device",
+    "cuda"
+  ],
+  "started": "2026-10-25T11:20:54.560Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "d46bbe9e608aac083bece7f652b330da2d4444b96989c0d954f61fdc9e28c91a",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/node-inference.mjs": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a",
+    "tools/ai-gnn/match.mjs": "17987b91d2774948764eeb548f95e959522e9dde26a7a8415174b989e7d65fd5",
+    "tools/ai-gnn/selfplay.mjs": "75dd66ec259e4a5a890679a154a1dd891c356e4309c7fe14d04c22c529561afb",
+    "tools/ai-gnn/reanalyze.mjs": "243976d461c4275a85860dbd9737cbbc2d7d3a0a0a1efea30a1230fbdb133020",
+    "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/ai-v3.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39"
+  },
+  "finished": "2026-10-25T11:24:36.908Z",
+  "elapsedSeconds": 222.348,
+  "exitCode": 0
+}

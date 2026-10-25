@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "checkedOn": "2026-10-25",
+  "sources": [
+    {
+      "id": "katago-transformers-2026",
+      "title": "KataGo v1.17.0: Transformers - Strong New Nets",
+      "url": "https://github.com/lightvector/KataGo/releases/tag/v1.17.0",
+      "supports": "Go-specific evidence for transformer teacher architecture; does not validate sphere/torus transfer."
+    },
+    {
+      "id": "katago-architecture",
+      "title": "KataGo Network Sizes and Architectures",
+      "url": "https://github.com/lightvector/KataGo/blob/master/docs/NetworkArchitectures.md",
+      "supports": "Current Go teacher architectures and sizes, not interchangeable with this graph game."
+    },
+    {
+      "id": "graphormer2021",
+      "title": "Do Transformers Really Perform Bad for Graph Representation?",
+      "url": "https://arxiv.org/abs/2106.05234",
+      "supports": "Structural encodings for graph transformers; no Go strength result."
+    },
+    {
+      "id": "mctx-policy",
+      "title": "DeepMind mctx policies.py",
+      "url": "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/policies.py",
+      "supports": "Separate root candidate budget and completed-Q based policy targets over valid actions."
+    },
+    {
+      "id": "mctx-q",
+      "title": "DeepMind mctx qtransforms.py",
+      "url": "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/qtransforms.py",
+      "supports": "Mixed-value imputation for unvisited actions and Q transformations."
+    },
+    {
+      "id": "katago2019",
+      "title": "Accelerating Self-Play Learning in Go",
+      "url": "https://arxiv.org/html/1902.10565v5",
+      "supports": "Selfplay learning, auxiliary ownership/score, forced exploration and policy target pruning."
+    },
+    {
+      "id": "katago-methods",
+      "title": "Other Methods Implemented in KataGo",
+      "url": "https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md",
+      "supports": "Search value uncertainty, subtree bias correction, optimistic policy; not every method independently validated."
+    },
+    {
+      "id": "go-exploit2023",
+      "title": "Targeted Search Control in AlphaZero for Effective Policy Improvement",
+      "url": "https://arxiv.org/abs/2302.12359",
+      "supports": "State archive based restarts on Connect4 and9x9 Go; adaptation here is a hypothesis."
+    }
+  ],
+  "notes": [
+    "OpenReview forum returned a browser verification challenge, so details were checked from primary mctx sources and available paper excerpts. No code copied from external projects."
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "interpretation": "Current GNN has six local propagation blocks plus global pooling and engineered group features, so this is not a proof of an absolute receptive-field limit.",
+  "rows": [
+    {
+      "board": "sphere3",
+      "points": 56,
+      "diameter": 9,
+      "orderedPairsBeyondSixHops": 248,
+      "fractionBeyondSix": 0.08051948051948052
+    },
+    {
+      "board": "sphere4",
+      "points": 98,
+      "diameter": 12,
+      "orderedPairsBeyondSixHops": 3122,
+      "fractionBeyondSix": 0.3284241531664212
+    },
+    {
+      "board": "sphere5",
+      "points": 152,
+      "diameter": 15,
+      "orderedPairsBeyondSixHops": 12032,
+      "fractionBeyondSix": 0.524224468455908
+    },
+    {
+      "board": "torus7",
+      "points": 49,
+      "diameter": 6,
+      "orderedPairsBeyondSixHops": 0,
+      "fractionBeyondSix": 0
+    },
+    {
+      "board": "torus9",
+      "points": 81,
+      "diameter": 8,
+      "orderedPairsBeyondSixHops": 972,
+      "fractionBeyondSix": 0.15
+    },
+    {
+      "board": "torus11",
+      "points": 121,
+      "diameter": 10,
+      "orderedPairsBeyondSixHops": 4840,
+      "fractionBeyondSix": 0.3333333333333333
+    }
+  ]
+}

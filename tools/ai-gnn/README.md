@@ -169,3 +169,34 @@ node tools/ai-gnn/test-training-search.mjs
 `train.py --balanced --policy-surprise-fraction 0.5` は、自己対局の各世代・盤ごとの質量を保ちながら、半分を元のサンプリング、半分を `KL(探索方策 || NN事前分布)` に比例させます。教師データと検証用重みは変えず、方策対象外の局面の重点度は0です。すべて0なら元の重みを維持します。実験ではノイズを除いた再解析の値を使います。
 
 根の比較式の評価値倍率は0.4です。[倍率の比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)で同じ64訪問・同じモデルの独立対戦と速度基準を通過しました。
+
+## オフライン教師の調査
+
+browser-match.mjs は --a-simulations / --b-simulations でプレイヤー別の固定訪問数を指定できます。--simulations は両者の既定値で、省略時に片側だけ指定すると他方は64です。--budget-msとは混用せず、v2相手の --b-simulations は使えません。報告の simulationsByPlayer と configurations に実際の予算が入り、各通常着手が予算に厳密一致することを検査します。
+
+[教師専用AIの研究](../../experiments/ai/v3/2026-10-25-offline-teacher/README.md)に、256訪問と32候補1,024訪問の予備比較、大型Graph Transformerと蒸留教材の設計案を記録しました。予備対戦は最強の教師を証明する評価ではなく、配信ファイルを変更しません。
+## 大型教師モデルをローカルで動かす
+
+`teacher_model.py` は配信モデルと別の容量を扱います。`teacher_package.py` の `gnn` は256幅・GNN20層・5,544,713パラメータ、`hybrid` は384幅・GNN6層・Attention12層・25,222,585パラメータです。Attentionのバイアスにはグラフ距離、同じ自石の連、同じ相手石の連、同じ空点領域を使います。頂点番号に依存する位置埋め込みは使いません。
+
+初期化は既存の重みを複製・正規化し、追加の残差分岐を恒等写像にして元の出力を保ちます。容量を増やしただけでは強くなりません。初期化直後は `untrained-bootstrap` と記録し、対局で強さを確かめる必要があります。
+
+```powershell
+& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/teacher_package.py --source experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt --output tools/ai-gnn/target/teacher-gnn --preset gnn
+& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/teacher_package.py --source experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt --output tools/ai-gnn/target/teacher-hybrid --preset hybrid
+node tools/ai-gnn/test-teacher-inference.mjs tools/ai-gnn/target/teacher-gnn cuda
+node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn --device cuda --simulations 4096 --games 2 --require-complete --output tools/ai-gnn/target/teacher-replay.jsonl --report tools/ai-gnn/target/teacher-replay-report.json
+& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/train_teacher.py --package tools/ai-gnn/target/teacher-gnn --data tools/ai-gnn/target/teacher-replay.jsonl --output tools/ai-gnn/target/teacher-trained --epochs 8 --batch-size 32 --device cuda
+```
+
+これらの出力先は新しい空ディレクトリを指定します。モデルの初期化・学習コマンドは `dist/` への出力を拒否します。`test-teacher-inference.mjs` は初期化直後のパッケージを対象に、固定fixtureとの誤差、リクエストの並行発行、エラー後の復帰、全6盤65訪問を検証します。学習済みパッケージの棋力テストではありません。
+
+`teacher-inference.mjs` はローカルPythonプロセスへstdioでバッチを渡し、TorchのCPU/CUDAで推論します。教師パッケージのチェックサムを確認し、モデル容量に関するブラウザー側の制限から独立しています。`offline-player.mjs` の `createInference` に注入して既存WASM探索でも使えます。訪問数は明示必須で、時間上限やUI向けの待機を入れません。現WASMのノード上限は8,192なので、大きな予算を指定するときは容量も別途確認してください。4,096訪問は検証済みです。
+
+`train_teacher.py` は既存の32入力・WDL/得点/所有権ラベルを使い、対局単位で学習と検証を分けます。盤・対局・進行度を均衡化し、epoch0を含む検証損失で選択します。結果は独立した教師パッケージと `training.json` に保存します。検証損失の改善だけで教師として採用せず、独立seedでの対局と、その教師を使った生徒の対局を別に評価します。
+
+[同予算の探索比較と大型教師の動作検証](../../experiments/ai/v3/2026-10-25-teacher-search/README.md)に、配信を変更しない研究の結果と再現記録を保存しています。
+
+大型教師の対戦は `match.mjs --player offline --a-teacher PACKAGE --a-device cuda --b dist/models/v3 --simulations 1024 --pairs 2 --output REPORT.json` で実行できます。相手も教師の場合は `--b-teacher PACKAGE --b-device cuda` を指定します。教師を指定した側の `--a` / `--b` は併記しません。`--a-wasm` / `--b-wasm`、プレイヤー別の訪問数も使えます。既存の `match.mjs` の既定PUCT動作は維持し、有限予算の逐次半減を使う場合は `--player offline` を明示します。固定訪問数の対戦であり、速度が等しいという意味ではありません。
+
+[既存9,575局面を使う教師容量の比較](../../experiments/ai/v3/2026-10-25-teacher-capacity/README.md)では、同じ対局分割・4epochで小型・大型GNN・Attention併用モデルを検証しました。保存した実験用パッケージは、その記録のrestore-package.pyから復元できます。

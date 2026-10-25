@@ -1,0 +1,87 @@
+{
+  "bootstrap": [
+    {
+      "config": {
+        "hidden": 64,
+        "blocks": 6,
+        "attention_blocks": 0,
+        "heads": 8,
+        "policy_width": 32,
+        "value_width": 64,
+        "max_distance": 32
+      },
+      "parameters": 120905,
+      "maxErrors": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tensorHash": "34def93e7a4f07364ed7690fa59ed3f4145ceb90cce07cd17db0317cc9aa7f74"
+    },
+    {
+      "config": {
+        "hidden": 128,
+        "blocks": 8,
+        "attention_blocks": 0,
+        "heads": 8,
+        "policy_width": 64,
+        "value_width": 128,
+        "max_distance": 32
+      },
+      "parameters": 600969,
+      "maxErrors": [
+        1.9073486328125e-06,
+        5.960464477539063e-08,
+        0.0,
+        9.5367431640625e-07
+      ],
+      "tensorHash": "266ba73f924a71d39721a9876966c1dd1755bfe4fe4c8cc22fd554f10d6edfcf"
+    },
+    {
+      "config": {
+        "hidden": 256,
+        "blocks": 20,
+        "attention_blocks": 0,
+        "heads": 8,
+        "policy_width": 128,
+        "value_width": 256,
+        "max_distance": 32
+      },
+      "parameters": 5544713,
+      "maxErrors": [
+        1.9073486328125e-06,
+        5.960464477539063e-08,
+        3.725290298461914e-09,
+        4.76837158203125e-07
+      ],
+      "tensorHash": "d6247032c5ceb22f91fb9fae243a457e2ab38645c2d0314857be92f6766a030c"
+    },
+    {
+      "config": {
+        "hidden": 128,
+        "blocks": 6,
+        "attention_blocks": 2,
+        "heads": 4,
+        "policy_width": 64,
+        "value_width": 128,
+        "max_distance": 32
+      },
+      "parameters": 863777,
+      "maxErrors": [
+        1.430511474609375e-06,
+        5.960464477539063e-08,
+        2.2351741790771484e-08,
+        9.5367431640625e-07
+      ],
+      "tensorHash": "9958ef56e0fd8fe08cd51c5fd92c5e2295f1de7aafd9fd8820e583e6ad4ef353"
+    }
+  ],
+  "permutationMaxErrors": [
+    1.1920928955078125e-07,
+    5.21540641784668e-08,
+    1.4901161193847656e-08,
+    1.7881393432617188e-07
+  ],
+  "finiteGradients": true
+}

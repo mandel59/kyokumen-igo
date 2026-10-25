@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "games": 2,
+  "turns": 112,
+  "sameMoves": true,
+  "sameBudgets": true,
+  "sameOutcomes": true,
+  "appTotalMoveMs": 3792.100000023842,
+  "offlineTotalMoveMs": 3656.100000053644,
+  "timingCaveat": "Same matched trajectories but different runs; includes first-use initialization. Not a controlled performance benchmark."
+}

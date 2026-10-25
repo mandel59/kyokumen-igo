@@ -1,0 +1,29 @@
+{
+  "failedSecondPlayerCleanup": {
+    "args": [
+      "tools/ai-gnn/match.mjs",
+      "--player",
+      "offline",
+      "--a-teacher",
+      "tools/ai-gnn/target/teacher-search-study/clone-teacher",
+      "--a-device",
+      "cpu",
+      "--b",
+      "tools/ai-gnn/target/teacher-search-study/nonexistent"
+    ],
+    "status": 1,
+    "elapsedMs": 2846.2967,
+    "stderr": "node:fs:624\r\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\r\n                   ^\r\n\r\nError: ENOENT: no such file or directory, open 'C:\\Users\\mande\\ws\\kyokumen-igo\\tools\\ai-gnn\\target\\teacher-search-study\\nonexistent\\manifest.json'\r\n    at readFileSync (node:fs:624:20)\r\n    at createNodeInference (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/node-inference.mjs:7:57)\r\n    at createInference (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:36:117)\r\n    at createOfflineAI (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/offline-player.mjs:15:65)\r\n    at async player (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:35:12)\r\n    at async file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:57:13 {\r\n  errno: -4058,\r\n  code: 'ENOENT',\r\n  syscall: 'open',\r\n  path: 'C:\\\\Users\\\\mande\\\\ws\\\\kyokumen-igo\\\\tools\\\\ai-gnn\\\\target\\\\teacher-search-study\\\\nonexistent\\\\manifest.json'\r\n}\r\n\r\nNode.js v26.12.1\r\n"
+  },
+  "teacherRequiresOfflineMode": {
+    "args": [
+      "tools/ai-gnn/match.mjs",
+      "--a-teacher",
+      "tools/ai-gnn/target/teacher-search-study/clone-teacher"
+    ],
+    "status": 1,
+    "elapsedMs": 119.07760000000007,
+    "stderr": "file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:22\r\n if(teacher&&(playerMode!=='offline'||args.includes('--'+side)))throw new Error('Native teachers require --player offline and cannot also specify --'+side);\r\n                                                                      ^\r\n\r\nError: Native teachers require --player offline and cannot also specify --a\r\n    at player (file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:22:71)\r\n    at file:///C:/Users/mande/ws/kyokumen-igo/tools/ai-gnn/match.mjs:56:15\r\n    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)\r\n    at async node:internal/modules/esm/loader:650:26\r\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:105:5)\r\n\r\nNode.js v26.12.1\r\n"
+  },
+  "badChecksumRejected": true
+}

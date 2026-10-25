@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "reports": [
+    {
+      "variant": "all",
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 15,
+        "draws": 0,
+        "losses": 9,
+        "score": 15,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              1,
+              0
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              1,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.625,
+        "pairedBootstrap": {
+          "seed": 2026102642,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4583333333333333,
+            0.8333333333333334
+          ]
+        }
+      }
+    },
+    {
+      "variant": "sh32",
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 13,
+        "draws": 0,
+        "losses": 11,
+        "score": 13,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 0,
+            "pairScores": [
+              0,
+              0
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 4,
+            "pairScores": [
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 4,
+            "pairScores": [
+              1,
+              1
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          }
+        ],
+        "scoreRate": 0.5416666666666666,
+        "pairedBootstrap": {
+          "seed": 2026102642,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4583333333333333,
+            0.625
+          ]
+        }
+      }
+    },
+    {
+      "variant": "puct",
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 9,
+        "draws": 0,
+        "losses": 15,
+        "score": 9,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 0,
+            "pairScores": [
+              0,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 0,
+            "pairScores": [
+              0,
+              0
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.375,
+        "pairedBootstrap": {
+          "seed": 2026102642,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.2916666666666667,
+            0.4583333333333333
+          ]
+        }
+      }
+    }
+  ],
+  "selected": "all",
+  "eligible": false,
+  "rule": "Highest score; tie order sh32,all,puct. Continue only if >=17/24, paired95% lower>0.5, everyboard>=1/4, no capped/illegal games."
+}

@@ -1,0 +1,235 @@
+{
+  "schemaVersion": 1,
+  "role": "exploratory offline teacher research",
+  "pilots": [
+    {
+      "id": "sh8-256",
+      "rootCandidates": 8,
+      "requestedVisits": 256,
+      "opponentVisits": 64,
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 13,
+        "draws": 0,
+        "losses": 11,
+        "score": 13,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          }
+        ],
+        "scoreRate": 0.5416666666666666,
+        "pairedBootstrap": {
+          "seed": 2026102632,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4583333333333333,
+            0.625
+          ]
+        }
+      },
+      "exactNormalTurns": 2350,
+      "certifiedEarlyPassTurns": 20,
+      "wallSeconds": 193.576,
+      "actualTurnTiming": {
+        "a": {
+          "turns": 1185,
+          "ms": 144186.79999998212,
+          "visits": 300810
+        },
+        "b": {
+          "turns": 1185,
+          "ms": 39288.90000000596,
+          "visits": 75210
+        }
+      },
+      "condition": "Observed match timings on different trajectories, not an isolated timing benchmark or equal-compute comparison."
+    },
+    {
+      "id": "sh32-1024",
+      "rootCandidates": 32,
+      "requestedVisits": 1024,
+      "opponentVisits": 64,
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 15,
+        "draws": 0,
+        "losses": 9,
+        "score": 15,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 4,
+            "pairScores": [
+              1,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          }
+        ],
+        "scoreRate": 0.625,
+        "pairedBootstrap": {
+          "seed": 2026102634,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.75
+          ]
+        }
+      },
+      "exactNormalTurns": 2282,
+      "certifiedEarlyPassTurns": 15,
+      "wallSeconds": 583.328,
+      "actualTurnTiming": {
+        "a": {
+          "turns": 1149,
+          "ms": 535560.1999999434,
+          "visits": 1169415
+        },
+        "b": {
+          "turns": 1148,
+          "ms": 37754.89999985695,
+          "visits": 72968
+        }
+      },
+      "condition": "Observed match timings on different trajectories, not an isolated timing benchmark or equal-compute comparison."
+    }
+  ],
+  "productionChecks": [
+    {
+      "file": "dist/ai-v3.wasm",
+      "sha256": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+      "matches": true
+    },
+    {
+      "file": "dist/ai-v3-search.js",
+      "sha256": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+      "matches": true
+    },
+    {
+      "file": "dist/ai-v3.js",
+      "sha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+      "matches": true
+    },
+    {
+      "file": "dist/models/v3/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+      "matches": true
+    },
+    {
+      "file": "dist/models/v3/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "matches": true
+    },
+    {
+      "file": "dist/models/v3/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7",
+      "matches": true
+    }
+  ],
+  "conclusion": "Neither pilot establishes a strongest teacher. Larger architecture and broader high-budget search need independent tournaments. No student was trained or model promoted."
+}

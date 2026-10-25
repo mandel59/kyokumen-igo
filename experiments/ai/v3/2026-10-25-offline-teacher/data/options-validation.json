@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "rows": [
+    {
+      "name": "zero",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--output",
+        "tools/ai-gnn/target/offline-teacher/invalid-zero.json",
+        "--a-simulations",
+        "0"
+      ],
+      "exitCode": 1,
+      "expected": "Invalid per-player visit budget",
+      "passed": true
+    },
+    {
+      "name": "fraction",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--output",
+        "tools/ai-gnn/target/offline-teacher/invalid-fraction.json",
+        "--b-simulations",
+        "2.5"
+      ],
+      "exitCode": 1,
+      "expected": "Invalid per-player visit budget",
+      "passed": true
+    },
+    {
+      "name": "mixed-time",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--output",
+        "tools/ai-gnn/target/offline-teacher/invalid-mixed-time.json",
+        "--a-simulations",
+        "256",
+        "--budget-ms",
+        "300"
+      ],
+      "exitCode": 1,
+      "expected": "Use either",
+      "passed": true
+    },
+    {
+      "name": "v2-visits",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--output",
+        "tools/ai-gnn/target/offline-teacher/invalid-v2-visits.json",
+        "--b",
+        "v2",
+        "--b-simulations",
+        "64"
+      ],
+      "exitCode": 1,
+      "expected": "v2 uses depth",
+      "passed": true
+    }
+  ]
+}

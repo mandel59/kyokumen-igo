@@ -7,20 +7,38 @@ import {createWasmAI} from '../../dist/ai-wasm.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 import {createNodeInference} from './node-inference.mjs';
+import {createTeacherInference} from './teacher-inference.mjs';
+import {createOfflineAI} from './offline-player.mjs';
+import {matchStatistics} from './match-statistics.mjs';
 
 const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
 const pairs=Number(arg('--pairs','1')),simulations=Number(arg('--simulations','128')),seed=Number(arg('--seed','20261101'));
 if(!Number.isInteger(pairs)||pairs<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid match options');
+const playerMode=arg('--player','puct');
+if(!['puct','offline'].includes(playerMode))throw new Error('Invalid native player mode');
 const bytes=readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url));
 async function player(model,tactics,side){
+ const teacher=arg('--'+side+'-teacher',null);
+ if(teacher&&(playerMode!=='offline'||args.includes('--'+side)))throw new Error('Native teachers require --player offline and cannot also specify --'+side);
+ if(teacher)model=teacher;
  if(model==='v2'){
   const loaded=readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url));
   const ai=await createWasmAI({load:async()=>loaded});
   return {name:'v2-deployed',config:{architecture:'v2',depth:4,wasmSha256:createHash('sha256').update(loaded).digest('hex')},async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
  }
  const wasm=arg('--'+side+'-wasm',null),loaded=wasm?readFileSync(wasm):bytes;
- const fpu=Number(arg('--'+side+'-fpu','0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
+ const fpu=Number(arg('--'+side+'-fpu',playerMode==='offline'?'1':'0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
  if(!Number.isInteger(fpu)||fpu<0||fpu>2||!Number.isInteger(visits)||visits<2)throw new Error('Invalid per-player search configuration');
+ if(playerMode==='offline'){
+  if(tactics!=='safe')throw Error('Offline native player requires safe tactics');
+  let inference;
+  const ai=await createOfflineAI({fpu,createSearch:()=>createV3Search({load:async()=>loaded}),createInference:async()=>{
+   inference=teacher?await createTeacherInference({directory:teacher,device:arg('--'+side+'-device','cuda')}):await createNodeInference(model);
+   if(!teacher){inference.backend='onnx-cpu';inference.batchSize=8;}return inference;
+  }});
+  const config={model:inference.manifest.sha256,format:teacher?'offline-teacher-v1':'v3-onnx',backend:ai.backend,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
+  return {name:config.model+':offline:fpu='+fpu,config,choose:(position,seed)=>ai.chooseMove(position,{seed,maxSimulations:visits,diagnostics:arg('--diagnostics','false')==='true'}),dispose:()=>ai.dispose()};
+ }
  const search=await createV3Search({load:async()=>loaded}),inference=await createNodeInference(model);
  const config={model:inference.manifest.sha256,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
  return {name:inference.manifest.sha256+':tactics='+tactics+':fpu='+fpu,config,async choose(position,seed,adjacency){
@@ -35,9 +53,10 @@ async function player(model,tactics,side){
  },async dispose(){search.dispose();await inference.dispose();}};
 }
 let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
-const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a'),b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');
-const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
- condition:'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
+const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a');
+let b;try{b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');}catch(error){await a.dispose();throw error;}
+const report={schemaVersion:1,playerMode,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
+ condition:playerMode==='offline'?'Finite fixed visits, research-only native ONNX/Torch inference; separate per-player budgets/backends, no wall-time cutoff or speed claim.':'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
 const output=arg('--output','tools/ai-gnn/target/match.json');
 try{
  for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
@@ -92,4 +111,6 @@ for(const board of report.boards)for(const game of board.games){
  }
 }
 report.summary.scoreRate=report.summary.completed?report.summary.score/report.summary.completed:null;
+Object.assign(report.summary,matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(seed+1)))}));
+report.provenance={sources:Object.fromEntries(['tools/ai-gnn/match.mjs',...(playerMode==='offline'?['tools/ai-gnn/offline-player.mjs','tools/ai-gnn/teacher-inference.mjs','tools/ai-gnn/teacher_server.py','tools/ai-gnn/teacher_model.py','tools/ai-gnn/teacher_package.py']:[]),'tools/ai-gnn/node-inference.mjs','tools/ai-gnn/match-statistics.mjs','dist/ai-v3-inference.js','dist/ai-position.js','dist/ai-v3-search.js','dist/engine.js'].map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]))};
 writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report.summary));

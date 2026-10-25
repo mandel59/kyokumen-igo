@@ -1,0 +1,30 @@
+{
+  "format": "offline-teacher-v1",
+  "status": "supervised-pilot",
+  "config": {
+    "hidden": 256,
+    "blocks": 20,
+    "attention_blocks": 0,
+    "heads": 8,
+    "policy_width": 128,
+    "value_width": 256,
+    "max_distance": 32
+  },
+  "parameters": 5544713,
+  "weights": "weights.pt",
+  "sha256": "e8b2ac35012086bd7b60729f32142f020abd7b22f724063a5c9525168b35b12e",
+  "tensorSha256": "c3a433689ab6935284491510dad7cbc90855f3b78635f698d91bdd2843a45380",
+  "sourceCheckpointSha256": "ad8e854dbe92ead11a3b867a28a6b6c5c3cab2eab0acb217638dfc614745f512",
+  "seed": 2026102651,
+  "noise": 0.001,
+  "features": {
+    "points": 160,
+    "channels": 32,
+    "globals": 8
+  },
+  "search": {
+    "fpu": 1
+  },
+  "warning": "Validation loss is not playing strength; independent matches required.",
+  "training": "training.json"
+}

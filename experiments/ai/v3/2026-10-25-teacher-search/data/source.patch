@@ -1,0 +1,312 @@
+diff --git a/experiments/ai/README.md b/experiments/ai/README.md
+index 3c75fa1..ea81f38 100644
+--- a/experiments/ai/README.md
++++ b/experiments/ai/README.md
+@@ -60,3 +60,7 @@
+ [根の戦術候補1枠・2枠の比較](v3/2026-10-25-tactical-shortlist/README.md)は両方24勝24敗で不採用でした。
+ 
+ [根の探索評価値の重みの比較](v3/2026-10-25-root-value-scale/README.md)を保存しました。
++
++[オフライン教師の調査と予備比較](v3/2026-10-25-offline-teacher/README.md)は、ブラウザー配信を変更しない研究です。
++
++[同予算の教師探索比較と大型モデルの動作検証](v3/2026-10-25-teacher-search/README.md)を保存しました。教師の採用・ブラウザーへの反映はしていません。
+diff --git a/experiments/ai/catalog.json b/experiments/ai/catalog.json
+index ffcc556..ef5492c 100644
+--- a/experiments/ai/catalog.json
++++ b/experiments/ai/catalog.json
+@@ -150,6 +150,18 @@
+       "architecture": "v3",
+       "title": "根の探索評価値の重み0.2・0.4の比較",
+       "path": "v3/2026-10-25-root-value-scale/"
++    },
++    {
++      "id": "v3/2026-10-25-offline-teacher",
++      "architecture": "v3",
++      "title": "計算量制約を外した教師AIの調査と探索予備比較",
++      "path": "v3/2026-10-25-offline-teacher/"
++    },
++    {
++      "id": "v3/2026-10-25-teacher-search",
++      "architecture": "v3",
++      "title": "同予算の教師探索比較と大型GNN・Attention教師の動作検証",
++      "path": "v3/2026-10-25-teacher-search/"
+     }
+   ]
+ }
+diff --git a/tools/ai-gnn/README.md b/tools/ai-gnn/README.md
+index 03b2805..29be53a 100644
+--- a/tools/ai-gnn/README.md
++++ b/tools/ai-gnn/README.md
+@@ -169,3 +169,32 @@ node tools/ai-gnn/test-training-search.mjs
+ `train.py --balanced --policy-surprise-fraction 0.5` は、自己対局の各世代・盤ごとの質量を保ちながら、半分を元のサンプリング、半分を `KL(探索方策 || NN事前分布)` に比例させます。教師データと検証用重みは変えず、方策対象外の局面の重点度は0です。すべて0なら元の重みを維持します。実験ではノイズを除いた再解析の値を使います。
+ 
+ 根の比較式の評価値倍率は0.4です。[倍率の比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)で同じ64訪問・同じモデルの独立対戦と速度基準を通過しました。
++
++## オフライン教師の調査
++
++browser-match.mjs は --a-simulations / --b-simulations でプレイヤー別の固定訪問数を指定できます。--simulations は両者の既定値で、省略時に片側だけ指定すると他方は64です。--budget-msとは混用せず、v2相手の --b-simulations は使えません。報告の simulationsByPlayer と configurations に実際の予算が入り、各通常着手が予算に厳密一致することを検査します。
++
++[教師専用AIの研究](../../experiments/ai/v3/2026-10-25-offline-teacher/README.md)に、256訪問と32候補1,024訪問の予備比較、大型Graph Transformerと蒸留教材の設計案を記録しました。予備対戦は最強の教師を証明する評価ではなく、配信ファイルを変更しません。
++## 大型教師モデルをローカルで動かす
++
++`teacher_model.py` は配信モデルと別の容量を扱います。`teacher_package.py` の `gnn` は256幅・GNN20層・5,544,713パラメータ、`hybrid` は384幅・GNN6層・Attention12層・25,222,585パラメータです。Attentionのバイアスにはグラフ距離、同じ自石の連、同じ相手石の連、同じ空点領域を使います。頂点番号に依存する位置埋め込みは使いません。
++
++初期化は既存の重みを複製・正規化し、追加の残差分岐を恒等写像にして元の出力を保ちます。容量を増やしただけでは強くなりません。初期化直後は `untrained-bootstrap` と記録し、対局で強さを確かめる必要があります。
++
++```powershell
++& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/teacher_package.py --source experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt --output tools/ai-gnn/target/teacher-gnn --preset gnn
++& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/teacher_package.py --source experiments/ai/v3/2026-10-22-learning-revision/data/round1-t0/weights.pt --output tools/ai-gnn/target/teacher-hybrid --preset hybrid
++node tools/ai-gnn/test-teacher-inference.mjs tools/ai-gnn/target/teacher-gnn cuda
++node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn --device cuda --simulations 4096 --games 2 --require-complete --output tools/ai-gnn/target/teacher-replay.jsonl --report tools/ai-gnn/target/teacher-replay-report.json
++& tools/ai-gnn/.venv/Scripts/python.exe tools/ai-gnn/train_teacher.py --package tools/ai-gnn/target/teacher-gnn --data tools/ai-gnn/target/teacher-replay.jsonl --output tools/ai-gnn/target/teacher-trained --epochs 8 --batch-size 32 --device cuda
++```
++
++これらの出力先は新しい空ディレクトリを指定します。モデルの初期化・学習コマンドは `dist/` への出力を拒否します。`test-teacher-inference.mjs` は初期化直後のパッケージを対象に、固定fixtureとの誤差、リクエストの並行発行、エラー後の復帰、全6盤65訪問を検証します。学習済みパッケージの棋力テストではありません。
++
++`teacher-inference.mjs` はローカルPythonプロセスへstdioでバッチを渡し、TorchのCPU/CUDAで推論します。教師パッケージのチェックサムを確認し、モデル容量に関するブラウザー側の制限から独立しています。`offline-player.mjs` の `createInference` に注入して既存WASM探索でも使えます。訪問数は明示必須で、時間上限やUI向けの待機を入れません。現WASMのノード上限は8,192なので、大きな予算を指定するときは容量も別途確認してください。4,096訪問は検証済みです。
++
++`train_teacher.py` は既存の32入力・WDL/得点/所有権ラベルを使い、対局単位で学習と検証を分けます。盤・対局・進行度を均衡化し、epoch0を含む検証損失で選択します。結果は独立した教師パッケージと `training.json` に保存します。検証損失の改善だけで教師として採用せず、独立seedでの対局と、その教師を使った生徒の対局を別に評価します。
++
++[同予算の探索比較と大型教師の動作検証](../../experiments/ai/v3/2026-10-25-teacher-search/README.md)に、配信を変更しない研究の結果と再現記録を保存しています。
++
++大型教師の対戦は `match.mjs --player offline --a-teacher PACKAGE --a-device cuda --b dist/models/v3 --simulations 1024 --pairs 2 --output REPORT.json` で実行できます。相手も教師の場合は `--b-teacher PACKAGE --b-device cuda` を指定します。教師を指定した側の `--a` / `--b` は併記しません。`--a-wasm` / `--b-wasm`、プレイヤー別の訪問数も使えます。既存の `match.mjs` の既定PUCT動作は維持し、有限予算の逐次半減を使う場合は `--player offline` を明示します。固定訪問数の対戦であり、速度が等しいという意味ではありません。
+diff --git a/tools/ai-gnn/browser-match.mjs b/tools/ai-gnn/browser-match.mjs
+index 80625b2..abc6389 100644
+--- a/tools/ai-gnn/browser-match.mjs
++++ b/tools/ai-gnn/browser-match.mjs
+@@ -12,8 +12,14 @@ const v2Opponent=arg('--b')==='v2',sides=v2Opponent?['a']:['a','b'];
+ if(!args.includes('--a')||!output)throw new Error('Expected --a MODEL --output FILE');
+ if(existsSync(output))throw new Error('Output already exists: '+output);
+ const pairs=Number(arg('--pairs','4')),budgetMs=Number(arg('--budget-ms','300')),seed=Number(arg('--seed','2026102252'));
+-const fixedVisits=args.includes('--simulations')?Number(arg('--simulations')):null;
++const perPlayerVisits=args.includes('--a-simulations')||args.includes('--b-simulations');
++const fixedVisits=args.includes('--simulations')||perPlayerVisits?Number(arg('--simulations','64')):null;
++const visitsBySide=fixedVisits===null?null:Object.fromEntries(['a','b'].map(side=>[side,Number(arg('--'+side+'-simulations',String(fixedVisits)))]));
++if(visitsBySide&&Object.values(visitsBySide).some(v=>!Number.isInteger(v)||v<1||v>0xffffffff))throw new Error('Invalid per-player visit budget');
++if(v2Opponent&&args.includes('--b-simulations'))throw new Error('v2 uses depth, not v3 visits');
+ if(fixedVisits!==null&&(!Number.isInteger(fixedVisits)||fixedVisits<1||fixedVisits>0xffffffff||args.includes('--budget-ms')))throw new Error('Use either --simulations VISITS or --budget-ms MS');
++const playerMode=arg('--player','app');
++if(!['app','offline'].includes(playerMode)||(playerMode==='offline'&&fixedVisits===null))throw new Error('Offline player requires fixed visits');
+ const selectedBoard=arg('--board','all');
+ if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
+  !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
+@@ -21,14 +27,15 @@ const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm
+ const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
+ if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
+ const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+-const mime={'.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
++const mime={'.mjs':'text/javascript','.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
+ const server=createServer((req,res)=>{
+  try{
+   const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+   if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Kyokugo AI evaluation</title>');return;}
+   if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
+   let path;
+-  if(name==='/wasm/a'||name==='/wasm/b')path=wasm[name.at(-1)];
++  if(name==='/tools/ai-gnn/offline-player.mjs')path=resolve(root,'tools/ai-gnn/offline-player.mjs');
++  else if(name==='/wasm/a'||name==='/wasm/b')path=wasm[name.at(-1)];
+   else if(/^\/models\/[ab]\//.test(name)){
+    const side=name[8],base=models[side];path=resolve(base,name.slice(10));
+    if(!path.startsWith(base+sep))throw new Error('Invalid model path');
+@@ -47,23 +54,25 @@ try{
+  await page.exposeFunction('studyProgress',report=>{writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Browser games',report.boards.reduce((s,b)=>s+b.games.length,0));});
+  const report=await page.evaluate(async config=>{
+   const run=async function(config){
+-   const {base,seed,pairs,budgetMs,fixedVisits,fpu,v2Opponent,sides,selectedBoard}=config;
++   const {base,seed,pairs,budgetMs,fixedVisits,visitsBySide,playerMode,fpu,v2Opponent,sides,selectedBoard}=config;
+    const {Game,createTopology}=await import(base+'/dist/engine.js');
+    const {aiPosition}=await import(base+'/dist/ai-position.js');
+    const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
+    const {createV3AI}=await import(base+'/dist/ai-v3.js');
++   const createPlayer=playerMode==='offline'?(await import(base+'/tools/ai-gnn/offline-player.mjs')).createOfflineAI:createV3AI;
+    const {createWasmAI}=await import(base+'/dist/ai-wasm.js');
+    const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
+    const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].filter(([kind,size])=>selectedBoard==='all'||kind+size===selectedBoard);
+    const manifest={};for(const side of sides)manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
+-   const searchBudget=fixedVisits!==null?{maxSimulations:fixedVisits}:{budgetMs,maxSimulations:4096};
+-   const configuration=side=>({architecture:'v3',backend:'webgpu',budgetMs:fixedVisits===null?budgetMs:null,maxSimulations:searchBudget.maxSimulations,fpu:fpu[side]});
+-   const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:fixedVisits===null?budgetMs:null,simulationsPerMove:fixedVisits,komi:6.5,openingMoves:4,
++   const searchBudget=side=>fixedVisits!==null?{maxSimulations:visitsBySide[side]}:{budgetMs,maxSimulations:4096};
++   const configuration=side=>({architecture:'v3',backend:'webgpu',playerMode,budgetMs:fixedVisits===null?budgetMs:null,maxSimulations:searchBudget(side).maxSimulations,fpu:fpu[side]});
++   const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:fixedVisits===null?budgetMs:null,simulationsPerMove:fixedVisits===null||visitsBySide.a!==visitsBySide.b?null:visitsBySide.a,playerMode,simulationsByPlayer:visitsBySide&&{a:visitsBySide.a,b:v2Opponent?null:visitsBySide.b},komi:6.5,openingMoves:4,
+     models:{a:manifest.a.sha256,b:v2Opponent?'v2-deployed':manifest.b.sha256},fpu,boards:[],inferenceTimings:[],
+     configurations:{a:configuration('a'),b:v2Opponent?{architecture:'v2',backend:'wasm',depth:4}:configuration('b')},
+     condition:v2Opponent?'Current application configurations: v3 WebGPU with 300ms default budget versus deployed v2 WASM depth 4. Same Worker, sequential turns; actual compute time is measured, not equalized.':'Same Worker, sequential turns, actual application WebGPU player; fixed time, max 4096 visits, early stop on certified loss.'};
+    if(v2Opponent)report.condition=report.condition.replace('300ms',budgetMs+'ms');
+-   if(fixedVisits!==null)report.condition='Actual application WebGPU player with exactly '+fixedVisits+' visits and no time cutoff; certified losses stop early. '+(v2Opponent?'Opponent is deployed v2 WASM depth 4.':'Both players use the same visit budget.')+' Same Worker, sequential turns; not equal compute time.';
++   if(fixedVisits!==null)report.condition='Actual application WebGPU player with fixed visits A='+visitsBySide.a+', B='+(v2Opponent?'v2 depth4':visitsBySide.b)+' and no time cutoff; certified losses stop early. '+(v2Opponent?'Opponent is deployed v2 WASM depth 4.':visitsBySide.a===visitsBySide.b?'Both players use the same visit budget.':'Players use different visit budgets; this is not an equal-compute comparison.')+' Same Worker, sequential turns; not equal compute time.';
++   if(playerMode==='offline')report.condition+=' Offline research player without UI timer yields; search and neural evaluations are unchanged.';
+    const load=side=>async()=>{const r=await fetch(base+'/wasm/'+side);if(!r.ok)throw new Error('Missing WASM');return r.arrayBuffer();};
+    const native={};for(const side of sides){
+     native[side]=await createV3Inference({manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu'});
+@@ -91,7 +100,7 @@ try{
+     }
+    }finally{encoder.dispose();for(const v of Object.values(native))await v.dispose();}
+    report.warmInference={aP95:p95(allTimes.a),bP95:v2Opponent?null:p95(allTimes.b),ratio:v2Opponent?null:p95(allTimes.a)/p95(allTimes.b),samplesPerModel:allTimes.a.length};
+-   const players={};for(const side of sides)players[side]=await createV3AI({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
++   const players={};for(const side of sides)players[side]=await createPlayer({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
+    if(v2Opponent){
+     const ai=await createWasmAI({load:load('b')});
+     players.b={async chooseMove(position,{seed}){return{move:ai.chooseMove(position,{depth:4,seed}),backend:'v2-wasm'};},async dispose(){ai.dispose();}};
+@@ -109,9 +118,9 @@ try{
+        const metrics={a:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0},b:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0}},turnMetrics=[];
+        while(!game.ended&&game.moves<turnSeeds.length){
+         const side=game.turn===aColor?'a':'b',start=performance.now();
+-        const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],...searchBudget});
+-        if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
+-        if(fixedVisits!==null&&!(side==='b'&&v2Opponent)&&!result.provenLoss&&result.simulations!==fixedVisits)throw new Error('Fixed visit budget was not reached exactly');
++        const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],...searchBudget(side)});
++        if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':playerMode==='offline'?'offline-webgpu':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
++        if(fixedVisits!==null&&!(side==='b'&&v2Opponent)&&!result.provenLoss&&result.simulations!==visitsBySide[side])throw new Error('Fixed visit budget was not reached exactly');
+         const elapsedMs=performance.now()-start,m=metrics[side];m.turns++;m.ms+=elapsedMs;m.simulations+=result.simulations??0;
+         turnMetrics.push({ply:game.moves,side,elapsedMs,simulations:result.simulations??null,backend:result.backend,batches:result.batches??null,move:result.move,provenLoss:result.provenLoss??null});
+         if(result.move===null)m.passes++;if(result.provenLoss)m.certifiedLossPasses++;
+@@ -135,9 +144,9 @@ try{
+    worker.onmessage=event=>{const r=event.data;if(r.kind==='progress'){pending=pending.then(()=>window.studyProgress(r.report));pending.catch(reject);}else if(r.kind==='done'){worker.terminate();pending.then(()=>resolve(r.report),reject);}else{worker.terminate();reject(new Error(r.message));}};
+    worker.onerror=event=>{worker.terminate();reject(new Error(event.message));};worker.postMessage(config);
+   });
+- },{base,seed,pairs,budgetMs,fixedVisits,fpu,v2Opponent,sides,selectedBoard});
++ },{base,seed,pairs,budgetMs,fixedVisits,visitsBySide,playerMode,fpu,v2Opponent,sides,selectedBoard});
+  report.role=arg('--role','evaluation');
+  report.summary=matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(report.seed+1)))});report.environment={browser:browser.version(),node:process.version,cpu:cpus()[0].model};
+- report.provenance={wasm:{a:hash(wasm.a),b:hash(wasm.b)},sources:Object.fromEntries(['tools/ai-gnn/browser-match.mjs','dist/engine.js','dist/ai-position.js','dist/ai-wasm.js','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js'].map(p=>[p,hash(p)]))};
++ report.provenance={wasm:{a:hash(wasm.a),b:hash(wasm.b)},sources:Object.fromEntries(['tools/ai-gnn/browser-match.mjs',...(playerMode==='offline'?['tools/ai-gnn/offline-player.mjs']:[]),'dist/engine.js','dist/ai-position.js','dist/ai-wasm.js','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js'].map(p=>[p,hash(p)]))};
+  writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({summary:report.summary,warmInference:report.warmInference}));
+ }finally{await browser.close();await new Promise(r=>server.close(r));}
+diff --git a/tools/ai-gnn/match.mjs b/tools/ai-gnn/match.mjs
+index eac57cb..876bc05 100644
+--- a/tools/ai-gnn/match.mjs
++++ b/tools/ai-gnn/match.mjs
+@@ -7,20 +7,38 @@ import {createWasmAI} from '../../dist/ai-wasm.js';
+ import {createV3Search} from '../../dist/ai-v3-search.js';
+ import {adjacencyFor} from '../../dist/ai-v3-inference.js';
+ import {createNodeInference} from './node-inference.mjs';
++import {createTeacherInference} from './teacher-inference.mjs';
++import {createOfflineAI} from './offline-player.mjs';
++import {matchStatistics} from './match-statistics.mjs';
+ 
+ const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
+ const pairs=Number(arg('--pairs','1')),simulations=Number(arg('--simulations','128')),seed=Number(arg('--seed','20261101'));
+ if(!Number.isInteger(pairs)||pairs<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid match options');
++const playerMode=arg('--player','puct');
++if(!['puct','offline'].includes(playerMode))throw new Error('Invalid native player mode');
+ const bytes=readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url));
+ async function player(model,tactics,side){
++ const teacher=arg('--'+side+'-teacher',null);
++ if(teacher&&(playerMode!=='offline'||args.includes('--'+side)))throw new Error('Native teachers require --player offline and cannot also specify --'+side);
++ if(teacher)model=teacher;
+  if(model==='v2'){
+   const loaded=readFileSync(new URL('../../dist/ai-engine.wasm',import.meta.url));
+   const ai=await createWasmAI({load:async()=>loaded});
+   return {name:'v2-deployed',config:{architecture:'v2',depth:4,wasmSha256:createHash('sha256').update(loaded).digest('hex')},async choose(position,seed){return {move:ai.chooseMove(position,{depth:4,seed})};},async dispose(){ai.dispose();}};
+  }
+  const wasm=arg('--'+side+'-wasm',null),loaded=wasm?readFileSync(wasm):bytes;
+- const fpu=Number(arg('--'+side+'-fpu','0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
++ const fpu=Number(arg('--'+side+'-fpu',playerMode==='offline'?'1':'0')),visits=Number(arg('--'+side+'-simulations',String(simulations)));
+  if(!Number.isInteger(fpu)||fpu<0||fpu>2||!Number.isInteger(visits)||visits<2)throw new Error('Invalid per-player search configuration');
++ if(playerMode==='offline'){
++  if(tactics!=='safe')throw Error('Offline native player requires safe tactics');
++  let inference;
++  const ai=await createOfflineAI({fpu,createSearch:()=>createV3Search({load:async()=>loaded}),createInference:async()=>{
++   inference=teacher?await createTeacherInference({directory:teacher,device:arg('--'+side+'-device','cuda')}):await createNodeInference(model);
++   if(!teacher){inference.backend='onnx-cpu';inference.batchSize=8;}return inference;
++  }});
++  const config={model:inference.manifest.sha256,format:teacher?'offline-teacher-v1':'v3-onnx',backend:ai.backend,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
++  return {name:config.model+':offline:fpu='+fpu,config,choose:(position,seed)=>ai.chooseMove(position,{seed,maxSimulations:visits,diagnostics:arg('--diagnostics','false')==='true'}),dispose:()=>ai.dispose()};
++ }
+  const search=await createV3Search({load:async()=>loaded}),inference=await createNodeInference(model);
+  const config={model:inference.manifest.sha256,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
+  return {name:inference.manifest.sha256+':tactics='+tactics+':fpu='+fpu,config,async choose(position,seed,adjacency){
+@@ -35,9 +53,10 @@ async function player(model,tactics,side){
+  },async dispose(){search.dispose();await inference.dispose();}};
+ }
+ let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
+-const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a'),b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');
+-const report={schemaVersion:1,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
+- condition:'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
++const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a');
++let b;try{b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');}catch(error){await a.dispose();throw error;}
++const report={schemaVersion:1,playerMode,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
++ condition:playerMode==='offline'?'Finite fixed visits, research-only native ONNX/Torch inference; separate per-player budgets/backends, no wall-time cutoff or speed claim.':'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
+ const output=arg('--output','tools/ai-gnn/target/match.json');
+ try{
+  for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+@@ -92,4 +111,6 @@ for(const board of report.boards)for(const game of board.games){
+  }
+ }
+ report.summary.scoreRate=report.summary.completed?report.summary.score/report.summary.completed:null;
++Object.assign(report.summary,matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(seed+1)))}));
++report.provenance={sources:Object.fromEntries(['tools/ai-gnn/match.mjs',...(playerMode==='offline'?['tools/ai-gnn/offline-player.mjs','tools/ai-gnn/teacher-inference.mjs','tools/ai-gnn/teacher_server.py','tools/ai-gnn/teacher_model.py','tools/ai-gnn/teacher_package.py']:[]),'tools/ai-gnn/node-inference.mjs','tools/ai-gnn/match-statistics.mjs','dist/ai-v3-inference.js','dist/ai-position.js','dist/ai-v3-search.js','dist/engine.js'].map(p=>[p,createHash('sha256').update(readFileSync(p)).digest('hex')]))};
+ writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report.summary));
+diff --git a/tools/ai-gnn/selfplay.mjs b/tools/ai-gnn/selfplay.mjs
+index cf59d54..50d2b15 100644
+--- a/tools/ai-gnn/selfplay.mjs
++++ b/tools/ai-gnn/selfplay.mjs
+@@ -7,6 +7,7 @@ import {aiPosition} from '../../dist/ai-position.js';
+ import {createV3Search} from '../../dist/ai-v3-search.js';
+ import {adjacencyFor} from '../../dist/ai-v3-inference.js';
+ import {createNodeInference} from './node-inference.mjs';
++import {createTeacherInference} from './teacher-inference.mjs';
+ import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
+ import {runTrainingSearch,trainingTarget} from './training-search.mjs';
+ const args=process.argv.slice(2),value=(flag,fallback)=>args.includes(flag)?args[args.indexOf(flag)+1]:fallback;
+@@ -16,9 +17,12 @@ if(!['halving','puct'].includes(searchMode))throw new Error('Invalid search mode
+ if(!Number.isInteger(fpu)||fpu<0||fpu>2)throw new Error('Invalid FPU');
+ if(!Number.isInteger(games)||games<1||!Number.isInteger(simulations)||simulations<2||!Number.isInteger(seed))throw new Error('Invalid selfplay options');
+ const random=createRandom(seed);
+-const inference=await createNodeInference(value('--model','tools/ai-gnn/target/model'));
++if(value('--teacher-package')&&args.includes('--model'))throw new Error('Choose either --model or --teacher-package');
+ const wasm=readFileSync(value('--wasm','dist/ai-v3.wasm')),searchHash=createHash('sha256').update(wasm).digest('hex');
+ const search=await createV3Search({load:async()=>wasm});
++let inference;
++try{inference=value('--teacher-package')?await createTeacherInference({directory:value('--teacher-package'),device:value('--device','cuda')}):await createNodeInference(value('--model','tools/ai-gnn/target/model'));}
++catch(error){search.dispose();throw error;}
+ const out=createWriteStream(value('--output','tools/ai-gnn/target/selfplay.jsonl'));
+ let written=0,capped=0,completedGames=0;const boardReports=[];
+ try{
+@@ -40,7 +44,7 @@ try{
+     samples.push({x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),
+      legal:Array.from(root.legal,Boolean),policy:target.policy,validationPolicy:Array.from(result.policy),policySurprise:target.policySurprise,policyOrigin:searchMode,priorMix:.25,turn:game.turn,ply:game.moves,
+      action,playedAction:action,visits:result.simulations,source:'selfplay',decisionReason:result.decisionReason,
+-     policyEligible:!result.provenLoss,generatorModelHash:inference.manifest.sha256,searchHash,searchSeed,
++     policyEligible:!result.provenLoss,generatorModelHash:inference.manifest.sha256,generatorFormat:inference.manifest.format??'v3-onnx',searchHash,searchSeed,
+      rootNoiseApplied,requestedVisits:simulations,searchConfig:{mode:searchMode,fpu,tactics:true,endgame:true,puct:1.5},searchDiagnostics:result.diagnostics});
+     if(!(move===null?game.pass():game.play(move)).ok)throw new Error('Illegal MCTS move');
+    }
+diff --git a/tools/ai-gnn/test-training-search.mjs b/tools/ai-gnn/test-training-search.mjs
+index d7d3507..2de9a4b 100644
+--- a/tools/ai-gnn/test-training-search.mjs
++++ b/tools/ai-gnn/test-training-search.mjs
+@@ -14,6 +14,10 @@ try{
+   for(let i=0;i<161;i++){if(!r.root.legal[i])assert.equal(target.policy[i],0);assert.ok(target.policy[i]>=.25*r.prior[i]-1e-7);}
+   assert.ok(Number.isFinite(target.policySurprise));if(visits>=63)assert.ok(Array.from(r.policy).filter(v=>v>0).length<=2);
+  }
++ for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
++  const won=new Game(createTopology(kind,size),6.5);won.play(0);won.pass();const score=won.score();won.komi=score.black-score.white-.5;
++  search.start(aiPosition(won),{fpu:1});const exact=await runTrainingSearch(search,inference,null,{visits:4096});assert.equal(exact.simulations,4096);assert.equal(exact.move,null);assert.equal(exact.policy[160],1);
++ }
+  const game=new Game(createTopology('torus',7),6.5);search.start(aiPosition(game),{fpu:0});
+  const legacy=await runTrainingSearch(search,inference,null,{visits:65,mode:'puct'});assert.equal(legacy.simulations,65);
+  assert.deepEqual(legalPrior(Float32Array.of(1000,0,1000),[1,0,1]),[.5,0,.5]);
+diff --git a/tools/ai-gnn/training-search.mjs b/tools/ai-gnn/training-search.mjs
+index d1ba94e..4897319 100644
+--- a/tools/ai-gnn/training-search.mjs
++++ b/tools/ai-gnn/training-search.mjs
+@@ -16,13 +16,14 @@ export async function runTrainingSearch(search,inference,adjacency,{visits,mode=
+  if(!Number.isInteger(visits)||visits<1||!['halving','puct'].includes(mode))throw new Error('Invalid training search');
+  let root,prior,stalled=0;
+  while(search.result().simulations<visits){
+-  const remaining=visits-search.result().simulations;
++  const completed=search.result().simulations,remaining=visits-completed;
+   const leaves=search.collect(Math.min(8,remaining),mode==='halving'?remaining:undefined);
+   if(leaves.count){
+    const evaluation=await inference.evaluate(leaves,adjacency);
+    if(!root){root=leaves;prior=legalPrior(evaluation.policy.subarray(0,161),leaves.legal.subarray(0,161));onRoot?.(evaluation,leaves);}
+-   search.submit(leaves,evaluation);stalled=0;
+-  }else if(++stalled>16)throw new Error('Stalled training search');
++   search.submit(leaves,evaluation);
++  }
++  if(search.result().simulations===completed){if(++stalled>16)throw new Error('Stalled training search');}else stalled=0;
+   if(search.result().provenLoss)break;
+  }
+  const result=search.result({diagnostics:true});

@@ -14,6 +14,10 @@ try{
   for(let i=0;i<161;i++){if(!r.root.legal[i])assert.equal(target.policy[i],0);assert.ok(target.policy[i]>=.25*r.prior[i]-1e-7);}
   assert.ok(Number.isFinite(target.policySurprise));if(visits>=63)assert.ok(Array.from(r.policy).filter(v=>v>0).length<=2);
  }
+ for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+  const won=new Game(createTopology(kind,size),6.5);won.play(0);won.pass();const score=won.score();won.komi=score.black-score.white-.5;
+  search.start(aiPosition(won),{fpu:1});const exact=await runTrainingSearch(search,inference,null,{visits:4096});assert.equal(exact.simulations,4096);assert.equal(exact.move,null);assert.equal(exact.policy[160],1);
+ }
  const game=new Game(createTopology('torus',7),6.5);search.start(aiPosition(game),{fpu:0});
  const legacy=await runTrainingSearch(search,inference,null,{visits:65,mode:'puct'});assert.equal(legacy.simulations,65);
  assert.deepEqual(legalPrior(Float32Array.of(1000,0,1000),[1,0,1]),[.5,0,.5]);

@@ -12,8 +12,14 @@ const v2Opponent=arg('--b')==='v2',sides=v2Opponent?['a']:['a','b'];
 if(!args.includes('--a')||!output)throw new Error('Expected --a MODEL --output FILE');
 if(existsSync(output))throw new Error('Output already exists: '+output);
 const pairs=Number(arg('--pairs','4')),budgetMs=Number(arg('--budget-ms','300')),seed=Number(arg('--seed','2026102252'));
-const fixedVisits=args.includes('--simulations')?Number(arg('--simulations')):null;
+const perPlayerVisits=args.includes('--a-simulations')||args.includes('--b-simulations');
+const fixedVisits=args.includes('--simulations')||perPlayerVisits?Number(arg('--simulations','64')):null;
+const visitsBySide=fixedVisits===null?null:Object.fromEntries(['a','b'].map(side=>[side,Number(arg('--'+side+'-simulations',String(fixedVisits)))]));
+if(visitsBySide&&Object.values(visitsBySide).some(v=>!Number.isInteger(v)||v<1||v>0xffffffff))throw new Error('Invalid per-player visit budget');
+if(v2Opponent&&args.includes('--b-simulations'))throw new Error('v2 uses depth, not v3 visits');
 if(fixedVisits!==null&&(!Number.isInteger(fixedVisits)||fixedVisits<1||fixedVisits>0xffffffff||args.includes('--budget-ms')))throw new Error('Use either --simulations VISITS or --budget-ms MS');
+const playerMode=arg('--player','app');
+if(!['app','offline'].includes(playerMode)||(playerMode==='offline'&&fixedVisits===null))throw new Error('Offline player requires fixed visits');
 const selectedBoard=arg('--board','all');
 if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
  !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
@@ -21,14 +27,15 @@ const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm
 const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
 if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
 const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
-const mime={'.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
+const mime={'.mjs':'text/javascript','.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
 const server=createServer((req,res)=>{
  try{
   const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Kyokugo AI evaluation</title>');return;}
   if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
   let path;
-  if(name==='/wasm/a'||name==='/wasm/b')path=wasm[name.at(-1)];
+  if(name==='/tools/ai-gnn/offline-player.mjs')path=resolve(root,'tools/ai-gnn/offline-player.mjs');
+  else if(name==='/wasm/a'||name==='/wasm/b')path=wasm[name.at(-1)];
   else if(/^\/models\/[ab]\//.test(name)){
    const side=name[8],base=models[side];path=resolve(base,name.slice(10));
    if(!path.startsWith(base+sep))throw new Error('Invalid model path');
@@ -47,23 +54,25 @@ try{
  await page.exposeFunction('studyProgress',report=>{writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log('Browser games',report.boards.reduce((s,b)=>s+b.games.length,0));});
  const report=await page.evaluate(async config=>{
   const run=async function(config){
-   const {base,seed,pairs,budgetMs,fixedVisits,fpu,v2Opponent,sides,selectedBoard}=config;
+   const {base,seed,pairs,budgetMs,fixedVisits,visitsBySide,playerMode,fpu,v2Opponent,sides,selectedBoard}=config;
    const {Game,createTopology}=await import(base+'/dist/engine.js');
    const {aiPosition}=await import(base+'/dist/ai-position.js');
    const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
    const {createV3AI}=await import(base+'/dist/ai-v3.js');
+   const createPlayer=playerMode==='offline'?(await import(base+'/tools/ai-gnn/offline-player.mjs')).createOfflineAI:createV3AI;
    const {createWasmAI}=await import(base+'/dist/ai-wasm.js');
    const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
    const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].filter(([kind,size])=>selectedBoard==='all'||kind+size===selectedBoard);
    const manifest={};for(const side of sides)manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
-   const searchBudget=fixedVisits!==null?{maxSimulations:fixedVisits}:{budgetMs,maxSimulations:4096};
-   const configuration=side=>({architecture:'v3',backend:'webgpu',budgetMs:fixedVisits===null?budgetMs:null,maxSimulations:searchBudget.maxSimulations,fpu:fpu[side]});
-   const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:fixedVisits===null?budgetMs:null,simulationsPerMove:fixedVisits,komi:6.5,openingMoves:4,
+   const searchBudget=side=>fixedVisits!==null?{maxSimulations:visitsBySide[side]}:{budgetMs,maxSimulations:4096};
+   const configuration=side=>({architecture:'v3',backend:'webgpu',playerMode,budgetMs:fixedVisits===null?budgetMs:null,maxSimulations:searchBudget(side).maxSimulations,fpu:fpu[side]});
+   const report={schemaVersion:1,seed,pairsPerBoard:pairs,budgetMsPerMove:fixedVisits===null?budgetMs:null,simulationsPerMove:fixedVisits===null||visitsBySide.a!==visitsBySide.b?null:visitsBySide.a,playerMode,simulationsByPlayer:visitsBySide&&{a:visitsBySide.a,b:v2Opponent?null:visitsBySide.b},komi:6.5,openingMoves:4,
     models:{a:manifest.a.sha256,b:v2Opponent?'v2-deployed':manifest.b.sha256},fpu,boards:[],inferenceTimings:[],
     configurations:{a:configuration('a'),b:v2Opponent?{architecture:'v2',backend:'wasm',depth:4}:configuration('b')},
     condition:v2Opponent?'Current application configurations: v3 WebGPU with 300ms default budget versus deployed v2 WASM depth 4. Same Worker, sequential turns; actual compute time is measured, not equalized.':'Same Worker, sequential turns, actual application WebGPU player; fixed time, max 4096 visits, early stop on certified loss.'};
    if(v2Opponent)report.condition=report.condition.replace('300ms',budgetMs+'ms');
-   if(fixedVisits!==null)report.condition='Actual application WebGPU player with exactly '+fixedVisits+' visits and no time cutoff; certified losses stop early. '+(v2Opponent?'Opponent is deployed v2 WASM depth 4.':'Both players use the same visit budget.')+' Same Worker, sequential turns; not equal compute time.';
+   if(fixedVisits!==null)report.condition='Actual application WebGPU player with fixed visits A='+visitsBySide.a+', B='+(v2Opponent?'v2 depth4':visitsBySide.b)+' and no time cutoff; certified losses stop early. '+(v2Opponent?'Opponent is deployed v2 WASM depth 4.':visitsBySide.a===visitsBySide.b?'Both players use the same visit budget.':'Players use different visit budgets; this is not an equal-compute comparison.')+' Same Worker, sequential turns; not equal compute time.';
+   if(playerMode==='offline')report.condition+=' Offline research player without UI timer yields; search and neural evaluations are unchanged.';
    const load=side=>async()=>{const r=await fetch(base+'/wasm/'+side);if(!r.ok)throw new Error('Missing WASM');return r.arrayBuffer();};
    const native={};for(const side of sides){
     native[side]=await createV3Inference({manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu'});
@@ -91,7 +100,7 @@ try{
     }
    }finally{encoder.dispose();for(const v of Object.values(native))await v.dispose();}
    report.warmInference={aP95:p95(allTimes.a),bP95:v2Opponent?null:p95(allTimes.b),ratio:v2Opponent?null:p95(allTimes.a)/p95(allTimes.b),samplesPerModel:allTimes.a.length};
-   const players={};for(const side of sides)players[side]=await createV3AI({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
+   const players={};for(const side of sides)players[side]=await createPlayer({load:load(side),manifestURL:base+'/models/'+side+'/manifest.json',backend:'webgpu',fpu:fpu[side]});
    if(v2Opponent){
     const ai=await createWasmAI({load:load('b')});
     players.b={async chooseMove(position,{seed}){return{move:ai.chooseMove(position,{depth:4,seed}),backend:'v2-wasm'};},async dispose(){ai.dispose();}};
@@ -109,9 +118,9 @@ try{
        const metrics={a:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0},b:{turns:0,ms:0,simulations:0,passes:0,certifiedLossPasses:0}},turnMetrics=[];
        while(!game.ended&&game.moves<turnSeeds.length){
         const side=game.turn===aColor?'a':'b',start=performance.now();
-        const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],...searchBudget});
-        if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
-        if(fixedVisits!==null&&!(side==='b'&&v2Opponent)&&!result.provenLoss&&result.simulations!==fixedVisits)throw new Error('Fixed visit budget was not reached exactly');
+        const result=await players[side].chooseMove(aiPosition(game),{seed:turnSeeds[game.moves],...searchBudget(side)});
+        if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':playerMode==='offline'?'offline-webgpu':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
+        if(fixedVisits!==null&&!(side==='b'&&v2Opponent)&&!result.provenLoss&&result.simulations!==visitsBySide[side])throw new Error('Fixed visit budget was not reached exactly');
         const elapsedMs=performance.now()-start,m=metrics[side];m.turns++;m.ms+=elapsedMs;m.simulations+=result.simulations??0;
         turnMetrics.push({ply:game.moves,side,elapsedMs,simulations:result.simulations??null,backend:result.backend,batches:result.batches??null,move:result.move,provenLoss:result.provenLoss??null});
         if(result.move===null)m.passes++;if(result.provenLoss)m.certifiedLossPasses++;
@@ -135,9 +144,9 @@ try{
    worker.onmessage=event=>{const r=event.data;if(r.kind==='progress'){pending=pending.then(()=>window.studyProgress(r.report));pending.catch(reject);}else if(r.kind==='done'){worker.terminate();pending.then(()=>resolve(r.report),reject);}else{worker.terminate();reject(new Error(r.message));}};
    worker.onerror=event=>{worker.terminate();reject(new Error(event.message));};worker.postMessage(config);
   });
- },{base,seed,pairs,budgetMs,fixedVisits,fpu,v2Opponent,sides,selectedBoard});
+ },{base,seed,pairs,budgetMs,fixedVisits,visitsBySide,playerMode,fpu,v2Opponent,sides,selectedBoard});
  report.role=arg('--role','evaluation');
  report.summary=matchStatistics(report,{seed:Number(arg('--bootstrap-seed',String(report.seed+1)))});report.environment={browser:browser.version(),node:process.version,cpu:cpus()[0].model};
- report.provenance={wasm:{a:hash(wasm.a),b:hash(wasm.b)},sources:Object.fromEntries(['tools/ai-gnn/browser-match.mjs','dist/engine.js','dist/ai-position.js','dist/ai-wasm.js','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js'].map(p=>[p,hash(p)]))};
+ report.provenance={wasm:{a:hash(wasm.a),b:hash(wasm.b)},sources:Object.fromEntries(['tools/ai-gnn/browser-match.mjs',...(playerMode==='offline'?['tools/ai-gnn/offline-player.mjs']:[]),'dist/engine.js','dist/ai-position.js','dist/ai-wasm.js','dist/ai-v3.js','dist/ai-v3-search.js','dist/ai-v3-inference.js'].map(p=>[p,hash(p)]))};
  writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({summary:report.summary,warmInference:report.warmInference}));
 }finally{await browser.close();await new Promise(r=>server.close(r));}

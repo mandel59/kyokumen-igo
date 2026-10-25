@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "d45d63d5be5598df595d4290c3c20bd04310d7d4",
+  "purpose": "Supervised capacity pilot on archived on-policy games, not final strongest-teacher training.",
+  "data": "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/selfplay.jsonl.gz",
+  "positions": 9575,
+  "games": 96,
+  "splitManifest": "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/candidate/manifest.json",
+  "seed": 2026102655,
+  "epochs": 4,
+  "batchSize": 32,
+  "learningRate": 0.0001,
+  "device": "cuda",
+  "models": [
+    "clone",
+    "gnn",
+    "hybrid"
+  ],
+  "packageDirectory": "tools/ai-gnn/target/teacher-search-study",
+  "sampling": "board/game/thirds, selfplay-only; identical common game split for all capacities",
+  "selection": "Consider gnn/hybrid only. Lowest selected held-out loss; tie order gnn,hybrid. Continue to arena only if selectedEpoch>0, loss<control selected loss, WDL Brier<=control selected Brier and every board loss<=1.10*control selected board loss. Otherwise no large-teacher adoption or arena.",
+  "arena": {
+    "pairsPerBoard": 2,
+    "games": 24,
+    "visitsPerPlayer": 256,
+    "seed": 2026102656,
+    "bootstrapSeed": 2026102657,
+    "opponent": "frozen original clone-teacher, same CUDA backend, sh8 production search for both",
+    "interpretation": "Independent opening seeds, development strength pilot only; interval and all boards reported. No deployment or student distillation claim."
+  },
+  "baselineFiles": {
+    "dist/ai-v3.wasm": "9c613c4150326aa8d8f81ca08826c6a444979bfc3afd593ea75f84fb5a530d39",
+    "dist/ai-v3-search.js": "453fea40338aa8ba2ccc540b6fcabaaafe913f236441d8ca640740b88a32bf0c",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/models/v3/manifest.json": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca",
+    "dist/models/v3/model.onnx": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "dist/models/v3/weights.f32": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+  },
+  "inputHashes": {
+    "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/selfplay.jsonl.gz": "28df2d4afd7fa243440bb5c1645a3a36fee57fd9f507498d889c3453697abde9",
+    "experiments/ai/v3/2026-10-25-onpolicy-distillation/data/candidate/manifest.json": "a847595afbe1d5059abf3da4e81ad29a5fe96fd217db04a0fd89490f614a94bc",
+    "tools/ai-gnn/target/teacher-search-study/clone-teacher/teacher.json": "dcad628dfd7dda5f0a86d11f51266e1dfb7286033f2b99a9db185d36714ef12c",
+    "tools/ai-gnn/target/teacher-search-study/gnn-teacher/teacher.json": "66d368128c536f745cdaf9ff191adf36ae3c31b37aa82351de7a8231bf5b30c2",
+    "tools/ai-gnn/target/teacher-search-study/hybrid-teacher/teacher.json": "34d7d4d37d11a8ae98f0dc158cf950e2929ba0aef0ef8243fe6f4708a8f07c93",
+    "tools/ai-gnn/train_teacher.py": "ebe26ef986de36e404fe564a73a07b4a7b4339abfc59517ee9c0f3137e874c1f",
+    "tools/ai-gnn/teacher_model.py": "94bf3d6d938dc09b3dd50a0bafb2fd8ebd0a1db8ff309bc16879d0389571b1e9",
+    "tools/ai-gnn/teacher_package.py": "dec73669a2e8ab1bba4783b3c0a5e97b5999c8ef32845829153be26639064098",
+    "tools/ai-gnn/match.mjs": "17987b91d2774948764eeb548f95e959522e9dde26a7a8415174b989e7d65fd5",
+    "tools/ai-gnn/teacher-inference.mjs": "49694d3e3b20e24c5523dab28686e79a61b3afd95d381dd84cc7d766fe5f94f4",
+    "tools/ai-gnn/teacher_server.py": "94ee11ee53878867d0aaf38be4b4e43af7de3d6eb0f8b0d9003e42073a92da43",
+    "tools/ai-gnn/offline-player.mjs": "edf7af30aed4832a3d8eb4a52e65ac430c29a81b7b68e70033e74a0751f8390f"
+  }
+}

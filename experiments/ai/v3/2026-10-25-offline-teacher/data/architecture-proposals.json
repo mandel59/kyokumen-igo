@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "scope": "Illustrative configurable GNN baselines using the current block and head equations; not trained, not exported, not strength claims. GraphTransformer sizes depend on its separately designed attention/FFN blocks.",
+  "configs": [
+    {
+      "hidden": 64,
+      "blocks": 6,
+      "parameters": 120905,
+      "parameterRatio": 1
+    },
+    {
+      "hidden": 128,
+      "blocks": 12,
+      "parameters": 838153,
+      "parameterRatio": 6.932327033621438
+    },
+    {
+      "hidden": 256,
+      "blocks": 20,
+      "parameters": 5366921,
+      "parameterRatio": 44.389570323807945
+    },
+    {
+      "hidden": 384,
+      "blocks": 24,
+      "parameters": 14357769,
+      "parameterRatio": 118.75248335469998
+    },
+    {
+      "hidden": 512,
+      "blocks": 40,
+      "parameters": 42301833,
+      "parameterRatio": 349.87662214135065
+    }
+  ]
+}
