@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "schedule": [
+    {
+      "board": "sphere3",
+      "mean": 7,
+      "loss": 4,
+      "games": 8,
+      "mode": 2
+    },
+    {
+      "board": "sphere4",
+      "mean": 5,
+      "loss": 4,
+      "games": 8,
+      "mode": 2
+    },
+    {
+      "board": "sphere5",
+      "mean": 6,
+      "loss": 4,
+      "games": 8,
+      "mode": 2
+    },
+    {
+      "board": "torus7",
+      "mean": 4,
+      "loss": 4,
+      "games": 8,
+      "mode": 0
+    },
+    {
+      "board": "torus9",
+      "mean": 3,
+      "loss": 4,
+      "games": 8,
+      "mode": 0
+    },
+    {
+      "board": "torus11",
+      "mean": 4,
+      "loss": 4,
+      "games": 8,
+      "mode": 0
+    }
+  ],
+  "chosenBeforeHeldOutEvaluation": true,
+  "aggregateDevelopmentScore": 30,
+  "games": 48,
+  "wasmSha256": "90fe5c55a6ce52fe83adc1a40c8fd9f794f5ae583a6813888fb90066b7cfab3d",
+  "sourceSha256": "b0fa8ef20dcefcfc1314b728af33893159846a02db9edf0ea24db94b5e35c8e4",
+  "build": {
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-tuner/src/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/batch-search/selected.wasm"
+    ]
+  }
+}

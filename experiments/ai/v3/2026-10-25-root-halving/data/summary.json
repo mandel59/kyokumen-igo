@@ -1,0 +1,663 @@
+{
+  "schemaVersion": 1,
+  "accepted": true,
+  "consideredActions": 8,
+  "defaultSimulations": 64,
+  "modelUnchanged": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "featureABI": 1,
+  "searchABI": 3,
+  "sourceBaseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+  "environment": {
+    "browser": "156.0.4314.42",
+    "node": "v26.12.1",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "rust": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "independentMatch": {
+    "games": 192,
+    "completed": 192,
+    "capped": 0,
+    "wins": 117,
+    "draws": 0,
+    "losses": 75,
+    "score": 117,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 32,
+        "score": 19,
+        "pairScores": [
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          1,
+          1,
+          0,
+          0.5,
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 32,
+        "score": 20,
+        "pairScores": [
+          1,
+          1,
+          0.5,
+          0,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          1
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 32,
+        "score": 19,
+        "pairScores": [
+          0.5,
+          0.5,
+          0,
+          1,
+          0.5,
+          0.5,
+          1,
+          0,
+          1,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 32,
+        "score": 22,
+        "pairScores": [
+          0.5,
+          1,
+          0.5,
+          1,
+          0.5,
+          1,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 32,
+        "score": 20,
+        "pairScores": [
+          0.5,
+          0.5,
+          1,
+          1,
+          0,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 32,
+        "score": 17,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "scoreRate": 0.609375,
+    "pairedBootstrap": {
+      "seed": 2026102582,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.5520833333333334,
+        0.6666666666666666
+      ]
+    }
+  },
+  "speed": [
+    {
+      "backend": "wasm",
+      "a": {
+        "samples": 126,
+        "p95Ms": 157.70000000298023,
+        "meanMs": 151.81984127017242,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 161.5,
+        "meanMs": 151.9333333326947,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9764705882537476,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 152.8999999910593,
+            "meanMs": 150.82380952366762,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 153.30000001192093,
+            "meanMs": 151.10476190490382,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9973907369808838
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157,
+            "meanMs": 152.1476190480448,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 153.70000000298023,
+            "meanMs": 151.42857142715226,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.021470396857227
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157.59999999403954,
+            "meanMs": 153.95714285685904,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 162.40000000596046,
+            "meanMs": 155.30476190433615,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9704433496813747
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 150.5,
+            "meanMs": 148.49523809552193,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 155.79999999701977,
+            "meanMs": 150.70476190391042,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9659820282598129
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 152.80000001192093,
+            "meanMs": 149.65238095465162,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 154.3999999910593,
+            "meanMs": 149.90476190263317,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.989637305833996
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 176.6000000089407,
+            "meanMs": 155.8428571422895,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 168.1000000089407,
+            "meanMs": 153.15238095323244,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.05056513979505
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "a": {
+        "samples": 126,
+        "p95Ms": 38.6000000089407,
+        "meanMs": 33.125396825964486,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 39.20000000298023,
+        "meanMs": 33.34126984115158,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9846938777042368,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 41.599999994039536,
+            "meanMs": 35.12857142942293,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39.8999999910593,
+            "meanMs": 34.080952380384716,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0426065163749665
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.1000000089407,
+            "meanMs": 32.59047619217918,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 38.3999999910593,
+            "meanMs": 33.18571428528854,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9140625004456524
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.70000000298023,
+            "meanMs": 34.49523809481235,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 40.30000001192093,
+            "meanMs": 35.161904762898175,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9602977665392702
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 33.79999999701977,
+            "meanMs": 31.195238095663843,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.20000000298023,
+            "meanMs": 33.0571428565752,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9337016572993679
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.099999994039536,
+            "meanMs": 31.790476190901938,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 34.099999994039536,
+            "meanMs": 31.866666666099004,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0293255132016068
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.099999994039536,
+            "meanMs": 33.5523809528067,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 35,
+            "meanMs": 32.69523809566384,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.059999999829701
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "adoption": {
+    "schemaVersion": 1,
+    "accepted": true,
+    "modelUnchanged": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "defaultVisits": 64,
+    "consideredActions": 8,
+    "independentSummary": {
+      "games": 192,
+      "completed": 192,
+      "capped": 0,
+      "wins": 117,
+      "draws": 0,
+      "losses": 75,
+      "score": 117,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 32,
+          "score": 19,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            0,
+            0.5,
+            0,
+            0,
+            1,
+            1
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 32,
+          "score": 20,
+          "pairScores": [
+            1,
+            1,
+            0.5,
+            0,
+            0,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            1
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 32,
+          "score": 19,
+          "pairScores": [
+            0.5,
+            0.5,
+            0,
+            1,
+            0.5,
+            0.5,
+            1,
+            0,
+            1,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 32,
+          "score": 22,
+          "pairScores": [
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            0.5,
+            1,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 32,
+          "score": 20,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            1,
+            0,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 32,
+          "score": 17,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0,
+            0.5,
+            0.5,
+            1,
+            0.5,
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.609375,
+      "pairedBootstrap": {
+        "seed": 2026102582,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.5520833333333334,
+          0.6666666666666666
+        ]
+      }
+    },
+    "speedGatePassed": true,
+    "installedWasm": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+    "installedSource": "dbaa2821c7655ed6e41d207f7b6bc2c55161acd995a2caf65cdf9e0a04598f7f",
+    "matchesFrozenEvaluation": true,
+    "evaluatedSource": "12c3d74b7c9e18c3f36dd1a7cdaae5836ee7e1ec005a526b3017369094f91954",
+    "sourceNormalization": "CRLF to LF only; normalized frozen source exactly matches installed source."
+  },
+  "command": {
+    "command": "node",
+    "args": [
+      "tools/ai-gnn/browser-match.mjs",
+      "--a",
+      "tools/ai-gnn/target/value-calibration/baseline-model",
+      "--b",
+      "tools/ai-gnn/target/value-calibration/baseline-model",
+      "--a-wasm",
+      "tools/ai-gnn/target/root-halving/selected.wasm",
+      "--b-wasm",
+      "tools/ai-gnn/target/root-halving/baseline.wasm",
+      "--pairs",
+      "16",
+      "--simulations",
+      "64",
+      "--seed",
+      "2026102581",
+      "--role",
+      "evaluation",
+      "--output",
+      "tools/ai-gnn/target/root-halving/evaluation.json"
+    ]
+  },
+  "sourceHashes": {
+    "tools/ai-tuner/src/mcts.rs": "dbaa2821c7655ed6e41d207f7b6bc2c55161acd995a2caf65cdf9e0a04598f7f",
+    "dist/ai-v3-search.js": "e3fcf95a42fb5cd2c26d03527067ad95b658a3341bc199e9c4d3829b9db5a2f8",
+    "v3-tests.mjs": "c3296d03152450ee1045a558b25054ddec32ed3f61ac1c2e796a873628e6a110",
+    "tools/ai-gnn/browser-match.mjs": "cac87458d356c6d616c71e27b925ecf72abc494bb5af08f3fd8ea196dee46165",
+    "tools/ai-gnn/test-browser.mjs": "3e67f688a00b3abe192441e12844528ce21e433130d896ea64adde8ac88cb0bc",
+    "tools/ai-gnn/bench-search.mjs": "d5896798e8d8f2bade89fefc3cc175fa29e509a1dd95427efa5f1815793fcdfd"
+  },
+  "runtimeProvenance": {
+    "wasm": {
+      "a": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+      "b": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+    },
+    "sources": {
+      "tools/ai-gnn/browser-match.mjs": "cac87458d356c6d616c71e27b925ecf72abc494bb5af08f3fd8ea196dee46165",
+      "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+      "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+      "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+      "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+      "dist/ai-v3-search.js": "d9077bd40041361a9a6841747dd40f04b7730b51d45840d05b2ffdd5f6a93b42",
+      "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    }
+  },
+  "reference": {
+    "title": "Policy improvement by planning with Gumbel",
+    "authors": "Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver",
+    "year": 2022,
+    "url": "https://openreview.net/forum?id=bERaNdoegnO",
+    "implementation": "Independent deterministic root sequential halving with ordinary PUCT below the root; no Gumbel noise or copied mctx code."
+  }
+}

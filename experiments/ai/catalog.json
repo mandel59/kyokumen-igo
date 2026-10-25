@@ -102,6 +102,30 @@
       "architecture": "v2",
       "title": "Share Benson certificates and pass after proven defeat in v2",
       "path": "v2/2026-10-22-endgame/"
+    },
+    {
+      "id": "v3/2026-10-25-search-proof",
+      "architecture": "v3",
+      "title": "Exact internal pass values, minimax proofs and rejected exploration tuning",
+      "path": "v3/2026-10-25-search-proof/"
+    },
+    {
+      "id": "v3/2026-10-25-batch-search",
+      "architecture": "v3",
+      "title": "Pending-aware reservations and rejected board-specific virtual means",
+      "path": "v3/2026-10-25-batch-search/"
+    },
+    {
+      "id": "v3/2026-10-25-value-calibration",
+      "architecture": "v3",
+      "title": "Frozen-policy value-head fine-tuning rejected after independent evaluation",
+      "path": "v3/2026-10-25-value-calibration/"
+    },
+    {
+      "id": "v3/2026-10-25-root-halving",
+      "architecture": "v3",
+      "title": "Adopted eight-action root sequential halving at unchanged 64 visits",
+      "path": "v3/2026-10-25-root-halving/"
     }
   ]
 }

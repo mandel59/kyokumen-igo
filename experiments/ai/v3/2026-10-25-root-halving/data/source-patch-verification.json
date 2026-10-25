@@ -1,0 +1,10 @@
+{
+  "command": "git",
+  "args": [
+    "apply",
+    "--check",
+    "--reverse",
+    "experiments/ai/v3/2026-10-25-root-halving/data/source.patch"
+  ],
+  "exitCode": 0
+}

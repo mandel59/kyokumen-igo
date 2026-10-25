@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "accepted": false,
+  "reason": "Paired 95% interval includes 50%: 102/192 is not confirmed strength improvement.",
+  "model": "19ab1ebd27aeef054454e87d3a2ae5b1c3161417e49bb28f7ed7ed9149f5188d",
+  "parent": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "selectedEpoch": 24,
+  "parameterCount": 120905,
+  "changedParameters": 4867,
+  "trainingSeconds": 155.778,
+  "validation": {
+    "before": {
+      "loss": 3.0514132976531982,
+      "unweightedLoss": 3.161549073917456,
+      "policyTop1": 0.4673178061607814,
+      "policyTop5": 0.8264462809917356,
+      "policyKL": 1.3759496599517906,
+      "wdlAccuracy": 0.6952884733669578,
+      "wdlBrier": 0.3934363563322672,
+      "wdlCE": 0.6331223834996617,
+      "scoreMAE": 26.702246586295978,
+      "ownershipAccuracy": 0.7224743683878706,
+      "passRecall": 0.7604166666666666,
+      "passPrecision": 0.73,
+      "positions": 8129,
+      "policyPositions": 3993
+    },
+    "after": {
+      "loss": 3.030853271484375,
+      "unweightedLoss": 3.135144765269406,
+      "policyTop1": 0.4673178061607814,
+      "policyTop5": 0.8264462809917356,
+      "policyKL": 1.3759496599517906,
+      "wdlAccuracy": 0.7100504367080822,
+      "wdlBrier": 0.38227084959135504,
+      "wdlCE": 0.6067187355840202,
+      "scoreMAE": 26.702246586295978,
+      "ownershipAccuracy": 0.7224743683878706,
+      "passRecall": 0.7604166666666666,
+      "passPrecision": 0.73,
+      "positions": 8129,
+      "policyPositions": 3993
+    }
+  },
+  "match": {
+    "games": 192,
+    "completed": 192,
+    "capped": 0,
+    "wins": 102,
+    "draws": 0,
+    "losses": 90,
+    "score": 102,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 32,
+        "score": 20,
+        "pairScores": [
+          0,
+          0,
+          0.5,
+          1,
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          1,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 32,
+        "score": 13,
+        "pairScores": [
+          0.5,
+          0.5,
+          0,
+          0,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 32,
+        "score": 18,
+        "pairScores": [
+          0.5,
+          0,
+          0,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          1,
+          1,
+          1,
+          0.5
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 32,
+        "score": 12,
+        "pairScores": [
+          0,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 32,
+        "score": 21,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          0,
+          1,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 32,
+        "score": 18,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0,
+          0.5,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          0
+        ]
+      }
+    ],
+    "scoreRate": 0.53125,
+    "pairedBootstrap": {
+      "seed": 2026102562,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.46875,
+        0.59375
+      ]
+    }
+  },
+  "speed": [
+    {
+      "backend": "wasm",
+      "a": {
+        "samples": 126,
+        "p95Ms": 168.19999998807907,
+        "meanMs": 158.65079365103017,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 171.29999999701977,
+        "meanMs": 159.48650793695734,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.981903093934649,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 168.90000000596046,
+            "meanMs": 160.01428571485337,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 179.29999999701977,
+            "meanMs": 160.41904761961527,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9419966537019957
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 170.6000000089407,
+            "meanMs": 161.6095238093819,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 182.40000000596046,
+            "meanMs": 161.4714285717124,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9353070175623127
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 170.29999999701977,
+            "meanMs": 159.88571428472088,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 171.29999999701977,
+            "meanMs": 161.31904761989912,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9941622883828524
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 160,
+            "meanMs": 155.9238095226742,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 167.20000000298023,
+            "meanMs": 158.80000000198683,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9569377990260054
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 161.79999999701977,
+            "meanMs": 157.20476190603915,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 163,
+            "meanMs": 156.04761904761904,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9926380367915323
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 163.19999998807907,
+            "meanMs": 157.26666666851156,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 166.79999999701977,
+            "meanMs": 158.86190476091136,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9784172661330635
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "a": {
+        "samples": 126,
+        "p95Ms": 38.5,
+        "meanMs": 34.54603174588983,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 40,
+        "meanMs": 34.69682539703827,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9625,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.20000000298023,
+            "meanMs": 34.08571428557237,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.70000000298023,
+            "meanMs": 33.84285714228948,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0408719346015856
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.599999994039536,
+            "meanMs": 33.37619047505515,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 38.80000001192093,
+            "meanMs": 33.60952381080105,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9175257727603551
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.5,
+            "meanMs": 35.638095239798226,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 40,
+            "meanMs": 36.785714284295125,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9625
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37,
+            "meanMs": 33.552380952097124,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 43.20000000298023,
+            "meanMs": 34.36666666751816,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.8564814814223956
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.79999999701977,
+            "meanMs": 34.45238095309053,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 37.5,
+            "meanMs": 34.17142857114474,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0079999999205271
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 41.20000000298023,
+            "meanMs": 36.171428569725585,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39.29999999701977,
+            "meanMs": 35.404761906181065,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0483460561349758
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "environment": {
+    "browser": "156.0.4314.42",
+    "node": "v26.12.1",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "search": {
+    "a": "726f67744fc115c09b8b7def0e136774b05f3f77874b8c376a5e0caa05d33299",
+    "b": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+  },
+  "command": {
+    "command": "node",
+    "args": [
+      "tools/ai-gnn/browser-match.mjs",
+      "--a",
+      "tools/ai-gnn/target/value-calibration/candidate-model",
+      "--b",
+      "tools/ai-gnn/target/value-calibration/baseline-model",
+      "--a-wasm",
+      "tools/ai-gnn/target/value-calibration/candidate.wasm",
+      "--b-wasm",
+      "tools/ai-gnn/target/value-calibration/baseline.wasm",
+      "--a-fpu",
+      "1",
+      "--b-fpu",
+      "1",
+      "--pairs",
+      "16",
+      "--simulations",
+      "64",
+      "--seed",
+      "2026102561",
+      "--role",
+      "evaluation",
+      "--output",
+      "tools/ai-gnn/target/value-calibration/evaluation.json"
+    ]
+  }
+}

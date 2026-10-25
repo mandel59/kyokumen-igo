@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "registeredAfter": "Completed first held-out evaluation: 49/96. Reject exploration coefficient 0.75.",
+  "selection": "Restore original coefficient 1.5; retain exact terminal values, winning second-pass proofs, minimax propagation and refuted-action filtering. This is the correctness fallback specified in the original plan, not another parameter sweep.",
+  "seed": 2026102521,
+  "pairsPerBoard": 8,
+  "games": 96,
+  "visits": 64,
+  "fpu": 1,
+  "komi": 6.5,
+  "openingMoves": 4,
+  "maxPlies": "20 * points",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "stop": "Complete 96 games with no tuning or extra games. Treat as an operational regression/strength measurement. Claim measured strength improvement only if >=53/96 and each board >=6/16; otherwise report tactical correctness improvement without claiming overall strength."
+}

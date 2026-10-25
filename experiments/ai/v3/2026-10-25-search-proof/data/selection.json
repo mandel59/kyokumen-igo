@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "variant": "solver-0.75",
+  "chosenBeforeEvaluation": true,
+  "development": [
+    {
+      "variant": "solver-0.75",
+      "score": 15,
+      "games": 24,
+      "file": "solver-075-development.json"
+    },
+    {
+      "variant": "solver-1.5",
+      "score": 13,
+      "games": 24,
+      "file": "solver-development.json"
+    },
+    {
+      "variant": "solver-2.25",
+      "score": 13,
+      "games": 24,
+      "file": "solver-225-development.json"
+    }
+  ],
+  "evaluation": {
+    "seed": 2026102511,
+    "pairsPerBoard": 8,
+    "games": 96,
+    "visits": 64,
+    "fpu": 1
+  },
+  "wasmSha256": "382fc826bc4bbddb3ba118211a7109fa3a1f13527c5cb036182262b78ac4dd8b",
+  "mctsSha256": "cca31000b68ab4f10bb4a961c785960e4a9f22508e1addf644d37dac3184b967",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "build": {
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-tuner/src/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/exact-pass/selected.wasm"
+    ]
+  },
+  "note": "Identical selected Rust source rebuilt at its canonical path before evaluation; development binary contains different source-location strings."
+}

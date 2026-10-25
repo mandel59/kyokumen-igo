@@ -22,7 +22,11 @@
 | v3/2026-10-22-pixel8a-visits | Pixel 8aのChrome / Firefox実測と共通64訪問への調整 | [記録](v3/2026-10-22-pixel8a-visits/README.md) |
 | v3/2026-10-22-fixed64-strength | 実ブラウザーの共通64訪問v3と現行v2の先後交換96局 | [記録](v3/2026-10-22-fixed64-strength/README.md) |
 | v3/2026-10-23-antipodal | 黒v2・64訪問v3に対する白の対蹠点コピーと違法応手の診断 | [記録](v3/2026-10-23-antipodal/README.md) |
+| v3/2026-10-25-search-proof | 探索内の確定勝敗・敵対的NN回帰・探索係数の不採用評価 | [記録](v3/2026-10-25-search-proof/README.md) |
 | v2/2026-10-22-endgame | 生存・敗北確定判定の共通化と v2 のパス改善 | [記録](v2/2026-10-22-endgame/README.md) |
+| v3/2026-10-25-batch-search | 64訪問の評価待ち重複回避・予約値平均・独立192局の不採用評価 | [記録](v3/2026-10-25-batch-search/README.md) |
+| v3/2026-10-25-value-calibration | 着手方策を固定した勝敗ヘッド学習・独立192局の不採用評価 | [記録](v3/2026-10-25-value-calibration/README.md) |
+| v3/2026-10-25-root-halving | 同じ64訪問で根の逐次半減を採用・独立192局117勝75敗・速度維持 | [記録](v3/2026-10-25-root-halving/README.md) |
 
 機械可読の索引は [catalog.json](catalog.json) です。各実験は README（報告）、manifest.json（識別情報・出所・データハッシュ）、data/（結果・計画・ログ）を持ちます。
 

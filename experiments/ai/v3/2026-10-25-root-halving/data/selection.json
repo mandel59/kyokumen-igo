@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "consideredActions": 8,
+      "score": 34,
+      "games": 48
+    },
+    {
+      "consideredActions": 16,
+      "score": 28,
+      "games": 48
+    }
+  ],
+  "selectedActions": 8,
+  "chosenBeforeEvaluation": true,
+  "wasm": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+  "source": "12c3d74b7c9e18c3f36dd1a7cdaae5836ee7e1ec005a526b3017369094f91954",
+  "build": {
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-gnn/target/root-halving/source/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/root-halving/selected.wasm"
+    ]
+  },
+  "compatibility": "Before held-out evaluation, add a PUCT fallback for changing incremental budgets; fixed 64-visit planning is unchanged."
+}

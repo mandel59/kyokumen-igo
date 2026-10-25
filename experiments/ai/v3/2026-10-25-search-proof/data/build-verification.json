@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "sourceMatchesFrozenFinal": true,
+  "evaluatedSha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+  "rebuiltSha256": "e24f13688607e18a66c2cd32baeae94b6060d959ef8f6f038cbb662d6e597718",
+  "note": "Rebuilding produced different function/type ordering from the same frozen Rust source. Preserve and install the evaluated binary; both passed the WASM regression suite."
+}

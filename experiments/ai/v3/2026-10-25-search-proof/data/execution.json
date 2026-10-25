@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "sourceBaseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+  "node": "v26.12.1",
+  "rust": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "sourceHashes": {
+    "tools/ai-tuner/src/mcts.rs": "7e591b8efbfb110e087ab31ca97b59d4c1cb6d3b447592a6006e55a109a1e275",
+    "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+    "v3-tests.mjs": "011d4da6881ee308502712546fc9bec63c03c7c3ae9b8424d10b2255b9a06ef2",
+    "dist/ai-v3-search.js": "d9077bd40041361a9a6841747dd40f04b7730b51d45840d05b2ffdd5f6a93b42",
+    "tools/ai-gnn/test-browser.mjs": "00b8e8812651959244512d9164da2831b493eed17c615b1c40ad8bd7d26d79f1"
+  },
+  "deployedWasm": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+  "runs": [
+    {
+      "name": "development",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "2",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102501",
+        "--role",
+        "development",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/development.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "5384081263f7e630511b5d3b194c252e9bba76dff1327239e16f47b8c26c3026",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "847904d9a79d81b310f185fdd3b8ef202c7abdcac152e54df222b737e41ed8b0",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 74.35969999999553
+    },
+    {
+      "name": "solver-development",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/exact-pass/solver.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "2",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102501",
+        "--role",
+        "development",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/solver-development.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 77.00720000003278
+    },
+    {
+      "name": "solver-075-development",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/exact-pass/solver-075.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "2",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102501",
+        "--role",
+        "development",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/solver-075-development.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "fd9e470452975acf8b464cd7d898205c5d8bbfd863ccd1f9d907b96ec0f5bd79",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 77.1119000000134
+    },
+    {
+      "name": "solver-225-development",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/exact-pass/solver-225.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "2",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102501",
+        "--role",
+        "development",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/solver-225-development.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "9bc1d92ac6fcf16fb2d76be32092765465d65496ab1653764fe7724e4b8c0f95",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 78.73609999998659
+    },
+    {
+      "name": "evaluation",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/exact-pass/selected.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "8",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102511",
+        "--role",
+        "evaluation",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/evaluation.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "382fc826bc4bbddb3ba118211a7109fa3a1f13527c5cb036182262b78ac4dd8b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 307.445000000298
+    },
+    {
+      "name": "final-evaluation",
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/exact-pass/final.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/exact-pass/baseline.wasm",
+        "--pairs",
+        "8",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102521",
+        "--role",
+        "evaluation",
+        "--output",
+        "tools/ai-gnn/target/exact-pass/final-evaluation.json"
+      ],
+      "provenance": {
+        "wasm": {
+          "a": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "environment": {
+        "browser": "156.0.4314.42",
+        "node": "v26.12.1",
+        "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+      },
+      "elapsedMoveSeconds": 296.76140000029653
+    }
+  ],
+  "adoption": {
+    "variant": "solver-cpuct-1.5",
+    "exactCorrectnessFix": true,
+    "explorationChangeRejected": true,
+    "overallStrengthGatePassed": false
+  }
+}

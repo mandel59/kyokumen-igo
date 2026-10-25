@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "baseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+  "constraint": "Keep default 64 visits and the same model/inference batch capacity. User explicitly requires current response speed.",
+  "baselineWasm": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+  "hypothesis": "The collector can repeatedly select an already pending child and return an underfilled batch. Exclude pending/exhausted branches to fill available batches, then test reservation counts without a fictitious -1 value.",
+  "variants": [
+    "pending-aware-virtual-loss",
+    "pending-aware-virtual-mean"
+  ],
+  "development": {
+    "seed": 2026102531,
+    "pairsPerBoard": 4,
+    "gamesPerVariant": 48
+  },
+  "selection": "Highest completed development score; tie prefers original virtual-loss values. No parameter sweep. Freeze winner before fresh evaluation.",
+  "evaluation": {
+    "seed": 2026102541,
+    "pairsPerBoard": 16,
+    "games": 192
+  },
+  "strengthGate": "At least 108/192, each board at least 12/32, paired bootstrap lower 95% bound >0.5, no illegal/capped games.",
+  "speedGate": "Fixed 18 roots with unchanged 64 visits on both CPU/WASM and WebGPU; aggregate P95 <= 1.05 baseline and every board P95 <= 1.10 baseline. Record neural batch counts. No increase to default visits or model size.",
+  "komi": 6.5,
+  "openingMoves": 4,
+  "maxPlies": "20 * points",
+  "amendments": [
+    {
+      "stage": "After observing first-candidate development results, before inspecting second-candidate results and before any held-out evaluation",
+      "reason": "Development already shows a large sphere/torus difference. Use conservative board-specific deployment rather than forcing one reservation rule onto all six boards.",
+      "selection": "For each board choose the higher development score from the two candidates only if >=5/8. Otherwise retain the baseline exactly on that board. Candidate ties prefer original virtual-loss values. Freeze the full six-board schedule before any held-out evaluation. Strength and speed gates remain unchanged.",
+      "recordedFirstCandidateGames": 48
+    }
+  ]
+}

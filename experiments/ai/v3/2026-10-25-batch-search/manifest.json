@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-batch-search",
+  "architecture": "v3",
+  "title": "Pending-aware reservations and virtual means",
+  "source": {
+    "baseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "baseline",
+    "pending-aware-virtual-loss",
+    "pending-aware-virtual-mean",
+    "sphere-only-virtual-mean"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "1fc31dc31480fb830b5e46784094fc6986d97dee8dea603d9b49ed34b1517ede"
+  },
+  "notes": [
+    "Rejected after independent 101/192 despite passing speed gate. Production reservation values unchanged."
+  ],
+  "artifacts": [
+    {
+      "path": "data/baseline-regression.json",
+      "sha256": "67dd2cbbd4f9ac55f3cb9087688dfc96871e9605d911fb364940b80a6a38c5f5"
+    },
+    {
+      "path": "data/evaluation.json.gz",
+      "sha256": "841020e5da702887b90dfad6ea0dc2ff402c9b18fb8b75e1663a2738d67448ed"
+    },
+    {
+      "path": "data/initial-plan.json",
+      "sha256": "b67cf2299e5164183b15ff0353edece343c5177cff21437a955bcb70bcbd694e"
+    },
+    {
+      "path": "data/loss-development.json.gz",
+      "sha256": "ba964f4fbe5ffc5bf430cb9b579432f788930d1bbb290bb07dbb8caf93a50a55"
+    },
+    {
+      "path": "data/mean-development.json.gz",
+      "sha256": "d2ba5c366d9b987b6083b38d63b43e145332a96d680b3f51d772e25023fce81d"
+    },
+    {
+      "path": "data/pending-aware-virtual-loss-tests.txt",
+      "sha256": "ea42fea4d3f57bd14ab9604cefd2c53d6dae7506ce6b1afc116883c770192b84"
+    },
+    {
+      "path": "data/pending-aware-virtual-mean-tests.txt",
+      "sha256": "a80e09b8e6a325c6f6f0f2d5a870210f093a15dc82342af518f9b34f6b19226e"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "1fc31dc31480fb830b5e46784094fc6986d97dee8dea603d9b49ed34b1517ede"
+    },
+    {
+      "path": "data/selected-tests.txt",
+      "sha256": "ce3d97c12f1477eec5c63f7896ca27d20bb79199eb34ecb275c4e1ac84e02c23"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "5f51f382ff0976a2951c082ba715eed31a6f4dc11f47c85aa6e2e0dac64b1e76"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "0ebb1076bc84d83df2777c7c1e50644cb2a8cc744b89008524b0d0eacc53da5d"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/bench-search.mjs",
+      "sha256": "085a5d57b1405371798771eb446fbda7d090df2cc24cad5050104cfd144b4a9e"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/browser-match.mjs",
+      "sha256": "cac87458d356c6d616c71e27b925ecf72abc494bb5af08f3fd8ea196dee46165"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/test-browser.mjs",
+      "sha256": "3e67f688a00b3abe192441e12844528ce21e433130d896ea64adde8ac88cb0bc"
+    },
+    {
+      "path": "data/speed.json",
+      "sha256": "453345ec613f437078927ac3c3316bfd698a9b539a1736a7f1e550971c620382"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "2d3ba5fbadeeb9ab61d6d85d5603fc9599958d79d66835977b9885be3d6dd368"
+    },
+    {
+      "path": "data/variants/baseline-mcts.rs",
+      "sha256": "7e591b8efbfb110e087ab31ca97b59d4c1cb6d3b447592a6006e55a109a1e275"
+    },
+    {
+      "path": "data/variants/baseline.wasm",
+      "sha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+    },
+    {
+      "path": "data/variants/pending-aware-virtual-loss.rs",
+      "sha256": "75116a1e558db86a289d21d2f8cc08a7441fead676649630f65dbef3eeee7503"
+    },
+    {
+      "path": "data/variants/pending-aware-virtual-loss.wasm",
+      "sha256": "726f67744fc115c09b8b7def0e136774b05f3f77874b8c376a5e0caa05d33299"
+    },
+    {
+      "path": "data/variants/pending-aware-virtual-mean.rs",
+      "sha256": "b922d296cd61f7767f93b873a1d9b113abbc58dfaf260abece6bab7fb60d80f1"
+    },
+    {
+      "path": "data/variants/pending-aware-virtual-mean.wasm",
+      "sha256": "ad98c2fd7c8991e1cfba46b9d52470b67a1cc839e81d1b6e3b63b02ff4ee1225"
+    },
+    {
+      "path": "data/variants/selected-mcts.rs",
+      "sha256": "b0fa8ef20dcefcfc1314b728af33893159846a02db9edf0ea24db94b5e35c8e4"
+    },
+    {
+      "path": "data/variants/selected.wasm",
+      "sha256": "90fe5c55a6ce52fe83adc1a40c8fd9f794f5ae583a6813888fb90066b7cfab3d"
+    }
+  ]
+}

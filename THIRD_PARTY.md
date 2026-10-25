@@ -6,7 +6,7 @@
 
 コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。
 
-正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-22。参考実装、配信するライブラリ、開発ツールと文献の一覧。
+正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-25。参考実装、配信するライブラリ、開発ツールと文献の一覧。
 
 配信用の表示は [ライセンスと参考ソフトウェア](dist/credits.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
 
@@ -59,6 +59,8 @@
 - G. Marsaglia and W. W. Tsang, [A simple method for generating gamma variables (2000)](https://doi.org/10.1145/358407.358414)：Dirichlet ノイズのための Gamma 乱数。
 
 - G. Marsaglia, [Xorshift RNGs (2003)](https://doi.org/10.18637/jss.v008.i14)：検証・自己対局の seed 付き乱数。
+
+- Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver, [Policy improvement by planning with Gumbel (2022)](https://openreview.net/forum?id=bERaNdoegnO)：AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。
 
 ## 更新と検証
 

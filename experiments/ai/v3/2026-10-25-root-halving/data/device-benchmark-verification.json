@@ -1,0 +1,772 @@
+{
+  "fixturePositions": 18,
+  "referenceDeviceNotMeasured": true,
+  "results": [
+    {
+      "schemaVersion": 1,
+      "targetMs": 300,
+      "margin": 1,
+      "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "backend": "v3-wasm",
+      "initializationMs": 366,
+      "fixtureSource": "v3/2026-10-22-vs-v2, primary-browser.json, first game of each board",
+      "repeats": 1,
+      "runs": [
+        {
+          "visits": 8,
+          "p95Ms": 26.900000005960464,
+          "worstBoardP95Ms": 26.900000005960464,
+          "perBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 26.900000005960464,
+              "samples": 3
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 25.799999997019768,
+              "samples": 3
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 26.200000002980232,
+              "samples": 3
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 26.899999991059303,
+              "samples": 3
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 24.69999998807907,
+              "samples": 3
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 25.600000008940697,
+              "samples": 3
+            }
+          ],
+          "samples": [
+            {
+              "board": "sphere3",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 26.900000005960464,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 25.100000008940697,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 25.200000002980232,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 24.400000005960464,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 25.099999994039536,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 25.799999997019768,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 24.299999997019768,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 24.599999994039536,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 26.200000002980232,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 26.899999991059303,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 24.100000008940697,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 25.399999991059303,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 24.600000008940697,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 24.69999998807907,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 23.5,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 24.30000001192093,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 24.099999994039536,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 25.600000008940697,
+              "simulations": 8,
+              "provenLoss": false
+            }
+          ]
+        },
+        {
+          "visits": 16,
+          "p95Ms": 44.79999999701977,
+          "worstBoardP95Ms": 44.79999999701977,
+          "perBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 43.5,
+              "samples": 3
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 43,
+              "samples": 3
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 43.599999994039536,
+              "samples": 3
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 44,
+              "samples": 3
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 43.80000001192093,
+              "samples": 3
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 44.79999999701977,
+              "samples": 3
+            }
+          ],
+          "samples": [
+            {
+              "board": "sphere3",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 40.20000000298023,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 41.79999999701977,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 43.5,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 43,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 42.20000000298023,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 41.5,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 41.79999999701977,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 43.599999994039536,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 42.20000000298023,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 42,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 43.900000005960464,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 44,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 40.900000005960464,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 43.80000001192093,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 41.8999999910593,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 41.29999999701977,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 44.79999999701977,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 43.20000000298023,
+              "simulations": 16,
+              "provenLoss": false
+            }
+          ]
+        }
+      ],
+      "recommendedVisits": 16,
+      "method": "End-to-end chooseMove in a Worker; all six boards, opening/middle/late archived positions; per-board P95 against the 300ms target. No additional timing margin, time cutoff or automatic setting changes.",
+      "elapsedMs": 2025.7000000029802,
+      "finished": "2026-10-25T05:55:13.654Z"
+    },
+    {
+      "schemaVersion": 1,
+      "targetMs": 300,
+      "margin": 1,
+      "modelSha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0",
+      "backend": "v3-webgpu",
+      "initializationMs": 218.40000000596046,
+      "fixtureSource": "v3/2026-10-22-vs-v2, primary-browser.json, first game of each board",
+      "repeats": 1,
+      "runs": [
+        {
+          "visits": 8,
+          "p95Ms": 9.900000005960464,
+          "worstBoardP95Ms": 9.900000005960464,
+          "perBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 7.4000000059604645,
+              "samples": 3
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 8.299999997019768,
+              "samples": 3
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 8.5,
+              "samples": 3
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 7.9000000059604645,
+              "samples": 3
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 9.5,
+              "samples": 3
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 9.900000005960464,
+              "samples": 3
+            }
+          ],
+          "samples": [
+            {
+              "board": "sphere3",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 6.9000000059604645,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 5.9000000059604645,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 7.4000000059604645,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 7.799999997019768,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 8,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 8.299999997019768,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 7.200000002980232,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 7.399999991059303,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 8.5,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 7.299999997019768,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 7.700000002980232,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 7.9000000059604645,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 6,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 7,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 9.5,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 9.900000005960464,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 7.700000002980232,
+              "simulations": 8,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 7.899999991059303,
+              "simulations": 8,
+              "provenLoss": false
+            }
+          ]
+        },
+        {
+          "visits": 16,
+          "p95Ms": 14.200000002980232,
+          "worstBoardP95Ms": 14.200000002980232,
+          "perBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 13,
+              "samples": 3
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 13.600000008940697,
+              "samples": 3
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 14.200000002980232,
+              "samples": 3
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 11.299999997019768,
+              "samples": 3
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 11.300000011920929,
+              "samples": 3
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 11.5,
+              "samples": 3
+            }
+          ],
+          "samples": [
+            {
+              "board": "sphere3",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 13,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 12.599999994039536,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere3",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 10.900000005960464,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 11.199999988079071,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 13.600000008940697,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere4",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 10.900000005960464,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 11,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 14.200000002980232,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "sphere5",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 12.799999997019768,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 11.299999997019768,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 10.300000011920929,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus7",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 9.599999994039536,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 11.300000011920929,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 10.099999994039536,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus9",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 9.700000002980232,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "opening",
+              "repeat": 0,
+              "elapsedMs": 10.200000002980232,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "middle",
+              "repeat": 0,
+              "elapsedMs": 9.900000005960464,
+              "simulations": 16,
+              "provenLoss": false
+            },
+            {
+              "board": "torus11",
+              "phase": "late",
+              "repeat": 0,
+              "elapsedMs": 11.5,
+              "simulations": 16,
+              "provenLoss": false
+            }
+          ]
+        }
+      ],
+      "recommendedVisits": 16,
+      "method": "End-to-end chooseMove in a Worker; all six boards, opening/middle/late archived positions; per-board P95 against the 300ms target. No additional timing margin, time cutoff or automatic setting changes.",
+      "elapsedMs": 703.2999999970198,
+      "finished": "2026-10-25T05:55:14.392Z"
+    }
+  ]
+}

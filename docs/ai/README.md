@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | [Kyokugo AI v1](architectures/v1.md) | 合法手を採点する一手評価。相手の応手は探索しない | JS / Rust / WASM |
 | [Kyokugo AI v2](architectures/v2.md) | 候補手を限定した最大 4 手の alpha-beta 探索 | Rust / WASM / 自動生成JS |
-| [Kyokugo AI v3（実験）](architectures/v3.md) | 小型 GNN とバッチ PUCT / MCTS | Rust / WASM + WebGPU / ONNX |
+| [Kyokugo AI v3（実験）](architectures/v3.md) | 小型GNN・根の逐次半減・内部のバッチPUCT | Rust / WASM + WebGPU / ONNX |
 
 v1 / v2 / v3 はアーキテクチャの世代です。係数の再調整、モデルの再学習、盤別の採用、実行方式の違いでは世代を変えません。WASM の ABI バージョンも別の番号です。
 
@@ -18,7 +18,7 @@ v2 の深さ 1〜3 手の試走は、v2 の探索量を減らした比較条件�
 
 通常はKyokugo AI v2をWorker内のWASMで実行します。WASMを利用できない場合は同じRustから生成したJS版v2へ切り替え、Workerを利用できない場合も同じ生成JSを画面側で実行します。手書きJS版v1は比較・検証用であり、アプリからは呼びません。
 
-v3 は `?ai=v3` で試す実験実装です。現在は [再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md) で旧版からの改善を確認したモデルです。通常対局への採用はしていません。[セットアップと学習手順](../../tools/ai-gnn/README.md) を参照してください。
+v3 は `?ai=v3` で試す実験実装です。[学習改修](../../experiments/ai/v3/2026-10-22-learning-revision/README.md)で採用した重みと、[64訪問の根の逐次半減探索](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を使います。後者はモデルと訪問数を固定した独立192局で従来探索に117勝75敗でした。[セットアップと学習手順](../../tools/ai-gnn/README.md)を参照してください。
 
 | 盤 | アーキテクチャ | v2 の係数 |
 | --- | --- | --- |

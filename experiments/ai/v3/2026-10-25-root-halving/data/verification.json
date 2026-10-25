@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "checks": [
+    {
+      "command": "node",
+      "args": [
+        "v3-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/test-browser.mjs",
+        "--model",
+        "tools/ai-gnn/target/value-calibration/baseline-model",
+        "--wasm",
+        "tools/ai-gnn/target/root-halving/selected.wasm",
+        "--output",
+        "tools/ai-gnn/target/root-halving/browser-verification.json"
+      ],
+      "exitCode": 0
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-25",
+  "baseCommit": "77dd92a",
+  "hypothesis": "Resolve immediate winning second passes at internal nodes with exact values instead of neural predictions.",
+  "model": "dist/models/v3",
+  "fpu": 1,
+  "visits": 64,
+  "development": {
+    "seed": 2026102501,
+    "pairsPerBoard": 2,
+    "games": 24
+  },
+  "evaluation": {
+    "seed": 2026102511,
+    "pairsPerBoard": 8,
+    "games": 96
+  },
+  "adoption": "Exact tactical regression must pass; independent evaluation score >= 53/96, no board below 6/16, no capped or illegal games. If strength gate fails, preserve the exact correctness fix but do not claim overall strength improvement.",
+  "maxPlies": "20 * points",
+  "komi": 6.5,
+  "openingMoves": 4,
+  "amendments": [
+    {
+      "reason": "Exact leaf evaluation alone scored 11/24 in development. Add minimax proof propagation and exclude refuted moves; compare exploration constants on the same development openings before independent evaluation.",
+      "variants": [
+        "solver-cpuct-0.75",
+        "solver-cpuct-1.5",
+        "solver-cpuct-2.25"
+      ],
+      "developmentSeed": 2026102501,
+      "developmentPairsPerBoard": 2,
+      "selection": "Highest total development score; tie prefers existing 1.5, then 0.75. Freeze selected variant before evaluation. Independent 96-game adoption gate is unchanged."
+    }
+  ]
+}

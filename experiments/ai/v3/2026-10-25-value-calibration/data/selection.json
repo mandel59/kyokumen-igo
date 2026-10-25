@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "chosenBeforeEvaluation": true,
+  "selectedEpoch": 24,
+  "model": "19ab1ebd27aeef054454e87d3a2ae5b1c3161417e49bb28f7ed7ed9149f5188d",
+  "weights": "6d3a3839b40026a699e8995eded16c4b19609bd31ab526291829e211f62bfaba",
+  "manifest": "3271d3ecc6d7293979f48d90bc613ca0932593bead1b6a4dda1e130b3ebc1b16",
+  "search": "726f67744fc115c09b8b7def0e136774b05f3f77874b8c376a5e0caa05d33299",
+  "validation": {
+    "before": {
+      "loss": 3.0514132976531982,
+      "unweightedLoss": 3.161549073917456,
+      "policyTop1": 0.4673178061607814,
+      "policyTop5": 0.8264462809917356,
+      "policyKL": 1.3759496599517906,
+      "wdlAccuracy": 0.6952884733669578,
+      "wdlBrier": 0.3934363563322672,
+      "wdlCE": 0.6331223834996617,
+      "scoreMAE": 26.702246586295978,
+      "ownershipAccuracy": 0.7224743683878706,
+      "passRecall": 0.7604166666666666,
+      "passPrecision": 0.73,
+      "positions": 8129,
+      "policyPositions": 3993
+    },
+    "after": {
+      "loss": 3.030853271484375,
+      "unweightedLoss": 3.135144765269406,
+      "policyTop1": 0.4673178061607814,
+      "policyTop5": 0.8264462809917356,
+      "policyKL": 1.3759496599517906,
+      "wdlAccuracy": 0.7100504367080822,
+      "wdlBrier": 0.38227084959135504,
+      "wdlCE": 0.6067187355840202,
+      "scoreMAE": 26.702246586295978,
+      "ownershipAccuracy": 0.7224743683878706,
+      "passRecall": 0.7604166666666666,
+      "passPrecision": 0.73,
+      "positions": 8129,
+      "policyPositions": 3993
+    }
+  },
+  "frozen": {
+    "changedTensors": [
+      "value.0.weight",
+      "value.0.bias",
+      "value.2.weight",
+      "value.2.bias"
+    ],
+    "changedParameters": 4867,
+    "frozenTensors": 60,
+    "nonValueParametersExactlyEqual": true,
+    "policyScoreOwnershipExactlyEqualOnGolden": true,
+    "selectedEpoch": 24
+  },
+  "speedGatePassed": true
+}

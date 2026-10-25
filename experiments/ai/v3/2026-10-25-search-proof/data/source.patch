@@ -1,0 +1,249 @@
+diff --git a/dist/ai-v3-search.js b/dist/ai-v3-search.js
+index 9af7ccd..8e007bb 100644
+--- a/dist/ai-v3-search.js
++++ b/dist/ai-v3-search.js
+@@ -2,7 +2,7 @@
+ import {validateAIPosition} from './ai-position.js';
+ export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
+ export async function createV3Search({load=async()=>{
+- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=302b894edc6d',import.meta.url));
++ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=7e89b8b71581',import.meta.url));
+  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
+ }}={}) {
+  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;
+diff --git a/tools/ai-gnn/browser-match.mjs b/tools/ai-gnn/browser-match.mjs
+index cf2aaed..f40362e 100644
+--- a/tools/ai-gnn/browser-match.mjs
++++ b/tools/ai-gnn/browser-match.mjs
+@@ -17,7 +17,7 @@ if(fixedVisits!==null&&(!Number.isInteger(fixedVisits)||fixedVisits<1||fixedVisi
+ const selectedBoard=arg('--board','all');
+ if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
+  !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
+-const wasm={a:resolve('dist/ai-v3.wasm'),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
++const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
+ const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
+ if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
+ const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+diff --git a/tools/ai-gnn/test-browser.mjs b/tools/ai-gnn/test-browser.mjs
+index 2e41208..770adb2 100644
+--- a/tools/ai-gnn/test-browser.mjs
++++ b/tools/ai-gnn/test-browser.mjs
+@@ -173,7 +173,7 @@ try{
+   let production;
+   try{
+    for(let id=1;id<=60;id++){
+-    production=await new Promise((resolve,reject)=>{worker.onmessage=e=>resolve(e.data);worker.onerror=e=>reject(new Error(e.message));
++    production=await new Promise((resolve,reject)=>{worker.onmessage=e=>{if(e.data.id===id)resolve(e.data);};worker.onerror=e=>reject(new Error(e.message));
+      worker.postMessage({id,position:{kind:'torus',size:7,komi:6.5,moves:new Int32Array()}});});
+     if(production.backend?.startsWith('v3-'))break;
+     await new Promise(r=>setTimeout(r,250));
+diff --git a/tools/ai-tuner/src/mcts.rs b/tools/ai-tuner/src/mcts.rs
+index bb47764..74f6f5e 100644
+--- a/tools/ai-tuner/src/mcts.rs
++++ b/tools/ai-tuner/src/mcts.rs
+@@ -7,7 +7,7 @@ use crate::{tactics,endgame};
+ const MAX_NODES: usize = 8192;
+ #[derive(Default)]
+ struct Node {
+-    visits: u32, sum: f32, reserved: u32, pending: bool, expanded: bool, edges: Vec<Edge>,
++    visits: u32, sum: f32, reserved: u32, pending: bool, expanded: bool, edges: Vec<Edge>, proven: Option<f32>,
+ }
+ struct Edge { action: usize, prior: f32, child: Option<usize> }
+ struct Pending { id: u32, path: Vec<usize>, legal: Vec<bool> }
+@@ -47,11 +47,31 @@ impl Search {
+         if self.completed != 0 || !self.pending.is_empty() { return false; }
+         self.endgame = enabled; true
+     }
++    // Exact values use the node's player-to-move perspective. A single losing
++    // child proves a win; proving a draw/loss requires resolving every action.
++    fn prove(&mut self, p: usize) {
++        if self.nodes[p].proven.is_some() || !self.nodes[p].expanded { return; }
++        let edges = &self.nodes[p].edges;
++        if edges.iter().any(|e| e.child.is_some_and(|c| self.nodes[c].proven == Some(-1.))) {
++            self.nodes[p].proven = Some(1.);
++        } else if !edges.is_empty() && edges.iter().all(|e| e.child.is_some_and(|c| self.nodes[c].proven.is_some())) {
++            let value = edges.iter().map(|e| -self.nodes[e.child.unwrap()].proven.unwrap()).fold(-1., f32::max);
++            self.nodes[p].proven = Some(value);
++        }
++    }
++    fn viable(&self, p: usize, edge: &Edge) -> bool {
++        // Spend remaining visits on moves that have not already been refuted.
++        // If every move loses, keep them all so a legal policy still exists.
++        edge.child.is_none_or(|c| self.nodes[c].proven != Some(1.)) ||
++            self.nodes[p].edges.iter().all(|e| e.child.is_some_and(|c| self.nodes[c].proven == Some(1.)))
++    }
+     fn backup(&mut self, path: &[usize], mut value: f32, reserved: bool) {
+         for &p in path.iter().rev() {
+             let node = &mut self.nodes[p];
+             if reserved { node.reserved -= 1; }
+-            node.visits += 1; node.sum += value; value = -value;
++            node.visits += 1; node.sum += value;
++            self.prove(p);
++            value = -self.nodes[p].proven.unwrap_or(value);
+         }
+         self.completed += 1;
+     }
+@@ -72,11 +92,23 @@ impl Search {
+             let mut path = vec![0];
+             for _ in 0..256 {
+                 let p = *path.last().unwrap();
++                if let Some(value) = self.nodes[p].proven {
++                    self.backup(&path, value, false); break;
++                }
+                 if game.ended {
+                     let (b,w) = game.score();
+                     let value = if b==w {0.} else if (b>w)==(game.turn==1) {1.} else {-1.};
++                    self.nodes[p].proven = Some(value);
+                     self.backup(&path, value, false); break;
+                 }
++                // A winning second pass is an exact +1 for the player to move.
++                // Resolve it inside the tree before asking the network: otherwise
++                // an optimistic evaluation can make a losing first pass look safe.
++                // Keep the root policy path so callers still receive its pass edge.
++                if path.len() > 1 && endgame::wins_by_passing(&game) {
++                    self.nodes[p].proven = Some(1.);
++                    self.backup(&path, 1., false); break;
++                }
+                 if self.nodes[p].pending { break; }
+                 if !self.nodes[p].expanded {
+                     let features = gnn::encode(&game, &boards, sphere);
+@@ -113,6 +145,7 @@ impl Search {
+                 let unvisited_q = self.unvisited_q(p);
+                 let mut best = 0; let mut best_score = f32::NEG_INFINITY;
+                 for (k,e) in node.edges.iter().enumerate() {
++                    if !self.viable(p,e) { continue; }
+                     let (n,q) = e.child.map_or((0,unvisited_q), |c| {
+                         let child = &self.nodes[c];
+                         (child.visits + child.reserved, -(child.sum + child.reserved as f32) / (child.visits + child.reserved).max(1) as f32)
+@@ -166,10 +199,18 @@ impl Search {
+     }
+     pub fn policy(&self) -> Vec<f32> {
+         let mut result = vec![0.; ACTIONS];
+-        for e in &self.nodes[0].edges { result[e.action] = e.child.map_or(0.,|c|self.nodes[c].visits as f32); }
++        let winning = self.nodes[0].proven == Some(1.);
++        for e in &self.nodes[0].edges {
++            if self.viable(0,e) && (!winning || e.child.is_some_and(|c| self.nodes[c].proven == Some(-1.))) {
++                result[e.action] = e.child.map_or(0.,|c|self.nodes[c].visits as f32);
++            }
++        }
+         let total: f32 = result.iter().sum();
+         if total>0. { for v in &mut result {*v/=total;} }
+-        else { for e in &self.nodes[0].edges {result[e.action]=e.prior;} }
++        else {
++            let mass: f32 = self.nodes[0].edges.iter().filter(|e| self.viable(0,e)).map(|e|e.prior).sum();
++            for e in &self.nodes[0].edges { if self.viable(0,e) {result[e.action]=e.prior/mass;} }
++        }
+         result
+     }
+     pub fn statistics(&self) -> Vec<f32> {
+@@ -182,7 +223,7 @@ impl Search {
+             if let Some(c) = e.child {
+                 let child = &self.nodes[c];
+                 out[3+e.action] = child.visits as f32;
+-                out[3+ACTIONS*2+e.action] = -child.sum / child.visits.max(1) as f32;
++                out[3+ACTIONS*2+e.action] = -child.proven.unwrap_or(child.sum / child.visits.max(1) as f32);
+             }
+         }
+         out
+@@ -199,6 +240,38 @@ mod tests {
+     use super::*;
+     use crate::board::{Topology,Kind};
+     #[test]
++    fn proofs_preserve_unknown_replies_and_prefer_wins_over_visit_counts() {
++        for second in [None,Some(-1.),Some(0.),Some(1.)] {
++            let mut s=Search::new(1);
++            s.nodes[0].expanded=true;
++            s.nodes.push(Node {visits:99, sum:-99., proven:Some(1.), ..Node::default()});
++            s.nodes.push(Node {visits:1, sum:1., proven:second, ..Node::default()});
++            s.nodes[0].edges=vec![Edge{action:PASS,prior:0.99,child:Some(1)},Edge{action:0,prior:0.01,child:Some(2)}];
++            s.prove(0);
++            assert_eq!(s.nodes[0].proven,second.map(|v|-v));
++            let policy=s.policy();
++            assert!((policy.iter().sum::<f32>()-1.).abs()<1e-6);
++            if second!=Some(1.) {
++                assert_eq!(s.best(),0,"a refuted pass must not beat an unknown move, draw or proven win");
++                assert_eq!(policy[PASS],0.);
++            } else {
++                assert_eq!(s.nodes[0].proven,Some(-1.));
++                assert!(policy[PASS]>0.,"retain a legal policy when every action loses");
++            }
++        }
++        // The proof must cross several alternating player perspectives.
++        let mut s=Search::new(2);
++        for _ in 0..3 {s.nodes.push(Node::default());}
++        for p in 0..3 {
++            s.nodes[p].expanded=true;
++            s.nodes[p].edges=vec![Edge{action:0,prior:1.,child:Some(p+1)}];
++        }
++        s.nodes[3].proven=Some(-1.);
++        s.backup(&[0,1,2,3],-1.,false);
++        assert_eq!(s.nodes.iter().map(|n|n.proven).collect::<Vec<_>>(),vec![Some(1.),Some(-1.),Some(1.),Some(-1.)]);
++        assert_eq!(s.completed,1);
++    }
++    #[test]
+     fn visit_limit_counts_neural_leaves_and_exact_terminal_backups() {
+         let t=Topology::new(Kind::Torus,7);let mut g=Game::new(&t,6.5);g.pass();
+         for budget in [1,2,7,8,9,17,128,512] {
+diff --git a/v3-tests.mjs b/v3-tests.mjs
+index bc40c7a..81ccba2 100644
+--- a/v3-tests.mjs
++++ b/v3-tests.mjs
+@@ -4,7 +4,7 @@ import {Game,createTopology} from './dist/engine.js';
+ import {aiPosition} from './dist/ai-position.js';
+ import {decodeRecord} from './dist/record.js';
+ import {createV3Search} from './dist/ai-v3-search.js';
+-const ai=await createV3Search({load:async()=>readFileSync(new URL('./dist/ai-v3.wasm',import.meta.url))});
++const ai=await createV3Search({load:async()=>readFileSync(process.env.V3_TEST_WASM??new URL('./dist/ai-v3.wasm',import.meta.url))});
+ const fixture=(kind,size,moves,komi=6.5)=>{
+  const game=new Game(createTopology(kind,size),komi);
+  for(const m of moves)assert.equal((m<0?game.pass():game.play(m)).ok,true);return game;
+@@ -70,6 +70,43 @@ for(const komi of [-6.5,0,6.5]){
+  const result=ai.result();assert.ok(result.simulations>20);
+  assert.ok(Math.abs(result.policy.reduce((a,b)=>a+b,0)-1)<1e-5);
+ }
++// A first pass that hands the opponent an immediate win must be evaluated
++// exactly, even when their network confidently predicts a loss instead.
++for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
++ for(const colour of [1,2])for(const margin of [-0.5,0,0.5]){
++  const game=fixture(kind,size,colour===1?[]:[0],0),score=game.score();
++  game.komi=score.black-score.white+(colour===1?-margin:margin);
++  assert.equal(game.turn,colour);assert.equal(game.passes,0);
++  const before=JSON.stringify(game.toJSON());
++  ai.start(aiPosition(game),{seed:3,tactics:false,endgame:false,fpu:1});
++  const root=ai.collect(1,1),policy=new Float32Array(161).fill(-100);policy[160]=100;
++  ai.submit(root,{policy,wdl:new Float32Array(3)});
++  const child=ai.collect(1,1);
++  if(margin<0){
++   assert.equal(child.count,0,'opponent can win by passing: no neural evaluation');
++   const result=ai.result({diagnostics:true});
++   assert.equal(result.simulations,2,'exact pass consumes one visit');
++   assert.equal(result.diagnostics.rawVisits[160],1);
++   assert.equal(result.diagnostics.rootQ[160],-1,'losing first pass has exact -1 value');
++   assert.equal(result.provenLoss,false,'this does not prove every root move loses');
++   assert.equal(result.policy[160],0,'a refuted first pass is excluded while other moves remain unresolved');
++   while(ai.result().simulations<64){
++    const batch=ai.collect(8,64-ai.result().simulations);
++    if(batch.count){
++     const p=new Float32Array(batch.count*161).fill(-100),wdl=new Float32Array(batch.count*3);
++     for(let b=0;b<batch.count;b++){p[b*161+160]=100;wdl.set([-100,0,100],b*3);}
++     ai.submit(batch,{policy:p,wdl});
++    }
++   }
++   assert.notEqual(ai.result().move,null,'do not select a proven losing pass despite adversarial neural evaluations');
++   assert.equal(ai.result().simulations,64);
++  }else{
++   assert.equal(child.count,1,'a draw or loss for the opponent still needs search');
++   ai.submit(child,{policy,wdl:Float32Array.from([-100,0,100])});
++  }
++  assert.equal(JSON.stringify(game.toJSON()),before);ai.cancel();
++ }
++}
+ const ko=cases[6];ai.start(aiPosition(ko));const legal=ai.collect().legal;assert.equal(legal[24],0);ai.cancel();
+ assert.throws(()=>ai.start({...aiPosition(ko),moves:[...aiPosition(ko).moves,24]}),/Illegal AI history/);
+ assert.throws(()=>ai.collect(),/Start/);
+@@ -165,4 +202,4 @@ for(const game of [oneEye,sparseAlive,escaping,snapback,capturing]){
+  ai.start(aiPosition(game));const leaves=ai.collect(1);assert.equal(ai.result().provenLoss,false,'unsettled enemy stones cannot certify a loss');ai.cancel();
+ }
+ ai.dispose();ai.dispose();assert.throws(()=>ai.start(aiPosition(ko)),/disposed/);
+-console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');
++console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');

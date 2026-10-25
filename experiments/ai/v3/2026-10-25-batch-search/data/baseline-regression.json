@@ -1,0 +1,6 @@
+{
+  "expectedFailure": true,
+  "exitCode": 101,
+  "stdout": "\nrunning 1 test\ntest mcts::tests::pending_leaf_does_not_block_other_available_evaluations ... FAILED\n\nfailures:\n\nfailures:\n    mcts::tests::pending_leaf_does_not_block_other_available_evaluations\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.00s\n\n",
+  "stderr": "\nthread 'mcts::tests::pending_leaf_does_not_block_other_available_evaluations' (8144) panicked at tools/ai-gnn/target/batch-search/source\\mcts.rs:282:9:\nassertion `left == right` failed: pending high-prior child must not prevent seven other legal leaves\n  left: 1\n right: 8\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+}

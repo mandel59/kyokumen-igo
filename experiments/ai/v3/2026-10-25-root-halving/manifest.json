@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-root-halving",
+  "architecture": "v3",
+  "title": "Root sequential halving with unchanged inference cost",
+  "source": {
+    "baseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "baseline-puct",
+    "root-halving-8",
+    "root-halving-16",
+    "adopted-root-halving-8"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "42cd7d5aeef9aeccb683137727306f6801c5ee71838a9b386628e4d71b1ff092"
+  },
+  "notes": [
+    "Selected 8 globally before held-out evaluation; no board-specific routing.",
+    "Independent 117/192; paired 95% interval 55.2–66.7%; both speed gates passed.",
+    "Deployed exact evaluated WASM, unchanged model and default 64 visits."
+  ],
+  "artifacts": [
+    {
+      "path": "data/adoption.json",
+      "sha256": "8060c1f30fd8022036dd6caca5ad1cb0e21f1e5161342c7813fef01d3dab9b5d"
+    },
+    {
+      "path": "data/browser-verification-log.txt",
+      "sha256": "541deaf8bd3a06deebea5ab529a778af988c3c31dd1ca09c22e1be74064fa37f"
+    },
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "3517905918a462e0bf344b402c2ecfd101084a7b9a9d2bee239b21bc9dcc874c"
+    },
+    {
+      "path": "data/device-benchmark-verification.json",
+      "sha256": "31279be17f992c597ba00afdb536157d487d56bb3a805edfa510610b1876046b"
+    },
+    {
+      "path": "data/evaluation.json.gz",
+      "sha256": "4fb553b535b765d6e32af1ea4e5e94adcb12900936a14776829d12f3a594bfc2"
+    },
+    {
+      "path": "data/halving-16-development.json.gz",
+      "sha256": "b88591a5f1d79eb4c4d8f67aeae1d44a2193756f22ea43f9114373e42abc8f9a"
+    },
+    {
+      "path": "data/halving-16-tests.txt",
+      "sha256": "4a83a953fc15a3fb83ea3ace5d0503e4e581b1ed25e6ed762e098706075312ca"
+    },
+    {
+      "path": "data/halving-8-development.json.gz",
+      "sha256": "15f8f7ea084f1ad9c943dbd1f6cb5111ee946f807121d48b1184a2935deb4c4b"
+    },
+    {
+      "path": "data/halving-8-tests.txt",
+      "sha256": "012defabb328a8fc91bc7ca1515da1b69805973493b5681d537fd723d00fcc5e"
+    },
+    {
+      "path": "data/installed-browser-verification.json",
+      "sha256": "7ca4ecac0b616dba063e930d5ee9d6da59b5e6f360b168af50fd7af6b2b7ef95"
+    },
+    {
+      "path": "data/installed-verification.json",
+      "sha256": "9f208fc8e75e6266fadba27fcf0da0ddb970a68945eb495675bc725b527d8e2a"
+    },
+    {
+      "path": "data/model/golden.json",
+      "sha256": "f1f151b35792fc1f77ab098af6e80a64f723200de30e21238184789d3b03d066"
+    },
+    {
+      "path": "data/model/manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/model/model.onnx",
+      "sha256": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+    },
+    {
+      "path": "data/model/weights.f32",
+      "sha256": "21b5cc8d9d3eb8a8aac5a5fd9fc8d7871a56252ba9c85b7142ef370434f088b7"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "42cd7d5aeef9aeccb683137727306f6801c5ee71838a9b386628e4d71b1ff092"
+    },
+    {
+      "path": "data/runtime/dist/ai-position.js",
+      "sha256": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993"
+    },
+    {
+      "path": "data/runtime/dist/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/runtime/dist/ai-v3-search.js",
+      "sha256": "d9077bd40041361a9a6841747dd40f04b7730b51d45840d05b2ffdd5f6a93b42"
+    },
+    {
+      "path": "data/runtime/dist/ai-v3.js",
+      "sha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    },
+    {
+      "path": "data/runtime/dist/ai-wasm.js",
+      "sha256": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a"
+    },
+    {
+      "path": "data/runtime/dist/engine.js",
+      "sha256": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e"
+    },
+    {
+      "path": "data/runtime/tools/ai-gnn/browser-match.mjs",
+      "sha256": "cac87458d356c6d616c71e27b925ecf72abc494bb5af08f3fd8ea196dee46165"
+    },
+    {
+      "path": "data/search/baseline-mcts.rs",
+      "sha256": "7e591b8efbfb110e087ab31ca97b59d4c1cb6d3b447592a6006e55a109a1e275"
+    },
+    {
+      "path": "data/search/baseline.wasm",
+      "sha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+    },
+    {
+      "path": "data/search/halving-16.rs",
+      "sha256": "4d7ed8fdd126ca9214657cd10c99a1e32bab59775b202db7410d70ec63617f6a"
+    },
+    {
+      "path": "data/search/halving-16.wasm",
+      "sha256": "84d8b256e928178450c2af206297aae80030689c8085ed01eb262106636b532b"
+    },
+    {
+      "path": "data/search/halving-8.rs",
+      "sha256": "91d09dcc4e18dc3b480a6a7d1f45f7607d7fc6b0f2870aafcebb91b3a4b8241d"
+    },
+    {
+      "path": "data/search/halving-8.wasm",
+      "sha256": "3ca9e2bc5282b2b54968f76376be9ac108bd8e7c87605c05c697e29cd00dba76"
+    },
+    {
+      "path": "data/search/installed-mcts.rs",
+      "sha256": "dbaa2821c7655ed6e41d207f7b6bc2c55161acd995a2caf65cdf9e0a04598f7f"
+    },
+    {
+      "path": "data/search/selected.rs",
+      "sha256": "12c3d74b7c9e18c3f36dd1a7cdaae5836ee7e1ec005a526b3017369094f91954"
+    },
+    {
+      "path": "data/search/selected.wasm",
+      "sha256": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c"
+    },
+    {
+      "path": "data/selected-tests.txt",
+      "sha256": "5ae682ec55c8969456d3b7fdd109ab87542be712d2bfe820135653f712442e08"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "028efc313d47966cb6e0da11efa69ce7a1c01fc1efde971ccac912b38950c9a8"
+    },
+    {
+      "path": "data/source-patch-verification.json",
+      "sha256": "e53097989dcb0a436ce95f73339257f1cdb805ef51f49570b2111338ea636222"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "ed4882a83df5c3e0b40c96b2c4f11d0ff0c9ac027c6e1e5fe10c45a2e79aa774"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/bench-search.mjs",
+      "sha256": "d5896798e8d8f2bade89fefc3cc175fa29e509a1dd95427efa5f1815793fcdfd"
+    },
+    {
+      "path": "data/source/tools/ai-gnn/test-browser.mjs",
+      "sha256": "3e67f688a00b3abe192441e12844528ce21e433130d896ea64adde8ac88cb0bc"
+    },
+    {
+      "path": "data/speed.json",
+      "sha256": "aaa53bc2ced1bb014b8300a99b52bfc18cdd9bb4a3d857512a981cdc1ee36be4"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "704d93e904a56ece809b91082d6ea708feb8ee2ef150346ecb9565bf6da83c2c"
+    },
+    {
+      "path": "data/verification.json",
+      "sha256": "939bc2657cec0c524ab3026b5dbfb5e0670aac14c9115a412dbaac001662c793"
+    }
+  ]
+}

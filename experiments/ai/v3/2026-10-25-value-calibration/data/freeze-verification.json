@@ -1,0 +1,13 @@
+{
+  "changedTensors": [
+    "value.0.weight",
+    "value.0.bias",
+    "value.2.weight",
+    "value.2.bias"
+  ],
+  "changedParameters": 4867,
+  "frozenTensors": 60,
+  "nonValueParametersExactlyEqual": true,
+  "policyScoreOwnershipExactlyEqualOnGolden": true,
+  "selectedEpoch": 24
+}

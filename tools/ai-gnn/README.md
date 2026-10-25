@@ -1,6 +1,6 @@
 # Kyokugo AI v3 開発
 
-64 チャネル・6 ブロック、120,905 パラメータのグラフ NN と、Rust / WASM のバッチ MCTS です。[仕様](../../docs/ai/architectures/v3.md)、[再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md)、[初期検証](../../experiments/ai/v3/2026-10-21-initial/README.md) を参照してください。固定探索回数の診断で改善を確認したモデルを実験用に配置しています。現在の[共通64訪問の実ブラウザー評価](../../experiments/ai/v3/2026-10-22-fixed64-strength/README.md)では、現行v2に76勝20敗でした。
+64 チャネル・6 ブロック、120,905 パラメータのグラフ NN と、Rust / WASM のバッチ MCTS です。[仕様](../../docs/ai/architectures/v3.md)、[再学習と診断対戦](../../experiments/ai/v3/2026-10-21-strength/README.md)、[初期検証](../../experiments/ai/v3/2026-10-21-initial/README.md) を参照してください。固定探索回数の診断で改善を確認したモデルを実験用に配置しています。以前のPUCT構成の[共通64訪問の実ブラウザー評価](../../experiments/ai/v3/2026-10-22-fixed64-strength/README.md)では、現行v2に76勝20敗でした。
 
 ## セットアップと試走
 
@@ -106,6 +106,14 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/export_webgpu.py 
 
 従来の `node tests.mjs`、`node wasm-tests.mjs`、`node search-tests.mjs`、`node ui-tests.mjs` なども継続して実行します。
 
+## 固定予算の根の探索と速度比較
+
+現在のアプリは同じ64訪問の中で根の最大8候補を逐次半減し、内部はPUCTで探索します。モデルは変更せず、独立192局で従来探索に117勝75敗でした。[計画・全棋譜・速度・採用結果](../../experiments/ai/v3/2026-10-25-root-halving/README.md)を保存しています。
+
+実際の有限予算モードは browser-match.mjs の --simulations で評価できます。低レベルAPIの最初の collect(batch,remainingVisits) が全体予算を宣言します。残り数なしのcollect(batch)を使う既存のmatch.mjs・selfplay.mjs・reanalyze.mjsは従来PUCTです。有限予算モードのpolicyは最終候補の比較値を正規化したもので、生の訪問数はdiagnostics.rawVisitsにあります。
+
+bench-search.mjs は同一18局面・seedで順序を交互にし、CPU/WASMとWebGPUの待ち時間・バッチ数を比較します。--a-wasm / --b-wasm、--a-model / --b-modelで候補と基準を指定でき、--outputには新しいJSONを渡します。test-browser.mjs の --wasmでも配信用ファイルに触れず候補を検証できます。
+
 ## 棋力の診断対戦
 
 白の対蹠点コピーへの診断は [2026-10-23-antipodal](../../experiments/ai/v3/2026-10-23-antipodal/README.md) に保存しています。`node tools/ai-gnn/mirror-match.mjs --games 16 --seed 2026102301 --output tools/ai-gnn/target/antipodal.json` は空の球面3盤で現行v2・v3を黒にし、白は対蹠点が合法な限り真似します。違法なときだけ1手をv2で補い、補助手なしの成績・違法理由・棋譜の重複を別に記録します。
@@ -121,6 +129,10 @@ node tools/ai-gnn/match.mjs --a tools/ai-gnn/target/candidate --b v2 --pairs 2 -
 ```
 
 全 6 盤で同じ 4 手の初期配置から先後を交換します。`--b` に別のモデルディレクトリを指定すると GNN 同士でも比較できます。`--board torus7` のように盤を限定できます。全棋譜、盤別得点率、打ち切り、探索回数、計算時間などを記録します。v3 の固定探索回数と v2 の深さ 4 を比べる診断であり、ブラウザの同じ実時間での評価ではありません。
+
+探索内でパスにより即勝ちできる局面と、終局の勝敗は正確な値で処理します。確定勝敗を親へ伝え、既に負けと分かった枝より未解決の枝を探索します。全6盤・両色・引き分け境界・敵対的なNN出力を使う回帰テストと、探索係数の比較は[探索改善の記録](../../experiments/ai/v3/2026-10-25-search-proof/README.md)を参照してください。モデルと標準の64訪問は維持します。
+
+browser-match.mjs の --a-wasm と --b-wasm で両者の探索バイナリーを指定でき、配信用WASMを置き換えずに比較できます。
 
 v3 の戦術チェックは既定で有効です。同じモデルで有無を比較する場合は `--a-tactics safe --b-tactics none` を指定します。根の特徴抽出・戦術チェックのみの開発用計測は `node tools/ai-gnn/bench-tactics.mjs` で実行できます。
 

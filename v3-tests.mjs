@@ -4,7 +4,7 @@ import {Game,createTopology} from './dist/engine.js';
 import {aiPosition} from './dist/ai-position.js';
 import {decodeRecord} from './dist/record.js';
 import {createV3Search} from './dist/ai-v3-search.js';
-const ai=await createV3Search({load:async()=>readFileSync(new URL('./dist/ai-v3.wasm',import.meta.url))});
+const ai=await createV3Search({load:async()=>readFileSync(process.env.V3_TEST_WASM??new URL('./dist/ai-v3.wasm',import.meta.url))});
 const fixture=(kind,size,moves,komi=6.5)=>{
  const game=new Game(createTopology(kind,size),komi);
  for(const m of moves)assert.equal((m<0?game.pass():game.play(m)).ok,true);return game;
@@ -56,6 +56,23 @@ for(const game of cases){
  const pending=ai.collect();ai.cancel();
  if(pending.count)assert.throws(()=>ai.submit(pending,{policy:new Float32Array(pending.count*161),wdl:new Float32Array(pending.count*3)}),/Stale/);
 }
+// A declared fixed budget uses the root finalists as its improved policy.
+// Verify the shipped WASM path, not just native root-planner unit tests.
+for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+ const game=fixture(kind,size,[]);ai.start(aiPosition(game),{seed:3,fpu:1,tactics:false,endgame:false});
+ let calls=0;
+ while(ai.result().simulations<64){
+  const remaining=64-ai.result().simulations,batch=ai.collect(Math.min(8,remaining),remaining);
+  if(batch.count)ai.submit(batch,{policy:new Float32Array(batch.count*161),wdl:new Float32Array(batch.count*3)});
+  assert.ok(++calls<100,'finite-budget search must make progress');
+ }
+ const result=ai.result({diagnostics:true});
+ assert.equal(result.simulations,64);assert.equal(result.diagnostics.rootVisits,64);
+ assert.ok(result.policy.filter(p=>p>0).length<=2,'fixed-budget policy retains only final root candidates');
+ assert.ok(Math.abs(result.policy.reduce((a,b)=>a+b,0)-1)<1e-5);
+ assert.equal(result.policy[result.move??160],Math.max(...result.policy));
+ assert.ok(result.move===null||game.analyze(result.move).ok);ai.cancel();
+}
 // Terminal values are exact even when a neural evaluator strongly favours passing.
 for(const komi of [-6.5,0,6.5]){
  const game=fixture('torus',7,[-1],komi);ai.start(aiPosition(game),{seed:3});
@@ -69,6 +86,43 @@ for(const komi of [-6.5,0,6.5]){
  if(komi<0)assert.notEqual(ai.result().move,null);
  const result=ai.result();assert.ok(result.simulations>20);
  assert.ok(Math.abs(result.policy.reduce((a,b)=>a+b,0)-1)<1e-5);
+}
+// A first pass that hands the opponent an immediate win must be evaluated
+// exactly, even when their network confidently predicts a loss instead.
+for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+ for(const colour of [1,2])for(const margin of [-0.5,0,0.5]){
+  const game=fixture(kind,size,colour===1?[]:[0],0),score=game.score();
+  game.komi=score.black-score.white+(colour===1?-margin:margin);
+  assert.equal(game.turn,colour);assert.equal(game.passes,0);
+  const before=JSON.stringify(game.toJSON());
+  ai.start(aiPosition(game),{seed:3,tactics:false,endgame:false,fpu:1});
+  const root=ai.collect(1,1),policy=new Float32Array(161).fill(-100);policy[160]=100;
+  ai.submit(root,{policy,wdl:new Float32Array(3)});
+  const child=ai.collect(1,1);
+  if(margin<0){
+   assert.equal(child.count,0,'opponent can win by passing: no neural evaluation');
+   const result=ai.result({diagnostics:true});
+   assert.equal(result.simulations,2,'exact pass consumes one visit');
+   assert.equal(result.diagnostics.rawVisits[160],1);
+   assert.equal(result.diagnostics.rootQ[160],-1,'losing first pass has exact -1 value');
+   assert.equal(result.provenLoss,false,'this does not prove every root move loses');
+   assert.equal(result.policy[160],0,'a refuted first pass is excluded while other moves remain unresolved');
+   while(ai.result().simulations<64){
+    const batch=ai.collect(8,64-ai.result().simulations);
+    if(batch.count){
+     const p=new Float32Array(batch.count*161).fill(-100),wdl=new Float32Array(batch.count*3);
+     for(let b=0;b<batch.count;b++){p[b*161+160]=100;wdl.set([-100,0,100],b*3);}
+     ai.submit(batch,{policy:p,wdl});
+    }
+   }
+   assert.notEqual(ai.result().move,null,'do not select a proven losing pass despite adversarial neural evaluations');
+   assert.equal(ai.result().simulations,64);
+  }else{
+   assert.equal(child.count,1,'a draw or loss for the opponent still needs search');
+   ai.submit(child,{policy,wdl:Float32Array.from([-100,0,100])});
+  }
+  assert.equal(JSON.stringify(game.toJSON()),before);ai.cancel();
+ }
 }
 const ko=cases[6];ai.start(aiPosition(ko));const legal=ai.collect().legal;assert.equal(legal[24],0);ai.cancel();
 assert.throws(()=>ai.start({...aiPosition(ko),moves:[...aiPosition(ko).moves,24]}),/Illegal AI history/);
@@ -165,4 +219,4 @@ for(const game of [oneEye,sparseAlive,escaping,snapback,capturing]){
  ai.start(aiPosition(game));const leaves=ai.collect(1);assert.equal(ai.result().provenLoss,false,'unsettled enemy stones cannot certify a loss');ai.cancel();
 }
 ai.dispose();ai.dispose();assert.throws(()=>ai.start(aiPosition(ko)),/disposed/);
-console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');
+console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on six boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
 import {readFileSync,existsSync,writeFileSync} from 'node:fs';
 import {cpus} from 'node:os';
+import {createHash} from 'node:crypto';
 import {resolve,extname,sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright-core';
@@ -10,6 +11,9 @@ const root=fileURLToPath(new URL('../../',import.meta.url));
 const modelArgument=process.argv.indexOf('--model');
 if(modelArgument>=0&&!process.argv[modelArgument+1])throw new Error('--model requires a model directory');
 const modelDirectory=modelArgument>=0?resolve(process.argv[modelArgument+1]):resolve(root,'dist/models/v3');
+const wasmArgument=process.argv.indexOf('--wasm');
+if(wasmArgument>=0&&!process.argv[wasmArgument+1])throw new Error('--wasm requires a search binary');
+const wasmBytes=wasmArgument>=0?readFileSync(resolve(process.argv[wasmArgument+1])):null;
 const golden=readFileSync(modelArgument>=0?resolve(modelDirectory,'golden.json'):resolve(root,'tests/fixtures/ai/v3-golden.json'));
 const mime={'.js':'text/javascript','.mjs':'text/javascript','.wasm':'application/wasm','.json':'application/json','.html':'text/html','.css':'text/css','.onnx':'application/octet-stream'};
 const server=createServer((req,res)=>{
@@ -17,6 +21,7 @@ const server=createServer((req,res)=>{
   const name=new URL(req.url,'http://localhost').pathname;
   if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
   if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Kyokugo v3 verification</title>');return;}
+  if(name==='/dist/ai-v3.wasm'&&wasmBytes){res.setHeader('content-type','application/wasm');res.end(wasmBytes);return;}
   if(name==='/golden.json'){res.setHeader('content-type','application/json');res.end(golden);return;}
   if(name==='/endgame.json'){res.setHeader('content-type','application/json');res.end(readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url)));return;}
   if(name==='/dist/models/v3/bad-gpu-manifest.json'){
@@ -173,7 +178,7 @@ try{
   let production;
   try{
    for(let id=1;id<=60;id++){
-    production=await new Promise((resolve,reject)=>{worker.onmessage=e=>resolve(e.data);worker.onerror=e=>reject(new Error(e.message));
+    production=await new Promise((resolve,reject)=>{worker.onmessage=e=>{if(e.data.id===id)resolve(e.data);};worker.onerror=e=>reject(new Error(e.message));
      worker.postMessage({id,position:{kind:'torus',size:7,komi:6.5,moves:new Int32Array()}});});
     if(production.backend?.startsWith('v3-'))break;
     await new Promise(r=>setTimeout(r,250));
@@ -188,7 +193,8 @@ try{
  assert.equal(result.production.id,1,'First v3 turn must wait for initialization instead of using v2');
  assert.equal(result.production.simulations,64,'Production Worker must use the Pixel 8a-calibrated shared visit budget');
  result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model,
-  modelSha256:JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json'))).sha256};
+  modelSha256:JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json'))).sha256,
+  searchSha256:createHash('sha256').update(wasmBytes??readFileSync(resolve(root,'dist/ai-v3.wasm'))).digest('hex')};
  if(process.argv.includes('--output'))writeFileSync(process.argv[process.argv.indexOf('--output')+1],JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result,null,2));
  console.log('Real browser Worker: WebGPU/WASM numerical parity, six-board MCTS, cancellation and production v3 routing passed.');

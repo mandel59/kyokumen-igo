@@ -1,0 +1,4111 @@
+{
+  "schemaVersion": 1,
+  "visits": 64,
+  "repeats": 7,
+  "warmups": 2,
+  "seed": 2026102535,
+  "condition": "Same 18 roots and seeds; paired alternating player order in one isolated Worker per backend. Includes history restore/search/inference/cancellation yields, excludes initialization and rendering.",
+  "wasm": {
+    "a": "862f1120b03a56a4f6c110ec3e238ede5ad9933da355e28fc8d1ea1ab571d59c",
+    "b": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+  },
+  "models": {
+    "a": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+    "b": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a"
+  },
+  "fixture": "93e2f274ba8c992f7d880afa155ff1cd5eafbc21e81988c935645d3870590895",
+  "environment": {
+    "browser": "156.0.4314.42",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "node": "v26.12.1"
+  },
+  "runs": [
+    {
+      "backend": "wasm",
+      "results": [
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 151.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 38
+            },
+            {
+              "ms": 155.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 149.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 38
+            },
+            {
+              "ms": 151.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 41
+            },
+            {
+              "ms": 151,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 34
+            },
+            {
+              "ms": 150,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 34
+            }
+          ],
+          "b": [
+            {
+              "ms": 150.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 151.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 22
+            },
+            {
+              "ms": 151.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 152.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 25
+            },
+            {
+              "ms": 150.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 9
+            },
+            {
+              "ms": 151.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 38
+            },
+            {
+              "ms": 147,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 25
+            }
+          ]
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 149.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 150.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 151.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 150.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            }
+          ],
+          "b": [
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 150.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 150.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 151.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 150.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 153.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 152.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            }
+          ]
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 148,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 150.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 148.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 152.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 152.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 150.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            }
+          ],
+          "b": [
+            {
+              "ms": 148.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            },
+            {
+              "ms": 149.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 149.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 153.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 152.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 153.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 150.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            },
+            {
+              "ms": 151.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            },
+            {
+              "ms": 148.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 157.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            },
+            {
+              "ms": 150.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 150.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            }
+          ],
+          "b": [
+            {
+              "ms": 150.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 148.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 151.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 84
+            },
+            {
+              "ms": 149.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            },
+            {
+              "ms": 148.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 152.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 149.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 151.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 152.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 150.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 149.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 157,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 154.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 151.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            }
+          ],
+          "b": [
+            {
+              "ms": 151.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 149.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 153.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 152.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 153.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 151.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 152.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 153.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 154.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 152.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 151.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 152.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 153.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            }
+          ],
+          "b": [
+            {
+              "ms": 153,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 153.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 151.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 153.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 152,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 150.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 151.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 151.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 56
+            },
+            {
+              "ms": 149.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 56
+            },
+            {
+              "ms": 154.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 14
+            },
+            {
+              "ms": 151.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 56
+            },
+            {
+              "ms": 152.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 111
+            },
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 56
+            },
+            {
+              "ms": 151.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 111
+            }
+          ],
+          "b": [
+            {
+              "ms": 150,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 146
+            },
+            {
+              "ms": 147.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 104
+            },
+            {
+              "ms": 149.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 122
+            },
+            {
+              "ms": 149.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 141
+            },
+            {
+              "ms": 149.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 81
+            },
+            {
+              "ms": 155.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 109
+            },
+            {
+              "ms": 150.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 126
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 153.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 155.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 153.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 157.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 154.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 155.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            }
+          ],
+          "b": [
+            {
+              "ms": 155.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 154.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 154.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 157.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 153,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 158.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 151.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 155.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 155.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 152.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 156.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 155,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 157.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 156.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            }
+          ],
+          "b": [
+            {
+              "ms": 159.79999999701977,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 162.40000000596046,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 161.5,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 158.09999999403954,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 159.59999999403954,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 158.90000000596046,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 164.5,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 148.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 146.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 10
+            },
+            {
+              "ms": 148.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 1
+            },
+            {
+              "ms": 147.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 30
+            },
+            {
+              "ms": 148.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 30
+            },
+            {
+              "ms": 150.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 147.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 44
+            }
+          ],
+          "b": [
+            {
+              "ms": 147.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 150,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 151.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 148.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 149,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 147.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 5
+            },
+            {
+              "ms": 147.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 148.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 148.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 155.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 149.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 149.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            }
+          ],
+          "b": [
+            {
+              "ms": 152.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 149.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 147.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 148.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 148,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 151,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 146.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 147.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 144.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 146.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 146.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 147.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 147.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 147.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            }
+          ],
+          "b": [
+            {
+              "ms": 153.70000000298023,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 156.29999999701977,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 152.79999999701977,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 153.90000000596046,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 152.09999999403954,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 155.79999999701977,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 154.8999999910593,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 147.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 1
+            },
+            {
+              "ms": 146.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 64
+            },
+            {
+              "ms": 145.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 30
+            },
+            {
+              "ms": 146.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 146.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 80
+            },
+            {
+              "ms": 151.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 64
+            },
+            {
+              "ms": 150.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 60
+            }
+          ],
+          "b": [
+            {
+              "ms": 147.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 31
+            },
+            {
+              "ms": 147.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 11
+            },
+            {
+              "ms": 151.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 48
+            },
+            {
+              "ms": 145.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 49
+            },
+            {
+              "ms": 149.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 3
+            },
+            {
+              "ms": 154.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 54
+            },
+            {
+              "ms": 147,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 11
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 155.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 150.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 152.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 150.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 149.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 151.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 152.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            }
+          ],
+          "b": [
+            {
+              "ms": 148.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 155.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 151.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 149.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 151.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 151.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 151.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 152.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 147.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 147.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 149.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 150.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 146,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            }
+          ],
+          "b": [
+            {
+              "ms": 146.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 148.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 149.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 150.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 150.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 151.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 143.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 147.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 20
+            },
+            {
+              "ms": 147.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 93
+            },
+            {
+              "ms": 145.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 17
+            },
+            {
+              "ms": 148.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 10
+            },
+            {
+              "ms": 147.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 116
+            },
+            {
+              "ms": 146.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 69
+            }
+          ],
+          "b": [
+            {
+              "ms": 144.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 29
+            },
+            {
+              "ms": 145.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 81
+            },
+            {
+              "ms": 145.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 13
+            },
+            {
+              "ms": 149.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 58
+            },
+            {
+              "ms": 147.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 85
+            },
+            {
+              "ms": 144.59999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 115
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 151.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 150.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 153,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 151,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 152.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 148.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 150.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            }
+          ],
+          "b": [
+            {
+              "ms": 150.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 151,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 149.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 150.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 151.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 148.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 151.40000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 157.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 176,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 194.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 167.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 158.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 157.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 176.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            }
+          ],
+          "b": [
+            {
+              "ms": 153.90000000596046,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 162.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 158.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 167.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 168.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 156.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 169.09999999403954,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "results": [
+        {
+          "board": "sphere3",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 35.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 26
+            },
+            {
+              "ms": 33.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 36.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.799999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 49
+            },
+            {
+              "ms": 38.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 53
+            },
+            {
+              "ms": 41.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            }
+          ],
+          "b": [
+            {
+              "ms": 34,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 5
+            },
+            {
+              "ms": 33.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 22
+            },
+            {
+              "ms": 29.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 32.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 26
+            },
+            {
+              "ms": 35,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 9
+            },
+            {
+              "ms": 38.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 10
+            },
+            {
+              "ms": 38.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 22
+            }
+          ]
+        },
+        {
+          "board": "sphere3",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 39.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 38.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 39.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 41.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 34.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 36.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 35.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            }
+          ],
+          "b": [
+            {
+              "ms": 36.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 38.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 39.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 32.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 34.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 36
+            },
+            {
+              "ms": 40.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            }
+          ]
+        },
+        {
+          "board": "sphere3",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 33.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 32.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 33.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 32.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 30.399999991059303,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            }
+          ],
+          "b": [
+            {
+              "ms": 31.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            },
+            {
+              "ms": 39.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 29.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            },
+            {
+              "ms": 29.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 30.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 21
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 39
+            },
+            {
+              "ms": 31.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 30.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 34.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 31.100000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 31.600000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 31.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 31.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 30.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            }
+          ],
+          "b": [
+            {
+              "ms": 33.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 29.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 33.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 31.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            },
+            {
+              "ms": 30.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 12
+            },
+            {
+              "ms": 33.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 32.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 72
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 31.100000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 33.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 31.399999991059303,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 33.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 31.799999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 31.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            }
+          ],
+          "b": [
+            {
+              "ms": 33.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 32.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 31.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 35.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 34,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            },
+            {
+              "ms": 30,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 77
+            }
+          ]
+        },
+        {
+          "board": "sphere4",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 33.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 34.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 31.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 32.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 36.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 35.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            }
+          ],
+          "b": [
+            {
+              "ms": 36.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 30.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 33.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 33.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 39.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 38.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            },
+            {
+              "ms": 32.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 73
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 33.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 15
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 15
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 15
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 51
+            },
+            {
+              "ms": 33.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 57
+            },
+            {
+              "ms": 33.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 51
+            },
+            {
+              "ms": 28.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 15
+            }
+          ],
+          "b": [
+            {
+              "ms": 30,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 146
+            },
+            {
+              "ms": 30.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 106
+            },
+            {
+              "ms": 30.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 9
+            },
+            {
+              "ms": 32.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 52
+            },
+            {
+              "ms": 31.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 81
+            },
+            {
+              "ms": 36.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 16
+            },
+            {
+              "ms": 29.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 126
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 31.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 34.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 37,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 38.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 30.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 35.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            }
+          ],
+          "b": [
+            {
+              "ms": 33.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 35,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 35.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 35.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 34.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 37.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            },
+            {
+              "ms": 35.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 131
+            }
+          ]
+        },
+        {
+          "board": "sphere5",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 32.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 37.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 38.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 38.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 36.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 35.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 38.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            }
+          ],
+          "b": [
+            {
+              "ms": 37.900000005960464,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 36.3999999910593,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 40,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 38.099999994039536,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 40.30000001192093,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 40.5,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            },
+            {
+              "ms": 37.6000000089407,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 65
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 32,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 5
+            },
+            {
+              "ms": 31.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 10
+            },
+            {
+              "ms": 37,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 20
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 48
+            },
+            {
+              "ms": 30,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 17
+            },
+            {
+              "ms": 27.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 27
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 7
+            }
+          ],
+          "b": [
+            {
+              "ms": 32.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 4
+            },
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 1
+            },
+            {
+              "ms": 29.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 2
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 34.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 32.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 1
+            },
+            {
+              "ms": 30.399999991059303,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 4
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 32.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 29.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 31.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 30.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 31.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 29.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            }
+          ],
+          "b": [
+            {
+              "ms": 30.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 32.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 31.30000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 32.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 31.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 33.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            },
+            {
+              "ms": 33.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 45
+            }
+          ]
+        },
+        {
+          "board": "torus7",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 30.100000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 31.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 31.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 33.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.899999991059303,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.600000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            }
+          ],
+          "b": [
+            {
+              "ms": 33.20000000298023,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 35.3999999910593,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 38.70000000298023,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 34.8999999910593,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 33.70000000298023,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 36.20000000298023,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 35.5,
+              "batches": 10,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 31.100000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 35
+            },
+            {
+              "ms": 30.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 20
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 30
+            },
+            {
+              "ms": 35.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 33
+            },
+            {
+              "ms": 30.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 43
+            },
+            {
+              "ms": 32,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 64
+            },
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            }
+          ],
+          "b": [
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 31
+            },
+            {
+              "ms": 29.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 11
+            },
+            {
+              "ms": 30.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 48
+            },
+            {
+              "ms": 28.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 49
+            },
+            {
+              "ms": 31.600000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 3
+            },
+            {
+              "ms": 34.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 54
+            },
+            {
+              "ms": 34,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 11
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 32.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 35.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 31.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 33.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 29.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 29,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            }
+          ],
+          "b": [
+            {
+              "ms": 33.19999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 32.80000001192093,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 33.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 35.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            },
+            {
+              "ms": 32.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 46
+            }
+          ]
+        },
+        {
+          "board": "torus9",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 31.799999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 33.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 30.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 30.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 31.200000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            }
+          ],
+          "b": [
+            {
+              "ms": 31.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 30.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 32.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 28.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 31.69999998807907,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            },
+            {
+              "ms": 33.8999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 78
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "opening",
+          "a": [
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 116
+            },
+            {
+              "ms": 31.799999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 71
+            },
+            {
+              "ms": 36.79999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 114
+            },
+            {
+              "ms": 31.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 114
+            },
+            {
+              "ms": 32.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 37.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 11
+            },
+            {
+              "ms": 34.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 5
+            }
+          ],
+          "b": [
+            {
+              "ms": 29.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 29
+            },
+            {
+              "ms": 31.799999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 81
+            },
+            {
+              "ms": 32.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 13
+            },
+            {
+              "ms": 30.299999997019768,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 37
+            },
+            {
+              "ms": 33.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 58
+            },
+            {
+              "ms": 36.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 85
+            },
+            {
+              "ms": 31.100000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 115
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "middle",
+          "a": [
+            {
+              "ms": 37.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 32.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 32.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 34.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 30.700000002980232,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 35.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 33,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            }
+          ],
+          "b": [
+            {
+              "ms": 34.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 31.5,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 32.70000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 34.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            },
+            {
+              "ms": 32.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 6
+            },
+            {
+              "ms": 31,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 42
+            }
+          ]
+        },
+        {
+          "board": "torus11",
+          "phase": "late",
+          "a": [
+            {
+              "ms": 30.900000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 34.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 32.400000005960464,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 34.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 31.600000008940697,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 34.6000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 35,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            }
+          ],
+          "b": [
+            {
+              "ms": 35,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 34.099999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 31.599999994039536,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 32.1000000089407,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 34.3999999910593,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 33.20000000298023,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            },
+            {
+              "ms": 33.29999999701977,
+              "batches": 9,
+              "simulations": 64,
+              "provenLoss": false,
+              "move": 89
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "backend": "wasm",
+      "a": {
+        "samples": 126,
+        "p95Ms": 157.70000000298023,
+        "meanMs": 151.81984127017242,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 161.5,
+        "meanMs": 151.9333333326947,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9764705882537476,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 152.8999999910593,
+            "meanMs": 150.82380952366762,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 153.30000001192093,
+            "meanMs": 151.10476190490382,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9973907369808838
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157,
+            "meanMs": 152.1476190480448,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 153.70000000298023,
+            "meanMs": 151.42857142715226,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.021470396857227
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157.59999999403954,
+            "meanMs": 153.95714285685904,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 162.40000000596046,
+            "meanMs": 155.30476190433615,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9704433496813747
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 150.5,
+            "meanMs": 148.49523809552193,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 155.79999999701977,
+            "meanMs": 150.70476190391042,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9659820282598129
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 152.80000001192093,
+            "meanMs": 149.65238095465162,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 154.3999999910593,
+            "meanMs": 149.90476190263317,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.989637305833996
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 176.6000000089407,
+            "meanMs": 155.8428571422895,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 168.1000000089407,
+            "meanMs": 153.15238095323244,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.05056513979505
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "a": {
+        "samples": 126,
+        "p95Ms": 38.6000000089407,
+        "meanMs": 33.125396825964486,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 39.20000000298023,
+        "meanMs": 33.34126984115158,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9846938777042368,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 41.599999994039536,
+            "meanMs": 35.12857142942293,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39.8999999910593,
+            "meanMs": 34.080952380384716,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0426065163749665
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.1000000089407,
+            "meanMs": 32.59047619217918,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 38.3999999910593,
+            "meanMs": 33.18571428528854,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9140625004456524
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.70000000298023,
+            "meanMs": 34.49523809481235,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 40.30000001192093,
+            "meanMs": 35.161904762898175,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9602977665392702
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 33.79999999701977,
+            "meanMs": 31.195238095663843,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.20000000298023,
+            "meanMs": 33.0571428565752,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9337016572993679
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.099999994039536,
+            "meanMs": 31.790476190901938,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 34.099999994039536,
+            "meanMs": 31.866666666099004,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0293255132016068
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.099999994039536,
+            "meanMs": 33.5523809528067,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 35,
+            "meanMs": 32.69523809566384,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.059999999829701
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "passes": true
+}

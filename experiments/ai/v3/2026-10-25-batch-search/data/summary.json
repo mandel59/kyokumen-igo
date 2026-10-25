@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+  "baseline": "v3/2026-10-25-search-proof/data/variants/final.wasm",
+  "baselineSha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+  "candidateSha256": "90fe5c55a6ce52fe83adc1a40c8fd9f794f5ae583a6813888fb90066b7cfab3d",
+  "sourceHashes": {
+    "tools/ai-tuner/src/mcts.rs": "b0fa8ef20dcefcfc1314b728af33893159846a02db9edf0ea24db94b5e35c8e4",
+    "tools/ai-gnn/browser-match.mjs": "cac87458d356c6d616c71e27b925ecf72abc494bb5af08f3fd8ea196dee46165",
+    "tools/ai-gnn/test-browser.mjs": "3e67f688a00b3abe192441e12844528ce21e433130d896ea64adde8ac88cb0bc",
+    "dist/ai-v3-search.js": "d9077bd40041361a9a6841747dd40f04b7730b51d45840d05b2ffdd5f6a93b42",
+    "v3-tests.mjs": "011d4da6881ee308502712546fc9bec63c03c7c3ae9b8424d10b2255b9a06ef2"
+  },
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "environment": {
+    "browser": "156.0.4314.42",
+    "node": "v26.12.1",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             "
+  },
+  "summary": {
+    "games": 192,
+    "completed": 192,
+    "capped": 0,
+    "wins": 101,
+    "draws": 0,
+    "losses": 91,
+    "score": 101,
+    "boards": [
+      {
+        "board": "sphere3",
+        "games": 32,
+        "score": 15,
+        "pairScores": [
+          0.5,
+          1,
+          1,
+          0,
+          0,
+          0.5,
+          0,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere4",
+        "games": 32,
+        "score": 18,
+        "pairScores": [
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0,
+          0,
+          1,
+          0.5,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "sphere5",
+        "games": 32,
+        "score": 20,
+        "pairScores": [
+          1,
+          1,
+          1,
+          0.5,
+          0.5,
+          0.5,
+          1,
+          0,
+          0.5,
+          1,
+          0,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          1
+        ]
+      },
+      {
+        "board": "torus7",
+        "games": 32,
+        "score": 16,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus9",
+        "games": 32,
+        "score": 16,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      {
+        "board": "torus11",
+        "games": 32,
+        "score": 16,
+        "pairScores": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "scoreRate": 0.5260416666666666,
+    "pairedBootstrap": {
+      "seed": 2026102542,
+      "iterations": 10000,
+      "unit": "colour-swapped opening pair",
+      "stratifiedByBoard": true,
+      "interval95": [
+        0.4791666666666667,
+        0.5729166666666666
+      ]
+    }
+  },
+  "speed": [
+    {
+      "backend": "wasm",
+      "a": {
+        "samples": 126,
+        "p95Ms": 171.59999999403954,
+        "meanMs": 163.77698412691316,
+        "meanBatches": 9.055555555555555,
+        "maxBatches": 10
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 172.70000000298023,
+        "meanMs": 163.83253968270526,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9936305731967474,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 167.70000000298023,
+            "meanMs": 163.43809523894674,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 168.3999999910593,
+            "meanMs": 162.8523809519552,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9958432304743692
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 169.5,
+            "meanMs": 163.83809523781142,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 169.40000000596046,
+            "meanMs": 163.63809523837907,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0005903187369305
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 175.3999999910593,
+            "meanMs": 166.10476190348467,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 176.6000000089407,
+            "meanMs": 168.2761904774677,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9932049829115479
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 171.90000000596046,
+            "meanMs": 164.39047618990853,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 170.20000000298023,
+            "meanMs": 162.58571428628196,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 1.0099882491360193
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 166.30000001192093,
+            "meanMs": 161.15238095181329,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 169,
+            "meanMs": 162.74761904847054,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9840236687095913
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 171.5,
+            "meanMs": 163.7380952395144,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 169.1000000089407,
+            "meanMs": 162.89523809367702,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0141927852804993
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "a": {
+        "samples": 126,
+        "p95Ms": 38,
+        "meanMs": 33.26428571497164,
+        "meanBatches": 9.055555555555555,
+        "maxBatches": 10
+      },
+      "b": {
+        "samples": 126,
+        "p95Ms": 38.29999999701977,
+        "meanMs": 33.18253968206663,
+        "meanBatches": 9.11111111111111,
+        "maxBatches": 10
+      },
+      "p95Ratio": 0.9921671019048796,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 35.099999994039536,
+            "meanMs": 32.32857142814568,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.70000000298023,
+            "meanMs": 32.490476191043854,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.956403269514693
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.099999994039536,
+            "meanMs": 34.08571428486279,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.29999999701977,
+            "meanMs": 33.38095238237154,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.049586776781475
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 36.80000001192093,
+            "meanMs": 33.866666668227744,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 38.8999999910593,
+            "meanMs": 34.89047618919895,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.9460154246884053
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 36.5,
+            "meanMs": 33.01904761933145,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39.20000000298023,
+            "meanMs": 33.09999999971617,
+            "meanBatches": 9.333333333333334,
+            "maxBatches": 10
+          },
+          "p95Ratio": 0.931122448908802
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.6000000089407,
+            "meanMs": 32.71428571641445,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 35,
+            "meanMs": 31.733333332198008,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0742857145411628
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.900000005960464,
+            "meanMs": 33.57142857284773,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 37.5,
+            "meanMs": 33.499999997871264,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0106666668256123
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "accepted": false,
+  "reason": "101/192 and lower 95% bound 47.9% fail predeclared strength gate. Speed gate passed. Keep existing production scheduling.",
+  "commands": [
+    {
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/browser-match.mjs",
+        "--a",
+        "dist/models/v3",
+        "--b",
+        "dist/models/v3",
+        "--a-wasm",
+        "tools/ai-gnn/target/batch-search/selected.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/batch-search/baseline.wasm",
+        "--pairs",
+        "16",
+        "--simulations",
+        "64",
+        "--seed",
+        "2026102541",
+        "--role",
+        "evaluation",
+        "--output",
+        "tools/ai-gnn/target/batch-search/evaluation.json"
+      ]
+    },
+    {
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/bench-search.mjs",
+        "--a-wasm",
+        "tools/ai-gnn/target/batch-search/selected.wasm",
+        "--b-wasm",
+        "tools/ai-gnn/target/batch-search/baseline.wasm",
+        "--output",
+        "tools/ai-gnn/target/batch-search/speed.json"
+      ]
+    }
+  ]
+}

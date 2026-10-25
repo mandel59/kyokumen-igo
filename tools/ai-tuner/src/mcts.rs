@@ -5,9 +5,11 @@ use crate::rng::Rng;
 use crate::{tactics,endgame};
 
 const MAX_NODES: usize = 8192;
+const HALVING_ACTIONS: usize = 8;
+struct RootPlan {active: Vec<usize>, targets: Vec<u32>, final_round: bool}
 #[derive(Default)]
 struct Node {
-    visits: u32, sum: f32, reserved: u32, pending: bool, expanded: bool, edges: Vec<Edge>,
+    visits: u32, sum: f32, reserved: u32, pending: bool, expanded: bool, edges: Vec<Edge>, proven: Option<f32>,
 }
 struct Edge { action: usize, prior: f32, child: Option<usize> }
 struct Pending { id: u32, path: Vec<usize>, legal: Vec<bool> }
@@ -22,10 +24,11 @@ pub struct Search {
     fpu: u32,
     root_noise: bool,
     unvisited_selections: u32,
+    root_budget: u32, root_initialized: bool, root_plan: Option<RootPlan>,
 }
 impl Search {
     pub fn new(seed: u64) -> Self {
-        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0 }
+        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0, root_budget: 0, root_initialized: false, root_plan: None }
     }
     pub fn set_fpu(&mut self, mode: u32, root_noise: bool) -> bool {
         if mode > 2 || self.completed != 0 || !self.pending.is_empty() { return false; }
@@ -47,11 +50,31 @@ impl Search {
         if self.completed != 0 || !self.pending.is_empty() { return false; }
         self.endgame = enabled; true
     }
+    // Exact values use the node's player-to-move perspective. A single losing
+    // child proves a win; proving a draw/loss requires resolving every action.
+    fn prove(&mut self, p: usize) {
+        if self.nodes[p].proven.is_some() || !self.nodes[p].expanded { return; }
+        let edges = &self.nodes[p].edges;
+        if edges.iter().any(|e| e.child.is_some_and(|c| self.nodes[c].proven == Some(-1.))) {
+            self.nodes[p].proven = Some(1.);
+        } else if !edges.is_empty() && edges.iter().all(|e| e.child.is_some_and(|c| self.nodes[c].proven.is_some())) {
+            let value = edges.iter().map(|e| -self.nodes[e.child.unwrap()].proven.unwrap()).fold(-1., f32::max);
+            self.nodes[p].proven = Some(value);
+        }
+    }
+    fn viable(&self, p: usize, edge: &Edge) -> bool {
+        // Spend remaining visits on moves that have not already been refuted.
+        // If every move loses, keep them all so a legal policy still exists.
+        edge.child.is_none_or(|c| self.nodes[c].proven != Some(1.)) ||
+            self.nodes[p].edges.iter().all(|e| e.child.is_some_and(|c| self.nodes[c].proven == Some(1.)))
+    }
     fn backup(&mut self, path: &[usize], mut value: f32, reserved: bool) {
         for &p in path.iter().rev() {
             let node = &mut self.nodes[p];
             if reserved { node.reserved -= 1; }
-            node.visits += 1; node.sum += value; value = -value;
+            node.visits += 1; node.sum += value;
+            self.prove(p);
+            value = -self.nodes[p].proven.unwrap_or(value);
         }
         self.completed += 1;
     }
@@ -60,22 +83,41 @@ impl Search {
     }
     pub fn collect_limited(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize, remaining: u32) -> Vec<Leaf> {
         assert!(self.pending.is_empty(), "submit or cancel the outstanding batch first");
+        if self.completed==0 {self.root_budget=remaining;}
+        else if remaining>0 && self.root_budget!=u32::MAX && self.completed.saturating_add(remaining)!=self.root_budget {
+            // Preserve incremental callers that extend or replace their budget.
+            self.root_budget=u32::MAX;self.root_initialized=true;self.root_plan=None;
+        }
         let mut leaves = vec![];
+        let mut blocked = vec![false; MAX_NODES];
         if root.ended { return leaves; }
         let limit = self.completed.saturating_add(remaining);
         let mut scratch = Scratch::new(root.board.len());
         // Bounded CPU work, including runs that repeatedly reach terminal positions.
         for _ in 0..batch.clamp(1,8)*16 {
             // Pending neural evaluations and exact terminal backups both consume visits.
+            if blocked[0] { break; }
             if leaves.len() == batch.clamp(1,8) || self.completed.saturating_add(self.pending.len() as u32) >= limit { break; }
             let mut game = root.clone(); let mut boards = past.to_vec();
             let mut path = vec![0];
             for _ in 0..256 {
                 let p = *path.last().unwrap();
+                if let Some(value) = self.nodes[p].proven {
+                    self.backup(&path, value, false); break;
+                }
                 if game.ended {
                     let (b,w) = game.score();
                     let value = if b==w {0.} else if (b>w)==(game.turn==1) {1.} else {-1.};
+                    self.nodes[p].proven = Some(value);
                     self.backup(&path, value, false); break;
+                }
+                // A winning second pass is an exact +1 for the player to move.
+                // Resolve it inside the tree before asking the network: otherwise
+                // an optimistic evaluation can make a losing first pass look safe.
+                // Keep the root policy path so callers still receive its pass edge.
+                if path.len() > 1 && endgame::wins_by_passing(&game) {
+                    self.nodes[p].proven = Some(1.);
+                    self.backup(&path, 1., false); break;
                 }
                 if self.nodes[p].pending { break; }
                 if !self.nodes[p].expanded {
@@ -108,18 +150,23 @@ impl Search {
                     self.pending.push(Pending {id, path, legal});
                     leaves.push(Leaf {id, features}); break;
                 }
+                let root_choice=if p==0 {self.halving_action(&blocked)}else{None};
                 let node = &self.nodes[p];
                 let scale = ((node.visits + node.reserved + 1) as f32).sqrt();
                 let unvisited_q = self.unvisited_q(p);
-                let mut best = 0; let mut best_score = f32::NEG_INFINITY;
+                let mut best = root_choice.flatten(); let mut best_score = f32::NEG_INFINITY;
+                if root_choice.is_none() {
                 for (k,e) in node.edges.iter().enumerate() {
+                    if !self.viable(p,e) || e.child.is_some_and(|c| self.nodes[c].pending || blocked[c]) { continue; }
                     let (n,q) = e.child.map_or((0,unvisited_q), |c| {
                         let child = &self.nodes[c];
                         (child.visits + child.reserved, -(child.sum + child.reserved as f32) / (child.visits + child.reserved).max(1) as f32)
                     });
                     let score = q + 1.5 * e.prior * scale / (1+n) as f32;
-                    if score > best_score { best = k; best_score = score; }
+                    if score > best_score { best = Some(k); best_score = score; }
                 }
+                }
+                let Some(best) = best else { blocked[p] = true; break; };
                 let action = self.nodes[p].edges[best].action;
                 if self.nodes[p].edges[best].child.is_none() { self.unvisited_selections += 1; }
                 gnn::remember(&mut boards, &game.board);
@@ -159,17 +206,103 @@ impl Search {
         }
         Ok(())
     }
+    fn halving_remaining(&self) -> u32 {
+        self.root_budget.saturating_sub(self.completed.saturating_add(self.pending.len() as u32))
+    }
+    fn halving_scale(&self) -> f32 {
+        let max_visits=self.nodes[0].edges.iter().filter_map(|e|e.child).map(|c|self.nodes[c].visits).max().unwrap_or(0);
+        (50.+max_visits as f32)*0.1
+    }
+    fn halving_score(&self, edge: usize, scale: f32) -> f32 {
+        let root=&self.nodes[0];let e=&root.edges[edge];
+        let q=e.child.map_or(self.unvisited_q(0),|c| {
+            let n=&self.nodes[c];-n.proven.unwrap_or(n.sum/n.visits.max(1) as f32)
+        });
+        e.prior.max(1e-30).ln()+scale*q
+    }
+    fn allocate_halving(&self, active: Vec<usize>) -> RootPlan {
+        let remaining=self.halving_remaining();let k=active.len();
+        let mut rounds=0;let mut m=k;while m>1 {rounds+=1;m=(m+1)/2;}
+        let allocation=if k<=2||remaining<=8 {remaining} else {
+            let share=((remaining as u64+rounds as u64-1)/rounds.max(1) as u64) as u32;
+            ((share/8)*8).max(((k+7)/8*8) as u32).min(remaining)
+        };
+        let mut targets=vec![0;self.nodes[0].edges.len()];
+        for (rank,&edge) in active.iter().enumerate() {
+            let current=self.nodes[0].edges[edge].child.map_or(0,|c|self.nodes[c].visits+self.nodes[c].reserved);
+            targets[edge]=current.saturating_add(allocation/k as u32+u32::from(rank<allocation as usize%k));
+        }
+        RootPlan {active,targets,final_round:allocation==remaining}
+    }
+    // None means ordinary PUCT; Some(None) waits for the current neural batch.
+    fn halving_action(&mut self, blocked: &[bool]) -> Option<Option<usize>> {
+        if self.root_budget<3||self.root_budget==u32::MAX {return None;}
+        let scale=self.halving_scale();
+        if !self.root_initialized {
+            self.root_initialized=true;
+            let mut active:Vec<_>=(0..self.nodes[0].edges.len()).filter(|&i|self.viable(0,&self.nodes[0].edges[i])).collect();
+            active.sort_by(|&a,&b|self.nodes[0].edges[b].prior.total_cmp(&self.nodes[0].edges[a].prior));
+            active.truncate(HALVING_ACTIONS.min(self.halving_remaining() as usize));
+            if active.len()>1 {self.root_plan=Some(self.allocate_halving(active));}
+        }
+        loop {
+            let plan=self.root_plan.as_ref()?;
+            let mut live:Vec<_>=plan.active.iter().copied().filter(|&i|self.viable(0,&self.nodes[0].edges[i])).collect();
+            if live.is_empty() {self.root_plan=None;return None;}
+            let complete=live.iter().all(|&i|self.nodes[0].edges[i].child.is_some_and(|c|self.nodes[c].visits>=plan.targets[i]));
+            if complete {
+                if self.halving_remaining()==0 {return Some(None);}
+                let final_round=plan.final_round;
+                live.sort_by(|&a,&b|self.halving_score(b,scale).total_cmp(&self.halving_score(a,scale)));
+                if !final_round&&live.len()>1 {live.truncate((live.len()+1)/2);}
+                self.root_plan=Some(self.allocate_halving(live));continue;
+            }
+            let plan=self.root_plan.as_ref().unwrap();
+            let mut best=None;let mut least=u32::MAX;let mut score=f32::NEG_INFINITY;
+            for i in live {
+                let edge=&self.nodes[0].edges[i];
+                if edge.child.is_some_and(|c|self.nodes[c].pending||blocked[c]) {continue;}
+                let visits=edge.child.map_or(0,|c|self.nodes[c].visits+self.nodes[c].reserved);
+                if visits>=plan.targets[i] {continue;}
+                let next=self.halving_score(i,scale);
+                if visits<least||(visits==least&&next>score) {best=Some(i);least=visits;score=next;}
+            }
+            return Some(best);
+        }
+    }
+    fn halving_policy(&self) -> Option<Vec<f32>> {
+        if self.nodes[0].proven.is_some() {return None;}
+        let plan=self.root_plan.as_ref()?;
+        let scale=self.halving_scale();
+        let live:Vec<_>=plan.active.iter().copied().filter(|&i|self.viable(0,&self.nodes[0].edges[i])).collect();
+        if live.is_empty() {return None;}
+        let maximum=live.iter().map(|&i|self.halving_score(i,scale)).fold(f32::NEG_INFINITY,f32::max);
+        let mut result=vec![0.;ACTIONS];let mut total=0.;
+        for i in live {let v=(self.halving_score(i,scale)-maximum).exp();result[self.nodes[0].edges[i].action]=v;total+=v;}
+        for p in &mut result {*p/=total;}
+        Some(result)
+    }
+
     pub fn cancel(&mut self) {
         for pending in std::mem::take(&mut self.pending) {
             for p in pending.path { self.nodes[p].reserved -= 1; self.nodes[p].pending = false; }
         }
     }
     pub fn policy(&self) -> Vec<f32> {
+        if let Some(policy)=self.halving_policy() {return policy;}
         let mut result = vec![0.; ACTIONS];
-        for e in &self.nodes[0].edges { result[e.action] = e.child.map_or(0.,|c|self.nodes[c].visits as f32); }
+        let winning = self.nodes[0].proven == Some(1.);
+        for e in &self.nodes[0].edges {
+            if self.viable(0,e) && (!winning || e.child.is_some_and(|c| self.nodes[c].proven == Some(-1.))) {
+                result[e.action] = e.child.map_or(0.,|c|self.nodes[c].visits as f32);
+            }
+        }
         let total: f32 = result.iter().sum();
         if total>0. { for v in &mut result {*v/=total;} }
-        else { for e in &self.nodes[0].edges {result[e.action]=e.prior;} }
+        else {
+            let mass: f32 = self.nodes[0].edges.iter().filter(|e| self.viable(0,e)).map(|e|e.prior).sum();
+            for e in &self.nodes[0].edges { if self.viable(0,e) {result[e.action]=e.prior/mass;} }
+        }
         result
     }
     pub fn statistics(&self) -> Vec<f32> {
@@ -182,7 +315,7 @@ impl Search {
             if let Some(c) = e.child {
                 let child = &self.nodes[c];
                 out[3+e.action] = child.visits as f32;
-                out[3+ACTIONS*2+e.action] = -child.sum / child.visits.max(1) as f32;
+                out[3+ACTIONS*2+e.action] = -child.proven.unwrap_or(child.sum / child.visits.max(1) as f32);
             }
         }
         out
@@ -198,6 +331,93 @@ impl Search {
 mod tests {
     use super::*;
     use crate::board::{Topology,Kind};
+    #[test]
+    fn proofs_preserve_unknown_replies_and_prefer_wins_over_visit_counts() {
+        for second in [None,Some(-1.),Some(0.),Some(1.)] {
+            let mut s=Search::new(1);
+            s.nodes[0].expanded=true;
+            s.nodes.push(Node {visits:99, sum:-99., proven:Some(1.), ..Node::default()});
+            s.nodes.push(Node {visits:1, sum:1., proven:second, ..Node::default()});
+            s.nodes[0].edges=vec![Edge{action:PASS,prior:0.99,child:Some(1)},Edge{action:0,prior:0.01,child:Some(2)}];
+            s.prove(0);
+            assert_eq!(s.nodes[0].proven,second.map(|v|-v));
+            let policy=s.policy();
+            assert!((policy.iter().sum::<f32>()-1.).abs()<1e-6);
+            if second!=Some(1.) {
+                assert_eq!(s.best(),0,"a refuted pass must not beat an unknown move, draw or proven win");
+                assert_eq!(policy[PASS],0.);
+            } else {
+                assert_eq!(s.nodes[0].proven,Some(-1.));
+                assert!(policy[PASS]>0.,"retain a legal policy when every action loses");
+            }
+        }
+        // The proof must cross several alternating player perspectives.
+        let mut s=Search::new(2);
+        for _ in 0..3 {s.nodes.push(Node::default());}
+        for p in 0..3 {
+            s.nodes[p].expanded=true;
+            s.nodes[p].edges=vec![Edge{action:0,prior:1.,child:Some(p+1)}];
+        }
+        s.nodes[3].proven=Some(-1.);
+        s.backup(&[0,1,2,3],-1.,false);
+        assert_eq!(s.nodes.iter().map(|n|n.proven).collect::<Vec<_>>(),vec![Some(1.),Some(-1.),Some(1.),Some(-1.)]);
+        assert_eq!(s.completed,1);
+    }
+    #[test]
+    fn halving_cancellation_and_incremental_budget_extensions_keep_progress() {
+        let t=Topology::new(Kind::Sphere,3);let game=Game::new(&t,6.5);let mut s=Search::new(3);
+        let first=s.collect_limited(&game,&[],true,8,64);let ids=first.iter().map(|l|l.id).collect::<Vec<_>>();s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();
+        let pending=s.collect_limited(&game,&[],true,8,64-s.completed);assert!(!pending.is_empty());s.cancel();
+        for goal in [64,67] {
+            let mut calls=0;while s.completed<goal {
+                let leaves=s.collect_limited(&game,&[],true,8,goal-s.completed);let ids=leaves.iter().map(|l|l.id).collect::<Vec<_>>();
+                if !ids.is_empty(){s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();}
+                calls+=1;assert!(calls<goal+20);
+            }
+            assert_eq!(s.completed,goal);assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
+        }
+        assert_eq!(s.root_budget,u32::MAX);assert!(s.root_plan.is_none());
+    }
+    #[test]
+    fn halving_recommends_value_instead_of_the_most_visited_action() {
+        let mut s=Search::new(3);
+        s.nodes[0]=Node {visits:12,expanded:true,edges:vec![Edge{action:0,prior:0.9,child:Some(1)},Edge{action:1,prior:0.1,child:Some(2)}],..Node::default()};
+        s.nodes.push(Node{visits:10,sum:8.,..Node::default()});s.nodes.push(Node{visits:1,sum:-0.8,..Node::default()});
+        s.root_plan=Some(RootPlan{active:vec![0,1],targets:vec![10,1],final_round:true});
+        assert_eq!(s.best(),1);assert!((s.policy().iter().sum::<f32>()-1.).abs()<1e-6);
+        s.nodes[2].proven=Some(1.);assert_eq!(s.best(),0,"exact refutations still override estimated values");
+    }
+    #[test]
+    fn halving_respects_odd_budgets_and_releases_all_reservations() {
+        for (kind,size,sphere) in [(Kind::Sphere,3,true),(Kind::Torus,7,false)] {
+            let t=Topology::new(kind,size);let game=Game::new(&t,6.5);
+            for budget in [1,2,7,8,9,17,64,129] {
+                let mut s=Search::new(3);let mut calls=0;
+                while s.completed<budget {
+                    let leaves=s.collect_limited(&game,&[],sphere,8,budget-s.completed);
+                    assert!(s.completed+leaves.len() as u32<=budget);
+                    let ids=leaves.iter().map(|l|l.id).collect::<Vec<_>>();
+                    if !ids.is_empty(){s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();}
+                    calls+=1;assert!(calls<budget+20);
+                }
+                assert_eq!(s.completed,budget);assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
+                assert!((s.policy().iter().sum::<f32>()-1.).abs()<1e-5);
+            }
+        }
+    }
+    #[test]
+    fn pending_leaf_does_not_block_other_available_evaluations() {
+        let t=Topology::new(Kind::Torus,7);let g=Game::new(&t,6.5);
+        let mut s=Search::new(3);assert!(s.set_fpu(1,false));
+        let root=s.collect_limited(&g,&[],false,8,1);assert_eq!(root.len(),1);
+        let mut eval=vec![-100.;ACTIONS+1];eval[0]=100.;eval[ACTIONS]=-1.;
+        s.submit(&[root[0].id],&eval).unwrap();
+        let batch=s.collect_limited(&g,&[],false,8,8);
+        assert_eq!(batch.len(),8,"pending high-prior child must not prevent seven other legal leaves");
+        let mut ids=batch.iter().map(|l|l.id).collect::<Vec<_>>();ids.sort();ids.dedup();assert_eq!(ids.len(),8);
+        assert_eq!(s.nodes[0].reserved,8);
+        s.cancel();assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
+    }
     #[test]
     fn visit_limit_counts_neural_leaves_and_exact_terminal_backups() {
         let t=Topology::new(Kind::Torus,7);let mut g=Game::new(&t,6.5);g.pass();

@@ -1,0 +1,1235 @@
+{
+  "schemaVersion": 1,
+  "results": [
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/development.json.gz",
+      "seed": 2026102501,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "5384081263f7e630511b5d3b194c252e9bba76dff1327239e16f47b8c26c3026",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "847904d9a79d81b310f185fdd3b8ef202c7abdcac152e54df222b737e41ed8b0",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 11,
+        "draws": 0,
+        "losses": 13,
+        "score": 11,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.4583333333333333,
+        "pairedBootstrap": {
+          "seed": 2026102502,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4166666666666667,
+            0.5
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 1128,
+          "meanMs": 32.92845744689834,
+          "p95Ms": 40,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 36.70000000298023,
+              "meanMs": 31.002678571934148
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 36.899999998509884,
+              "meanMs": 32.25154639208286
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 42.30000000447035,
+              "meanMs": 35.50477707027724
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.19999999552965,
+              "meanMs": 30.685046728804846
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 39.20000000298023,
+              "meanMs": 31.80409356716432
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 38.29999999701977,
+              "meanMs": 32.79956521715807
+            }
+          ]
+        },
+        "b": {
+          "turns": 1128,
+          "meanMs": 32.993262411253724,
+          "p95Ms": 40.100000001490116,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 36.5,
+              "meanMs": 30.837499999374682
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 36.70000000298023,
+              "meanMs": 32.203092783113426
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 42.899999998509884,
+              "meanMs": 35.407643312054454
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.5,
+              "meanMs": 31.11962616833571
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 37.100000001490116,
+              "meanMs": 32.18011695895976
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 37.899999998509884,
+              "meanMs": 32.88956521765694
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.200000002980232,
+        "bP95": 4.199999995529652,
+        "ratio": 1.0000000017739477,
+        "samplesPerModel": 1080
+      }
+    },
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/solver-development.json.gz",
+      "seed": 2026102501,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 13,
+        "draws": 0,
+        "losses": 11,
+        "score": 13,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5416666666666666,
+        "pairedBootstrap": {
+          "seed": 2026102502,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.5833333333333334
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 1162,
+          "meanMs": 33.119965576667745,
+          "p95Ms": 41.099999994039536,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 38.20000000298023,
+              "meanMs": 31.397345132466437
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 37.399999998509884,
+              "meanMs": 31.95346534665268
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 42.899999998509884,
+              "meanMs": 35.01661441993657
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 38.30000000447035,
+              "meanMs": 31.129629630112536
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 39.100000001490116,
+              "meanMs": 32.27777777782135
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 42.5,
+              "meanMs": 33.85983935773492
+            }
+          ]
+        },
+        "b": {
+          "turns": 1162,
+          "meanMs": 33.15129087774945,
+          "p95Ms": 40.100000001490116,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 36.29999999701977,
+              "meanMs": 30.80088495614782
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 37.899999998509884,
+              "meanMs": 32.46336633641974
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 42.19999999552965,
+              "meanMs": 35.1965517240772
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.29999999701977,
+              "meanMs": 31.079629629436468
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 38.5,
+              "meanMs": 32.23567251490745
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 39.600000001490116,
+              "meanMs": 33.68313252985717
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.199999995529652,
+        "bP95": 4.199999995529652,
+        "ratio": 1,
+        "samplesPerModel": 1080
+      }
+    },
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/solver-075-development.json.gz",
+      "seed": 2026102501,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "fd9e470452975acf8b464cd7d898205c5d8bbfd863ccd1f9d907b96ec0f5bd79",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 15,
+        "draws": 0,
+        "losses": 9,
+        "score": 15,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 4,
+            "pairScores": [
+              1,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          }
+        ],
+        "scoreRate": 0.625,
+        "pairedBootstrap": {
+          "seed": 2026102502,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.75
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 1158,
+          "meanMs": 33.112176165763216,
+          "p95Ms": 39.900000005960464,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 39.100000001490116,
+              "meanMs": 32.047499999962746
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 41,
+              "meanMs": 34.188481675314655
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 40.29999999701977,
+              "meanMs": 34.11451612908033
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 38.899999998509884,
+              "meanMs": 30.941228069822515
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 38.70000000298023,
+              "meanMs": 32.5195266272013
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 39.600000001490116,
+              "meanMs": 32.95118110236807
+            }
+          ]
+        },
+        "b": {
+          "turns": 1155,
+          "meanMs": 33.56536796541957,
+          "p95Ms": 39.600000001490116,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 40,
+              "meanMs": 32.86610169500365
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 41.29999999701977,
+              "meanMs": 35.30684210540433
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 39.400000005960464,
+              "meanMs": 34.206430867985134
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 38.29999999701977,
+              "meanMs": 31.784070796671166
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 40.600000001490116,
+              "meanMs": 33.23214285705416
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 37.600000001490116,
+              "meanMs": 32.81843137282367
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.200000002980232,
+        "bP95": 4.200000002980232,
+        "ratio": 1,
+        "samplesPerModel": 1080
+      }
+    },
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/solver-225-development.json.gz",
+      "seed": 2026102501,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "9bc1d92ac6fcf16fb2d76be32092765465d65496ab1653764fe7724e4b8c0f95",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 24,
+        "completed": 24,
+        "capped": 0,
+        "wins": 13,
+        "draws": 0,
+        "losses": 11,
+        "score": 13,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 4,
+            "score": 2,
+            "pairScores": [
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 4,
+            "score": 3,
+            "pairScores": [
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 4,
+            "score": 1,
+            "pairScores": [
+              0.5,
+              0
+            ]
+          }
+        ],
+        "scoreRate": 0.5416666666666666,
+        "pairedBootstrap": {
+          "seed": 2026102502,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4166666666666667,
+            0.6666666666666666
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 1178,
+          "meanMs": 33.67198641767728,
+          "p95Ms": 40.899999998509884,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 39.80000000447035,
+              "meanMs": 32.092372881532725
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 37.5,
+              "meanMs": 32.594088669958076
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 43,
+              "meanMs": 35.749185667898054
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 39,
+              "meanMs": 31.718348623962576
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 39.5,
+              "meanMs": 32.57262569811591
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 43.099999994039536,
+              "meanMs": 34.3484732823745
+            }
+          ]
+        },
+        "b": {
+          "turns": 1177,
+          "meanMs": 33.19498725570327,
+          "p95Ms": 40,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 40.100000001490116,
+              "meanMs": 31.73589743552809
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 37.899999998509884,
+              "meanMs": 32.602463054539534
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 41.70000000298023,
+              "meanMs": 34.94853420184276
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.899999998509884,
+              "meanMs": 31.953211008887227
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 38.900000005960464,
+              "meanMs": 32.31235955065388
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 41.399999998509884,
+              "meanMs": 33.36653992389205
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.200000002980232,
+        "bP95": 4.200000002980232,
+        "ratio": 1,
+        "samplesPerModel": 1080
+      }
+    },
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/evaluation.json.gz",
+      "seed": 2026102511,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "382fc826bc4bbddb3ba118211a7109fa3a1f13527c5cb036182262b78ac4dd8b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 49,
+        "draws": 0,
+        "losses": 47,
+        "score": 49,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              1,
+              0.5,
+              0,
+              1,
+              0,
+              1,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 7,
+            "pairScores": [
+              0,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 7,
+            "pairScores": [
+              0.5,
+              0,
+              0.5,
+              0,
+              0,
+              1,
+              0.5,
+              1
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 11,
+            "pairScores": [
+              1,
+              1,
+              0.5,
+              1,
+              0.5,
+              0,
+              1,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 9,
+            "pairScores": [
+              0.5,
+              0.5,
+              1,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 6,
+            "pairScores": [
+              0,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5104166666666666,
+        "pairedBootstrap": {
+          "seed": 2026102512,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.4166666666666667,
+            0.59375
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 4587,
+          "meanMs": 33.1706126007719,
+          "p95Ms": 39.900000005960464,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 38.900000005960464,
+              "meanMs": 32.59264069258586
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 39.399999998509884,
+              "meanMs": 33.40860759479147
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 40.69999999552965,
+              "meanMs": 34.18641171670474
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 38.5,
+              "meanMs": 31.253986332607976
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 39.900000005960464,
+              "meanMs": 32.1768115941705
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 40.5,
+              "meanMs": 33.53674513823758
+            }
+          ]
+        },
+        "b": {
+          "turns": 4590,
+          "meanMs": 33.83254901972926,
+          "p95Ms": 40.79999999701977,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 39.899999998509884,
+              "meanMs": 33.18917748917426
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 40.69999999552965,
+              "meanMs": 33.809367088728315
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 41.79999999701977,
+              "meanMs": 35.09292682944759
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 39.399999998509884,
+              "meanMs": 32.032110091828564
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 40,
+              "meanMs": 32.66362318854401
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 40.900000005960464,
+              "meanMs": 34.19592668035669
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.399999998509884,
+        "bP95": 4.399999998509884,
+        "ratio": 1,
+        "samplesPerModel": 1080
+      }
+    },
+    {
+      "file": "experiments/ai/v3/2026-10-25-search-proof/data/final-evaluation.json.gz",
+      "seed": 2026102521,
+      "configuration": {
+        "a": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        },
+        "b": {
+          "architecture": "v3",
+          "backend": "webgpu",
+          "budgetMs": null,
+          "maxSimulations": 64,
+          "fpu": 1
+        }
+      },
+      "provenance": {
+        "wasm": {
+          "a": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b",
+          "b": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+        },
+        "sources": {
+          "tools/ai-gnn/browser-match.mjs": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef",
+          "dist/engine.js": "bae3e8e3e54e83ce525bd9c54203dd4f2cf5a056c32fcb65516907130888836e",
+          "dist/ai-position.js": "5a11fce8dc04fa4241dee08b3944e76784f92eb357b25f146e8866af8666b993",
+          "dist/ai-wasm.js": "56eb975d0d191edfacdaac0e2973e7820774923267ef50051b7561662a2e1d9a",
+          "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+          "dist/ai-v3-search.js": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369",
+          "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+        }
+      },
+      "summary": {
+        "games": 96,
+        "completed": 96,
+        "capped": 0,
+        "wins": 48,
+        "draws": 0,
+        "losses": 48,
+        "score": 48,
+        "boards": [
+          {
+            "board": "sphere3",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere4",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "sphere5",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus7",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus9",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "board": "torus11",
+            "games": 16,
+            "score": 8,
+            "pairScores": [
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ],
+        "scoreRate": 0.5,
+        "pairedBootstrap": {
+          "seed": 2026102522,
+          "iterations": 10000,
+          "unit": "colour-swapped opening pair",
+          "stratifiedByBoard": true,
+          "interval95": [
+            0.5,
+            0.5
+          ]
+        }
+      },
+      "timing": {
+        "a": {
+          "turns": 4591,
+          "meanMs": 32.263515573927286,
+          "p95Ms": 39.5,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 37.100000001490116,
+              "meanMs": 30.822991071485117
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 38.099999994039536,
+              "meanMs": 31.9965432099906
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 41.100000001490116,
+              "meanMs": 34.12408462160118
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.399999998509884,
+              "meanMs": 30.474423963027203
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 39,
+              "meanMs": 31.378688524514658
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 39.899999998509884,
+              "meanMs": 32.20860860854
+            }
+          ]
+        },
+        "b": {
+          "turns": 4587,
+          "meanMs": 32.404534554261254,
+          "p95Ms": 39.29999999701977,
+          "byBoard": [
+            {
+              "board": "sphere3",
+              "p95Ms": 37,
+              "meanMs": 30.750446428644604
+            },
+            {
+              "board": "sphere4",
+              "p95Ms": 37.600000001490116,
+              "meanMs": 32.273918417764754
+            },
+            {
+              "board": "sphere5",
+              "p95Ms": 41.20000000298023,
+              "meanMs": 34.35024429977862
+            },
+            {
+              "board": "torus7",
+              "p95Ms": 37.5,
+              "meanMs": 30.63064516148603
+            },
+            {
+              "board": "torus9",
+              "p95Ms": 38.899999998509884,
+              "meanMs": 31.67339312409918
+            },
+            {
+              "board": "torus11",
+              "p95Ms": 38.19999999552965,
+              "meanMs": 32.12062062077724
+            }
+          ]
+        }
+      },
+      "warmInference": {
+        "aP95": 4.199999995529652,
+        "bP95": 4.200000002980232,
+        "ratio": 0.9999999982260522,
+        "samplesPerModel": 1080
+      }
+    }
+  ]
+}

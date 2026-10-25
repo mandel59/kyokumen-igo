@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-25-search-proof",
+  "architecture": "v3",
+  "title": "Exact internal pass values and minimax proofs",
+  "source": {
+    "baseCommit": "77dd92ab74f9af8139f380835ceec4f881c1b166",
+    "patch": "data/source.patch"
+  },
+  "variants": [
+    "baseline",
+    "exact-only",
+    "solver-cpuct-0.75",
+    "solver-cpuct-1.5",
+    "solver-cpuct-2.25"
+  ],
+  "plan": {
+    "path": "plan.json",
+    "sha256": "b200608171d9e5aa17a32417a9b617a936232076b9c482377f42fea4a457c5a8"
+  },
+  "notes": [
+    "Exploration 0.75 was rejected after 49/96 independent games; final fallback was fixed before a fresh 96-game measurement.",
+    "Exactness fix adopted for adversarial terminal/pass correctness; overall strength gate passed: false"
+  ],
+  "artifacts": [
+    {
+      "path": "data/browser-verification.json",
+      "sha256": "c09b4e04f285c02b7c643d695f3d9da88c3fbcaf315950f7b9b4f574055c6972"
+    },
+    {
+      "path": "data/build-verification.json",
+      "sha256": "cd8dd0c773bd58a0defc672ee61c98baac2dbac6320243926c9f3adde4cd5e4f"
+    },
+    {
+      "path": "data/development.json.gz",
+      "sha256": "6b1642f5695cce4c7cc22556e648cfe24940db383d6dec03174141ce94ff6f1c"
+    },
+    {
+      "path": "data/evaluation.json.gz",
+      "sha256": "944dbd76ff466bbe0ba1557fc593d55dc48b8e11d65c4fc5a447014c3e452d75"
+    },
+    {
+      "path": "data/execution.json",
+      "sha256": "a11e83728dc3d103e0e913eb99248f43ca94eacc1cb1daf70ce7a704c17b57a2"
+    },
+    {
+      "path": "data/final-evaluation.json.gz",
+      "sha256": "c4a45c9fad8e65419c524717507b81e2550f13d8d5c25d8a796226e5a41d624d"
+    },
+    {
+      "path": "data/final-plan.json",
+      "sha256": "fe019cd22ec5880a645e3b17ac17e5b432b735ecfdeb4f7e173f9dba5ce420a0"
+    },
+    {
+      "path": "data/final-selection.json",
+      "sha256": "7fd42b2ae3a1ac59a6db2c5e20ebc08ff8a607b80af6cf089a37488559d487e7"
+    },
+    {
+      "path": "data/final-verification.json",
+      "sha256": "3c6d0a521a40c7054de57346fc3c31e551b3d2051d4fab6a2033345f67b0b6cb"
+    },
+    {
+      "path": "data/match-runtime-ai-v3-search.js",
+      "sha256": "86d1bc628eb433843f6e7d422281d0f6dfbbe067f69178db9e64b7fcf9c36369"
+    },
+    {
+      "path": "data/match-runtime-browser-match.mjs",
+      "sha256": "63946106df6f720ba7dbe1fac8fce97abfbd2b9d52cf2e83deb62069f8d6e2ef"
+    },
+    {
+      "path": "data/model-manifest.json",
+      "sha256": "8066fac044a05a358e4877fda0f58ca9beb308aa609abb80343dde12deed73ca"
+    },
+    {
+      "path": "data/plan.json",
+      "sha256": "b200608171d9e5aa17a32417a9b617a936232076b9c482377f42fea4a457c5a8"
+    },
+    {
+      "path": "data/selection.json",
+      "sha256": "ae63de7a98d1f39de59871c496552ad66447ba146c9e405192b1de5ecc11a6ea"
+    },
+    {
+      "path": "data/solver-075-development.json.gz",
+      "sha256": "ba50d3aec374743d8f7ea530a0f442d55761ebabb2a2575248929c9064a8a28f"
+    },
+    {
+      "path": "data/solver-225-development.json.gz",
+      "sha256": "1cf2caee639ad64681863d127a59b452c72dc95673eaf66d66716955a8731403"
+    },
+    {
+      "path": "data/solver-development.json.gz",
+      "sha256": "1aa859a3b7e37972b0fb47f46a7b350d5a548314959ab9200cca9bf5d63936f5"
+    },
+    {
+      "path": "data/source.patch",
+      "sha256": "44110b7bfc14ee80034a841790ab5502dee6d75a6d0818cecec84eff7fcf7931"
+    },
+    {
+      "path": "data/summarize.mjs",
+      "sha256": "45ef0fd57d612d91f04d1799c78b26424f07b74f62914edfd81705d03d61f4a3"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "ea06d05b6c363d551390dfcd4677b5cb4ae43fbcd8544eedad41a406af1510ff"
+    },
+    {
+      "path": "data/variants/baseline.wasm",
+      "sha256": "302b894edc6d0266770cbb7177399ec2606c6357e245d5d199f83a49d5804864"
+    },
+    {
+      "path": "data/variants/exact-only.wasm",
+      "sha256": "5384081263f7e630511b5d3b194c252e9bba76dff1327239e16f47b8c26c3026"
+    },
+    {
+      "path": "data/variants/final-mcts.rs",
+      "sha256": "7e591b8efbfb110e087ab31ca97b59d4c1cb6d3b447592a6006e55a109a1e275"
+    },
+    {
+      "path": "data/variants/final.wasm",
+      "sha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+    },
+    {
+      "path": "data/variants/mcts-075.rs",
+      "sha256": "cca31000b68ab4f10bb4a961c785960e4a9f22508e1addf644d37dac3184b967"
+    },
+    {
+      "path": "data/variants/mcts-225.rs",
+      "sha256": "616fd4362d5b372d964ee35546e305b3eecb6f0df7c318d4c9307ad97bcd7d18"
+    },
+    {
+      "path": "data/variants/rebuilt.wasm",
+      "sha256": "e24f13688607e18a66c2cd32baeae94b6060d959ef8f6f038cbb662d6e597718"
+    },
+    {
+      "path": "data/variants/selected.wasm",
+      "sha256": "382fc826bc4bbddb3ba118211a7109fa3a1f13527c5cb036182262b78ac4dd8b"
+    },
+    {
+      "path": "data/variants/solver-075.wasm",
+      "sha256": "fd9e470452975acf8b464cd7d898205c5d8bbfd863ccd1f9d907b96ec0f5bd79"
+    },
+    {
+      "path": "data/variants/solver-225.wasm",
+      "sha256": "9bc1d92ac6fcf16fb2d76be32092765465d65496ab1653764fe7724e4b8c0f95"
+    },
+    {
+      "path": "data/variants/solver.wasm",
+      "sha256": "7e89b8b71581f8b2fd5ab4666b59307b0375b91931dcdebf32a3910105afea2b"
+    },
+    {
+      "path": "data/verification.json",
+      "sha256": "51c6b25f77dfb4e5facf6cdbc1d2f2e888421f74545a999823c4cecf558cd1e9"
+    }
+  ]
+}

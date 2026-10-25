@@ -17,7 +17,7 @@ if(fixedVisits!==null&&(!Number.isInteger(fixedVisits)||fixedVisits<1||fixedVisi
 const selectedBoard=arg('--board','all');
 if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
  !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
-const wasm={a:resolve('dist/ai-v3.wasm'),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
+const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
 const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
 if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
 const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
@@ -113,7 +113,7 @@ try{
         if(result.backend!==(side==='b'&&v2Opponent?'v2-wasm':'v3-webgpu'))throw new Error('Unexpected backend during browser match');
         if(fixedVisits!==null&&!(side==='b'&&v2Opponent)&&!result.provenLoss&&result.simulations!==fixedVisits)throw new Error('Fixed visit budget was not reached exactly');
         const elapsedMs=performance.now()-start,m=metrics[side];m.turns++;m.ms+=elapsedMs;m.simulations+=result.simulations??0;
-        turnMetrics.push({ply:game.moves,side,elapsedMs,simulations:result.simulations??null,backend:result.backend,move:result.move,provenLoss:result.provenLoss??null});
+        turnMetrics.push({ply:game.moves,side,elapsedMs,simulations:result.simulations??null,backend:result.backend,batches:result.batches??null,move:result.move,provenLoss:result.provenLoss??null});
         if(result.move===null)m.passes++;if(result.provenLoss)m.certifiedLossPasses++;
         if(!(result.move===null?game.pass():game.play(result.move)).ok)throw new Error('Illegal browser move');
        }

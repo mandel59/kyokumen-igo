@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-25",
+  "hypothesis": "Use deterministic root sequential halving to spend the same 64 visits comparing promising actions, keeping ordinary PUCT below the root and pending-aware batching. No Gumbel noise at evaluation. This is an independent implementation inspired by the paper, not a full Gumbel AlphaZero implementation.",
+  "reference": "https://openreview.net/forum?id=bERaNdoegnO",
+  "referenceImplementation": "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/policies.py",
+  "model": "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a",
+  "variants": [
+    8,
+    16
+  ],
+  "qTransform": "log(prior) + 0.1 * (50 + max root visits) * Q",
+  "development": {
+    "seed": 2026102571,
+    "pairsPerBoard": 4,
+    "games": 48
+  },
+  "selection": "Highest development score, tie prefers 8. Single global configuration; no board-specific selection.",
+  "evaluation": {
+    "seed": 2026102581,
+    "pairsPerBoard": 16,
+    "games": 192
+  },
+  "strengthGate": "Paired 95% bootstrap lower bound >0.5; each board >=12/32; no caps/illegal moves.",
+  "speedGate": "Same 18 fixed roots CPU/WASM and WebGPU; aggregate P95 <=1.05 baseline, every board <=1.10. Default 64 visits and same model.",
+  "budget": "The first finite collect budget declares the root planning budget. Unlimited/incremental collection remains PUCT. Halving stage budgets align to neural batches; final remainder is shared among finalists.",
+  "policy": "Finite-budget halving reports a normalized improved policy over remaining root candidates; raw visit diagnostics remain available. Exact wins/refutations take priority."
+}

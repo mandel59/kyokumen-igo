@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "checks": [
+    {
+      "command": "rustc",
+      "args": [
+        "--edition",
+        "2021",
+        "-C",
+        "opt-level=2",
+        "-A",
+        "dead_code",
+        "--test",
+        "tools/ai-tuner/src/gnn-wasm.rs",
+        "-o",
+        "tools/ai-gnn/target/root-halving/installed-tests.exe"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "tools/ai-gnn/target/root-halving/installed-tests.exe",
+      "args": [],
+      "exitCode": 0,
+      "stdout": "\nrunning 12 tests\ntest mcts::tests::fpu_uses_parent_perspective_without_virtual_loss ... ok\ntest mcts::tests::proofs_preserve_unknown_replies_and_prefer_wins_over_visit_counts ... ok\ntest mcts::tests::halving_recommends_value_instead_of_the_most_visited_action ... ok\ntest tactics::tests::unknown_open_extensions_are_retained_and_zero_budget_is_unknown ... ok\ntest mcts::tests::pending_leaf_does_not_block_other_available_evaluations ... ok\ntest tactics::tests::benson_requires_two_regions_and_does_not_condemn_large_enclosures ... ok\ntest tactics::tests::rejects_one_and_two_liberty_pockets_without_mutating_position ... ok\ntest mcts::tests::visit_limit_counts_neural_leaves_and_exact_terminal_backups ... ok\ntest mcts::tests::halving_cancellation_and_incremental_budget_extensions_keep_progress ... ok\ntest endgame::tests::certified_loss_bound_respects_both_colours_komi_and_draws_on_all_boards ... ok\ntest mcts::tests::halving_respects_odd_budgets_and_releases_all_reservations ... ok\ntest mcts::tests::reservations_validation_and_exact_terminal_signs ... ok\n\ntest result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s\n\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "All graph Go engine tests passed.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "v3-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on six boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "wasm-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "WASM parity passed: 300 positions, captures/superko, undo branches, passes/end, noise, input validation and disposal.\nProduction Worker passed: WASM selection/reuse, 404/corrupt/unsupported fallbacks and recovery after invalid input.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "generated-js-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "Generated JS: 1248 move comparisons, depth 0..4, all six boards, seeded parity, isolated/growing memory, invalid input, initialization/runtime fallback and disposal passed.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "search-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "Kyokugo AI v2 WASM passed: 1257 archived turns (629 search turns, 47 certified-loss roots, 14 winning-pass roots), unchanged choices outside forced passes, six-board / both-colour winning passes in WASM and generated JS, 33 reported endgame roots at depths1..4, capture, superko, bounds and immutable inputs.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "ui-tests.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "360x640 canvas simulation: UI integration tests passed: required DOM IDs, shared board/map toggle, map AI moves, settings/help/about dialogs, read-only about reopen/dismissals, AI fallback, undo, pass/end, reset cancellation, white start, staged board-kind selection, close/Escape cancellation, confirmed topology switch.\nPersistent AI Worker UI tests passed: minimum 400 ms turn, immediate slow replies, compact transfer, reuse, cancellation during delay, stale responses and error/illegal-move fallback.\nDraw UI passed: zero/integer komi, neutral result, share/replay and undo.\nSNS card metadata checks passed.\nDisplay settings UI passed: marks and counters switch at once in the board and map, follow replay steps, leave the game untouched, and are saved.\nAbout tabs passed: one panel at a time, click and arrow/Home/End navigation, game untouched.\nDisplay settings tabs passed: marks and counter on separate tabs, keyboard navigation, choices kept.\n",
+      "stderr": ""
+    },
+    {
+      "command": "node",
+      "args": [
+        "--experimental-vm-modules",
+        "tools/ai-gnn/test-player.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "v3 player: fixed 64 visits despite slow inference, exact odd/larger budgets, explicit timed mode, validation, cancellation/reuse and stalled-search guard passed.\n",
+      "stderr": "(node:32216) ExperimentalWarning: VM Modules is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": "node",
+      "args": [
+        "tools/ai-gnn/test-device-benchmark.mjs"
+      ],
+      "exitCode": 0,
+      "stdout": "[{\"backend\":\"v3-wasm\",\"recommendedVisits\":16,\"runs\":[{\"visits\":8,\"worstBoardP95Ms\":26.900000005960464},{\"visits\":16,\"worstBoardP95Ms\":44.79999999701977}]},{\"backend\":\"v3-webgpu\",\"recommendedVisits\":16,\"runs\":[{\"visits\":8,\"worstBoardP95Ms\":9.900000005960464},{\"visits\":16,\"worstBoardP95Ms\":14.200000002980232}]}]\nDevice benchmark: 300ms reference selection, 18 legal positions, isolated page, cancellation and real CPU/WebGPU Worker measurements passed.\n",
+      "stderr": ""
+    }
+  ]
+}
