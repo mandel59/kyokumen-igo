@@ -202,7 +202,7 @@ let copied=null;Object.defineProperty(globalThis,'navigator',{value:{clipboard:{
 window.location={href:'https://example.test/igo/?x=1#old',pathname:'/igo/',search:'?x=1',hash:'#old'};
 window.history={replaceState(state,title,url){window.location.hash='';window.location.href='https://example.test'+url;}};
 await el('shareRecord').onclick();
-assert.match(el('status').textContent,/コピーしました/);
+assert.match(el('status').textContent,/コピーしました/);assert.match(el('shareRecord').textContent,/コピーしました/);
 assert.match(copied,/^https:\/\/example\.test\/igo\/\?x=1#kifu=[A-Za-z0-9_-]+$/);
 const sharedCode=copied.split('#kifu=')[1],sharedGame=decodeRecord(sharedCode).game;
 assert.equal(sharedGame.moves,3);assert.equal(sharedGame.ended,true);
