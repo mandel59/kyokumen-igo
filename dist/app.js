@@ -401,14 +401,15 @@ async function shareRecord(){
  const url=window.location.href.split('#')[0]+'#kifu='+encodeRecord(game,settings.opponent==='ai'?3-settings.human:0);
  const text=`曲面囲碁の棋譜（${kind==='sphere'?'球面盤':'トーラス盤'} · ${resultText(game.score())}）`;
  if(navigator.share)try{await navigator.share({title:'曲面囲碁の棋譜',text,url});return;}catch(error){if(error.name==='AbortError')return;}
- try{await navigator.clipboard.writeText(url);$('status').textContent='棋譜のリンクをコピーしました。';showCopied();}
+ try{await navigator.clipboard.writeText(url);showCopied();}
  catch{prompt('このリンクをコピーして共有してください。',url);}
 }
 // Browsers without a share sheet (desktop Firefox) copy silently, so the button itself confirms the copy for a moment.
+// The result line in #status stays; screen readers hear the copy through the hidden #shareStatus.
 let copiedTimer=0;
 function showCopied(){
- const button=$('shareRecord');clearTimeout(copiedTimer);button.textContent='✓ リンクをコピーしました';
- copiedTimer=setTimeout(()=>{button.textContent='棋譜をシェア';},2500);
+ const button=$('shareRecord');clearTimeout(copiedTimer);button.textContent='✓ リンクをコピーしました';$('shareStatus').textContent='棋譜のリンクをコピーしました。';
+ copiedTimer=setTimeout(()=>{button.textContent='棋譜をシェア';$('shareStatus').textContent='';},2500);
 }
 $('shareRecord').onclick=shareRecord;$('replayPrev').onclick=()=>showReplayStep(game.moves-1);$('replayNext').onclick=()=>showReplayStep(game.moves+1);$('replaySlider').oninput=()=>showReplayStep(Number($('replaySlider').value));$('replayClose').onclick=closeReplay;window.onhashchange=openSharedRecord;
 // Starting a new game from a shared record still replaces the player's own saved game.
