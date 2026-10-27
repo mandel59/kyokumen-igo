@@ -17,12 +17,14 @@ const MAX_MOVES=size*size*3;
 
 function engine(command,cwd){
   const child=spawn(command,{shell:true,cwd,stdio:['pipe','pipe','ignore']}),lines=createInterface({input:child.stdout});
-  const pending=[];let reply=[];
+  const pending=[];let reply=[],exited=null;
   lines.on('line',line=>{
-    if(line.trim()===''){if(reply.length)pending.shift()?.(reply.join('\n'));reply=[];return;}
+    if(line.trim()===''){if(reply.length)pending.shift()?.resolve(reply.join('\n'));reply=[];return;}
     reply.push(line);
   });
-  const send=command=>new Promise(resolve=>{pending.push(resolve);child.stdin.write(command+'\n');}).then(text=>{
+  // An engine that fails to start or dies mid-game fails the match instead of leaving it waiting.
+  child.on('exit',code=>{exited=new Error(`engine exited (${code}): ${command}`);for(const p of pending.splice(0))p.reject(exited);});
+  const send=command=>new Promise((resolve,reject)=>{if(exited)return reject(exited);pending.push({resolve,reject});child.stdin.write(command+'\n');}).then(text=>{
     if(!text.startsWith('='))throw new Error(`${command}: ${text}`);
     return text.slice(1).trim();
   });
