@@ -1,0 +1,7 @@
+{
+  "recorded": "2026-10-27T13:11:40.701Z",
+  "beforeTrainingData": true,
+  "reason": "Upstream v1.18.1 analysis ignores nnXLen/nnYLen and searchRandSeed. Use the documented maxBoard*SizeForNNBuffer names for generation and forDeterministicTesting=true for process RNG. Screen retained its original config; exact teacher responses are archived. Teacher visits, data counts, splits, training and evaluation gates stay frozen.",
+  "generationConfigSha256": "e13b7cb6bdbbb2b2e2f2bb02b8d5c96e569022080cebe9507d6dbf51c7ffd779",
+  "teacherReproducibility": "Thread scheduling and floating point may change outputs; full actual responses and game/selection seeds are saved."
+}

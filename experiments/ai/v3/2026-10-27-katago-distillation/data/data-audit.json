@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "games": 96,
+  "planePositions": 7734,
+  "curvePositions": 4719,
+  "positions": 12453,
+  "changedPolicies": 7714,
+  "matchedFeaturesOutcomesValidation": true,
+  "replayedEveryPlaneRoot": true,
+  "reconstructedEveryTeacherPolicy": true,
+  "legalPolicies": true,
+  "trainGames": 108,
+  "validationGames": 36,
+  "boards": [
+    "sphere3",
+    "sphere4",
+    "sphere5",
+    "torus7",
+    "torus9",
+    "torus11",
+    "plane7",
+    "plane9",
+    "plane11"
+  ],
+  "inputs": {
+    "curve": "b3ae292df840bf89d67e851990b874d9bd3a169a82ebd8e7116dc635a513228a",
+    "plan": "29e7d7926cd33d61c5c54d216c13f951a28dbb2fdf9f200e0f77f23edb37d869"
+  },
+  "outputs": {
+    "teacher.jsonl.gz": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+    "control.jsonl.gz": "f784532c22206728140977a743caafb83307347480d3391815fb7607a616a9ac",
+    "game-split.json": "164e09a95e69e61c810b7e152bba3228375e959cfe862299b840f24a1fb968c9"
+  }
+}

@@ -1,0 +1,9 @@
+plane 7 pair 0 A colour 1 score 1 margin 18.5 moves 72
+plane 7 pair 0 A colour 2 score 1 margin 40.5 moves 54
+plane 7 pair 1 A colour 1 score 0 margin -3.5 moves 61
+plane 7 pair 1 A colour 2 score 0 margin -17.5 moves 75
+plane 7 pair 2 A colour 1 score 1 margin 7.5 moves 54
+plane 7 pair 2 A colour 2 score 1 margin 28.5 moves 60
+plane 7 pair 3 A colour 1 score 0 margin -7.5 moves 54
+plane 7 pair 3 A colour 2 score 1 margin 26.5 moves 70
+{"games":8,"completed":8,"capped":0,"score":5,"metrics":{"a_turns":234,"a_ms":19209.309699999976,"a_simulations":14913,"a_passes":15,"a_losingPasses":3,"a_earlyPasses":0,"a_certifiedLossPasses":1,"a_uncertifiedLosingPasses":2,"a_selfAtaris":3,"a_eyeFills":8,"a_missedCaptures":39,"b_turns":234,"b_ms":19763.883099999992,"b_simulations":14850,"b_passes":11,"b_losingPasses":5,"b_earlyPasses":0,"b_certifiedLossPasses":2,"b_uncertifiedLosingPasses":3,"b_selfAtaris":22,"b_eyeFills":8,"b_missedCaptures":48},"scoreRate":0.625,"wins":5,"draws":0,"losses":3,"boards":[{"board":"plane7","games":8,"score":5,"pairScores":[1,0,1,0.5]}],"pairedBootstrap":{"seed":2026108779,"iterations":10000,"unit":"colour-swapped opening pair","stratifiedByBoard":true,"interval95":[0.25,1]}}

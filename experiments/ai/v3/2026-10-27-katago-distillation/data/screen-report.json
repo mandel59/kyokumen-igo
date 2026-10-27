@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "phase": "screen",
+  "teacherVisits": 512,
+  "games": 12,
+  "positions": 1314,
+  "boards": [
+    {
+      "size": 7,
+      "games": 4,
+      "positions": 270,
+      "teacherScore": 1
+    },
+    {
+      "size": 9,
+      "games": 4,
+      "positions": 420,
+      "teacherScore": 1
+    },
+    {
+      "size": 11,
+      "games": 4,
+      "positions": 624,
+      "teacherScore": 1
+    }
+  ],
+  "passes": true
+}

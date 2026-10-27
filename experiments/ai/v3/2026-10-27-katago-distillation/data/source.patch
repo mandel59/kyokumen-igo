@@ -1,0 +1,1135 @@
+diff --git a/THIRD_PARTY.md b/THIRD_PARTY.md
+index 12a8423..4bf7bc1 100644
+--- a/THIRD_PARTY.md
++++ b/THIRD_PARTY.md
+@@ -6,7 +6,7 @@
+ 
+ コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。
+ 
+-正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-25。参考実装、配信するライブラリ、開発ツールと文献の一覧。
++正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-27。参考実装、配信するライブラリ、開発ツールと文献の一覧。
+ 
+ 配信用の表示は [ライセンスと参考ソフトウェア](dist/credits.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
+ 
+@@ -45,6 +45,8 @@
+ | [OpenAI Codex](https://github.com/openai/codex) | 開発時に利用 / Apache-2.0 | コードの作成・修正・検証に使用。    |
+ | [Claude Code](https://www.anthropic.com/claude-code) | 開発時に利用 / 提供元の利用条件 | コードの作成・修正・検証に使用。    |
+ | [Binaryen / wasm2js 132.0.0](https://github.com/WebAssembly/binaryen/tree/version_132) | JS / WASM を配信 / Apache-2.0 | v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。 Copyright 2015 WebAssembly Community Group participants [Binaryen-LICENSE.txt](dist/licenses/Binaryen-LICENSE.txt) |
++| [KataGo Analysis Engine 1.18.1](https://github.com/lightvector/KataGo/tree/v1.18.1) | 開発時に利用 / MIT | 平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。  Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository. [KataGo-v1.18.1-LICENSE.txt](dist/licenses/KataGo-v1.18.1-LICENSE.txt) |
++| [KataGo Neural Networks kata1-b10c128-s1141046784-d204142634](https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz) | 開発時に利用 / MIT型（ネット用） | v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。  Copyright 2026 David J Wu ("lightvector"). [KataGo-NN-LICENSE.txt](dist/licenses/KataGo-NN-LICENSE.txt) |
+ 
+ ## 推移依存と手法の一次資料
+ 
+diff --git a/dist/credits.html b/dist/credits.html
+index d8dd73d..2843283 100644
+--- a/dist/credits.html
++++ b/dist/credits.html
+@@ -1,7 +1,7 @@
+ <!doctype html>
+ <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ライセンスと参考ソフトウェア — 曲面囲碁</title><style>body{font:1rem/1.8 system-ui,sans-serif;max-width:52rem;margin:2rem auto;padding:0 1rem;color:#183333;background:#fafaf5}a{color:#126161}h1{font-size:1.7rem}h2{font-size:1.2rem;margin-top:2rem}li{margin:1.2rem 0}li p{margin:.3rem 0}</style></head><body><main>
+ <!-- Generated from docs/third-party/catalog.json. -->
+-<p><a href="./">曲面囲碁へ戻る</a></p><h1>ライセンスと参考ソフトウェア</h1><p>確認日：2026-10-25。<a href="third-party-catalog.json">機械可読の目録（JSON）</a>。<a href="https://github.com/mandel59/kyokumen-igo/blob/main/THIRD_PARTY.md">ソースリポジトリの目録</a>。</p><section><h2>アプリのソースコード</h2><p>自作ソースコードのライセンスは <a href="LICENSE.txt">MIT-0（全文）</a>です。</p><p>このアプリと開発・学習・検証ツールの自作ソースコード。第三者に由来するコードや同梱ライブラリには、それぞれのライセンスが適用されます。</p><p>コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。</p><p>WASM や生成 JS に含まれる第三者コードにも、以下のライセンスと告知が適用されます。</p></section>
++<p><a href="./">曲面囲碁へ戻る</a></p><h1>ライセンスと参考ソフトウェア</h1><p>確認日：2026-10-27。<a href="third-party-catalog.json">機械可読の目録（JSON）</a>。<a href="https://github.com/mandel59/kyokumen-igo/blob/main/THIRD_PARTY.md">ソースリポジトリの目録</a>。</p><section><h2>アプリのソースコード</h2><p>自作ソースコードのライセンスは <a href="LICENSE.txt">MIT-0（全文）</a>です。</p><p>このアプリと開発・学習・検証ツールの自作ソースコード。第三者に由来するコードや同梱ライブラリには、それぞれのライセンスが適用されます。</p><p>コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。</p><p>WASM や生成 JS に含まれる第三者コードにも、以下のライセンスと告知が適用されます。</p></section>
+ <section><h2>参考にした実装・移植したコード</h2><ul><li><strong>KataGo</strong><p>AI v2 / v3 の Benson 生存判定で calculateAreaForPla を参照。 曲面の隣接グラフ向けに連・空領域・vital 関係を実装。</p><p>実装を参照。ライセンス：MIT。 <a href="licenses/KataGo-LICENSE.txt">KataGo-LICENSE.txt</a></p><p>Copyright 2025 David J Wu (&quot;lightvector&quot;) and/or other authors of the content in this repository.</p><p><a href="https://github.com/lightvector/KataGo/blob/master/cpp/game/board.cpp">出典 1</a></p></li><li><strong>SplitMix64 2015</strong><p>AI の乱数生成とコミ検証の seed 生成。 Rust と JavaScript BigInt へ翻訳。 状態のインスタンス化、seed 混合、標本化補助を追加。</p><p>JS / WASM を配信。ライセンス：Public domain（利用許諾付き）。 <a href="licenses/SplitMix64-NOTICE.txt">SplitMix64-NOTICE.txt</a></p><p>Written in 2015 by Sebastiano Vigna (vigna@acm.org)</p><p><a href="https://prng.di.unimi.it/splitmix.c">出典 1</a></p></li><li><strong>Mulberry32 2017</strong><p>共有カードの再現可能な盤面生成。 JavaScript の変数名を変更し、seeded() クロージャに整理。</p><p>開発時に利用。ライセンス：Public domain / CC0。 <a href="licenses/Mulberry32-NOTICE.txt">Mulberry32-NOTICE.txt</a></p><p>Written in 2017 by Tommy Ettinger (tommy.ettinger@gmail.com)</p><p>JavaScript implementation by bryc</p><p><a href="https://gist.github.com/tommyettinger/46a874533244883189143505d203312c">出典 1</a> / <a href="https://github.com/bryc/code/blob/master/jshash/PRNGs.md#mulberry32">出典 2</a></p></li></ul></section>
+ <section><h2>配信に含まれる実行基盤</h2><ul><li><strong>ONNX Runtime Web / Common 1.30.0</strong><p>AI v3 の ONNX WebGPU / WASM 推論。 上流 npm の JS・WASM を配置し、WASM を gzip 圧縮。</p><p>JS / WASM を配信。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p>Copyright (c) Microsoft Corporation</p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js">出典 1</a></p></li><li><strong>Rust standard library 1.99.1</strong><p>ai-engine.wasm・ai-v3.wasmに静的リンク。v2のJS変換物にも含む。 </p><p>JS / WASM を配信。ライセンス：MIT OR Apache-2.0。 <a href="licenses/rust/COPYRIGHT-library.html">COPYRIGHT-library.html</a> <a href="licenses/rust/manifest.json">manifest.json</a></p><p>The Rust Project Developers</p><p><a href="https://github.com/rust-lang/rust/tree/1.99.1">出典 1</a></p></li></ul></section>
+-<section><h2>学習・検証・制作・配信ツール</h2><ul><li><strong>PyTorch 2.14.1+cu130</strong><p>GNN の学習。 </p><p>開発時に利用。ライセンス：Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT。</p><p><a href="https://github.com/pytorch/pytorch">出典 1</a></p></li><li><strong>NumPy 2.5.4</strong><p>学習・出力時の数値配列処理。 </p><p>開発時に利用。ライセンス：BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0。</p><p><a href="https://github.com/numpy/numpy">出典 1</a></p></li><li><strong>ONNX 1.23.2</strong><p>モデルの出力・検査。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/onnx/onnx">出典 1</a></p></li><li><strong>ONNX Script 0.7.2</strong><p>ONNX 出力の補助。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://microsoft.github.io/onnxscript/">出典 1</a></p></li><li><strong>ONNX Runtime Node 1.30.0</strong><p>自己対局と推論比較。 </p><p>開発時に利用。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js/node">出典 1</a></p></li><li><strong>Playwright Core 1.56.1</strong><p>実ブラウザによる回帰検証。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/microsoft/playwright">出典 1</a></p></li><li><strong>uv 0.12.23</strong><p>Python 環境と依存の管理。 </p><p>開発時に利用。ライセンス：MIT OR Apache-2.0。</p><p><a href="https://github.com/astral-sh/uv">出典 1</a></p></li><li><strong>Node.js 26.12.1</strong><p>開発・検証スクリプトの実行。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://nodejs.org/">出典 1</a></p></li><li><strong>Python 3.12.14</strong><p>学習スクリプトとローカル HTTP サーバーの実行。 </p><p>開発時に利用。ライセンス：PSF-2.0。</p><p><a href="https://www.python.org/">出典 1</a></p></li><li><strong>ImageMagick 7.1.2-34</strong><p>共有カードとアイコンの生成。 </p><p>開発時に利用。ライセンス：ImageMagick。</p><p><a href="https://github.com/ImageMagick/ImageMagick/blob/main/LICENSE">出典 1</a></p></li><li><strong>Pango</strong><p>ImageMagick を通した文字描画。 </p><p>開発時に利用。ライセンス：LGPL-2.1-or-later。</p><p><a href="https://github.com/GNOME/pango/blob/main/meson.build">出典 1</a> / <a href="https://github.com/GNOME/pango/blob/main/COPYING">出典 2</a></p></li><li><strong>Noto Sans JP</strong><p>共有カードの文字をラスター画像へ描画。 </p><p>開発時に利用。ライセンス：OFL-1.1。</p><p><a href="https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE">出典 1</a></p></li><li><strong>Wrangler / Workers SDK 4.151.3</strong><p>静的サイトの配信。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT">出典 1</a></p></li><li><strong>OpenAI Codex</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/openai/codex">出典 1</a></p></li><li><strong>Claude Code</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：提供元の利用条件。</p><p><a href="https://www.anthropic.com/claude-code">出典 1</a></p></li><li><strong>Binaryen / wasm2js 132.0.0</strong><p>v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。</p><p>JS / WASM を配信。ライセンス：Apache-2.0。 <a href="licenses/Binaryen-LICENSE.txt">Binaryen-LICENSE.txt</a></p><p>Copyright 2015 WebAssembly Community Group participants</p><p><a href="https://github.com/WebAssembly/binaryen/tree/version_132">出典 1</a> / <a href="https://github.com/AssemblyScript/binaryen.js">出典 2</a></p></li></ul></section><section><h2>手法の一次資料</h2><ul><li>David J. Wu: <a href="https://arxiv.org/html/1902.10565v5">Accelerating Self-Play Learning in Go (2019)</a> — AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。</li><li>D. B. Benson: <a href="https://doi.org/10.1016/S0020-0255(76)90554-5">Life in the game of Go (1976)</a> — 無条件生存の固定点。</li><li>D. Silver et al.: <a href="https://arxiv.org/abs/1712.01815">Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm (2017)</a> — PUCT、自己対局の訪問分布、探索時のノイズ。</li><li>G. Marsaglia and W. W. Tsang: <a href="https://doi.org/10.1145/358407.358414">A simple method for generating gamma variables (2000)</a> — Dirichlet ノイズのための Gamma 乱数。</li><li>G. Marsaglia: <a href="https://doi.org/10.18637/jss.v008.i14">Xorshift RNGs (2003)</a> — 検証・自己対局の seed 付き乱数。</li><li>Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver: <a href="https://openreview.net/forum?id=bERaNdoegnO">Policy improvement by planning with Gumbel (2022)</a> — AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。</li><li>David J. Wu and KataGo contributors: <a href="https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting">Other Methods Implemented in KataGo: Policy Surprise Weighting (2020)</a> — AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。</li></ul></section></main></body></html>
++<section><h2>学習・検証・制作・配信ツール</h2><ul><li><strong>PyTorch 2.14.1+cu130</strong><p>GNN の学習。 </p><p>開発時に利用。ライセンス：Apache-2.0 AND Apache-2.0 WITH LLVM-exception AND BSD-2-Clause AND BSD-3-Clause AND BSL-1.0 AND MIT。</p><p><a href="https://github.com/pytorch/pytorch">出典 1</a></p></li><li><strong>NumPy 2.5.4</strong><p>学習・出力時の数値配列処理。 </p><p>開発時に利用。ライセンス：BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0。</p><p><a href="https://github.com/numpy/numpy">出典 1</a></p></li><li><strong>ONNX 1.23.2</strong><p>モデルの出力・検査。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/onnx/onnx">出典 1</a></p></li><li><strong>ONNX Script 0.7.2</strong><p>ONNX 出力の補助。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://microsoft.github.io/onnxscript/">出典 1</a></p></li><li><strong>ONNX Runtime Node 1.30.0</strong><p>自己対局と推論比較。 </p><p>開発時に利用。ライセンス：MIT。 <a href="licenses/onnxruntime-LICENSE.txt">onnxruntime-LICENSE.txt</a> <a href="licenses/onnxruntime-ThirdPartyNotices.txt">onnxruntime-ThirdPartyNotices.txt</a></p><p><a href="https://github.com/microsoft/onnxruntime/tree/v1.30.0/js/node">出典 1</a></p></li><li><strong>Playwright Core 1.56.1</strong><p>実ブラウザによる回帰検証。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/microsoft/playwright">出典 1</a></p></li><li><strong>uv 0.12.23</strong><p>Python 環境と依存の管理。 </p><p>開発時に利用。ライセンス：MIT OR Apache-2.0。</p><p><a href="https://github.com/astral-sh/uv">出典 1</a></p></li><li><strong>Node.js 26.12.1</strong><p>開発・検証スクリプトの実行。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://nodejs.org/">出典 1</a></p></li><li><strong>Python 3.12.14</strong><p>学習スクリプトとローカル HTTP サーバーの実行。 </p><p>開発時に利用。ライセンス：PSF-2.0。</p><p><a href="https://www.python.org/">出典 1</a></p></li><li><strong>ImageMagick 7.1.2-34</strong><p>共有カードとアイコンの生成。 </p><p>開発時に利用。ライセンス：ImageMagick。</p><p><a href="https://github.com/ImageMagick/ImageMagick/blob/main/LICENSE">出典 1</a></p></li><li><strong>Pango</strong><p>ImageMagick を通した文字描画。 </p><p>開発時に利用。ライセンス：LGPL-2.1-or-later。</p><p><a href="https://github.com/GNOME/pango/blob/main/meson.build">出典 1</a> / <a href="https://github.com/GNOME/pango/blob/main/COPYING">出典 2</a></p></li><li><strong>Noto Sans JP</strong><p>共有カードの文字をラスター画像へ描画。 </p><p>開発時に利用。ライセンス：OFL-1.1。</p><p><a href="https://github.com/notofonts/noto-cjk/blob/main/Sans/LICENSE">出典 1</a></p></li><li><strong>Wrangler / Workers SDK 4.151.3</strong><p>静的サイトの配信。 </p><p>開発時に利用。ライセンス：MIT。</p><p><a href="https://github.com/cloudflare/workers-sdk/blob/main/LICENSE-MIT">出典 1</a></p></li><li><strong>OpenAI Codex</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：Apache-2.0。</p><p><a href="https://github.com/openai/codex">出典 1</a></p></li><li><strong>Claude Code</strong><p>コードの作成・修正・検証に使用。 </p><p>開発時に利用。ライセンス：提供元の利用条件。</p><p><a href="https://www.anthropic.com/claude-code">出典 1</a></p></li><li><strong>Binaryen / wasm2js 132.0.0</strong><p>v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。</p><p>JS / WASM を配信。ライセンス：Apache-2.0。 <a href="licenses/Binaryen-LICENSE.txt">Binaryen-LICENSE.txt</a></p><p>Copyright 2015 WebAssembly Community Group participants</p><p><a href="https://github.com/WebAssembly/binaryen/tree/version_132">出典 1</a> / <a href="https://github.com/AssemblyScript/binaryen.js">出典 2</a></p></li><li><strong>KataGo Analysis Engine 1.18.1</strong><p>平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。 </p><p>開発時に利用。ライセンス：MIT。 <a href="licenses/KataGo-v1.18.1-LICENSE.txt">KataGo-v1.18.1-LICENSE.txt</a></p><p>Copyright 2025 David J Wu (&quot;lightvector&quot;) and/or other authors of the content in this repository.</p><p><a href="https://github.com/lightvector/KataGo/tree/v1.18.1">出典 1</a> / <a href="https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE">出典 2</a></p></li><li><strong>KataGo Neural Networks kata1-b10c128-s1141046784-d204142634</strong><p>v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。 </p><p>開発時に利用。ライセンス：MIT型（ネット用）。 <a href="licenses/KataGo-NN-LICENSE.txt">KataGo-NN-LICENSE.txt</a></p><p>Copyright 2026 David J Wu (&quot;lightvector&quot;).</p><p><a href="https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz">出典 1</a> / <a href="https://katagotraining.org/network_license/">出典 2</a></p></li></ul></section><section><h2>手法の一次資料</h2><ul><li>David J. Wu: <a href="https://arxiv.org/html/1902.10565v5">Accelerating Self-Play Learning in Go (2019)</a> — AI v3 の未探索手の初期評価を親の平均値から求める方式と、探索用の訪問分布・学習教師を分離する実験の参考。論文の式から実装。</li><li>D. B. Benson: <a href="https://doi.org/10.1016/S0020-0255(76)90554-5">Life in the game of Go (1976)</a> — 無条件生存の固定点。</li><li>D. Silver et al.: <a href="https://arxiv.org/abs/1712.01815">Mastering Chess and Shogi by Self-Play with a General Reinforcement Learning Algorithm (2017)</a> — PUCT、自己対局の訪問分布、探索時のノイズ。</li><li>G. Marsaglia and W. W. Tsang: <a href="https://doi.org/10.1145/358407.358414">A simple method for generating gamma variables (2000)</a> — Dirichlet ノイズのための Gamma 乱数。</li><li>G. Marsaglia: <a href="https://doi.org/10.18637/jss.v008.i14">Xorshift RNGs (2003)</a> — 検証・自己対局の seed 付き乱数。</li><li>Ivo Danihelka, Arthur Guez, Julian Schrittwieser, David Silver: <a href="https://openreview.net/forum?id=bERaNdoegnO">Policy improvement by planning with Gumbel (2022)</a> — AI v3 の根で候補を逐次半減し、事前確率と評価値で最終手を選ぶ方式の参考。Gumbel乱数なし・内部はPUCTの独立実装。</li><li>David J. Wu and KataGo contributors: <a href="https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#policy-surprise-weighting">Other Methods Implemented in KataGo: Policy Surprise Weighting (2020)</a> — AI v3の学習用再生を、半分は元の重み・半分は探索方策とNN事前分布のKLに比例させる考え方の参考。世代・盤の質量を保ち、検証重みは固定する独立実装。コードの転載なし。</li></ul></section></main></body></html>
+diff --git a/dist/licenses/sources.json b/dist/licenses/sources.json
+index afa1540..8ff7e9f 100644
+--- a/dist/licenses/sources.json
++++ b/dist/licenses/sources.json
+@@ -1,6 +1,6 @@
+ {
+   "schemaVersion": 1,
+-  "checkedOn": "2026-10-25",
++  "checkedOn": "2026-10-27",
+   "versions": {
+     "onnxruntime": "1.30.0"
+   },
+@@ -39,6 +39,18 @@
+       "path": "Binaryen-LICENSE.txt",
+       "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
+       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
++    },
++    {
++      "path": "KataGo-v1.18.1-LICENSE.txt",
++      "url": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE",
++      "gitBlobSha": null,
++      "sha256": "ead22455d923920cd152546d89e4f415c94d6b580aa109fda3b57a69c57c32e0"
++    },
++    {
++      "path": "KataGo-NN-LICENSE.txt",
++      "url": "https://katagotraining.org/network_license/",
++      "gitBlobSha": null,
++      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+     }
+   ]
+ }
+diff --git a/dist/third-party-catalog.json b/dist/third-party-catalog.json
+index ac9dcb5..af336fd 100644
+--- a/dist/third-party-catalog.json
++++ b/dist/third-party-catalog.json
+@@ -1,6 +1,6 @@
+ {
+   "schemaVersion": 1,
+-  "checkedOn": "2026-10-25",
++  "checkedOn": "2026-10-27",
+   "repository": "https://github.com/mandel59/kyokumen-igo",
+   "projectSourceLicense": {
+     "licenseExpression": "MIT-0",
+@@ -636,6 +636,72 @@
+         "ref": "version_132",
+         "gitBlobSha": null
+       }
++    },
++    {
++      "id": "katago-analysis-engine",
++      "name": "KataGo Analysis Engine",
++      "version": "1.18.1",
++      "category": "tool",
++      "relationship": "dependency",
++      "licenseExpression": "MIT",
++      "usage": "平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。",
++      "files": [
++        "tools/ai-gnn/katago-analysis.mjs"
++      ],
++      "urls": [
++        "https://github.com/lightvector/KataGo/tree/v1.18.1",
++        "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE"
++      ],
++      "notices": [
++        "dist/licenses/KataGo-v1.18.1-LICENSE.txt"
++      ],
++      "distribution": "development-only",
++      "copyrightNotices": [
++        "Copyright 2025 David J Wu (\"lightvector\") and/or other authors of the content in this repository."
++      ],
++      "modifications": [],
++      "provenance": {
++        "kind": "tool",
++        "evidence": [
++          "tools/ai-gnn/katago-distill-setup.mjs",
++          "tools/ai-gnn/katago-distill-notices.mjs"
++        ],
++        "ref": "1.18.1",
++        "gitBlobSha": null
++      }
++    },
++    {
++      "id": "katago-neural-network",
++      "name": "KataGo Neural Networks",
++      "version": "kata1-b10c128-s1141046784-d204142634",
++      "category": "tool",
++      "relationship": "dependency",
++      "licenseExpression": "LicenseRef-KataGo-Neural-Network",
++      "usage": "v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。",
++      "files": [
++        "tools/ai-gnn/katago-analysis.mjs"
++      ],
++      "urls": [
++        "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
++        "https://katagotraining.org/network_license/"
++      ],
++      "notices": [
++        "dist/licenses/KataGo-NN-LICENSE.txt"
++      ],
++      "distribution": "development-only",
++      "copyrightNotices": [
++        "Copyright 2026 David J Wu (\"lightvector\")."
++      ],
++      "modifications": [],
++      "provenance": {
++        "kind": "tool",
++        "evidence": [
++          "tools/ai-gnn/katago-distill-setup.mjs",
++          "tools/ai-gnn/katago-distill-notices.mjs"
++        ],
++        "ref": "kata1-b10c128-s1141046784-d204142634",
++        "gitBlobSha": null
++      }
+     }
+   ],
+   "inventoryFiles": {
+@@ -676,6 +742,18 @@
+       "path": "dist/licenses/Binaryen-LICENSE.txt",
+       "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
+       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
++    },
++    {
++      "path": "dist/licenses/KataGo-v1.18.1-LICENSE.txt",
++      "url": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE",
++      "gitBlobSha": null,
++      "sha256": "ead22455d923920cd152546d89e4f415c94d6b580aa109fda3b57a69c57c32e0"
++    },
++    {
++      "path": "dist/licenses/KataGo-NN-LICENSE.txt",
++      "url": "https://katagotraining.org/network_license/",
++      "gitBlobSha": null,
++      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+     }
+   ],
+   "references": [
+diff --git a/docs/ai/README.md b/docs/ai/README.md
+index 381c14f..a9e080a 100644
+--- a/docs/ai/README.md
++++ b/docs/ai/README.md
+@@ -18,7 +18,7 @@ v2 の深さ 1〜3 手の試走は、v2 の探索量を減らした比較条件
+ 
+ 通常はKyokugo AI v2をWorker内のWASMで実行します。WASMを利用できない場合は同じRustから生成したJS版v2へ切り替え、Workerを利用できない場合も同じ生成JSを画面側で実行します。手書きJS版v1は比較・検証用であり、アプリからは呼びません。
+ 
+-v3は `?ai=v3` で試す実験実装です。[4,096訪問教師から蒸留した小型モデル](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)と、根の逐次半減探索を使います。同じ64訪問で更新前v3に138勝54敗（独立192局）となり、全6盤の勝率とCPU/WASM・WebGPUの速度基準を通過しました。[セットアップと学習手順](../../tools/ai-gnn/README.md)を参照してください。
++v3は `?ai=v3` で試す実験実装です。[KataGoの平面盤方策を蒸留した小型モデル](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)を採用しています。独立384局と全9盤のCPU/WASM・WebGPU速度基準を通過しました。[仕様](architectures/v3.md)と[開発手順](../../tools/ai-gnn/README.md)を参照してください。
+ 
+ | 盤 | アーキテクチャ | v2 の係数 |
+ | --- | --- | --- |
+@@ -55,3 +55,5 @@ tests/fixtures/ai/         回帰テストで使う固定局面
+ [根の探索評価値の重みの比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)では、同じ64訪問で採用条件を満たした探索へ更新しました。
+ 
+ [4,096訪問教師からの蒸留](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)では、採用条件を通過した同容量の生徒モデルをv3へ採用しました。ブラウザーの探索は64訪問です。
++
++[KataGoの平面盤方策からの蒸留](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)では、平面96局と曲面の既存教材で候補と方策対照を学習し、独立384局で評価しました。配信モデルの採否と盤別結果は実験報告に記録しています。
+diff --git a/docs/ai/architectures/v3.md b/docs/ai/architectures/v3.md
+index 2594470..5e37bfc 100644
+--- a/docs/ai/architectures/v3.md
++++ b/docs/ai/architectures/v3.md
+@@ -2,11 +2,11 @@
+ 
+ v3 は小型 GNN と、根の逐次半減・内部のバッチ PUCT を組み合わせた MCTS です。モデルは **64 チャネル × 6 残差ブロック、120,905 パラメータ**。配信モデルの ONNX は 502,401 bytes です。
+ 
+-通常対局の標準はv2です。v3には[4,096訪問教師から蒸留した小型モデル](../../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)を採用しました。同じ64訪問で更新前v3に138勝54敗（独立192局、ペア95%区間66.7〜77.1%）。同じPCでのウォーム探索P95はCPU/WASMで219.3→211.2ms、WebGPUで39.8→38.7msとなり、全体・盤別の速度基準を通過しました。今回のモデルのスマートフォン実機速度は未計測です。根の8候補、評価値の重み0.4、内部PUCT、FPU 1、標準64訪問は維持しています。
++通常対局の標準はv2です。実験用v3には、[KataGoの平面盤方策を蒸留したモデル](../../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)を採用しました。同じ120,905パラメータ・64訪問で、独立評価の更新前v3への得点率は平面86.5%、曲面62.0%、方策対照に対しては平面67.7%でした。全9盤の事前採用基準とPCのCPU/WASM・WebGPU速度基準を通過しています。スマートフォンの実機速度は未計測です。
+ 
+ ## 試す
+ 
+-球面・トーラスに加え、平面の7・9・11路盤でもv3を使えます。盤の種類と隣接関係を探索へ渡し、平面盤の端はつなぎません。配信モデルの重みは従来のものを維持しています。平面盤での動作確認と、平面盤を含む再学習の経路は用意していますが、配信モデルは球面・トーラスだけを学習したもので、平面盤の棋力は未検証です。
++球面・トーラスに加え、平面の7・9・11路盤でもv3を使えます。平面盤の隣接関係を探索へ渡し、端はつなぎません。配信モデルはKataGoの平面盤教師と曲面の既存教師データを混ぜて再学習したものです。
+ 
+ [開発手順](../../../tools/ai-gnn/README.md) に従って推論ランタイムを用意し、通常の HTTP サーバーで `dist/` を配信します。
+ 
+@@ -132,6 +132,10 @@ WebGPU は専用 WGSL を優先します。1 点につき最大 4 個の隣接
+ 
+ ## 現在の配信モデル
+ 
++平面96局と曲面の既存48局を使い、KataGoのroot edgeVisitsから着手方策を蒸留しました。勝敗・得点・所属はアプリのルールによる実際の終局値です。候補と追加学習対照を同じ条件で学習し、独立384局と全9盤の固定局面速度比較を通過しました。[全記録](../../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)と[採用profile](../../../experiments/ai/v3/2026-10-27-katago-distillation/data/student-profile.json)を参照してください。ONNX SHA-256は `d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f`。
++
++## 2026-10-25時点の配信モデル
++
+ 4,096訪問のオフライン教師で同じ自己対局局面を再解析し、従来と同じ120,905パラメータの生徒へ蒸留しました。学習36局・検証12局を対局単位で分離し、共通教師の検証損失でepoch 8を選択しています。開発対戦96局と別の開始条件で独立192局を評価し、全6盤で更新前モデルを上回りました。ブラウザーでは生徒だけを64訪問で動かします。
+ 
+ ONNXのSHA-256は `e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df`、専用GPU重みは `6ecd1a870e51681b99f443f0218ce8e6e7516e8bdd6d45d964a4f846454b7151`。採用根拠は配信用manifestの `acceptance` と[確定した研究記録](../../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/data/student-profile.json)から参照できます。研究記録内の未配信フラグは実験完了時点の状態として保持しています。
+diff --git a/docs/third-party/catalog.json b/docs/third-party/catalog.json
+index 714220b..975dbc5 100644
+--- a/docs/third-party/catalog.json
++++ b/docs/third-party/catalog.json
+@@ -1,7 +1,7 @@
+ {
+   "$schema": "./catalog.schema.json",
+   "schemaVersion": 1,
+-  "checkedOn": "2026-10-25",
++  "checkedOn": "2026-10-27",
+   "repository": "https://github.com/mandel59/kyokumen-igo",
+   "projectSourceLicense": {
+     "licenseExpression": "MIT-0",
+@@ -637,6 +637,72 @@
+         "ref": "version_132",
+         "gitBlobSha": null
+       }
++    },
++    {
++      "id": "katago-analysis-engine",
++      "name": "KataGo Analysis Engine",
++      "version": "1.18.1",
++      "category": "tool",
++      "relationship": "dependency",
++      "licenseExpression": "MIT",
++      "usage": "平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。",
++      "files": [
++        "tools/ai-gnn/katago-analysis.mjs"
++      ],
++      "urls": [
++        "https://github.com/lightvector/KataGo/tree/v1.18.1",
++        "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE"
++      ],
++      "notices": [
++        "dist/licenses/KataGo-v1.18.1-LICENSE.txt"
++      ],
++      "distribution": "development-only",
++      "copyrightNotices": [
++        "Copyright 2025 David J Wu (\"lightvector\") and/or other authors of the content in this repository."
++      ],
++      "modifications": [],
++      "provenance": {
++        "kind": "tool",
++        "evidence": [
++          "tools/ai-gnn/katago-distill-setup.mjs",
++          "tools/ai-gnn/katago-distill-notices.mjs"
++        ],
++        "ref": "1.18.1",
++        "gitBlobSha": null
++      }
++    },
++    {
++      "id": "katago-neural-network",
++      "name": "KataGo Neural Networks",
++      "version": "kata1-b10c128-s1141046784-d204142634",
++      "category": "tool",
++      "relationship": "dependency",
++      "licenseExpression": "LicenseRef-KataGo-Neural-Network",
++      "usage": "v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。",
++      "files": [
++        "tools/ai-gnn/katago-analysis.mjs"
++      ],
++      "urls": [
++        "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
++        "https://katagotraining.org/network_license/"
++      ],
++      "notices": [
++        "dist/licenses/KataGo-NN-LICENSE.txt"
++      ],
++      "distribution": "development-only",
++      "copyrightNotices": [
++        "Copyright 2026 David J Wu (\"lightvector\")."
++      ],
++      "modifications": [],
++      "provenance": {
++        "kind": "tool",
++        "evidence": [
++          "tools/ai-gnn/katago-distill-setup.mjs",
++          "tools/ai-gnn/katago-distill-notices.mjs"
++        ],
++        "ref": "kata1-b10c128-s1141046784-d204142634",
++        "gitBlobSha": null
++      }
+     }
+   ],
+   "inventoryFiles": {
+@@ -677,6 +743,18 @@
+       "path": "dist/licenses/Binaryen-LICENSE.txt",
+       "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
+       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
++    },
++    {
++      "path": "dist/licenses/KataGo-v1.18.1-LICENSE.txt",
++      "url": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE",
++      "gitBlobSha": null,
++      "sha256": "ead22455d923920cd152546d89e4f415c94d6b580aa109fda3b57a69c57c32e0"
++    },
++    {
++      "path": "dist/licenses/KataGo-NN-LICENSE.txt",
++      "url": "https://katagotraining.org/network_license/",
++      "gitBlobSha": null,
++      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+     }
+   ],
+   "references": [
+diff --git a/docs/third-party/catalog.schema.json b/docs/third-party/catalog.schema.json
+index bd8dad6..877ad4c 100644
+--- a/docs/third-party/catalog.schema.json
++++ b/docs/third-party/catalog.schema.json
+@@ -236,7 +236,7 @@
+           "pattern": "^[a-f0-9]{64}$"
+         },
+         "gitBlobSha": {
+-          "type": "string",
++          "type": ["string", "null"],
+           "pattern": "^[a-f0-9]{40}$"
+         }
+       }
+diff --git a/tools/ai-gnn/README.md b/tools/ai-gnn/README.md
+index 08e1736..c6b04f2 100644
+--- a/tools/ai-gnn/README.md
++++ b/tools/ai-gnn/README.md
+@@ -28,7 +28,7 @@ uv run --project tools/ai-gnn python -m http.server --directory dist 8000
+ 
+ ## 初期データ生成と学習
+ 
+-対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信中の重みは曲面のみで学習したものです。平面盤での棋力を改善するには、平面盤を含むデータで候補を学習し、全盤の独立対戦で評価してください。
++対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信モデルはKataGoの平面盤教師と曲面の既存教材を混ぜて再学習し、全9盤の独立対戦と速度基準を通過したものです。次の候補も、全盤で独立に評価してから採用します。
+ 
+ ```powershell
+ tools/ai-gnn/target/gnn-data.exe tools/ai-gnn/target/bootstrap.jsonl 20 20261021
+@@ -54,6 +54,24 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/train.py --data t
+ 
+ `install-model.mjs` は実験用の `dist/models/v3/` と数値照合用固定入力を更新します。通常対局のモデルを切り替える操作は行いません。
+ 
++## KataGoから平面盤の方策を蒸留する
++
++`katago-distill-*.mjs` は公式通常ネットを使う研究用パイプラインです。平面7・9・11路の教師分布を生成し、曲面6盤の既存教材と混ぜ、現行モデル・着手分布だけを変えた追加学習対照と比較します。対照も同じKataGo自己対局由来の局面・終局ラベルと共通検証目標を使うため、KataGo由来データ全体の効果を分離する比較ではありません。
++
++依存と全9盤のtopologies.jsonを用意し、KataGo v1.18.1 OpenCLの配布フォルダを指定します。出力には新しい空のパスを使います。
++
++```powershell
++node tools/ai-gnn/katago-distill-setup.mjs --directory tools/ai-tuner/target/katago-study-new --engine-source PATH_TO_KATAGO_FOLDER
++node tools/ai-gnn/katago-distill-bench.mjs tools/ai-tuner/target/katago-study-new
++node tools/ai-gnn/katago-distill-plan.mjs tools/ai-tuner/target/katago-study-new
++node tools/ai-gnn/katago-distill-data.mjs tools/ai-tuner/target/katago-study-new screen
++node tools/ai-gnn/katago-distill-run.mjs tools/ai-tuner/target/katago-study-new
++```
++
++ベンチマーク後に局数・seed・対局分割・採用基準をplan.jsonへ固定します。教師が予備対戦基準を通過した場合だけ、96局の収集、全局面と学習テンソルの監査、比較用2モデルの学習、開発対戦、独立384局、ONNX・実ブラウザー・速度検証へ進みます。途中経過はpipeline-state.jsonと工程別ログに残ります。パイプラインは配信モデルを自動変更しません。終了後の判定とアーカイブには `katago-distill-archive.mjs` を使います。許諾文・出所は教師本体とNNを分け、生徒パッケージにもNN用告知を添えます。
++
++`node tools/ai-gnn/test-katago-analysis.mjs` は座標・履歴・合法手・root edgeVisitsからの分布変換を検査します。`bench-search.mjs --positions FILE.json` は平面を含む固定局面で速度を比較できます。
++
+ ## 自己対局からの改善
+ 
+ ```powershell
+diff --git a/tools/ai-gnn/bench-search.mjs b/tools/ai-gnn/bench-search.mjs
+index 24f1179..2f0dcc6 100644
+--- a/tools/ai-gnn/bench-search.mjs
++++ b/tools/ai-gnn/bench-search.mjs
+@@ -10,6 +10,7 @@ const output=arg('--output'),paths={a:arg('--a-wasm'),b:arg('--b-wasm')};
+ const repeats=Number(arg('--repeats','7')),warmups=Number(arg('--warmups','2')),visits=Number(arg('--simulations','64'));
+ if(!output||!paths.a||!paths.b||existsSync(output)||!Number.isInteger(repeats)||repeats<3||!Number.isInteger(warmups)||warmups<1||!Number.isInteger(visits)||visits<2)throw Error('Expected fresh --output, --a-wasm, --b-wasm and valid repeat/visit counts');
+ const modelPaths={a:resolve(arg('--a-model','dist/models/v3')),b:resolve(arg('--b-model','dist/models/v3'))};
++const positionPath=arg('--positions','dist/ai-benchmark-positions.json'),positionBytes=readFileSync(positionPath);
+ const root=resolve('.'),hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+ const binaries=Object.fromEntries(Object.entries(paths).map(([k,p])=>['/'+k+'.wasm',readFileSync(p)]));
+ const mime={'.mjs':'text/javascript','.js':'text/javascript','.wasm':'application/wasm','.json':'application/json','.onnx':'application/octet-stream','.f32':'application/octet-stream'};
+@@ -18,6 +19,7 @@ const server=createServer((req,res)=>{
+   const name=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+   if(name==='/'){res.setHeader('content-type','text/html');res.end('<!doctype html><title>Fixed-root search comparison</title>');return;}
+   if(name==='/favicon.ico'){res.writeHead(204);res.end();return;}
++  if(name==='/dist/ai-benchmark-positions.json'){res.setHeader('content-type','application/json');res.end(positionBytes);return;}
+   if(binaries[name]){res.setHeader('content-type','application/wasm');res.end(binaries[name]);return;}
+   if(/^\/models\/[ab]\//.test(name)){
+    const side=name[8],base=modelPaths[side],file=resolve(base,name.slice(10));
+@@ -31,7 +33,7 @@ const server=createServer((req,res)=>{
+ });
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const base='http://127.0.0.1:'+server.address().port;
+ const browser=await chromium.launch({executablePath:process.env.EDGE_PATH??'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',headless:true,args:['--enable-unsafe-webgpu','--no-first-run']});
+-const report={schemaVersion:1,visits,repeats,warmups,seed:2026102535,condition:'Same 18 roots and seeds; paired alternating player order in one isolated Worker per backend. Includes history restore/search/inference/cancellation yields, excludes initialization and rendering.',wasm:Object.fromEntries(Object.entries(paths).map(([k,p])=>[k,hash(p)])),models:Object.fromEntries(Object.entries(modelPaths).map(([k,p])=>[k,JSON.parse(readFileSync(p+'/manifest.json')).sha256])),fixture:hash('dist/ai-benchmark-positions.json'),environment:{browser:browser.version(),cpu:cpus()[0].model,node:process.version},runs:[]};
++const report={schemaVersion:1,visits,repeats,warmups,seed:2026102535,condition:'Same fixed roots and seeds; paired alternating player order in one isolated Worker per backend. Includes history restore/search/inference/cancellation yields, excludes initialization and rendering.',wasm:Object.fromEntries(Object.entries(paths).map(([k,p])=>[k,hash(p)])),models:Object.fromEntries(Object.entries(modelPaths).map(([k,p])=>[k,JSON.parse(readFileSync(p+'/manifest.json')).sha256])),fixture:hash(positionPath),environment:{browser:browser.version(),cpu:cpus()[0].model,node:process.version},runs:[]};
+ try{
+  const page=await browser.newPage();await page.goto(base);
+  for(const backend of ['wasm','webgpu']){
+diff --git a/tools/third-party.mjs b/tools/third-party.mjs
+index 5565298..53f2ca1 100644
+--- a/tools/third-party.mjs
++++ b/tools/third-party.mjs
+@@ -34,7 +34,7 @@ const md=s=>String(s).replaceAll('|','\\|').replaceAll('\n',' ');
+ const agents=catalog.entries.filter(e=>e.relationship==='coding-agent').map(e=>e.name),agentNotice='コードの作成・修正・検証には、AI コーディングエージェント（'+agents.join('、')+'）を使用しています。';
+ const groups=[['reference','参考にした実装・移植したコード'],['runtime','配信に含まれる実行基盤'],['tool','学習・検証・制作・配信ツール']];
+ const distribution={reference:'実装を参照',wasm:'WASM に組み込み','runtime-files':'JS / WASM を配信','development-only':'開発時に利用'};
+-const license=e=>e.licenseExpression===null?'提供元の利用条件':e.licenseExpression==='LicenseRef-SplitMix64-Public-Domain'?'Public domain（利用許諾付き）':e.licenseExpression==='CC0-1.0 AND LicenseRef-Bryc-Public-Domain'?'Public domain / CC0':e.licenseExpression;
++const license=e=>e.licenseExpression===null?'提供元の利用条件':e.licenseExpression==='LicenseRef-SplitMix64-Public-Domain'?'Public domain（利用許諾付き）':e.licenseExpression==='CC0-1.0 AND LicenseRef-Bryc-Public-Domain'?'Public domain / CC0':e.licenseExpression==='LicenseRef-KataGo-Neural-Network'?'MIT型（ネット用）':e.licenseExpression;
+ const markdown=['<!-- Generated by node tools/third-party.mjs --write. Edit docs/third-party/catalog.json and LICENSE. -->','# 参考ソフトウェアと第三者ライセンス',
+  `自作ソースコードのライセンスは [${project.licenseExpression}](${project.licenseFile}) です。適用範囲：${project.scope}`,
+  agentNotice,
+diff --git a/tools/ai-gnn/katago-analysis.mjs b/tools/ai-gnn/katago-analysis.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-analysis.mjs
+@@ -0,0 +1,65 @@
++// Local KataGo JSON analysis process. No hosted service or API credentials are used.
++import {spawn} from 'node:child_process';
++import {createInterface} from 'node:readline';
++import {createWriteStream} from 'node:fs';
++import {toVertex,fromVertex} from '../gtp/vertex.mjs';
++
++export const KATAGO_RULES={ko:'POSITIONAL',scoring:'AREA',suicide:false,tax:'NONE',hasButton:false,whiteHandicapBonus:'0',friendlyPassOk:false};
++export function analysisPosition(game){
++ if(game.topology.kind!=='plane')throw Error('KataGo requires a plane board');
++ const size=game.topology.size;
++ return {boardXSize:size,boardYSize:size,komi:game.komi,rules:KATAGO_RULES,
++  moves:game.history.slice(1).map((s,i)=>[i%2?'W':'B',toVertex(s.lastMove,size)])};
++}
++export function analysisPolicy(result,game,{uniformMix=.02}={}){
++ if(!Number.isFinite(uniformMix)||uniformMix<0||uniformMix>1)throw Error('Invalid policy mixture');
++ const policy=new Float32Array(161),legal=[];
++ for(let p=0;p<game.board.length;p++)if(game.analyze(p).ok)legal.push(p);
++ if(!game.ended)legal.push(160);
++ if(!legal.length)throw Error('No legal training actions');
++ for(const move of result.moveInfos??[]){
++  // Graph-search child visits can include paths through other parents; use root edge visits.
++  const point=fromVertex(move.move,game.topology.size),action=point??160,visits=move.edgeVisits??move.visits;
++  if(!Number.isFinite(visits)||visits<0)throw Error('Invalid KataGo visits');
++  if(visits&&!legal.includes(action))throw Error('KataGo and app legality disagree: '+move.move);
++  if(legal.includes(action))policy[action]+=visits;
++ }
++ const sum=policy.reduce((a,b)=>a+b,0);if(!(sum>0))throw Error('Empty KataGo search policy');
++ for(const p of legal)policy[p]=(1-uniformMix)*policy[p]/sum+uniformMix/legal.length;
++ return policy;
++}
++export function createKataGoAnalysis({exe,model,config,log,timeoutMs=600000,overrides=[]}){
++ const child=spawn(exe,['analysis','-config',config,'-model',model,...(overrides.length?['-override-config',overrides.join(',')]:[])],{windowsHide:true,stdio:['pipe','pipe','pipe']});
++ const lines=createInterface({input:child.stdout}),output=log?createWriteStream(log):null,pending=new Map();
++ let sequence=0,closed=false,stderr='',exitResolve;
++ const exited=new Promise(r=>{exitResolve=r;});
++ function fail(error){for(const item of pending.values()){clearTimeout(item.timer);item.reject(error);}pending.clear();}
++ child.stderr.on('data',data=>{stderr=(stderr+data).slice(-16000);output?.write(data);});
++ child.once('error',error=>{closed=true;fail(error);exitResolve();});
++ child.stdin.on('error',error=>fail(error));
++ child.once('exit',(code,signal)=>{closed=true;fail(Error('KataGo exited '+(signal??code)+'\n'+stderr));exitResolve();});
++ lines.on('line',line=>{
++  try{
++   const reply=JSON.parse(line),item=pending.get(reply.id);
++   if(!item||reply.isDuringSearch)return;
++   pending.delete(reply.id);clearTimeout(item.timer);
++   if(reply.error)item.reject(Error('KataGo: '+reply.error));else if(reply.warning)item.reject(Error('KataGo warning: '+reply.warning));else item.resolve(reply);
++  }catch(error){fail(error);child.kill();}
++ });
++ return {
++  query(position,options={}){
++   if(closed)return Promise.reject(Error('KataGo process is closed'));
++   const id=String(++sequence);
++   return new Promise((resolve,reject)=>{
++    const timer=setTimeout(()=>{pending.delete(id);reject(Error('KataGo query timeout'));child.kill();},timeoutMs);
++    pending.set(id,{resolve,reject,timer});
++    child.stdin.write(JSON.stringify({...position,...options,id})+'\n',error=>{if(error){pending.delete(id);clearTimeout(timer);reject(error);}});
++   });
++  },
++  async dispose(){
++   if(!closed)child.stdin.end();
++   let timer;await Promise.race([exited,new Promise(r=>{timer=setTimeout(()=>{child.kill();r();},15000);})]);
++   clearTimeout(timer);lines.close();if(output)await new Promise(r=>output.end(r));
++  }
++ };
++}
+diff --git a/tools/ai-gnn/katago-distill-archive.mjs b/tools/ai-gnn/katago-distill-archive.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-archive.mjs
+@@ -0,0 +1,81 @@
++// Freeze the completed study without overwriting any prior experiment.
++import {readFileSync,writeFileSync,mkdirSync,copyFileSync,readdirSync,existsSync} from 'node:fs';
++import {join,resolve,relative,dirname} from 'node:path';
++import {gzipSync} from 'node:zlib';
++import {createHash} from 'node:crypto';
++import {execFileSync} from 'node:child_process';
++const directory=resolve(process.argv[2]),root='experiments/ai/v3/2026-10-27-katago-distillation',data=join(root,'data');
++if(existsSync(root))throw Error('Archive already exists');
++const read=file=>JSON.parse(readFileSync(join(directory,file),'utf8')),hash=path=>createHash('sha256').update(readFileSync(path)).digest('hex');
++const plan=read('plan.json'),provenance=read('provenance.json'),summary=read('independent-summary.json'),audit=read('data-audit.json'),pipeline=read('pipeline-state.json');
++if(!pipeline.finished)throw Error('Pipeline has unfinished required work');
++const speedFile=existsSync(join(directory,'speed-nine.json'))?'speed-nine.json':'speed.json',speed=read(speedFile);
++const teacher=read('teacher-model/manifest.json'),control=read('control-model/manifest.json');
++const numeric=['teacher-onnx','control-onnx','teacher-browser'].every(name=>read(name+'-command.json').exitCode===0);
++const speedCoversAllBoards=speed.summary.every(r=>r.boards.length===9);
++const decision={schemaVersion:1,strength:summary.strengthGates,numeric,speed:speed.passes,speedCoversAllBoards,
++ eligible:summary.passesStrength&&numeric&&speed.passes&&speedCoversAllBoards,
++ baseline:provenance.baseline,candidate:teacher.sha256,control:control.sha256,
++ deployedModel:JSON.parse(readFileSync('dist/models/v3/manifest.json')).sha256};
++decision.installed=decision.deployedModel===decision.candidate&&decision.candidate!==decision.baseline;
++if(decision.eligible&&!decision.installed)throw Error('Qualified candidate requires an explicit installation decision before final archive');
++writeFileSync(join(directory,'decision.json'),JSON.stringify(decision,null,2)+'\n');
++mkdirSync(data,{recursive:true});copyFileSync(join(directory,'plan.json'),join(root,'plan.json'));
++const copy=(source,dest)=>{mkdirSync(dirname(dest),{recursive:true});copyFileSync(source,dest);};
++for(const file of readdirSync(directory)){
++ if(/\.(?:json|txt|cfg|html|gz|log)$/.test(file)&&file!=='plan.json'&&!file.endsWith('.txt.gz'))copy(join(directory,file),join(data,file));
++}
++for(const name of ['baseline','teacher-model','control-model'])for(const file of ['manifest.json','model.onnx','weights.f32','weights.pt','golden.json','KataGo-NN-LICENSE.txt']){
++ const source=join(directory,name,file);if(existsSync(source))copy(source,join(data,name,file));
++}
++for(const phase of ['screen','generate'])for(const file of readdirSync(join(directory,phase)))copy(join(directory,phase,file),join(data,phase,file));
++copy(join(directory,'search.wasm'),join(data,'search.wasm'));
++// Keep compact copies of match JSON as well as exact command records and logs.
++for(const file of readdirSync(data))if(/^(?:independent|development)-(?:baseline|control)-.+\.json$/.test(file)){
++ writeFileSync(join(data,file+'.gz'),gzipSync(readFileSync(join(data,file)),{level:9}));
++ // Both forms intentionally retained: the runner can re-summarize JSON directly.
++}
++const aiDocs='docs/ai/README.md';
++writeFileSync(aiDocs,readFileSync(aiDocs,'utf8')+`\n[KataGoの平面盤方策からの蒸留](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)では、平面96局と曲面の既存教材で候補と方策対照を学習し、独立384局で評価しました。配信モデルの採否と盤別結果は実験報告に記録しています。\n`);
++const added=[...readdirSync('tools/ai-gnn').filter(file=>/^katago-.*\.mjs$/.test(file)||file==='test-katago-analysis.mjs').map(file=>'tools/ai-gnn/'+file),
++ 'dist/licenses/KataGo-NN-LICENSE.txt','dist/licenses/KataGo-v1.18.1-LICENSE.txt',
++ ...(existsSync('dist/models/v3/KataGo-NN-LICENSE.txt')?['dist/models/v3/KataGo-NN-LICENSE.txt']:[])];
++const modified=['tools/ai-gnn/bench-search.mjs','tools/ai-gnn/README.md','tools/third-party.mjs','docs/ai/README.md','docs/ai/architectures/v3.md','docs/third-party/catalog.json','docs/third-party/catalog.schema.json','THIRD_PARTY.md','dist/credits.html','dist/third-party-catalog.json','dist/licenses/sources.json'];
++let patch=execFileSync('git',['diff','--binary',provenance.baseCommit,'--',...modified],{encoding:'utf8'});
++for(const file of added){
++ const contents=readFileSync(file,'utf8').replace(/\r\n/g,'\n'),lines=contents.endsWith('\n')?contents.slice(0,-1).split('\n'):contents.split('\n');
++ patch+=`diff --git a/${file} b/${file}\nnew file mode 100644\n--- /dev/null\n+++ b/${file}\n@@ -0,0 +1,${lines.length} @@\n`+lines.map(line=>'+'+line).join('\n')+'\n'+(contents.endsWith('\n')?'':'\\ No newline at end of file\n');
++}
++writeFileSync(join(data,'source.patch'),patch);
++for(const file of [...added,...modified,'tools/ai-gnn/train.py','tools/ai-gnn/model.py','tools/ai-gnn/match.mjs','tools/ai-gnn/study-commands.mjs','tools/ai-gnn/test-browser.mjs','dist/ai-v3-search.js','dist/ai-v3-inference.js','dist/engine.js'])copy(file,join(data,'source',file));
++// The already-running top-level driver preceded addition of the nine-board speed fixture.
++const driver=readFileSync('tools/ai-gnn/katago-distill-run.mjs','utf8').replace("'--positions',join(directory,'speed-positions.json'),",'');
++writeFileSync(join(data,'executed-pipeline-driver.mjs'),driver);
++writeFileSync(join(data,'execution-notes.json'),JSON.stringify({
++ actualDriver:'executed-pipeline-driver.mjs',currentDriver:'source/tools/ai-gnn/katago-distill-run.mjs',
++ neuralArtifacts:'Model weights, manifests and golden inputs/outputs are archived as model artifacts. install-model.mjs restores the experimental slot and model-bound test fixture; source.patch covers source, documentation and notices.',
++ speed:'The original running driver measured the historical six-board fixture. A supplementary nine-board speed run uses the same selected model and fixed visits; no training or strength evaluation was repeated.',
++ configCorrection:'execution-amendment.json records the buffer-setting correction before any training-data collection.',
++ teacherOutput:'Every target can be reconstructed from saved game moves, legal masks and compact root/move search statistics. Unused raw NN policy arrays and PVs were not retained.',
++ reproducibility:'Actual teacher outputs are archived. Concurrent KataGo scheduling and GPU floating point prevent a bitwise replay guarantee.',
++ control:'The matched control shares KataGo-selfplay positions and exact game outcomes with the teacher arm. It omits KataGo policy targets from training updates, but uses the common KataGo validation target for epoch selection. This isolates policy-target effects, not all effects of KataGo-derived data.'
++},null,2)+'\n');
++const pct=x=>(100*x).toFixed(1)+'%',ci=s=>s.pairedBootstrap?`${pct(s.pairedBootstrap.interval95[0])}–${pct(s.pairedBootstrap.interval95[1])}`:'なし';
++const rows=summary.allVsBaseline.boards.map(b=>`| ${b.board} | ${b.score}/${b.games} | ${pct(b.score/b.games)} |`).join('\n');
++const stageNames=[...pipeline.stages.map(stage=>stage.name),...['speed-nine','postrelease-browser'].filter(name=>existsSync(join(directory,name+'-command.json')))];
++const stages=stageNames.map(name=>{const c=read(name+'-command.json');return`| ${name} | ${c.elapsedSeconds.toFixed(1)}秒 |`;}).join('\n');
++const outcome=decision.installed?'採用基準を通過した候補を実験用v3へ反映しました。':'採用基準を満たさなかったため、配信モデルは変更していません。';
++writeFileSync(join(root,'README.md'),`# KataGoの平面盤方策からv3への蒸留\n\n## 結論\n\n${outcome} 平面3盤での現行v3に対する得点率は${pct(summary.planeVsBaseline.scoreRate)}（${summary.planeVsBaseline.wins}勝${summary.planeVsBaseline.draws}分${summary.planeVsBaseline.losses}敗、ペア95%区間${ci(summary.planeVsBaseline)}）。同じ追加学習を行う方策対照への得点率は${pct(summary.planeVsControl.scoreRate)}（95%区間${ci(summary.planeVsControl)}）、曲面6盤では${pct(summary.allCurvesVsBaseline.scoreRate)}（95%区間${ci(summary.allCurvesVsBaseline)}）でした。[判定](data/decision.json)と[独立評価集計](data/independent-summary.json)を保存しています。\n\n## 識別情報\n\n- 実験ID：${plan.id}\n- 生徒：現行と同じ64チャネル・6ブロック・120,905パラメータ。探索は全て64訪問、FPU 1。\n- 教師：KataGo v1.18.1 OpenCL、公式通常ネット kata1-b10c128-s1141046784-d204142634、512訪問。最強・最新ネットではなく、生成速度と予備対戦で選んだ小型教師です。\n- 学習：PyTorch CUDA、RTX 5060 Ti。対戦：ONNX Runtime CPUと現行WASMの研究用プレイヤー。\n- 基準commit：${provenance.baseCommit}。追加ツールと速度計測の変更は[data/source.patch](data/source.patch)、ソースは[data/source/](data/source/)に保存。実行上の設定訂正・元のdriverとの差は[data/execution-notes.json](data/execution-notes.json)に記録。\n\n## 実行前の計画\n\n[plan.json](plan.json)で、データ収集・学習・独立評価の前に条件を固定しました。教師は学習に使わない先後交換12局で現行v3に12勝し、予備基準を通過しました。[速度試験](data/benchmark.json)から512訪問を選びました。\n\n平面7/9/11路それぞれ32局を生成し、各盤24局を学習・8局を検証へ分けます。各盤16局はKataGo自己対局、16局は現行v3自己対局です。曲面6盤は過去の教師蒸留48局を再生し、配信モデルの対局分割を維持します。全9盤を均等化して16エポック学習し、epoch 0/4/8/12/16から共通教師による通常局面の検証損失で選択します。開発対戦後も候補・ハイパーパラメータ・独立局数を変更しません。\n\n独立評価は候補対現行v3が全9盤・各16先後交換ペアの288局、候補対方策対照が平面3盤・各16ペアの96局、合計384局です。初期4手と同じ手数の乱数列を先後で共有します。集計は盤別に層化したペアbootstrapです。\n\n## 方法と結果\n\n面積採点・位置的スーパーコウ・自殺手禁止・死石自動除去なし・コミ6.5で、全着手と最終ラベルはアプリのGameで判定します。教師のroot edgeVisitsを合法手上で正規化し、2%の合法手一様分布を混ぜます。勝敗・点数・所属は予測値ではなく実際の終局結果です。\n\n比較用2モデルは入力局面、終局ラベル、分割、検証目標、サンプリング、初期重み、更新回数を共通にし、学習時の方策目標だけをKataGoと現行v3で変えます。対照もKataGo自己対局由来の局面と終局結果を共有するため、「KataGoを全く使わない」対照ではありません。検証目標も共通KataGo方策です。\n\n生成した平面${audit.games}局・${audit.planePositions}局面と曲面${audit.curvePositions}局面を使用しました。[全根の再生監査](data/data-audit.json)と[学習テンソルの一致監査](data/paired-tensor-audit.json)があります。蒸留候補はepoch ${teacher.selectedEpoch}、方策対照はepoch ${control.selectedEpoch}を選択しました。\n\n| 盤 | 候補の得点 / 局数（対現行v3） | 得点率 |\n| --- | --- | --- |\n${rows}\n\n各対局の全手順、打ち切り、探索設定はdata内のindependent-*.jsonに保存しています。基準別の通否は[data/decision.json](data/decision.json)にあります。\n\n## 所要時間・速度\n\n| 工程 | 経過時間 |\n| --- | --- |\n${stages}\n\n速度は同じ固定局面・seed・64訪問で順番を交互にして比較し、履歴復元・探索・推論・待機を含み、初期化と描画を除きます。[速度結果](data/${speedFile})を参照してください。\n\n## 採用と限界\n\n${outcome} 32局/盤の初期試験で、教師は小型の古い通常ネットです。曲面への転移改善やKataGo相当の棋力を主張する試験ではありません。教師のスレッド割当とGPU演算のため、seedだけで全出力のビット一致を保証しません。全ての使用方策は保存した探索統計から再構成できます。\n\n公式ネットの出所・SHA-256は[data/provenance.json](data/provenance.json)、ネットの許諾文は[data/KataGo-NN-LICENSE.txt](data/KataGo-NN-LICENSE.txt)です。生徒パッケージにも出典と許諾文を添えています。これは出典を明示する運用方針で、ライセンス本文に蒸留専用条項があるという意味ではありません。\n\n## 再現手順と保存データ\n\n実行ツールはtools/ai-gnn/katago-distill-*.mjsです。新しい作業ディレクトリにKataGoを用意し、保存したplan.json・設定・分割を使用します。各工程の正確なコマンドと経過時間はdata内の*-command.json、ログは*-log.txtです。実行済みのtargetやこのdataを上書きしません。\n\n生徒のONNX・FP32 GPU重み・PyTorchチェックポイントは[data/teacher-model/](data/teacher-model/)、方策対照は[data/control-model/](data/control-model/)、更新前は[data/baseline/](data/baseline/)です。教師ネットと実行バイナリ自体は同梱せず、公式取得URLとハッシュを保存しています。\n`);
++const reportPath=join(root,'README.md');
++writeFileSync(reportPath,readFileSync(reportPath,'utf8').replaceAll('現行v3','基準v3').replace('生成した平面',`証明済み敗北局面を除いた実際の学習数は${teacher.trainPositions}局面、検証数は${teacher.validationPositions}局面です。\n\n生成した平面`));
++const files=dir=>readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(join(dir,e.name)):[join(dir,e.name)]);
++const artifacts=files(data).sort().map(path=>({path:relative(root,path).split('\\').join('/'),sha256:hash(path)}));
++const manifest={schemaVersion:1,id:plan.id,architecture:'v3',title:'KataGoの平面盤方策からv3への蒸留',source:{baseCommit:provenance.baseCommit,patch:'data/source.patch'},
++ plan:{path:'plan.json',sha256:hash(join(root,'plan.json'))},variants:['deployed baseline v3','matched v3-policy extra-training control','KataGo policy-distilled v3'],
++ notes:['Pre-registered data split, training and independent gates; all failed candidates retained.','Teacher model files and executable are referenced by official URL and SHA-256, not vendored.'],artifacts};
++writeFileSync(join(root,'manifest.json'),JSON.stringify(manifest,null,2)+'\n');
++const catalogFile='experiments/ai/catalog.json',catalog=JSON.parse(readFileSync(catalogFile));
++if(catalog.experiments.some(e=>e.id===plan.id))throw Error('Catalog entry already exists');
++catalog.experiments.push({id:plan.id,architecture:'v3',title:manifest.title,path:'v3/2026-10-27-katago-distillation/'});writeFileSync(catalogFile,JSON.stringify(catalog,null,2)+'\n');
++writeFileSync('experiments/ai/README.md',readFileSync('experiments/ai/README.md','utf8')+'\n[KataGoの平面盤方策からv3への蒸留](v3/2026-10-27-katago-distillation/README.md)のデータ・学習・独立評価を保存しました。\n');
++console.log(JSON.stringify({archive:root,artifacts:artifacts.length,decision}));
+diff --git a/tools/ai-gnn/katago-distill-bench.mjs b/tools/ai-gnn/katago-distill-bench.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-bench.mjs
+@@ -0,0 +1,23 @@
++import {readFileSync,writeFileSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {Game,createTopology} from '../../dist/engine.js';
++import {createKataGoAnalysis,analysisPosition,analysisPolicy} from './katago-analysis.mjs';
++const directory=resolve(process.argv[2]),provenance=JSON.parse(readFileSync(join(directory,'provenance.json')));
++const engine=createKataGoAnalysis({exe:provenance.engine.path,model:provenance.model.path,config:join(directory,'analysis.cfg'),log:join(directory,'benchmark-engine.log')});
++const report={schemaVersion:1,started:new Date().toISOString(),provenance,measurements:[]};
++try{
++ const begin=performance.now();await engine.query(analysisPosition(new Game(createTopology('plane',7),6.5)),{maxVisits:8});report.startupSeconds=(performance.now()-begin)/1000;
++ for(const visits of [512,2048]){
++  const roots=[];for(const size of [7,9,11])for(const moves of [[],[1,0,size]]){
++   const game=new Game(createTopology('plane',size),6.5);for(const move of moves)if(!game.play(move).ok)throw Error('Invalid benchmark fixture');roots.push(game);
++  }
++  const start=performance.now();const answers=await Promise.all(roots.map(game=>engine.query(analysisPosition(game),{maxVisits:visits,includePolicy:true})));
++  const seconds=(performance.now()-start)/1000;
++  const measurements=answers.map((result,i)=>{analysisPolicy(result,roots[i]);return{size:roots[i].topology.size,moves:roots[i].moves,visits:result.rootInfo.visits,best:result.moveInfos.find(m=>m.order===0)?.move};});
++  report.measurements.push({requestedVisits:visits,seconds,secondsPerRoot:seconds/roots.length,roots:measurements});
++  console.log(JSON.stringify(report.measurements.at(-1)));writeFileSync(join(directory,'benchmark.json'),JSON.stringify(report,null,2)+'\n');
++ }
++ const deep=report.measurements.find(m=>m.requestedVisits===2048);report.selectedVisits=deep.secondsPerRoot<=.25?2048:512;
++ report.decision='Use 2048 if batched benchmark <=0.25 seconds/root; otherwise 512. Selection uses speed only, before collecting training games.';
++ writeFileSync(join(directory,'benchmark.json'),JSON.stringify(report,null,2)+'\n');
++}finally{await engine.dispose();}
+diff --git a/tools/ai-gnn/katago-distill-data.mjs b/tools/ai-gnn/katago-distill-data.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-data.mjs
+@@ -0,0 +1,80 @@
++// Matched policy targets on the same legal roots and exact completed-game outcomes.
++import {readFileSync,writeFileSync,mkdirSync,existsSync} from 'node:fs';
++import {gzipSync,gunzipSync} from 'node:zlib';
++import {join,resolve} from 'node:path';
++import {Game,createTopology} from '../../dist/engine.js';
++import {aiPosition} from '../../dist/ai-position.js';
++import {createV3Search} from '../../dist/ai-v3-search.js';
++import {adjacencyFor} from '../../dist/ai-v3-inference.js';
++import {createNodeInference} from './node-inference.mjs';
++import {runTrainingSearch,trainingTarget} from './training-search.mjs';
++import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
++import {finishGame,validateSavedGame,invariant} from './selfplay-records.mjs';
++import {createKataGoAnalysis,analysisPosition,analysisPolicy} from './katago-analysis.mjs';
++const args=process.argv.slice(2),directory=resolve(args[0]),phase=args[1];
++if(!['screen','generate'].includes(phase))throw Error('Expected DIRECTORY screen|generate');
++const provenance=JSON.parse(readFileSync(join(directory,'provenance.json'))),plan=JSON.parse(readFileSync(join(directory,'plan.json')));
++const config=join(directory,phase==='generate'?'analysis-generation.cfg':'analysis.cfg');
++const engine=createKataGoAnalysis({exe:provenance.engine.path,model:provenance.model.path,config,log:join(directory,phase+'-engine.log'),overrides:['forDeterministicTesting=true']});
++const inference=await createNodeInference(join(directory,'baseline')),wasm=readFileSync(join(directory,'search.wasm'));
++const dest=join(directory,phase);mkdirSync(dest,{recursive:true});
++const jobs=[7,9,11].flatMap(size=>Array.from({length:phase==='screen'?4:32},(_,index)=>({kind:'plane',size,index,komi:6.5,
++ gameId:`katago-distill-v1:${phase}:${size}:${index}`,seed:(plan.seeds[phase]+size*10000+index*1009)>>>0,
++ mode:phase==='screen'?'match':index<16?'katago-selfplay':'v3-selfplay',teacherColour:index%2+1})));
++let next=0,completed=0;
++async function run(spec){
++ const path=join(dest,`plane${spec.size}-${String(spec.index).padStart(2,'0')}.json.gz`);
++ if(existsSync(path)){const saved=JSON.parse(gunzipSync(readFileSync(path)));validateSavedGame(saved,saved.teacherRows);validateSavedGame(saved,saved.controlRows);return;}
++ const game=new Game(createTopology('plane',spec.size),spec.komi),search=await createV3Search({load:async()=>wasm}),adjacency=adjacencyFor(game.topology),random=createRandom(spec.seed);
++ const teacherSamples=[],controlSamples=[],analyses=[],started=Date.now();
++ try{
++  while(!game.ended&&game.moves<game.board.length*6){
++   const query=engine.query(analysisPosition(game),{maxVisits:plan.teacherVisits,includePolicy:true,analysisPVLen:1});
++   search.start(aiPosition(game),{seed:(random()*4294967296)>>>0,fpu:1});
++   const [baseline,analysis]=await Promise.all([runTrainingSearch(search,inference,adjacency,{visits:64}),query]);
++   invariant(baseline.root?.count===1,'Missing root features');
++   const policy=analysisPolicy(analysis,game),control=trainingTarget(baseline.policy,baseline.prior).policy;
++   const playingTeacher=spec.mode==='katago-selfplay'||spec.mode==='match'&&game.turn===spec.teacherColour;
++   let action;
++   if(spec.mode==='match')action=playingTeacher?sampleVisits(policy,random,0):baseline.move??160;
++   else{
++    let sampling=Float32Array.from(playingTeacher?policy:baseline.policy);
++    const opening=game.moves<Math.min(18,game.board.length/3);
++    if(opening){
++     const logits=Float32Array.from(sampling,v=>Math.log(Math.max(1e-30,v)));exploreRoot(logits,baseline.root.legal,random);
++     sampling=Float32Array.from(logits,(v,p)=>baseline.root.legal[p]?Math.exp(v):0);
++    }
++    action=sampleVisits(sampling,random,opening?1:game.moves<game.board.length/2?.25:0);
++   }
++   const root=baseline.root,common={source:'selfplay',ply:game.moves,turn:game.turn,action,playedAction:action,
++    x:Array.from(root.x.subarray(0,game.board.length*32)),global:Array.from(root.global_features),legal:Array.from(root.legal,Boolean),
++    validationPolicy:Array.from(policy),decisionReason:baseline.decisionReason,policyEligible:!baseline.provenLoss,
++    teacherModel:provenance.model.sha256,baselineModel:provenance.baseline};
++   teacherSamples.push({...common,policy:Array.from(policy),targetSearch:{engine:'katago',requestedVisits:plan.teacherVisits,completedVisits:analysis.rootInfo.visits,provenLoss:false}});
++   controlSamples.push({...common,policy:control,targetSearch:{engine:'v3',requestedVisits:64,completedVisits:baseline.simulations,provenLoss:baseline.provenLoss}});
++   analyses.push({ply:game.moves,rootInfo:analysis.rootInfo,moveInfos:analysis.moveInfos.map(({move,visits,edgeVisits,prior,order,winrate,scoreLead,isSymmetryOf})=>({move,visits,edgeVisits,prior,order,winrate,scoreLead,isSymmetryOf}))});
++   invariant((action===160?game.pass():game.play(action)).ok,'Illegal selected training move');search.cancel();
++  }
++  invariant(game.ended,'Game reached move cap: '+spec.gameId);
++  const score=game.score(),saved={spec,ended:true,margin:score.black-score.white,moves:game.history.slice(1).map(s=>s.lastMove??-1),
++   elapsedSeconds:(Date.now()-started)/1000,teacherRows:finishGame(game,teacherSamples,spec),controlRows:finishGame(game,controlSamples,spec),analyses,
++   teacherScore:score.winner===0?.5:score.winner===spec.teacherColour?1:0};
++  validateSavedGame(saved,saved.teacherRows);validateSavedGame(saved,saved.controlRows);
++  writeFileSync(path,gzipSync(JSON.stringify(saved)+'\n',{level:6}));
++  console.log(JSON.stringify({phase,board:'plane'+spec.size,index:spec.index,mode:spec.mode,moves:game.moves,seconds:saved.elapsedSeconds,teacherScore:phase==='screen'?saved.teacherScore:undefined}));
++ }finally{search.dispose();}
++}
++try{
++ await Promise.all(Array.from({length:4},async()=>{while(next<jobs.length){const spec=jobs[next++];await run(spec);completed++;}}));
++ const games=jobs.map(spec=>JSON.parse(gunzipSync(readFileSync(join(dest,`plane${spec.size}-${String(spec.index).padStart(2,'0')}.json.gz`)))));
++ const report={schemaVersion:1,phase,teacherVisits:plan.teacherVisits,games:completed,positions:games.reduce((s,g)=>s+g.moves.length,0),
++  boards:[7,9,11].map(size=>{const rows=games.filter(g=>g.spec.size===size);return{size,games:rows.length,positions:rows.reduce((s,g)=>s+g.moves.length,0),teacherScore:rows.reduce((s,g)=>s+g.teacherScore,0)/rows.length};})};
++ if(phase==='screen'){report.passes=report.boards.every(b=>b.teacherScore>=.5)&&report.boards.reduce((s,b)=>s+b.teacherScore,0)/3>=.75;}
++ writeFileSync(join(directory,phase+'-report.json'),JSON.stringify(report,null,2)+'\n');
++ if(phase==='generate'){
++  for(const arm of ['teacher','control']){
++   const rows=games.flatMap(g=>g[arm+'Rows']);writeFileSync(join(directory,arm+'-plane.jsonl.gz'),gzipSync(rows.map(r=>JSON.stringify(r)).join('\n')+'\n',{level:9}));
++  }
++ }
++ console.log(JSON.stringify(report));
++}finally{await engine.dispose();await inference.dispose();}
+diff --git a/tools/ai-gnn/katago-distill-evaluate.mjs b/tools/ai-gnn/katago-distill-evaluate.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-evaluate.mjs
+@@ -0,0 +1,42 @@
++import {readFileSync,writeFileSync,existsSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {AI_BOARDS} from '../../dist/ai-position.js';
++import {matchStatistics} from './match-statistics.mjs';
++import {runStudyCommand} from './study-commands.mjs';
++const directory=resolve(process.argv[2]),stage=process.argv[3];
++if(!['development','independent'].includes(stage))throw Error('Expected DIRECTORY development|independent');
++const plan=JSON.parse(readFileSync(join(directory,'plan.json'))),jobs=[];
++const pairs=stage==='development'?plan.evaluation.developmentPairsPerBoard:plan.evaluation.independentBaselinePairsPerBoard;
++for(const [index,[kind,size]]of AI_BOARDS.entries())jobs.push({name:`${stage}-baseline-${kind}${size}`,kind,size,pairs,
++ a:join(directory,'teacher-model'),b:join(directory,'baseline'),seed:plan.seeds[stage==='development'?'development':'independentBaseline']+index*1009,comparison:'baseline'});
++if(stage==='independent')for(const [index,size]of [7,9,11].entries())jobs.push({name:`independent-control-plane${size}`,kind:'plane',size,
++ pairs:plan.evaluation.independentControlPairsPerPlaneBoard,a:join(directory,'teacher-model'),b:join(directory,'control-model'),
++ seed:plan.seeds.independentControl+index*1009,comparison:'control'});
++let next=0;
++await Promise.all(Array.from({length:3},async()=>{
++ while(next<jobs.length){
++  const job=jobs[next++],output=join(directory,job.name+'.json');
++  if(existsSync(output)){
++   const saved=JSON.parse(readFileSync(output));if(!saved.summary||saved.summary.games!==job.pairs*2)throw Error('Incomplete evaluation exists: '+job.name);
++  }else await runStudyCommand(directory,job.name,process.execPath,['tools/ai-gnn/match.mjs','--player','offline',
++   '--a',job.a,'--b',job.b,'--a-wasm',join(directory,'search.wasm'),'--b-wasm',join(directory,'search.wasm'),
++   '--a-fpu','1','--b-fpu','1','--simulations','64','--pairs',String(job.pairs),'--board',job.kind+job.size,'--seed',String(job.seed),'--output',output]);
++ }
++}));
++const results=jobs.map(job=>({job,report:JSON.parse(readFileSync(join(directory,job.name+'.json')))}));
++const aggregate=(comparison,kind)=>{
++ const selected=results.filter(r=>r.job.comparison===comparison&&(!kind||r.job.kind===kind)),report={boards:selected.flatMap(r=>r.report.boards)};
++ if(!report.boards.length)return null;
++ return matchStatistics(report,{seed:plan.seeds.independentBaseline});
++};
++const summary={schemaVersion:1,stage,planeVsBaseline:aggregate('baseline','plane'),sphereVsBaseline:aggregate('baseline','sphere'),
++ allCurvesVsBaseline:matchStatistics({boards:results.filter(r=>r.job.comparison==='baseline'&&r.job.kind!=='plane').flatMap(r=>r.report.boards)},{seed:plan.seeds.independentBaseline}),
++ planeVsControl:aggregate('control'),allVsBaseline:aggregate('baseline'),jobs:jobs.map(j=>j.name)};
++if(stage==='independent'){
++ const gates=plan.evaluation.adoption,check=(result,gate)=>result.capped===0&&result.scoreRate>=gate.minScore&&
++  (gate.minBoardScore===undefined||result.boards.every(b=>b.score/b.games>=gate.minBoardScore))&&result.pairedBootstrap.interval95[0]>=(gate.minLower95??0);
++ summary.strengthGates={planeVsBaseline:check(summary.planeVsBaseline,gates.planeVsBaseline),planeVsControl:check(summary.planeVsControl,gates.planeVsControl),
++  curvesVsBaseline:check(summary.allCurvesVsBaseline,gates.curveVsBaseline)};
++ summary.passesStrength=Object.values(summary.strengthGates).every(Boolean);
++}
++writeFileSync(join(directory,stage+'-summary.json'),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));
+diff --git a/tools/ai-gnn/katago-distill-notices.mjs b/tools/ai-gnn/katago-distill-notices.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-notices.mjs
+@@ -0,0 +1,24 @@
++import {readFileSync,writeFileSync,copyFileSync} from 'node:fs';
++import {join,resolve} from 'node:path';
++import {createHash} from 'node:crypto';
++const directory=resolve(process.argv[2]),file='docs/third-party/catalog.json',catalog=JSON.parse(readFileSync(file));
++const provenance=JSON.parse(readFileSync(join(directory,'provenance.json')));
++const entries=[
++ {id:'katago-analysis-engine',name:'KataGo Analysis Engine',version:'1.18.1',licenseExpression:'MIT',
++  usage:'平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。',
++  url:'https://github.com/lightvector/KataGo/tree/v1.18.1',licenseURL:provenance.licenses.engineURL,
++  source:'KataGo-LICENSE.txt',notice:'dist/licenses/KataGo-v1.18.1-LICENSE.txt',copyright:'Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository.'},
++ {id:'katago-neural-network',name:'KataGo Neural Networks',version:'kata1-b10c128-s1141046784-d204142634',licenseExpression:'LicenseRef-KataGo-Neural-Network',
++  usage:'v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。',
++  url:provenance.model.url,licenseURL:provenance.licenses.networkURL,
++  source:'KataGo-NN-LICENSE.txt',notice:'dist/licenses/KataGo-NN-LICENSE.txt',copyright:'Copyright 2026 David J Wu ("lightvector").'}
++];
++for(const e of entries){
++ if(catalog.entries.some(old=>old.id===e.id))throw Error('Notice entry already exists: '+e.id);
++ copyFileSync(join(directory,e.source),e.notice);
++ catalog.entries.push({id:e.id,name:e.name,version:e.version,category:'tool',relationship:'dependency',licenseExpression:e.licenseExpression,
++  usage:e.usage,files:['tools/ai-gnn/katago-analysis.mjs'],urls:[e.url,e.licenseURL],notices:[e.notice],distribution:'development-only',
++  copyrightNotices:[e.copyright],modifications:[],provenance:{kind:'tool',evidence:['tools/ai-gnn/katago-distill-setup.mjs','tools/ai-gnn/katago-distill-notices.mjs'],ref:e.version,gitBlobSha:null}});
++ catalog.noticeSnapshots.push({path:e.notice,url:e.licenseURL,gitBlobSha:null,sha256:createHash('sha256').update(readFileSync(e.notice)).digest('hex')});
++}
++catalog.checkedOn='2026-10-27';writeFileSync(file,JSON.stringify(catalog,null,2)+'\n');console.log('Recorded KataGo engine and neural-network notices separately.');
+diff --git a/tools/ai-gnn/katago-distill-plan.mjs b/tools/ai-gnn/katago-distill-plan.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-plan.mjs
+@@ -0,0 +1,30 @@
++import {readFileSync,writeFileSync,existsSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {createHash} from 'node:crypto';
++const directory=resolve(process.argv[2]),file=join(directory,'plan.json');
++if(existsSync(file))throw Error('Plan already frozen');
++const provenance=JSON.parse(readFileSync(join(directory,'provenance.json'))),benchmark=JSON.parse(readFileSync(join(directory,'benchmark.json')));
++const plan={schemaVersion:1,id:'v3/2026-10-27-katago-distillation',created:new Date().toISOString(),baseCommit:provenance.baseCommit,
++ objective:'Isolate KataGo search-policy distillation from extra training, with exact app outcomes and curved-board replay.',
++ teacherModel:provenance.model,teacherVisits:benchmark.selectedVisits,baselineModel:provenance.baseline,
++ rules:{area:true,positionalSuperko:true,suicide:false,deadStoneRemoval:false,komi:6.5},
++ seeds:{screen:2026102721,generate:2026102722,training:2026102723,development:2026102724,independentBaseline:2026102725,independentControl:2026102726},
++ screen:{gamesPerBoard:4,colourSwapped:true,minOverallScore:.75,minBoardScore:.5,excludeFromLearning:true},
++ data:{boards:[7,9,11],gamesPerBoard:32,katagoSelfplay:16,v3Selfplay:16,trainPerBoard:24,validationPerBoard:8,
++  validationIndices:[3,7,11,15,19,23,27,31],baselineVisits:64,concurrency:4,maxMovesPerPoint:6,uniformTeacherMix:.02,
++  control:'Same roots, features, labels, split, common KataGo validation targets and sampling order; only training policy differs (baseline v3 search policy with 25% legal NN prior).',
++  curveReplay:'experiments/ai/v3/2026-10-25-teacher-distillation-pilot/data/teacher4096.jsonl.gz',
++  curveSplit:'Preserve deployed model train/validation origins. Never include independent evaluation games in learning.'},
++ training:{epochs:16,batchSize:64,learningRate:.0001,minimumLearningRate:.00001,cosine:true,emaDecay:.99,balanced:true,
++  normalTraining:true,normalSelection:true,normalizePolicy:true,bestValidation:true,checkpointEvery:4,architecture:'unchanged 64x6 / 120905 parameters',
++  validation:'Common KataGo policy targets and exact app outcome/score/ownership on normal roots; selectable epochs 0/4/8/12/16 only.'},
++ evaluation:{visits:64,player:'offline',komi:6.5,developmentPairsPerBoard:4,independentBaselinePairsPerBoard:16,independentControlPairsPerPlaneBoard:16,
++  confidence:'95% paired bootstrap, stratified by board; colour-swapped opening pairs are resampling units.',
++  adoption:{planeVsBaseline:{minScore:.60,minBoardScore:.50,minLower95:.50},planeVsControl:{minScore:.55,minLower95:.50},
++   curveVsBaseline:{minScore:.50,minBoardScore:.50,minLower95:.45},noCappedOrIllegalGames:true,
++   speed:{overallP95Ratio:1.05,perBoardP95Ratio:1.10},numericValidation:true},
++  policy:'Do not change candidate, hyperparameters, gate or sample count after independent evaluation. Failure leaves deployed weights unchanged.'},
++ licenses:{networkURL:provenance.licenses.networkURL,networkLicenseSha256:provenance.licenses.networkSha256,
++  delivery:'Retain teacher provenance and NN notice with the student package as a documented attribution policy.'}};
++writeFileSync(file,JSON.stringify(plan,null,2)+'\n');
++console.log('Frozen plan',createHash('sha256').update(readFileSync(file)).digest('hex'));
+diff --git a/tools/ai-gnn/katago-distill-prepare.mjs b/tools/ai-gnn/katago-distill-prepare.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-prepare.mjs
+@@ -0,0 +1,58 @@
++import {readFileSync,writeFileSync,existsSync} from 'node:fs';
++import {join,resolve} from 'node:path';
++import {gzipSync,gunzipSync} from 'node:zlib';
++import {createHash} from 'node:crypto';
++import assert from 'node:assert/strict';
++import {Game,createTopology} from '../../dist/engine.js';
++import {aiPosition} from '../../dist/ai-position.js';
++import {createV3Search} from '../../dist/ai-v3-search.js';
++import {assertSameFeatures,validateSavedGame} from './selfplay-records.mjs';
++import {analysisPolicy} from './katago-analysis.mjs';
++const directory=resolve(process.argv[2]),plan=JSON.parse(readFileSync(join(directory,'plan.json')));
++if(existsSync(join(directory,'data-audit.json')))throw Error('Data already prepared');
++const baseline=JSON.parse(readFileSync(join(directory,'baseline/manifest.json'))),split={trainGames:[...baseline.trainGames],validationGames:[...baseline.validationGames]};
++const readRows=path=>gunzipSync(readFileSync(path)).toString().trim().split('\n').map(line=>JSON.parse(line));
++const curve=readRows(plan.data.curveReplay),teacher=[...curve],control=[...curve],origins=new Set(),positions=new Set();
++const search=await createV3Search({load:async()=>readFileSync(join(directory,'search.wasm'))});
++let changed=0,planePositions=0;
++try{
++ for(const size of plan.data.boards)for(let index=0;index<plan.data.gamesPerBoard;index++){
++  const saved=JSON.parse(gunzipSync(readFileSync(join(directory,'generate',`plane${size}-${String(index).padStart(2,'0')}.json.gz`))));
++  assert.equal(saved.spec.size,size);assert.equal(saved.spec.index,index);assert.ok(!origins.has(saved.spec.gameId));origins.add(saved.spec.gameId);
++  validateSavedGame(saved,saved.teacherRows);validateSavedGame(saved,saved.controlRows);
++  split[plan.data.validationIndices.includes(index)?'validationGames':'trainGames'].push(saved.spec.gameId);
++  const game=new Game(createTopology('plane',size),saved.spec.komi);
++  for(let ply=0;ply<saved.moves.length;ply++){
++   const left=saved.teacherRows[ply],right=saved.controlRows[ply];assert.ok(!positions.has(left.positionId));positions.add(left.positionId);
++   for(const key of ['x','global','legal','wdl','score','ownership','gameId','positionId','validationPolicy','policyEligible','decisionReason','playedAction'])assert.deepEqual(left[key],right[key],key);
++   search.start(aiPosition(game),{tactics:false,endgame:false});const root=search.collect(1);assert.equal(root.count,1);assertSameFeatures(left,root,size*size);search.cancel();
++   assert.deepEqual(left.policy,Array.from(analysisPolicy(saved.analyses[ply],game)),'Teacher policy differs from saved search statistics');
++   assert.deepEqual(left.validationPolicy,left.policy,'Common teacher validation target differs');
++   for(const row of [left,right]){
++    assert.equal(row.policy.length,161);assert.ok(row.policy.every((v,p)=>Number.isFinite(v)&&v>=0&&(row.legal[p]||v===0)));
++    assert.ok(Math.abs(row.policy.reduce((a,b)=>a+b,0)-1)<1e-5);
++   }
++   changed+=Number(left.policy.some((v,p)=>v!==right.policy[p]));planePositions++;
++   assert.ok((saved.moves[ply]<0?game.pass():game.play(saved.moves[ply])).ok);
++  }
++  teacher.push(...saved.teacherRows);control.push(...saved.controlRows);
++ }
++}finally{search.dispose();}
++const trainIds=new Set(split.trainGames),valIds=new Set(split.validationGames);
++assert.ok([...trainIds].every(id=>!valIds.has(id)));assert.equal(planePositions,positions.size);
++for(const row of curve)assert.ok(trainIds.has(row.gameId)||valIds.has(row.gameId),'Unknown curve origin');
++for(const [name,rows]of [['teacher',teacher],['control',control]])writeFileSync(join(directory,name+'.jsonl.gz'),gzipSync(rows.map(r=>JSON.stringify(r)).join('\n')+'\n',{level:9}));
++writeFileSync(join(directory,'game-split.json'),JSON.stringify(split,null,2)+'\n');
++const speed=JSON.parse(readFileSync('dist/ai-benchmark-positions.json'));
++for(const size of [7,9,11]){
++ const saved=JSON.parse(gunzipSync(readFileSync(join(directory,'generate',`plane${size}-03.json.gz`))));
++ for(const [phase,ply]of [['opening',0],['middle',Math.floor(saved.moves.length/2)],['endgame',Math.max(0,saved.moves.length-4)]])
++  speed.positions.push({kind:'plane',size,komi:6.5,phase,moves:saved.moves.slice(0,ply)});
++}
++writeFileSync(join(directory,'speed-positions.json'),JSON.stringify(speed,null,2)+'\n');
++const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
++const audit={schemaVersion:1,games:origins.size,planePositions,curvePositions:curve.length,positions:teacher.length,changedPolicies:changed,
++ matchedFeaturesOutcomesValidation:true,replayedEveryPlaneRoot:true,reconstructedEveryTeacherPolicy:true,legalPolicies:true,trainGames:trainIds.size,validationGames:valIds.size,
++ boards:[...new Set(teacher.map(r=>r.kind+r.size))],inputs:{curve:hash(plan.data.curveReplay),plan:hash(join(directory,'plan.json'))},
++ outputs:Object.fromEntries(['teacher.jsonl.gz','control.jsonl.gz','game-split.json'].map(file=>[file,hash(join(directory,file))]))};
++writeFileSync(join(directory,'data-audit.json'),JSON.stringify(audit,null,2)+'\n');console.log(JSON.stringify(audit));
+diff --git a/tools/ai-gnn/katago-distill-release.mjs b/tools/ai-gnn/katago-distill-release.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-release.mjs
+@@ -0,0 +1,39 @@
++// Update only the local experimental v3 slot after every preregistered gate passes.
++import {readFileSync,writeFileSync,copyFileSync} from 'node:fs';
++import {join,resolve,basename} from 'node:path';
++import {execFileSync} from 'node:child_process';
++const directory=resolve(process.argv[2]),read=name=>JSON.parse(readFileSync(join(directory,name)));
++const strength=read('independent-summary.json'),speed=read('speed-nine.json'),provenance=read('provenance.json'),plan=read('plan.json');
++const numeric=['teacher-onnx','control-onnx','teacher-browser'].every(name=>read(name+'-command.json').exitCode===0);
++const profile={schemaVersion:1,planId:plan.id,recorded:new Date().toISOString(),strengthGates:strength.strengthGates,
++ speed:speed.passes,speedCoversAllBoards:speed.summary.every(s=>s.boards.length===9),numeric,
++ strength:{planes:strength.planeVsBaseline,curves:strength.allCurvesVsBaseline,control:strength.planeVsControl},
++ speedResults:speed.summary,baseline:provenance.baseline,candidate:read('teacher-model/manifest.json').sha256,control:read('control-model/manifest.json').sha256};
++profile.eligible=strength.passesStrength&&profile.speed&&profile.speedCoversAllBoards&&numeric;
++writeFileSync(join(directory,'student-profile.json'),JSON.stringify(profile,null,2)+'\n');
++if(!profile.eligible){console.log('Candidate did not pass every gate; deployed weights remain unchanged.');process.exit(0);}
++const current=JSON.parse(readFileSync('dist/models/v3/manifest.json'));
++if(current.sha256!==provenance.baseline)throw Error('Deployed model changed during study; refusing to overwrite it');
++const source=join(directory,'teacher-model/manifest.json'),manifest=read('teacher-model/manifest.json');
++manifest.accepted=true;manifest.teacherProvenance={name:basename(provenance.model.path),url:provenance.model.url,sha256:provenance.model.sha256,
++ license:'https://katagotraining.org/network_license/'};
++manifest.dataSha256=Object.fromEntries(Object.entries(manifest.dataSha256).map(([file,sha])=>['experiments/ai/v3/2026-10-27-katago-distillation/data/'+basename(file),sha]));
++manifest.acceptance={study:plan.id,profile:'experiments/ai/v3/2026-10-27-katago-distillation/data/student-profile.json',
++ independentGames:384,planes:strength.planeVsBaseline.scoreRate,curves:strength.allCurvesVsBaseline.scoreRate,control:strength.planeVsControl.scoreRate,
++ fixedVisits:64,parameters:120905,scope:'PC WebGPU and WASM; mobile speed not measured',allGatesPassed:true};
++writeFileSync(source,JSON.stringify(manifest,null,2)+'\n');
++execFileSync(process.execPath,['tools/ai-gnn/install-model.mjs',join(directory,'teacher-model')],{stdio:'inherit',windowsHide:true});
++copyFileSync(join(directory,'KataGo-NN-LICENSE.txt'),'dist/models/v3/KataGo-NN-LICENSE.txt');
++const pct=x=>(x*100).toFixed(1)+'%';
++let docs=readFileSync('docs/ai/architectures/v3.md','utf8');
++docs=docs.replace(/通常対局の標準はv2です。[^\n]+/,`通常対局の標準はv2です。実験用v3には、[KataGoの平面盤方策を蒸留したモデル](../../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)を採用しました。同じ120,905パラメータ・64訪問で、独立評価の対現行v3得点率は平面${pct(strength.planeVsBaseline.scoreRate)}、曲面${pct(strength.allCurvesVsBaseline.scoreRate)}、方策対照に対しては平面${pct(strength.planeVsControl.scoreRate)}でした。全9盤の事前採用基準とPCのCPU/WASM・WebGPU速度基準を通過しています。スマートフォンの実機速度は未計測です。`);
++docs=docs.replace(/球面・トーラスに加え、平面の7・9・11路盤でもv3を使えます。[^\n]+/,'球面・トーラスに加え、平面の7・9・11路盤でもv3を使えます。平面盤の隣接関係を探索へ渡し、端はつなぎません。配信モデルはKataGoの平面盤教師と曲面の既存教師データを混ぜて再学習したものです。');
++docs=docs.replace('## 現在の配信モデル',`## 現在の配信モデル\n\n平面96局と曲面の既存48局を使い、KataGoのroot edgeVisitsから着手方策を蒸留しました。勝敗・得点・所属はアプリのルールによる実際の終局値です。候補と追加学習対照を同じ条件で学習し、独立384局と全9盤の固定局面速度比較を通過しました。[全記録](../../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)と[採用profile](../../../experiments/ai/v3/2026-10-27-katago-distillation/data/student-profile.json)を参照してください。ONNX SHA-256は \`${manifest.sha256}\`。\n\n## 2026-10-25時点の配信モデル`);
++writeFileSync('docs/ai/architectures/v3.md',docs.replace('対現行v3得点率','更新前v3への得点率'));
++const index='docs/ai/README.md';
++writeFileSync(index,readFileSync(index,'utf8').replace(/v3は `\?ai=v3` で試す実験実装です。[^\n]+/,`v3は \`?ai=v3\` で試す実験実装です。[KataGoの平面盤方策を蒸留した小型モデル](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)を採用しています。独立384局と全9盤のCPU/WASM・WebGPU速度基準を通過しました。[仕様](architectures/v3.md)と[開発手順](../../tools/ai-gnn/README.md)を参照してください。`));
++const tools='tools/ai-gnn/README.md';
++writeFileSync(tools,readFileSync(tools,'utf8').replace('配信中の重みは曲面のみで学習したものです。平面盤での棋力を改善するには、平面盤を含むデータで候補を学習し、全盤の独立対戦で評価してください。','配信モデルはKataGoの平面盤教師と曲面の既存教材を混ぜて再学習し、全9盤の独立対戦と速度基準を通過したものです。次の候補も、全盤で独立に評価してから採用します。'));
++profile.installed=true;profile.candidate=manifest.sha256;profile.installedAt=new Date().toISOString();
++writeFileSync(join(directory,'student-profile.json'),JSON.stringify(profile,null,2)+'\n');
++console.log('Installed qualified experimental v3 model',manifest.sha256);
+diff --git a/tools/ai-gnn/katago-distill-run.mjs b/tools/ai-gnn/katago-distill-run.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-run.mjs
+@@ -0,0 +1,23 @@
++import {readFileSync,writeFileSync,existsSync} from 'node:fs';
++import {join,resolve} from 'node:path';
++import {runStudyCommand} from './study-commands.mjs';
++const directory=resolve(process.argv[2]),screen=JSON.parse(readFileSync(join(directory,'screen-report.json')));
++if(!screen.passes)throw Error('KataGo teacher did not qualify');
++if(existsSync(join(directory,'pipeline-state.json')))throw Error('Pipeline already started; inspect saved state before resuming');
++const state={started:new Date().toISOString(),stages:[]};
++async function run(name,args){
++ state.current=name;writeFileSync(join(directory,'pipeline-state.json'),JSON.stringify(state,null,2)+'\n');
++ try{await runStudyCommand(directory,name,process.execPath,args);state.stages.push({name,status:'complete',at:new Date().toISOString()});}
++ catch(error){state.stages.push({name,status:'failed',error:error.message});writeFileSync(join(directory,'pipeline-state.json'),JSON.stringify(state,null,2)+'\n');throw error;}
++}
++await run('collect',['tools/ai-gnn/katago-distill-data.mjs',directory,'generate']);
++await run('prepare',['tools/ai-gnn/katago-distill-prepare.mjs',directory]);
++await run('train',['tools/ai-gnn/katago-distill-train.mjs',directory]);
++await run('development',['tools/ai-gnn/katago-distill-evaluate.mjs',directory,'development']);
++await run('independent',['tools/ai-gnn/katago-distill-evaluate.mjs',directory,'independent']);
++for(const arm of ['teacher','control'])await run(arm+'-onnx',['tools/ai-gnn/test-onnx.mjs',join(directory,arm+'-model')]);
++await run('teacher-browser',['tools/ai-gnn/test-browser.mjs','--model',join(directory,'teacher-model'),'--output',join(directory,'teacher-browser.json')]);
++await run('speed',['tools/ai-gnn/bench-search.mjs','--a-wasm',join(directory,'search.wasm'),'--b-wasm',join(directory,'search.wasm'),
++ '--a-model',join(directory,'teacher-model'),'--b-model',join(directory,'baseline'),'--positions',join(directory,'speed-positions.json'),'--repeats','7','--output',join(directory,'speed.json')]);
++state.current=null;state.finished=new Date().toISOString();writeFileSync(join(directory,'pipeline-state.json'),JSON.stringify(state,null,2)+'\n');
++console.log('Training and independent evaluation complete. Inspect independent-summary.json and speed.json before any model installation.');
+diff --git a/tools/ai-gnn/katago-distill-setup.mjs b/tools/ai-gnn/katago-distill-setup.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-setup.mjs
+@@ -0,0 +1,32 @@
++import {mkdirSync,readFileSync,writeFileSync,cpSync,existsSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {createHash} from 'node:crypto';
++import {execFileSync} from 'node:child_process';
++const args=process.argv.slice(2),arg=k=>args[args.indexOf(k)+1];
++if(!args.includes('--directory')||!args.includes('--engine-source'))throw Error('Expected --directory DIR --engine-source DIR');
++const directory=resolve(arg('--directory')),engine=join(directory,'engine');
++if(existsSync(directory))throw Error('Use a fresh study directory');
++mkdirSync(directory,{recursive:true});cpSync(resolve(arg('--engine-source')),engine,{recursive:true});
++const url='https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz';
++const model=join(directory,'kata1-b10c128-s1141046784-d204142634.txt.gz');
++const hash=path=>createHash('sha256').update(readFileSync(path)).digest('hex');
++for(const [source,file]of [[url,model],['https://katagotraining.org/network_license/',join(directory,'network-license.html')],['https://raw.githubusercontent.com/lightvector/KataGo/v1.18.1/LICENSE',join(directory,'KataGo-LICENSE.txt')]]){
++ const response=await fetch(source);if(!response.ok)throw Error('Download '+response.status+' '+source);
++ const bytes=Buffer.from(await response.arrayBuffer());writeFileSync(file,bytes);console.log('Downloaded',file,bytes.length);
++}
++const license=readFileSync(join(directory,'network-license.html'),'utf8');
++const section=license.match(/KataGo Neural Network License[\s\S]*?(?=<h[1-6][^>]*>Exceptions)/i);
++if(!section)throw Error('Cannot identify official NN license section');
++writeFileSync(join(directory,'KataGo-NN-LICENSE.txt'),section[0].replace(/<[^>]*>/g,'').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&').trim()+'\n');
++cpSync('dist/models/v3',join(directory,'baseline'),{recursive:true});
++cpSync('tests/fixtures/ai/v3-golden.json',join(directory,'baseline/golden.json'));
++cpSync('tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/weights.pt',join(directory,'baseline/weights.pt'));
++const baseline=JSON.parse(readFileSync(join(directory,'baseline/manifest.json')));
++const checkpoint=JSON.parse(readFileSync('tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/manifest.json'));
++if(baseline.sha256!==checkpoint.sha256)throw Error('Baseline checkpoint does not match deployed model');
++cpSync('dist/ai-v3.wasm',join(directory,'search.wasm'));
++cpSync('tools/ai-gnn/target/topologies.json',join(directory,'topologies.json'));
++const config=`logToStderr = true\nnumAnalysisThreads = 8\nnumSearchThreadsPerAnalysisThread = 1\nnnMaxBatchSize = 16\nmaxVisits = 512\nnnCacheSizePowerOfTwo = 20\nnnMutexPoolSizePowerOfTwo = 16\nmaxBoardXSizeForNNBuffer = 11\nmaxBoardYSizeForNNBuffer = 11\nreportAnalysisWinratesAs = SIDETOMOVE\nwideRootNoise = 0.0\nignorePreRootHistory = false\nconservativePass = true\npreventCleanupPhase = true\nuseEvalCache = false\nrootSymmetryPruning = false\n`;
++writeFileSync(join(directory,'analysis.cfg'),config);writeFileSync(join(directory,'analysis-generation.cfg'),config);
++const provenance={schemaVersion:1,baseCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),created:new Date().toISOString(),model:{path:model,url,sha256:hash(model)},engine:{path:join(engine,'katago.exe'),sha256:hash(join(engine,'katago.exe'))},licenses:{networkURL:'https://katagotraining.org/network_license/',networkSha256:hash(join(directory,'KataGo-NN-LICENSE.txt')),engineURL:'https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE'},baseline:baseline.sha256,search:hash(join(directory,'search.wasm'))};
++writeFileSync(join(directory,'provenance.json'),JSON.stringify(provenance,null,2)+'\n');console.log(JSON.stringify(provenance));
+diff --git a/tools/ai-gnn/katago-distill-speed.mjs b/tools/ai-gnn/katago-distill-speed.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-speed.mjs
+@@ -0,0 +1,9 @@
++import {readFileSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {runStudyCommand} from './study-commands.mjs';
++const directory=resolve(process.argv[2]),state=JSON.parse(readFileSync(join(directory,'pipeline-state.json')));
++if(!state.finished)throw Error('Wait for the primary pipeline to finish; do not overlap speed measurements');
++await runStudyCommand(directory,'speed-nine',process.execPath,['tools/ai-gnn/bench-search.mjs',
++ '--a-wasm',join(directory,'search.wasm'),'--b-wasm',join(directory,'search.wasm'),
++ '--a-model',join(directory,'teacher-model'),'--b-model',join(directory,'baseline'),
++ '--positions',join(directory,'speed-positions.json'),'--repeats','7','--output',join(directory,'speed-nine.json')]);
+diff --git a/tools/ai-gnn/katago-distill-train.mjs b/tools/ai-gnn/katago-distill-train.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/katago-distill-train.mjs
+@@ -0,0 +1,22 @@
++import {readFileSync,writeFileSync,copyFileSync,existsSync} from 'node:fs';
++import {resolve,join} from 'node:path';
++import {runStudyCommand} from './study-commands.mjs';
++const directory=resolve(process.argv[2]),plan=JSON.parse(readFileSync(join(directory,'plan.json')));
++await runStudyCommand(directory,'paired-tensor-audit','tools/ai-gnn/.venv/Scripts/python.exe',[
++ 'tools/ai-gnn/validate_paired_training.py','--control',join(directory,'control.jsonl.gz'),'--teacher',join(directory,'teacher.jsonl.gz'),
++ '--split',join(directory,'game-split.json'),'--output',join(directory,'paired-tensor-audit.json')]);
++const args=['tools/ai-gnn/train.py','--topologies',join(directory,'topologies.json'),'--resume',join(directory,'baseline/weights.pt'),
++ '--split-manifest',join(directory,'game-split.json'),'--epochs',String(plan.training.epochs),'--batch-size',String(plan.training.batchSize),
++ '--seed',String(plan.seeds.training),'--device','cuda','--learning-rate',String(plan.training.learningRate),
++ '--minimum-learning-rate',String(plan.training.minimumLearningRate),'--balanced','--normal-training','--normal-selection','--normalize-policy',
++ '--require-validation-policy','--checkpoint-every',String(plan.training.checkpointEvery),'--best-validation','--cosine','--ema-decay',String(plan.training.emaDecay)];
++for(const arm of ['control','teacher']){
++ if(existsSync(join(directory,arm+'-train-command.json')))throw Error('Training record already exists: '+arm);
++ await runStudyCommand(directory,arm+'-train','tools/ai-gnn/.venv/Scripts/python.exe',[...args,'--data',join(directory,arm+'.jsonl.gz'),'--output',join(directory,arm+'-model')]);
++ const path=join(directory,arm+'-model/manifest.json'),manifest=JSON.parse(readFileSync(path));
++ manifest.search={fpu:1};manifest.teacherProvenance=JSON.parse(readFileSync(join(directory,'provenance.json'))).model;
++ manifest.researchRole=arm==='teacher'?'KataGo search-policy distillation candidate':'Matched v3-policy extra-training control';
++ manifest.planId=plan.id;writeFileSync(path,JSON.stringify(manifest,null,2)+'\n');
++ copyFileSync(join(directory,'KataGo-NN-LICENSE.txt'),join(directory,arm+'-model/KataGo-NN-LICENSE.txt'));
++ console.log(arm,'selected epoch',manifest.selectedEpoch,'model',manifest.sha256);
++}
+diff --git a/tools/ai-gnn/test-katago-analysis.mjs b/tools/ai-gnn/test-katago-analysis.mjs
+new file mode 100644
+--- /dev/null
++++ b/tools/ai-gnn/test-katago-analysis.mjs
+@@ -0,0 +1,25 @@
++import assert from 'node:assert/strict';
++import {Game,createTopology} from '../../dist/engine.js';
++import {analysisPosition,analysisPolicy,KATAGO_RULES} from './katago-analysis.mjs';
++import {toVertex,fromVertex} from '../gtp/vertex.mjs';
++for(const size of [7,9,11]){
++ const game=new Game(createTopology('plane',size),6.5);
++ for(let point=0;point<size*size;point++)assert.equal(fromVertex(toVertex(point,size),size),point);
++ for(const point of [1,0,size])assert.ok(game.play(point).ok);
++ const query=analysisPosition(game);
++ assert.deepEqual(query.moves,[['B','A'+(size-1)],['W','A'+size],['B','B'+size]]);
++ assert.deepEqual(query.rules,KATAGO_RULES);assert.equal(query.komi,6.5);assert.equal(query.boardXSize,size);
++ assert.equal(game.board[0],0,'app fixture captured the corner');
++ const target=size+1;
++ const policy=analysisPolicy({moveInfos:[{move:toVertex(target,size),visits:999,edgeVisits:3},{move:'pass',visits:1,edgeVisits:1}]},game,{uniformMix:0});
++ assert.equal(policy[target],.75);assert.equal(policy[160],.25);assert.equal(policy[1],0);
++ const smooth=analysisPolicy({moveInfos:[{move:toVertex(target,size),visits:4}]},game);
++ assert.ok(Math.abs(smooth.reduce((a,b)=>a+b,0)-1)<1e-6);
++ assert.equal(smooth[1],0);assert.equal(smooth[size],0);assert.ok(smooth[160]>0);
++ assert.throws(()=>analysisPolicy({moveInfos:[{move:toVertex(1,size),visits:1}]},game),/legality/);
++ assert.throws(()=>analysisPolicy({moveInfos:[{move:'pass',visits:NaN}]},game),/visits/);
++ assert.throws(()=>analysisPolicy({moveInfos:[]},game),/Empty/);
++ game.pass();assert.equal(analysisPosition(game).moves.at(-1)[1],'pass');
++}
++assert.throws(()=>analysisPosition(new Game(createTopology('torus',7))),/plane/);
++console.log('KataGo adapter: coordinate/history mapping, plane captures, edge-visit targets, legal smoothing and invalid-output rejection passed.');
+diff --git a/dist/licenses/KataGo-NN-LICENSE.txt b/dist/licenses/KataGo-NN-LICENSE.txt
+new file mode 100644
+--- /dev/null
++++ b/dist/licenses/KataGo-NN-LICENSE.txt
+@@ -0,0 +1,19 @@
++KataGo Neural Network License
++
++Copyright 2026 David J Wu ("lightvector").
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of the neural net files or training weight files (the "Software"), to deal in the Software without restriction,
++including without limitation the rights to use, copy, modify, merge, publish, distribute,
++sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all copies or
++substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
++NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++--------------------
+diff --git a/dist/licenses/KataGo-v1.18.1-LICENSE.txt b/dist/licenses/KataGo-v1.18.1-LICENSE.txt
+new file mode 100644
+--- /dev/null
++++ b/dist/licenses/KataGo-v1.18.1-LICENSE.txt
+@@ -0,0 +1,41 @@
++The code in this repository currently relies on several other libraries, parts of libraries,
++or external files: clblast, composable_kernel_fmha, cudnn-frontend, cutlass, filesystem-1.5.8, half-2.2.0,
++httplib, katagocoreml (which itself vendors components from Apple's coremltools and the FP16
++library), macos (Swift CMake modules), mozilla-cacerts, nlohmann_json, sgfmill, onnx, and
++tclap-1.2.5. For the licenses for those libraries and/or files, see the individual readmes and/or
++license files for each one within their respective subdirectories within cpp/external.
++Additionally, cpp/core/sha2.cpp derives from another piece of external code and embeds its own
++license within that file.
++
++Some parts of python/katago/model_pytorch.py and a few other files, where noted, are modifications
++of code from other open source authors.
++
++Aside from the above, the license for all OTHER content in this repo is as follows:
++
++----------------------------------------
++
++Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository.
++(See 'CONTRIBUTORS' file for a list of authors as well as other indirect contributors).
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
++associated documentation files (the "Software"), to deal in the Software without restriction,
++including without limitation the rights to use, copy, modify, merge, publish, distribute,
++sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all copies or
++substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
++NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++----------------------------------------
++
++Additional disclaimer from David J Wu ("lightvector") regarding the above license and KataGo's
++repository (https://github.com/lightvector/KataGo):
++I am providing code in the repository to you under an open source license. Because this is my
++personal repository, the license you receive to my code is from me, and not from any of my employers,
++present or past (including Facebook, during part of 2020-2023).
+\ No newline at end of file
+diff --git a/dist/models/v3/KataGo-NN-LICENSE.txt b/dist/models/v3/KataGo-NN-LICENSE.txt
+new file mode 100644
+--- /dev/null
++++ b/dist/models/v3/KataGo-NN-LICENSE.txt
+@@ -0,0 +1,19 @@
++KataGo Neural Network License
++
++Copyright 2026 David J Wu ("lightvector").
++
++Permission is hereby granted, free of charge, to any person obtaining a copy of the neural net files or training weight files (the "Software"), to deal in the Software without restriction,
++including without limitation the rights to use, copy, modify, merge, publish, distribute,
++sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
++furnished to do so, subject to the following conditions:
++
++The above copyright notice and this permission notice shall be included in all copies or
++substantial portions of the Software.
++
++THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
++NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
++NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
++DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
++OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
++
++--------------------

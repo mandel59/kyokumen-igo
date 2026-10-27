@@ -1,0 +1,9 @@
+torus 11 pair 0 A colour 1 score 0 margin -20.5 moves 150
+torus 11 pair 0 A colour 2 score 1 margin 7.5 moves 119
+torus 11 pair 1 A colour 1 score 1 margin 58.5 moves 137
+torus 11 pair 1 A colour 2 score 0 margin -11.5 moves 131
+torus 11 pair 2 A colour 1 score 1 margin 67.5 moves 129
+torus 11 pair 2 A colour 2 score 0 margin -47.5 moves 129
+torus 11 pair 3 A colour 1 score 0 margin -5.5 moves 121
+torus 11 pair 3 A colour 2 score 1 margin 68.5 moves 124
+{"games":8,"completed":8,"capped":0,"score":4,"metrics":{"a_turns":504,"a_ms":44392.29470000007,"a_simulations":32193,"a_passes":10,"a_losingPasses":4,"a_earlyPasses":0,"a_certifiedLossPasses":1,"a_uncertifiedLosingPasses":3,"a_selfAtaris":5,"a_eyeFills":2,"a_missedCaptures":7,"b_turns":504,"b_ms":44109.72080000013,"b_simulations":32067,"b_passes":20,"b_losingPasses":4,"b_earlyPasses":0,"b_certifiedLossPasses":3,"b_uncertifiedLosingPasses":1,"b_selfAtaris":3,"b_eyeFills":4,"b_missedCaptures":35},"scoreRate":0.5,"wins":4,"draws":0,"losses":4,"boards":[{"board":"torus11","games":8,"score":4,"pairScores":[0.5,0.5,0.5,0.5]}],"pairedBootstrap":{"seed":2026107770,"iterations":10000,"unit":"colour-swapped opening pair","stratifiedByBoard":true,"interval95":[0.5,0.5]}}

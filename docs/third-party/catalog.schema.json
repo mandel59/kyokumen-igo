@@ -236,7 +236,7 @@
           "pattern": "^[a-f0-9]{64}$"
         },
         "gitBlobSha": {
-          "type": "string",
+          "type": ["string", "null"],
           "pattern": "^[a-f0-9]{40}$"
         }
       }

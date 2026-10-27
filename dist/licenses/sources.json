@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "checkedOn": "2026-10-25",
+  "checkedOn": "2026-10-27",
   "versions": {
     "onnxruntime": "1.30.0"
   },
@@ -39,6 +39,18 @@
       "path": "Binaryen-LICENSE.txt",
       "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
+    },
+    {
+      "path": "KataGo-v1.18.1-LICENSE.txt",
+      "url": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE",
+      "gitBlobSha": null,
+      "sha256": "ead22455d923920cd152546d89e4f415c94d6b580aa109fda3b57a69c57c32e0"
+    },
+    {
+      "path": "KataGo-NN-LICENSE.txt",
+      "url": "https://katagotraining.org/network_license/",
+      "gitBlobSha": null,
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
     }
   ]
 }

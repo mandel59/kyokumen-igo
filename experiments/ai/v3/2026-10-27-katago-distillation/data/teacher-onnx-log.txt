@@ -1,0 +1,5 @@
+policy PyTorch/ONNX max difference 0.000003814697265625
+wdl PyTorch/ONNX max difference 3.5762786865234375e-7
+score PyTorch/ONNX max difference 2.2351741790771484e-8
+ownership PyTorch/ONNX max difference 3.129243850708008e-7
+v3 ONNX + batched WASM MCTS: legal moves on all nine boards passed.

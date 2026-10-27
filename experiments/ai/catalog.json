@@ -186,6 +186,12 @@
       "architecture": "v3",
       "title": "平面盤でのKataGo人間模倣20kとの対戦（v2・v3）",
       "path": "v3/2026-10-27-katago-plane/"
+    },
+    {
+      "id": "v3/2026-10-27-katago-distillation",
+      "architecture": "v3",
+      "title": "KataGoの平面盤方策からv3への蒸留",
+      "path": "v3/2026-10-27-katago-distillation/"
     }
   ]
 }

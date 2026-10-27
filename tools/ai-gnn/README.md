@@ -28,7 +28,7 @@ uv run --project tools/ai-gnn python -m http.server --directory dist 8000
 
 ## 初期データ生成と学習
 
-対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信中の重みは曲面のみで学習したものです。平面盤での棋力を改善するには、平面盤を含むデータで候補を学習し、全盤の独立対戦で評価してください。
+対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信モデルはKataGoの平面盤教師と曲面の既存教材を混ぜて再学習し、全9盤の独立対戦と速度基準を通過したものです。次の候補も、全盤で独立に評価してから採用します。
 
 ```powershell
 tools/ai-gnn/target/gnn-data.exe tools/ai-gnn/target/bootstrap.jsonl 20 20261021
@@ -53,6 +53,24 @@ uv run --project tools/ai-gnn --extra cuda python tools/ai-gnn/train.py --data t
 `--best-validation` は対局を分けた検証データの損失が最小だった epoch を出力します。モデル選択に使った検証値は独立した棋力評価ではありません。CPU は既定のまま利用でき、CUDA 版を使うコマンドには `--extra cuda` を付けます。
 
 `install-model.mjs` は実験用の `dist/models/v3/` と数値照合用固定入力を更新します。通常対局のモデルを切り替える操作は行いません。
+
+## KataGoから平面盤の方策を蒸留する
+
+`katago-distill-*.mjs` は公式通常ネットを使う研究用パイプラインです。平面7・9・11路の教師分布を生成し、曲面6盤の既存教材と混ぜ、現行モデル・着手分布だけを変えた追加学習対照と比較します。対照も同じKataGo自己対局由来の局面・終局ラベルと共通検証目標を使うため、KataGo由来データ全体の効果を分離する比較ではありません。
+
+依存と全9盤のtopologies.jsonを用意し、KataGo v1.18.1 OpenCLの配布フォルダを指定します。出力には新しい空のパスを使います。
+
+```powershell
+node tools/ai-gnn/katago-distill-setup.mjs --directory tools/ai-tuner/target/katago-study-new --engine-source PATH_TO_KATAGO_FOLDER
+node tools/ai-gnn/katago-distill-bench.mjs tools/ai-tuner/target/katago-study-new
+node tools/ai-gnn/katago-distill-plan.mjs tools/ai-tuner/target/katago-study-new
+node tools/ai-gnn/katago-distill-data.mjs tools/ai-tuner/target/katago-study-new screen
+node tools/ai-gnn/katago-distill-run.mjs tools/ai-tuner/target/katago-study-new
+```
+
+ベンチマーク後に局数・seed・対局分割・採用基準をplan.jsonへ固定します。教師が予備対戦基準を通過した場合だけ、96局の収集、全局面と学習テンソルの監査、比較用2モデルの学習、開発対戦、独立384局、ONNX・実ブラウザー・速度検証へ進みます。途中経過はpipeline-state.jsonと工程別ログに残ります。パイプラインは配信モデルを自動変更しません。終了後の判定とアーカイブには `katago-distill-archive.mjs` を使います。許諾文・出所は教師本体とNNを分け、生徒パッケージにもNN用告知を添えます。
+
+`node tools/ai-gnn/test-katago-analysis.mjs` は座標・履歴・合法手・root edgeVisitsからの分布変換を検査します。`bench-search.mjs --positions FILE.json` は平面を含む固定局面で速度を比較できます。
 
 ## 自己対局からの改善
 

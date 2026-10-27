@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "67e9bffcb292e594001726c1eb7f0009ec39b34a",
+  "created": "2026-10-27T13:03:25.952Z",
+  "model": {
+    "path": "C:\\Users\\mande\\ws\\kyokumen-igo\\tools\\ai-tuner\\target\\katago-distillation-20261027\\kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "sha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4"
+  },
+  "engine": {
+    "path": "C:\\Users\\mande\\ws\\kyokumen-igo\\tools\\ai-tuner\\target\\katago-distillation-20261027\\engine\\katago.exe",
+    "sha256": "0e6cc918840e6ef67c0b4a21109585306df7aaa3772971574e58deb8e8fc0575"
+  },
+  "licenses": {
+    "networkURL": "https://katagotraining.org/network_license/",
+    "networkSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+    "engineURL": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE"
+  },
+  "baseline": "e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df",
+  "search": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+}

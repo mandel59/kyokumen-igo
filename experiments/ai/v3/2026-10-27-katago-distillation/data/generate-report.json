@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "phase": "generate",
+  "teacherVisits": 512,
+  "games": 96,
+  "positions": 7734,
+  "boards": [
+    {
+      "size": 7,
+      "games": 32,
+      "positions": 1562,
+      "teacherScore": 0.4375
+    },
+    {
+      "size": 9,
+      "games": 32,
+      "positions": 2439,
+      "teacherScore": 0.5625
+    },
+    {
+      "size": 11,
+      "games": 32,
+      "positions": 3733,
+      "teacherScore": 0.53125
+    }
+  ]
+}

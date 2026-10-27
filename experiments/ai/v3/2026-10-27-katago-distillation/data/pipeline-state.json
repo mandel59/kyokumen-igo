@@ -1,0 +1,52 @@
+{
+  "started": "2026-10-27T13:14:49.855Z",
+  "stages": [
+    {
+      "name": "collect",
+      "status": "complete",
+      "at": "2026-10-27T13:37:56.531Z"
+    },
+    {
+      "name": "prepare",
+      "status": "complete",
+      "at": "2026-10-27T13:38:23.523Z"
+    },
+    {
+      "name": "train",
+      "status": "complete",
+      "at": "2026-10-27T13:41:27.879Z"
+    },
+    {
+      "name": "development",
+      "status": "complete",
+      "at": "2026-10-27T13:44:54.968Z"
+    },
+    {
+      "name": "independent",
+      "status": "complete",
+      "at": "2026-10-27T14:03:28.591Z"
+    },
+    {
+      "name": "teacher-onnx",
+      "status": "complete",
+      "at": "2026-10-27T14:03:29.233Z"
+    },
+    {
+      "name": "control-onnx",
+      "status": "complete",
+      "at": "2026-10-27T14:03:29.869Z"
+    },
+    {
+      "name": "teacher-browser",
+      "status": "complete",
+      "at": "2026-10-27T14:03:36.805Z"
+    },
+    {
+      "name": "speed",
+      "status": "complete",
+      "at": "2026-10-27T14:04:40.184Z"
+    }
+  ],
+  "current": null,
+  "finished": "2026-10-27T14:04:40.184Z"
+}

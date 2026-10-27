@@ -18,7 +18,7 @@ v2 の深さ 1〜3 手の試走は、v2 の探索量を減らした比較条件�
 
 通常はKyokugo AI v2をWorker内のWASMで実行します。WASMを利用できない場合は同じRustから生成したJS版v2へ切り替え、Workerを利用できない場合も同じ生成JSを画面側で実行します。手書きJS版v1は比較・検証用であり、アプリからは呼びません。
 
-v3は `?ai=v3` で試す実験実装です。[4,096訪問教師から蒸留した小型モデル](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)と、根の逐次半減探索を使います。同じ64訪問で更新前v3に138勝54敗（独立192局）となり、全6盤の勝率とCPU/WASM・WebGPUの速度基準を通過しました。[セットアップと学習手順](../../tools/ai-gnn/README.md)を参照してください。
+v3は `?ai=v3` で試す実験実装です。[KataGoの平面盤方策を蒸留した小型モデル](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)を採用しています。独立384局と全9盤のCPU/WASM・WebGPU速度基準を通過しました。[仕様](architectures/v3.md)と[開発手順](../../tools/ai-gnn/README.md)を参照してください。
 
 | 盤 | アーキテクチャ | v2 の係数 |
 | --- | --- | --- |
@@ -55,3 +55,5 @@ tests/fixtures/ai/         回帰テストで使う固定局面
 [根の探索評価値の重みの比較](../../experiments/ai/v3/2026-10-25-root-value-scale/README.md)では、同じ64訪問で採用条件を満たした探索へ更新しました。
 
 [4,096訪問教師からの蒸留](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)では、採用条件を通過した同容量の生徒モデルをv3へ採用しました。ブラウザーの探索は64訪問です。
+
+[KataGoの平面盤方策からの蒸留](../../experiments/ai/v3/2026-10-27-katago-distillation/README.md)では、平面96局と曲面の既存教材で候補と方策対照を学習し、独立384局で評価しました。配信モデルの採否と盤別結果は実験報告に記録しています。

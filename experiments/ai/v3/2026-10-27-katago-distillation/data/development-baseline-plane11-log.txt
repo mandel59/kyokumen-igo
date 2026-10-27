@@ -1,0 +1,9 @@
+plane 11 pair 0 A colour 1 score 1 margin 9.5 moves 117
+plane 11 pair 0 A colour 2 score 1 margin 0.5 moves 141
+plane 11 pair 1 A colour 1 score 1 margin 58.5 moves 150
+plane 11 pair 1 A colour 2 score 0 margin -4.5 moves 148
+plane 11 pair 2 A colour 1 score 1 margin 71.5 moves 141
+plane 11 pair 2 A colour 2 score 1 margin 80.5 moves 138
+plane 11 pair 3 A colour 1 score 1 margin 64.5 moves 143
+plane 11 pair 3 A colour 2 score 1 margin 29.5 moves 128
+{"games":8,"completed":8,"capped":0,"score":7,"metrics":{"a_turns":538,"a_ms":30373.39070000009,"a_simulations":34432,"a_passes":26,"a_losingPasses":1,"a_earlyPasses":0,"a_certifiedLossPasses":0,"a_uncertifiedLosingPasses":1,"a_selfAtaris":1,"a_eyeFills":13,"a_missedCaptures":179,"b_turns":536,"b_ms":30626.338999999953,"b_simulations":34052,"b_passes":14,"b_losingPasses":7,"b_earlyPasses":0,"b_certifiedLossPasses":4,"b_uncertifiedLosingPasses":3,"b_selfAtaris":34,"b_eyeFills":34,"b_missedCaptures":172},"scoreRate":0.875,"wins":7,"draws":0,"losses":1,"boards":[{"board":"plane11","games":8,"score":7,"pairScores":[1,0.5,1,1]}],"pairedBootstrap":{"seed":2026110797,"iterations":10000,"unit":"colour-swapped opening pair","stratifiedByBoard":true,"interval95":[0.625,1]}}

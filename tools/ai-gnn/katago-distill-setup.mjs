@@ -1,0 +1,32 @@
+import {mkdirSync,readFileSync,writeFileSync,cpSync,existsSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
+const args=process.argv.slice(2),arg=k=>args[args.indexOf(k)+1];
+if(!args.includes('--directory')||!args.includes('--engine-source'))throw Error('Expected --directory DIR --engine-source DIR');
+const directory=resolve(arg('--directory')),engine=join(directory,'engine');
+if(existsSync(directory))throw Error('Use a fresh study directory');
+mkdirSync(directory,{recursive:true});cpSync(resolve(arg('--engine-source')),engine,{recursive:true});
+const url='https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz';
+const model=join(directory,'kata1-b10c128-s1141046784-d204142634.txt.gz');
+const hash=path=>createHash('sha256').update(readFileSync(path)).digest('hex');
+for(const [source,file]of [[url,model],['https://katagotraining.org/network_license/',join(directory,'network-license.html')],['https://raw.githubusercontent.com/lightvector/KataGo/v1.18.1/LICENSE',join(directory,'KataGo-LICENSE.txt')]]){
+ const response=await fetch(source);if(!response.ok)throw Error('Download '+response.status+' '+source);
+ const bytes=Buffer.from(await response.arrayBuffer());writeFileSync(file,bytes);console.log('Downloaded',file,bytes.length);
+}
+const license=readFileSync(join(directory,'network-license.html'),'utf8');
+const section=license.match(/KataGo Neural Network License[\s\S]*?(?=<h[1-6][^>]*>Exceptions)/i);
+if(!section)throw Error('Cannot identify official NN license section');
+writeFileSync(join(directory,'KataGo-NN-LICENSE.txt'),section[0].replace(/<[^>]*>/g,'').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&').trim()+'\n');
+cpSync('dist/models/v3',join(directory,'baseline'),{recursive:true});
+cpSync('tests/fixtures/ai/v3-golden.json',join(directory,'baseline/golden.json'));
+cpSync('tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/weights.pt',join(directory,'baseline/weights.pt'));
+const baseline=JSON.parse(readFileSync(join(directory,'baseline/manifest.json')));
+const checkpoint=JSON.parse(readFileSync('tools/ai-gnn/target/teacher-distillation-pilot/student-teacher4096/manifest.json'));
+if(baseline.sha256!==checkpoint.sha256)throw Error('Baseline checkpoint does not match deployed model');
+cpSync('dist/ai-v3.wasm',join(directory,'search.wasm'));
+cpSync('tools/ai-gnn/target/topologies.json',join(directory,'topologies.json'));
+const config=`logToStderr = true\nnumAnalysisThreads = 8\nnumSearchThreadsPerAnalysisThread = 1\nnnMaxBatchSize = 16\nmaxVisits = 512\nnnCacheSizePowerOfTwo = 20\nnnMutexPoolSizePowerOfTwo = 16\nmaxBoardXSizeForNNBuffer = 11\nmaxBoardYSizeForNNBuffer = 11\nreportAnalysisWinratesAs = SIDETOMOVE\nwideRootNoise = 0.0\nignorePreRootHistory = false\nconservativePass = true\npreventCleanupPhase = true\nuseEvalCache = false\nrootSymmetryPruning = false\n`;
+writeFileSync(join(directory,'analysis.cfg'),config);writeFileSync(join(directory,'analysis-generation.cfg'),config);
+const provenance={schemaVersion:1,baseCommit:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),created:new Date().toISOString(),model:{path:model,url,sha256:hash(model)},engine:{path:join(engine,'katago.exe'),sha256:hash(join(engine,'katago.exe'))},licenses:{networkURL:'https://katagotraining.org/network_license/',networkSha256:hash(join(directory,'KataGo-NN-LICENSE.txt')),engineURL:'https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE'},baseline:baseline.sha256,search:hash(join(directory,'search.wasm'))};
+writeFileSync(join(directory,'provenance.json'),JSON.stringify(provenance,null,2)+'\n');console.log(JSON.stringify(provenance));

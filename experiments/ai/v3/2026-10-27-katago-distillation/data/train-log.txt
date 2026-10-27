@@ -1,0 +1,8 @@
+Starting paired-tensor-audit 2026-10-27T13:38:23.578Z
+Completed paired-tensor-audit 36.305 seconds
+Starting control-train 2026-10-27T13:38:59.884Z
+Completed control-train 73.205 seconds
+control selected epoch 16 model e4cc75a1231a9606ef616740ef6fe5a557cf65d865e39d75631501134fa57aed
+Starting teacher-train 2026-10-27T13:40:13.105Z
+Completed teacher-train 74.748 seconds
+teacher selected epoch 16 model d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f

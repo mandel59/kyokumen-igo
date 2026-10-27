@@ -1,0 +1,14 @@
+{
+  "actualDriver": "executed-pipeline-driver.mjs",
+  "currentDriver": "source/tools/ai-gnn/katago-distill-run.mjs",
+  "neuralArtifacts": "Model weights, manifests and golden inputs/outputs are archived as model artifacts. install-model.mjs restores the experimental slot and model-bound test fixture; source.patch covers source, documentation and notices.",
+  "speed": "The original running driver measured the historical six-board fixture. A supplementary nine-board speed run uses the same selected model and fixed visits; no training or strength evaluation was repeated.",
+  "configCorrection": "execution-amendment.json records the buffer-setting correction before any training-data collection.",
+  "teacherOutput": "Every target can be reconstructed from saved game moves, legal masks and compact root/move search statistics. Unused raw NN policy arrays and PVs were not retained.",
+  "reproducibility": "Actual teacher outputs are archived. Concurrent KataGo scheduling and GPU floating point prevent a bitwise replay guarantee.",
+  "control": "The matched control shares KataGo-selfplay positions and exact game outcomes with the teacher arm. It omits KataGo policy targets from training updates, but uses the common KataGo validation target for epoch selection. This isolates policy-target effects, not all effects of KataGo-derived data.",
+  "archiveCorrection": {
+    "at": "2026-10-27T14:11:15.541Z",
+    "reason": "Preserve the no-final-newline marker in the upstream engine license new-file patch. Source snapshots refreshed and report comparator named baseline v3. No learning/evaluation inputs, selected weights, seeds, gates or results changed."
+  }
+}

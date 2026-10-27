@@ -74,3 +74,5 @@
 [強い教師から現行サイズへの蒸留パイロット](v3/2026-10-25-teacher-distillation-pilot/README.md)の実行結果を保存しました。
 
 [平面盤でのKataGo人間模倣20kとの対戦](v3/2026-10-27-katago-plane/README.md)を保存しました。v2・v3とも30局中8勝で、v3の重みは平面盤で未学習です。
+
+[KataGoの平面盤方策からv3への蒸留](v3/2026-10-27-katago-distillation/README.md)のデータ・学習・独立評価を保存しました。

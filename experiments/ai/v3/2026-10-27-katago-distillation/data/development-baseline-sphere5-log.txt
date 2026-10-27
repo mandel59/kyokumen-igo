@@ -1,0 +1,9 @@
+sphere 5 pair 0 A colour 1 score 1 margin 40.5 moves 154
+sphere 5 pair 0 A colour 2 score 1 margin 8.5 moves 149
+sphere 5 pair 1 A colour 1 score 0 margin -5.5 moves 154
+sphere 5 pair 1 A colour 2 score 1 margin 51.5 moves 156
+sphere 5 pair 2 A colour 1 score 0 margin -3.5 moves 153
+sphere 5 pair 2 A colour 2 score 1 margin 39.5 moves 152
+sphere 5 pair 3 A colour 1 score 1 margin 8.5 moves 159
+sphere 5 pair 3 A colour 2 score 1 margin 5.5 moves 148
+{"games":8,"completed":8,"capped":0,"score":6,"metrics":{"a_turns":597,"a_ms":51989.75139999986,"a_simulations":38145,"a_passes":12,"a_losingPasses":2,"a_earlyPasses":0,"a_certifiedLossPasses":1,"a_uncertifiedLosingPasses":1,"a_selfAtaris":1,"a_eyeFills":5,"a_missedCaptures":141,"b_turns":596,"b_ms":52816.125299999716,"b_simulations":37955,"b_passes":15,"b_losingPasses":6,"b_earlyPasses":0,"b_certifiedLossPasses":3,"b_uncertifiedLosingPasses":3,"b_selfAtaris":6,"b_eyeFills":10,"b_missedCaptures":49},"scoreRate":0.75,"wins":6,"draws":0,"losses":2,"boards":[{"board":"sphere5","games":8,"score":6,"pairScores":[1,0.5,0.5,1]}],"pairedBootstrap":{"seed":2026104743,"iterations":10000,"unit":"colour-swapped opening pair","stratifiedByBoard":true,"interval95":[0.5,1]}}

@@ -6,7 +6,7 @@
 
 コードの作成・修正・検証には、AI コーディングエージェント（OpenAI Codex、Claude Code）を使用しています。
 
-正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-25。参考実装、配信するライブラリ、開発ツールと文献の一覧。
+正本は [catalog.json](docs/third-party/catalog.json)、形式は [JSON Schema](docs/third-party/catalog.schema.json) です。確認日：2026-10-27。参考実装、配信するライブラリ、開発ツールと文献の一覧。
 
 配信用の表示は [ライセンスと参考ソフトウェア](dist/credits.html)、配信用 JSON は [third-party-catalog.json](dist/third-party-catalog.json) です。
 
@@ -45,6 +45,8 @@
 | [OpenAI Codex](https://github.com/openai/codex) | 開発時に利用 / Apache-2.0 | コードの作成・修正・検証に使用。    |
 | [Claude Code](https://www.anthropic.com/claude-code) | 開発時に利用 / 提供元の利用条件 | コードの作成・修正・検証に使用。    |
 | [Binaryen / wasm2js 132.0.0](https://github.com/WebAssembly/binaryen/tree/version_132) | JS / WASM を配信 / Apache-2.0 | v2のWASMをJSへ変換。生成物にはメモリー操作・数値演算などの補助関数を含む。 生成出力全体をインスタンス生成関数で囲み、各インスタンスのメモリーと補助関数を独立させる。 Copyright 2015 WebAssembly Community Group participants [Binaryen-LICENSE.txt](dist/licenses/Binaryen-LICENSE.txt) |
+| [KataGo Analysis Engine 1.18.1](https://github.com/lightvector/KataGo/tree/v1.18.1) | 開発時に利用 / MIT | 平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。  Copyright 2025 David J Wu ("lightvector") and/or other authors of the content in this repository. [KataGo-v1.18.1-LICENSE.txt](dist/licenses/KataGo-v1.18.1-LICENSE.txt) |
+| [KataGo Neural Networks kata1-b10c128-s1141046784-d204142634](https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz) | 開発時に利用 / MIT型（ネット用） | v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。  Copyright 2026 David J Wu ("lightvector"). [KataGo-NN-LICENSE.txt](dist/licenses/KataGo-NN-LICENSE.txt) |
 
 ## 推移依存と手法の一次資料
 

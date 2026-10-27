@@ -1,7 +1,7 @@
 {
   "$schema": "./catalog.schema.json",
   "schemaVersion": 1,
-  "checkedOn": "2026-10-25",
+  "checkedOn": "2026-10-27",
   "repository": "https://github.com/mandel59/kyokumen-igo",
   "projectSourceLicense": {
     "licenseExpression": "MIT-0",
@@ -637,6 +637,72 @@
         "ref": "version_132",
         "gitBlobSha": null
       }
+    },
+    {
+      "id": "katago-analysis-engine",
+      "name": "KataGo Analysis Engine",
+      "version": "1.18.1",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "MIT",
+      "usage": "平面7・9・11路の蒸留用教師データをローカルで生成。実行バイナリはアプリに同梱しません。",
+      "files": [
+        "tools/ai-gnn/katago-analysis.mjs"
+      ],
+      "urls": [
+        "https://github.com/lightvector/KataGo/tree/v1.18.1",
+        "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE"
+      ],
+      "notices": [
+        "dist/licenses/KataGo-v1.18.1-LICENSE.txt"
+      ],
+      "distribution": "development-only",
+      "copyrightNotices": [
+        "Copyright 2025 David J Wu (\"lightvector\") and/or other authors of the content in this repository."
+      ],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/ai-gnn/katago-distill-setup.mjs",
+          "tools/ai-gnn/katago-distill-notices.mjs"
+        ],
+        "ref": "1.18.1",
+        "gitBlobSha": null
+      }
+    },
+    {
+      "id": "katago-neural-network",
+      "name": "KataGo Neural Networks",
+      "version": "kata1-b10c128-s1141046784-d204142634",
+      "category": "tool",
+      "relationship": "dependency",
+      "licenseExpression": "LicenseRef-KataGo-Neural-Network",
+      "usage": "v3の平面盤の着手分布を学ぶ教師として使用。公式教師ネット自体はアプリに同梱せず、生徒パッケージにも出所とネット用許諾文を添付します。",
+      "files": [
+        "tools/ai-gnn/katago-analysis.mjs"
+      ],
+      "urls": [
+        "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
+        "https://katagotraining.org/network_license/"
+      ],
+      "notices": [
+        "dist/licenses/KataGo-NN-LICENSE.txt"
+      ],
+      "distribution": "development-only",
+      "copyrightNotices": [
+        "Copyright 2026 David J Wu (\"lightvector\")."
+      ],
+      "modifications": [],
+      "provenance": {
+        "kind": "tool",
+        "evidence": [
+          "tools/ai-gnn/katago-distill-setup.mjs",
+          "tools/ai-gnn/katago-distill-notices.mjs"
+        ],
+        "ref": "kata1-b10c128-s1141046784-d204142634",
+        "gitBlobSha": null
+      }
     }
   ],
   "inventoryFiles": {
@@ -677,6 +743,18 @@
       "path": "dist/licenses/Binaryen-LICENSE.txt",
       "url": "https://registry.npmjs.org/binaryen/-/binaryen-132.0.0.tgz",
       "sha256": "c5accbbd8546e94c34aed24afe689a617627d18eed5a6c48277e48db57c23851"
+    },
+    {
+      "path": "dist/licenses/KataGo-v1.18.1-LICENSE.txt",
+      "url": "https://github.com/lightvector/KataGo/blob/v1.18.1/LICENSE",
+      "gitBlobSha": null,
+      "sha256": "ead22455d923920cd152546d89e4f415c94d6b580aa109fda3b57a69c57c32e0"
+    },
+    {
+      "path": "dist/licenses/KataGo-NN-LICENSE.txt",
+      "url": "https://katagotraining.org/network_license/",
+      "gitBlobSha": null,
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
     }
   ],
   "references": [

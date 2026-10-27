@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "strength": {
+    "planeVsBaseline": true,
+    "planeVsControl": true,
+    "curvesVsBaseline": true
+  },
+  "numeric": true,
+  "speed": true,
+  "speedCoversAllBoards": true,
+  "eligible": true,
+  "baseline": "e329d8c79d872adbd2096110ef6afb4ff99d15db54de0c4570599e05be4bb6df",
+  "candidate": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+  "control": "e4cc75a1231a9606ef616740ef6fe5a557cf65d865e39d75631501134fa57aed",
+  "deployedModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+  "installed": true
+}
