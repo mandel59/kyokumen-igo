@@ -41,8 +41,7 @@ function renderAIInfo(){
   for(const choice of AI_CHOICES){$('aiChoice_'+choice).checked=aiChoice===choice;$('aiChoice_'+choice).disabled=!aiAvailable(choice);}
   $('aiV3Note').textContent=aiAvailable('v3')?'初回に数 MB を取得':'この端末では使えません';
   $('aiNote').hidden=!(backend&&ai!==aiChoice);
-  // v3 has learned only the closed surfaces, so v2 plays the plane boards.
-  $('aiNote').textContent=kind==='plane'?'v3 は平面盤に対応していないため、v2 で対局しています。':'v3 を読み込めなかったため、v2 で対局しています。';
+  $('aiNote').textContent='v3 を利用できなかったため、v2 で対局しています。';
   $('aiName').textContent=AI_NAMES[ai];$('aiDescription').textContent=AI_DESCRIPTIONS[ai];
   $('aiBackend').textContent=failed?'読み込めませんでした':backend?(AI_BACKENDS[backend]??backend)+(mainThread?'（Web Worker を使えないため画面側で実行）':''):'読み込み中…';
 }
@@ -291,7 +290,7 @@ function sizeOptions(boardKind=$('boardKind').value){
 }
 function startGame(){restoreWarning='';cancelAI();if(replay){replay=null;clearSharedRecordURL();}kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;orientation=defaultOrientation(kind);showGame();}
 function showGame(){for(const k of KINDS){$(k+'Tab').classList.toggle('active',kind===k);$(k+'Tab').setAttribute('aria-pressed',kind===k);}SIZE_TABS.forEach((id,i)=>{const active=BOARD_SIZES[kind][i]===game.topology.size;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);});syncView();$('topologyName').textContent=KIND_NAMES[kind]+'盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS';update();resize();scheduleAI();}
-function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':MAP_NAMES[kind];$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent={sphere:'表裏を正距方位で投影 · 円周上の点は両図で共通',torus:'上下・左右の端がつながります',plane:'盤を真上から見た図です'}[kind];applyInputWords();$('boardHint').textContent=defaultHint();if(showMap)renderMap();else resize();}
+function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':MAP_NAMES[kind];$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent={sphere:'表裏を正距方位で投影 · 円周上の点は両図で共通',torus:'上下・左右の端がつながります',plane:''}[kind];applyInputWords();$('boardHint').textContent=defaultHint();if(showMap)renderMap();else resize();}
 // The board hint when nothing is selected; contextual hints (a selected point) replace it.
 function defaultHint(){
   if($('inspect').checked)return '交点を選ぶと、隣接点が光ります';
