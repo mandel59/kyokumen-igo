@@ -20,7 +20,7 @@ for(const game of games)for(const ai of [0,1,2]){
  assert.match(code,/^D[A-Za-z0-9_-]+$/);
  assert.equal(decoded.ai,ai);
  assert.deepEqual(decoded.game.toJSON(),game.toJSON());
- const bits=Math.log2(540)+game.moves*Math.log2(game.board.length+1);
+ const bits=Math.log2(16*64*256*8)+game.moves*Math.log2(game.board.length+1);
  assert.ok(code.length<=1+Math.ceil(bits/6));
 }
 assert.equal(decodeRecord(encodeRecord(games[2])).game.score().winner,0);
@@ -58,6 +58,23 @@ for(const version of ['B','C']){
  };
  for(const [name,value] of Object.entries(rejected))assert.throws(()=>decodeRecord(value),undefined,version+' '+name);
 }
+// D headers leave room: kind 16, size 64 (the line count), komi 256 (half-points + 128), AI 8.
+// Values this version does not support are rejected rather than misread.
+function dcode(kind,size,komi,ai,moves,points){
+ const digits=[[kind,16],[size,64],[komi*2+128,256],[ai,8],...moves.map(m=>[m??points,points+1])];
+ let value=0n,text='';
+ for(let i=digits.length-1;i>=0;i--)value=value*BigInt(digits[i][1])+BigInt(digits[i][0]);
+ while(value>0n){text=ALPHABET[Number(value%64n)]+text;value/=64n;}
+ return 'D'+text;
+}
+assert.equal(encodeRecord(planeKo,2),dcode(2,7,.5,2,[...ko,null,null],49),'D layout is fixed');
+assert.equal(encodeRecord(finished('sphere',4,6.5,[])),'DTJAjRA','pinned D example');
+assert.deepEqual(decodeRecord('DTJAjRA').game.toJSON(),finished('sphere',4,6.5,[]).toJSON());
+for(const [label,kind,size,komi,ai] of [['unknown kind',3,7,6.5,0],['reserved kind',15,7,6.5,0],['unsupported size',2,13,6.5,0],
+  ['size of another kind',0,7,6.5,0],['komi above range',1,7,10,0],['negative komi',1,7,-.5,0],['reserved AI',1,7,6.5,3],['last AI',1,7,6.5,7]])
+ assert.throws(()=>decodeRecord(dcode(kind,size,komi,ai,[null,null],size*size)),/Unsupported record/,label);
+assert.throws(()=>encodeRecord(games[0],3),/AI/);
 for(const komi of [-.5,.25,10,NaN,Infinity])assert.throws(()=>encodeRecord(finished('torus',7,komi,[])),/komi/);
 console.log('Record round trips passed: every half-point komi, drawn games, all boards (plane included)/AI colours and deployed B/C links.');
+console.log('D header passed: fixed layout and rejection of unknown kinds, sizes, komi and AI values.');
 console.log('Record rejection passed for B/C: malformed codes, illegal moves, superko, unfinished and trailing records.');

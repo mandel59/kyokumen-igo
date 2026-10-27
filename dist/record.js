@@ -4,16 +4,24 @@ import {KOMI_VALUES,isValidKomi} from './komi.js';
 // A finished game as a URL-safe code. The first character names the format; the rest is one
 // mixed-radix integer written in base 64: board kind, size, komi and AI colour (0 = two players),
 // then every move as one of the board's points or a pass. Each value takes log2(choices) bits.
-// D adds the plane board (three kinds); C adds zero and integer komi; B links retain their
-// original 10-value header. B and C links have two kinds.
+// B and C headers are dense: two kinds, three sizes per kind, every komi value and AI colour
+// are each used up, so C (zero and integer komi) needed a new letter. D (adding the plane) leaves
+// room in each header field, so new kinds, sizes, komi and AI options fit the same format:
+//   kind  radix 16   index into KINDS, which is only ever appended to
+//   size  radix 64   the number of lines (sphere: cube-edge divisions), not an index
+//   komi  radix 256  half-points + 128, so -64 to 63.5
+//   ai    radix 8    0 two players, 1 black, 2 white; 3-7 reserved
+// A decoder rejects values it does not support instead of misreading the record. The header costs
+// 21 bits instead of 9, about two characters.
 const VERSION='D',ALPHABET='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 const KINDS=['sphere','torus','plane'],SIZES={sphere:[3,4,5],torus:[7,9,11],plane:[7,9,11]},LEGACY_KOMIS=[.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5];
-const MAX_MOVES=10000,MAX_LENGTH=16000;
+const MAX_MOVES=10000,MAX_LENGTH=16000,HEADER={kind:16,size:64,komi:256,ai:8},KOMI_OFFSET=128;
 
 export function encodeRecord(game,ai=0){
   const {kind,size}=game.topology,points=game.board.length;
   if(!isValidKomi(game.komi))throw new Error('Invalid record komi');
-  const digits=[[KINDS.indexOf(kind),KINDS.length],[SIZES[kind].indexOf(size),3],[KOMI_VALUES.indexOf(game.komi),KOMI_VALUES.length],[ai,3],...game.history.slice(1).map(s=>[s.lastMove??points,points+1])];
+  if(![0,1,2].includes(ai))throw new Error('Invalid record AI');
+  const digits=[[KINDS.indexOf(kind),HEADER.kind],[size,HEADER.size],[game.komi*2+KOMI_OFFSET,HEADER.komi],[ai,HEADER.ai],...game.history.slice(1).map(s=>[s.lastMove??points,points+1])];
   let value=0n;
   for(let i=digits.length-1;i>=0;i--)value=value*BigInt(digits[i][1])+BigInt(digits[i][0]);
   let text='';
@@ -27,8 +35,14 @@ export function decodeRecord(code){
   let value=0n;
   for(const c of code.slice(1))value=value*64n+BigInt(ALPHABET.indexOf(c));
   const take=radix=>{const digit=Number(value%BigInt(radix));value/=BigInt(radix);return digit;};
-  const komis=code[0]==='B'?LEGACY_KOMIS:KOMI_VALUES;
-  const kind=KINDS[take(code[0]===VERSION?KINDS.length:2)],size=SIZES[kind][take(3)],komi=komis[take(komis.length)],ai=take(3);
+  let kind,size,komi,ai;
+  if(code[0]===VERSION){
+    kind=KINDS[take(HEADER.kind)];size=take(HEADER.size);komi=(take(HEADER.komi)-KOMI_OFFSET)/2;ai=take(HEADER.ai);
+    if(!SIZES[kind]?.includes(size)||!isValidKomi(komi)||ai>2)throw new Error('Unsupported record');
+  }else{
+    const komis=code[0]==='B'?LEGACY_KOMIS:KOMI_VALUES;
+    kind=KINDS[take(2)];size=SIZES[kind][take(3)];komi=komis[take(komis.length)];ai=take(3);
+  }
   const game=new Game(createTopology(kind,size),komi),points=game.board.length;
   // Once the digits run out every further move reads as point 0, which soon fails as occupied.
   while(!game.ended){
