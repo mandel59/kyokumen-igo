@@ -107,8 +107,6 @@ export const markerColor=(id,selected,hover)=>id===selected?MARKER.selected:id==
 
 export function renderSurface({topology,board,lastMove=null,orientation,rotX,rotY,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false,marks=null}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
-  // Turned 45°, the goban's corners and its near side, enlarged by perspective, still fit the frame.
-  if(topology.kind==='plane')scale*=.86;
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
   const matrix=orientationMatrix(orientation??(rotX===undefined?defaultOrientation(topology.kind):orientationFromEuler(rotX,rotY)));
   const rotate=p=>transformPoint(p,matrix);
