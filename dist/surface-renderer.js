@@ -53,29 +53,30 @@ export function starPoints(topology){
   const n=topology.size,c=(n-1)/2,o=n>=11?3:2,stars=[[o,o],[o,n-1-o],[n-1-o,o],[n-1-o,n-1-o],[c,c]];
   return stars.map(([i,j])=>i*n+j);
 }
-// The goban: a solid wooden block whose top face carries the grid, standing on four legs.
-// Every face has its own vertices so it shades flat; g is the wood-grain coordinate.
+// The goban: a solid block whose top face carries the grid, standing on four legs. It takes the
+// curved boards' material (0); every face has its own vertices so it shades flat.
+// Camera distance for the goban's perspective, in board units (about a 28° field of view).
+export const CAMERA=4.2;
 export function planeExtent(size){const step=2*PLANE_HALF/(size-1);return {half:PLANE_HALF+step*.75+.03,thickness:.2,leg:.14};}
 function planeMesh(size){
-  const {half,thickness,leg}=planeExtent(size),vertices=[],triangles=[],materials=[];
-  function box(x0,x1,y0,y1,z0,z1,top,side,end){
-    const quad=(corners,normal,material,grain)=>{
+  const {half,thickness,leg}=planeExtent(size),vertices=[],triangles=[];
+  function box(x0,x1,y0,y1,z0,z1){
+    const quad=(corners,normal)=>{
       const base=vertices.length;
-      for(const [x,y,z] of corners)vertices.push({x,y,z,normal,g:grain({x,y,z})});
-      triangles.push([base,base+1,base+2],[base,base+2,base+3]);materials.push(material,material);
+      for(const [x,y,z] of corners)vertices.push({x,y,z,normal});
+      triangles.push([base,base+1,base+2],[base,base+2,base+3]);
     };
-    const alongX=p=>p.x,alongZ=p=>p.z+p.y*.6;
-    quad([[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]],{x:0,y:1,z:0},top,alongX);
-    quad([[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],{x:0,y:-1,z:0},side,alongX);
-    quad([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],{x:0,y:0,z:1},side,alongX);
-    quad([[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]],{x:0,y:0,z:-1},side,alongX);
-    quad([[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]],{x:1,y:0,z:0},end,alongZ);
-    quad([[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],{x:-1,y:0,z:0},end,alongZ);
+    quad([[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]],{x:0,y:1,z:0});
+    quad([[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],{x:0,y:-1,z:0});
+    quad([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],{x:0,y:0,z:1});
+    quad([[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]],{x:0,y:0,z:-1});
+    quad([[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]],{x:1,y:0,z:0});
+    quad([[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],{x:-1,y:0,z:0});
   }
-  box(-half,half,-thickness,0,-half,half,6,7,8);
+  box(-half,half,-thickness,0,-half,half);
   const inset=half*.64,foot=half*.1;
-  for(const sx of [-1,1])for(const sz of [-1,1])box(sx*inset-foot,sx*inset+foot,-thickness-leg,-thickness,sz*inset-foot,sz*inset+foot,9,9,9);
-  return {vertices,triangles,materials};
+  for(const sx of [-1,1])for(const sz of [-1,1])box(sx*inset-foot,sx*inset+foot,-thickness-leg,-thickness,sz*inset-foot,sz*inset+foot);
+  return {vertices,triangles};
 }
 const meshCache=new Map();
 function boardMesh(kind,interactive,size){
@@ -92,8 +93,6 @@ function boardMesh(kind,interactive,size){
   }
   const mesh={vertices,triangles};meshCache.set(key,mesh);return mesh;
 }
-// Goban wood (materials 6–9): top face, long sides, end-grain sides, legs.
-const WOOD=[[226,186,118],[206,160,94],[192,145,82],[118,80,44]];
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
 let coverage=new Float32Array(0);
@@ -108,11 +107,22 @@ export const markerColor=(id,selected,hover)=>id===selected?MARKER.selected:id==
 
 export function renderSurface({topology,board,lastMove=null,orientation,rotX,rotY,width,height,scale=Math.min(width*.405,height*.385),centerX=width/2,centerY=height*.46,pixelRatio=1,interactive=false,marks=null}) {
   width=Math.max(1,Math.round(width));height=Math.max(1,Math.round(height));
+  // Turned 45°, the goban's corners and its near side, enlarged by perspective, still fit the frame.
+  if(topology.kind==='plane')scale*=.86;
   const pixels=new Uint8ClampedArray(width*height*4),depth=new Float32Array(width*height).fill(-Infinity),owners=new Int32Array(width*height).fill(-2);
   const matrix=orientationMatrix(orientation??(rotX===undefined?defaultOrientation(topology.kind):orientationFromEuler(rotX,rotY)));
   const rotate=p=>transformPoint(p,matrix);
-  const project=p=>{const q=rotate(p);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
-  const vertex=(p,n)=>({...project(p),normal:rotate(n),g:p.g});
+  // The goban is seen in perspective from a camera CAMERA units in front of its centre; the closed
+  // boards stay orthographic. Depth is CAMERA·z/(CAMERA−z): it keeps the order and roughly the
+  // units of z, and is affine in screen space, so it interpolates exactly across a flat triangle.
+  const perspective=topology.kind==='plane';
+  const toScreen=q=>{
+    if(!perspective)return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};
+    const f=CAMERA/(CAMERA-q.z);return {x:centerX+q.x*scale*f,y:centerY-q.y*scale*f,z:q.z*f};
+  };
+  const project=p=>toScreen(rotate(p));
+  // front > 0 when the surface faces the camera: along +z for orthographic, towards the eye in perspective.
+  const vertex=(p,n)=>{const q=rotate(p),normal=rotate(n);return {...toScreen(q),normal,front:perspective?CAMERA*normal.z-(normal.x*q.x+normal.y*q.y+normal.z*q.z):normal.z};};
   const put=(x,y,z,color,owner,epsilon=0)=>{
     if(x<0||x>=width||y<0||y>=height)return;
     const i=y*width+x;if(z+epsilon<depth[i])return;
@@ -120,7 +130,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     const o=i*4;pixels[o]=color[0];pixels[o+1]=color[1];pixels[o+2]=color[2];pixels[o+3]=255;
   };
   function triangle(a,b,c,material,owner){
-    if(a.normal.z+b.normal.z+c.normal.z<=0)return;
+    if(a.front+b.front+c.front<=0)return;
     const area=(b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x);if(Math.abs(area)<1e-8)return;
     const minX=Math.max(0,Math.floor(Math.min(a.x,b.x,c.x))),maxX=Math.min(width-1,Math.ceil(Math.max(a.x,b.x,c.x)));
     const minY=Math.max(0,Math.floor(Math.min(a.y,b.y,c.y))),maxY=Math.min(height-1,Math.ceil(Math.max(a.y,b.y,c.y)));
@@ -133,7 +143,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
       const wc=1-wa-wb;
       if(wa< -1e-7||wb< -1e-7||wc< -1e-7)continue;
       const z=wa*a.z+wb*b.z+wc*c.z,i=y*width+x;if(z<=depth[i])continue;
-      if(material>=3&&material<=5){
+      if(material>=3){
         const factor=material===3?.94:material===4?.88:.79,o=i*4;
         pixels[o]*=factor;pixels[o+1]*=factor;pixels[o+2]*=factor;
         continue;
@@ -146,12 +156,6 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
       const factor=material===1?.48+.62*diffuse:.57+.43*diffuse;
       const shine=spec*(material===1?115:material===2?28:8),o=i*4;
       depth[i]=z;owners[i]=owner;
-      if(material>=6){
-        // Straight grain: fine stripes wandering slowly across the grain coordinate.
-        const s=wa*a.g+wb*b.g+wc*c.g,tone=factor*(1+.05*Math.sin(s*90+2.6*Math.sin(s*11))+.025*Math.sin(s*231+1.3)),wood=WOOD[material-6];
-        pixels[o]=wood[0]*tone+shine;pixels[o+1]=wood[1]*tone+shine;pixels[o+2]=wood[2]*tone+shine;pixels[o+3]=255;
-        continue;
-      }
       pixels[o]=(material===0?218:material===1?23:240)*factor+shine;
       pixels[o+1]=(material===0?195:material===1?30:239)*factor+shine;
       pixels[o+2]=(material===0?148:material===1?29:222)*factor+shine;pixels[o+3]=255;
@@ -184,11 +188,11 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     touched.length=0;
   }
   const plane=topology.kind==='plane',mesh=boardMesh(topology.kind,interactive,topology.size),vs=mesh.vertices.map(p=>vertex(p,p.normal));
-  mesh.triangles.forEach(([a,b,c],k)=>triangle(vs[a],vs[b],vs[c],mesh.materials?.[k]??0,-1));
+  for(const [a,b,c] of mesh.triangles)triangle(vs[a],vs[b],vs[c],0,-1);
   // Grid lines follow the curved surface, not straight chords through it. A goban's lines are
   // straight and dark, with a heavier border.
   const last=topology.size-1,border=(p,q)=>plane&&(p.i===q.i&&(p.i===0||p.i===last)||p.j===q.j&&(p.j===0||p.j===last));
-  const lineColor=plane?[48,36,22]:[97,99,72];
+  const lineColor=[97,99,72];
   for(const pass of plane?[false,true]:[false]){
   for(const [a,b] of topology.edges){
     const p=topology.vertices[a],q=topology.vertices[b];let previous;
@@ -235,7 +239,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     const dotRadius=!plane?Math.max(.75,1.6*pixelRatio):stars.has(p.i)?starRadius:Math.max(.75,.7*pixelRatio);
     const normal=rotate(surfaceNormal(topology.kind,topology.vertices[p.i]));
     if(normal.z<=0)continue;
-    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,plane?lineColor:[65,76,56],p.i,.003+(plane?dotRadius/scale:0));
+    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,plane&&!stars.has(p.i)?lineColor:[65,76,56],p.i,.003+(plane?dotRadius/scale:0));
   }
   for(let index=0;index<board.length;index++)if(board[index]){
     const mesh=stoneMesh(topology,index,interactive),stone=mesh.vertices.map(p=>vertex(p,p.normal));

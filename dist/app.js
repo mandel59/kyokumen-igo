@@ -10,7 +10,7 @@ import {AI_CHOICES,loadAIChoice,saveAIChoice} from './ai-choice.js';
 import {v3Supported} from './ai-support.js';
 import {loadBuildInfo} from './build-info.js';
 import {loadSavedGame,saveGame} from './persistence.js';
-import {defaultOrientation,rotateByDrag} from './orientation.js';
+import {defaultOrientation,rotateByDrag,rotateUpright} from './orientation.js';
 import {encodeRecord,decodeRecord} from './record.js';
 const $=id=>document.getElementById(id),canvas=$('board'),ctx=canvas.getContext('2d'),map=$('map'),mctx=map.getContext('2d');
 let mapView=false,replay=null;
@@ -135,19 +135,17 @@ function drawMapMarks(p,radius){
   }
 }
 
-// The goban from straight above: wood, the grid with a heavier border, and its star points.
+// The goban from straight above, in the sphere map's board colours: the grid with a heavier border, and its star points.
 function renderPlaneMap(w,h){
   const size=game.topology.size,side=Math.max(20,Math.min(w-40,h-32)*.86),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2,margin=step*.75+4;
-  const left=ox-margin,width=side+margin*2;
-  mctx.fillStyle='#e2b976';mctx.fillRect(left,oy-margin,width,width);
-  // Straight grain: thin stripes, a little lighter and darker, with the same rhythm as the 3D board's wood.
-  for(let x=0;x<width;x+=2){const t=x/width*1.7,tone=Math.sin(t*90+2.6*Math.sin(t*11))+.5*Math.sin(t*231+1.3);if(Math.abs(tone)<.6)continue;mctx.fillStyle=tone>0?'#f2d39a40':'#b58a4a30';mctx.fillRect(left+x,oy-margin,2,width);}
-  mctx.strokeStyle='#30241680';mctx.lineWidth=1;mctx.strokeRect(ox-margin+.5,oy-margin+.5,side+margin*2-1,side+margin*2-1);
-  mctx.strokeStyle='#302416';mctx.lineWidth=1;
+  const g=mctx.createRadialGradient(w/2-side*.3,h/2-side*.3,0,w/2,h/2,side*.75+margin);g.addColorStop(0,'#f3e8ca');g.addColorStop(1,'#dbc79c');
+  mctx.fillStyle=g;mctx.fillRect(ox-margin,oy-margin,side+margin*2,side+margin*2);
+  mctx.strokeStyle='#8b805d';mctx.lineWidth=1;mctx.strokeRect(ox-margin+.5,oy-margin+.5,side+margin*2-1,side+margin*2-1);
+  mctx.strokeStyle='#66705a';mctx.lineWidth=1;
   for(let i=1;i<size-1;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}
   mctx.lineWidth=2;mctx.strokeRect(ox,oy,side,side);
   const radius=Math.min(step*.47,24);
-  mctx.fillStyle='#302416';
+  mctx.fillStyle='#51604b';
   for(const i of starPoints(game.topology))if(!game.board[i]){const v=game.topology.vertices[i];mctx.beginPath();mctx.arc(ox+v.i*step,oy+v.j*step,Math.max(2.5,radius*.2),0,Math.PI*2);mctx.fill();}
   mapPoints=game.topology.vertices.map((v,i)=>({x:ox+v.i*step,y:oy+v.j*step,i}));
   for(const p of mapPoints)drawMapPoint(p,radius,0);
@@ -283,7 +281,7 @@ function scheduleAI(){
 }
 function act(i){if($('inspect').checked){selected=i;const ns=game.topology.neighbors[i],hidden=mapView?0:ns.filter(n=>!screen[n]?.visible).length;$('boardHint').textContent=`交点 ${i+1} · 隣接 ${ns.length} 点${hidden?' · '+hidden+' 点は裏側':''}`;render();return;}if(!canPlay())return;const r=game.play(i);if(!r.ok){update(errors[r.reason]);return;}selected=null;update();scheduleAI();}
 function pick(e,points){const rect=e.currentTarget.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;if(e.currentTarget===canvas&&surfaceFrame)return surfaceFrame.pick(x*rasterRatio,y*rasterRatio,Math.max(10,Math.min(20,scale*.1))*rasterRatio);let nearest=null,distance=e.currentTarget===map?20:Math.max(14,Math.min(23,scale*.12));for(const s of points){if(s.visible===false)continue;const d=Math.hypot(s.x-x,s.y-y);if(d<distance){nearest=s.i;distance=d;}}return nearest;}
-canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);requestRender();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){orientation=rotateByDrag(orientation,e.clientX-drag.lastX,e.clientY-drag.lastY);requestRender();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;render();persist();});canvas.addEventListener('pointercancel',()=>{drag=null;render();persist();});canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);drag={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,moved:false};});canvas.addEventListener('pointermove',e=>{if(!drag){hover=pick(e,screen);requestRender();return;}if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>6)drag.moved=true;if(drag.moved){orientation=(kind==='plane'?rotateUpright:rotateByDrag)(orientation,e.clientX-drag.lastX,e.clientY-drag.lastY);requestRender();}drag.lastX=e.clientX;drag.lastY=e.clientY;});canvas.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const i=pick(e,screen);if(i!==null)act(i);}drag=null;render();persist();});canvas.addEventListener('pointercancel',()=>{drag=null;render();persist();});canvas.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('pointermove',e=>{hover=pick(e,mapPoints);render();});map.addEventListener('pointerleave',()=>{hover=null;render();});map.addEventListener('click',e=>{const i=pick(e,mapPoints);if(i!==null)act(i);});
 function keyboard(e,points){if(!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown','Enter',' '].includes(e.key))return;e.preventDefault();const ps=points.filter((p,j)=>p.visible!==false&&points.findIndex(q=>q.i===p.i)===j);if(!ps.length)return;if(e.key==='Enter'||e.key===' '){act(ps[keyboardIndex%ps.length].i);}else{keyboardIndex=(keyboardIndex+(e.key==='ArrowRight'||e.key==='ArrowDown'?1:-1)+ps.length)%ps.length;selected=ps[keyboardIndex].i;$('boardHint').textContent='交点 '+(selected+1)+(replay?'':' · Enter で着手');render();}}canvas.addEventListener('keydown',e=>keyboard(e,screen));map.addEventListener('keydown',e=>keyboard(e,mapPoints));
 // Switching the board kind keeps the size's position (small, standard, large).
 function sizeOptions(boardKind=$('boardKind').value){
@@ -459,6 +457,8 @@ if(restored.state){
   ({game,settings}=restored.state);
   ({mapView,orientation}=restored.state.view);
   kind=game.topology.kind;
+  // A goban stays upright: drop any roll from a view saved before it turned by yaw and pitch.
+  if(kind==='plane')orientation=rotateUpright(orientation,0,0);
   syncSettings();
   showGame();
 }else{

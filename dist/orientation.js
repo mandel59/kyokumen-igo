@@ -26,6 +26,22 @@ export function defaultOrientation(kind = 'sphere') {
   return kind === 'sphere' ? orientationFromEuler(.35, 0) : orientationFromEuler(.65, -Math.PI / 2);
 }
 
+// The pitch and yaw of an orientation built as Rx(pitch) * Ry(yaw), read from the images of the
+// board's vertical axis and of its x axis. Any roll in the input is dropped.
+export function eulerFromOrientation(orientation) {
+  const m = orientationMatrix(orientation);
+  return {pitch: Math.atan2(m[7], m[4]), yaw: Math.atan2(m[2], m[0])};
+}
+
+// The goban turns like an object on a table: horizontal drags turn it about its own vertical axis
+// (yaw), vertical drags tilt it towards the viewer (pitch). With no roll, the board's vertical axis
+// always appears vertical on screen. Pitch stops at straight above and straight below.
+export function rotateUpright(orientation, dx, dy, sensitivity = .009) {
+  if (![dx, dy, sensitivity].every(Number.isFinite)) throw new Error('Invalid drag');
+  const {pitch, yaw} = eulerFromOrientation(orientation);
+  return orientationFromEuler(Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch + dy * sensitivity)), yaw + dx * sensitivity);
+}
+
 export function rotateByDrag(orientation, dx, dy, sensitivity = .009) {
   if (![dx, dy, sensitivity].every(Number.isFinite)) throw new Error('Invalid drag');
   const distance = Math.hypot(dx, dy), q = normalizeOrientation(orientation);

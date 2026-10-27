@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {defaultOrientation,normalizeOrientation,orientationFromEuler,orientationMatrix,rotateByDrag,transformPoint} from './dist/orientation.js';
+import {defaultOrientation,eulerFromOrientation,normalizeOrientation,orientationFromEuler,orientationMatrix,rotateByDrag,rotateUpright,transformPoint} from './dist/orientation.js';
 import {createTopology} from './dist/engine.js';
 import {renderSurface,rotatePoint} from './dist/surface-renderer.js';
 
@@ -103,5 +103,31 @@ for(const kind of ['sphere','torus'])for(const dpr of [1,3]){
   assert.deepEqual(migrated.points,old.points);
   for(let i=0;i<migrated.owners.length;i++)if(migrated.owners[i]>=0)
     assert.equal(migrated.pick(i%migrated.width+.5,Math.floor(i/migrated.width)+.5,0),migrated.owners[i],'high-DPI fragment picking');
+}
+// The goban turns by yaw and pitch: its vertical axis always projects onto the screen's vertical line.
+{
+  for(const [pitch,yaw] of [[.78,-.32],[0,0],[-1.2,2.5],[Math.PI/2-1e-3,-3]]){
+    const e=eulerFromOrientation(orientationFromEuler(pitch,yaw));close(e.pitch,pitch,'pitch',1e-12);close(e.yaw,yaw,'yaw',1e-12);
+  }
+  let q=defaultOrientation('plane');
+  const drags=[[40,-25],[-130,60],[300,10],[5,-400],[-70,900],[220,-35]];
+  for(const [dx,dy] of drags){
+    q=rotateUpright(q,dx,dy);const up=rotate({x:0,y:1,z:0},q);
+    close(up.x,0,'vertical axis stays vertical on screen',1e-12);assert.ok(up.y>=-1e-12,'pitch stops at straight above and below');
+  }
+  const start=eulerFromOrientation(defaultOrientation('plane')),moved=eulerFromOrientation(rotateUpright(defaultOrientation('plane'),10,-20));
+  close(moved.yaw-start.yaw,10*.009,'horizontal drag turns the yaw');close(moved.pitch-start.pitch,-20*.009,'vertical drag tilts the pitch');
+  // A rolled orientation (from an older save) comes back upright.
+  close(rotate({x:0,y:1,z:0},rotateUpright(orientationFromEuler(.4,.2).map((v,i)=>v+[.05,0,.08,0][i]),0,0)).x,0,'roll dropped',1e-12);
+}
+// The goban is drawn in perspective: the near edge is wider on screen than the far edge, and picking still
+// returns the point under each stone's own pixels.
+{
+  const topology=createTopology('plane',9),board=new Int8Array(81);board[0]=1;board[80]=2;
+  const frame=renderSurface({topology,board,orientation:orientationFromEuler(.6,0),width:400,height:400});
+  const far=frame.points[72].x-frame.points[0].x,near=frame.points[80].x-frame.points[8].x;assert.ok(far>0);
+  assert.ok(near>far*1.1,`perspective widens the near edge (${near} vs ${far})`);
+  for(const id of [0,80]){const p=frame.points[id];assert.equal(frame.pick(p.x,p.y),id,'stone under its own point');}
+  assert.ok(frame.points.every(p=>p.visible),'every point of the goban is visible from above');
 }
 console.log('Orientation tests passed: legacy order, screen-relative inverted/rolled drags, continuity, event-rate invariance, long-run normalization, home view, identical migrated rendering and DPR 1/3 picking.');
