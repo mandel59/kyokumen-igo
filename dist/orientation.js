@@ -20,9 +20,9 @@ export function orientationFromEuler(rotX, rotY) {
 
 // Home view: looking slightly down at the board, symmetric left to right. The sphere faces the
 // centre of a cube face; the torus turns so point 0 (present on every size) sits at the front.
-// The goban is seen from in front and above, as a player sitting at it would see it.
+// The goban is seen square from in front and above, as a player sitting at it would see it.
 export function defaultOrientation(kind = 'sphere') {
-  if (kind === 'plane') return orientationFromEuler(.78, -.32);
+  if (kind === 'plane') return orientationFromEuler(.9, 0);
   return kind === 'sphere' ? orientationFromEuler(.35, 0) : orientationFromEuler(.65, -Math.PI / 2);
 }
 
