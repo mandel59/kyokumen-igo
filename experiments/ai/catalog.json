@@ -180,6 +180,12 @@
       "architecture": "v3",
       "title": "強い教師から同容量v3への対応蒸留パイロット",
       "path": "v3/2026-10-25-teacher-distillation-pilot/"
+    },
+    {
+      "id": "v3/2026-10-27-katago-plane",
+      "architecture": "v3",
+      "title": "平面盤でのKataGo人間模倣20kとの対戦（v2・v3）",
+      "path": "v3/2026-10-27-katago-plane/"
     }
   ]
 }

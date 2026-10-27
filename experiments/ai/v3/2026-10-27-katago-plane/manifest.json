@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "id": "v3/2026-10-27-katago-plane",
+  "architecture": "v3",
+  "title": "平面盤でのKataGo人間模倣20kとの対戦（v2・v3）",
+  "source": {
+    "baseCommit": "a67a7b5c8eb4021fd925079dc06f5507c8532ae9",
+    "patch": null
+  },
+  "variants": [
+    "v3 64 visits (dist/models/v3)",
+    "v2 depth 4 (dist/ai-engine.wasm)",
+    "KataGo 1.18.1 b18c384nbt-humanv0 rank_20k"
+  ],
+  "notes": [
+    "Exploratory comparison; conditions recorded after the run, no adoption decision.",
+    "v2 games ran on code identical to eaf31f9; v3 games on a67a7b5.",
+    "v3 weights were not trained on plane boards."
+  ],
+  "artifacts": [
+    {
+      "path": "data/conditions.json",
+      "sha256": "20c2ba4447ba535809bc86a4830db0f6d2a17c2a4db4ac47f57606af7ac1ba65"
+    },
+    {
+      "path": "data/pilot-v2-rank10k-9.jsonl",
+      "sha256": "102e941b79456a89793f06ed27fbbfa0046a22e3abbdc0046acf0e5c3500c09c"
+    },
+    {
+      "path": "data/pilot-v2-rank20k-9.jsonl",
+      "sha256": "fbfb4d992762cc6ebfbcc924c8401d2e5325fac1b0809be9348eba3139b6fd86"
+    },
+    {
+      "path": "data/summarize.mjs",
+      "sha256": "985f51f5e38db487016113e86e1b95c72afff63e9a6bbe6f079a146546ac1448"
+    },
+    {
+      "path": "data/summary.json",
+      "sha256": "dabdd8ff8897685ccc47341548903a8a4192f5a3c17d2fa61e75c475ed4f4005"
+    },
+    {
+      "path": "data/v2-rank20k-11.jsonl",
+      "sha256": "6a72d011c5ee6480809e5b137e1b27198b6d57911d7071b75dca907aae89516d"
+    },
+    {
+      "path": "data/v2-rank20k-11.log",
+      "sha256": "ac07f0f45e50b0c065df04e7b6be88034f15671a9c7e09fe9a0650ebadcf15ba"
+    },
+    {
+      "path": "data/v2-rank20k-7.jsonl",
+      "sha256": "090b6280c049dbaeb2915bd31be1d3e0b312a80e9b78a12162572e22a2e199a5"
+    },
+    {
+      "path": "data/v2-rank20k-7.log",
+      "sha256": "5505a2a86c0047512b382e0d363bd82e1cd08412153589c3b31287a33ca93d59"
+    },
+    {
+      "path": "data/v2-rank20k-9.jsonl",
+      "sha256": "b297b6f99966ef32d6d0f469a968611fb05f1535a5c68007bd3e3cbd13b4a8cc"
+    },
+    {
+      "path": "data/v2-rank20k-9.log",
+      "sha256": "d5ad8417c10ff7cd634ba0485788a4133f556da1e11317956a7fa5327ce578e9"
+    },
+    {
+      "path": "data/v3-rank20k-11.jsonl",
+      "sha256": "5f8be82e998176e98ab25f1b96ffa396117fbcd0b145e9fd531dca6f7e2598e7"
+    },
+    {
+      "path": "data/v3-rank20k-11.log",
+      "sha256": "bf0ed66cb07b5d401634e6dc7e152950e56e55674bede761aba80ea653d566b4"
+    },
+    {
+      "path": "data/v3-rank20k-7.jsonl",
+      "sha256": "89244b3300c09d13b66ddfc932127504a08663e88a9425e2d266d75675fb435f"
+    },
+    {
+      "path": "data/v3-rank20k-7.log",
+      "sha256": "82c9a23f38da27692f3541ba02ab3fd40aab0563143169755d3b4352185f7042"
+    },
+    {
+      "path": "data/v3-rank20k-9.jsonl",
+      "sha256": "dd8caa35da8edab61e1986f00c779b09a9ba746b591d397be74d58dd8dbd2e10"
+    },
+    {
+      "path": "data/v3-rank20k-9.log",
+      "sha256": "7489d8829c31c4925b4966eea2d181dc804d80668e4021387830c9231bb1004f"
+    }
+  ]
+}

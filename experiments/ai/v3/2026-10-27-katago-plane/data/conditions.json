@@ -1,0 +1,27 @@
+{
+ "schemaVersion": 1,
+ "recordedAfterRun": true,
+ "note": "Exploratory comparison. The conditions below were chosen while running the pilots and are recorded after the run; there was no pre-registered plan or adoption criterion.",
+ "boards": ["plane 7", "plane 9", "plane 11"],
+ "komi": 6.5,
+ "rules": "The app's: area scoring, positional superko, no suicide, no dead-stone removal (dist/engine.js referees every game).",
+ "gamesPerBoard": 10,
+ "colours": "Alternate every game; game 0 has Kyokugo as black.",
+ "moveLimit": "3 x points; no game reached it.",
+ "players": {
+  "v2": {"command": "node tools/gtp/kyokugo-gtp.mjs --seed <size*100>", "search": "depth 4", "codeCommit": "eaf31f9"},
+  "v3": {"command": "node tools/gtp/kyokugo-gtp.mjs --ai v3 --seed <size*100>", "search": "64 visits, dist/models/v3 on ONNX Runtime CPU", "codeCommit": "a67a7b5"}
+ },
+ "opponent": {
+  "engine": "KataGo v1.18.1",
+  "model": "b18c384nbt-humanv0 (as -model and -human-model)",
+  "config": "tools/gtp/katago-human.cfg",
+  "overrides": "humanSLProfile=rank_20k, maxVisits=10",
+  "backendForV2Games": "eigenavx2 (CPU)",
+  "backendForV3Games": "OpenCL (RTX 5060 Ti)"
+ },
+ "pilots": [
+  {"file": "pilot-v2-rank10k-9.jsonl", "games": 2, "opponent": "rank_10k, maxVisits 40, CPU", "usedInSummary": false},
+  {"file": "pilot-v2-rank20k-9.jsonl", "games": 2, "opponent": "rank_20k, maxVisits 10, CPU", "usedInSummary": false}
+ ]
+}

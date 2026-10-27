@@ -1,0 +1,159 @@
+{
+ "schemaVersion": 1,
+ "opponent": "KataGo 1.18.1 b18c384nbt-humanv0, humanSLProfile rank_20k, maxVisits 10",
+ "komi": 6.5,
+ "players": {
+  "v2": {
+   "boards": {
+    "7": {
+     "games": 10,
+     "wins": 4,
+     "winRate": 0.4,
+     "wilson95": [
+      0.168,
+      0.687
+     ],
+     "winsAsBlack": 2,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 2,
+     "gamesAsWhite": 5,
+     "medianMargin": -4.5,
+     "meanMargin": -7.7,
+     "wiped": 2,
+     "meanMoves": 65,
+     "endedOtherThanScore": 0
+    },
+    "9": {
+     "games": 10,
+     "wins": 2,
+     "winRate": 0.2,
+     "wilson95": [
+      0.057,
+      0.51
+     ],
+     "winsAsBlack": 1,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 1,
+     "gamesAsWhite": 5,
+     "medianMargin": -48,
+     "meanMargin": -42,
+     "wiped": 3,
+     "meanMoves": 100,
+     "endedOtherThanScore": 0
+    },
+    "11": {
+     "games": 10,
+     "wins": 2,
+     "winRate": 0.2,
+     "wilson95": [
+      0.057,
+      0.51
+     ],
+     "winsAsBlack": 2,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 0,
+     "gamesAsWhite": 5,
+     "medianMargin": -53,
+     "meanMargin": -41.2,
+     "wiped": 2,
+     "meanMoves": 153,
+     "endedOtherThanScore": 0
+    }
+   },
+   "total": {
+    "games": 30,
+    "wins": 8,
+    "winRate": 0.267,
+    "wilson95": [
+     0.142,
+     0.444
+    ],
+    "winsAsBlack": 5,
+    "gamesAsBlack": 15,
+    "winsAsWhite": 3,
+    "gamesAsWhite": 15,
+    "medianMargin": -28,
+    "meanMargin": -30.3,
+    "wiped": 7,
+    "meanMoves": 106,
+    "endedOtherThanScore": 0
+   }
+  },
+  "v3": {
+   "boards": {
+    "7": {
+     "games": 10,
+     "wins": 2,
+     "winRate": 0.2,
+     "wilson95": [
+      0.057,
+      0.51
+     ],
+     "winsAsBlack": 2,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 0,
+     "gamesAsWhite": 5,
+     "medianMargin": -42.5,
+     "meanMargin": -33.3,
+     "wiped": 7,
+     "meanMoves": 66,
+     "endedOtherThanScore": 0
+    },
+    "9": {
+     "games": 10,
+     "wins": 4,
+     "winRate": 0.4,
+     "wilson95": [
+      0.168,
+      0.687
+     ],
+     "winsAsBlack": 1,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 3,
+     "gamesAsWhite": 5,
+     "medianMargin": -13.5,
+     "meanMargin": -13.1,
+     "wiped": 2,
+     "meanMoves": 110,
+     "endedOtherThanScore": 0
+    },
+    "11": {
+     "games": 10,
+     "wins": 2,
+     "winRate": 0.2,
+     "wilson95": [
+      0.057,
+      0.51
+     ],
+     "winsAsBlack": 1,
+     "gamesAsBlack": 5,
+     "winsAsWhite": 1,
+     "gamesAsWhite": 5,
+     "medianMargin": -36,
+     "meanMargin": -34.1,
+     "wiped": 1,
+     "meanMoves": 144,
+     "endedOtherThanScore": 0
+    }
+   },
+   "total": {
+    "games": 30,
+    "wins": 8,
+    "winRate": 0.267,
+    "wilson95": [
+     0.142,
+     0.444
+    ],
+    "winsAsBlack": 4,
+    "gamesAsBlack": 15,
+    "winsAsWhite": 4,
+    "gamesAsWhite": 15,
+    "medianMargin": -30,
+    "meanMargin": -26.8,
+    "wiped": 10,
+    "meanMoves": 107,
+    "endedOtherThanScore": 0
+   }
+  }
+ }
+}
