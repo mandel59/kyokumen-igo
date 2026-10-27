@@ -148,6 +148,41 @@ class TrainingTests(unittest.TestCase):
         shifted=loss_terms(changed,*outputs[1:],*args[4:],cached.policy_weight,cached.anchor,.5).item()
         self.assertGreater(shifted,anchored+.1)
 
+    def test_plane_boards_load_split_and_train_with_real_adjacencies(self):
+        torch.set_num_threads(2)
+        rows = []
+        adjacency = {}
+        for size in (7, 9, 11):
+            n = size*size
+            a = torch.zeros(160, 160)
+            x = torch.zeros(n, 32)
+            x[:, 2] = 1
+            for p in range(n):
+                u, v = divmod(p, size)
+                ns = [r*size+c for r, c in ((u-1,v),(u+1,v),(u,v-1),(u,v+1)) if 0 <= r < size and 0 <= c < size]
+                a[p, ns] = 1/len(ns)
+                x[p, 13] = float(len(ns) == 3)
+                x[p, 14] = float(len(ns) == 4)
+            adjacency[('plane', size)] = a
+            for game in ('a', 'b'):
+                rows.append(dict(schemaVersion=1, kind='plane', size=size, gameId=f'{size}-{game}',
+                    x=x.flatten().tolist(), legal=[True]*n+[False]*(160-n)+[True], action=160,
+                    ownership=[1]*n, wdl=1, score=0., **{'global':[0.,n/160,0.,0.,0.,0.,1.,1.]}))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/'plane.jsonl'
+            path.write_text(''.join(json.dumps(row)+'\n' for row in rows), encoding='utf-8')
+            loaded = load_data([path])
+        train, val = split_games(loaded, 20261027)
+        self.assertEqual(len(train), 3)
+        self.assertEqual(len(val), 3)
+        self.assertFalse({r['record']['gameId'] for r in train} & {r['record']['gameId'] for r in val})
+        data = Prepared(train, adjacency, 'cpu')
+        model = GraphNet()
+        loss = data.forward(model, data.indices)[0].mean()
+        loss.backward()
+        self.assertTrue(torch.isfinite(loss))
+        self.assertTrue(all(p.grad is None or torch.isfinite(p.grad).all() for p in model.parameters()))
+
     def test_gzip_loading_rejects_inconsistent_labels_and_compacts_records(self):
         row=dict(schemaVersion=1,kind='torus',size=7,gameId='a',x=[0.]*(49*32),legal=[True]*161,action=160,
             ownership=[1]*49,wdl=1,score=0.,**{'global':[0.]*8})

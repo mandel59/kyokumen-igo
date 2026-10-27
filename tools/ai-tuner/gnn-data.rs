@@ -16,13 +16,13 @@ fn main() {
     let mut rng=rng::Rng::new(seed);
     let mut out=BufWriter::new(std::fs::File::create(&args[1]).unwrap());
     let mut count=0;let mut capped=0;
-    for (config,(kind,size)) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),(Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11)].into_iter().enumerate() {
+    for (config,(kind,size)) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),(Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11),(Kind::Plane,7),(Kind::Plane,9),(Kind::Plane,11)].into_iter().enumerate() {
         let t=Topology::new(kind,size);
         for k in 0..games {
             let komi=[0.,3.5,6.5,9.5][k%4];
             let mut game=Game::new(&t,komi);let mut scratch=Scratch::new(t.len());let mut past=vec![];let mut samples=vec![];
             while !game.ended&&game.history.len()<t.len()*20 {
-                let features=gnn::encode(&game,&past,kind==Kind::Sphere);
+                let features=gnn::encode(&game,&past,kind);
                 let teacher=search::choose_search(&game,4,rng.next_u64() as u32).0;
                 // Slightly diversify openings while retaining the teacher's actual target.
                 let played=if game.history.len()<6&&rng.f64()<0.25 {

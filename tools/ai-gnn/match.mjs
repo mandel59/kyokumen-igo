@@ -2,7 +2,7 @@
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {createTopology,Game} from '../../dist/engine.js';
-import {aiPosition} from '../../dist/ai-position.js';
+import {aiPosition,AI_BOARDS} from '../../dist/ai-position.js';
 import {createWasmAI} from '../../dist/ai-wasm.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
@@ -59,7 +59,7 @@ const report={schemaVersion:1,playerMode,seed,pairsPerBoard:pairs,simulations,ko
  condition:playerMode==='offline'?'Finite fixed visits, research-only native ONNX/Torch inference; separate per-player budgets/backends, no wall-time cutoff or speed claim.':'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
 const output=arg('--output','tools/ai-gnn/target/match.json');
 try{
- for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+ for(const [kind,size]of AI_BOARDS){
   if(arg('--board','all')!=='all'&&arg('--board','all')!==kind+size)continue;
   const topology=createTopology(kind,size),adjacency=adjacencyFor(topology),board={kind,size,games:[],pairScores:[]};report.boards.push(board);
   for(let pair=0;pair<pairs;pair++){

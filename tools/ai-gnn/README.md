@@ -28,6 +28,8 @@ uv run --project tools/ai-gnn python -m http.server --directory dist 8000
 
 ## 初期データ生成と学習
 
+対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信中の重みは曲面のみで学習したものです。平面盤での棋力を改善するには、平面盤を含むデータで候補を学習し、全盤の独立対戦で評価してください。
+
 ```powershell
 tools/ai-gnn/target/gnn-data.exe tools/ai-gnn/target/bootstrap.jsonl 20 20261021
 uv run --project tools/ai-gnn python tools/ai-gnn/train.py --data tools/ai-gnn/target/bootstrap.jsonl --epochs 10 --output tools/ai-gnn/target/model
@@ -35,7 +37,7 @@ node tools/ai-gnn/test-onnx.mjs tools/ai-gnn/target/model
 node tools/ai-gnn/install-model.mjs tools/ai-gnn/target/model
 ```
 
-Unix では生成器名の `.exe` を省略します。数値 `20` は盤ごとの対局数です。全 6 盤を扱い、コミ 0 / 3.5 / 6.5 / 9.5 を巡回します。6 手目まで確率 25% で合法手をランダムに選び、教師の着手を学習ターゲットとして保持します。点数の 20 倍の手数で打ち切った局は、終局ラベルに使いません。
+Unix では生成器名の `.exe` を省略します。数値 `20` は盤ごとの対局数です。全9盤を扱い、コミ 0 / 3.5 / 6.5 / 9.5 を巡回します。6 手目まで確率 25% で合法手をランダムに選び、教師の着手を学習ターゲットとして保持します。点数の 20 倍の手数で打ち切った局は、終局ラベルに使いません。
 
 データは 1 行 1 局面の JSONL。特徴 ABI、盤、対局 ID、合法手、着手（または探索訪問分布）、最終勝敗・得点・所属を保存します。盤ごとに対局 ID を分割し、同じ対局を学習と検証に混在させません。各盤 2 局以上の終局データが必要です。
 
@@ -86,7 +88,7 @@ node tools/ai-gnn/test-browser.mjs
 
 学習候補は `node tools/ai-gnn/test-browser.mjs --model tools/ai-gnn/target/next-model --output tools/ai-gnn/target/candidate-browser.json` で配信モデルを変更せず検証できます。候補ディレクトリの manifest・重み・golden をテストサーバーだけで配信し、本番 Worker もその候補で動かします。
 
-ブラウザ検証はローカルサーバーと一時プロファイルのヘッドレス Edge を起動し、Worker 内の専用 WebGPU / WASM を PyTorch の固定出力と比較します。実バッチ数・最大容量 1 / 4 / 8、交点の並べ替え、破損重み・未対応グラフからの ONNX フォールバック、6 盤での MCTS、終盤、キャンセル、実際の Worker の v3 選択も検証します。Windows の既定 Edge パス以外では環境変数 `EDGE_PATH` を指定してください。`--output <file.json>` で環境と観測時間を保存できます。
+ブラウザ検証はローカルサーバーと一時プロファイルのヘッドレス Edge を起動し、Worker 内の専用 WebGPU / WASM を PyTorch の固定出力と比較します。実バッチ数・最大容量 1 / 4 / 8、交点の並べ替え、破損重み・未対応グラフからの ONNX フォールバック、全9盤での MCTS、平面盤の実局面でのGPU/CPU照合、終盤、キャンセル、実際の Worker の平面盤での v3 選択も検証します。Windows の既定 Edge パス以外では環境変数 `EDGE_PATH` を指定してください。`--output <file.json>` で環境と観測時間を保存できます。
 
 ## 推論速度の比較
 
@@ -128,7 +130,9 @@ node tools/ai-gnn/browser-match.mjs --a dist/models/v3 --b v2 --pairs 8 --simula
 node tools/ai-gnn/match.mjs --a tools/ai-gnn/target/candidate --b v2 --pairs 2 --simulations 128 --seed 20261140 --output tools/ai-gnn/target/match.json
 ```
 
-全 6 盤で同じ 4 手の初期配置から先後を交換します。`--b` に別のモデルディレクトリを指定すると GNN 同士でも比較できます。`--board torus7` のように盤を限定できます。全棋譜、盤別得点率、打ち切り、探索回数、計算時間などを記録します。v3 の固定探索回数と v2 の深さ 4 を比べる診断であり、ブラウザの同じ実時間での評価ではありません。
+全9盤で同じ4手の初期配置から先後を交換します。`--b` に別のモデルディレクトリを指定すると GNN 同士でも比較できます。`--board plane7` のように盤を限定できます。全棋譜、盤別得点率、打ち切り、探索回数、計算時間などを記録します。v3 の固定探索回数と v2 の深さ 4 を比べる診断であり、ブラウザの同じ実時間での評価ではありません。
+
+`browser-match.mjs` は両側とも現行の探索WASMを既定にします。過去の探索との比較には `--a-wasm` / `--b-wasm` を明示してください。平面盤追加前のWASMは平面盤を受け付けないため、その比較では `--board sphere3` など対象を曲面に限定します。
 
 探索内でパスにより即勝ちできる局面と、終局の勝敗は正確な値で処理します。確定勝敗を親へ伝え、既に負けと分かった枝より未解決の枝を探索します。全6盤・両色・引き分け境界・敵対的なNN出力を使う回帰テストと、探索係数の比較は[探索改善の記録](../../experiments/ai/v3/2026-10-25-search-proof/README.md)を参照してください。モデルと標準の64訪問は維持します。
 

@@ -1,5 +1,6 @@
 import {mkdirSync,writeFileSync,copyFileSync} from 'node:fs';
 import {createTopology} from '../../dist/engine.js';
+import {AI_BOARDS} from '../../dist/ai-position.js';
 import {readFileSync} from 'node:fs';
 import {gzipSync} from 'node:zlib';
 import assert from 'node:assert/strict';
@@ -12,9 +13,7 @@ const license=readFileSync(new URL('onnxruntime-LICENSE.txt',licenses));
 const notices=readFileSync(new URL('onnxruntime-ThirdPartyNotices.txt',licenses));
 const target=new URL('./target/',import.meta.url),vendor=new URL('../../dist/vendor/onnxruntime/',import.meta.url);
 mkdirSync(target,{recursive:true});mkdirSync(vendor,{recursive:true});
-writeFileSync(new URL('topologies.json',target),JSON.stringify([
- ['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11],
-].map(([kind,size])=>({kind,size,neighbors:createTopology(kind,size).neighbors}))));
+writeFileSync(new URL('topologies.json',target),JSON.stringify(AI_BOARDS.map(([kind,size])=>({kind,size,neighbors:createTopology(kind,size).neighbors}))));
 for(const file of ['ort.webgpu.min.mjs','ort.wasm.min.mjs',
  'ort-wasm-simd-threaded.asyncify.mjs','ort-wasm-simd-threaded.mjs']) {
  copyFileSync(new URL('node_modules/onnxruntime-web/dist/'+file,import.meta.url),new URL(file,vendor));

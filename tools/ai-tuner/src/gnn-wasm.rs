@@ -5,7 +5,7 @@ use board::{Game,Kind,Scratch,Topology};
 use gnn::{ACTIONS,GLOBALS,CHANNELS,POINTS};
 
 struct Engine {
-    topology: Topology, sphere: bool, komi: f64, moves: Vec<i32>, search: mcts::Search,
+    topology: Topology, kind: Kind, komi: f64, moves: Vec<i32>, search: mcts::Search,
     ids: Vec<u32>, x: Vec<f32>, globals: Vec<f32>, masks: Vec<f32>, legal: Vec<f32>, policy: Vec<f32>, statistics: Vec<f32>,
 }
 thread_local! {static ENGINE: RefCell<Option<Engine>>=const {RefCell::new(None)};}
@@ -54,11 +54,12 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
 #[no_mangle] pub unsafe extern "C" fn v3_start(kind:u32,size:usize,komi:f64,ptr:*const i32,len:usize,seed:u32)->i32 {
     ENGINE.with(|slot| {
         *slot.borrow_mut()=None;
-        if ptr.is_null()||len>10000||!komi.is_finite()||!matches!((kind,size),(0,3..=5)|(1,7|9|11)) {return -2;}
+        if ptr.is_null()||len>10000||!komi.is_finite()||!matches!((kind,size),(0,3..=5)|(1|2,7|9|11)) {return -2;}
         let moves=std::slice::from_raw_parts(ptr,len).to_vec();
-        let topology=Topology::new(if kind==0 {Kind::Sphere}else{Kind::Torus},size);
+        let kind=match kind {0=>Kind::Sphere,1=>Kind::Torus,_=>Kind::Plane};
+        let topology=Topology::new(kind,size);
         if restore(&topology,komi,&moves).is_none() {return -3;}
-        *slot.borrow_mut()=Some(Engine {topology,sphere:kind==0,komi,moves,search:mcts::Search::new(seed as u64),
+        *slot.borrow_mut()=Some(Engine {topology,kind,komi,moves,search:mcts::Search::new(seed as u64),
             ids:vec![],x:vec![],globals:vec![],masks:vec![],legal:vec![],policy:vec![0.;ACTIONS],statistics:vec![]});
         0
     })
@@ -75,8 +76,8 @@ fn collect(batch:usize,remaining:Option<u32>)->i32 {
         if !(1..=8).contains(&batch)||!e.ids.is_empty() {return -2;}
         let (game,past)=restore(&e.topology,e.komi,&e.moves).unwrap();
         let leaves=match remaining {
-            Some(limit)=>e.search.collect_limited(&game,&past,e.sphere,batch,limit),
-            None=>e.search.collect(&game,&past,e.sphere,batch),
+            Some(limit)=>e.search.collect_limited(&game,&past,e.kind,batch,limit),
+            None=>e.search.collect(&game,&past,e.kind,batch),
         };
         e.x.clear();e.globals.clear();e.masks.clear();e.legal.clear();
         for leaf in leaves {

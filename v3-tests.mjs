@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {Game,createTopology} from './dist/engine.js';
-import {aiPosition} from './dist/ai-position.js';
+import {aiPosition,AI_BOARDS} from './dist/ai-position.js';
 import {decodeRecord} from './dist/record.js';
 import {createV3Search} from './dist/ai-v3-search.js';
 const ai=await createV3Search({load:async()=>readFileSync(process.env.V3_TEST_WASM??new URL('./dist/ai-v3.wasm',import.meta.url))});
@@ -13,7 +13,8 @@ function reference(game){
  const x=new Float32Array(160*32),legal=new Float32Array(161),mask=new Float32Array(160),n=game.board.length;
  for(let p=0;p<n;p++){
   mask[p]=1;const stone=game.board[p],ns=game.topology.neighbors[p];
-  x[p*32+(stone===0?2:stone===game.turn?0:1)]=1;x[p*32+13+(ns.length===4?1:0)]=1;
+  x[p*32+(stone===0?2:stone===game.turn?0:1)]=1;
+  x[p*32+13]=ns.length===3?1:0;x[p*32+14]=ns.length===4?1:0;
   x[p*32+30]=ns.filter(q=>game.board[q]===game.turn).length/4;
   x[p*32+31]=ns.filter(q=>game.board[q]===3-game.turn).length/4;
   if(stone){
@@ -35,15 +36,20 @@ function reference(game){
  legal[160]=game.ended?0:1;
  return {x,legal,mask};
 }
+const ko=fixture('torus',7,[17,24,31,18,23,32,0,26,25],.5);
+const capturing=fixture('torus',7,[17,24,18,25,19,26,31,0,32,1,33,2,23,3]);
 const cases=[
- ...[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].map(([kind,size])=>fixture(kind,size,[0,2,5])),
- fixture('torus',7,[17,24,31,18,23,32,0,26,25],.5),
+ ...AI_BOARDS.map(([kind,size])=>fixture(kind,size,[0,2,5])),
+ ko,
+ ...[7,9,11].map(size=>fixture('plane',size,[1,0,size])),
  fixture('torus',7,[1,0,7,48,-1]),
- fixture('torus',7,[17,24,18,25,19,26,31,0,32,1,33,2,23,3]),
+ capturing,
 ];
 for(const game of cases){
  const before=JSON.stringify(game.toJSON());ai.start(aiPosition(game));const batch=ai.collect(8),expected=reference(game);
  assert.equal(batch.count,1);
+ assert.equal(batch.global_features[2],game.topology.kind==='sphere'?1:0);
+ assert.equal(batch.global_features[3],game.topology.kind==='torus'?1:0);
  for(const name of ['x','mask','legal']){
   assert.equal(batch[name].length,expected[name].length);
   for(let k=0;k<expected[name].length;k++)assert.ok(Math.abs(batch[name][k]-expected[name][k])<2e-7,name+' '+k);
@@ -58,7 +64,7 @@ for(const game of cases){
 }
 // A declared fixed budget uses the root finalists as its improved policy.
 // Verify the shipped WASM path, not just native root-planner unit tests.
-for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+for(const [kind,size] of AI_BOARDS){
  const game=fixture(kind,size,[]);ai.start(aiPosition(game),{seed:3,fpu:1,tactics:false,endgame:false});
  let calls=0;
  while(ai.result().simulations<64){
@@ -89,7 +95,7 @@ for(const komi of [-6.5,0,6.5]){
 }
 // A first pass that hands the opponent an immediate win must be evaluated
 // exactly, even when their network confidently predicts a loss instead.
-for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+for(const [kind,size] of AI_BOARDS){
  for(const colour of [1,2])for(const margin of [-0.5,0,0.5]){
   const game=fixture(kind,size,colour===1?[]:[0],0),score=game.score();
   game.komi=score.black-score.white+(colour===1?-margin:margin);
@@ -124,7 +130,18 @@ for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['t
   assert.equal(JSON.stringify(game.toJSON()),before);ai.cancel();
  }
 }
-const ko=cases[6];ai.start(aiPosition(ko));const legal=ai.collect().legal;assert.equal(legal[24],0);ai.cancel();
+// Plane edges must not wrap. Capturing the corner takes two neighbours, not four.
+for(const size of [7,9,11]){
+ const corner=fixture('plane',size,[1,0,size]);assert.equal(corner.board[0],0);
+ const wrapped=fixture('torus',size,[1,0,size]);assert.equal(wrapped.board[0],2);
+ ai.start(aiPosition(corner));const batch=ai.collect();
+ for(const [point,degree]of [[0,2],[size-1,2],[size*(size-1),2],[size*size-1,2],[1,3],[size+1,4]]){
+  assert.deepEqual(Array.from(batch.x.subarray(point*32+13,point*32+15)),[degree===3?1:0,degree===4?1:0]);
+ }
+ assert.equal(batch.mask.reduce((a,b)=>a+b,0),size*size);
+ assert.deepEqual(Array.from(batch.global_features.subarray(2,4)),[0,0]);ai.cancel();
+}
+ai.start(aiPosition(ko));const legal=ai.collect().legal;assert.equal(legal[24],0);ai.cancel();
 assert.throws(()=>ai.start({...aiPosition(ko),moves:[...aiPosition(ko).moves,24]}),/Illegal AI history/);
 assert.throws(()=>ai.collect(),/Start/);
 const ended=fixture('sphere',3,[-1,-1]);ai.start(aiPosition(ended));assert.equal(ai.collect().count,0);assert.equal(ai.result().move,null);
@@ -135,7 +152,7 @@ function forcePolicy(game,target,tactics=true,endgame=false){
  ai.submit(batch,{policy,wdl:Float32Array.from([100,0,-100])});return ai.result();
 }
 // Take an immediate win even when the neural policy insists on another move.
-for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+for(const [kind,size]of AI_BOARDS){
  for(const colour of [1,2])for(const precedingPass of [true,false])for(const margin of [0.5,0,-0.5]){
   const moves=colour===1?[0,2,5]:[0,2];moves.push(precedingPass?-1:8);
   const game=fixture(kind,size,moves,0),score=game.score();
@@ -153,7 +170,7 @@ for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['to
   assert.equal(JSON.stringify(game.toJSON()),before);
  }
 }
-for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+for(const [kind,size]of AI_BOARDS){
  const topology=createTopology(kind,size);
  const target=topology.neighbors.findIndex(ns=>ns.length===4&&ns.every(p=>topology.neighbors[p].length===4));
  const moves=topology.neighbors[target].slice(0,3).flatMap(p=>[-1,p]);
@@ -193,7 +210,7 @@ assert.equal(snapback.analyze(24).liberties,1);assert.equal(snapback.analyze(24)
 assert.equal(forcePolicy(snapback,24).move,24,'a sacrificial snapback remains searchable');
 snapback.play(24);assert.equal(snapback.analyze(31).captured,1);snapback.play(31);
 assert.equal(snapback.analyze(24).captured,8);
-const capturing=cases[8],capturePoint=Array.from(capturing.board,(_,p)=>p).find(p=>capturing.analyze(p).captured>=3);
+const capturePoint=Array.from(capturing.board,(_,p)=>p).find(p=>capturing.analyze(p).captured>=3);
 assert.equal(forcePolicy(capturing,capturePoint).move,capturePoint,'profitable captures remain searchable');
 // The reported game must not resume futile play after passing on move 166.
 const reported=decodeRecord(JSON.parse(readFileSync(new URL('./tests/fixtures/ai/v3-endgame.json',import.meta.url))).code);
@@ -219,4 +236,4 @@ for(const game of [oneEye,sparseAlive,escaping,snapback,capturing]){
  ai.start(aiPosition(game));const leaves=ai.collect(1);assert.equal(ai.result().provenLoss,false,'unsettled enemy stones cannot certify a loss');ai.cancel();
 }
 ai.dispose();ai.dispose();assert.throws(()=>ai.start(aiPosition(ko)),/disposed/);
-console.log('v3 WASM: six-board features, captures/superko/history, PUCT, terminal signs, six-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on six boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');
+console.log('v3 WASM: nine-board features, plane corners/edge captures, captures/superko/history, PUCT, terminal signs, nine-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on nine boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');

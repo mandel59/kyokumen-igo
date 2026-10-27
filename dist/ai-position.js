@@ -1,6 +1,7 @@
 import {createTopology,Game} from './engine.js';
 
 const SIZES={sphere:[3,4,5],torus:[7,9,11],plane:[7,9,11]};
+export const AI_BOARDS=Object.entries(SIZES).flatMap(([kind,sizes])=>sizes.map(size=>[kind,size]));
 
 // Only the move list crosses the Worker boundary; the UI keeps its snapshots for undo/save.
 export function aiPosition(game) {

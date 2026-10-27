@@ -47,11 +47,12 @@ try{
  await page.goto(base);
  const result=await page.evaluate(async(base)=>{
   const run=async function({base,backend}){
-   const {createV3Inference}=await import(base+'/dist/ai-v3-inference.js');
+   const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
+   const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
    const {createV3AI,V3_DEFAULT_SIMULATIONS}=await import(base+'/dist/ai-v3.js');
    const {Game,createTopology}=await import(base+'/dist/engine.js');
    const {decodeRecord}=await import(base+'/dist/record.js');
-   const {aiPosition}=await import(base+'/dist/ai-position.js');
+   const {aiPosition,AI_BOARDS}=await import(base+'/dist/ai-position.js');
    const golden=await(await fetch(base+'/golden.json')).json();
    const input=Object.fromEntries(Object.entries(golden.inputs).map(([k,v])=>[k,Float32Array.from(v.data)]));
    const begin=performance.now();
@@ -95,6 +96,23 @@ try{
    const waitingEvaluation=ai.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);let concurrentRejected=false;
    try{await ai.evaluate({count:golden.inputs.x.shape[0],...input},input.adjacency);}catch(error){concurrentRejected=/already running/.test(error.message);}
    await waitingEvaluation;if(!concurrentRejected)throw new Error('Concurrent inference was not rejected');
+   // Compare real plane features, including degree-two corners and captured stones.
+   const planeParity=[];
+   if(backend==='webgpu'){
+    const search=await createV3Search(),reference=await createV3Inference({manifestURL:base+'/dist/models/v3/manifest.json',backend:'wasm'});
+    try{
+     for(const size of [7,9,11]){
+      const game=new Game(createTopology('plane',size),6.5);
+      for(const move of [1,0,size])if(!game.play(move).ok)throw new Error('Invalid plane capture fixture');
+      search.start(aiPosition(game));const request=search.collect(1),adjacency=adjacencyFor(game.topology);
+      const actual=await ai.evaluate(request,adjacency,{auxiliary:true}),expected=await reference.evaluate(request,adjacency,{auxiliary:true});
+      let maxError=0;
+      for(const key of Object.keys(widths))for(let i=0;i<actual[key].length;i++)maxError=Math.max(maxError,Math.abs(actual[key][i]-expected[key][i]));
+      if(maxError>2e-4)throw new Error('Plane '+size+' WebGPU/WASM mismatch: '+maxError);
+      planeParity.push({size,maxError});search.cancel();
+     }
+    }finally{search.dispose();await reference.dispose();}
+   }
    await ai.dispose();
    const capacityParity=[];
    if(backend==='webgpu')for(const batchSize of [1,4]){
@@ -127,7 +145,7 @@ try{
    }
    const player=await createV3AI({manifestURL:base+'/dist/models/v3/manifest.json',backend});
    const turns=[];
-   for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+   for(const [kind,size] of AI_BOARDS){
     const position={kind,size,komi:6.5,moves:new Int32Array()};
     const chosen=await player.chooseMove(position,{seed:3});
     if(chosen.simulations!==V3_DEFAULT_SIMULATIONS)throw new Error('Default visit budget changed on '+backend+' '+kind+size+': '+chosen.simulations);
@@ -162,7 +180,7 @@ try{
    await player.dispose();
    const adapter=backend==='webgpu'?await navigator.gpu.requestAdapter():null;
    const adapterInfo=adapter?Object.fromEntries(['vendor','architecture','device','description'].map(k=>[k,adapter.info[k]])):null;
-   return {selected,runtime,adapterInfo,differences,coldMs,warmBatchMs:times,batchParity,capacityParity,permutationError,concurrentRejected,gpuChecksumFallback,gpuExecutionFallback,turns,cancelled,
+   return {selected,runtime,adapterInfo,differences,coldMs,warmBatchMs:times,batchParity,planeParity,capacityParity,permutationError,concurrentRejected,gpuChecksumFallback,gpuExecutionFallback,turns,cancelled,
     tactics:{pocketAvoided:pocketResult.avoidedInvasions,eyePointsAvoided:eyesResult.avoidedInvasions},endgame};
   };
   const runWorker=backend=>new Promise((resolve,reject)=>{
@@ -175,16 +193,16 @@ try{
   const cpu=await runWorker('wasm'),gpu=await runWorker('webgpu');
   // The actual production Worker must wait for v3 even on its first turn.
   const worker=new Worker(base+'/dist/ai-worker.js?ai=v3',{type:'module'});
-  let production;
+  let production;const productionTurns=[];
   try{
-   for(let id=1;id<=60;id++){
+   for(const [index,[kind,size]]of [['plane',7],['plane',9],['plane',11],['torus',7]].entries()){
+    const id=index+1;
     production=await new Promise((resolve,reject)=>{worker.onmessage=e=>{if(e.data.id===id)resolve(e.data);};worker.onerror=e=>reject(new Error(e.message));
-     worker.postMessage({id,position:{kind:'torus',size:7,komi:6.5,moves:new Int32Array()}});});
-    if(production.backend?.startsWith('v3-'))break;
-    await new Promise(r=>setTimeout(r,250));
+     worker.postMessage({id,position:{kind,size,komi:6.5,moves:new Int32Array()}});});
+    productionTurns.push({kind,size,...production});
    }
   }finally{worker.terminate();}
-  return {cpu,gpu,production};
+  return {cpu,gpu,production:productionTurns[0],productionTurns};
  },base);
  for(const backend of ['cpu','gpu'])for(const [key,difference]of Object.entries(result[backend].differences))assert.ok(difference<1e-3,backend+' '+key+': '+difference);
  assert.equal(result.cpu.selected,'wasm');assert.equal(result.gpu.selected,'webgpu');
@@ -192,10 +210,14 @@ try{
  assert.equal(result.production.backend,'v3-webgpu');assert.equal(result.production.error,undefined);
  assert.equal(result.production.id,1,'First v3 turn must wait for initialization instead of using v2');
  assert.equal(result.production.simulations,64,'Production Worker must use the Pixel 8a-calibrated shared visit budget');
+ for(const turn of result.productionTurns){
+  assert.equal(turn.backend,'v3-webgpu',turn.kind+turn.size+' must use v3');
+  assert.equal(turn.error,undefined);assert.equal(turn.simulations,64);
+ }
  result.environment={node:process.version,browser:browser.version(),platform:process.platform,arch:process.arch,cpu:cpus()[0].model,
   modelSha256:JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json'))).sha256,
   searchSha256:createHash('sha256').update(wasmBytes??readFileSync(resolve(root,'dist/ai-v3.wasm'))).digest('hex')};
  if(process.argv.includes('--output'))writeFileSync(process.argv[process.argv.indexOf('--output')+1],JSON.stringify(result,null,2)+'\n');
  console.log(JSON.stringify(result,null,2));
- console.log('Real browser Worker: WebGPU/WASM numerical parity, six-board MCTS, cancellation and production v3 routing passed.');
+ console.log('Real browser Worker: WebGPU/WASM numerical parity, nine-board MCTS, cancellation and production v3 routing passed.');
 }finally{await browser.close();await new Promise(r=>server.close(r));}

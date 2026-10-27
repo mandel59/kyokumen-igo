@@ -1,5 +1,5 @@
 //! v3 feature ABI. All colours are relative to the player to move.
-use crate::board::{Game, Scratch};
+use crate::board::{Game, Kind, Scratch};
 
 pub const POINTS: usize = 160;
 pub const CHANNELS: usize = 32;
@@ -16,7 +16,7 @@ pub struct Features {
 }
 
 /// `past` contains up to four previous boards, oldest first, excluding the current board.
-pub fn encode(game: &Game, past: &[Vec<i8>], sphere: bool) -> Features {
+pub fn encode(game: &Game, past: &[Vec<i8>], kind: Kind) -> Features {
     let n = game.board.len();
     assert!(n <= POINTS);
     let mut f = Features {
@@ -30,7 +30,10 @@ pub fn encode(game: &Game, past: &[Vec<i8>], sphere: bool) -> Features {
         let stone = game.board[p];
         let offset = if stone == 0 { 2 } else if stone == game.turn { 0 } else { 1 };
         f.x[p * CHANNELS + offset] = 1.;
-        f.x[p * CHANNELS + 13 + usize::from(game.topology.neighbors[p].len() == 4)] = 1.;
+        // Degree two (plane corners) is [0, 0]; existing degree three/four inputs stay identical.
+        let degree = game.topology.neighbors[p].len();
+        f.x[p * CHANNELS + 13] = if degree == 3 {1.} else {0.};
+        f.x[p * CHANNELS + 14] = if degree == 4 {1.} else {0.};
         let adjacent = &game.topology.neighbors[p];
         f.x[p * CHANNELS + 30] = adjacent.iter().filter(|&&q| game.board[q] == game.turn).count() as f32 / 4.;
         f.x[p * CHANNELS + 31] = adjacent.iter().filter(|&&q| game.board[q] == 3-game.turn).count() as f32 / 4.;
@@ -63,7 +66,7 @@ pub fn encode(game: &Game, past: &[Vec<i8>], sphere: bool) -> Features {
     f.legal[PASS] = !game.ended;
     let sign = if game.turn == 1 { 1. } else { -1. };
     f.global = [-sign * game.komi as f32 / n as f32, n as f32 / POINTS as f32,
-        if sphere {1.} else {0.}, if sphere {0.} else {1.},
+        if kind == Kind::Sphere {1.} else {0.}, if kind == Kind::Torus {1.} else {0.},
         game.passes.min(2) as f32 / 2., (game.history.len() as f32 / (2*n) as f32).min(2.),
         if game.turn == 1 {1.} else {0.}, 1.];
     f

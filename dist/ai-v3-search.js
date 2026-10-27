@@ -2,7 +2,7 @@
 import {validateAIPosition} from './ai-position.js';
 export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
 export async function createV3Search({load=async()=>{
- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=9c613c415032',import.meta.url));
+ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=a7168da72141',import.meta.url));
  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
 }}={}) {
  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;
@@ -16,11 +16,9 @@ export async function createV3Search({load=async()=>{
  return {
   start(next,{seed=0,tactics=true,endgame=true,fpu=0,rootNoise=false}={}){
    check();validateAIPosition(next);
-   // The v3 model has only seen closed surfaces; plane boards are played by v2.
-   if(next.kind==='plane')throw new Error('v3 does not play plane boards');
    api.v3_cancel();pending=null;generation++;position=null;
    allocate(Math.max(1,next.moves.length));new Int32Array(api.memory.buffer,ptr,next.moves.length).set(next.moves);
-   const result=api.v3_start(next.kind==='sphere'?0:1,next.size,next.komi,ptr,next.moves.length,seed>>>0);
+   const result=api.v3_start(['sphere','torus','plane'].indexOf(next.kind),next.size,next.komi,ptr,next.moves.length,seed>>>0);
    if(result)throw new Error(result===-3?'Illegal AI history':'Invalid v3 position');
    if(api.v3_set_tactics(tactics?1:0))throw new Error('Invalid v3 tactics configuration');
    if(api.v3_set_endgame(endgame?1:0))throw new Error('Invalid v3 endgame configuration');

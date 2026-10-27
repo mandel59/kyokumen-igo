@@ -1,5 +1,5 @@
 //! Batched PUCT with path reservations. No transposition merging: superko is path-dependent.
-use crate::board::{Game, Scratch};
+use crate::board::{Game, Kind, Scratch};
 use crate::gnn::{self, Features, ACTIONS, PASS};
 use crate::rng::Rng;
 use crate::{tactics,endgame};
@@ -79,10 +79,10 @@ impl Search {
         }
         self.completed += 1;
     }
-    pub fn collect(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize) -> Vec<Leaf> {
-        self.collect_limited(root,past,sphere,batch,u32::MAX)
+    pub fn collect(&mut self, root: &Game, past: &[Vec<i8>], kind: Kind, batch: usize) -> Vec<Leaf> {
+        self.collect_limited(root,past,kind,batch,u32::MAX)
     }
-    pub fn collect_limited(&mut self, root: &Game, past: &[Vec<i8>], sphere: bool, batch: usize, remaining: u32) -> Vec<Leaf> {
+    pub fn collect_limited(&mut self, root: &Game, past: &[Vec<i8>], kind: Kind, batch: usize, remaining: u32) -> Vec<Leaf> {
         assert!(self.pending.is_empty(), "submit or cancel the outstanding batch first");
         if self.completed==0 {self.root_budget=remaining;}
         else if remaining>0 && self.root_budget!=u32::MAX && self.completed.saturating_add(remaining)!=self.root_budget {
@@ -122,7 +122,7 @@ impl Search {
                 }
                 if self.nodes[p].pending { break; }
                 if !self.nodes[p].expanded {
-                    let features = gnn::encode(&game, &boards, sphere);
+                    let features = gnn::encode(&game, &boards, kind);
                     let mut legal = features.legal.clone();
                     if path.len() == 1 {
                         if endgame::wins_by_passing(&game) {
@@ -367,11 +367,11 @@ mod tests {
     #[test]
     fn halving_cancellation_and_incremental_budget_extensions_keep_progress() {
         let t=Topology::new(Kind::Sphere,3);let game=Game::new(&t,6.5);let mut s=Search::new(3);
-        let first=s.collect_limited(&game,&[],true,8,64);let ids=first.iter().map(|l|l.id).collect::<Vec<_>>();s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();
-        let pending=s.collect_limited(&game,&[],true,8,64-s.completed);assert!(!pending.is_empty());s.cancel();
+        let first=s.collect_limited(&game,&[],Kind::Sphere,8,64);let ids=first.iter().map(|l|l.id).collect::<Vec<_>>();s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();
+        let pending=s.collect_limited(&game,&[],Kind::Sphere,8,64-s.completed);assert!(!pending.is_empty());s.cancel();
         for goal in [64,67] {
             let mut calls=0;while s.completed<goal {
-                let leaves=s.collect_limited(&game,&[],true,8,goal-s.completed);let ids=leaves.iter().map(|l|l.id).collect::<Vec<_>>();
+                let leaves=s.collect_limited(&game,&[],Kind::Sphere,8,goal-s.completed);let ids=leaves.iter().map(|l|l.id).collect::<Vec<_>>();
                 if !ids.is_empty(){s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();}
                 calls+=1;assert!(calls<goal+20);
             }
@@ -390,12 +390,12 @@ mod tests {
     }
     #[test]
     fn halving_respects_odd_budgets_and_releases_all_reservations() {
-        for (kind,size,sphere) in [(Kind::Sphere,3,true),(Kind::Torus,7,false)] {
+        for (kind,size) in [(Kind::Sphere,3),(Kind::Torus,7),(Kind::Plane,7),(Kind::Plane,9),(Kind::Plane,11)] {
             let t=Topology::new(kind,size);let game=Game::new(&t,6.5);
             for budget in [1,2,7,8,9,17,64,129] {
                 let mut s=Search::new(3);let mut calls=0;
                 while s.completed<budget {
-                    let leaves=s.collect_limited(&game,&[],sphere,8,budget-s.completed);
+                    let leaves=s.collect_limited(&game,&[],kind,8,budget-s.completed);
                     assert!(s.completed+leaves.len() as u32<=budget);
                     let ids=leaves.iter().map(|l|l.id).collect::<Vec<_>>();
                     if !ids.is_empty(){s.submit(&ids,&vec![0.;ids.len()*(ACTIONS+1)]).unwrap();}
@@ -410,10 +410,10 @@ mod tests {
     fn pending_leaf_does_not_block_other_available_evaluations() {
         let t=Topology::new(Kind::Torus,7);let g=Game::new(&t,6.5);
         let mut s=Search::new(3);assert!(s.set_fpu(1,false));
-        let root=s.collect_limited(&g,&[],false,8,1);assert_eq!(root.len(),1);
+        let root=s.collect_limited(&g,&[],Kind::Torus,8,1);assert_eq!(root.len(),1);
         let mut eval=vec![-100.;ACTIONS+1];eval[0]=100.;eval[ACTIONS]=-1.;
         s.submit(&[root[0].id],&eval).unwrap();
-        let batch=s.collect_limited(&g,&[],false,8,8);
+        let batch=s.collect_limited(&g,&[],Kind::Torus,8,8);
         assert_eq!(batch.len(),8,"pending high-prior child must not prevent seven other legal leaves");
         let mut ids=batch.iter().map(|l|l.id).collect::<Vec<_>>();ids.sort();ids.dedup();assert_eq!(ids.len(),8);
         assert_eq!(s.nodes[0].reserved,8);
@@ -425,7 +425,7 @@ mod tests {
         for budget in [1,2,7,8,9,17,128,512] {
             let mut s=Search::new(3);let mut calls=0;
             while s.completed<budget {
-                let leaves=s.collect_limited(&g,&[vec![0;49]],false,8,budget-s.completed);
+                let leaves=s.collect_limited(&g,&[vec![0;49]],Kind::Torus,8,budget-s.completed);
                 assert!(s.completed+leaves.len() as u32<=budget);
                 let ids:Vec<_>=leaves.iter().map(|l|l.id).collect();
                 let mut eval=vec![-10.;ids.len()*(ACTIONS+1)];
@@ -435,7 +435,7 @@ mod tests {
             }
             assert_eq!(s.completed,budget);
             assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
-            assert!(s.collect_limited(&g,&[],false,8,0).is_empty());assert_eq!(s.completed,budget);
+            assert!(s.collect_limited(&g,&[],Kind::Torus,8,0).is_empty());assert_eq!(s.completed,budget);
         }
     }
     #[test]
@@ -458,7 +458,7 @@ mod tests {
             let t=Topology::new(Kind::Torus,7); let mut g=Game::new(&t,komi); g.pass();
             let mut s=Search::new(3);
             for _ in 0..40 {
-                let leaves=s.collect(&g,&[vec![0;49]],false,8);
+                let leaves=s.collect(&g,&[vec![0;49]],Kind::Torus,8);
                 let ids:Vec<_>=leaves.iter().map(|l|l.id).collect();
                 let mut eval=vec![-10.;ids.len()*(ACTIONS+1)];
                 for e in eval.chunks_exact_mut(ACTIONS+1) {e[PASS]=10.; e[ACTIONS]=0.;}
@@ -471,7 +471,7 @@ mod tests {
             assert!(s.nodes.iter().all(|n|n.reserved==0&&!n.pending));
             if komi>0. {assert_eq!(s.best(),-1);}
             if komi<0. {assert_ne!(s.best(),-1);}
-            let leaves=s.collect(&g,&[],false,8); s.cancel();
+            let leaves=s.collect(&g,&[],Kind::Torus,8); s.cancel();
             assert!(s.submit(&leaves.iter().map(|l|l.id).collect::<Vec<_>>(),&[]).is_err() || leaves.is_empty());
             assert!(s.nodes.iter().all(|n|n.reserved==0));
         }

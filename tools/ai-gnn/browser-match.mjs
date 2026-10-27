@@ -6,6 +6,7 @@ import {cpus} from 'node:os';
 import {createHash} from 'node:crypto';
 import {chromium} from 'playwright-core';
 import {matchStatistics} from './match-statistics.mjs';
+import {AI_BOARDS} from '../../dist/ai-position.js';
 const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
 const root=resolve('.'),models={a:resolve(arg('--a')),b:resolve(arg('--b','dist/models/v3'))},output=arg('--output');
 const v2Opponent=arg('--b')==='v2',sides=v2Opponent?['a']:['a','b'];
@@ -22,8 +23,8 @@ const playerMode=arg('--player','app');
 if(!['app','offline'].includes(playerMode)||(playerMode==='offline'&&fixedVisits===null))throw new Error('Offline player requires fixed visits');
 const selectedBoard=arg('--board','all');
 if(!Number.isInteger(pairs)||pairs<1||!Number.isFinite(budgetMs)||budgetMs<=0||!Number.isInteger(seed)||
- !['all','sphere3','sphere4','sphere5','torus7','torus9','torus11'].includes(selectedBoard))throw new Error('Invalid browser match options');
-const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'experiments/ai/v3/2026-10-22-learning-revision/data/baseline-search.wasm'))};
+ !['all',...AI_BOARDS.map(([kind,size])=>kind+size)].includes(selectedBoard))throw new Error('Invalid browser match options');
+const wasm={a:resolve(arg('--a-wasm','dist/ai-v3.wasm')),b:resolve(arg('--b-wasm',v2Opponent?'dist/ai-engine.wasm':'dist/ai-v3.wasm'))};
 const fpu=Object.fromEntries(sides.map(side=>[side,Number(arg('--'+side+'-fpu',String(JSON.parse(readFileSync(models[side]+'/manifest.json','utf8')).search?.fpu??0)))]));
 if(Object.values(fpu).some(v=>!Number.isInteger(v)||v<0||v>2))throw new Error('Invalid FPU mode');
 const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
@@ -56,13 +57,13 @@ try{
   const run=async function(config){
    const {base,seed,pairs,budgetMs,fixedVisits,visitsBySide,playerMode,fpu,v2Opponent,sides,selectedBoard}=config;
    const {Game,createTopology}=await import(base+'/dist/engine.js');
-   const {aiPosition}=await import(base+'/dist/ai-position.js');
+   const {aiPosition,AI_BOARDS}=await import(base+'/dist/ai-position.js');
    const {createV3Search}=await import(base+'/dist/ai-v3-search.js');
    const {createV3AI}=await import(base+'/dist/ai-v3.js');
    const createPlayer=playerMode==='offline'?(await import(base+'/tools/ai-gnn/offline-player.mjs')).createOfflineAI:createV3AI;
    const {createWasmAI}=await import(base+'/dist/ai-wasm.js');
    const {createV3Inference,adjacencyFor}=await import(base+'/dist/ai-v3-inference.js');
-   const boards=[['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]].filter(([kind,size])=>selectedBoard==='all'||kind+size===selectedBoard);
+   const boards=AI_BOARDS.filter(([kind,size])=>selectedBoard==='all'||kind+size===selectedBoard);
    const manifest={};for(const side of sides)manifest[side]=await(await fetch(base+'/models/'+side+'/manifest.json')).json();
    const searchBudget=side=>fixedVisits!==null?{maxSimulations:visitsBySide[side]}:{budgetMs,maxSimulations:4096};
    const configuration=side=>({architecture:'v3',backend:'webgpu',playerMode,budgetMs:fixedVisits===null?budgetMs:null,maxSimulations:searchBudget(side).maxSimulations,fpu:fpu[side]});

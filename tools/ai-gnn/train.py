@@ -21,7 +21,7 @@ def load_data(paths, policy_temperature=1., minimum_policy_confidence=0.):
                 r = json.loads(line)
                 if r.get("schemaVersion") != 1:
                     raise ValueError("Unsupported feature schema")
-                if r.get("kind") not in ("sphere", "torus") or r.get("size") not in ({"sphere": (3, 4, 5), "torus": (7, 9, 11)}[r["kind"]]) or not isinstance(r.get("gameId"), str):
+                if r.get("kind") not in ("sphere", "torus", "plane") or r.get("size") not in ({"sphere": (3, 4, 5), "torus": (7, 9, 11), "plane": (7, 9, 11)}[r["kind"]]) or not isinstance(r.get("gameId"), str):
                     raise ValueError("Invalid board or game ID")
                 n = 6 * r["size"] ** 2 + 2 if r["kind"] == "sphere" else r["size"] ** 2
                 x = torch.tensor(r["x"], dtype=torch.float32).reshape(n, CHANNELS)

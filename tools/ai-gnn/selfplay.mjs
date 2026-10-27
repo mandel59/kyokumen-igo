@@ -3,7 +3,7 @@ import {createWriteStream,readFileSync,writeFileSync} from 'node:fs';
 import {once} from 'node:events';
 import {createHash} from 'node:crypto';
 import {createTopology,Game} from '../../dist/engine.js';
-import {aiPosition} from '../../dist/ai-position.js';
+import {aiPosition,AI_BOARDS} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
 import {createNodeInference} from './node-inference.mjs';
@@ -26,7 +26,7 @@ catch(error){search.dispose();throw error;}
 const out=createWriteStream(value('--output','tools/ai-gnn/target/selfplay.jsonl'));
 let written=0,capped=0,completedGames=0;const boardReports=[];
 try{
- for(const [kind,size] of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
+ for(const [kind,size] of AI_BOARDS){
   if(value('--board','all')!=='all'&&value('--board','all')!==kind+size)continue;
   const topology=createTopology(kind,size),adjacency=adjacencyFor(topology);
   const boardReport={kind,size,attempted:games,completed:0,capped:0};boardReports.push(boardReport);
