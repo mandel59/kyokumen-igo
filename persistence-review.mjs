@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
+import {setImmediate as nextTurn} from 'node:timers/promises';
 const base=new URL('./dist/',import.meta.url),html=readFileSync(new URL('index.html',base),'utf8');
 const validIds=new Set([...html.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
 const store=new Map();let unavailable=false;
@@ -15,9 +16,9 @@ async function boot(hash=''){
  const storage={getItem(k){if(unavailable)throw Error('denied');return store.get(k)??null},setItem(k,v){if(unavailable)throw Error('quota');store.set(k,String(v))},removeItem(k){if(unavailable)throw Error('denied');store.delete(k)}};
  const win={devicePixelRatio:1,localStorage:storage,addEventListener:noop,location:{hash,pathname:'/',search:'',href:'https://example.test/'+hash},history:{replaceState(){win.location.hash=''}}};
  const realm=vm.createContext({console,URL,atob,document:{getElementById:el},window:win,localStorage:storage,ResizeObserver:class{constructor(f){this.f=f}observe(){this.f()}},confirm:()=>confirmAllowed,Date:class extends Date{static now(){return clock}},setTimeout:(f,delay=0)=>{timers.set(++tid,{f,due:clock+delay});return tid},clearTimeout:id=>timers.delete(id)});
- const cache=new Map();function mod(url){const path=fileURLToPath(url);if(!cache.has(path))cache.set(path,(async()=>{const m=new vm.SourceTextModule(readFileSync(path,'utf8'),{context:realm,identifier:url.href,initializeImportMeta(meta){meta.url=url.href}});await m.link((s,p)=>mod(new URL(s,p.identifier)));return m;})());return cache.get(path);}
+ const cache=new Map();function mod(url){const path=fileURLToPath(url);if(!cache.has(path))cache.set(path,(async()=>{const m=new vm.SourceTextModule(readFileSync(path,'utf8'),{context:realm,identifier:url.href,initializeImportMeta(meta){meta.url=url.href},async importModuleDynamically(s,p){const imported=await mod(new URL(s,p.identifier));await imported.evaluate();return imported;}});await m.link((s,p)=>mod(new URL(s,p.identifier)));return m;})());return cache.get(path);}
  const app=await mod(new URL('app.js',base));await app.evaluate();
- return {el,win,timers,setConfirm:value=>confirmAllowed=value,async tick(){while(timers.size){const [id,task]=[...timers].sort((a,b)=>a[1].due-b[1].due)[0];timers.delete(id);clock=task.due;task.f();}await Promise.resolve()},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
+ return {el,win,timers,setConfirm:value=>confirmAllowed=value,async tick(){for(let turn=0;turn<100;turn++){while(timers.size){const [id,task]=[...timers].sort((a,b)=>a[1].due-b[1].due)[0];timers.delete(id);clock=task.due;task.f();}await nextTurn();if(!timers.size&&el('turnText').textContent!=='AI が考えています')return;}assert.fail('AI response did not settle');},moves:()=>Number(el('moveCount').textContent.split(' ')[0]),saved:()=>JSON.parse([...store.values()][0])};
 }
 function human(a){a.el('opponent').value='human';a.el('newGame').onclick()}
 function play(a){a.el('board').events.keydown({key:'Enter',preventDefault(){}})}
@@ -77,7 +78,7 @@ const aboutBefore=store.get(STORAGE_KEY),aboutMoves=quiet.moves();
 for(const closeId of ['aboutClose','aboutDone']){quiet.el('aboutOpen').onclick();assert.equal(quiet.el('aboutDialog').open,true);quiet.el(closeId).onclick();assert.equal(quiet.el('aboutDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);}
 console.log('Read-only application information dialog storage checks passed.');
 
-quiet.el('rulesOpen').onclick();for(let n=0;n<4;n++)quiet.el('rulesDone').onclick();quiet.el('rulesPrev').onclick();quiet.el('rulesDone').onclick();quiet.el('rulesDone').onclick();assert.equal(quiet.el('rulesDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);
+quiet.el('rulesOpen').onclick();const tutorialPages=[...validIds].filter(id=>/^rulesStep\d+$/.test(id)).length;for(let n=0;n<tutorialPages-1;n++)quiet.el('rulesDone').onclick();quiet.el('rulesPrev').onclick();quiet.el('rulesDone').onclick();quiet.el('rulesDone').onclick();assert.equal(quiet.el('rulesDialog').open,false);assert.equal(store.get(STORAGE_KEY),aboutBefore);assert.equal(quiet.moves(),aboutMoves);
 console.log('Tutorial page navigation does not change the saved match or view.');
 
 // Opening a shared record in a fresh page shows it read-only and never rewrites the saved match.
