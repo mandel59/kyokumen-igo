@@ -88,3 +88,15 @@ console.log('Independent readable highlight / hidden selection / unrelated-owner
  }
  console.log('Board marks: shapes and colours, independence, far-side clipping, and unchanged depth and picking on both boards.');
 }
+// A goban's star points lie on the board under its territory squares at every pitch, low ones included.
+{
+ const {starPoints}=await import('./dist/surface-renderer.js'),star=[65,76,56];
+ const topology=createTopology('plane',11),board=new Int8Array(topology.vertices.length),stars=starPoints(topology);
+ for(const owner of [1,2])for(const rotX of [.9,.5,.25,.18]){
+  const territory=new Int8Array(board.length);for(const i of stars)territory[i]=owner;
+  const frame=renderSurface({topology,board,rotX,rotY:0,width:800,height:800,pixelRatio:2,marks:{territory}});let seen=0;
+  for(const i of stars){const p=frame.points[i];for(let y=Math.floor(p.y-16);y<=p.y+16;y++)for(let x=Math.floor(p.x-16);x<=p.x+16;x++){const o=(y*800+x)*4;if(frame.pixels[o]===star[0]&&frame.pixels[o+1]===star[1]&&frame.pixels[o+2]===star[2])seen++;}}
+  assert.equal(seen,0,`plane star points stay under owner ${owner} territory at pitch ${rotX}`);
+ }
+ console.log('Plane star points stay covered by territory squares from high and low angles.');
+}

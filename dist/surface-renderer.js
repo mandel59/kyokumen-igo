@@ -234,12 +234,21 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
   // At least one pixel centre always falls inside, so dots never vanish at low drag resolution.
   // A goban marks only its star points; its other dots are the size of a line crossing.
+  // Each dot pixel takes the depth of the surface's tangent plane beneath it, so a tilted board's
+  // far side of a star point stays behind marks drawn on the board. Star points are discs painted
+  // on the goban and foreshorten with it, like the territory squares that cover them.
   const stars=new Set(starPoints(topology)),starRadius=Math.max(1.6*pixelRatio,stoneRadius(topology)*scale*.2);
   for(const p of points)if(!board[p.i]){
-    const dotRadius=!plane?Math.max(.75,1.6*pixelRatio):stars.has(p.i)?starRadius:Math.max(.75,.7*pixelRatio);
-    const normal=rotate(surfaceNormal(topology.kind,topology.vertices[p.i]));
+    const star=stars.has(p.i),dotRadius=!plane?Math.max(.75,1.6*pixelRatio):star?starRadius:Math.max(.75,.7*pixelRatio);
+    const {normal:n,tangent,bitangent,radius}=stoneGeometry(topology,p.i),normal=rotate(n);
     if(normal.z<=0)continue;
-    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,plane&&!stars.has(p.i)?lineColor:[65,76,56],p.i,.003+(plane?dotRadius/scale:0));
+    const v=topology.vertices[p.i],a=project(add(v,tangent,radius)),b=project(add(v,bitangent,radius));
+    const ax=a.x-p.x,ay=a.y-p.y,bx=b.x-p.x,by=b.y-p.y,det=ax*by-ay*bx;
+    const gx=det?((a.z-p.z)*by-(b.z-p.z)*ay)/det:0,gy=det?((b.z-p.z)*ax-(a.z-p.z)*bx)/det:0;
+    // (u,v): the pixel's offset along the surface, in stone radii; the centre pixel is always kept.
+    const disc=dotRadius/(scale*radius),reach=star?disc*Math.max(Math.hypot(ax,ay),Math.hypot(bx,by)):dotRadius;
+    const inside=(dx,dy)=>!star||!det?Math.hypot(dx,dy)<dotRadius:Math.hypot(dx*by-dy*bx,ax*dy-ay*dx)<disc*Math.abs(det);
+    for(let y=Math.floor(p.y-reach);y<=p.y+reach;y++)for(let x=Math.floor(p.x-reach);x<=p.x+reach;x++)if(inside(x+.5-p.x,y+.5-p.y)||x===Math.floor(p.x)&&y===Math.floor(p.y))put(x,y,p.z+gx*(x+.5-p.x)+gy*(y+.5-p.y),plane&&!star?lineColor:[65,76,56],p.i,.003);
   }
   for(let index=0;index<board.length;index++)if(board[index]){
     const mesh=stoneMesh(topology,index,interactive),stone=mesh.vertices.map(p=>vertex(p,p.normal));
