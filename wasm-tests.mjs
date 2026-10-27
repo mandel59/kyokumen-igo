@@ -21,6 +21,18 @@ for(const c of fixture.cases) {
   assert.equal(ai.chooseMove(request,{randomize:false}),chooseMove(game,{random:()=>0}));
   assert.equal(JSON.stringify(game.toJSON()),before,'AI request does not mutate the saved match');
 }
+// Plane boards: the one-move WASM AI agrees with the JS reference, and the depth-4 search plays legal moves.
+for(const size of [7,9,11]) {
+  const game=new Game(createTopology('plane',size));
+  for(let turn=0;turn<30&&!game.ended;turn++) {
+    const position=aiPosition(game),expected=chooseMove(game,{random:()=>0});
+    assert.equal(ai.chooseMove(position,{randomize:false}),expected,`plane ${size} turn ${turn}`);
+    const searched=ai.chooseMove(position,{seed:turn,depth:4});
+    assert.ok(searched===null||game.analyze(searched).ok,`plane ${size} search move is legal`);
+    assert.equal((expected===null?game.pass():game.play(expected)).ok,true);
+  }
+}
+assert.throws(()=>ai.chooseMove({kind:'plane',size:5,komi:6.5,moves:[]}),/Invalid AI position/);
 const ko=new Game(createTopology('torus',7),.5);
 for(const move of [17,24,31,18,23,32,0,26,25])assert.equal(ko.play(move).ok,true);
 const koPosition=aiPosition(ko);

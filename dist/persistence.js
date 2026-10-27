@@ -24,7 +24,7 @@ function savedView(view, version) {
 export function restoreSnapshot(data) {
   if (!record(data) || ![1, 2].includes(data.version) || !record(data.game) || !record(data.settings) || !record(data.view)) throw new Error('Invalid saved game');
   const saved = data.game;
-  const sizes = saved.kind === 'sphere' ? [3, 4, 5] : saved.kind === 'torus' ? [7, 9, 11] : [];
+  const sizes = saved.kind === 'sphere' ? [3, 4, 5] : ['torus', 'plane'].includes(saved.kind) ? [7, 9, 11] : [];
   if (saved.version !== 1 || !sizes.includes(saved.size) || !isValidKomi(saved.komi)) throw new Error('Invalid board settings');
   if (!['ai', 'human'].includes(data.settings.opponent) || ![1, 2].includes(data.settings.human)) throw new Error('Invalid opponent');
   const view = savedView(data.view, data.version);

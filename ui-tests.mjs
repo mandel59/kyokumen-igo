@@ -246,6 +246,11 @@ delete window.location;delete window.history;
 // Before the first move, size tabs start a new game on the same shape; shape tabs keep the size on screen.
 assert.equal(el('moveCount').textContent,'0 手');assert.equal(el('kindTabs').inert,false);assert.equal(el('boardSummary').hidden,true);
 el('sizeSmall').onclick();el('torusTab').onclick();assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS');
+// The plane tab keeps the size; its whole-board view is the 俯瞰図, drawn from above.
+el('planeTab').onclick();assert.equal(el('topologyName').textContent,'平面盤');assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS');assert.equal(el('viewToggle').textContent,'俯瞰図');
+el('viewToggle').onclick();assert.equal(el('mapSection').hidden,false);assert.equal(el('mapHint').textContent,'盤を真上から見た図です');assert.equal(el('viewToggle').textContent,'立体盤');
+el('viewToggle').onclick();assert.equal(el('surfaceSection').hidden,false);
+el('torusTab').onclick();assert.equal(el('topologyName').textContent,'トーラス盤');assert.equal(el('nodeCount').textContent,'49 INTERSECTIONS');
 // From the first move until the game ends, the tabs give way to the summary and a tap changes nothing.
 el('board').events.keydown({key:'Enter',preventDefault:noop});assert.equal(el('moveCount').textContent,'1 手');
 assert.equal(el('kindTabs').inert,true);assert.equal(el('sizeTabs').inert,true);assert.equal(el('boardSummary').textContent,'トーラス · 小 · 7 × 7');

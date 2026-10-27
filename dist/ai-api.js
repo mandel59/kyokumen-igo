@@ -17,7 +17,7 @@ export function createAIAdapter(api,{random=Math.random,backend}={}){
     pointer=nextPointer;capacity=nextCapacity;
    }
    new Int32Array(api.memory.buffer,pointer,position.moves.length).set(position.moves);
-   const args=[position.kind==='sphere'?0:1,position.size,position.komi,pointer,position.moves.length,seed??(random()*4294967296)>>>0,randomize?1:0];
+   const args=[['sphere','torus','plane'].indexOf(position.kind),position.size,position.komi,pointer,position.moves.length,seed??(random()*4294967296)>>>0,randomize?1:0];
    const chosen=depth?api.ai_search(...args,depth):api.ai_choose(...args);
    if(chosen< -1)throw new AIInputError(chosen===-3?'Illegal AI history':'Invalid AI position');
    return chosen===-1?null:chosen;

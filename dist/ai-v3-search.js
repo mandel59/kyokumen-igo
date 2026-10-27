@@ -15,7 +15,10 @@ export async function createV3Search({load=async()=>{
  function read(kind,length,Type=Float32Array){return new Type(api.memory.buffer,api.v3_buffer(kind),length).slice();}
  return {
   start(next,{seed=0,tactics=true,endgame=true,fpu=0,rootNoise=false}={}){
-   check();validateAIPosition(next);api.v3_cancel();pending=null;generation++;position=null;
+   check();validateAIPosition(next);
+   // The v3 model has only seen closed surfaces; plane boards are played by v2.
+   if(next.kind==='plane')throw new Error('v3 does not play plane boards');
+   api.v3_cancel();pending=null;generation++;position=null;
    allocate(Math.max(1,next.moves.length));new Int32Array(api.memory.buffer,ptr,next.moves.length).set(next.moves);
    const result=api.v3_start(next.kind==='sphere'?0:1,next.size,next.komi,ptr,next.moves.length,seed>>>0);
    if(result)throw new Error(result===-3?'Illegal AI history':'Invalid v3 position');

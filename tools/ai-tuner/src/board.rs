@@ -7,6 +7,7 @@ use std::collections::{HashMap, HashSet};
 pub enum Kind {
     Sphere,
     Torus,
+    Plane,
 }
 
 impl Kind {
@@ -14,6 +15,7 @@ impl Kind {
         match self {
             Kind::Sphere => "sphere",
             Kind::Torus => "torus",
+            Kind::Plane => "plane",
         }
     }
 }
@@ -46,6 +48,19 @@ impl Topology {
                     for v in 0..size {
                         link(&mut adjacency, &mut edges, u * size + v, ((u + 1) % size) * size + v);
                         link(&mut adjacency, &mut edges, u * size + v, u * size + (v + 1) % size);
+                    }
+                }
+            }
+            Kind::Plane => {
+                adjacency.resize(size * size, Vec::new());
+                for u in 0..size {
+                    for v in 0..size {
+                        if u + 1 < size {
+                            link(&mut adjacency, &mut edges, u * size + v, (u + 1) * size + v);
+                        }
+                        if v + 1 < size {
+                            link(&mut adjacency, &mut edges, u * size + v, u * size + v + 1);
+                        }
                     }
                 }
             }

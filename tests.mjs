@@ -22,6 +22,20 @@ for(const n of [3,4,6,9]) {
     assert.equal(reached.size,topology.vertices.length);
   }
 }
+// A plane board has edges: corners have two neighbours, edge points three, and nothing wraps.
+for(const n of [7,9,11]) {
+  const t=createTopology('plane',n),degree=d=>t.neighbors.filter(a=>a.length===d).length;
+  assert.equal(t.vertices.length,n*n);assert.equal(t.edges.length,2*n*(n-1));
+  assert.deepEqual([degree(2),degree(3),degree(4)],[4,4*(n-2),(n-2)*(n-2)]);
+  assert.ok(!t.neighbors[0].includes(n-1)&&!t.neighbors[0].includes((n-1)*n),'no wrap at the corner');
+  for(const p of t.vertices)assert.equal(p.y,0);
+}
+// A corner stone is captured with two moves; the same shape on the torus is not.
+{
+  const g=new Game(createTopology('plane',7));
+  g.play(0);g.play(1);g.pass();assert.deepEqual(g.play(7),{ok:true,captured:1});assert.equal(g.board[0],0);
+  const s=g.score();assert.equal(s.stonesWhite,2);
+}
 // Capture crosses both wrapped seams at torus vertex zero.
 {
   const g=fixture([[0,2],[7,1],[42,1],[1,1]]);

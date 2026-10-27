@@ -1,9 +1,10 @@
-// Go rules on a closed, undirected graph. Area scoring; positional superko.
+// Go rules on an undirected graph: a closed surface, or a plane board with edges. Area scoring; positional superko.
 import {territoryOwners} from './board-analysis.js';
+export const PLANE_HALF = .7;
 export function createTopology(kind = 'sphere', size = 6) {
   size = Math.round(Number(size));
   if (!Number.isFinite(size) || size < 3 || size > 40) throw new Error('Board size must be between 3 and 40.');
-  if (kind !== 'sphere' && kind !== 'torus') throw new Error('Unknown surface.');
+  if (!['sphere','torus','plane'].includes(kind)) throw new Error('Unknown surface.');
   const vertices = [], adjacency = [], edgeSet = new Set(), edges = [];
   const add = v => { adjacency.push(new Set()); return vertices.push(v) - 1; };
   const link = (a, b) => {
@@ -12,7 +13,15 @@ export function createTopology(kind = 'sphere', size = 6) {
     if (edgeSet.has(key)) return;
     edgeSet.add(key); adjacency[a].add(b); adjacency[b].add(a); edges.push([a,b]);
   };
-  if (kind === 'torus') {
+  if (kind === 'plane') {
+    // A goban lying flat: y is up, the grid spans x and z in [-PLANE_HALF, PLANE_HALF].
+    const step = 2 * PLANE_HALF / (size - 1);
+    for (let u = 0; u < size; u++) for (let v = 0; v < size; v++) add({x:u*step-PLANE_HALF, y:0, z:v*step-PLANE_HALF, i:u, j:v});
+    for (let u=0;u<size;u++) for(let v=0;v<size;v++) {
+      if (u+1<size) link(u*size+v, (u+1)*size+v);
+      if (v+1<size) link(u*size+v, u*size+v+1);
+    }
+  } else if (kind === 'torus') {
     for (let u = 0; u < size; u++) for (let v = 0; v < size; v++) {
       const a = u * 2 * Math.PI / size, b = v * 2 * Math.PI / size;
       const r = 0.72 + 0.28 * Math.cos(b);

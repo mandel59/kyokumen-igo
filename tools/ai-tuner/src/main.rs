@@ -43,6 +43,13 @@ fn selftest() {
         assert_eq!(three, if kind == Kind::Sphere { 8 } else { 0 }, "{kind:?} {size} three-neighbour points");
         assert!(t.neighbors.iter().all(|n| n.len() == 3 || n.len() == 4));
     }
+    // A plane board has edges: 4 corner points of degree 2 and 4(size-2) edge points of degree 3.
+    for size in [7, 9, 11] {
+        let t = Topology::new(Kind::Plane, size);
+        assert_eq!(t.len(), size * size, "plane {size} vertex count");
+        let degree = |d: usize| t.neighbors.iter().filter(|n| n.len() == d).count();
+        assert_eq!((degree(2), degree(3), degree(4)), (4, 4 * (size - 2), (size - 2) * (size - 2)), "plane {size} degrees");
+    }
     // Capture, suicide and positional superko on a 7×7 torus (same sequence as persistence tests).
     let t = Topology::new(Kind::Torus, 7);
     let mut s = Scratch::new(t.len());

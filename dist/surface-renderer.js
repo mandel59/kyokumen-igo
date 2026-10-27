@@ -1,5 +1,6 @@
 // Orthographic software renderer: one depth buffer for the board, grid and stones.
 // The same final fragment ownership drives picking, including partly hidden stones.
+import {PLANE_HALF} from './engine.js';
 import {defaultOrientation,orientationFromEuler,orientationMatrix,transformPoint} from './orientation.js';
 const TAU = Math.PI * 2;
 const dot = (a, b) => a.x*b.x+a.y*b.y+a.z*b.z;
@@ -8,6 +9,7 @@ const unit = v => {const n=Math.hypot(v.x,v.y,v.z)||1;return {x:v.x/n,y:v.y/n,z:
 const add = (a,b,s=1) => ({x:a.x+b.x*s,y:a.y+b.y*s,z:a.z+b.z*s});
 export function surfaceNormal(kind,p) {
   if(kind==='sphere')return unit(p);
+  if(kind==='plane')return {x:0,y:1,z:0};
   const r=Math.hypot(p.x,p.z);
   return unit({x:p.x*(1-.72/r),y:p.y,z:p.z*(1-.72/r)});
 }
@@ -16,13 +18,14 @@ export function stoneRadius(topology){
   if(radiusCache.has(topology))return radiusCache.get(topology);
   let spacing=Infinity;
   for(const [a,b] of topology.edges){const p=topology.vertices[a],q=topology.vertices[b];spacing=Math.min(spacing,Math.hypot(q.x-p.x,q.y-p.y,q.z-p.z));}
-  const radius=spacing*.43;radiusCache.set(topology,radius);return radius;
+  const radius=spacing*(topology.kind==='plane'?.47:.43);radiusCache.set(topology,radius);return radius;
 }
 export function stoneGeometry(topology,index) {
   const p=topology.vertices[index],normal=surfaceNormal(topology.kind,p);
   const radius=stoneRadius(topology),halfHeight=radius*.42;
   const tangent=unit(cross(normal,Math.abs(normal.y)<.9?{x:0,y:1,z:0}:{x:1,y:0,z:0}));
-  return {center:add(p,normal,halfHeight*.56),normal,tangent,bitangent:cross(normal,tangent),radius,halfHeight};
+  // Curved boards seat the stone slightly into the surface; a plane board's stone rests on top.
+  return {center:add(p,normal,halfHeight*(topology.kind==='plane'?.92:.56)),normal,tangent,bitangent:cross(normal,tangent),radius,halfHeight};
 }
 function stoneMesh(topology,index,interactive){
   let cache=stoneMeshCache.get(topology);if(!cache){cache=new Map();stoneMeshCache.set(topology,cache);}
@@ -44,9 +47,40 @@ export function rotatePoint(p,rotX,rotY) {
   return transformPoint(p,orientationMatrix(Array.isArray(rotX)?rotX:orientationFromEuler(rotX,rotY)));
 }
 function torus(u,v){const r=.72+.28*Math.cos(v);return {x:r*Math.cos(u),y:.28*Math.sin(v),z:r*Math.sin(u)};}
+// Star points (hoshi) of the plane boards: the corner points and the centre.
+export function starPoints(topology){
+  if(topology.kind!=='plane')return [];
+  const n=topology.size,c=(n-1)/2,o=n>=11?3:2,stars=[[o,o],[o,n-1-o],[n-1-o,o],[n-1-o,n-1-o],[c,c]];
+  return stars.map(([i,j])=>i*n+j);
+}
+// The goban: a solid wooden block whose top face carries the grid, standing on four legs.
+// Every face has its own vertices so it shades flat; g is the wood-grain coordinate.
+export function planeExtent(size){const step=2*PLANE_HALF/(size-1);return {half:PLANE_HALF+step*.75+.03,thickness:.2,leg:.14};}
+function planeMesh(size){
+  const {half,thickness,leg}=planeExtent(size),vertices=[],triangles=[],materials=[];
+  function box(x0,x1,y0,y1,z0,z1,top,side,end){
+    const quad=(corners,normal,material,grain)=>{
+      const base=vertices.length;
+      for(const [x,y,z] of corners)vertices.push({x,y,z,normal,g:grain({x,y,z})});
+      triangles.push([base,base+1,base+2],[base,base+2,base+3]);materials.push(material,material);
+    };
+    const alongX=p=>p.x,alongZ=p=>p.z+p.y*.6;
+    quad([[x0,y1,z0],[x0,y1,z1],[x1,y1,z1],[x1,y1,z0]],{x:0,y:1,z:0},top,alongX);
+    quad([[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],{x:0,y:-1,z:0},side,alongX);
+    quad([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],{x:0,y:0,z:1},side,alongX);
+    quad([[x1,y0,z0],[x0,y0,z0],[x0,y1,z0],[x1,y1,z0]],{x:0,y:0,z:-1},side,alongX);
+    quad([[x1,y0,z1],[x1,y0,z0],[x1,y1,z0],[x1,y1,z1]],{x:1,y:0,z:0},end,alongZ);
+    quad([[x0,y0,z0],[x0,y0,z1],[x0,y1,z1],[x0,y1,z0]],{x:-1,y:0,z:0},end,alongZ);
+  }
+  box(-half,half,-thickness,0,-half,half,6,7,8);
+  const inset=half*.64,foot=half*.1;
+  for(const sx of [-1,1])for(const sz of [-1,1])box(sx*inset-foot,sx*inset+foot,-thickness-leg,-thickness,sz*inset-foot,sz*inset+foot,9,9,9);
+  return {vertices,triangles,materials};
+}
 const meshCache=new Map();
-function boardMesh(kind,interactive){
-  const key=kind+':'+interactive;if(meshCache.has(key))return meshCache.get(key);
+function boardMesh(kind,interactive,size){
+  const key=kind+':'+interactive+(kind==='plane'?':'+size:'');if(meshCache.has(key))return meshCache.get(key);
+  if(kind==='plane'){const mesh=planeMesh(size);meshCache.set(key,mesh);return mesh;}
   const nu=interactive?(kind==='sphere'?48:64):(kind==='sphere'?96:128),nv=interactive?(kind==='sphere'?24:32):(kind==='sphere'?48:64),vertices=[],triangles=[];
   for(let u=0;u<=nu;u++)for(let v=0;v<=nv;v++){
     const a=u*TAU/nu,b=v*(kind==='sphere'?Math.PI:TAU)/nv;
@@ -58,6 +92,8 @@ function boardMesh(kind,interactive){
   }
   const mesh={vertices,triangles};meshCache.set(key,mesh);return mesh;
 }
+// Goban wood (materials 6–9): top face, long sides, end-grain sides, legs.
+const WOOD=[[226,186,118],[206,160,94],[192,145,82],[118,80,44]];
 const LIGHT=unit({x:-.45,y:.7,z:1});
 const HALF=unit(add(LIGHT,{x:0,y:0,z:1}));
 let coverage=new Float32Array(0);
@@ -76,7 +112,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
   const matrix=orientationMatrix(orientation??(rotX===undefined?defaultOrientation(topology.kind):orientationFromEuler(rotX,rotY)));
   const rotate=p=>transformPoint(p,matrix);
   const project=p=>{const q=rotate(p);return {x:centerX+q.x*scale,y:centerY-q.y*scale,z:q.z};};
-  const vertex=(p,n)=>({...project(p),normal:rotate(n)});
+  const vertex=(p,n)=>({...project(p),normal:rotate(n),g:p.g});
   const put=(x,y,z,color,owner,epsilon=0)=>{
     if(x<0||x>=width||y<0||y>=height)return;
     const i=y*width+x;if(z+epsilon<depth[i])return;
@@ -97,7 +133,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
       const wc=1-wa-wb;
       if(wa< -1e-7||wb< -1e-7||wc< -1e-7)continue;
       const z=wa*a.z+wb*b.z+wc*c.z,i=y*width+x;if(z<=depth[i])continue;
-      if(material>=3){
+      if(material>=3&&material<=5){
         const factor=material===3?.94:material===4?.88:.79,o=i*4;
         pixels[o]*=factor;pixels[o+1]*=factor;pixels[o+2]*=factor;
         continue;
@@ -110,6 +146,12 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
       const factor=material===1?.48+.62*diffuse:.57+.43*diffuse;
       const shine=spec*(material===1?115:material===2?28:8),o=i*4;
       depth[i]=z;owners[i]=owner;
+      if(material>=6){
+        // Straight grain: fine stripes wandering slowly across the grain coordinate.
+        const s=wa*a.g+wb*b.g+wc*c.g,tone=factor*(1+.05*Math.sin(s*90+2.6*Math.sin(s*11))+.025*Math.sin(s*231+1.3)),wood=WOOD[material-6];
+        pixels[o]=wood[0]*tone+shine;pixels[o+1]=wood[1]*tone+shine;pixels[o+2]=wood[2]*tone+shine;pixels[o+3]=255;
+        continue;
+      }
       pixels[o]=(material===0?218:material===1?23:240)*factor+shine;
       pixels[o+1]=(material===0?195:material===1?30:239)*factor+shine;
       pixels[o+2]=(material===0?148:material===1?29:222)*factor+shine;pixels[o+3]=255;
@@ -141,26 +183,34 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     }
     touched.length=0;
   }
-  const mesh=boardMesh(topology.kind,interactive),vs=mesh.vertices.map(p=>vertex(p,p.normal));
-  for(const [a,b,c] of mesh.triangles)triangle(vs[a],vs[b],vs[c],0,-1);
-  // Grid lines follow the curved surface, not straight chords through it.
+  const plane=topology.kind==='plane',mesh=boardMesh(topology.kind,interactive,topology.size),vs=mesh.vertices.map(p=>vertex(p,p.normal));
+  mesh.triangles.forEach(([a,b,c],k)=>triangle(vs[a],vs[b],vs[c],mesh.materials?.[k]??0,-1));
+  // Grid lines follow the curved surface, not straight chords through it. A goban's lines are
+  // straight and dark, with a heavier border.
+  const last=topology.size-1,border=(p,q)=>plane&&(p.i===q.i&&(p.i===0||p.i===last)||p.j===q.j&&(p.j===0||p.j===last));
+  const lineColor=plane?[48,36,22]:[97,99,72];
+  for(const pass of plane?[false,true]:[false]){
   for(const [a,b] of topology.edges){
     const p=topology.vertices[a],q=topology.vertices[b];let previous;
     // A closed board always hides its own far side; skip those edges before sampling them.
     if(rotate(surfaceNormal(topology.kind,p)).z< -.15&&rotate(surfaceNormal(topology.kind,q)).z< -.15)continue;
-    const steps=16;
+    if(border(p,q)!==pass)continue;
+    const steps=plane?1:16;
     for(let j=0;j<=steps;j++){
       const t=j/steps;let s;
       if(topology.kind==='sphere')s=unit({x:p.x+(q.x-p.x)*t,y:p.y+(q.y-p.y)*t,z:p.z+(q.z-p.z)*t});
+      else if(plane)s={x:p.x+(q.x-p.x)*t,y:0,z:p.z+(q.z-p.z)*t};
       else{let du=q.u-p.u,dv=q.v-p.v;if(du>Math.PI)du-=TAU;if(du< -Math.PI)du+=TAU;if(dv>Math.PI)dv-=TAU;if(dv< -Math.PI)dv+=TAU;s=torus(p.u+du*t,p.v+dv*t);}
-      const next=project(add(s,surfaceNormal(topology.kind,s),.001));if(previous)stroke(previous,next,.65*pixelRatio,.002);previous=next;
+      const next=project(add(s,surfaceNormal(topology.kind,s),.001));if(previous)stroke(previous,next,(pass?1.15:.65)*pixelRatio,.002);previous=next;
     }
   }
-  flush([97,99,72]);
+  flush(lineColor);
+  }
   // Small surface-conforming contact shadows anchor each stone to the board.
   // Blend into the existing board/grid without changing depth or hit ownership.
   function onSurface(p){
     if(topology.kind==='sphere')return unit(p);
+    if(plane)return {x:p.x,y:0,z:p.z};
     const r=Math.hypot(p.x,p.z),core={x:p.x*.72/r,y:0,z:p.z*.72/r};
     return add(core,unit({x:p.x-core.x,y:p.y,z:p.z-core.z}),.28);
   }
@@ -179,11 +229,13 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
   const points=topology.vertices.map((p,i)=>({...project(p),i,visible:false}));
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
   // At least one pixel centre always falls inside, so dots never vanish at low drag resolution.
-  const dotRadius=Math.max(.75,1.6*pixelRatio);
+  // A goban marks only its star points; its other dots are the size of a line crossing.
+  const stars=new Set(starPoints(topology)),starRadius=Math.max(1.6*pixelRatio,stoneRadius(topology)*scale*.2);
   for(const p of points)if(!board[p.i]){
+    const dotRadius=!plane?Math.max(.75,1.6*pixelRatio):stars.has(p.i)?starRadius:Math.max(.75,.7*pixelRatio);
     const normal=rotate(surfaceNormal(topology.kind,topology.vertices[p.i]));
     if(normal.z<=0)continue;
-    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,[65,76,56],p.i,.003);
+    for(let y=Math.floor(p.y-dotRadius);y<=p.y+dotRadius;y++)for(let x=Math.floor(p.x-dotRadius);x<=p.x+dotRadius;x++)if(Math.hypot(x+.5-p.x,y+.5-p.y)<dotRadius)put(x,y,p.z,plane?lineColor:[65,76,56],p.i,.003+(plane?dotRadius/scale:0));
   }
   for(let index=0;index<board.length;index++)if(board[index]){
     const mesh=stoneMesh(topology,index,interactive),stone=mesh.vertices.map(p=>vertex(p,p.normal));
@@ -283,6 +335,7 @@ export function highlightSurface(frame,selected,hover){
       }else{
         const base=topology.vertices[id];p=add(add(base,tangent,r*Math.cos(angle)),bitangent,r*Math.sin(angle));
         if(topology.kind==='sphere')p=unit(p);
+        else if(topology.kind==='plane')p={x:p.x,y:0,z:p.z};
         else{const length=Math.hypot(p.x,p.z),core={x:p.x*.72/length,y:0,z:p.z*.72/length};p=add(core,unit({x:p.x-core.x,y:p.y,z:p.z-core.z}),.28);}
         p=add(p,surfaceNormal(topology.kind,p),.002);
       }

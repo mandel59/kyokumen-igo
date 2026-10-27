@@ -16,12 +16,12 @@ struct Engine {
 }
 impl Engine {
     fn choose(&mut self, kind: u32, size: usize, komi: f64, moves: &[i32], seed: u32, randomize: bool, depth: u32) -> i32 {
-        if !matches!((kind, size), (0, 3..=5) | (1, 7 | 9 | 11))
+        if !matches!((kind, size), (0, 3..=5) | (1 | 2, 7 | 9 | 11))
             || !komi.is_finite() || moves.len() > 10000 {
             return -2;
         }
         if !self.topology.as_ref().is_some_and(|(k, s, _)| *k == kind && *s == size) {
-            let topology = Topology::new(if kind == 0 { Kind::Sphere } else { Kind::Torus }, size);
+            let topology = Topology::new([Kind::Sphere, Kind::Torus, Kind::Plane][kind as usize], size);
             self.scratch = Some(Scratch::new(topology.len()));
             self.topology = Some((kind, size, topology));
         }

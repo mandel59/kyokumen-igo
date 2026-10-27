@@ -11,7 +11,7 @@ const save = game => assert.equal(saveGame(game, settings, view, storage), true)
 const read = () => JSON.parse(data.get(STORAGE_KEY));
 assert.deepEqual(loadSavedGame(storage), {state: null, error: null});
 
-for (const kind of ['sphere', 'torus']) {
+for (const kind of ['sphere', 'torus', 'plane']) {
   for (const size of kind === 'sphere' ? [3, 4, 5] : [7, 9, 11]) {
     for (const komi of Array.from({length:20},(_,i)=>i/2)) {
       const game = new Game(createTopology(kind, size), komi);
@@ -62,7 +62,8 @@ const original = read();
 const mutations = [
   d => d.version = 3,
   d => d.game.version = 2,
-  d => d.game.kind = 'plane',
+  d => d.game.kind = 'cube',
+  d => { d.game.kind = 'plane'; d.game.size = 5; },
   d => d.game.size = 40,
   d => d.game.komi = '6.5',
   d => d.game.komi = 10.5,

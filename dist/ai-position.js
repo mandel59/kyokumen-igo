@@ -1,6 +1,6 @@
 import {createTopology,Game} from './engine.js';
 
-const SIZES={sphere:[3,4,5],torus:[7,9,11]};
+const SIZES={sphere:[3,4,5],torus:[7,9,11],plane:[7,9,11]};
 
 // Only the move list crosses the Worker boundary; the UI keeps its snapshots for undo/save.
 export function aiPosition(game) {

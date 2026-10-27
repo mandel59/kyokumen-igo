@@ -2,7 +2,7 @@ import {createTopology,Game} from './engine.js';
 import {createJSAI} from './ai-js.js';
 import {aiPosition} from './ai-position.js';
 import {KOMI_MIN,KOMI_MAX,KOMI_STEP} from './komi.js';
-import {renderSurface,highlightSurface,MARKER,MARKS,markerColor} from './surface-renderer.js';
+import {renderSurface,highlightSurface,starPoints,MARKER,MARKS,markerColor} from './surface-renderer.js';
 import {analyzeBoard} from './board-analysis.js';
 import {COUNTERS,MARK_KEYS,counterValues,loadDisplay,marksShown,saveDisplay} from './display.js';
 import {sphereProjection} from './sphere-projection.js';
@@ -14,6 +14,8 @@ import {defaultOrientation,rotateByDrag} from './orientation.js';
 import {encodeRecord,decodeRecord} from './record.js';
 const $=id=>document.getElementById(id),canvas=$('board'),ctx=canvas.getContext('2d'),map=$('map'),mctx=map.getContext('2d');
 let mapView=false,replay=null;
+// Each board's name and its whole-board view: the sphere's two hemispheres, the torus net, the goban seen from above.
+const KINDS=['sphere','torus','plane'],KIND_NAMES={sphere:'球面',torus:'トーラス',plane:'平面'},MAP_NAMES={sphere:'全球図',torus:'展開図',plane:'俯瞰図'};
 let restoreWarning='';
 // Gesture words follow the input in use: touch says スワイプ/タップ, a mouse says ドラッグ/クリック.
 // Start from the primary pointer, then follow whichever pointer the player actually uses.
@@ -39,6 +41,8 @@ function renderAIInfo(){
   for(const choice of AI_CHOICES){$('aiChoice_'+choice).checked=aiChoice===choice;$('aiChoice_'+choice).disabled=!aiAvailable(choice);}
   $('aiV3Note').textContent=aiAvailable('v3')?'初回に数 MB を取得':'この端末では使えません';
   $('aiNote').hidden=!(backend&&ai!==aiChoice);
+  // v3 has learned only the closed surfaces, so v2 plays the plane boards.
+  $('aiNote').textContent=kind==='plane'?'v3 は平面盤に対応していないため、v2 で対局しています。':'v3 を読み込めなかったため、v2 で対局しています。';
   $('aiName').textContent=AI_NAMES[ai];$('aiDescription').textContent=AI_DESCRIPTIONS[ai];
   $('aiBackend').textContent=failed?'読み込めませんでした':backend?(AI_BACKENDS[backend]??backend)+(mainThread?'（Web Worker を使えないため画面側で実行）':''):'読み込み中…';
 }
@@ -94,13 +98,13 @@ function render(){
   if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}
-let mapPoints=[];function renderMap(){mapMarks=boardMarks();const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),2);});}
+let mapPoints=[];function renderMap(){mapMarks=boardMarks();const rect=map.getBoundingClientRect(),w=rect.width,h=rect.height,dpr=window.devicePixelRatio||1;if(map.width!==Math.round(w*dpr)||map.height!==Math.round(h*dpr)){map.width=Math.round(w*dpr);map.height=Math.round(h*dpr);}mctx.setTransform(dpr,0,0,dpr,0,0);mctx.clearRect(0,0,w,h);if(kind==='sphere'){renderSphereMap(w,h);return;}if(kind==='plane'){renderPlaneMap(w,h);return;}const size=game.topology.size,side=Math.max(20,Math.min(w-60,h-48)),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2;mapPoints=[];mctx.strokeStyle='#66705a80';mctx.lineWidth=1;for(let i=0;i<size;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}mctx.fillStyle='#647357';mctx.font='11px sans-serif';mctx.textAlign='center';mctx.fillText('↕',w/2,oy-12);mctx.fillText('↕',w/2,oy+side+20);mctx.fillText('↔',ox-20,h/2);mctx.fillText('↔',ox+side+20,h/2);game.topology.vertices.forEach((v,i)=>{const p={x:ox+v.i*step,y:oy+v.j*step,i};mapPoints.push(p);drawMapPoint(p,Math.min(step*.4,13),2);});}
 // Both maps draw markers in the 3D board's style (MARKER): same colours, outline and ring sizes.
 const rgb=([r,g,b])=>`rgb(${r},${g},${b})`;
 function drawMapPoint(p,stoneRadius,dotRadius){
   const stone=game.board[p.i];
   if(stone)drawStone(mctx,p.x,p.y,stoneRadius,stone,game.lastMove===p.i);
-  else{mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,dotRadius,0,Math.PI*2);mctx.fill();}
+  else if(dotRadius){mctx.fillStyle='#51604b';mctx.beginPath();mctx.arc(p.x,p.y,dotRadius,0,Math.PI*2);mctx.fill();}
   drawMapMarks(p,stoneRadius);
   const active=selected===p.i||hover===p.i;
   if(!active&&(selected===null||!game.topology.neighbors[selected].includes(p.i)))return;
@@ -131,6 +135,23 @@ function drawMapMarks(p,radius){
   }
 }
 
+// The goban from straight above: wood, the grid with a heavier border, and its star points.
+function renderPlaneMap(w,h){
+  const size=game.topology.size,side=Math.max(20,Math.min(w-40,h-32)*.86),step=side/(size-1),ox=(w-side)/2,oy=(h-side)/2,margin=step*.75+4;
+  const left=ox-margin,width=side+margin*2;
+  mctx.fillStyle='#e2b976';mctx.fillRect(left,oy-margin,width,width);
+  // Straight grain: thin stripes, a little lighter and darker, with the same rhythm as the 3D board's wood.
+  for(let x=0;x<width;x+=2){const t=x/width*1.7,tone=Math.sin(t*90+2.6*Math.sin(t*11))+.5*Math.sin(t*231+1.3);if(Math.abs(tone)<.6)continue;mctx.fillStyle=tone>0?'#f2d39a40':'#b58a4a30';mctx.fillRect(left+x,oy-margin,2,width);}
+  mctx.strokeStyle='#30241680';mctx.lineWidth=1;mctx.strokeRect(ox-margin+.5,oy-margin+.5,side+margin*2-1,side+margin*2-1);
+  mctx.strokeStyle='#302416';mctx.lineWidth=1;
+  for(let i=1;i<size-1;i++){mctx.beginPath();mctx.moveTo(ox+i*step,oy);mctx.lineTo(ox+i*step,oy+side);mctx.moveTo(ox,oy+i*step);mctx.lineTo(ox+side,oy+i*step);mctx.stroke();}
+  mctx.lineWidth=2;mctx.strokeRect(ox,oy,side,side);
+  const radius=Math.min(step*.47,24);
+  mctx.fillStyle='#302416';
+  for(const i of starPoints(game.topology))if(!game.board[i]){const v=game.topology.vertices[i];mctx.beginPath();mctx.arc(ox+v.i*step,oy+v.j*step,Math.max(2.5,radius*.2),0,Math.PI*2);mctx.fill();}
+  mapPoints=game.topology.vertices.map((v,i)=>({x:ox+v.i*step,y:oy+v.j*step,i}));
+  for(const p of mapPoints)drawMapPoint(p,radius,0);
+}
 function renderSphereMap(w,h){
   const projection=sphereProjection(game.topology,w,h);mapPoints=projection.points;
   for(const view of projection.views){
@@ -271,8 +292,8 @@ function sizeOptions(boardKind=$('boardKind').value){
   syncChoices();
 }
 function startGame(){restoreWarning='';cancelAI();if(replay){replay=null;clearSharedRecordURL();}kind=$('boardKind').value;settings={opponent:$('opponent').value,human:Number($('humanColor').value)};game=new Game(createTopology(kind,Number($('size').value)),Number($('komi').value));selected=null;hover=null;orientation=defaultOrientation(kind);showGame();}
-function showGame(){$('sphereTab').classList.toggle('active',kind==='sphere');$('torusTab').classList.toggle('active',kind==='torus');$('sphereTab').setAttribute('aria-pressed',kind==='sphere');$('torusTab').setAttribute('aria-pressed',kind==='torus');SIZE_TABS.forEach((id,i)=>{const active=BOARD_SIZES[kind][i]===game.topology.size;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);});syncView();$('topologyName').textContent=kind==='sphere'?'球面盤':'トーラス盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS';update();resize();scheduleAI();}
-function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':kind==='sphere'?'全球図':'展開図';$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent=kind==='sphere'?'表裏を正距方位で投影 · 円周上の点は両図で共通':'上下・左右の端がつながります';applyInputWords();$('boardHint').textContent=defaultHint();if(showMap)renderMap();else resize();}
+function showGame(){for(const k of KINDS){$(k+'Tab').classList.toggle('active',kind===k);$(k+'Tab').setAttribute('aria-pressed',kind===k);}SIZE_TABS.forEach((id,i)=>{const active=BOARD_SIZES[kind][i]===game.topology.size;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',active);});syncView();$('topologyName').textContent=KIND_NAMES[kind]+'盤';$('nodeCount').textContent=game.board.length+' INTERSECTIONS';update();resize();scheduleAI();}
+function syncView(){const showMap=mapView;$('surfaceSection').hidden=showMap;$('mapSection').hidden=!showMap;$('viewToggle').hidden=false;$('viewToggle').textContent=showMap?'立体盤':MAP_NAMES[kind];$('viewToggle').setAttribute('aria-pressed',String(showMap));$('homeView').disabled=showMap;$('mapHint').textContent={sphere:'表裏を正距方位で投影 · 円周上の点は両図で共通',torus:'上下・左右の端がつながります',plane:'盤を真上から見た図です'}[kind];applyInputWords();$('boardHint').textContent=defaultHint();if(showMap)renderMap();else resize();}
 // The board hint when nothing is selected; contextual hints (a selected point) replace it.
 function defaultHint(){
   if($('inspect').checked)return '交点を選ぶと、隣接点が光ります';
@@ -282,7 +303,7 @@ function defaultHint(){
 function applyInputWords(){
   const {rotate,place}=inputWords();
   canvas.setAttribute('aria-label',replay?`${rotate}で回転。矢印キーで交点を選択`:`${rotate}で回転、交点を${place}して着手。矢印キーで交点を選びEnterで着手`);
-  map.setAttribute('aria-label',(kind==='sphere'?'球面の全交点を前後の半球に投影した全球図':'上下左右がつながる展開図')+(replay?'':`。交点を${place}して着手`));
+  map.setAttribute('aria-label',{sphere:'球面の全交点を前後の半球に投影した全球図',torus:'上下左右がつながる展開図',plane:'碁盤を真上から見た俯瞰図'}[kind]+(replay?'':`。交点を${place}して着手`));
   $('rulesPlaceWord').textContent=place;$('rulesRotateWord').textContent=rotate;$('rulesRotateCaption').textContent=rotate+'で回転';
 }
 function setTouchInput(touch){
@@ -311,11 +332,11 @@ const boardLocked=()=>!!replay||game.moves>0&&!game.ended;
 function syncBoardTabs(){
   const locked=boardLocked(),ordinal=BOARD_SIZES[kind].indexOf(game.topology.size);
   $('kindTabs').inert=locked;$('sizeTabs').inert=locked;$('boardSummary').hidden=!locked;
-  $('boardSummary').textContent=`${kind==='sphere'?'球面':'トーラス'} · ${['小','標準','大'][ordinal]} · ${SIZE_DETAILS[kind][ordinal]}`;
+  $('boardSummary').textContent=`${KIND_NAMES[kind]} · ${['小','標準','大'][ordinal]} · ${SIZE_DETAILS[kind][ordinal]}`;
 }
 // Board tabs start a new game on the board they pick, keeping the other choice that is on screen
 // (the shape or the size), with the player's own opponent and komi.
-const BOARD_SIZES={sphere:[3,4,5],torus:[7,9,11]},SIZE_TABS=['sizeSmall','sizeStandard','sizeLarge'];
+const BOARD_SIZES={sphere:[3,4,5],torus:[7,9,11],plane:[7,9,11]},SIZE_TABS=['sizeSmall','sizeStandard','sizeLarge'];
 function switchBoard(nextKind,nextSize=BOARD_SIZES[nextKind][BOARD_SIZES[kind].indexOf(game.topology.size)]){
   if(boardLocked()||kind===nextKind&&game.topology.size===nextSize||!confirmReset())return;
   syncSettings();
@@ -327,8 +348,8 @@ function switchBoard(nextKind,nextSize=BOARD_SIZES[nextKind][BOARD_SIZES[kind].i
 $('boardKind').onchange=()=>sizeOptions();
 // The dialog shows segmented radio groups and a komi stepper. They write into hidden fields
 // (#opponent, #humanColor, #boardKind, #size, #komi), which syncSettings and startGame use.
-const CHOICES={opponent:['ai','human'],humanColor:['1','2'],boardKind:['sphere','torus'],size:['0','1','2']};
-const SIZE_DETAILS={sphere:['56 交点','98 交点','152 交点'],torus:['7 × 7','9 × 9','11 × 11']},KOMI_RANGE=[KOMI_MIN,KOMI_MAX];
+const CHOICES={opponent:['ai','human'],humanColor:['1','2'],boardKind:KINDS,size:['0','1','2']};
+const SIZE_DETAILS={sphere:['56 交点','98 交点','152 交点'],torus:['7 × 7','9 × 9','11 × 11'],plane:['7 路','9 路','11 路']},KOMI_RANGE=[KOMI_MIN,KOMI_MAX];
 function syncChoices(){
   const boardKind=$('boardKind').value,ordinal=String(BOARD_SIZES[boardKind].indexOf(Number($('size').value)));
   for(const [field,values] of Object.entries(CHOICES))for(const value of values)$(field+'_'+value).checked=(field==='size'?ordinal:$(field).value)===value;
@@ -399,7 +420,7 @@ function closeReplay(){
 }
 async function shareRecord(){
  const url=window.location.href.split('#')[0]+'#kifu='+encodeRecord(game,settings.opponent==='ai'?3-settings.human:0);
- const text=`曲面囲碁の棋譜（${kind==='sphere'?'球面盤':'トーラス盤'} · ${resultText(game.score())}）`;
+ const text=`曲面囲碁の棋譜（${KIND_NAMES[kind]}盤 · ${resultText(game.score())}）`;
  if(navigator.share)try{await navigator.share({title:'曲面囲碁の棋譜',text,url});return;}catch(error){if(error.name==='AbortError')return;}
  try{await navigator.clipboard.writeText(url);showCopied();}
  catch{prompt('このリンクをコピーして共有してください。',url);}
@@ -414,7 +435,7 @@ function showCopied(){
 $('shareRecord').onclick=shareRecord;$('replayPrev').onclick=()=>showReplayStep(game.moves-1);$('replayNext').onclick=()=>showReplayStep(game.moves+1);$('replaySlider').oninput=()=>showReplayStep(Number($('replaySlider').value));$('replayClose').onclick=closeReplay;window.onhashchange=openSharedRecord;
 // Starting a new game from a shared record still replaces the player's own saved game.
 function confirmReset(){const own=replay?replay.own.game:game;return!own.moves||confirm(replay?'自分の対局を終了して、新しい対局を始めますか？':own.ended?'新しい対局を始めますか？ 棋譜をシェアしていない場合、終局した対局は残りません。':'今の対局を終了して、新しい対局を始めますか？');}
-$('sphereTab').onclick=()=>switchBoard('sphere');$('torusTab').onclick=()=>switchBoard('torus');SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=syncChoices;
+for(const k of KINDS)$(k+'Tab').onclick=()=>switchBoard(k);SIZE_TABS.forEach((id,i)=>{$(id).onclick=()=>switchBoard(kind,BOARD_SIZES[kind][i]);});$('newGame').onclick=()=>{if(confirmReset()){startGame();$('settingsDialog').close();}};$('pass').onclick=()=>{if(canPlay()){game.pass();selected=null;update();scheduleAI();}};$('undo').onclick=()=>{cancelAI();if(settings.opponent==='human')game.undo();else{do{game.undo();}while(game.moves>0&&game.turn!==settings.human);}selected=null;update('一手前に戻しました。');scheduleAI();};$('homeView').onclick=()=>{orientation=defaultOrientation(kind);render();persist();};$('inspect').onchange=()=>{selected=null;$('boardHint').textContent=defaultHint();render();};$('opponent').onchange=syncChoices;
 // Dialog tabs: the selected tab stays selected while the dialog is closed. Arrow keys, Home and End move between tabs.
 function dialogTabs(prefix,count){
  const show=(next,focus=false)=>{
