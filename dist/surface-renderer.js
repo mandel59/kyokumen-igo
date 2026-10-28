@@ -13,7 +13,7 @@ export function surfaceNormal(kind,p) {
   const r=Math.hypot(p.x,p.z);
   return unit({x:p.x*(1-.72/r),y:p.y,z:p.z*(1-.72/r)});
 }
-const radiusCache=new WeakMap(),stoneMeshCache=new WeakMap();
+const radiusCache=new WeakMap(),stoneMeshCache=new WeakMap(),geometryCache=new WeakMap(),gridCache=new WeakMap(),shadowCache=new WeakMap();
 export function stoneRadius(topology){
   if(radiusCache.has(topology))return radiusCache.get(topology);
   let spacing=Infinity;
@@ -21,11 +21,14 @@ export function stoneRadius(topology){
   const radius=spacing*(topology.kind==='plane'?.47:.43);radiusCache.set(topology,radius);return radius;
 }
 export function stoneGeometry(topology,index) {
+  let cache=geometryCache.get(topology);if(!cache){cache=new Map();geometryCache.set(topology,cache);}
+  if(cache.has(index))return cache.get(index);
   const p=topology.vertices[index],normal=surfaceNormal(topology.kind,p);
   const radius=stoneRadius(topology),halfHeight=radius*.42;
   const tangent=unit(cross(normal,Math.abs(normal.y)<.9?{x:0,y:1,z:0}:{x:1,y:0,z:0}));
   // Curved boards seat the stone slightly into the surface; a plane board's stone rests on top.
-  return {center:add(p,normal,halfHeight*(topology.kind==='plane'?.92:.56)),normal,tangent,bitangent:cross(normal,tangent),radius,halfHeight};
+  const shape={center:add(p,normal,halfHeight*(topology.kind==='plane'?.92:.56)),normal,tangent,bitangent:cross(normal,tangent),radius,halfHeight};
+  cache.set(index,shape);return shape;
 }
 function stoneMesh(topology,index,interactive){
   let cache=stoneMeshCache.get(topology);if(!cache){cache=new Map();stoneMeshCache.set(topology,cache);}
@@ -47,6 +50,23 @@ export function rotatePoint(p,rotX,rotY) {
   return transformPoint(p,orientationMatrix(Array.isArray(rotX)?rotX:orientationFromEuler(rotX,rotY)));
 }
 function torus(u,v){const r=.72+.28*Math.cos(v);return {x:r*Math.cos(u),y:.28*Math.sin(v),z:r*Math.sin(u)};}
+// Topology and the paths on its surface do not change when the camera turns.
+function gridPaths(topology){
+  if(gridCache.has(topology))return gridCache.get(topology);
+  const paths=topology.edges.map(([a,b])=>{
+    const p=topology.vertices[a],q=topology.vertices[b],points=[],plane=topology.kind==='plane',steps=plane?1:16;
+    let du=q.u-p.u,dv=q.v-p.v;if(du>Math.PI)du-=TAU;if(du< -Math.PI)du+=TAU;if(dv>Math.PI)dv-=TAU;if(dv< -Math.PI)dv+=TAU;
+    for(let j=0;j<=steps;j++){
+      const t=j/steps;let s;
+      if(topology.kind==='sphere')s=unit({x:p.x+(q.x-p.x)*t,y:p.y+(q.y-p.y)*t,z:p.z+(q.z-p.z)*t});
+      else if(plane)s={x:p.x+(q.x-p.x)*t,y:0,z:p.z+(q.z-p.z)*t};
+      else s=torus(p.u+du*t,p.v+dv*t);
+      points.push(add(s,surfaceNormal(topology.kind,s),.001));
+    }
+    return {p,q,normalP:surfaceNormal(topology.kind,p),normalQ:surfaceNormal(topology.kind,q),points};
+  });
+  gridCache.set(topology,paths);return paths;
+}
 // Star points (hoshi) of the plane boards: the corner points and the centre.
 export function starPoints(topology){
   if(topology.kind!=='plane')return [];
@@ -122,7 +142,28 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
   };
   const project=p=>toScreen(rotate(p));
   // front > 0 when the surface faces the camera: along +z for orthographic, towards the eye in perspective.
-  const vertex=(p,n)=>{const q=rotate(p),normal=rotate(n);return {...toScreen(q),normal,front:perspective?CAMERA*normal.z-(normal.x*q.x+normal.y*q.y+normal.z*q.z):normal.z};};
+  const vertex=(p,n)=>{const q=rotate(p),normal=rotate(n),s=toScreen(q);return {x:s.x,y:s.y,z:s.z,normal,front:perspective?CAMERA*normal.z-(normal.x*q.x+normal.y*q.y+normal.z*q.z):normal.z};};
+  // A sphere enclosing the entire object projects inside this camera-space box.
+  // Reject it only when EVERY pixel in the box is nearer, retaining silhouettes
+  // and stones partly visible through the torus hole. Account for Float32 depth rounding.
+  function occluded(center,radius){
+    const q=rotate(center);let minX,maxX,minY,maxY,maxZ;
+    if(!perspective){
+      minX=centerX+(q.x-radius)*scale;maxX=centerX+(q.x+radius)*scale;
+      minY=centerY-(q.y+radius)*scale;maxY=centerY-(q.y-radius)*scale;maxZ=q.z+radius;
+    }else{
+      if(q.z+radius>=CAMERA)return false;
+      minX=minY=Infinity;maxX=maxY=maxZ=-Infinity;
+      for(const dx of [-radius,radius])for(const dy of [-radius,radius])for(const dz of [-radius,radius]){
+        const p=toScreen({x:q.x+dx,y:q.y+dy,z:q.z+dz});
+        minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);maxZ=Math.max(maxZ,p.z);
+      }
+    }
+    minX=Math.max(0,Math.floor(minX));maxX=Math.min(width-1,Math.ceil(maxX));
+    minY=Math.max(0,Math.floor(minY));maxY=Math.min(height-1,Math.ceil(maxY));
+    for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++)if(depth[y*width+x]<maxZ+1e-6)return false;
+    return true;
+  }
   const put=(x,y,z,color,owner,epsilon=0)=>{
     if(x<0||x>=width||y<0||y>=height)return;
     const i=y*width+x;if(z+epsilon<depth[i])return;
@@ -194,18 +235,13 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
   const last=topology.size-1,border=(p,q)=>plane&&(p.i===q.i&&(p.i===0||p.i===last)||p.j===q.j&&(p.j===0||p.j===last));
   const lineColor=[97,99,72];
   for(const pass of plane?[false,true]:[false]){
-  for(const [a,b] of topology.edges){
-    const p=topology.vertices[a],q=topology.vertices[b];let previous;
+  for(const {p,q,normalP,normalQ,points} of gridPaths(topology)){
+    let previous;
     // A closed board always hides its own far side; skip those edges before sampling them.
-    if(rotate(surfaceNormal(topology.kind,p)).z< -.15&&rotate(surfaceNormal(topology.kind,q)).z< -.15)continue;
+    if(rotate(normalP).z< -.15&&rotate(normalQ).z< -.15)continue;
     if(border(p,q)!==pass)continue;
-    const steps=plane?1:16;
-    for(let j=0;j<=steps;j++){
-      const t=j/steps;let s;
-      if(topology.kind==='sphere')s=unit({x:p.x+(q.x-p.x)*t,y:p.y+(q.y-p.y)*t,z:p.z+(q.z-p.z)*t});
-      else if(plane)s={x:p.x+(q.x-p.x)*t,y:0,z:p.z+(q.z-p.z)*t};
-      else{let du=q.u-p.u,dv=q.v-p.v;if(du>Math.PI)du-=TAU;if(du< -Math.PI)du+=TAU;if(dv>Math.PI)dv-=TAU;if(dv< -Math.PI)dv+=TAU;s=torus(p.u+du*t,p.v+dv*t);}
-      const next=project(add(s,surfaceNormal(topology.kind,s),.001));if(previous)stroke(previous,next,(pass?1.15:.65)*pixelRatio,.002);previous=next;
+    for(const point of points){
+      const next=project(point);if(previous)stroke(previous,next,(pass?1.15:.65)*pixelRatio,.002);previous=next;
     }
   }
   flush(lineColor);
@@ -218,17 +254,23 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     const r=Math.hypot(p.x,p.z),core={x:p.x*.72/r,y:0,z:p.z*.72/r};
     return add(core,unit({x:p.x-core.x,y:p.y,z:p.z-core.z}),.28);
   }
+  let shadows=shadowCache.get(topology);if(!shadows){shadows=new Map();shadowCache.set(topology,shadows);}
   for(let index=0;index<board.length;index++)if(board[index]){
-    const {tangent,bitangent,radius}=stoneGeometry(topology,index),p=topology.vertices[index];
-    const lift=q=>vertex(add(q,surfaceNormal(topology.kind,q),.003),surfaceNormal(topology.kind,q));
-    const center=lift(p);
-    for(const [r,material] of [[1.08,3],[.98,4],[.88,5]]){
-      let previous;
-      for(let i=0;i<=20;i++){
-        const angle=i*TAU/20,q=onSurface(add(add(p,tangent,radius*r*Math.cos(angle)),bitangent,radius*r*Math.sin(angle))),next=lift(q);
-        if(previous)triangle(center,previous,next,material,-1);previous=next;
+    const p=topology.vertices[index];let shadow=shadows.get(index);
+    if(!shadow){
+      const {tangent,bitangent,radius}=stoneGeometry(topology,index),vertices=[],triangles=[];
+      const lift=q=>{const normal=surfaceNormal(topology.kind,q);vertices.push({...add(q,normal,.003),normal});};
+      lift(p);let bound=0;
+      for(const [r,material] of [[1.08,3],[.98,4],[.88,5]])for(let i=0;i<=20;i++){
+        const angle=i*TAU/20,q=onSurface(add(add(p,tangent,radius*r*Math.cos(angle)),bitangent,radius*r*Math.sin(angle)));
+        lift(q);const v=vertices.at(-1);bound=Math.max(bound,Math.hypot(v.x-p.x,v.y-p.y,v.z-p.z));
+        if(i)triangles.push([0,vertices.length-2,vertices.length-1,material]);
       }
+      shadow={vertices,triangles,bound};shadows.set(index,shadow);
     }
+    if(occluded(p,shadow.bound))continue;
+    const vertices=shadow.vertices.map(p=>vertex(p,p.normal));
+    for(const [a,b,c,material] of shadow.triangles)triangle(vertices[a],vertices[b],vertices[c],material,-1);
   }
   const points=topology.vertices.map((p,i)=>({...project(p),i,visible:false}));
   // Empty intersection dots are depth-tested too; rear-face dots cannot be clicked.
@@ -251,6 +293,7 @@ export function renderSurface({topology,board,lastMove=null,orientation,rotX,rot
     for(let y=Math.floor(p.y-reach);y<=p.y+reach;y++)for(let x=Math.floor(p.x-reach);x<=p.x+reach;x++)if(inside(x+.5-p.x,y+.5-p.y)||x===Math.floor(p.x)&&y===Math.floor(p.y))put(x,y,p.z+gx*(x+.5-p.x)+gy*(y+.5-p.y),plane&&!star?lineColor:[65,76,56],p.i,.003);
   }
   for(let index=0;index<board.length;index++)if(board[index]){
+    const {center,radius}=stoneGeometry(topology,index);if(occluded(center,radius))continue;
     const mesh=stoneMesh(topology,index,interactive),stone=mesh.vertices.map(p=>vertex(p,p.normal));
     for(const [a,b,c] of mesh.triangles)triangle(stone[a],stone[b],stone[c],board[index],index);
   }

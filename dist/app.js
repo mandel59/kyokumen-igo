@@ -63,6 +63,7 @@ function renderCounters(){
 let width=0,height=0,scale=1,centerX=0,centerY=0;
 const errors={occupied:'そこにはすでに石があります。',suicide:'呼吸点がなくなる手は打てません。',superko:'過去と同じ盤面になる手は打てません。',ended:'対局は終了しました。',invalid:'交点を選んでください。'};
 let surfaceFrame=null,surfaceKey='',rasterRatio=1,renderQueued=false;
+let surfaceImage=null,paintedFrame=null,paintedSelected=null,paintedHover=null;
 // Drag frames trade resolution for speed. Their pixel budget follows the measured frame
 // time, so fast devices drag sharply while slow ones keep the original 90k-pixel floor.
 const DRAG_FRAME_MS=16;let dragPixels=90000;
@@ -84,16 +85,18 @@ function render(){
   rasterRatio=Math.min(interactive?(window.devicePixelRatio||1):Math.max(1.5,window.devicePixelRatio||1),3,Math.sqrt((interactive?dragPixels:3000000)/Math.max(1,width*height)));
   const rw=Math.max(1,Math.round(width*rasterRatio)),rh=Math.max(1,Math.round(height*rasterRatio));
   if(canvas.width!==rw)canvas.width=rw;if(canvas.height!==rh)canvas.height=rh;
-  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height,MARK_KEYS.map(name=>display.marks[name]?1:0).join('')].join('|'),drawn=key!==surfaceKey;
+  const key=[kind,game.topology.size,game.board.join(''),game.lastMove,...orientation,canvas.width,canvas.height,scale*rasterRatio,centerX*rasterRatio,centerY*rasterRatio,rasterRatio,interactive,MARK_KEYS.map(name=>display.marks[name]?1:0).join('')].join('|'),drawn=key!==surfaceKey||surfaceFrame?.topology!==game.topology;
   if(drawn){
     surfaceFrame=renderSurface({topology:game.topology,board:game.board,lastMove:game.lastMove,marks:boardMarks(),orientation,width:canvas.width,height:canvas.height,scale:scale*rasterRatio,centerX:centerX*rasterRatio,centerY:centerY*rasterRatio,pixelRatio:rasterRatio,interactive});
     surfaceKey=key;
   }
-  screen=surfaceFrame.points.map(p=>({...p,x:p.x/rasterRatio,y:p.y/rasterRatio}));
+  if(drawn)screen=surfaceFrame.points.map(p=>({...p,x:p.x/rasterRatio,y:p.y/rasterRatio}));
+  if(paintedFrame===surfaceFrame&&paintedSelected===selected&&paintedHover===hover)return;
   const pixels=highlightSurface(surfaceFrame,selected,hover);
   // createImageData is available in browsers; headless DOM test doubles may omit it.
-  const image=ctx.createImageData(canvas.width,canvas.height);
-  if(image?.data){image.data.set(pixels);ctx.putImageData(image,0,0);}
+  if(!surfaceImage||surfaceImage.width!==canvas.width||surfaceImage.height!==canvas.height)surfaceImage=ctx.createImageData(canvas.width,canvas.height);
+  if(surfaceImage?.data){surfaceImage.data.set(pixels);ctx.putImageData(surfaceImage,0,0);}
+  paintedFrame=surfaceFrame;paintedSelected=selected;paintedHover=hover;
   if(interactive&&drawn)adaptDragPixels(performance.now()-started);
 }
 function drawStone(c,x,y,r,color,last){c.save();c.shadowColor='#14231755';c.shadowBlur=4;c.shadowOffsetY=3;const g=c.createRadialGradient(x-r*.35,y-r*.45,r*.1,x,y,r);if(color===1){g.addColorStop(0,'#52605b');g.addColorStop(.45,'#25332e');g.addColorStop(1,'#15201d');}else{g.addColorStop(0,'#fffef1');g.addColorStop(.65,'#ede9d7');g.addColorStop(1,'#b7b6a3');}c.fillStyle=g;c.beginPath();c.arc(x,y,r,0,Math.PI*2);c.fill();c.shadowColor='transparent';if(last){c.strokeStyle=color===1?'#e1c58e':'#536a58';c.lineWidth=1.5;c.beginPath();c.arc(x,y,r*.36,0,Math.PI*2);c.stroke();}c.restore();}

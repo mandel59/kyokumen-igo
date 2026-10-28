@@ -114,12 +114,15 @@ node display-tests.mjs
 node --experimental-vm-modules persistence-review.mjs
 node projection-review.mjs
 node rendering-review.mjs
+node tools/bench-rendering.mjs
 node orientation-tests.mjs
 node --experimental-vm-modules rotation-review.mjs
 node ui-tests.mjs
 UI_WIDTH=390 UI_HEIGHT=844 node ui-tests.mjs
 UI_WIDTH=844 UI_HEIGHT=390 node ui-tests.mjs
 ```
+
+描画の変更前後を比較するには `node tools/bench-rendering.mjs --baseline <変更前のコミット>` を実行します。全盤種・全サイズの90ケースで画像・奥行き・選択判定の一致を検証し、空盤・中盤・密集盤面のドラッグ時／静止時の描画時間の中央値を表示します。Node.js上のCPU描画の計測で、ブラウザーへの転送・表示時間は含みません。
 
 最後の 2 行は POSIX シェル向けです。`UI_WIDTH` / `UI_HEIGHT` を省略すると 360 × 640 の想定になります。
 
