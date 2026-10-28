@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "partition": "development",
+  "totalRoots": 140,
+  "labeledPlaneRoots": 48,
+  "summaries": [
+    {
+      "variant": "A8",
+      "labeled": 48,
+      "bestIncluded": 41,
+      "bestSelected": 16,
+      "selectedWhenIncluded": 16,
+      "includedMassMean": 0.7974053724053723
+    },
+    {
+      "variant": "B16",
+      "labeled": 48,
+      "bestIncluded": 47,
+      "bestSelected": 16,
+      "selectedWhenIncluded": 16,
+      "includedMassMean": 0.9410307285307286
+    }
+  ],
+  "transitions": {
+    "newlyIncluded": 6,
+    "newlyIncludedAndSelected": 1,
+    "selectionImproved": 2,
+    "selectionLost": 2
+  },
+  "holdoutTeacherLabels": "not generated or inspected; study stopped at development gate",
+  "interpretation": "Teacher first-choice agreement is a diagnostic, not a proof of optimality or a substitute for match strength."
+}

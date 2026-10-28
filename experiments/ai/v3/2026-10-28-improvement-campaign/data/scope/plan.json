@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-learning-scope-study-20261028",
+  "date": "2026-10-28",
+  "status": "registered-before-training",
+  "workspace": "tools/ai-gnn/target/learning-scope-study-20261028",
+  "reason": "Search variants and frozen-policy-head continuation failed development gates. Compare full-network continuation and value-only learning with the same fixed-size network and original data.",
+  "baseline": {
+    "model": "dist/models/v3",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "visits": 64,
+    "fpu": 1,
+    "rootQScale": 0.4
+  },
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3"
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7"
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9"
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11"
+    },
+    {
+      "kind": "plane",
+      "size": 7,
+      "key": "plane7"
+    },
+    {
+      "kind": "plane",
+      "size": 9,
+      "key": "plane9"
+    },
+    {
+      "kind": "plane",
+      "size": 11,
+      "key": "plane11"
+    }
+  ],
+  "data": {
+    "path": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher.jsonl.gz",
+    "sha256": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+    "checkpoint": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher-model/weights.pt",
+    "splitManifest": "dist/models/v3/manifest.json",
+    "trainingPositions": 9263,
+    "validationPositions": 3123,
+    "policy": "Reuse only original teacher training/validation partitions; no reported game, previous diagnostic holdout, screen games or future independent matches in learning."
+  },
+  "training": {
+    "seed": 2026102900,
+    "trainable": "per-arm: all120905 parameters or value head only; value-only must preserve every other tensor exactly",
+    "epochs": 8,
+    "batchSize": 64,
+    "learningRate": 0.00003,
+    "minimumLearningRate": 0.000003,
+    "cosine": true,
+    "emaDecay": 0.99,
+    "balanced": true,
+    "normalTraining": true,
+    "normalSelection": true,
+    "normalizePolicy": true,
+    "checkpointEvery": 2,
+    "selection": "Lowest common validation loss at epochs0/2/4/6/8 including baseline epoch0; no result-driven recipe changes.",
+    "arms": [
+      {
+        "id": "AllUniform",
+        "trainable": "all",
+        "surpriseFraction": 0
+      },
+      {
+        "id": "AllPriority",
+        "trainable": "all",
+        "surpriseFraction": 0.25
+      },
+      {
+        "id": "ValueUniform",
+        "trainable": "value",
+        "surpriseFraction": 0
+      }
+    ]
+  },
+  "preflight": {
+    "requireSelectedEpochPositive": true,
+    "minRelativeSelectionLossGain": 0.001,
+    "maxPerBoardSelectionLossRatio": 1.02,
+    "requireUnchangedNonPolicyTensors": false,
+    "tests": [
+      "Value-only mode preserves every non-value tensor; full mode permits backbone updates; all modes retain architecture and feature ABI",
+      "refresh-surprise weights preserve domain mass and eligibility",
+      "PyTorch/ONNX/WGSL golden and actual9-board Worker parity"
+    ],
+    "requireFrozenTensorsPerArm": true
+  },
+  "seeds": {
+    "development": 2026102901,
+    "independent": 2026102902,
+    "bootstrap": 2026102903
+  },
+  "development": {
+    "pairsPerBoard": 4,
+    "gamesPerCandidate": 72,
+    "minScore": 40,
+    "minPerBoardScore": 3,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "selection": "At most one eligible candidate with highest total score; ties use AllUniform, AllPriority, ValueUniform order."
+  },
+  "independent": {
+    "pairsPerBoard": 24,
+    "games": 432,
+    "minScoreRate": 0.55,
+    "minPaired95LowerExclusive": 0.5,
+    "minPerBoardScore": 19,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "bootstrapIterations": 10000,
+    "resampling": "colour-swapped pair, board-stratified"
+  },
+  "matches": {
+    "openingMoves": 4,
+    "seed": "FNV1a32(phaseSeed|board|pair|ply); independently seeded xorshift opening sampler; same opening and per-ply seed for both colours and variants",
+    "moveCap": "6*N; retain capped games; no outcome-dependent seed replacement",
+    "concurrency": 3,
+    "score": "actual Game area score, komi6.5, draw half point",
+    "noTimedCutoff": true
+  },
+  "latency": {
+    "fixture": "First development colour1 game per board at N/4,N/2,3N/4, plus predefined reported/pass/certified-loss stress roots; freeze before timing.",
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate <= max(1.10*baseline, baseline+2ms)",
+      "reason": "Predeclared absolute tolerance for very short roots motivated by the previous 1.3ms outlier; applies only to new measurements and does not change the previous study verdict."
+    },
+    "backends": [
+      "wasm",
+      "webgpu"
+    ],
+    "condition": "quiet environment, alternating order, includes restore/search/normal yields; no diagnostic logging"
+  },
+  "scope": "Compare three newly registered learning scopes, same120905-parameter model and original A8 search at64 visits. No post-outcome recipe changes; only one independent432-game candidate. No hosted deployment.",
+  "stopping": "If neither training arm passes preflight/development, archive negative results. Independent or speed failure retains deployed baseline. A passing candidate can be integrated locally only after all correctness and PC latency checks."
+}

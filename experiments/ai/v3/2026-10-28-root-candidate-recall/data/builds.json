@@ -1,0 +1,80 @@
+[
+  {
+    "variant": "A8",
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/builds/A8/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/A8.wasm"
+    ],
+    "sha256": "5f341dcf72eeb4d8b3be4c3fc9150ed15df74938e22a603778c627ada2c44b6f"
+  },
+  {
+    "variant": "B16",
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/builds/B16/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/B16.wasm"
+    ],
+    "sha256": "fbe64424980476136464259e6211ded67a26f677156defe7bca1d8e45ce1ec2a"
+  },
+  {
+    "variant": "C8plus4",
+    "command": "rustc",
+    "args": [
+      "--edition",
+      "2021",
+      "-C",
+      "opt-level=3",
+      "-A",
+      "dead_code",
+      "--target",
+      "wasm32-unknown-unknown",
+      "--crate-type",
+      "cdylib",
+      "-C",
+      "lto=fat",
+      "-C",
+      "panic=abort",
+      "-C",
+      "strip=symbols",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/builds/C8plus4/gnn-wasm.rs",
+      "-o",
+      "tools/ai-gnn/target/root-candidate-recall-20261028/C8plus4.wasm"
+    ],
+    "sha256": "2facaa0413e8994a5f9ca0ff2e573953b43b82dd1dfaab22543eb288f7255e47"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "changes": [
+    {
+      "when": "after speed preflight, before any development outcome",
+      "action": "Exclude C8plus4 after its WebGPU certified-loss stress P95 ratio 1.295 exceeded 1.10. Retain B16 which passed all speed gates. Development therefore runs 72 of the planned maximum 144 games; no gate/sample change for the eligible candidate."
+    },
+    {
+      "action": "Distinguish tactical-added-root counts from candidate-set changes; original canary raw traces retained. Previous driver archived as source/study-driver-canary.mjs."
+    }
+  ],
+  "frozenPlanUnchanged": true
+}

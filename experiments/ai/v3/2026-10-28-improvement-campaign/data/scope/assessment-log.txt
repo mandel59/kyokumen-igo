@@ -1,0 +1,1 @@
+{"overall":false,"everyBoard":false,"plane":false,"curves":true,"complete":true}

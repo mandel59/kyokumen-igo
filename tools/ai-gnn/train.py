@@ -215,6 +215,21 @@ class Prepared:
             self.anchor_weight*self.policy_weight[indices] if self.policy_balanced else self.anchor_weight)
         return loss, output, d
 
+    @torch.no_grad()
+    def refresh_surprise(self, model, batch_size):
+        model.eval()
+        values = torch.zeros(self.count, device=self.indices.device)
+        for start in range(0, self.count, batch_size):
+            ix = self.indices[start:start+batch_size]
+            _, (logits, _, _, _), d = self.forward(model, ix)
+            log_probability = F.log_softmax(logits.masked_fill(~d['legal'], -1e9), -1)
+            values[ix] = F.kl_div(log_probability, d['raw_policy'], reduction='none').sum(-1).clamp_min(0)
+        if not torch.isfinite(values).all():
+            raise ValueError('Nonfinite refreshed policy surprise')
+        for item, value in zip(self.items, values.cpu().tolist()):
+            item['record']['policySurprise'] = value
+        return values.cpu().tolist()
+
     def normalized_policy_weights(self, weights, indices, eligible):
         mass = torch.ones(self.count,device=self.indices.device) if weights is None else torch.tensor(weights,device=self.indices.device)
         result = torch.zeros(self.count,device=self.indices.device)
@@ -362,6 +377,16 @@ def export(model, directory, examples, adjacency, metadata):
     return metadata
 
 
+def configure_trainable(model, mode):
+    if mode not in ('all', 'value', 'policy'):
+        raise ValueError('Unknown trainable mode')
+    for name, parameter in model.named_parameters():
+        parameter.requires_grad_(mode == 'all' or
+            mode == 'value' and name.startswith('value.') or
+            mode == 'policy' and name.startswith(('policy.', 'passing.')))
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data", nargs="+", required=True)
@@ -384,7 +409,7 @@ def main():
     parser.add_argument('--minimum-policy-confidence', type=float, default=0.)
     parser.add_argument('--policy-anchor', help='Trusted frozen policy checkpoint used to limit policy drift')
     parser.add_argument('--policy-anchor-weight', type=float, default=0.)
-    parser.add_argument('--trainable', choices=('all','value'), default='all', help='Value-only calibration preserves the complete policy function')
+    parser.add_argument('--trainable', choices=('all','value','policy'), default='all', help='Freeze other tensors for value-only or policy/passing-only learning')
     parser.add_argument('--normal-training',action='store_true',help='Exclude certified-loss roots from all training heads')
     parser.add_argument('--normal-selection',action='store_true',help='Use common targets on normal positions, excluding policy anchor, for selection')
     parser.add_argument('--normalize-policy',action='store_true',help='Maintain source policy mass when only a subset is eligible')
@@ -392,7 +417,10 @@ def main():
     parser.add_argument('--balance-generations',action='store_true',help='Equal selfplay generation mass within the selfplay source')
     parser.add_argument('--require-validation-policy',action='store_true',help='Require explicit common policy targets for eligible selfplay validation roots')
     parser.add_argument('--policy-surprise-fraction',type=float,default=0.,help='Within-domain training replay fraction proportional to policy surprise; maximum 0.5')
+    parser.add_argument('--refresh-policy-surprise',action='store_true',help='Compute training-only policy surprise from the frozen resumed model before weighting replay')
     args = parser.parse_args()
+    if args.refresh_policy_surprise and (not args.resume or not args.policy_surprise_fraction):
+        parser.error('Refreshed surprise requires a resumed model and nonzero surprise fraction')
     if not math.isfinite(args.policy_surprise_fraction) or not 0 <= args.policy_surprise_fraction <= .5 or (args.policy_surprise_fraction and not args.balanced):
         parser.error('Surprise weighting requires --balanced and fraction in [0,0.5]')
     if args.balance_generations and not args.balanced:
@@ -418,11 +446,9 @@ def main():
     model = GraphNet()
     if args.resume:
         model.load_state_dict(torch.load(args.resume, weights_only=True))
-    if args.trainable=='value':
-        if not args.resume:
-            parser.error('Value-only learning requires a trained checkpoint')
-        for name,parameter in model.named_parameters():
-            parameter.requires_grad_(name.startswith('value.'))
+    if args.trainable!='all' and not args.resume:
+        parser.error('Head-only learning requires a trained checkpoint')
+    configure_trainable(model,args.trainable)
     model.to(device)
     records = load_data(args.data,args.policy_temperature,args.minimum_policy_confidence)
     if args.normal_training or args.normal_selection:
@@ -455,6 +481,9 @@ def main():
         prepared_validation.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
         del teacher
     train_weights = sampling_weights(train,args.selfplay_mass,args.balance_generations) if args.balanced else None
+    if args.refresh_policy_surprise:
+        refreshed=prepared_train.refresh_surprise(model,args.batch_size)
+        print(json.dumps(dict(refreshedTrainingSurprise=dict(count=len(refreshed),mean=sum(refreshed)/len(refreshed),maximum=max(refreshed)))),flush=True)
     if args.policy_surprise_fraction:
         train_weights = surprise_weights(train,train_weights,args.policy_surprise_fraction)
     validation_weights = sampling_weights(validation,args.selfplay_mass,args.balance_generations) if args.balanced else None
@@ -557,7 +586,7 @@ def main():
             policyAnchorSha256=hashlib.sha256(Path(args.policy_anchor).read_bytes()).hexdigest() if args.policy_anchor else None,policyAnchorWeight=args.policy_anchor_weight,
             trainable=args.trainable,trainableParameters=sum(p.numel() for p in trainable_parameters),
             normalTraining=args.normal_training,normalSelection=args.normal_selection,normalizePolicy=args.normalize_policy,checkpointEvery=args.checkpoint_every,
-            balanceGenerations=args.balance_generations,policySurpriseFraction=args.policy_surprise_fraction,
+            balanceGenerations=args.balance_generations,policySurpriseFraction=args.policy_surprise_fraction,refreshPolicySurprise=args.refresh_policy_surprise,
             requireValidationPolicy=args.require_validation_policy,
             selectionMetrics=selected_metrics,
             initialSelectionMetrics=initial_selection,

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "status": "completed-stopped-no-adoption",
+  "selected": null,
+  "reasons": {
+    "C8plus4": "Registered WebGPU certified-loss stress P95 ratio 1.29545 > 1.10; excluded before development.",
+    "B16": "Development score 30/72 < 40/72 and torus7 score 1/8 < 3/8."
+  },
+  "completedGames": {
+    "canary": 36,
+    "diagnosticSelfplay": 72,
+    "development": 72,
+    "total": 180
+  },
+  "replayAudit": {
+    "passed": true,
+    "turns": 17258
+  },
+  "independent288": "not run: no eligible selected candidate",
+  "diagnosticHoldout": "teacher labels not generated",
+  "phase2": "not started; separate preregistration required",
+  "mobile": "not measured; no candidate reached release gate",
+  "production": "model, search WASM, app behavior unchanged"
+}

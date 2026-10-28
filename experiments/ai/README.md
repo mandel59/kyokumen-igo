@@ -76,3 +76,9 @@
 [平面盤でのKataGo人間模倣20kとの対戦](v3/2026-10-27-katago-plane/README.md)を保存しました。v2・v3とも30局中8勝で、v3の重みは平面盤で未学習です。
 
 [KataGoの平面盤方策からv3への蒸留](v3/2026-10-27-katago-distillation/README.md)のデータ・学習・独立評価を保存しました。
+
+登録計画：[v3の候補手取りこぼしを減らす改良](plans/v3-root-candidate-recall/README.md)（M2まで実行済み・採用候補なし）。
+
+[v3の候補手取りこぼしを減らす実験](v3/2026-10-28-root-candidate-recall/README.md)は、16手版が開発30勝42敗、戦術候補追加版が速度基準未達となり、両案とも不採用でした。
+
+[v3の探索6案・学習5案の改善試行](v3/2026-10-28-improvement-campaign/README.md)の全結果を保存しました。

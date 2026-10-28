@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "seed": 2026102861,
+  "pairsPerBoard": 1,
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            14,
+            55,
+            42,
+            6
+          ],
+          "searchSeedFormula": "2026102861|sphere3|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            27,
+            60,
+            20,
+            11
+          ],
+          "searchSeedFormula": "2026102861|sphere4|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            80,
+            101,
+            68,
+            90
+          ],
+          "searchSeedFormula": "2026102861|sphere5|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            47,
+            24,
+            8,
+            36
+          ],
+          "searchSeedFormula": "2026102861|torus7|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            11,
+            27,
+            73,
+            67
+          ],
+          "searchSeedFormula": "2026102861|torus9|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            58,
+            116,
+            4,
+            11
+          ],
+          "searchSeedFormula": "2026102861|torus11|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "plane",
+      "size": 7,
+      "key": "plane7",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            25,
+            24,
+            37,
+            10
+          ],
+          "searchSeedFormula": "2026102861|plane7|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "plane",
+      "size": 9,
+      "key": "plane9",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            45,
+            56,
+            42,
+            14
+          ],
+          "searchSeedFormula": "2026102861|plane9|0|ply"
+        }
+      ]
+    },
+    {
+      "kind": "plane",
+      "size": 11,
+      "key": "plane11",
+      "pairs": [
+        {
+          "pair": 0,
+          "moves": [
+            81,
+            117,
+            112,
+            22
+          ],
+          "searchSeedFormula": "2026102861|plane11|0|ply"
+        }
+      ]
+    }
+  ]
+}

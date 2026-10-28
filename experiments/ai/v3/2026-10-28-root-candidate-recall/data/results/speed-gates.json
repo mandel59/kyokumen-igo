@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "method": "Registered gates: aggregate and per-board P95 use 27 ordinary roots; each of 3 stress roots is checked separately; n=7 timings per root, P95=max; no resampling or retiming.",
+  "results": [
+    {
+      "variant": "C8plus4",
+      "passes": false,
+      "backends": [
+        {
+          "backend": "wasm",
+          "overall": {
+            "candidateP95Ms": 167.0999999642372,
+            "baselineP95Ms": 170.39999997615814,
+            "ratio": 0.9806338027442333
+          },
+          "boards": [
+            {
+              "board": "sphere3",
+              "candidateP95Ms": 165.19999998807907,
+              "baselineP95Ms": 162.80000001192093,
+              "ratio": 1.0147420145944865
+            },
+            {
+              "board": "sphere4",
+              "candidateP95Ms": 167,
+              "baselineP95Ms": 168.19999998807907,
+              "ratio": 0.9928656362178114
+            },
+            {
+              "board": "sphere5",
+              "candidateP95Ms": 162.69999998807907,
+              "baselineP95Ms": 161.9000000357628,
+              "ratio": 1.0049413215079652
+            },
+            {
+              "board": "torus7",
+              "candidateP95Ms": 164.70000004768372,
+              "baselineP95Ms": 159.5999999642372,
+              "ratio": 1.0319548877480533
+            },
+            {
+              "board": "torus9",
+              "candidateP95Ms": 164.39999997615814,
+              "baselineP95Ms": 173.4000000357628,
+              "ratio": 0.9480968854801127
+            },
+            {
+              "board": "torus11",
+              "candidateP95Ms": 180.60000002384186,
+              "baselineP95Ms": 181.30000001192093,
+              "ratio": 0.9961389962050025
+            },
+            {
+              "board": "plane7",
+              "candidateP95Ms": 162,
+              "baselineP95Ms": 169.60000002384186,
+              "ratio": 0.9551886791110055
+            },
+            {
+              "board": "plane9",
+              "candidateP95Ms": 165.20000004768372,
+              "baselineP95Ms": 169.39999997615814,
+              "ratio": 0.9752066119889873
+            },
+            {
+              "board": "plane11",
+              "candidateP95Ms": 163.19999998807907,
+              "baselineP95Ms": 164.10000002384186,
+              "ratio": 0.9945155390881656
+            }
+          ],
+          "stress": [
+            {
+              "phase": "stress-reported-max-candidates",
+              "candidateP95Ms": 176.69999998807907,
+              "baselineP95Ms": 166.4000000357628,
+              "ratio": 1.0618990381616742
+            },
+            {
+              "phase": "stress-proof-pass",
+              "candidateP95Ms": 2.400000035762787,
+              "baselineP95Ms": 3,
+              "ratio": 0.800000011920929
+            },
+            {
+              "phase": "stress-certified-loss",
+              "candidateP95Ms": 13.5,
+              "baselineP95Ms": 14.099999964237213,
+              "ratio": 0.9574468109390756
+            }
+          ],
+          "passes": true
+        },
+        {
+          "backend": "webgpu",
+          "overall": {
+            "candidateP95Ms": 38.60000002384186,
+            "baselineP95Ms": 37.60000002384186,
+            "ratio": 1.0265957446639868
+          },
+          "boards": [
+            {
+              "board": "sphere3",
+              "candidateP95Ms": 35.09999996423721,
+              "baselineP95Ms": 36.69999998807907,
+              "ratio": 0.9564032690909654
+            },
+            {
+              "board": "sphere4",
+              "candidateP95Ms": 35.40000003576279,
+              "baselineP95Ms": 34.799999952316284,
+              "ratio": 1.0172413817318573
+            },
+            {
+              "board": "sphere5",
+              "candidateP95Ms": 38.60000002384186,
+              "baselineP95Ms": 37.10000002384186,
+              "ratio": 1.0404312668203786
+            },
+            {
+              "board": "torus7",
+              "candidateP95Ms": 34.09999996423721,
+              "baselineP95Ms": 32.30000001192093,
+              "ratio": 1.0557275526827232
+            },
+            {
+              "board": "torus9",
+              "candidateP95Ms": 40,
+              "baselineP95Ms": 37.39999997615814,
+              "ratio": 1.06951871725934
+            },
+            {
+              "board": "torus11",
+              "candidateP95Ms": 39.69999998807907,
+              "baselineP95Ms": 38.09999996423721,
+              "ratio": 1.0419947513213572
+            },
+            {
+              "board": "plane7",
+              "candidateP95Ms": 34.19999998807907,
+              "baselineP95Ms": 35.19999998807907,
+              "ratio": 0.971590909081288
+            },
+            {
+              "board": "plane9",
+              "candidateP95Ms": 39.30000001192093,
+              "baselineP95Ms": 38.30000001192093,
+              "ratio": 1.0261096605662858
+            },
+            {
+              "board": "plane11",
+              "candidateP95Ms": 36.80000001192093,
+              "baselineP95Ms": 37.60000002384186,
+              "ratio": 0.9787234039517645
+            }
+          ],
+          "stress": [
+            {
+              "phase": "stress-reported-max-candidates",
+              "candidateP95Ms": 36.69999998807907,
+              "baselineP95Ms": 37.5,
+              "ratio": 0.9786666663487752
+            },
+            {
+              "phase": "stress-proof-pass",
+              "candidateP95Ms": 4.5,
+              "baselineP95Ms": 4.100000023841858,
+              "ratio": 1.0975609692273431
+            },
+            {
+              "phase": "stress-certified-loss",
+              "candidateP95Ms": 5.699999988079071,
+              "baselineP95Ms": 4.400000035762787,
+              "ratio": 1.2954545322159106
+            }
+          ],
+          "passes": false
+        }
+      ]
+    },
+    {
+      "variant": "B16",
+      "passes": true,
+      "backends": [
+        {
+          "backend": "wasm",
+          "overall": {
+            "candidateP95Ms": 168.4000000357628,
+            "baselineP95Ms": 164.0999999642372,
+            "ratio": 1.026203534871802
+          },
+          "boards": [
+            {
+              "board": "sphere3",
+              "candidateP95Ms": 162.9000000357628,
+              "baselineP95Ms": 162.10000002384186,
+              "ratio": 1.004935225242463
+            },
+            {
+              "board": "sphere4",
+              "candidateP95Ms": 161.19999998807907,
+              "baselineP95Ms": 162.5,
+              "ratio": 0.9919999999266405
+            },
+            {
+              "board": "sphere5",
+              "candidateP95Ms": 172.4000000357628,
+              "baselineP95Ms": 168.10000002384186,
+              "ratio": 1.0255800119649676
+            },
+            {
+              "board": "torus7",
+              "candidateP95Ms": 168.60000002384186,
+              "baselineP95Ms": 162.29999995231628,
+              "ratio": 1.0388170059973907
+            },
+            {
+              "board": "torus9",
+              "candidateP95Ms": 164.5,
+              "baselineP95Ms": 166.60000002384186,
+              "ratio": 0.9873949578418888
+            },
+            {
+              "board": "torus11",
+              "candidateP95Ms": 168.4000000357628,
+              "baselineP95Ms": 158.5999999642372,
+              "ratio": 1.0617906688129595
+            },
+            {
+              "board": "plane7",
+              "candidateP95Ms": 151.5,
+              "baselineP95Ms": 154.20000004768372,
+              "ratio": 0.9824902720697225
+            },
+            {
+              "board": "plane9",
+              "candidateP95Ms": 163,
+              "baselineP95Ms": 158.70000004768372,
+              "ratio": 1.0270951477695291
+            },
+            {
+              "board": "plane11",
+              "candidateP95Ms": 166.39999997615814,
+              "baselineP95Ms": 158.30000001192093,
+              "ratio": 1.051168666858037
+            }
+          ],
+          "stress": [
+            {
+              "phase": "stress-reported-max-candidates",
+              "candidateP95Ms": 160.29999995231628,
+              "baselineP95Ms": 161,
+              "ratio": 0.9956521736168713
+            },
+            {
+              "phase": "stress-proof-pass",
+              "candidateP95Ms": 2.300000011920929,
+              "baselineP95Ms": 2.800000011920929,
+              "ratio": 0.8214285721888348
+            },
+            {
+              "phase": "stress-certified-loss",
+              "candidateP95Ms": 13.600000023841858,
+              "baselineP95Ms": 13.100000023841858,
+              "ratio": 1.0381679388618326
+            }
+          ],
+          "passes": true
+        },
+        {
+          "backend": "webgpu",
+          "overall": {
+            "candidateP95Ms": 35.19999998807907,
+            "baselineP95Ms": 35.5,
+            "ratio": 0.9915492954388471
+          },
+          "boards": [
+            {
+              "board": "sphere3",
+              "candidateP95Ms": 34,
+              "baselineP95Ms": 34.59999996423721,
+              "ratio": 0.982658960553255
+            },
+            {
+              "board": "sphere4",
+              "candidateP95Ms": 35.40000003576279,
+              "baselineP95Ms": 33.30000001192093,
+              "ratio": 1.063063063756459
+            },
+            {
+              "board": "sphere5",
+              "candidateP95Ms": 35.60000002384186,
+              "baselineP95Ms": 34.700000047683716,
+              "ratio": 1.0259365987009046
+            },
+            {
+              "board": "torus7",
+              "candidateP95Ms": 32.09999996423721,
+              "baselineP95Ms": 33.5,
+              "ratio": 0.9582089541563347
+            },
+            {
+              "board": "torus9",
+              "candidateP95Ms": 33.799999952316284,
+              "baselineP95Ms": 35.80000001192093,
+              "ratio": 0.9441340765659589
+            },
+            {
+              "board": "torus11",
+              "candidateP95Ms": 34.10000002384186,
+              "baselineP95Ms": 35.5,
+              "ratio": 0.9605633809532917
+            },
+            {
+              "board": "plane7",
+              "candidateP95Ms": 34.69999998807907,
+              "baselineP95Ms": 34.30000001192093,
+              "ratio": 1.011661806881024
+            },
+            {
+              "board": "plane9",
+              "candidateP95Ms": 34.59999996423721,
+              "baselineP95Ms": 34.700000047683716,
+              "ratio": 0.9971181532187583
+            },
+            {
+              "board": "plane11",
+              "candidateP95Ms": 34.10000002384186,
+              "baselineP95Ms": 35.60000002384186,
+              "ratio": 0.9578651685675442
+            }
+          ],
+          "stress": [
+            {
+              "phase": "stress-reported-max-candidates",
+              "candidateP95Ms": 32.09999996423721,
+              "baselineP95Ms": 32.60000002384186,
+              "ratio": 0.9846625748699702
+            },
+            {
+              "phase": "stress-proof-pass",
+              "candidateP95Ms": 4.100000023841858,
+              "baselineP95Ms": 4.099999964237213,
+              "ratio": 1.0000000145377184
+            },
+            {
+              "phase": "stress-certified-loss",
+              "candidateP95Ms": 4.899999976158142,
+              "baselineP95Ms": 5.099999964237213,
+              "ratio": 0.9607843157879347
+            }
+          ],
+          "passes": true
+        }
+      ]
+    }
+  ]
+}

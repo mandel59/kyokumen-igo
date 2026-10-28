@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "stage": "development",
+  "summaries": [
+    {
+      "variant": "B16",
+      "games": 72,
+      "completed": 72,
+      "capped": 0,
+      "wins": 30,
+      "draws": 0,
+      "losses": 42,
+      "score": 30,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 8,
+          "score": 3,
+          "pairScores": [
+            0.5,
+            0,
+            1,
+            0
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0,
+            1,
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 8,
+          "score": 3,
+          "pairScores": [
+            0.5,
+            0,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 8,
+          "score": 1,
+          "pairScores": [
+            0,
+            0.5,
+            0,
+            0
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 8,
+          "score": 3,
+          "pairScores": [
+            0.5,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 8,
+          "score": 3,
+          "pairScores": [
+            0.5,
+            0.5,
+            0,
+            0.5
+          ]
+        },
+        {
+          "board": "plane7",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0,
+            1,
+            1,
+            0
+          ]
+        },
+        {
+          "board": "plane9",
+          "games": 8,
+          "score": 4,
+          "pairScores": [
+            0.5,
+            0.5,
+            1,
+            0
+          ]
+        },
+        {
+          "board": "plane11",
+          "games": 8,
+          "score": 5,
+          "pairScores": [
+            0.5,
+            0.5,
+            0.5,
+            1
+          ]
+        }
+      ],
+      "scoreRate": 0.4166666666666667,
+      "pairedBootstrap": {
+        "seed": 2026102864,
+        "iterations": 10000,
+        "unit": "colour-swapped opening pair",
+        "stratifiedByBoard": true,
+        "interval95": [
+          0.3055555555555556,
+          0.5277777777777778
+        ]
+      },
+      "candidateChangedRoots": 3072,
+      "tacticalAddedRoots": 0,
+      "addedSelected": 0
+    }
+  ]
+}

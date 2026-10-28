@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "clarifications": [
+    "Latency fixture is drawn from the first development colour1 game per board: this learning study has a development stage and no screen stage. The copied latency description uses screen-origin as a generic label; numeric gates and fixed-ply selection are unchanged.",
+    "Added --trainable policy and --refresh-policy-surprise to the existing trainer; default all/value behavior is retained and tested.",
+    "No dataset, split, epoch, learning-rate or evaluation gate was changed after training started."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "source": "Executed in this session; console transcript is retained in the tool history.",
+  "commands": [
+    "node v3-tests.mjs",
+    "node --experimental-vm-modules tools/ai-gnn/test-offline-player.mjs",
+    "node tests.mjs",
+    "node wasm-tests.mjs",
+    "node search-tests.mjs",
+    "node ui-tests.mjs"
+  ],
+  "rust": {
+    "testBinary": "candidate-tests.exe",
+    "passed": 13,
+    "log": "logs/rust-tests.log"
+  },
+  "newSemanticChecks": {
+    "passed": 243,
+    "file": "results/semantic-checks.json"
+  },
+  "browser": {
+    "status": "passed",
+    "file": "results/browser-C8plus4.json"
+  },
+  "note": "Expected corrupt-GPU-sidecar fallback warning in browser test is an intentional test case, not a real model mismatch."
+}

@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 1,
+  "stage": "canary",
+  "summaries": [
+    {
+      "variant": "B16",
+      "games": 18,
+      "completed": 18,
+      "capped": 0,
+      "wins": 11,
+      "draws": 0,
+      "losses": 7,
+      "score": 11,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "plane7",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "plane9",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "plane11",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.6111111111111112,
+      "changedRoots": 0,
+      "addedSelected": 0
+    },
+    {
+      "variant": "C8plus4",
+      "games": 18,
+      "completed": 18,
+      "capped": 0,
+      "wins": 11,
+      "draws": 0,
+      "losses": 7,
+      "score": 11,
+      "boards": [
+        {
+          "board": "sphere3",
+          "games": 2,
+          "score": 0,
+          "pairScores": [
+            0
+          ]
+        },
+        {
+          "board": "sphere4",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "sphere5",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "torus7",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "torus9",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "torus11",
+          "games": 2,
+          "score": 2,
+          "pairScores": [
+            1
+          ]
+        },
+        {
+          "board": "plane7",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        },
+        {
+          "board": "plane9",
+          "games": 2,
+          "score": 0,
+          "pairScores": [
+            0
+          ]
+        },
+        {
+          "board": "plane11",
+          "games": 2,
+          "score": 1,
+          "pairScores": [
+            0.5
+          ]
+        }
+      ],
+      "scoreRate": 0.6111111111111112,
+      "changedRoots": 292,
+      "addedSelected": 13
+    }
+  ]
+}

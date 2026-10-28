@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "partial": false,
+  "excludedPhase": null,
+  "games": 216,
+  "turns": 20937,
+  "productionUnchanged": true,
+  "rows": [
+    {
+      "file": "screen-PUCTQ-plane11.json",
+      "games": 4,
+      "turns": 505,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-plane7.json",
+      "games": 4,
+      "turns": 216,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-plane9.json",
+      "games": 4,
+      "turns": 379,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-sphere3.json",
+      "games": 4,
+      "turns": 234,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-sphere4.json",
+      "games": 4,
+      "turns": 392,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-sphere5.json",
+      "games": 4,
+      "turns": 641,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-torus11.json",
+      "games": 4,
+      "turns": 518,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-torus7.json",
+      "games": 4,
+      "turns": 242,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-PUCTQ-torus9.json",
+      "games": 4,
+      "turns": 362,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "8a90936e45011b9819c363b877f9d0cf0f28b3d5af8a6aedb28ca0386878ae75",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-plane11.json",
+      "games": 4,
+      "turns": 572,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-plane7.json",
+      "games": 4,
+      "turns": 228,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-plane9.json",
+      "games": 4,
+      "turns": 375,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-sphere3.json",
+      "games": 4,
+      "turns": 240,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-sphere4.json",
+      "games": 4,
+      "turns": 410,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-sphere5.json",
+      "games": 4,
+      "turns": 604,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-torus11.json",
+      "games": 4,
+      "turns": 492,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-torus7.json",
+      "games": 4,
+      "turns": 247,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q02-torus9.json",
+      "games": 4,
+      "turns": 365,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "372dee2e33913c6407088eb7e21013057fca4d6016935fdd6ce78517861cb4e8",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-plane11.json",
+      "games": 4,
+      "turns": 568,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-plane7.json",
+      "games": 4,
+      "turns": 221,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-plane9.json",
+      "games": 4,
+      "turns": 354,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-sphere3.json",
+      "games": 4,
+      "turns": 244,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-sphere4.json",
+      "games": 4,
+      "turns": 397,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-sphere5.json",
+      "games": 4,
+      "turns": 615,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-torus11.json",
+      "games": 4,
+      "turns": 483,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-torus7.json",
+      "games": 4,
+      "turns": 237,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Q08-torus9.json",
+      "games": 4,
+      "turns": 347,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c08ed772764012b255241b9ebfa71dff733a82b0ebe7a3c241ad31286a3467c1",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-plane11.json",
+      "games": 4,
+      "turns": 588,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-plane7.json",
+      "games": 4,
+      "turns": 204,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-plane9.json",
+      "games": 4,
+      "turns": 356,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-sphere3.json",
+      "games": 4,
+      "turns": 248,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-sphere4.json",
+      "games": 4,
+      "turns": 423,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-sphere5.json",
+      "games": 4,
+      "turns": 614,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-torus11.json",
+      "games": 4,
+      "turns": 517,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-torus7.json",
+      "games": 4,
+      "turns": 251,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Skip16-torus9.json",
+      "games": 4,
+      "turns": 360,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "c28feb0e30a4a5da4f9b229474d20e65855a6cf0a60421f3ef6cab38a59fb5dc",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-plane11.json",
+      "games": 4,
+      "turns": 561,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-plane7.json",
+      "games": 4,
+      "turns": 207,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-plane9.json",
+      "games": 4,
+      "turns": 364,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-sphere3.json",
+      "games": 4,
+      "turns": 222,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-sphere4.json",
+      "games": 4,
+      "turns": 396,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-sphere5.json",
+      "games": 4,
+      "turns": 612,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-torus11.json",
+      "games": 4,
+      "turns": 492,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-torus7.json",
+      "games": 4,
+      "turns": 222,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-Tactical8-torus9.json",
+      "games": 4,
+      "turns": 362,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "ae4e466b732159464f96172bcf5f649f1771248343f53397bea16f161f18bbdb",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-plane11.json",
+      "games": 4,
+      "turns": 563,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-plane7.json",
+      "games": 4,
+      "turns": 210,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-plane9.json",
+      "games": 4,
+      "turns": 364,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-sphere3.json",
+      "games": 4,
+      "turns": 230,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-sphere4.json",
+      "games": 4,
+      "turns": 409,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-sphere5.json",
+      "games": 4,
+      "turns": 625,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-torus11.json",
+      "games": 4,
+      "turns": 482,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-torus7.json",
+      "games": 4,
+      "turns": 216,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    },
+    {
+      "file": "screen-TacticalFast-torus9.json",
+      "games": 4,
+      "turns": 351,
+      "provenance": {
+        "model": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "6eb421163894f0e7fd3528f9b05a8c2878ae980e93302e5c61861f014586d051",
+        "b": "6432e7e25833765fe968ef895610c2d00024408253f8aeb1f11ebf890b2fa8ae",
+        "driver": "8eb53fa4b55400ad0b24dfad4faf50c89d542f6de12b50358576128a250e6eda"
+      }
+    }
+  ]
+}

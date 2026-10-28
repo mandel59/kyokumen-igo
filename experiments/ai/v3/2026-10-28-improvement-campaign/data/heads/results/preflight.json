@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "results": [
+    {
+      "id": "HeadUniform",
+      "eligible": false,
+      "selectedEpoch": 8,
+      "changedTensors": [
+        "policy.0.weight",
+        "policy.0.bias",
+        "policy.2.weight",
+        "policy.2.bias",
+        "passing.0.weight",
+        "passing.0.bias",
+        "passing.2.weight",
+        "passing.2.bias"
+      ],
+      "nonPolicyTensorsChanged": 0,
+      "trainableParameters": 4482,
+      "initialSelectionLoss": 3.1122934818267822,
+      "selectionLoss": 3.11210036277771,
+      "relativeGain": 6.205039794604517e-05,
+      "perBoardLossRatios": {
+        "board/sphere3": 0.9997557913146629,
+        "board/sphere4": 1.0000109762165048,
+        "board/sphere5": 0.999994334917668,
+        "board/torus7": 1.0002023072646582,
+        "board/torus9": 1.0000992385951406,
+        "board/torus11": 0.9998717048109563,
+        "board/plane7": 0.9994747382239175,
+        "board/plane9": 0.999899119578762,
+        "board/plane11": 1.000057155091054
+      },
+      "modelSha256": "911b1cf9d4e99abe17eb023cac9977e8407b8f69490e5cce9d4d997d60db8234"
+    },
+    {
+      "id": "HeadPriority",
+      "eligible": false,
+      "selectedEpoch": 4,
+      "changedTensors": [
+        "policy.0.weight",
+        "policy.0.bias",
+        "policy.2.weight",
+        "policy.2.bias",
+        "passing.0.weight",
+        "passing.0.bias",
+        "passing.2.weight",
+        "passing.2.bias"
+      ],
+      "nonPolicyTensorsChanged": 0,
+      "trainableParameters": 4482,
+      "initialSelectionLoss": 3.1122934818267822,
+      "selectionLoss": 3.1109330654144287,
+      "relativeGain": 0.0004371105810866416,
+      "perBoardLossRatios": {
+        "board/sphere3": 1.0011450138427853,
+        "board/sphere4": 0.9971921363763774,
+        "board/sphere5": 0.9998367956428186,
+        "board/torus7": 0.9986436436083408,
+        "board/torus9": 1.0014974052522774,
+        "board/torus11": 1.000485016671652,
+        "board/plane7": 0.9996968578213842,
+        "board/plane9": 0.9999432594788549,
+        "board/plane11": 0.9979695653903061
+      },
+      "modelSha256": "f1be79430440e6ff4c1d0232640b807fd7cb1b8b8e5b5ee6839eca83321a1707"
+    }
+  ],
+  "notes": "Exact tensor comparisons preserve backbone/value/score/ownership; old validation partitions are reused only for model selection. Match outcomes remain independent."
+}

@@ -1,0 +1,12 @@
+Development diagnostics 12 / 140
+Development diagnostics 24 / 140
+Development diagnostics 36 / 140
+Development diagnostics 48 / 140
+Development diagnostics 60 / 140
+Development diagnostics 72 / 140
+Development diagnostics 84 / 140
+Development diagnostics 96 / 140
+Development diagnostics 108 / 140
+Development diagnostics 120 / 140
+Development diagnostics 132 / 140
+[{"variant":"A8","labeled":48,"bestIncluded":41,"bestSelected":16,"selectedWhenIncluded":16,"includedMassMean":0.7974053724053723},{"variant":"B16","labeled":48,"bestIncluded":47,"bestSelected":16,"selectedWhenIncluded":16,"includedMassMean":0.9410307285307286}]

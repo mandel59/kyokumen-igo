@@ -230,3 +230,9 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
 [教師データ生成と蒸留の登録計画](../../experiments/ai/plans/v3-teacher-distillation/README.md)は実行済みです。48局の自己対局と同一局面の64/4,096訪問再解析から、同容量の2生徒で教師データの効果を比較し、強教師生徒が独立対局・速度を含む全基準を通過しました。登録JSONは事前計画として保持しています。
 
 `browser-selfplay.mjs` と `browser-reanalyze.mjs` は、固定した対局specからの集約WebGPU生成と同一局面の対応再解析を行います。`audit-distillation-data.mjs` は全対局・ラベル・対応入力を監査し、`validate_paired_training.py` は学習テンソルと分割・サンプリングを照合します。[実行記録](../../experiments/ai/v3/2026-10-25-teacher-distillation-pilot/README.md)にCLI・入力・出力・停止条件を保存しています。
+
+## 部分学習と優先再生
+
+`train.py --trainable policy` は着手とパスのヘッド4,482パラメータだけを学習し、盤面表現・勝敗・得点・所属の重みを固定します。`--trainable value` は従来どおり勝敗ヘッドだけ、既定の `--trainable all` は全体を学習します。部分学習には `--resume` が必要です。モデル規模と入出力ABIは変わりません。
+
+`--refresh-policy-surprise` は、再開したモデルと教師方策のKLを学習局面だけで再計算してから優先再生に使います。`--resume`、`--balanced`、0より大きい `--policy-surprise-fraction` と併用します。検証局面を使って優先度を決めることはなく、元の教材ファイルも変更しません。学習比率、対局単位の分割、モデル選定と独立評価条件を実行前に固定してください。

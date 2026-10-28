@@ -1,0 +1,12 @@
+{
+  "selected": "AllUniform",
+  "modelSha256": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+  "modelFileSha256": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+  "weightsSha256": "07b1202fd89e1b1feab9fcae83ec99c09a1e878986c0c206de17c4c494955857",
+  "searchSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+  "driverSha256": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494",
+  "planSha256": "a4e01c459edbb9db984273b80619f150ead30e30d6eec3b549dc17be7c064e34",
+  "speedPassed": true,
+  "heldoutGames": 432,
+  "stopping": "Fixed sample, no model replacement or parameter changes."
+}

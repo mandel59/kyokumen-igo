@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-search-campaign-20261028",
+  "date": "2026-10-28",
+  "status": "registered-before-execution",
+  "reason": "User explicitly requested broader attempts after the previous study stopped. This is a new study with fresh seeds and gates, not a reopening of its holdout or a retiming of failed measurements.",
+  "workspace": "tools/ai-gnn/target/search-campaign-20261028",
+  "baseline": {
+    "model": "dist/models/v3",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "visits": 64,
+    "fpu": 1,
+    "rootQScale": 0.4
+  },
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3"
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7"
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9"
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11"
+    },
+    {
+      "kind": "plane",
+      "size": 7,
+      "key": "plane7"
+    },
+    {
+      "kind": "plane",
+      "size": 9,
+      "key": "plane9"
+    },
+    {
+      "kind": "plane",
+      "size": 11,
+      "key": "plane11"
+    }
+  ],
+  "variants": [
+    {
+      "id": "Q02",
+      "method": "root Q coefficient 0.2 instead of 0.4; otherwise unchanged 8-root halving"
+    },
+    {
+      "id": "Q08",
+      "method": "root Q coefficient 0.8 instead of 0.4; otherwise unchanged 8-root halving"
+    },
+    {
+      "id": "Skip16",
+      "method": "evaluate top16 once, prune to4 at first elimination, then ordinary halving; all within64 visits"
+    },
+    {
+      "id": "Tactical8",
+      "method": "keep top6; add up to2 tactical-scored actions from outside top6; fill remaining slots from prior ranking; at most8 total; no prior/value bonus"
+    },
+    {
+      "id": "TacticalFast",
+      "method": "keep top8 plus up to4 tactical extras, computed after root NN only for outside candidates; skip heuristics for pass-only roots"
+    },
+    {
+      "id": "PUCTQ",
+      "method": "ordinary PUCT at root; final choice uses log(prior)+0.4*(50+max child visits)*Q over viable actions visited at least twice; proofs still override; fallback original visits if no such action"
+    }
+  ],
+  "scope": "Search-only campaign with frozen network. Keep original production assets until independent strength and PC latency/correctness gates pass. No hosted deployment. Learning changes require a separate recipe before training.",
+  "seeds": {
+    "screen": 2026102880,
+    "refine": 2026102881,
+    "independent": 2026102882,
+    "bootstrap": 2026102883
+  },
+  "screen": {
+    "pairsPerBoard": 2,
+    "gamesPerVariant": 36,
+    "totalGames": 216,
+    "shortlistMax": 2,
+    "minScore": 20,
+    "minPerBoardScore": 1,
+    "minPlaneScoreRate": 0.45,
+    "minCurveScoreRate": 0.45
+  },
+  "refine": {
+    "pairsPerBoard": 4,
+    "gamesPerVariant": 72,
+    "selection": "At most one eligible candidate, highest overall score; tie uses registered variant order.",
+    "minScore": 40,
+    "minPerBoardScore": 3,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5
+  },
+  "independent": {
+    "pairsPerBoard": 24,
+    "games": 432,
+    "minScoreRate": 0.55,
+    "minPaired95LowerExclusive": 0.5,
+    "minPerBoardScore": 19,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "bootstrapIterations": 10000,
+    "resampling": "colour-swapped pair, board-stratified"
+  },
+  "tieOrder": [
+    "Q02",
+    "Q08",
+    "Skip16",
+    "Tactical8",
+    "TacticalFast",
+    "PUCTQ"
+  ],
+  "matches": {
+    "openingMoves": 4,
+    "seed": "FNV1a32(phaseSeed|board|pair|ply); independently seeded xorshift opening sampler; same opening and per-ply seed for both colours and variants",
+    "moveCap": "6*N; retain capped games; no outcome-dependent seed replacement",
+    "concurrency": 3,
+    "score": "actual Game area score, komi6.5, draw half point",
+    "noTimedCutoff": true
+  },
+  "diagnostics": {
+    "reportedGame": "development-only fixture from prior study; no L6-specific rule or requirement that overrides playing-strength selection",
+    "previousDevelopmentRoots": "may be reused only for development diagnostics; prior sealed holdout stays unused"
+  },
+  "correctness": [
+    "Rust regression per variant",
+    "nine-board exact visits/legality, proof/pass, cancellation",
+    "A8 research reference equivalence",
+    "full match replay and trace audit",
+    "selected candidate actual CPU/WebGPU Worker and numerical parity"
+  ],
+  "latency": {
+    "fixture": "fresh screen-origin roots, first colour1 game in registered board order at N/4,N/2,3N/4; reported and pass/proof stress roots fixed before timing",
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate <= max(1.10*baseline, baseline+2ms)",
+      "reason": "Predeclared absolute tolerance for very short roots motivated by the previous 1.3ms outlier; applies only to new measurements and does not change the previous study verdict."
+    },
+    "backends": [
+      "wasm",
+      "webgpu"
+    ],
+    "condition": "quiet environment, alternating order, includes restore/search/normal yields; no diagnostic logging"
+  },
+  "selectionPolicy": "Freeze configuration/binary before each next stage. Max2 screen finalists, max1 independent candidate. No tuning, sample extension, fallback to runner-up on independent failure or repeated holdouts. Failure retains baseline and is reported.",
+  "outputs": "fresh workspace, full games and compact per-turn diagnostics, command/source/model hashes, archived positive and negative results; no overwrite of previous experiment artifacts"
+}

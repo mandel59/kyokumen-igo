@@ -1,0 +1,23 @@
+{
+  "command": "C:\\Users\\mande\\AppData\\Local\\Author Software\\nvm\\installs\\v26.12.1\\node.exe",
+  "args": [
+    "tools/ai-gnn/root-candidate-study.mjs",
+    "diagnostics"
+  ],
+  "started": "2026-10-28T10:54:28.790Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "d8490b21b739618120952f59561d55e35f1ffd66ab69e26945cbe9b4842d6531",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/node-inference.mjs": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a",
+    "tools/ai-gnn/match.mjs": "9a180dc37b3f40fe5ecedc1e83efd2dc2edf050d59d8c39df84c24bd04bb980e",
+    "tools/ai-gnn/selfplay.mjs": "d60c5c70c3c6cce10bc0cc9c2d4c99689a2703f90e448dce86d7d438eaf88da3",
+    "tools/ai-gnn/reanalyze.mjs": "243976d461c4275a85860dbd9737cbbc2d7d3a0a0a1efea30a1230fbdb133020",
+    "dist/ai-v3-search.js": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+    "dist/ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "dist/ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "dist/ai-v3.wasm": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  },
+  "finished": "2026-10-28T10:57:13.800Z",
+  "elapsedSeconds": 165.01,
+  "exitCode": 0
+}

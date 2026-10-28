@@ -1,0 +1,228 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "games": 180,
+  "turns": 17258,
+  "changedRoots": 4146,
+  "tacticalAddedRoots": 292,
+  "tacticalSelected": 13,
+  "productionModelAndWasmUnchanged": true,
+  "rows": [
+    {
+      "file": "canary-B16-plane11.json",
+      "games": 2,
+      "turns": 294,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-plane7.json",
+      "games": 2,
+      "turns": 101,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-plane9.json",
+      "games": 2,
+      "turns": 200,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-sphere3.json",
+      "games": 2,
+      "turns": 121,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-sphere4.json",
+      "games": 2,
+      "turns": 217,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-sphere5.json",
+      "games": 2,
+      "turns": 290,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-torus11.json",
+      "games": 2,
+      "turns": 237,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-torus7.json",
+      "games": 2,
+      "turns": 118,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-B16-torus9.json",
+      "games": 2,
+      "turns": 164,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-plane11.json",
+      "games": 2,
+      "turns": 263,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-plane7.json",
+      "games": 2,
+      "turns": 92,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-plane9.json",
+      "games": 2,
+      "turns": 177,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-sphere3.json",
+      "games": 2,
+      "turns": 127,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-sphere4.json",
+      "games": 2,
+      "turns": 180,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-sphere5.json",
+      "games": 2,
+      "turns": 313,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-torus11.json",
+      "games": 2,
+      "turns": 234,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-torus7.json",
+      "games": 2,
+      "turns": 137,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "canary-C8plus4-torus9.json",
+      "games": 2,
+      "turns": 175,
+      "driverSha256": "b61fdaa94681c837dce9976686dd3d1a169e6b746c20d16e5db9801ab2164830"
+    },
+    {
+      "file": "corpus-plane11.json",
+      "games": 8,
+      "turns": 1129,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-plane7.json",
+      "games": 8,
+      "turns": 411,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-plane9.json",
+      "games": 8,
+      "turns": 782,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-sphere3.json",
+      "games": 8,
+      "turns": 464,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-sphere4.json",
+      "games": 8,
+      "turns": 760,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-sphere5.json",
+      "games": 8,
+      "turns": 1250,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-torus11.json",
+      "games": 8,
+      "turns": 1000,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-torus7.json",
+      "games": 8,
+      "turns": 482,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "corpus-torus9.json",
+      "games": 8,
+      "turns": 666,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-plane11.json",
+      "games": 8,
+      "turns": 1200,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-plane7.json",
+      "games": 8,
+      "turns": 428,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-plane9.json",
+      "games": 8,
+      "turns": 713,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-sphere3.json",
+      "games": 8,
+      "turns": 462,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-sphere4.json",
+      "games": 8,
+      "turns": 805,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-sphere5.json",
+      "games": 8,
+      "turns": 1174,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-torus11.json",
+      "games": 8,
+      "turns": 984,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-torus7.json",
+      "games": 8,
+      "turns": 428,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    },
+    {
+      "file": "development-B16-torus9.json",
+      "games": 8,
+      "turns": 680,
+      "driverSha256": "626eba49ec2c11acdfbe25aacc7b2ea98ef2442127f8ef54857f2b78286f7887"
+    }
+  ]
+}

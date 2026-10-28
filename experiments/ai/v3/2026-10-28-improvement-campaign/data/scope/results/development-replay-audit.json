@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "passed": true,
+  "partial": true,
+  "excludedPhase": "independent",
+  "games": 144,
+  "turns": 14119,
+  "productionUnchanged": true,
+  "rows": [
+    {
+      "file": "development-AllPriority-plane11.json",
+      "games": 8,
+      "turns": 1172,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-plane7.json",
+      "games": 8,
+      "turns": 409,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-plane9.json",
+      "games": 8,
+      "turns": 747,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-sphere3.json",
+      "games": 8,
+      "turns": 485,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-sphere4.json",
+      "games": 8,
+      "turns": 795,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-sphere5.json",
+      "games": 8,
+      "turns": 1262,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-torus11.json",
+      "games": 8,
+      "turns": 983,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-torus7.json",
+      "games": 8,
+      "turns": 451,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllPriority-torus9.json",
+      "games": 8,
+      "turns": 680,
+      "provenance": {
+        "aModel": "bf1130803c0ce6c14f6ed6e5689f8d877bc3da53f34d8f8322b8ce9d53c0c534",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-plane11.json",
+      "games": 8,
+      "turns": 1134,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-plane7.json",
+      "games": 8,
+      "turns": 409,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-plane9.json",
+      "games": 8,
+      "turns": 760,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-sphere3.json",
+      "games": 8,
+      "turns": 509,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-sphere4.json",
+      "games": 8,
+      "turns": 820,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-sphere5.json",
+      "games": 8,
+      "turns": 1324,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-torus11.json",
+      "games": 8,
+      "turns": 1024,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-torus7.json",
+      "games": 8,
+      "turns": 455,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    },
+    {
+      "file": "development-AllUniform-torus9.json",
+      "games": 8,
+      "turns": 700,
+      "provenance": {
+        "aModel": "1c705523d4363200eb199d04371b198b6f7cc9ebc2b62f6921e191aeedfbfc56",
+        "bModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+        "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+        "driver": "23850712f5592036aec72e13c150fe8f244b61511d41c957953b2a16440c1494"
+      }
+    }
+  ]
+}

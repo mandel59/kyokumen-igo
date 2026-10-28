@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-10-28T10:34:18.377Z",
+  "planSha256": "e6222be83c185c54525eee962f79cdb145d52aa47d236d2b8d8900d3b5530d41",
+  "baseline": {
+    "modelDirectory": "dist/models/v3",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "sourceSha256": {
+      "mcts": "068e33351d3ba9116d266e3d2c1344cec5165e7886a843e3398cdb9aae479065",
+      "tactics": "00a78d193ef85e9293de6403ec3efe20aae1993befba3c5e2966bdf01ec2a203"
+    },
+    "visits": 64,
+    "fpu": 1,
+    "rootQScale": 0.4,
+    "rootUniformMix": 0.02,
+    "hidden": 64,
+    "blocks": 6,
+    "parameters": 120905
+  },
+  "sourceFiles": [
+    {
+      "file": "ai.rs",
+      "sha256": "8be6e629a0479cc4518e8580cca8f23b4afc55f4f002396e165b76a56c79f87b"
+    },
+    {
+      "file": "board.rs",
+      "sha256": "6c8dc4bd2b31bcab371facd57ec3d18e6f5beb5c94143d9a81f7a2b8ea9cf2e0"
+    },
+    {
+      "file": "endgame.rs",
+      "sha256": "d8d892ebc50d68803dbba313217806fcdaa3b7e1f4ca416f99ffe30e8ac025e3"
+    },
+    {
+      "file": "gnn-wasm.rs",
+      "sha256": "1a4ee17af9bf1898f9ba701ffd9303512df206fcde4333f238b6b8f962ca40f3"
+    },
+    {
+      "file": "gnn.rs",
+      "sha256": "e10c2802f19ad2cc11dbe615175c6cafd4a0ea1b610b2ce165025829ff72463a"
+    },
+    {
+      "file": "main.rs",
+      "sha256": "34f585c89e891f69044d4d954b7f76bbf0ca0a04540eca94421a85629f5a8cbf"
+    },
+    {
+      "file": "mcts.rs",
+      "sha256": "068e33351d3ba9116d266e3d2c1344cec5165e7886a843e3398cdb9aae479065"
+    },
+    {
+      "file": "rng.rs",
+      "sha256": "a10292d8dd75a8f5bb2376ddb750176b3398263e7d9baf111c5dec73e21ae104"
+    },
+    {
+      "file": "search.rs",
+      "sha256": "839b73522ee9d2ffa767da3ecf9cf4705ed9fbfd07dbcd589d40f16420bffbf8"
+    },
+    {
+      "file": "tactics.rs",
+      "sha256": "00a78d193ef85e9293de6403ec3efe20aae1993befba3c5e2966bdf01ec2a203"
+    },
+    {
+      "file": "tune.rs",
+      "sha256": "e8c8a30e89e8d7706f22b80910708b8d6c99281f812fb3b24b40f5076915f1ef"
+    },
+    {
+      "file": "wasm.rs",
+      "sha256": "086b1a390e3a7993eb29dbf7f9aeeb424340b12027dcb39a8a276dc069e4f300"
+    }
+  ],
+  "status": "M0 baseline frozen; no production files changed"
+}

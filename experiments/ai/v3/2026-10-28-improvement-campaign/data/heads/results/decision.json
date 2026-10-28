@@ -1,0 +1,8 @@
+{
+  "status": "completed-no-preflight-finalist",
+  "reason": "Both policy-only arms improved common validation loss by less than predeclared0.1%; non-policy tensors remained exactly fixed.",
+  "selected": null,
+  "developmentGames": 0,
+  "independentGames": 0,
+  "productionUpdated": false
+}

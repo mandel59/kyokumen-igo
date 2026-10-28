@@ -5,7 +5,7 @@ import tempfile
 import unittest
 import torch
 from model import GraphNet
-from train import Prepared, load_data, loss_for, sampling_weights, split_games, surprise_weights
+from train import Prepared, load_data, loss_for, sampling_weights, split_games, surprise_weights, configure_trainable
 
 
 def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
@@ -16,6 +16,38 @@ def item(game, kind='torus', size=7, source='teacher', score=0., ply=0):
 
 
 class TrainingTests(unittest.TestCase):
+    def test_policy_only_update_preserves_backbone_and_nonpolicy_outputs(self):
+        torch.manual_seed(20261028)
+        model=GraphNet().eval()
+        self.assertEqual(configure_trainable(model,'policy'),4482)
+        before={k:v.detach().clone() for k,v in model.state_dict().items()}
+        x=torch.randn(2,160,32);mask=torch.ones(2,160,1)
+        adjacency=torch.eye(160).unsqueeze(0);global_features=torch.randn(2,8)
+        with torch.no_grad(): original=model(x,adjacency,mask,global_features)
+        optimizer=torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=.001)
+        logits=model(x,adjacency,mask,global_features)[0]
+        torch.nn.functional.cross_entropy(logits,torch.tensor([3,160])).backward();optimizer.step()
+        with torch.no_grad(): updated=model(x,adjacency,mask,global_features)
+        self.assertFalse(torch.equal(original[0],updated[0]))
+        for old,new in zip(original[1:],updated[1:]):self.assertTrue(torch.equal(old,new))
+        for k,v in model.state_dict().items():
+            if not k.startswith(('policy.','passing.')):self.assertTrue(torch.equal(v,before[k]))
+        configure_trainable(model,'value')
+        self.assertTrue(all(p.requires_grad==name.startswith('value.') for name,p in model.named_parameters()))
+        configure_trainable(model,'all');self.assertTrue(all(p.requires_grad for p in model.parameters()))
+        with self.assertRaises(ValueError):configure_trainable(model,'invalid')
+
+    def test_refreshed_surprise_is_training_only_finite_and_preserves_weights(self):
+        records=[item('s'+str(i),source='selfplay') for i in range(4)]
+        prepared=Prepared(records,{('torus',7):torch.eye(160)},'cpu')
+        model=GraphNet().eval();before={k:v.clone() for k,v in model.state_dict().items()}
+        values=prepared.refresh_surprise(model,2)
+        self.assertEqual(len(values),4);self.assertTrue(all(v>=0 and v<float('inf') for v in values))
+        self.assertTrue(all(torch.equal(v,before[k]) for k,v in model.state_dict().items()))
+        self.assertTrue(all(p.grad is None for p in model.parameters()))
+        base=sampling_weights(records);weighted=surprise_weights(records,base,.25)
+        self.assertAlmostEqual(sum(base),sum(weighted));self.assertTrue(all(w>=.75*b for w,b in zip(weighted,base)))
+
     def test_surprise_keeps_domain_mass_and_uniform_floor(self):
         records=[item('teacher')]+[item('s'+str(i),source='selfplay') for i in range(4)]
         for i,r in enumerate(records):

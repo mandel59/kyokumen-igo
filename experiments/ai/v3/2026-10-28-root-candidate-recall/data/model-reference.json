@@ -1,0 +1,10 @@
+{
+  "model": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher-model/model.onnx",
+  "sha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+  "localSnapshot": "tools/ai-gnn/target/root-candidate-recall-20261028/baseline",
+  "teacherEngine": "tools/ai-tuner/target/katago-distillation-20261027/engine/katago.exe",
+  "teacherEngineSha256": "0e6cc918840e6ef67c0b4a21109585306df7aaa3772971574e58deb8e8fc0575",
+  "teacherNetwork": "kata1-b10c128-s1141046784-d204142634",
+  "teacherNetworkSha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4",
+  "note": "Unchanged student model is referenced from its immutable earlier experiment; no new weights were trained or installed."
+}

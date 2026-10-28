@@ -1,0 +1,1464 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "sphere3",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "sphere4",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "sphere5",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "torus7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "torus9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "torus11",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "plane7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "plane9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "A8",
+      "board": "plane11",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "sphere3",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "sphere4",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "sphere5",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "torus7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "torus9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "torus11",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "plane7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "plane9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "B16",
+      "board": "plane11",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere3",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere4",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "sphere5",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "torus11",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane7",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane9",
+      "budget": 129,
+      "simulations": 129
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 1,
+      "simulations": 1
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 2,
+      "simulations": 2
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 3,
+      "simulations": 3
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 7,
+      "simulations": 7
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 17,
+      "simulations": 17
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 31,
+      "simulations": 31
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 64,
+      "simulations": 64
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 65,
+      "simulations": 65
+    },
+    {
+      "variant": "C8plus4",
+      "board": "plane11",
+      "budget": 129,
+      "simulations": 129
+    }
+  ],
+  "notes": "9 boards; reference tactical scores; original A8 equivalence; finite/odd budgets; every initial candidate visited; exact winning pass; pending cancellation/reuse. Full native Rust tests archived separately."
+}

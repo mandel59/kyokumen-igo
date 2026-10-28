@@ -1,0 +1,6 @@
+{
+  "scope": "audit tooling only",
+  "firstPartialAttempt": "The exclusion patch did not match the single-line source; the auditor correctly rejected an in-progress independent report as incomplete.",
+  "resolution": "Explicitly exclude independent files before opening them in development-only mode. Full mode still requires every report complete.",
+  "inferenceAndTrialsChanged": false
+}

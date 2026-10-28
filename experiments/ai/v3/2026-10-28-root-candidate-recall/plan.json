@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-root-candidate-recall",
+  "date": "2026-10-28",
+  "timezone": "Asia/Tokyo",
+  "status": "planned-not-executed",
+  "baseCommit": "7c6a55a025030dcea17526b532f6168da8eff269",
+  "objective": "Improve root candidate recall at exactly 64 visits with the current unchanged-size model; measure candidate inclusion separately from evaluation and final move selection.",
+  "workspace": "tools/ai-gnn/target/root-candidate-recall-20261028",
+  "baseline": {
+    "modelDirectory": "dist/models/v3",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "sourceSha256": {
+      "mcts": "068e33351d3ba9116d266e3d2c1344cec5165e7886a843e3398cdb9aae479065",
+      "tactics": "00a78d193ef85e9293de6403ec3efe20aae1993befba3c5e2966bdf01ec2a203"
+    },
+    "visits": 64,
+    "fpu": 1,
+    "rootQScale": 0.4,
+    "rootUniformMix": 0.02,
+    "hidden": 64,
+    "blocks": 6,
+    "parameters": 120905
+  },
+  "boards": [
+    {
+      "kind": "sphere",
+      "size": 3,
+      "key": "sphere3"
+    },
+    {
+      "kind": "sphere",
+      "size": 4,
+      "key": "sphere4"
+    },
+    {
+      "kind": "sphere",
+      "size": 5,
+      "key": "sphere5"
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "key": "torus7"
+    },
+    {
+      "kind": "torus",
+      "size": 9,
+      "key": "torus9"
+    },
+    {
+      "kind": "torus",
+      "size": 11,
+      "key": "torus11"
+    },
+    {
+      "kind": "plane",
+      "size": 7,
+      "key": "plane7"
+    },
+    {
+      "kind": "plane",
+      "size": 9,
+      "key": "plane9"
+    },
+    {
+      "kind": "plane",
+      "size": 11,
+      "key": "plane11"
+    }
+  ],
+  "rules": {
+    "komi": 6.5,
+    "scoring": "AREA",
+    "ko": "POSITIONAL",
+    "suicide": false,
+    "deadStoneRemoval": false
+  },
+  "variants": [
+    {
+      "id": "A8",
+      "role": "baseline",
+      "rootCandidates": "top 8 eligible actions by unchanged mixed prior"
+    },
+    {
+      "id": "B16",
+      "role": "candidate",
+      "rootCandidates": "top 16 eligible actions by unchanged mixed prior"
+    },
+    {
+      "id": "C8plus4",
+      "role": "candidate",
+      "rootCandidates": "keep top 8; add up to 4 distinct eligible tactical actions from outside top 8; maximum 12",
+      "tactical": {
+        "eligible": "non-pass legal actions surviving existing root masks; post-move new chain has at least 2 liberties",
+        "score": "captured stones + unique friendly vulnerable-chain stones continued + max(0, distinct adjacent friendly chains joined - 1)",
+        "vulnerableChain": "before the move, friendly chain has 1 or 2 liberties; action is an original liberty and the surviving joined chain has at least 2 liberties after the move; this is a candidate heuristic, not a proof of survival",
+        "counting": "each pre-move friendly chain counted once; require score > 0",
+        "ordering": "score descending, unchanged root prior descending, existing seeded root order",
+        "scope": "candidate membership only; no logit/prior/value bonus and no overrides of pass, proof, legality, superko or existing masks"
+      }
+    }
+  ],
+  "invariants": [
+    "Same frozen neural model and exact 64 completed visits except the existing certified-loss early stop.",
+    "All first-round candidates receive at least one visit before halving; preserve pending reservations, cancellation and arbitrary budget behavior.",
+    "Child PUCT, FPU, Q scale, prior mixture, exact terminal proof and root guards remain unchanged.",
+    "Candidate generation uses graph neighbors/groups; no plane coordinates, vertex-number preference or L6 special case.",
+    "All added evaluations and terminal backups count within 64; no hidden NN pre-screen outside the budget."
+  ],
+  "diagnosticSeeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "reportedFixture": {
+    "file": "reported-game.json",
+    "role": "development-only",
+    "rootPly": 39,
+    "nextMoveNumber": 40,
+    "excludeWholeGameFrom": [
+      "training",
+      "diagnostic-holdout",
+      "independent-match-openings"
+    ],
+    "passCondition": "C8plus4 includes and visits L6 and selects L6 at 64 visits for all 8 diagnostic seeds on native CPU; browser numeric/choice differences must be investigated before release",
+    "note": "Prior-promotion results in the conversation are synthetic diagnostics, not measurements of B16 or C8plus4."
+  },
+  "diagnostics": {
+    "corpus": {
+      "generator": "fresh A8 selfplay, separate from all historical holdout games",
+      "seed": 2026102860,
+      "gamesPerBoard": 8,
+      "games": 72,
+      "rootPlies": "floor(N/4), floor(N/2), floor(3*N/4), N, where N is board points",
+      "missingRoot": "record absence; never replace a short game or resample based on outcome",
+      "developmentGameIndices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "holdoutGameIndices": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "splitUnit": "whole origin game and all symmetries/relabelings",
+      "teacher": "plane roots only: existing KataGo network 3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4, same rules, 4096 visits, noise-free; store outputs and binary/config hashes; curved roots have no KataGo labels"
+    },
+    "metrics": [
+      "initial candidate IDs/count and per-action addition reason",
+      "fraction of roots with a candidate-set change, added moves, and a final selected added move",
+      "teacher best-action inclusion and teacher policy mass included, on plane roots",
+      "teacher best-action visits and final selection conditional on inclusion",
+      "root original policy rank, mixed prior, raw visits, Q, final comparison score/policy, eliminated round and selected action",
+      "NN batches/evaluations, completed visits, root-heuristic CPU time and total latency"
+    ],
+    "interpretation": "Diagnostic metrics explain mechanisms; they do not substitute for independent playing strength. Holdout outputs remain unopened until code/config selection is frozen."
+  },
+  "canary": {
+    "seed": 2026102861,
+    "pairsPerBoard": 1,
+    "gamesPerCandidate": 18,
+    "variants": [
+      "B16",
+      "C8plus4"
+    ],
+    "checks": [
+      "legal full replay",
+      "finite outputs and matching masks",
+      "exact visit accounting including terminal evaluations",
+      "proof/pass preservation",
+      "changed-candidate and added-move counters work on fixed adversarial roots"
+    ]
+  },
+  "development": {
+    "seed": 2026102862,
+    "pairsPerBoard": 4,
+    "gamesPerCandidate": 72,
+    "totalGames": 144,
+    "opponent": "A8 with identical model",
+    "selection": "Eligible candidate with highest overall match score; tie prefers smaller maximum candidate set (C8plus4). Candidate must score at least 40/72, each board at least 3/8, pass fixture/correctness/speed preflight, and have no illegal or capped games. If none passes, stop and retain A8.",
+    "freeze": "Record selected source, binary, model, seeds, fixture manifest and config hashes before inspecting any holdout output."
+  },
+  "independent": {
+    "seed": 2026102863,
+    "bootstrapSeed": 2026102864,
+    "bootstrapIterations": 10000,
+    "pairsPerBoard": 16,
+    "games": 288,
+    "opponent": "A8; only the single frozen selected candidate is tested",
+    "resamplingUnit": "colour-swapped opening pair, stratified by board",
+    "gates": {
+      "overall": {
+        "minScoreRate": 0.55,
+        "minPaired95LowerExclusive": 0.5
+      },
+      "plane": {
+        "minScoreRate": 0.55,
+        "minPaired95LowerExclusive": 0.5
+      },
+      "curves": {
+        "minScoreRate": 0.5,
+        "minPaired95LowerExclusive": 0.45
+      },
+      "everyBoardMinScoreOutOf32": 14,
+      "illegalGames": 0,
+      "cappedGames": 0
+    },
+    "interpretation": "Plane/curve/individual-board conditions are safeguards with finite power; per-board point thresholds do not prove per-board non-inferiority. Failure or uncertainty is not permission to increase the sample or change settings."
+  },
+  "matches": {
+    "backend": "native CPU/ONNX and production search WASM for fixed-budget strength; actual Worker backends for correctness/latency",
+    "opening": "same 4 legal moves from an independent per-pair RNG, shared by both colour-swapped games and variants; enumerate opening histories/seeds before play; use existing opening sampler after compatibility audit",
+    "gameMoveCap": "6*N, retaining capped trajectories as failures",
+    "outcome": "actual app Game area score; draw = half point",
+    "seedDerivation": "FNV1a32 of phase seed, board key, pair index and ply; same per-ply search seed across swapped games; zero maps to 1",
+    "retries": "Infrastructure retries retain original seed, input and all attempt logs; never replace an outcome or capped game."
+  },
+  "speed": {
+    "fixture": "Freeze 3 fresh ordinary roots per board (27) plus reported-game, maximum-candidate and proof/pass stress roots, before timing; use fresh independent canary origins, no outcome-based choice",
+    "backends": [
+      "wasm",
+      "webgpu"
+    ],
+    "warmups": 2,
+    "repeats": 7,
+    "ordering": "paired alternating A/B order in the same environment",
+    "gates": {
+      "overallP95RatioMax": 1.05,
+      "everyBoardP95RatioMax": 1.1,
+      "stressRootP95RatioMax": 1.1
+    },
+    "measurement": "full restore + root-candidate generation + search + NN inference + normal yields, excluding initialization/rendering and diagnostic logging; report sample sizes and observed P95",
+    "mobile": "Pixel 8a WASM and WebGPU device timing required before changing default; unavailable device means leave release gate pending, not an assumed pass"
+  },
+  "implementation": [
+    {
+      "path": "tools/ai-tuner/src/mcts.rs",
+      "work": "parameterized root membership and correct halving for 8, 12 and 16 candidates; preserve finite/incremental budget semantics"
+    },
+    {
+      "path": "tools/ai-tuner/src/tactics.rs",
+      "work": "bounded graph-based add-only tactical candidates separate from existing negative pruning"
+    },
+    {
+      "path": "dist/ai-v3-search.js and tools/ai-tuner/src/gnn-wasm.rs",
+      "work": "development diagnostics for candidate membership, additions and elimination; version diagnostic layout if it changes, retain old readers or update together"
+    },
+    {
+      "path": "tools/ai-gnn/root-candidate-study.mjs",
+      "work": "proposed, not implemented: freeze artifacts, reproduce fixture, collect diagnostics and run predeclared stages"
+    },
+    {
+      "path": "tools/ai-gnn/bench-search.mjs and test-browser.mjs",
+      "work": "reuse production Worker measurement and extend to all 9 boards and selected search binary"
+    }
+  ],
+  "milestones": [
+    {
+      "id": "M0",
+      "deliverable": "baseline snapshot, game fixture and reproducible raw diagnostic JSON",
+      "gate": "hashes and reported behavior verified"
+    },
+    {
+      "id": "M1",
+      "deliverable": "three research binaries, candidate instrumentation and semantic tests",
+      "gate": "fixture, masking, budgeting, proofs and canaries pass"
+    },
+    {
+      "id": "M2",
+      "deliverable": "development corpus/teacher diagnostics, 144 development games and speed preflight",
+      "gate": "select at most one candidate using fixed rule, or stop"
+    },
+    {
+      "id": "M3",
+      "deliverable": "one frozen 288-game independent comparison and sealed diagnostic holdout",
+      "gate": "all independent strength criteria pass"
+    },
+    {
+      "id": "M4",
+      "deliverable": "CPU/WebGPU/mobile timing, Worker regression, final report and releasable artifact",
+      "gate": "all release checks pass before any installation/deployment"
+    }
+  ],
+  "checks": [
+    "cargo test --manifest-path tools/ai-tuner/Cargo.toml (relevant graph/tactics/MCTS tests)",
+    "node v3-tests.mjs",
+    "node --experimental-vm-modules tools/ai-gnn/test-offline-player.mjs",
+    "node tools/ai-gnn/test-browser.mjs with the research WASM",
+    "node tests.mjs",
+    "node wasm-tests.mjs",
+    "node search-tests.mjs",
+    "node ui-tests.mjs"
+  ],
+  "phase2": {
+    "status": "roadmap-requires-separate-preregistered-plan",
+    "goal": "Improve policy recall with fresh teacher labels after search effects have been measured separately.",
+    "design": "Freeze stage-1 search. Collect normal and low-recall plane roots from fresh games, label with KataGo, and retain representative curve replay. Compare teacher-policy fine-tuning with a matched extra-training control on identical roots, WDL/score/ownership labels, splits, optimizer and compute. Keep 64x6/120905 parameters. Use origin-game splits and common teacher validation. Evaluate candidate model with old and selected searches to report search, learning and combined effects.",
+    "beforeExecution": "Register game IDs/counts, curriculum weighting, teacher visits, optimizer, epochs, model selection, independent samples/seeds and adoption criteria before collecting labels or training; no stage-1 holdout or reported-game data in training.",
+    "reason": "Avoid tuning both search and weights on the same observed outcome."
+  },
+  "stopConditions": [
+    "artifact/hash drift without a new recorded plan revision",
+    "legality, terminal proof, mask, budget, cancellation or numeric semantic failure",
+    "development or independent gate failure",
+    "latency gate failure",
+    "holdout leakage; regenerate a genuinely fresh evaluation plan before further claims"
+  ],
+  "outputPolicy": "Use a fresh workspace and append immutable commands, inputs, hashes, raw logs, full games and reports. Do not overwrite historical experiments. This task creates the plan only; it does not run the study, install binaries, update model weights, commit or deploy."
+}
