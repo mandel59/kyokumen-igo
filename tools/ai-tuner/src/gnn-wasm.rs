@@ -41,6 +41,9 @@ fn restore<'a>(t:&'a Topology,komi:f64,moves:&[i32])->Option<(Game<'a>,Vec<Vec<i
         if enabled>1||!e.search.set_tactics(enabled!=0){-2}else{0}
     })
 }
+#[no_mangle] pub extern "C" fn v3_settled_pass()->u32 {
+    ENGINE.with(|slot|slot.borrow().as_ref().map_or(0,|e|e.search.settled_pass as u32))
+}
 #[no_mangle] pub extern "C" fn v3_avoided()->u32 {
     ENGINE.with(|slot|slot.borrow().as_ref().map_or(0,|e|e.search.avoided as u32))
 }

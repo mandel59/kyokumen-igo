@@ -2,7 +2,7 @@
 import {validateAIPosition} from './ai-position.js';
 export const V3={points:160,channels:32,globals:8,actions:161,batch:8};
 export async function createV3Search({load=async()=>{
- const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=a7168da72141',import.meta.url));
+ const r=await fetch(new URL('./ai-v3.wasm?abi=3&build=4c7fa7d7c3df',import.meta.url));
  if(!r.ok)throw new Error('v3 WASM HTTP '+r.status);return r.arrayBuffer();
 }}={}) {
  const {instance}=await WebAssembly.instantiate(await load(),{}),api=instance.exports;
@@ -53,9 +53,11 @@ export async function createV3Search({load=async()=>{
   },
   result({diagnostics=false}={}){check();if(!position)throw new Error('Start v3 search first');const move=api.v3_best();
    if(move< -1)throw new Error('v3 has no position');const lossMarginLowerBound=api.v3_loss_margin();
-   const avoidedInvasions=api.v3_avoided(),result={move:move===-1?null:move,policy:read(5,161),simulations:api.v3_completed(),avoidedInvasions,
-    provenLoss:lossMarginLowerBound>0,lossMarginLowerBound,
-    decisionReason:lossMarginLowerBound>0?'certified-loss':avoidedInvasions?'tactics-pruned':'normal'};
+   // The legacy avoidedInvasions counter also includes certified own-eye fills.
+   const avoidedInvasions=api.v3_avoided(),settledPass=api.v3_settled_pass?.()===1,
+   result={move:move===-1?null:move,policy:read(5,161),simulations:api.v3_completed(),avoidedInvasions,
+    provenLoss:lossMarginLowerBound>0,lossMarginLowerBound,settledPass,
+    decisionReason:lossMarginLowerBound>0?'certified-loss':settledPass?'settled-position':avoidedInvasions?'tactics-pruned':'normal'};
    if(diagnostics&&api.v3_statistics){
     const pointer=api.v3_statistics(),data=new Float32Array(api.memory.buffer,pointer,3+161*3).slice();
     result.diagnostics={rootValue:data[0],unvisitedSelections:data[1],rootVisits:data[2],

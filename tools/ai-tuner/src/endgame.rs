@@ -15,6 +15,22 @@ pub fn wins_by_passing(game: &Game) -> bool {
     if game.turn==1 {black>white}else{white>black}
 }
 
+/// Accept a second pass, including a draw or loss, only when every point has a
+/// Benson certificate: all stones live unconditionally and all empty regions
+/// are vital regions of those living chains. Unsettled stones, dame and large
+/// uncertified enclosures keep the position searchable. This is deliberately
+/// independent of the neural win probability and the stone-count loss bound.
+pub fn settled_by_passing(game: &Game) -> bool {
+    if game.ended || game.passes != 1 { return false; }
+    let black = pass_alive(game, 1);
+    let white = pass_alive(game, 2);
+    game.board.iter().enumerate().all(|(p, &stone)| match stone {
+        1 => black.stones[p],
+        2 => white.stones[p],
+        _ => black.vital[p] || white.vital[p],
+    })
+}
+
 /// Empty vital regions and stones of pass-alive chains, using the conservative
 /// empty-region form of Benson's fixed point. Large enclosures are NOT marked
 /// unless every point touches the same surviving chain (no room for an eye).
@@ -118,4 +134,34 @@ mod tests {
         assert_eq!(pass_alive(&g,2).stones.iter().filter(|&&v|v).count(),13);
         assert_eq!(proven_loss_margin(&g),0.,"there is still enough unsettled space to win");
     }
+    #[test]
+    fn settled_pass_requires_certificates_for_every_point_and_a_preceding_pass() {
+        for (kind,size) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),
+            (Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11),
+            (Kind::Plane,7),(Kind::Plane,9),(Kind::Plane,11)] {
+            let t=Topology::new(kind,size);let n=t.len();
+            let other=(1..n).find(|p|!t.neighbors[0].contains(p)).unwrap();
+            let moves:Vec<i32>=(0..n).filter(|&p|p!=0&&p!=other).flat_map(|p|[-1,p as i32]).collect();
+            let mut g=position(&t,&moves);
+            assert!(!settled_by_passing(&g),"a first pass is not forced");
+            for colour in [1,2] {
+                g.turn=colour;g.passes=1;
+                assert!(settled_by_passing(&g));
+                g.ended=true;assert!(!settled_by_passing(&g));g.ended=false;
+            }
+        }
+        let t=Topology::new(Kind::Plane,11);
+        // Two single eyes prove the surrounding stones alive, but not the
+        // large enclosure: its centre is not adjacent to the living chain.
+        let holes=[0,120,48,49,50,59,60,61,70,71,72];
+        let moves:Vec<i32>=(0..121).filter(|p|!holes.contains(p)).flat_map(|p|[-1,p]).collect();
+        let mut g=position(&t,&moves);g.passes=1;
+        assert_eq!(pass_alive(&g,2).stones.iter().filter(|&&v|v).count(),110);
+        assert!(!settled_by_passing(&g),"retain uncertified space even if every stone lives");
+        let mut empty=Game::new(&t,6.5);empty.pass();
+        assert!(!settled_by_passing(&empty),"empty/neutral points are not settled territory");
+        let mut sparse=position(&t,&[60,61]);sparse.pass();
+        assert!(!settled_by_passing(&sparse),"unsettled stones must remain searchable");
+    }
+
 }

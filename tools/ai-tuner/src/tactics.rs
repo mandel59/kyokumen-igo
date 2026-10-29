@@ -1,4 +1,4 @@
-//! Conservative v3 root guards against isolated invasions.
+//! Conservative v3 root guards against futile invasions and certified eye fills.
 //! A capture proof must cover *all* legal defender replies (including pass).
 //! Exhausting the depth/node budget means unknown, never "dead".
 use crate::board::{Game, Scratch};
@@ -48,6 +48,21 @@ fn forced_capture(game: &Game, target: usize, defender: i8, depth: u32, budget: 
         let mut child = game.clone();
         !child.pass() || forced_capture(&child, target, defender, depth-1, budget, scratch)
     }
+}
+
+/// A single-point eye of certified living chains cannot gain area by being
+/// filled. Keep uncertified eye shapes, connections, rescues and captures.
+/// This also prevents turning the last two true eyes into a capturable chain.
+pub fn avoid_futile_moves(game: &Game, legal: &[bool]) -> Vec<usize> {
+    let mut avoided = avoid_isolated_invasions(game, legal);
+    let own = pass_alive(game, game.turn);
+    for p in 0..game.board.len() {
+        if legal[p] && own.vital[p] &&
+            game.topology.neighbors[p].iter().all(|&q| game.board[q] == game.turn) {
+            avoided.push(p);
+        }
+    }
+    avoided
 }
 
 pub fn avoid_isolated_invasions(game: &Game, legal: &[bool]) -> Vec<usize> {
@@ -122,6 +137,29 @@ mod tests {
         let g=setup(&pockets[..6]);assert!(!enemy_vital_regions(&g)[17]);
         let g=setup(&[8,9,10,15,16,17,22,23,24,40,45]);
         assert!(!enemy_vital_regions(&g)[16]);
+    }
+
+    #[test]
+    fn certified_eyes_are_preserved_but_unsettled_connections_are_kept() {
+        for (kind,size) in [(Kind::Sphere,3),(Kind::Sphere,4),(Kind::Sphere,5),
+            (Kind::Torus,7),(Kind::Torus,9),(Kind::Torus,11),
+            (Kind::Plane,7),(Kind::Plane,9),(Kind::Plane,11)] {
+            let t=Topology::new(kind,size);let n=t.len();
+            let other=(1..n).find(|p|!t.neighbors[0].contains(p)).unwrap();
+            for colour in [1,2] {
+                let moves:Vec<i32>=(0..n).filter(|&p|p!=0&&p!=other).flat_map(|p|
+                    if colour==1 {[p as i32,-1]} else {[-1,p as i32]}).collect();
+                let mut g=position(&t,&moves);
+                if g.turn!=colour {assert!(g.pass());}
+                let before=g.board.clone();let avoided=avoid_futile_moves(&g,&legal(&g));
+                assert!(avoided.contains(&0));assert!(avoided.contains(&other));
+                assert_eq!(g.board,before);
+            }
+        }
+        let t=Topology::new(Kind::Torus,7);
+        let g=position(&t,&[17,-1,23,-1,25,-1,31,-1]);
+        assert!(legal(&g)[24]);
+        assert!(!avoid_futile_moves(&g,&legal(&g)).contains(&24));
     }
 
 }

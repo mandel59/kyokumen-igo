@@ -26,6 +26,8 @@ uv run --project tools/ai-gnn python -m http.server --directory dist 8000
 
 `prepare.mjs` は固定バージョンの ONNX Runtime Web とライセンスを `dist/vendor/onnxruntime/` に用意します。この生成ディレクトリは Git 管理外です。v3 を配信する際も事前に prepare を実行し、生成物を含めて `dist/` を配信します。推論時に外部 CDN や AI サーバーへ接続しません。
 
+終盤の回帰テストは `node v3-tests.mjs`（WASM・敵対的な方策による全9盤の検証）と `node tools/ai-gnn/test-settled-endgame.mjs`（配信モデル・64訪問で報告棋譜を再生）で実行できます。後者は `--baseline PATH_TO_WASM` で変更前の探索と同じモデル・局面・乱数条件を比較できます。
+
 ## 初期データ生成と学習
 
 対象は球面3種類・トーラス3種類・平面7/9/11路の全9盤です。`prepare.mjs` が全9盤の隣接関係を生成し、bootstrap生成器と自己対局、学習、対戦ツールで同じ盤種を扱えます。配信モデルはKataGoの平面盤教師と曲面の既存教材を混ぜて再学習し、全9盤の独立対戦と速度基準を通過したものです。次の候補も、全盤で独立に評価してから採用します。

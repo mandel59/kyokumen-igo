@@ -20,6 +20,7 @@ pub struct Search {
     pub completed: u32,
     pub avoided: usize,
     pub loss_margin: f64,
+    pub settled_pass: bool,
     tactics: bool,
     endgame: bool,
     fpu: u32,
@@ -29,7 +30,7 @@ pub struct Search {
 }
 impl Search {
     pub fn new(seed: u64) -> Self {
-        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0, root_budget: 0, root_initialized: false, root_plan: None }
+        Self { nodes: vec![Node::default()], pending: vec![], next_id: 1, rng: Rng::new(seed), completed: 0, avoided: 0, loss_margin: 0., settled_pass: false, tactics: true, endgame: true, fpu: 0, root_noise: false, unvisited_selections: 0, root_budget: 0, root_initialized: false, root_plan: None }
     }
     pub fn set_fpu(&mut self, mode: u32, root_noise: bool) -> bool {
         if mode > 2 || self.completed != 0 || !self.pending.is_empty() { return false; }
@@ -131,15 +132,17 @@ impl Search {
                             legal.iter_mut().enumerate().for_each(|(a,v)|*v=a==PASS);
                         } else {
                             if self.tactics {
-                                let avoided = tactics::avoid_isolated_invasions(&game, &legal);
+                                let avoided = tactics::avoid_futile_moves(&game, &legal);
                                 self.avoided = avoided.len();
                                 for p in avoided { legal[p] = false; }
                             }
                             if self.endgame {
                                 self.loss_margin = endgame::proven_loss_margin(&game);
-                                if self.loss_margin > 0. {
-                                    // Stop futile continuations, including extensions of existing
-                                    // dead groups. Re-evaluate the certificate on each real turn.
+                                self.settled_pass = endgame::settled_by_passing(&game);
+                                if self.loss_margin > 0. || self.settled_pass {
+                                    // Stop only with a certificate, never a pessimistic NN value.
+                                    // Settled territory also permits accepting a small loss or draw.
+                                    // Re-evaluate on each real turn; cleanup remains searchable.
                                     legal.iter_mut().enumerate().for_each(|(a,v)|*v=a==PASS);
                                 }
                             }

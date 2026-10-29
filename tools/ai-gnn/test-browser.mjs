@@ -24,6 +24,7 @@ const server=createServer((req,res)=>{
   if(name==='/dist/ai-v3.wasm'&&wasmBytes){res.setHeader('content-type','application/wasm');res.end(wasmBytes);return;}
   if(name==='/golden.json'){res.setHeader('content-type','application/json');res.end(golden);return;}
   if(name==='/endgame.json'){res.setHeader('content-type','application/json');res.end(readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url)));return;}
+  if(name==='/plane-endgame.json'){res.setHeader('content-type','application/json');res.end(readFileSync(new URL('../../tests/fixtures/ai/v3-plane-endgame.json',import.meta.url)));return;}
   if(name==='/dist/models/v3/bad-gpu-manifest.json'){
    const manifest=JSON.parse(readFileSync(resolve(modelDirectory,'manifest.json')));
    manifest.webgpu.sha256='0'.repeat(64);res.setHeader('content-type','application/json');res.end(JSON.stringify(manifest));return;
@@ -174,6 +175,14 @@ try{
     }
     if(!(move===null?replay.pass():replay.play(move)).ok)throw new Error('Invalid reported game');
    }
+   const {game:planeRecord}=decodeRecord((await(await fetch(base+'/plane-endgame.json')).json()).code),planeEndgame=[];
+   for(const ply of [149,153,155,157]){
+    const game=Game.fromJSON({...planeRecord.toJSON(),history:planeRecord.history.slice(0,ply+1)});
+    const result=await player.chooseMove(aiPosition(game),{maxSimulations:64,seed:3});
+    if(result.move!==null||!result.settledPass||result.policy[160]!==1||result.simulations!==64)throw new Error('Settled plane game did not pass after '+ply+' on '+backend);
+    game.pass();if(!game.ended||game.score().winner!==1||game.score().margin!==0.5)throw new Error('Settled plane score changed');
+    planeEndgame.push({after:ply,move:result.move,reason:result.decisionReason,margin:game.score().margin});
+   }
    const waiting=player.chooseMove({kind:'torus',size:7,komi:6.5,moves:new Int32Array()});
    player.cancel();let cancelled=false;try{await waiting;}catch(error){cancelled=/cancelled/.test(error.message);}
    if(!cancelled)throw new Error('Cancellation did not reject the stale result');
@@ -181,7 +190,7 @@ try{
    const adapter=backend==='webgpu'?await navigator.gpu.requestAdapter():null;
    const adapterInfo=adapter?Object.fromEntries(['vendor','architecture','device','description'].map(k=>[k,adapter.info[k]])):null;
    return {selected,runtime,adapterInfo,differences,coldMs,warmBatchMs:times,batchParity,planeParity,capacityParity,permutationError,concurrentRejected,gpuChecksumFallback,gpuExecutionFallback,turns,cancelled,
-    tactics:{pocketAvoided:pocketResult.avoidedInvasions,eyePointsAvoided:eyesResult.avoidedInvasions},endgame};
+    tactics:{pocketAvoided:pocketResult.avoidedInvasions,eyePointsAvoided:eyesResult.avoidedInvasions},endgame,planeEndgame};
   };
   const runWorker=backend=>new Promise((resolve,reject)=>{
    const source='self.onmessage=async({data})=>{try{const run='+run.toString()+';self.postMessage({result:await run(data)});}catch(e){self.postMessage({error:e.stack});}}';

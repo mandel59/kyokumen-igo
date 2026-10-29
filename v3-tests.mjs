@@ -235,5 +235,43 @@ assert.equal(forcePolicy(sparseAlive,0,true,true).move,0,'a living enemy chain i
 for(const game of [oneEye,sparseAlive,escaping,snapback,capturing]){
  ai.start(aiPosition(game));const leaves=ai.collect(1);assert.equal(ai.result().provenLoss,false,'unsettled enemy stones cannot certify a loss');ai.cancel();
 }
+// A half-point loss on a settled board must not turn into filling one's own eyes.
+const planeRecord=decodeRecord(JSON.parse(readFileSync(new URL('./tests/fixtures/ai/v3-plane-endgame.json',import.meta.url))).code).game;
+assert.equal(planeRecord.moves,189);
+const atPlaneMove=ply=>Game.fromJSON({...planeRecord.toJSON(),history:planeRecord.history.slice(0,ply+1)});
+for(const ply of [149,153,155,157]){
+ const game=atPlaneMove(ply),before=JSON.stringify(game.toJSON()),target=planeRecord.history[ply+1].lastMove;
+ const result=forcePolicy(game,target,true,true);
+ assert.equal(result.move,null,'accept the settled half-point loss after move '+ply);
+ assert.equal(result.policy[160],1);assert.equal(result.settledPass,true);assert.equal(result.decisionReason,'settled-position');
+ assert.equal(result.provenLoss,false,'settlement is separate from the stone-count loss bound');
+ assert.equal(JSON.stringify(game.toJSON()),before);
+}
+const beforeEyeFill=atPlaneMove(157);
+for(const eye of [12,96]){ // B10 and J3 in the app's column-major point numbering.
+ assert.equal(beforeEyeFill.analyze(eye).ok,true);
+ assert.equal(forcePolicy(beforeEyeFill,eye,false,false).move,eye,'unguarded policy can reproduce eye filling');
+ assert.equal(forcePolicy(beforeEyeFill,eye,true,false).policy[eye],0,'preserve a certified living chain even without settlement passing');
+}
+// A surrounded connection between uncertified chains is not an expendable eye.
+const connection=fixture('torus',7,[17,-1,23,-1,25,-1,31,-1]);
+const connectionScore=connection.score();connection.komi+=connectionScore.black-connectionScore.white;
+assert.equal(forcePolicy(connection,24,true,false).move,24,'retain connections between unsettled friendly chains');
+// Force the network to prefer self-destruction: both colours and every topology must still stop.
+for(const [kind,size] of AI_BOARDS){
+ const topology=createTopology(kind,size),n=topology.vertices.length;
+ const second=topology.neighbors.findIndex((_,p)=>p!==0&&!topology.neighbors[0].includes(p));
+ for(const colour of [1,2])for(const deficit of [0,0.5]){
+  const moves=Array.from({length:n},(_,p)=>p).filter(p=>p!==0&&p!==second).flatMap(p=>colour===1?[p,-1]:[-1,p]);
+  const game=fixture(kind,size,moves);
+  if(game.turn!==colour)assert.equal(game.pass().ok,true);
+  const score=game.score();game.komi+=score.black-score.white+(colour===1?deficit:-deficit);
+  const before=JSON.stringify(game.toJSON()),result=forcePolicy(game,0,false,true);
+  assert.equal(result.move,null,'settled losing pass overrides adversarial policy on '+kind+size+' colour '+colour);
+  assert.equal(result.settledPass,true);assert.equal(result.policy[160],1);
+  const ended=Game.fromJSON(game.toJSON());ended.pass();assert.equal(ended.ended,true);assert.equal(ended.score().margin,deficit);
+  assert.equal(JSON.stringify(game.toJSON()),before);
+ }
+}
 ai.dispose();ai.dispose();assert.throws(()=>ai.start(aiPosition(ko)),/disposed/);
-console.log('v3 WASM: nine-board features, plane corners/edge captures, captures/superko/history, PUCT, terminal signs, nine-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on nine boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards and disposal passed.');
+console.log('v3 WASM: nine-board features, plane corners/edge captures, captures/superko/history, PUCT, terminal signs, nine-board / both-colour immediate winning passes against adversarial policy, exact internal pass proofs / refuted first passes at 64 visits, finite-budget root finalists on nine boards, first-pass/draw/loss controls, tactics, snapback, 33 reported endgame positions / 31 prevented futile moves, loss-certificate safeguards, reported plane half-point settlement, certified eye preservation, nine-board/both-colour settled passes/draws and disposal passed.');
