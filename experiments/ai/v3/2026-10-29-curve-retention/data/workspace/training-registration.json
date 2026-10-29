@@ -1,0 +1,12 @@
+{
+  "started": "2026-10-28T15:59:07.659Z",
+  "sourceHashes": {
+    "train.py": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8",
+    "model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "test_curve_retention.py": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc",
+    "curve-retention-train.mjs": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea",
+    "completed-q-target.mjs": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+  },
+  "plan": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641",
+  "audit": "3f2442c32e45f3cac57890009b00dd562c01e4d29c190880d5c829ee6889b1af"
+}

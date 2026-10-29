@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "results": [
+    {
+      "id": "Control-r0",
+      "arm": "Control",
+      "replica": 0,
+      "seed": 2026102851,
+      "eligible": true,
+      "selectedEpoch": 16,
+      "initialLoss": 3.1350748538970947,
+      "selectedLoss": 3.057502269744873,
+      "relativeGain": 0.02474345518602028,
+      "perBoardRatios": {
+        "board/sphere3": 0.993774215734069,
+        "board/sphere4": 0.961318338620211,
+        "board/sphere5": 0.9596352886642703,
+        "board/torus7": 0.9697453653682024,
+        "board/torus9": 0.9749907227647427,
+        "board/torus11": 0.9983306764977721,
+        "board/plane7": 0.966742624926477,
+        "board/plane9": 0.96444331440937,
+        "board/plane11": 0.9826606251186053
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 120905,
+      "exportParityMaxErrors": {
+        "policy": 0.0,
+        "wdl": 0.0,
+        "score": 0.0,
+        "ownership": 0.0
+      },
+      "sha256": "33f4720ab2eff194dc217f69a90c7828471fa9fc4ffc6be97c50baacb27d1170"
+    },
+    {
+      "id": "NewData-r0",
+      "arm": "NewData",
+      "replica": 0,
+      "seed": 2026102851,
+      "eligible": true,
+      "selectedEpoch": 16,
+      "initialLoss": 3.1350748538970947,
+      "selectedLoss": 3.056022882461548,
+      "relativeGain": 0.02521533778923346,
+      "perBoardRatios": {
+        "board/sphere3": 0.9907558827994408,
+        "board/sphere4": 0.9595517411473947,
+        "board/sphere5": 0.959704435992734,
+        "board/torus7": 0.9726537326812478,
+        "board/torus9": 0.9764443801444525,
+        "board/torus11": 0.9968410936354618,
+        "board/plane7": 0.9741500367234116,
+        "board/plane9": 0.9631210991364512,
+        "board/plane11": 0.9766852438060356
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 120905,
+      "exportParityMaxErrors": {
+        "policy": 0.0,
+        "wdl": 0.0,
+        "score": 0.0,
+        "ownership": 0.0
+      },
+      "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+    }
+  ],
+  "newDataEligible": true,
+  "notes": "Control remains a valid comparator even with epoch0. Both arms use identical common old+fresh validation and optimizer-step count. Numerical/Worker checks are additional required gates."
+}

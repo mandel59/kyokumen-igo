@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "reported-plane11-ply39",
+  "recordCode": "DVJzpLUfiOjoFnH_fOX4q0cILOHkO1Yv0qDwEBp6vF8fv7QOQz37l9UjILcVaC36EoMlogcvF4U6YGDdAmV6Xmu9sVpMo1yoncbmI5JmetinRaGE1nuwdBndHzBu-hlt7GF7NuXINrbJjaoQY7TTW1JccbM_9MtLM3U5FHYbdMOZgcieT7BTSy",
+  "url": "https://kyokugo.ryusei.dev/#kifu=DVJzpLUfiOjoFnH_fOX4q0cILOHkO1Yv0qDwEBp6vF8fv7QOQz37l9UjILcVaC36EoMlogcvF4U6YGDdAmV6Xmu9sVpMo1yoncbmI5JmetinRaGE1nuwdBndHzBu-hlt7GF7NuXINrbJjaoQY7TTW1JccbM_9MtLM3U5FHYbdMOZgcieT7BTSy",
+  "rootPly": 39,
+  "nextMoveNumber": 40,
+  "kind": "plane",
+  "size": 11,
+  "komi": 6.5,
+  "aiColour": 2,
+  "preferredMove": "L6",
+  "recordedMove": "J3",
+  "partition": "development-only",
+  "originalRuntime": {
+    "modelSha256": null,
+    "wasmSha256": null,
+    "seed": null,
+    "note": "Shared record does not encode AI version, model hash, backend or RNG seed."
+  },
+  "observations": {
+    "provenance": "Native CPU/ONNX + current WASM console diagnostics in the preceding conversation, seed 0; raw archival rerun is M0, not yet completed.",
+    "baselineModelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "baselineWasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "L6NeuralRank": 14,
+    "L6MixedPrior": 0.007732165511697531,
+    "J3MixedPrior": 0.5400081276893616,
+    "runs": [
+      {
+        "mode": "A8",
+        "visits": 64,
+        "selected": "J3",
+        "L6Visits": 0
+      },
+      {
+        "mode": "A8",
+        "visits": 256,
+        "selected": "J3",
+        "L6Visits": 0
+      },
+      {
+        "mode": "A8",
+        "visits": 1024,
+        "selected": "D5",
+        "L6Visits": 0
+      },
+      {
+        "mode": "synthetic-L6-root-logit-raised-just-above-rank8",
+        "visits": 64,
+        "selected": "L6",
+        "L6Visits": 20,
+        "L6MixedPrior": 0.014000743627548218
+      },
+      {
+        "mode": "unlimited-root-PUCT-stopped-after-fixed-visits",
+        "visits": 64,
+        "selected": "J3",
+        "L6Visits": 2
+      },
+      {
+        "mode": "unlimited-root-PUCT-stopped-after-fixed-visits",
+        "visits": 256,
+        "selected": "L6",
+        "L6Visits": 165
+      }
+    ],
+    "limitation": "Synthetic promotion changes a root prior and is not a measured tactical-candidate algorithm or a strength test."
+  }
+}

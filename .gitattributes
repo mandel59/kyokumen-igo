@@ -1,3 +1,7 @@
 # Retain the exact bytes of upstream notices and recorded experiment artifacts.
 dist/licenses/** -text -whitespace
 experiments/ai/**/data/** -text -whitespace
+
+# Keep registered study runner hashes stable while recognizing CRLF line endings.
+tools/ai-gnn/topology-routing-audit.mjs -text whitespace=cr-at-eol
+tools/ai-gnn/topology-routing-matches.mjs -text whitespace=cr-at-eol

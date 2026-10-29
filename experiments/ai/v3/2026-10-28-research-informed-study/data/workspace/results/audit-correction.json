@@ -1,0 +1,7 @@
+{
+  "time": "2026-10-28T14:39:40.650283+00:00",
+  "failedCheck": "An audit assertion incorrectly expected validationPolicy == raw targetSearch.policy.",
+  "resolvedBy": "Verified browser-data-worker.mjs and katago-distill-data.mjs. Curved-board common targets include the declared25% prior mixture; planes use KataGo512 targets without targetSearch.policy.",
+  "dataChanged": false,
+  "learningStarted": false
+}

@@ -184,10 +184,53 @@ def loss_terms(logits, wdl, score, ownership, legal, target, outcome, score_targ
     return policy+value+.5*points+.5*own
 
 
+def curve_retention_loss(output, target, legal, mask):
+    logits, wdl, score, ownership = output
+    policy = F.kl_div(F.log_softmax(logits.masked_fill(~legal,-1e9),-1),target['policy'],reduction='none').sum(-1)
+    value = F.kl_div(F.log_softmax(wdl,-1),target['wdl'],reduction='none').sum(-1)
+    points = (score-target['score']).square()
+    own = (F.kl_div(F.log_softmax(ownership,-1),target['ownership'],reduction='none').sum(-1)*mask).sum(-1)/mask.sum(-1)
+    return policy+value+.5*points+.5*own
+
+
+def mixed_generation_weights(records, fresh_fraction):
+    # Keep equal board mass; mix old/new only within boards containing fresh data.
+    if not math.isfinite(fresh_fraction) or not 0 < fresh_fraction < 1:
+        raise ValueError('Invalid fresh-generation fraction')
+    if any(r['record']['source']!='selfplay' or r['record'].get('replayGeneration',0) not in (0,1) for r in records):
+        raise ValueError('Fresh mixing requires selfplay generations0/1')
+    boards={}
+    for i,r in enumerate(records):
+        boards.setdefault((r['record']['kind'],r['record']['size']),[]).append(i)
+    result=[0.]*len(records)
+    for indices in boards.values():
+        old=[i for i in indices if records[i]['record'].get('replayGeneration',0)==0]
+        new=[i for i in indices if records[i]['record'].get('replayGeneration',0)==1]
+        if not old:
+            raise ValueError('Fresh board has no legacy replay')
+        for subset,mass in [(old,1-fresh_fraction if new else 1.),(new,fresh_fraction)]:
+            if not subset: continue
+            local=sampling_weights([records[i] for i in subset])
+            for i,w in zip(subset,local):result[i]=mass*w/len(boards)
+    return result
+
+
+def softened_policy_target(target, legal, temperature):
+    if not math.isfinite(temperature) or temperature <= 0:
+        raise ValueError('Invalid auxiliary policy temperature')
+    softened = target.masked_fill(~legal,0).pow(1/temperature)
+    total = softened.sum(-1,keepdim=True)
+    if not torch.isfinite(softened).all() or (total<=0).any():
+        raise ValueError('Invalid auxiliary policy target')
+    return softened/total
+
+
 class Prepared:
     """Cache feature/target tensors on the training device once, rather than each step."""
     def __init__(self, items, adjacency, device, balance_generations=False):
         self.items, self.count = items, len(items)
+        self.auxiliary_policy_weight = 0.
+        self.curve_anchor_weight, self.curve_anchor = 0., None
         self.data = {k:torch.stack([r[k] for r in items]).to(device) for k in ('x','mask','global_features','legal','policy','own')}
         self.data['raw_policy'] = torch.stack([r.get('raw_policy',r['policy']) for r in items]).to(device)
         self.data['selection_policy'] = torch.stack([r.get('selection_policy',r.get('raw_policy',r['policy'])) for r in items]).to(device)
@@ -209,11 +252,50 @@ class Prepared:
 
     def forward(self, model, indices):
         d = {k:v[indices] for k,v in self.data.items()}
-        output = model(d['x'],self.adjacency[self.boards[indices]],d['mask'],d['global_features'])
+        inputs = (d['x'],self.adjacency[self.boards[indices]],d['mask'],d['global_features'])
+        if self.auxiliary_policy_weight:
+            output, auxiliary = model.forward_with_aux(*inputs)
+        else:
+            output = model(*inputs)
         loss = loss_terms(*output,d['legal'],d['policy'],self.outcome[indices],self.score[indices],d['own'],d['mask'].squeeze(-1),
             self.policy_weight[indices],None if self.anchor is None else self.anchor[indices],
             self.anchor_weight*self.policy_weight[indices] if self.policy_balanced else self.anchor_weight)
+        if self.auxiliary_policy_weight:
+            auxiliary_loss = -(d['soft_policy']*F.log_softmax(auxiliary.masked_fill(~d['legal'],-1e9),-1)).sum(-1)
+            loss = loss+self.auxiliary_policy_weight*self.policy_weight[indices]*auxiliary_loss
+        if self.curve_anchor_weight:
+            target = {k:v[indices] for k,v in self.curve_anchor.items()}
+            loss = loss+self.curve_anchor_weight*self.curve_mask[indices]*curve_retention_loss(output,target,d['legal'],d['mask'].squeeze(-1))
         return loss, output, d
+
+    def configure_soft_policy(self, temperature, weight):
+        if not math.isfinite(weight) or weight < 0:
+            raise ValueError('Invalid auxiliary policy weight')
+        self.data['soft_policy'] = softened_policy_target(self.data['policy'],self.data['legal'],temperature)
+        self.auxiliary_policy_weight = weight
+
+    @torch.no_grad()
+    def cache_curve_anchor(self, teacher, batch_size, weight):
+        if not math.isfinite(weight) or weight < 0:
+            raise ValueError('Invalid curve anchor weight')
+        self.curve_anchor_weight = weight
+        if not weight:
+            return
+        teacher.eval()
+        self.curve_mask = torch.tensor([r['record']['kind']!='plane' for r in self.items],device=self.indices.device,dtype=torch.float32)
+        selected = self.indices[self.curve_mask.bool()]
+        if not len(selected):
+            raise ValueError('Curve anchor requires curved training roots')
+        self.curve_anchor = dict(policy=torch.zeros_like(self.data['policy']),
+            wdl=torch.zeros(self.count,3,device=self.indices.device),score=torch.zeros_like(self.score),
+            ownership=torch.zeros(self.count,POINTS,3,device=self.indices.device))
+        for start in range(0,len(selected),batch_size):
+            ix = selected[start:start+batch_size]
+            logits,wdl,score,own = teacher(self.data['x'][ix],self.adjacency[self.boards[ix]],self.data['mask'][ix],self.data['global_features'][ix])
+            self.curve_anchor['policy'][ix] = F.softmax(logits.masked_fill(~self.data['legal'][ix],-1e9),-1)
+            self.curve_anchor['wdl'][ix] = F.softmax(wdl,-1)
+            self.curve_anchor['score'][ix] = score
+            self.curve_anchor['ownership'][ix] = F.softmax(own,-1)
 
     @torch.no_grad()
     def refresh_surprise(self, model, batch_size):
@@ -418,7 +500,26 @@ def main():
     parser.add_argument('--require-validation-policy',action='store_true',help='Require explicit common policy targets for eligible selfplay validation roots')
     parser.add_argument('--policy-surprise-fraction',type=float,default=0.,help='Within-domain training replay fraction proportional to policy surprise; maximum 0.5')
     parser.add_argument('--refresh-policy-surprise',action='store_true',help='Compute training-only policy surprise from the frozen resumed model before weighting replay')
+    parser.add_argument('--auxiliary-soft-policy',action='store_true',help='Add training-only heads initialized from the resumed policy/passing heads')
+    parser.add_argument('--auxiliary-policy-temperature',type=float,default=4.)
+    parser.add_argument('--auxiliary-policy-weight',type=float,default=0.)
+    parser.add_argument('--samples-per-epoch',type=int,help='Fixed balanced sample count per epoch, independent of corpus size')
+    parser.add_argument('--fresh-generation-fraction',type=float,help='Within-board generation1 fraction, retaining original board mass')
+    parser.add_argument('--curve-anchor',help='Trusted frozen checkpoint for curve-only output retention during training')
+    parser.add_argument('--curve-anchor-weight',type=float,default=0.)
     args = parser.parse_args()
+    if not math.isfinite(args.curve_anchor_weight) or args.curve_anchor_weight<0 or (args.curve_anchor_weight and not args.curve_anchor):
+        parser.error('Curve retention requires a checkpoint and finite nonnegative weight')
+    if args.samples_per_epoch is not None and (not args.balanced or args.samples_per_epoch<1):
+        parser.error('Fixed samples per epoch requires --balanced and a positive count')
+    if args.fresh_generation_fraction is not None and (not args.balanced or args.balance_generations or args.policy_surprise_fraction or not math.isfinite(args.fresh_generation_fraction) or not 0<args.fresh_generation_fraction<1):
+        parser.error('Fresh mixing requires --balanced, fraction in (0,1), no generation balancing or surprise weighting')
+    if not math.isfinite(args.auxiliary_policy_temperature) or args.auxiliary_policy_temperature<=0 or not math.isfinite(args.auxiliary_policy_weight) or args.auxiliary_policy_weight<0:
+        parser.error('Invalid auxiliary policy temperature or weight')
+    if args.auxiliary_policy_weight and not args.auxiliary_soft_policy:
+        parser.error('Auxiliary weight requires --auxiliary-soft-policy')
+    if args.auxiliary_soft_policy and args.trainable!='all':
+        parser.error('Auxiliary policy currently requires --trainable all')
     if args.refresh_policy_surprise and (not args.resume or not args.policy_surprise_fraction):
         parser.error('Refreshed surprise requires a resumed model and nonzero surprise fraction')
     if not math.isfinite(args.policy_surprise_fraction) or not 0 <= args.policy_surprise_fraction <= .5 or (args.policy_surprise_fraction and not args.balanced):
@@ -448,6 +549,8 @@ def main():
         model.load_state_dict(torch.load(args.resume, weights_only=True))
     if args.trainable!='all' and not args.resume:
         parser.error('Head-only learning requires a trained checkpoint')
+    if args.auxiliary_soft_policy:
+        model.enable_soft_policy()
     configure_trainable(model,args.trainable)
     model.to(device)
     records = load_data(args.data,args.policy_temperature,args.minimum_policy_confidence)
@@ -474,11 +577,20 @@ def main():
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,args.epochs,eta_min=args.minimum_learning_rate) if args.cosine else None
     ema = copy.deepcopy(model).eval().requires_grad_(False) if args.ema_decay else None
     prepared_train, prepared_validation = Prepared(train,adjacency,device,args.balance_generations), Prepared(validation,adjacency,device,args.balance_generations)
+    if args.auxiliary_soft_policy:
+        prepared_train.configure_soft_policy(args.auxiliary_policy_temperature,args.auxiliary_policy_weight)
     if args.policy_anchor:
         teacher = GraphNet().to(device).eval()
         teacher.load_state_dict(torch.load(args.policy_anchor,map_location=device,weights_only=True))
         prepared_train.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
         prepared_validation.anchor_policy(teacher,args.batch_size,args.policy_anchor_weight)
+        del teacher
+    if args.curve_anchor_weight:
+        with torch.random.fork_rng(devices=[]):
+            teacher = GraphNet()
+        teacher = teacher.to(device).eval()
+        teacher.load_state_dict(torch.load(args.curve_anchor,map_location=device,weights_only=True))
+        prepared_train.cache_curve_anchor(teacher,args.batch_size,args.curve_anchor_weight)
         del teacher
     train_weights = sampling_weights(train,args.selfplay_mass,args.balance_generations) if args.balanced else None
     if args.refresh_policy_surprise:
@@ -487,6 +599,9 @@ def main():
     if args.policy_surprise_fraction:
         train_weights = surprise_weights(train,train_weights,args.policy_surprise_fraction)
     validation_weights = sampling_weights(validation,args.selfplay_mass,args.balance_generations) if args.balanced else None
+    if args.fresh_generation_fraction is not None:
+        train_weights = mixed_generation_weights(train,args.fresh_generation_fraction)
+        validation_weights = mixed_generation_weights(validation,args.fresh_generation_fraction)
     selection_digest=hashlib.sha256()
     for i,r in sorted(enumerate(validation),key=lambda pair:(pair[1]['record']['kind'],pair[1]['record']['size'],pair[1]['record']['gameId'],pair[1]['record'].get('ply',0))):
         m=r['record'];selection_digest.update(json.dumps([m['kind'],m['size'],m['gameId'],m.get('ply'),m['wdl'],m['score'],m.get('policyEligible',True),validation_weights[i] if validation_weights else None]).encode())
@@ -517,13 +632,13 @@ def main():
     if args.best_validation:
         best_state = {k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
     for epoch in range(args.epochs):
-        order = rng.choices(range(len(train)),weights=train_weights,k=len(train)) if args.balanced else list(range(len(train)))
+        order = rng.choices(range(len(train)),weights=train_weights,k=args.samples_per_epoch or len(train)) if args.balanced else list(range(len(train)))
         if not args.balanced:
             rng.shuffle(order)
         order = torch.tensor(order,device=device)
         model.train()
         total = 0
-        for start in range(0, len(train), args.batch_size):
+        for start in range(0, len(order), args.batch_size):
             indices = order[start:start+args.batch_size]
             optimizer.zero_grad()
             loss = prepared_train.forward(model,indices)[0].mean()
@@ -544,7 +659,7 @@ def main():
         selectable = not args.checkpoint_every or (epoch+1)%args.checkpoint_every==0
         if args.checkpoint_every and selectable:
             save_checkpoint(epoch+1,ema if ema is not None else model)
-        metrics = dict(epoch=epoch+1,trainLoss=total/len(train),validationLoss=val_metrics['loss'],selectionLoss=val,learningRate=optimizer.param_groups[0]['lr'],validation=val_metrics,selection=selection_metrics)
+        metrics = dict(epoch=epoch+1,sampledPositions=len(order),optimizerSteps=(len(order)+args.batch_size-1)//args.batch_size,trainLoss=total/len(order),validationLoss=val_metrics['loss'],selectionLoss=val,learningRate=optimizer.param_groups[0]['lr'],validation=val_metrics,selection=selection_metrics)
         history.append(metrics)
         if selectable and val < best_loss:
             best_loss, best_epoch = val, epoch+1
@@ -570,7 +685,16 @@ def main():
     # Golden batch must have a common topology, as in production searches.
     examples = [r for r in validation if (r["record"]["kind"],r["record"]["size"]) ==
                 (validation[0]["record"]["kind"],validation[0]["record"]["size"])]
-    metadata = export(model, Path(args.output), examples, adjacency,
+    auxiliary_metadata = None
+    inference_model = model
+    if args.auxiliary_soft_policy:
+        selected_training_path = Path(args.output)/'selected-training-weights.pt'
+        torch.save(model.state_dict(),selected_training_path)
+        auxiliary_metadata = dict(temperature=args.auxiliary_policy_temperature,weight=args.auxiliary_policy_weight,
+            initializedFrom='resumed policy/passing',trainingParameters=sum(p.numel() for p in model.parameters()),
+            selectedTrainingSha256=hashlib.sha256(selected_training_path.read_bytes()).hexdigest(),exported=False)
+        inference_model = model.inference_model()
+    metadata = export(inference_model, Path(args.output), examples, adjacency,
         dict(seed=args.seed, epochs=args.epochs, trainPositions=len(train), validationPositions=len(validation),
             trainGames=sorted({r["record"]["gameId"] for r in train}),
             validationGames=sorted({r["record"]["gameId"] for r in validation}), history=history,
@@ -578,12 +702,15 @@ def main():
             selectedEpoch=best_epoch if args.best_validation else args.epochs,
             selection=("minimum normal-position common-target validation loss, excluding anchor, at saved epochs including zero" if args.normal_selection else "minimum balanced validation loss including initial checkpoint" if args.balanced else "minimum validation loss including initial checkpoint") if args.best_validation else "last epoch",
             validationMetrics=validation_metrics,initialValidationMetrics=initial_metrics,validationBySource=by_source,initialValidationBySource=initial_by_source,
-            sampling=('source/generation/board/game/thirds' if args.balance_generations else 'source/board/game/thirds') if args.balanced else 'uniform positions',selfplayMass=args.selfplay_mass,
+            sampling=('board/generation/game/thirds' if args.fresh_generation_fraction is not None else 'source/generation/board/game/thirds' if args.balance_generations else 'source/board/game/thirds') if args.balanced else 'uniform positions',selfplayMass=args.selfplay_mass,
+            samplesPerEpoch=args.samples_per_epoch or len(train),freshGenerationFraction=args.fresh_generation_fraction,
             emaDecay=args.ema_decay,learningRateSchedule='cosine' if args.cosine else 'constant',minimumLearningRate=args.minimum_learning_rate,
             splitManifestSha256=hashlib.sha256(Path(args.split_manifest).read_bytes()).hexdigest() if args.split_manifest else None,
             dataSources=data_sources,
             policyTemperature=args.policy_temperature,minimumPolicyConfidence=args.minimum_policy_confidence,
             policyAnchorSha256=hashlib.sha256(Path(args.policy_anchor).read_bytes()).hexdigest() if args.policy_anchor else None,policyAnchorWeight=args.policy_anchor_weight,
+            curveAnchorSha256=hashlib.sha256(Path(args.curve_anchor).read_bytes()).hexdigest() if args.curve_anchor else None,curveAnchorWeight=args.curve_anchor_weight,
+            auxiliarySoftPolicy=auxiliary_metadata,
             trainable=args.trainable,trainableParameters=sum(p.numel() for p in trainable_parameters),
             normalTraining=args.normal_training,normalSelection=args.normal_selection,normalizePolicy=args.normalize_policy,checkpointEvery=args.checkpoint_every,
             balanceGenerations=args.balance_generations,policySurpriseFraction=args.policy_surprise_fraction,refreshPolicySurprise=args.refresh_policy_surprise,

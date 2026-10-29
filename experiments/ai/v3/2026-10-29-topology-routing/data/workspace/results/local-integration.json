@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "installed": "2026-10-28T17:51:38.884Z",
+  "scope": "Local experimental v3 slot only; no push or hosted deployment.",
+  "previousModel": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+  "models": {
+    "plane": {
+      "archive": "experiments/ai/v3/2026-10-28-fresh-data-study",
+      "prefix": "data/workspace/NewData-r0-model/",
+      "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "weightsSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e"
+    },
+    "curves": {
+      "archive": "experiments/ai/v3/2026-10-29-curve-retention",
+      "prefix": "data/workspace/CompletedQ-r0-model/",
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "weightsSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    }
+  },
+  "files": {
+    "dist/models/v3/model.onnx": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+    "dist/models/v3/weights.f32": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+    "dist/models/v3/manifest.json": "443d6db3c0fad18ac01b47143887b6cba97a2bf5c81ef3bdf3f086b7539923f4",
+    "dist/models/v3/plane/model.onnx": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+    "dist/models/v3/plane/weights.f32": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e",
+    "dist/models/v3/plane/manifest.json": "9750056350a5122db32b0a715a888a9f48ec978d66890a8086af9d5c594fed86",
+    "tests/fixtures/ai/v3-golden.json": "a7e2d84806ff73d26c9a5fb9234cc7565294aafbd212f2f2aa9ec93e1046f157"
+  },
+  "browserVerificationPending": false,
+  "verified": "2026-10-28T17:51:49.214Z",
+  "checks": [
+    "native-topology-tests",
+    "installed-native-onnx",
+    "installed-browser",
+    "installed-search-regression"
+  ]
+}

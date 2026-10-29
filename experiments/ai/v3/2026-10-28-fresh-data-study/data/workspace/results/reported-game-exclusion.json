@@ -1,0 +1,8 @@
+{
+  "role": "Post-training explanatory data exclusion check; not used to select or tune a model.",
+  "scannedPositions": 14101,
+  "rootPly": 39,
+  "trainingFeatureMatches": 0,
+  "validationFeatureMatches": 0,
+  "rootSha256": "a0822e790eb81acccdff6c25a3530a436b8be1caa5ed49ed0c63ae8e4e9753a6"
+}

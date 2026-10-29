@@ -1,0 +1,1 @@
+{"newDataEligible": true, "results": [{"id": "Control-r0", "eligible": true, "selectedEpoch": 16, "relativeGain": 0.02474345518602028}, {"id": "NewData-r0", "eligible": true, "selectedEpoch": 16, "relativeGain": 0.02521533778923346}]}

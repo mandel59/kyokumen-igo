@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "rawPositions": 12453,
+  "excludedCertifiedLoss": 67,
+  "excludedByBoard": {
+    "sphere3": 6,
+    "sphere4": 4,
+    "sphere5": 7,
+    "torus7": 7,
+    "torus9": 6,
+    "torus11": 6,
+    "plane7": 15,
+    "plane9": 12,
+    "plane11": 4
+  },
+  "training": 9263,
+  "validation": 3123,
+  "originGroups": 144,
+  "originSplitOverlap": 0,
+  "duplicatePositionIds": 0,
+  "featureFingerprintsSharedAcrossSplits": 31,
+  "sharedFingerprintInterpretation": "Identical model inputs from different origin games (e.g. common openings) are reported, not treated as origin-game leakage; compressed features need not uniquely identify full superko state.",
+  "checkpointMatchesProduction": true,
+  "commonSelfplayTargetVerified": "Curves: policy and validationPolicy both equal 75% clean4096 final policy +25% frozen NN prior. Planes: policy equals validationPolicy from KataGo512. No unexplained mismatch.",
+  "teacherInterpretation": "Teacher labels are estimates, not proof of best moves. NN ranking excludes legality but does not reproduce tactical search pruning."
+}

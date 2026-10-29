@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-fresh-teacher-pilot-20261028",
+  "status": "registered-before-pilot",
+  "date": "2026-10-28",
+  "reason": "Soft4 failed both preflight replicas; begin the separately registered NewData pilot before any new training.",
+  "baseline": {
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  },
+  "teacher": {
+    "engine": "local KataGo v1.18.1 OpenCL",
+    "modelSha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4",
+    "engineSha256": "0e6cc918840e6ef67c0b4a21109585306df7aaa3772971574e58deb8e8fc0575",
+    "scope": "plane only",
+    "visits": 512
+  },
+  "workspace": "tools/ai-gnn/target/fresh-teacher-pilot-20261028",
+  "seed": 2026102840,
+  "timing": {
+    "warmupQueries": 1,
+    "warmupVisits": 8,
+    "roots": 6,
+    "visits": 512,
+    "fixture": "plane7/9/11 each empty and legal history[1,0,size]",
+    "fullCollectionMaxSecondsPerRoot": 0.5,
+    "maximumQueries": 7,
+    "excludeFromTraining": true
+  },
+  "screen": {
+    "boards": [
+      "plane7",
+      "plane9",
+      "plane11"
+    ],
+    "pairsPerBoard": 2,
+    "games": 12,
+    "openingMoves": 4,
+    "sharedWithinColourPair": true,
+    "teacherVisits": 512,
+    "baselineVisits": 64,
+    "minTeacherScoreRate": 0.75,
+    "minPerBoardScoreRate": 0.5,
+    "moveCap": "6*N",
+    "retainCapped": true,
+    "cappedFailsPilot": true,
+    "concurrency": 3,
+    "maximumRootQueries": 6024,
+    "maximumTeacherVisits": 3088384,
+    "noOutcomeBasedReplacements": true,
+    "excludeAllPilotGamesFromLearning": true
+  },
+  "freezeNext": {
+    "requires": "Timing and teacher-strength gates both pass; record one-factor NewData comparison with exact data/steps/mixture/splits/seeds before generation.",
+    "dataBudgetProposal": "At most36 fresh plane games (12 per board), retained old curved-board replay; actual round plan frozen after pilot cost.",
+    "noAutomaticProductionChange": true
+  },
+  "stopping": "If either pilot gate fails, archive it and revise the research direction before a separately registered experiment; never change this pilot threshold or extend its sample."
+}

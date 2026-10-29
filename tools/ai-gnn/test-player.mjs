@@ -24,7 +24,7 @@ async function player(latency,searchFactory=()=>createV3Search({load:async()=>wa
  const module=new vm.SourceTextModule(source,{context});
  await module.link(name=>{const values=modules[name];assert.ok(values,name);return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});});
  await module.evaluate();assert.equal(module.namespace.V3_DEFAULT_SIMULATIONS,64);
- return module.namespace.createV3AI();
+ return module.namespace.createV3AI({discoverModels:false});
 }
 const position={kind:'torus',size:7,komi:6.5,moves:new Int32Array()};
 const fast=await player(1),slow=await player(1000);

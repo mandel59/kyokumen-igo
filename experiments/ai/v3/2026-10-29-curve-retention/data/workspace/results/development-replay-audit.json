@@ -1,0 +1,203 @@
+{
+  "passed": true,
+  "phase": "development",
+  "games": 216,
+  "turns": 20964,
+  "capped": 0,
+  "allMovesAndScoresReplayed": true,
+  "allActorsAndSeedsVerified": true,
+  "rootBudgetCountersVerified": true,
+  "childVisitAccounting": "Exact proven-root backups may bypass child edges",
+  "productionUnchanged": true,
+  "rows": [
+    {
+      "file": "development-CompletedQ-r0-plane11.json",
+      "id": "CompletedQ-r0",
+      "board": "plane11",
+      "games": 8,
+      "turns": 1155
+    },
+    {
+      "file": "development-CompletedQ-r0-plane7.json",
+      "id": "CompletedQ-r0",
+      "board": "plane7",
+      "games": 8,
+      "turns": 428
+    },
+    {
+      "file": "development-CompletedQ-r0-plane9.json",
+      "id": "CompletedQ-r0",
+      "board": "plane9",
+      "games": 8,
+      "turns": 776
+    },
+    {
+      "file": "development-CompletedQ-r0-sphere3.json",
+      "id": "CompletedQ-r0",
+      "board": "sphere3",
+      "games": 8,
+      "turns": 511
+    },
+    {
+      "file": "development-CompletedQ-r0-sphere4.json",
+      "id": "CompletedQ-r0",
+      "board": "sphere4",
+      "games": 8,
+      "turns": 819
+    },
+    {
+      "file": "development-CompletedQ-r0-sphere5.json",
+      "id": "CompletedQ-r0",
+      "board": "sphere5",
+      "games": 8,
+      "turns": 1254
+    },
+    {
+      "file": "development-CompletedQ-r0-torus11.json",
+      "id": "CompletedQ-r0",
+      "board": "torus11",
+      "games": 8,
+      "turns": 963
+    },
+    {
+      "file": "development-CompletedQ-r0-torus7.json",
+      "id": "CompletedQ-r0",
+      "board": "torus7",
+      "games": 8,
+      "turns": 442
+    },
+    {
+      "file": "development-CompletedQ-r0-torus9.json",
+      "id": "CompletedQ-r0",
+      "board": "torus9",
+      "games": 8,
+      "turns": 703
+    },
+    {
+      "file": "development-Control-r0-plane11.json",
+      "id": "Control-r0",
+      "board": "plane11",
+      "games": 8,
+      "turns": 1163
+    },
+    {
+      "file": "development-Control-r0-plane7.json",
+      "id": "Control-r0",
+      "board": "plane7",
+      "games": 8,
+      "turns": 430
+    },
+    {
+      "file": "development-Control-r0-plane9.json",
+      "id": "Control-r0",
+      "board": "plane9",
+      "games": 8,
+      "turns": 705
+    },
+    {
+      "file": "development-Control-r0-sphere3.json",
+      "id": "Control-r0",
+      "board": "sphere3",
+      "games": 8,
+      "turns": 477
+    },
+    {
+      "file": "development-Control-r0-sphere4.json",
+      "id": "Control-r0",
+      "board": "sphere4",
+      "games": 8,
+      "turns": 781
+    },
+    {
+      "file": "development-Control-r0-sphere5.json",
+      "id": "Control-r0",
+      "board": "sphere5",
+      "games": 8,
+      "turns": 1269
+    },
+    {
+      "file": "development-Control-r0-torus11.json",
+      "id": "Control-r0",
+      "board": "torus11",
+      "games": 8,
+      "turns": 984
+    },
+    {
+      "file": "development-Control-r0-torus7.json",
+      "id": "Control-r0",
+      "board": "torus7",
+      "games": 8,
+      "turns": 425
+    },
+    {
+      "file": "development-Control-r0-torus9.json",
+      "id": "Control-r0",
+      "board": "torus9",
+      "games": 8,
+      "turns": 673
+    },
+    {
+      "file": "development-CurveGuard-r0-plane11.json",
+      "id": "CurveGuard-r0",
+      "board": "plane11",
+      "games": 8,
+      "turns": 1155
+    },
+    {
+      "file": "development-CurveGuard-r0-plane7.json",
+      "id": "CurveGuard-r0",
+      "board": "plane7",
+      "games": 8,
+      "turns": 427
+    },
+    {
+      "file": "development-CurveGuard-r0-plane9.json",
+      "id": "CurveGuard-r0",
+      "board": "plane9",
+      "games": 8,
+      "turns": 745
+    },
+    {
+      "file": "development-CurveGuard-r0-sphere3.json",
+      "id": "CurveGuard-r0",
+      "board": "sphere3",
+      "games": 8,
+      "turns": 477
+    },
+    {
+      "file": "development-CurveGuard-r0-sphere4.json",
+      "id": "CurveGuard-r0",
+      "board": "sphere4",
+      "games": 8,
+      "turns": 813
+    },
+    {
+      "file": "development-CurveGuard-r0-sphere5.json",
+      "id": "CurveGuard-r0",
+      "board": "sphere5",
+      "games": 8,
+      "turns": 1294
+    },
+    {
+      "file": "development-CurveGuard-r0-torus11.json",
+      "id": "CurveGuard-r0",
+      "board": "torus11",
+      "games": 8,
+      "turns": 983
+    },
+    {
+      "file": "development-CurveGuard-r0-torus7.json",
+      "id": "CurveGuard-r0",
+      "board": "torus7",
+      "games": 8,
+      "turns": 432
+    },
+    {
+      "file": "development-CurveGuard-r0-torus9.json",
+      "id": "CurveGuard-r0",
+      "board": "torus9",
+      "games": 8,
+      "turns": 680
+    }
+  ]
+}

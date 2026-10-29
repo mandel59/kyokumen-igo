@@ -82,3 +82,13 @@
 [v3の候補手取りこぼしを減らす実験](v3/2026-10-28-root-candidate-recall/README.md)は、16手版が開発30勝42敗、戦術候補追加版が速度基準未達となり、両案とも不採用でした。
 
 [v3の探索6案・学習5案の改善試行](v3/2026-10-28-improvement-campaign/README.md)の全結果を保存しました。
+
+## 2026年10月28〜29日の追加実験
+
+- [根の候補取りこぼしの比較](v3/2026-10-28-root-candidate-recall/README.md)
+- [探索6案・学習5案の改善実験](v3/2026-10-28-improvement-campaign/README.md)
+- [学習専用の軟方策補助出力の比較](v3/2026-10-28-research-informed-study/README.md)
+- [平面KataGo教師の収集パイロット](v3/2026-10-28-fresh-teacher-pilot/README.md)
+- [新規平面教師データ追加の比較](v3/2026-10-28-fresh-data-study/README.md)
+- [曲面保持とcompleted-Q教師の比較](v3/2026-10-29-curve-retention/README.md)
+- [盤面別の固定モデル切替の比較](v3/2026-10-29-topology-routing/README.md)

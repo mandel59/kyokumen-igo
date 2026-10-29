@@ -12,7 +12,7 @@ import {createNodeInference} from './node-inference.mjs';
 const fixture=readFileSync(new URL('../../tests/fixtures/ai/v3-endgame.json',import.meta.url));
 const {game:record,ai:colour}=decodeRecord(JSON.parse(fixture).code);
 const args=process.argv.slice(2),arg=(key,fallback)=>args.includes(key)?args[args.indexOf(key)+1]:fallback;
-const inference=await createNodeInference(arg('--model','dist/models/v3'));
+const inference=await createNodeInference(arg('--model','dist/models/v3'),{kind:record.topology.kind});
 const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
 const adjacency=adjacencyFor(record.topology),game=new Game(record.topology,record.komi);
 const report={schemaVersion:1,fixtureSha256:createHash('sha256').update(fixture).digest('hex'),

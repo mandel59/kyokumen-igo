@@ -9,7 +9,7 @@ import {Game,createTopology} from '../../dist/engine.js';
 import {aiPosition} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
-import {createNodeInference} from './node-inference.mjs';
+import {createTopologyNodeInference as createNodeInference} from './node-topology-inference.mjs';
 import {createRandom} from './selfplay-policy.mjs';
 import {runTrainingSearch,trainingTarget} from './training-search.mjs';
 const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
@@ -23,7 +23,7 @@ const random=createRandom(seed),inference=await createNodeInference(arg('--model
 const wasm=readFileSync('dist/ai-v3.wasm'),searchHash=createHash('sha256').update(wasm).digest('hex');
 const search=await createV3Search({load:async()=>wasm});
 const outputs=recipes.map(recipe=>{const file=createWriteStream(prefix+'-t'+recipe+'.jsonl.gz'),gzip=createGzip();gzip.pipe(file);return{recipe,file,gzip};});
-const report={schemaVersion:1,input,seed,fpu,searchMode,recipes,teacherModel:inference.manifest.sha256,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
+const report={schemaVersion:1,input,seed,fpu,searchMode,recipes,teacherModel:inference.bundleManifest.sha256,modelRoutes:inference.bundleManifest.modelRoutes??null,searchHash,positions:0,eligible:0,selected:0,games:0,selectedByPhase:{},excludedCertified:0,budgetPositions:{128:0,512:0}};
 async function evaluate(game,visits,searchSeed){
  search.start(aiPosition(game),{seed:searchSeed,fpu,rootNoise:false});
  return runTrainingSearch(search,inference,adjacencyFor(game.topology),{visits,mode:searchMode});
@@ -32,6 +32,7 @@ async function evaluate(game,visits,searchSeed){
 async function family(rows){
  if(!rows.length)return;
  const first=rows[0],n=first.x.length/32,game=new Game(createTopology(first.kind,first.size),Math.round(-first.global[0]*n*2)/2),selected=new Set();
+ await inference.setKind(first.kind);
  const phases=new Map();
  for(let i=0;i<rows.length;i++){
   const r=rows[i];assert.equal(r.ply,i);assert.equal(r.source,'selfplay');

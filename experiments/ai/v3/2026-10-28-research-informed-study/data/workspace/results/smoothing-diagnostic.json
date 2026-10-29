@@ -1,0 +1,968 @@
+{
+  "role": "Post-hoc hypothesis only, after Soft4 preflight failed. No new training, tuning, or model-selection gate. Raw zero means unvisited/eliminated as well as disfavoured; it does not prove an action is bad.",
+  "planeRawReconstruction": "Invert the documented2% legal-uniform mixture; truncate FP32 residual<1e-7, below the smallest possible positive1/512 root-edge mass.",
+  "groups": {
+    "train/all": {
+      "rawSupport": {
+        "count": 9263,
+        "mean": 6.653675914930368,
+        "median": 5.0
+      },
+      "mixedSupport": {
+        "count": 9263,
+        "mean": 52.49929828349347,
+        "median": 46.0
+      },
+      "rawTail": {
+        "count": 9263,
+        "mean": 0.1286736068012934,
+        "median": 0.019569471753687305
+      },
+      "mixedTail": {
+        "count": 9263,
+        "mean": 0.1937218270819649,
+        "median": 0.15195438309070478
+      },
+      "softenedMassOnRawZero": {
+        "count": 9263,
+        "mean": 0.6236710380297918,
+        "median": 0.709876674997554
+      },
+      "softenedEntropy": {
+        "count": 9263,
+        "mean": 3.500601529534291,
+        "median": 3.608544174628824
+      },
+      "rawSoftenedEntropy": {
+        "count": 9263,
+        "mean": 1.4137109246265582,
+        "median": 1.4449773742606906
+      }
+    },
+    "train/sphere": {
+      "rawSupport": {
+        "count": 1930,
+        "mean": 1.9984455958549223,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 1930,
+        "mean": 59.016580310880826,
+        "median": 51.0
+      },
+      "rawTail": {
+        "count": 1930,
+        "mean": 0.0042074948136869485,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 1930,
+        "mean": 0.14898802840007166,
+        "median": 0.15326806369826257
+      },
+      "softenedMassOnRawZero": {
+        "count": 1930,
+        "mean": 0.780571640130581,
+        "median": 0.8184622505482095
+      },
+      "softenedEntropy": {
+        "count": 1930,
+        "mean": 3.43218758173987,
+        "median": 3.5513038425638017
+      },
+      "rawSoftenedEntropy": {
+        "count": 1930,
+        "mean": 0.5301825528555678,
+        "median": 0.6431281176052617
+      }
+    },
+    "train/sphere3": {
+      "rawSupport": {
+        "count": 374,
+        "mean": 1.9866310160427807,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 374,
+        "mean": 28.47326203208556,
+        "median": 27.0
+      },
+      "rawTail": {
+        "count": 374,
+        "mean": 0.004738707159650613,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 374,
+        "mean": 0.1438643027302323,
+        "median": 0.14931823081327925
+      },
+      "softenedMassOnRawZero": {
+        "count": 374,
+        "mean": 0.719360714065225,
+        "median": 0.7813373598774445
+      },
+      "softenedEntropy": {
+        "count": 374,
+        "mean": 2.8732368753989603,
+        "median": 3.011319120503896
+      },
+      "rawSoftenedEntropy": {
+        "count": 374,
+        "mean": 0.44574707426312304,
+        "median": 0.5475674603241627
+      }
+    },
+    "validation/all": {
+      "rawSupport": {
+        "count": 3123,
+        "mean": 7.040025616394493,
+        "median": 5.0
+      },
+      "mixedSupport": {
+        "count": 3123,
+        "mean": 52.8408581492155,
+        "median": 46.0
+      },
+      "rawTail": {
+        "count": 3123,
+        "mean": 0.1311796753044698,
+        "median": 0.021526418383306472
+      },
+      "mixedTail": {
+        "count": 3123,
+        "mean": 0.19623912240235897,
+        "median": 0.1538796055703531
+      },
+      "softenedMassOnRawZero": {
+        "count": 3123,
+        "mean": 0.6225993893441196,
+        "median": 0.7158660287246168
+      },
+      "softenedEntropy": {
+        "count": 3123,
+        "mean": 3.5245498401382824,
+        "median": 3.614867883356455
+      },
+      "rawSoftenedEntropy": {
+        "count": 3123,
+        "mean": 1.4396763776733903,
+        "median": 1.4852695837235355
+      }
+    },
+    "validation/sphere": {
+      "rawSupport": {
+        "count": 616,
+        "mean": 2.0243506493506493,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 616,
+        "mean": 60.478896103896105,
+        "median": 53.0
+      },
+      "rawTail": {
+        "count": 616,
+        "mean": 0.007668963105538612,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 616,
+        "mean": 0.15525970913134704,
+        "median": 0.15656609363781862
+      },
+      "softenedMassOnRawZero": {
+        "count": 616,
+        "mean": 0.7778883226624355,
+        "median": 0.8130407819218027
+      },
+      "softenedEntropy": {
+        "count": 616,
+        "mean": 3.4351741631019683,
+        "median": 3.560879214955026
+      },
+      "rawSoftenedEntropy": {
+        "count": 616,
+        "mean": 0.538155546634768,
+        "median": 0.6366739709570017
+      }
+    },
+    "validation/sphere3": {
+      "rawSupport": {
+        "count": 124,
+        "mean": 1.9758064516129032,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 124,
+        "mean": 28.669354838709676,
+        "median": 27.5
+      },
+      "rawTail": {
+        "count": 124,
+        "mean": 0.003524284888334259,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 124,
+        "mean": 0.14809801183491872,
+        "median": 0.15919265743738384
+      },
+      "softenedMassOnRawZero": {
+        "count": 124,
+        "mean": 0.7227703020796598,
+        "median": 0.7895810649052346
+      },
+      "softenedEntropy": {
+        "count": 124,
+        "mean": 2.8803522339566574,
+        "median": 3.0178781375363393
+      },
+      "rawSoftenedEntropy": {
+        "count": 124,
+        "mean": 0.5036541772259744,
+        "median": 0.6267673596640457
+      }
+    },
+    "train/sphere4": {
+      "rawSupport": {
+        "count": 603,
+        "mean": 2.0265339966832503,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 603,
+        "mean": 49.98673300165837,
+        "median": 49.0
+      },
+      "rawTail": {
+        "count": 603,
+        "mean": 0.00973617873530765,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 603,
+        "mean": 0.15339135957159566,
+        "median": 0.15671100395527862
+      },
+      "softenedMassOnRawZero": {
+        "count": 603,
+        "mean": 0.7666131097005809,
+        "median": 0.8124004041051265
+      },
+      "softenedEntropy": {
+        "count": 603,
+        "mean": 3.342513060810355,
+        "median": 3.4890749902465843
+      },
+      "rawSoftenedEntropy": {
+        "count": 603,
+        "mean": 0.5258476106668429,
+        "median": 0.632561591783017
+      }
+    },
+    "validation/sphere4": {
+      "rawSupport": {
+        "count": 190,
+        "mean": 2.057894736842105,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 190,
+        "mean": 51.73157894736842,
+        "median": 52.0
+      },
+      "rawTail": {
+        "count": 190,
+        "mean": 0.012118876024860219,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 190,
+        "mean": 0.1593356102360734,
+        "median": 0.15619889186389374
+      },
+      "softenedMassOnRawZero": {
+        "count": 190,
+        "mean": 0.7799349047672838,
+        "median": 0.8114819779416427
+      },
+      "softenedEntropy": {
+        "count": 190,
+        "mean": 3.4096228022616133,
+        "median": 3.5385113142869518
+      },
+      "rawSoftenedEntropy": {
+        "count": 190,
+        "mean": 0.5319849794631737,
+        "median": 0.6262009804736561
+      }
+    },
+    "train/sphere5": {
+      "rawSupport": {
+        "count": 953,
+        "mean": 1.9853095487932844,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 953,
+        "mean": 76.71668415529905,
+        "median": 75.0
+      },
+      "rawTail": {
+        "count": 953,
+        "mean": 0.0005008108450324952,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 953,
+        "mean": 0.1482126503351094,
+        "median": 0.15355191848504304
+      },
+      "softenedMassOnRawZero": {
+        "count": 953,
+        "mean": 0.813425659225789,
+        "median": 0.8278679001560234
+      },
+      "softenedEntropy": {
+        "count": 953,
+        "mean": 3.7082854834103816,
+        "median": 3.792447535018683
+      },
+      "rawSoftenedEntropy": {
+        "count": 953,
+        "mean": 0.5660617124918482,
+        "median": 0.6599994022756133
+      }
+    },
+    "validation/sphere5": {
+      "rawSupport": {
+        "count": 302,
+        "mean": 2.0231788079470197,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 302,
+        "mean": 79.04304635761589,
+        "median": 79.5
+      },
+      "rawTail": {
+        "count": 302,
+        "mean": 0.006571137424287733,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 302,
+        "mean": 0.15563596494213874,
+        "median": 0.1561641725439214
+      },
+      "softenedMassOnRawZero": {
+        "count": 302,
+        "mean": 0.7992319781337699,
+        "median": 0.825846003714513
+      },
+      "softenedEntropy": {
+        "count": 302,
+        "mean": 3.6790572020876837,
+        "median": 3.7721637748918933
+      },
+      "rawSoftenedEntropy": {
+        "count": 302,
+        "mean": 0.5562038167317658,
+        "median": 0.6478485583527316
+      }
+    },
+    "train/torus": {
+      "rawSupport": {
+        "count": 1604,
+        "mean": 1.9763092269326683,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 1604,
+        "mean": 47.41832917705736,
+        "median": 42.0
+      },
+      "rawTail": {
+        "count": 1604,
+        "mean": 0.003498094148418902,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 1604,
+        "mean": 0.15300758591183383,
+        "median": 0.15718429017038815
+      },
+      "softenedMassOnRawZero": {
+        "count": 1604,
+        "mean": 0.7727672176362542,
+        "median": 0.8134396141200835
+      },
+      "softenedEntropy": {
+        "count": 1604,
+        "mean": 3.2891837217629227,
+        "median": 3.433067413128956
+      },
+      "rawSoftenedEntropy": {
+        "count": 1604,
+        "mean": 0.4987580192488979,
+        "median": 0.6134098622818498
+      }
+    },
+    "train/torus7": {
+      "rawSupport": {
+        "count": 344,
+        "mean": 1.9156976744186047,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 344,
+        "mean": 24.65406976744186,
+        "median": 23.5
+      },
+      "rawTail": {
+        "count": 344,
+        "mean": 0.0005682811535582448,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 344,
+        "mean": 0.14612066262454443,
+        "median": 0.15889834494456628
+      },
+      "softenedMassOnRawZero": {
+        "count": 344,
+        "mean": 0.7155373847563713,
+        "median": 0.7710917222222168
+      },
+      "softenedEntropy": {
+        "count": 344,
+        "mean": 2.7715653047546858,
+        "median": 2.893248030573704
+      },
+      "rawSoftenedEntropy": {
+        "count": 344,
+        "mean": 0.45822036986590214,
+        "median": 0.6031185879501542
+      }
+    },
+    "validation/torus": {
+      "rawSupport": {
+        "count": 533,
+        "mean": 1.9887429643527204,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 533,
+        "mean": 48.24765478424015,
+        "median": 44.0
+      },
+      "rawTail": {
+        "count": 533,
+        "mean": 0.003577845373957451,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 533,
+        "mean": 0.15979081948233836,
+        "median": 0.16632262506277587
+      },
+      "softenedMassOnRawZero": {
+        "count": 533,
+        "mean": 0.7785236871830467,
+        "median": 0.8150471351303792
+      },
+      "softenedEntropy": {
+        "count": 533,
+        "mean": 3.31176596071348,
+        "median": 3.475538675089068
+      },
+      "rawSoftenedEntropy": {
+        "count": 533,
+        "mean": 0.49121839418320123,
+        "median": 0.6251888651611933
+      }
+    },
+    "validation/torus7": {
+      "rawSupport": {
+        "count": 101,
+        "mean": 2.0297029702970297,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 101,
+        "mean": 26.534653465346533,
+        "median": 25.0
+      },
+      "rawTail": {
+        "count": 101,
+        "mean": 0.010712419902161178,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 101,
+        "mean": 0.15784647638360663,
+        "median": 0.15718075682139077
+      },
+      "softenedMassOnRawZero": {
+        "count": 101,
+        "mean": 0.7412761012198478,
+        "median": 0.764975100327664
+      },
+      "softenedEntropy": {
+        "count": 101,
+        "mean": 2.904159414258261,
+        "median": 2.975407897563141
+      },
+      "rawSoftenedEntropy": {
+        "count": 101,
+        "mean": 0.3910076268286833,
+        "median": 0.43026797418179524
+      }
+    },
+    "train/torus9": {
+      "rawSupport": {
+        "count": 518,
+        "mean": 1.9594594594594594,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 518,
+        "mean": 41.83976833976834,
+        "median": 40.5
+      },
+      "rawTail": {
+        "count": 518,
+        "mean": 0.002150195120972219,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 518,
+        "mean": 0.15825304981037783,
+        "median": 0.16351311917397132
+      },
+      "softenedMassOnRawZero": {
+        "count": 518,
+        "mean": 0.780042953792308,
+        "median": 0.8148240005798567
+      },
+      "softenedEntropy": {
+        "count": 518,
+        "mean": 3.263565911743386,
+        "median": 3.3731752697778985
+      },
+      "rawSoftenedEntropy": {
+        "count": 518,
+        "mean": 0.4668319478098592,
+        "median": 0.577315230136547
+      }
+    },
+    "validation/torus9": {
+      "rawSupport": {
+        "count": 169,
+        "mean": 1.9940828402366864,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 169,
+        "mean": 41.59763313609467,
+        "median": 41.0
+      },
+      "rawTail": {
+        "count": 169,
+        "mean": 0.00488187677042037,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 169,
+        "mean": 0.16298726464638022,
+        "median": 0.1677477997702903
+      },
+      "softenedMassOnRawZero": {
+        "count": 169,
+        "mean": 0.768028881392925,
+        "median": 0.8042679762810145
+      },
+      "softenedEntropy": {
+        "count": 169,
+        "mean": 3.2286625846250865,
+        "median": 3.3757033008468063
+      },
+      "rawSoftenedEntropy": {
+        "count": 169,
+        "mean": 0.47910917083630716,
+        "median": 0.595330404020508
+      }
+    },
+    "train/torus11": {
+      "rawSupport": {
+        "count": 742,
+        "mean": 2.0161725067385445,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 742,
+        "mean": 61.86657681940701,
+        "median": 61.0
+      },
+      "rawTail": {
+        "count": 742,
+        "mean": 0.005797376313445112,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 742,
+        "mean": 0.15253851759833212,
+        "median": 0.15194338089529774
+      },
+      "softenedMassOnRawZero": {
+        "count": 742,
+        "mean": 0.7942203593907609,
+        "median": 0.825573090277097
+      },
+      "softenedEntropy": {
+        "count": 742,
+        "mean": 3.5470418902817267,
+        "median": 3.679413998479135
+      },
+      "rawSoftenedEntropy": {
+        "count": 742,
+        "mean": 0.5398397664095078,
+        "median": 0.6341370951838718
+      }
+    },
+    "validation/torus11": {
+      "rawSupport": {
+        "count": 263,
+        "mean": 1.9695817490494296,
+        "median": 2.0
+      },
+      "mixedSupport": {
+        "count": 263,
+        "mean": 60.85931558935361,
+        "median": 59.0
+      },
+      "rawTail": {
+        "count": 263,
+        "mean": 0.0,
+        "median": 0.0
+      },
+      "mixedTail": {
+        "count": 263,
+        "mean": 0.15848351689773316,
+        "median": 0.17227207581021525
+      },
+      "softenedMassOnRawZero": {
+        "count": 263,
+        "mean": 0.7995717037640871,
+        "median": 0.830073451431711
+      },
+      "softenedEntropy": {
+        "count": 263,
+        "mean": 3.521700301971715,
+        "median": 3.667363029998188
+      },
+      "rawSoftenedEntropy": {
+        "count": 263,
+        "mean": 0.5374835890441573,
+        "median": 0.6457059081998406
+      }
+    },
+    "train/plane": {
+      "rawSupport": {
+        "count": 5729,
+        "mean": 9.531506371094432,
+        "median": 9.0
+      },
+      "mixedSupport": {
+        "count": 5729,
+        "mean": 51.726304765229536,
+        "median": 46.0
+      },
+      "rawTail": {
+        "count": 5729,
+        "mean": 0.20565058680326428,
+        "median": 0.12915851276761534
+      },
+      "mixedTail": {
+        "count": 5729,
+        "mean": 0.22019099697076647,
+        "median": 0.14557534189594828
+      },
+      "softenedMassOnRawZero": {
+        "count": 5729,
+        "mean": 0.5290701593174008,
+        "median": 0.6270864017983481
+      },
+      "softenedEntropy": {
+        "count": 5729,
+        "mean": 3.5828415509880367,
+        "median": 3.665133664990101
+      },
+      "rawSoftenedEntropy": {
+        "count": 5729,
+        "mean": 1.9675238444631404,
+        "median": 2.032088991045644
+      }
+    },
+    "train/plane7": {
+      "rawSupport": {
+        "count": 1157,
+        "mean": 7.31028522039758,
+        "median": 6.0
+      },
+      "mixedSupport": {
+        "count": 1157,
+        "mean": 27.191875540190146,
+        "median": 27.0
+      },
+      "rawTail": {
+        "count": 1157,
+        "mean": 0.1521902755512646,
+        "median": 0.06457925462097408
+      },
+      "mixedTail": {
+        "count": 1157,
+        "mean": 0.16693898790647854,
+        "median": 0.0801198623413882
+      },
+      "softenedMassOnRawZero": {
+        "count": 1157,
+        "mean": 0.4479607698180177,
+        "median": 0.5392167040466251
+      },
+      "softenedEntropy": {
+        "count": 1157,
+        "mean": 2.9951067398898363,
+        "median": 3.1106859601877326
+      },
+      "rawSoftenedEntropy": {
+        "count": 1157,
+        "mean": 1.6566156197077064,
+        "median": 1.6680181509933114
+      }
+    },
+    "validation/plane": {
+      "rawSupport": {
+        "count": 1974,
+        "mean": 9.969098277608916,
+        "median": 8.0
+      },
+      "mixedSupport": {
+        "count": 1974,
+        "mean": 51.69756838905775,
+        "median": 45.0
+      },
+      "rawTail": {
+        "count": 1974,
+        "mean": 0.2041758121167822,
+        "median": 0.11839530271356846
+      },
+      "mixedTail": {
+        "count": 1974,
+        "mean": 0.21886843548813115,
+        "median": 0.1350273953630033
+      },
+      "softenedMassOnRawZero": {
+        "count": 1974,
+        "mean": 0.5320392912325541,
+        "median": 0.6277278602631053
+      },
+      "softenedEntropy": {
+        "count": 1974,
+        "mean": 3.6098939256437483,
+        "median": 3.6601385644441553
+      },
+      "rawSoftenedEntropy": {
+        "count": 1974,
+        "mean": 1.9770952921212432,
+        "median": 2.0044425772410097
+      }
+    },
+    "validation/plane7": {
+      "rawSupport": {
+        "count": 390,
+        "mean": 8.138461538461538,
+        "median": 7.0
+      },
+      "mixedSupport": {
+        "count": 390,
+        "mean": 27.72051282051282,
+        "median": 26.5
+      },
+      "rawTail": {
+        "count": 390,
+        "mean": 0.16464448798410025,
+        "median": 0.0861056747616026
+      },
+      "mixedTail": {
+        "count": 390,
+        "mean": 0.1794149733723418,
+        "median": 0.10240065543183724
+      },
+      "softenedMassOnRawZero": {
+        "count": 390,
+        "mean": 0.43394014105723616,
+        "median": 0.5032179042717643
+      },
+      "softenedEntropy": {
+        "count": 390,
+        "mean": 3.052860539709232,
+        "median": 3.113609033947056
+      },
+      "rawSoftenedEntropy": {
+        "count": 390,
+        "mean": 1.7836317703085596,
+        "median": 1.7971104625144516
+      }
+    },
+    "train/plane9": {
+      "rawSupport": {
+        "count": 1804,
+        "mean": 9.3519955654102,
+        "median": 9.0
+      },
+      "mixedSupport": {
+        "count": 1804,
+        "mean": 44.85809312638581,
+        "median": 44.0
+      },
+      "rawTail": {
+        "count": 1804,
+        "mean": 0.19868003698581807,
+        "median": 0.12133072613015412
+      },
+      "mixedTail": {
+        "count": 1804,
+        "mean": 0.21336692912318847,
+        "median": 0.13817659704059249
+      },
+      "softenedMassOnRawZero": {
+        "count": 1804,
+        "mean": 0.51936105091002,
+        "median": 0.6154276893060477
+      },
+      "softenedEntropy": {
+        "count": 1804,
+        "mean": 3.502282288651569,
+        "median": 3.607072614933178
+      },
+      "rawSoftenedEntropy": {
+        "count": 1804,
+        "mean": 1.9529745217063166,
+        "median": 2.032725128280757
+      }
+    },
+    "validation/plane9": {
+      "rawSupport": {
+        "count": 623,
+        "mean": 9.02247191011236,
+        "median": 8.0
+      },
+      "mixedSupport": {
+        "count": 623,
+        "mean": 44.990369181380416,
+        "median": 44.0
+      },
+      "rawTail": {
+        "count": 623,
+        "mean": 0.1874240229528886,
+        "median": 0.11937377648917666
+      },
+      "mixedTail": {
+        "count": 623,
+        "mean": 0.20234041695522384,
+        "median": 0.13623158684931455
+      },
+      "softenedMassOnRawZero": {
+        "count": 623,
+        "mean": 0.5282196313636204,
+        "median": 0.6078834654874846
+      },
+      "softenedEntropy": {
+        "count": 623,
+        "mean": 3.503151963410968,
+        "median": 3.6184803631726905
+      },
+      "rawSoftenedEntropy": {
+        "count": 623,
+        "mean": 1.9310524680958532,
+        "median": 2.0043153861594787
+      }
+    },
+    "train/plane11": {
+      "rawSupport": {
+        "count": 2768,
+        "mean": 10.576950867052023,
+        "median": 10.0
+      },
+      "mixedSupport": {
+        "count": 2768,
+        "mean": 66.45773121387283,
+        "median": 65.0
+      },
+      "rawTail": {
+        "count": 2768,
+        "mean": 0.23253947841787292,
+        "median": 0.16438356210666466
+      },
+      "mixedTail": {
+        "count": 2768,
+        "mean": 0.24689735278160893,
+        "median": 0.18050374330343016
+      },
+      "softenedMassOnRawZero": {
+        "count": 2768,
+        "mean": 0.5693009379365123,
+        "median": 0.6640769836780299
+      },
+      "softenedEntropy": {
+        "count": 2768,
+        "mean": 3.881012824721998,
+        "median": 4.015812414342902
+      },
+      "rawSoftenedEntropy": {
+        "count": 2768,
+        "mean": 2.1069630765062577,
+        "median": 2.155002553558627
+      }
+    },
+    "validation/plane11": {
+      "rawSupport": {
+        "count": 961,
+        "mean": 11.32570239334027,
+        "median": 9.0
+      },
+      "mixedSupport": {
+        "count": 961,
+        "mean": 65.77627471383975,
+        "median": 64.0
+      },
+      "rawTail": {
+        "count": 961,
+        "mean": 0.23107860198239272,
+        "median": 0.13307240466788245
+      },
+      "mixedTail": {
+        "count": 961,
+        "mean": 0.24559456011993047,
+        "median": 0.14991712931404177
+      },
+      "softenedMassOnRawZero": {
+        "count": 961,
+        "mean": 0.5743268215829388,
+        "median": 0.6814345818364848
+      },
+      "softenedEntropy": {
+        "count": 961,
+        "mean": 3.9051522638180285,
+        "median": 4.001097737646535
+      },
+      "rawSoftenedEntropy": {
+        "count": 961,
+        "mean": 2.0854568455809357,
+        "median": 2.0988215938181236
+      }
+    }
+  }
+}

@@ -1,0 +1,2310 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\baseline\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/baseline/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\baseline\\manifest.json",
+      "archive": "data/workspace/baseline/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 93047,
+      "originalSha256": "15db6417a8406e5a6bb2b21b2902789c4dbe472bc60b5d3fc96a509d44cd6790",
+      "storedSha256": "2fa9b29e0db1b6e0b2f16e2076ea47b146c14552e5242ac1b4b2a1e8d0556021"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\baseline\\model.onnx",
+      "archive": "data/workspace/baseline/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+      "storedSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\baseline\\weights.f32",
+      "archive": "data/workspace/baseline/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+      "storedSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\baseline\\weights.pt",
+      "archive": "data/workspace/baseline/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+      "storedSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-CompletedQ-r0-command.json",
+      "archive": "data/workspace/browser-CompletedQ-r0-command.json",
+      "compressed": false,
+      "originalBytes": 1489,
+      "originalSha256": "7a2f9f0eede1a94f3669ca384d632a75f5a89e11fbcb4fc4acc9d1c1da7eb7cc",
+      "storedSha256": "7a2f9f0eede1a94f3669ca384d632a75f5a89e11fbcb4fc4acc9d1c1da7eb7cc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-CompletedQ-r0-log.txt",
+      "archive": "data/workspace/browser-CompletedQ-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 8877,
+      "originalSha256": "51735efa878c3bcc9b0f95f395be349014ac4745a6a5de8eca5fd272fcad15cc",
+      "storedSha256": "51735efa878c3bcc9b0f95f395be349014ac4745a6a5de8eca5fd272fcad15cc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-Control-r0-command.json",
+      "archive": "data/workspace/browser-Control-r0-command.json",
+      "compressed": false,
+      "originalBytes": 1483,
+      "originalSha256": "dbe97fd977cc0a4d0f10cd0288fa8e30a2c906ec47c6df7c415c1dda9e32b9d9",
+      "storedSha256": "dbe97fd977cc0a4d0f10cd0288fa8e30a2c906ec47c6df7c415c1dda9e32b9d9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-Control-r0-log.txt",
+      "archive": "data/workspace/browser-Control-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 8801,
+      "originalSha256": "489200131103400259a5a783f52fc4a4525b8939dc57e28f7feb4b1f30308ee8",
+      "storedSha256": "489200131103400259a5a783f52fc4a4525b8939dc57e28f7feb4b1f30308ee8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-CurveGuard-r0-command.json",
+      "archive": "data/workspace/browser-CurveGuard-r0-command.json",
+      "compressed": false,
+      "originalBytes": 1489,
+      "originalSha256": "cda285b550f40e9d3091b8797d652b038ed71d35ccde9231a559b8b745fd00b8",
+      "storedSha256": "cda285b550f40e9d3091b8797d652b038ed71d35ccde9231a559b8b745fd00b8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\browser-CurveGuard-r0-log.txt",
+      "archive": "data/workspace/browser-CurveGuard-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 8827,
+      "originalSha256": "901cd27bc026a40365f86bb50acbc03bbba4d18d655225a4087231ead370f7f2",
+      "storedSha256": "901cd27bc026a40365f86bb50acbc03bbba4d18d655225a4087231ead370f7f2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\completed-q-legacy.jsonl.gz",
+      "archive": "data/workspace/completed-q-legacy.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 18166382,
+      "originalSha256": "e764c6062103d9b7edc1297956cd2a51f29e4b6dcb53b016ee7aa4c0af955862",
+      "storedSha256": "e764c6062103d9b7edc1297956cd2a51f29e4b6dcb53b016ee7aa4c0af955862"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\completed-q-tests-command.json",
+      "archive": "data/workspace/completed-q-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1213,
+      "originalSha256": "1454ecf59364bcd8270e8ace493a7bfc71244d1d83976d672386a22b3f33b3ad",
+      "storedSha256": "1454ecf59364bcd8270e8ace493a7bfc71244d1d83976d672386a22b3f33b3ad"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\completed-q-tests-log.txt",
+      "archive": "data/workspace/completed-q-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 120,
+      "originalSha256": "faf47fa61d061ac13a7709a8cd626659330b3637435d3f0d7bd6687e4f7f6ac3",
+      "storedSha256": "faf47fa61d061ac13a7709a8cd626659330b3637435d3f0d7bd6687e4f7f6ac3"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\epoch-00.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51",
+      "storedSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\epoch-04.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "c7c38216fe52664ab7fd27edf485876a20fcd724581be0ca113b5f5976ac3fd5",
+      "storedSha256": "c7c38216fe52664ab7fd27edf485876a20fcd724581be0ca113b5f5976ac3fd5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\epoch-08.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "db371cd7c4f7ef367fd46ab6bff0bb612f61f5b72aad6d83ff1fc5d8fa226db8",
+      "storedSha256": "db371cd7c4f7ef367fd46ab6bff0bb612f61f5b72aad6d83ff1fc5d8fa226db8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\epoch-12.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/epoch-12.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "b077b0986a5fbce120d23a4751ad12b2dc85df16bd4b72a4b74268fc78147c17",
+      "storedSha256": "b077b0986a5fbce120d23a4751ad12b2dc85df16bd4b72a4b74268fc78147c17"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\epoch-16.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/epoch-16.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "b01574f7d8eafded6f7606e8e9cb10422f4ecf044aa631eece6c60982992251f",
+      "storedSha256": "b01574f7d8eafded6f7606e8e9cb10422f4ecf044aa631eece6c60982992251f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\golden.json",
+      "archive": "data/workspace/CompletedQ-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 99944,
+      "originalSha256": "a7e2d84806ff73d26c9a5fb9234cc7565294aafbd212f2f2aa9ec93e1046f157",
+      "storedSha256": "eea0359426b62ae4f3e124a38147fd464271b9210275cd888d0f7c93002cdb5e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/CompletedQ-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\manifest.json",
+      "archive": "data/workspace/CompletedQ-r0-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 102023,
+      "originalSha256": "043555f24dcaf5766e9f9349d8b1b1ed5954638733e97efa0b4e81ab2efdbb3c",
+      "storedSha256": "430198f60ee302f7ddff675a235eca0a1a0e6417e1bae6d9605a9bb55928411f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\model.onnx",
+      "archive": "data/workspace/CompletedQ-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "storedSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\weights.f32",
+      "archive": "data/workspace/CompletedQ-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+      "storedSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CompletedQ-r0-model\\weights.pt",
+      "archive": "data/workspace/CompletedQ-r0-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "30f88aa9d68b5896516df7543be29cf3764ad6faeda40189051489921a67b884",
+      "storedSha256": "30f88aa9d68b5896516df7543be29cf3764ad6faeda40189051489921a67b884"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\epoch-00.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51",
+      "storedSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\epoch-04.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "43c685565218490fce31d554549c6de5832ad85ac80eb073078ee32123273b4b",
+      "storedSha256": "43c685565218490fce31d554549c6de5832ad85ac80eb073078ee32123273b4b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\epoch-08.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "88cacb28c545162ac0c3ce45fb8f7248ac497d05a6414ed777c211c5a982f8d4",
+      "storedSha256": "88cacb28c545162ac0c3ce45fb8f7248ac497d05a6414ed777c211c5a982f8d4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\epoch-12.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-12.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "26aaaffcdb3d951442031e629b974438badd0d5519c1204700b73fd21603b04d",
+      "storedSha256": "26aaaffcdb3d951442031e629b974438badd0d5519c1204700b73fd21603b04d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\epoch-16.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-16.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "b76eb8f6a1ec5a71ca0c2920b60d91fb96cff50c339cf875a256c556d05cbe4d",
+      "storedSha256": "b76eb8f6a1ec5a71ca0c2920b60d91fb96cff50c339cf875a256c556d05cbe4d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\golden.json",
+      "archive": "data/workspace/Control-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 99948,
+      "originalSha256": "39d06fc1304182e4da805f29cb410fcb77ebfdef165a914f121171732b3051db",
+      "storedSha256": "e0c3604e51a3664b8e86bfadc67c54419f1a5fa7ecb64b20133cc732986acf89"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Control-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\manifest.json",
+      "archive": "data/workspace/Control-r0-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 101953,
+      "originalSha256": "8f84273b2403895a6c71383c71340c5ac5dc9de612d173b014fc5318fd017a2e",
+      "storedSha256": "d8300c19b7c445b28930dc36dd9ac3c5109f9f9f70de0315dc78789f89dade63"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\model.onnx",
+      "archive": "data/workspace/Control-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "fe090e741cb8e69808998c605727f1292f724443d73b41772c517a874331dbcb",
+      "storedSha256": "fe090e741cb8e69808998c605727f1292f724443d73b41772c517a874331dbcb"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\weights.f32",
+      "archive": "data/workspace/Control-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "a22ad4337d5f867c2f35fcabf8962a71f77459672353038eb4b72eb83eb1b741",
+      "storedSha256": "a22ad4337d5f867c2f35fcabf8962a71f77459672353038eb4b72eb83eb1b741"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\Control-r0-model\\weights.pt",
+      "archive": "data/workspace/Control-r0-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "c8ee5aaff37682ad18fe2bb62aeb4dca968fc0ff7b1727cab3cdaacd3f2fc84c",
+      "storedSha256": "c8ee5aaff37682ad18fe2bb62aeb4dca968fc0ff7b1727cab3cdaacd3f2fc84c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\curve-drift-diagnostic-command.json",
+      "archive": "data/workspace/curve-drift-diagnostic-command.json",
+      "compressed": false,
+      "originalBytes": 1250,
+      "originalSha256": "8ee8eb788fa3f3c5429014e27307688ed1508aaf0b425ceadf5557948ed419c4",
+      "storedSha256": "8ee8eb788fa3f3c5429014e27307688ed1508aaf0b425ceadf5557948ed419c4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\curve-drift-diagnostic-log.txt",
+      "archive": "data/workspace/curve-drift-diagnostic-log.txt",
+      "compressed": false,
+      "originalBytes": 386,
+      "originalSha256": "6a4f54e006d07a3a1620d501709e90c34922a316a88e787c77421cfcc6823d3a",
+      "storedSha256": "6a4f54e006d07a3a1620d501709e90c34922a316a88e787c77421cfcc6823d3a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\epoch-00.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51",
+      "storedSha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\epoch-04.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "88cc88c8e5301b69db49141a28cf9e25ebbe4054d4dfa97889b5b36903ff5030",
+      "storedSha256": "88cc88c8e5301b69db49141a28cf9e25ebbe4054d4dfa97889b5b36903ff5030"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\epoch-08.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "512d38b466274a5b6860912e6aa7db59d9b9f71295453e6ed81573c4b379b0ee",
+      "storedSha256": "512d38b466274a5b6860912e6aa7db59d9b9f71295453e6ed81573c4b379b0ee"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\epoch-12.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/epoch-12.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "4314279687962036508bac3ac207e047941edeaae158388dd593350afb4c07b4",
+      "storedSha256": "4314279687962036508bac3ac207e047941edeaae158388dd593350afb4c07b4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\epoch-16.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/epoch-16.pt",
+      "compressed": false,
+      "originalBytes": 502825,
+      "originalSha256": "625fcae4038237386ff14e400f2590c4e290fdf5abdb3f81a28096f8b90d953d",
+      "storedSha256": "625fcae4038237386ff14e400f2590c4e290fdf5abdb3f81a28096f8b90d953d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\golden.json",
+      "archive": "data/workspace/CurveGuard-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 99874,
+      "originalSha256": "984f8605a47a6100be99588aebf016f67dfef323f0c617aaa59566fbdf327762",
+      "storedSha256": "76b1cefa95bf136f1daec6b1247efc32d36aa79a6323d7bc152a1264e1bc2b24"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/CurveGuard-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\manifest.json",
+      "archive": "data/workspace/CurveGuard-r0-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 102068,
+      "originalSha256": "50475da24cdfd7e86eefa4235dc72134322b6d69d9d794032e687ed422962466",
+      "storedSha256": "bab0051e80942e8529a0bc67c0cb345c6953151d3037435ea16876c082247af9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\model.onnx",
+      "archive": "data/workspace/CurveGuard-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40",
+      "storedSha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\weights.f32",
+      "archive": "data/workspace/CurveGuard-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "b7f362c21aad6b0fd381dc7ced03ff469414b9ecd4656b7ff118d45ce4378fb7",
+      "storedSha256": "b7f362c21aad6b0fd381dc7ced03ff469414b9ecd4656b7ff118d45ce4378fb7"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\CurveGuard-r0-model\\weights.pt",
+      "archive": "data/workspace/CurveGuard-r0-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "f2b8bd49d624149f112461ff11cf9734101f919407586c676184374cc1f831fe",
+      "storedSha256": "f2b8bd49d624149f112461ff11cf9734101f919407586c676184374cc1f831fe"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\development-audit-command.json",
+      "archive": "data/workspace/development-audit-command.json",
+      "compressed": false,
+      "originalBytes": 1231,
+      "originalSha256": "eb5e09eaba563c606d51b9f4f0e906f13b8193da97ef4a8b3176de47867fdb10",
+      "storedSha256": "eb5e09eaba563c606d51b9f4f0e906f13b8193da97ef4a8b3176de47867fdb10"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\development-audit-log.txt",
+      "archive": "data/workspace/development-audit-log.txt",
+      "compressed": false,
+      "originalBytes": 75,
+      "originalSha256": "e053948e55ef6529a25ecad0aaa8bff85bcba25e17e2bc076ce93e52cef603be",
+      "storedSha256": "e053948e55ef6529a25ecad0aaa8bff85bcba25e17e2bc076ce93e52cef603be"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\development-command.json",
+      "archive": "data/workspace/development-command.json",
+      "compressed": false,
+      "originalBytes": 1236,
+      "originalSha256": "dbfd96f71c0bb6c0d8fb3ade76c982b9b22f877c4cfad4ea9cef5e149e49d9ca",
+      "storedSha256": "dbfd96f71c0bb6c0d8fb3ade76c982b9b22f877c4cfad4ea9cef5e149e49d9ca"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\development-log.txt",
+      "archive": "data/workspace/development-log.txt",
+      "compressed": false,
+      "originalBytes": 14532,
+      "originalSha256": "32c69b33a26fb563380c9bb9326602cf52486a0e4350521493aa38492ecc7109",
+      "storedSha256": "32c69b33a26fb563380c9bb9326602cf52486a0e4350521493aa38492ecc7109"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\plan.json",
+      "archive": "data/workspace/plan.json",
+      "compressed": false,
+      "originalBytes": 10422,
+      "originalSha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641",
+      "storedSha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\preflight-command.json",
+      "archive": "data/workspace/preflight-command.json",
+      "compressed": false,
+      "originalBytes": 1248,
+      "originalSha256": "2162b7ee808d2a1a8018035c8c70d008cd68bdb3ca684770812519a3ab1fc4ca",
+      "storedSha256": "2162b7ee808d2a1a8018035c8c70d008cd68bdb3ca684770812519a3ab1fc4ca"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\preflight-log.txt",
+      "archive": "data/workspace/preflight-log.txt",
+      "compressed": false,
+      "originalBytes": 370,
+      "originalSha256": "f49e75affeaa940334f7d85b5a57da77e4f9f060205e25af514c56bd3c5dabad",
+      "storedSha256": "f49e75affeaa940334f7d85b5a57da77e4f9f060205e25af514c56bd3c5dabad"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\registered-plan.md",
+      "archive": "data/workspace/registered-plan.md",
+      "compressed": false,
+      "originalBytes": 3261,
+      "originalSha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5",
+      "storedSha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\registration.json",
+      "archive": "data/workspace/registration.json",
+      "compressed": false,
+      "originalBytes": 2405,
+      "originalSha256": "b8910fcfe250b0fdcab3c77ca9ecc037e7ce0b0ee6a0c21c977766d2d6049a67",
+      "storedSha256": "b8910fcfe250b0fdcab3c77ca9ecc037e7ce0b0ee6a0c21c977766d2d6049a67"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\reported-game-diagnostic-command.json",
+      "archive": "data/workspace/reported-game-diagnostic-command.json",
+      "compressed": false,
+      "originalBytes": 1214,
+      "originalSha256": "0f8bd0fe02a3034cfe2c8a6ee52c675f843cc6cae5cd467a3591b75ee7254752",
+      "storedSha256": "0f8bd0fe02a3034cfe2c8a6ee52c675f843cc6cae5cd467a3591b75ee7254752"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\reported-game-diagnostic-log.txt",
+      "archive": "data/workspace/reported-game-diagnostic-log.txt",
+      "compressed": false,
+      "originalBytes": 596,
+      "originalSha256": "ba7bcbc7ec572fa0685fdafeea10e49f85f5d1dff3d767cca0bd52a885869428",
+      "storedSha256": "ba7bcbc7ec572fa0685fdafeea10e49f85f5d1dff3d767cca0bd52a885869428"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\reported-game.json",
+      "archive": "data/workspace/reported-game.json",
+      "compressed": false,
+      "originalBytes": 2331,
+      "originalSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea",
+      "storedSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\browser-CompletedQ-r0.json",
+      "archive": "data/workspace/results/browser-CompletedQ-r0.json",
+      "compressed": false,
+      "originalBytes": 8699,
+      "originalSha256": "7fd68f6540f6b8a55bfabd3760d373c1eae663e5f089477eba3662a7e376a276",
+      "storedSha256": "7fd68f6540f6b8a55bfabd3760d373c1eae663e5f089477eba3662a7e376a276"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\browser-Control-r0.json",
+      "archive": "data/workspace/results/browser-Control-r0.json",
+      "compressed": false,
+      "originalBytes": 8623,
+      "originalSha256": "74a28e695abe6a631d09e7d33b17b89bd5226bcad208a84b7947f44fb2ac8c12",
+      "storedSha256": "74a28e695abe6a631d09e7d33b17b89bd5226bcad208a84b7947f44fb2ac8c12"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\browser-CurveGuard-r0.json",
+      "archive": "data/workspace/results/browser-CurveGuard-r0.json",
+      "compressed": false,
+      "originalBytes": 8649,
+      "originalSha256": "566d01cdc781a152049574923c43d1a163386d41130273fa1f160924cb74edc1",
+      "storedSha256": "566d01cdc781a152049574923c43d1a163386d41130273fa1f160924cb74edc1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\curve-drift-diagnostic.json",
+      "archive": "data/workspace/results/curve-drift-diagnostic.json",
+      "compressed": false,
+      "originalBytes": 4367,
+      "originalSha256": "76e31b2f93971479bc3682c49549174fafaab5fb7bb7c1e9282b224e70b92490",
+      "storedSha256": "76e31b2f93971479bc3682c49549174fafaab5fb7bb7c1e9282b224e70b92490"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\decision.json",
+      "archive": "data/workspace/results/decision.json",
+      "compressed": false,
+      "originalBytes": 22993,
+      "originalSha256": "e732aea38eedfff7f576c3bcf7a6fe99d7bc5ade6e4a7effff3d622498fbce9e",
+      "storedSha256": "e732aea38eedfff7f576c3bcf7a6fe99d7bc5ade6e4a7effff3d622498fbce9e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane11.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane11.json",
+      "compressed": false,
+      "originalBytes": 18037,
+      "originalSha256": "0f55f50ef376f2183c743b8ed3060e5e3b6672052e37df8f72fed4fb5eb1f8b0",
+      "storedSha256": "0f55f50ef376f2183c743b8ed3060e5e3b6672052e37df8f72fed4fb5eb1f8b0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 762843,
+      "originalSha256": "6d4eaa89a9cd39254b594b6414eace07427f9d223742f8b5b8620f67cc911772",
+      "storedSha256": "6d4eaa89a9cd39254b594b6414eace07427f9d223742f8b5b8620f67cc911772"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane7.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane7.json",
+      "compressed": false,
+      "originalBytes": 9119,
+      "originalSha256": "fd2a461f3f22498e551dd901b3b1475fa733cadbcfc544144603510c0988c217",
+      "storedSha256": "fd2a461f3f22498e551dd901b3b1475fa733cadbcfc544144603510c0988c217"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 144150,
+      "originalSha256": "816622357bc2eb6b7969454ba069fffd6dfcf69f480bcfee37eebb05d6dee30d",
+      "storedSha256": "816622357bc2eb6b7969454ba069fffd6dfcf69f480bcfee37eebb05d6dee30d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane9.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane9.json",
+      "compressed": false,
+      "originalBytes": 13314,
+      "originalSha256": "d2a4dee2f39fc20655d725a8f87e36427dc76f7c1d9f9b9aba92c57b7db6b78a",
+      "storedSha256": "d2a4dee2f39fc20655d725a8f87e36427dc76f7c1d9f9b9aba92c57b7db6b78a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-plane9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-plane9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 369748,
+      "originalSha256": "b24ba6fd78eadd0ceefb213f6debaa53ca607401d7fc31fe2495a590cabb9e62",
+      "storedSha256": "b24ba6fd78eadd0ceefb213f6debaa53ca607401d7fc31fe2495a590cabb9e62"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere3.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere3.json",
+      "compressed": false,
+      "originalBytes": 10102,
+      "originalSha256": "28e7b7a5e67804d0fe69e6eebd09b3d38f1d1a0b70d882259c284690ede8d3b3",
+      "storedSha256": "28e7b7a5e67804d0fe69e6eebd09b3d38f1d1a0b70d882259c284690ede8d3b3"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere3.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere3.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 189921,
+      "originalSha256": "2cba3927224bca8026c65a3051b80ac037d529add68b982e7be065a68677e5e9",
+      "storedSha256": "2cba3927224bca8026c65a3051b80ac037d529add68b982e7be065a68677e5e9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere4.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere4.json",
+      "compressed": false,
+      "originalBytes": 13821,
+      "originalSha256": "d1bd8da37a65f264f880c5955458f4e6606118fa67256c82f42f2b4379a5a952",
+      "storedSha256": "d1bd8da37a65f264f880c5955458f4e6606118fa67256c82f42f2b4379a5a952"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere4.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere4.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 478228,
+      "originalSha256": "2b32a4aaf8bf8260d6ca759c9fa34540bb6fefbdca5f9aec21d038f5bca4566f",
+      "storedSha256": "2b32a4aaf8bf8260d6ca759c9fa34540bb6fefbdca5f9aec21d038f5bca4566f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere5.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere5.json",
+      "compressed": false,
+      "originalBytes": 19476,
+      "originalSha256": "c7b8a1676cdc0b9df80bb87669af449e3d448d2e0d9c88c6fa7236f5bdaa6574",
+      "storedSha256": "c7b8a1676cdc0b9df80bb87669af449e3d448d2e0d9c88c6fa7236f5bdaa6574"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-sphere5.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-sphere5.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 1037402,
+      "originalSha256": "e55d21f24bbdff03a9caf0e957ec7537fa7e049535a7d17b8fdc20c91dfa5096",
+      "storedSha256": "e55d21f24bbdff03a9caf0e957ec7537fa7e049535a7d17b8fdc20c91dfa5096"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus11.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus11.json",
+      "compressed": false,
+      "originalBytes": 15708,
+      "originalSha256": "e108ae6b8517a557145abe26367495e3d52b1060af678e0e0af7796ac0da9172",
+      "storedSha256": "e108ae6b8517a557145abe26367495e3d52b1060af678e0e0af7796ac0da9172"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 682241,
+      "originalSha256": "66fb35be1d4cac20eecc1f15280f64ea46eeb60ce353a7316d4da1f8c2ee4cdd",
+      "storedSha256": "66fb35be1d4cac20eecc1f15280f64ea46eeb60ce353a7316d4da1f8c2ee4cdd"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus7.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus7.json",
+      "compressed": false,
+      "originalBytes": 9273,
+      "originalSha256": "9dc79855540dde1d64bc0c1a9deae48637a733cf1fc04193fbebce7e24989f85",
+      "storedSha256": "9dc79855540dde1d64bc0c1a9deae48637a733cf1fc04193fbebce7e24989f85"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 151878,
+      "originalSha256": "e47f71336f8436643f545af6167ace90411b2b2bc91d517d3314bee6fd2c515c",
+      "storedSha256": "e47f71336f8436643f545af6167ace90411b2b2bc91d517d3314bee6fd2c515c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus9.json",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus9.json",
+      "compressed": false,
+      "originalBytes": 12421,
+      "originalSha256": "7d5a373e8b2abd5571b5cf7d05c69f6db6c61069d59e7ae20caddee7e804e273",
+      "storedSha256": "7d5a373e8b2abd5571b5cf7d05c69f6db6c61069d59e7ae20caddee7e804e273"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CompletedQ-r0-torus9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CompletedQ-r0-torus9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 355405,
+      "originalSha256": "791651630da4e730d99d11b9da8d0193e7ff99611b79c09f715fc98a7e011430",
+      "storedSha256": "791651630da4e730d99d11b9da8d0193e7ff99611b79c09f715fc98a7e011430"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane11.json",
+      "archive": "data/workspace/results/development-Control-r0-plane11.json",
+      "compressed": false,
+      "originalBytes": 18149,
+      "originalSha256": "e84f7cb66999b56d4ef6591f31e1f649501d290de7395fef2c1cecbcf6b48c0d",
+      "storedSha256": "e84f7cb66999b56d4ef6591f31e1f649501d290de7395fef2c1cecbcf6b48c0d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-plane11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 768597,
+      "originalSha256": "e42741670ae25d96dce3e5e866a1562064fca0540e292f6e9598855d9128cb39",
+      "storedSha256": "e42741670ae25d96dce3e5e866a1562064fca0540e292f6e9598855d9128cb39"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane7.json",
+      "archive": "data/workspace/results/development-Control-r0-plane7.json",
+      "compressed": false,
+      "originalBytes": 9139,
+      "originalSha256": "175d8076a3130c32c7c3763436a5886ba442f76246e25d7fd6152ddf0195a646",
+      "storedSha256": "175d8076a3130c32c7c3763436a5886ba442f76246e25d7fd6152ddf0195a646"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-plane7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 145070,
+      "originalSha256": "40322773f4aa8714c61dffa042c489b6f7c548ff45b87cf442bbcceb88b4e5b6",
+      "storedSha256": "40322773f4aa8714c61dffa042c489b6f7c548ff45b87cf442bbcceb88b4e5b6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane9.json",
+      "archive": "data/workspace/results/development-Control-r0-plane9.json",
+      "compressed": false,
+      "originalBytes": 12442,
+      "originalSha256": "867ba4c0ecaa75a158bd8e81caa52026315c6388f3777291f1611381c2367450",
+      "storedSha256": "867ba4c0ecaa75a158bd8e81caa52026315c6388f3777291f1611381c2367450"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-plane9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-plane9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 349326,
+      "originalSha256": "6c70511109766de7c891d728f5c86ed23f3fa1f11fac5dff7ff570ade3046174",
+      "storedSha256": "6c70511109766de7c891d728f5c86ed23f3fa1f11fac5dff7ff570ade3046174"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere3.json",
+      "archive": "data/workspace/results/development-Control-r0-sphere3.json",
+      "compressed": false,
+      "originalBytes": 9706,
+      "originalSha256": "a6fd7d94a58ad2c30978cc5d781ab8a8b811fbb801734edece110979f15da97c",
+      "storedSha256": "a6fd7d94a58ad2c30978cc5d781ab8a8b811fbb801734edece110979f15da97c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere3.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-sphere3.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 183229,
+      "originalSha256": "c7aa85899556573aca3e8ed692700eb5625e8bd481a43b84ce4aa9925db11460",
+      "storedSha256": "c7aa85899556573aca3e8ed692700eb5625e8bd481a43b84ce4aa9925db11460"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere4.json",
+      "archive": "data/workspace/results/development-Control-r0-sphere4.json",
+      "compressed": false,
+      "originalBytes": 13357,
+      "originalSha256": "cc2cbd091a1cb129864960bb3fb3fddd6389351686dafea5c6014b0f3bba48ca",
+      "storedSha256": "cc2cbd091a1cb129864960bb3fb3fddd6389351686dafea5c6014b0f3bba48ca"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere4.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-sphere4.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 468886,
+      "originalSha256": "52e11a05332ba684afaa36022a4e3c4e5b2061125ec74c5c5b013426c7725312",
+      "storedSha256": "52e11a05332ba684afaa36022a4e3c4e5b2061125ec74c5c5b013426c7725312"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere5.json",
+      "archive": "data/workspace/results/development-Control-r0-sphere5.json",
+      "compressed": false,
+      "originalBytes": 19647,
+      "originalSha256": "dbc530674a38851e3aea3f43e06eaa0792775f46ae8ea6aecd151f2ea97e19ee",
+      "storedSha256": "dbc530674a38851e3aea3f43e06eaa0792775f46ae8ea6aecd151f2ea97e19ee"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-sphere5.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-sphere5.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 1031971,
+      "originalSha256": "b372be6f1a9d6427454d1128a7efed3b8e5a8934820b4040440091feb1a4d172",
+      "storedSha256": "b372be6f1a9d6427454d1128a7efed3b8e5a8934820b4040440091feb1a4d172"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus11.json",
+      "archive": "data/workspace/results/development-Control-r0-torus11.json",
+      "compressed": false,
+      "originalBytes": 15954,
+      "originalSha256": "dbeb20a3f9051923bad6d6c16eed304344192a646cebca918e0b209f57546c67",
+      "storedSha256": "dbeb20a3f9051923bad6d6c16eed304344192a646cebca918e0b209f57546c67"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-torus11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 683473,
+      "originalSha256": "8db9029659b9d2b507b55c99bf4758c010f268923c0b1d893a12a37920a66e31",
+      "storedSha256": "8db9029659b9d2b507b55c99bf4758c010f268923c0b1d893a12a37920a66e31"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus7.json",
+      "archive": "data/workspace/results/development-Control-r0-torus7.json",
+      "compressed": false,
+      "originalBytes": 9078,
+      "originalSha256": "4894dd07ee0b849b4a3f6c31695c489f7a4cdcf9dfb140ce5185ffac5fad810a",
+      "storedSha256": "4894dd07ee0b849b4a3f6c31695c489f7a4cdcf9dfb140ce5185ffac5fad810a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-torus7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 148666,
+      "originalSha256": "fba86157ae33614815ee65e718e6bde4ebf06e4371e2baf2381b86088d9c2e29",
+      "storedSha256": "fba86157ae33614815ee65e718e6bde4ebf06e4371e2baf2381b86088d9c2e29"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus9.json",
+      "archive": "data/workspace/results/development-Control-r0-torus9.json",
+      "compressed": false,
+      "originalBytes": 12048,
+      "originalSha256": "ce91c3680a4ebbdb99d0e6c81c5843331360ce396219afe8e12926f7a8bba892",
+      "storedSha256": "ce91c3680a4ebbdb99d0e6c81c5843331360ce396219afe8e12926f7a8bba892"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-Control-r0-torus9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Control-r0-torus9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 346403,
+      "originalSha256": "fa0be0d87a3fc79150ab51a97ef5eba36aeae92313807775f2527662689cf3e1",
+      "storedSha256": "fa0be0d87a3fc79150ab51a97ef5eba36aeae92313807775f2527662689cf3e1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane11.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane11.json",
+      "compressed": false,
+      "originalBytes": 18061,
+      "originalSha256": "8ffce0f206ffce4ebfef3e48e9ff52c9afc5a9fff68a50299162a0349e1f83bf",
+      "storedSha256": "8ffce0f206ffce4ebfef3e48e9ff52c9afc5a9fff68a50299162a0349e1f83bf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 769480,
+      "originalSha256": "eab222cbeadc0e7903144cb7d77c131fdc0bca40b58190c5c45c627abcae7b73",
+      "storedSha256": "eab222cbeadc0e7903144cb7d77c131fdc0bca40b58190c5c45c627abcae7b73"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane7.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane7.json",
+      "compressed": false,
+      "originalBytes": 9109,
+      "originalSha256": "b04b8f8c3c98cabb69c3125184cf07b27162b0606de6b372bcd5b95e7ee3fd05",
+      "storedSha256": "b04b8f8c3c98cabb69c3125184cf07b27162b0606de6b372bcd5b95e7ee3fd05"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 144853,
+      "originalSha256": "179c6e37665957e86805e4b5f085300b80848d624586efc2702883add9ae0115",
+      "storedSha256": "179c6e37665957e86805e4b5f085300b80848d624586efc2702883add9ae0115"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane9.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane9.json",
+      "compressed": false,
+      "originalBytes": 12944,
+      "originalSha256": "cba418908000175783ad4401a18570bb859390864b6b064495a03e664c127da9",
+      "storedSha256": "cba418908000175783ad4401a18570bb859390864b6b064495a03e664c127da9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-plane9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-plane9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 362871,
+      "originalSha256": "0123629900e58b9d8b50526097f8527c5f1e7ff06f1cb0e2fc557696494e8293",
+      "storedSha256": "0123629900e58b9d8b50526097f8527c5f1e7ff06f1cb0e2fc557696494e8293"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere3.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere3.json",
+      "compressed": false,
+      "originalBytes": 9702,
+      "originalSha256": "16b58016ebcb48edc6c1dc6e454a4eee08dc60b69209c0a0b4113eed3f70b565",
+      "storedSha256": "16b58016ebcb48edc6c1dc6e454a4eee08dc60b69209c0a0b4113eed3f70b565"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere3.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere3.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 183272,
+      "originalSha256": "d810b6925ee70edefe5e3ad5c7eaadba273600688aad6857c09231acb808ddaf",
+      "storedSha256": "d810b6925ee70edefe5e3ad5c7eaadba273600688aad6857c09231acb808ddaf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere4.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere4.json",
+      "compressed": false,
+      "originalBytes": 13742,
+      "originalSha256": "20e1a04630e24f8789fccb200d2bafc0312100ebbdd14a691043af0985364ad1",
+      "storedSha256": "20e1a04630e24f8789fccb200d2bafc0312100ebbdd14a691043af0985364ad1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere4.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere4.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 473382,
+      "originalSha256": "a53ff69b49ac8b5063ff9c37d18e8c5e4dac7cdbe184ab61c72dd46a80e126f5",
+      "storedSha256": "a53ff69b49ac8b5063ff9c37d18e8c5e4dac7cdbe184ab61c72dd46a80e126f5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere5.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere5.json",
+      "compressed": false,
+      "originalBytes": 19979,
+      "originalSha256": "c2984cd8cb4c26dd6bffda3d5f959e6baf593eed20c3ab7739297c2246070cf0",
+      "storedSha256": "c2984cd8cb4c26dd6bffda3d5f959e6baf593eed20c3ab7739297c2246070cf0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-sphere5.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-sphere5.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 1039756,
+      "originalSha256": "74aaaed009af7082b6dfe034d3d8a724b1e97816e08d47747d60cac24a9cfbc0",
+      "storedSha256": "74aaaed009af7082b6dfe034d3d8a724b1e97816e08d47747d60cac24a9cfbc0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus11.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus11.json",
+      "compressed": false,
+      "originalBytes": 15972,
+      "originalSha256": "15a6e7799e841ed066a3cde278f08b36d4509f2fa9eaa92b95f4aa73d467ebf8",
+      "storedSha256": "15a6e7799e841ed066a3cde278f08b36d4509f2fa9eaa92b95f4aa73d467ebf8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 690299,
+      "originalSha256": "61f2ae30a8281f89536d29b51088f2de7cf7cdd187f5396922b11591e0d22970",
+      "storedSha256": "61f2ae30a8281f89536d29b51088f2de7cf7cdd187f5396922b11591e0d22970"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus7.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus7.json",
+      "compressed": false,
+      "originalBytes": 9149,
+      "originalSha256": "608ff957f0bd2453710b3623f7fd66e8fd04ea9516a7803bc672a1e68a4d4b15",
+      "storedSha256": "608ff957f0bd2453710b3623f7fd66e8fd04ea9516a7803bc672a1e68a4d4b15"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 150327,
+      "originalSha256": "a4feda34e7c9164b9b75119c2056a30a96e112d32a1de4833ff6d14ccaa14430",
+      "storedSha256": "a4feda34e7c9164b9b75119c2056a30a96e112d32a1de4833ff6d14ccaa14430"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus9.json",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus9.json",
+      "compressed": false,
+      "originalBytes": 12143,
+      "originalSha256": "12898338f932d7d1ac746066a13d8dfea7bacdaae11c3c198fda27a50466f693",
+      "storedSha256": "12898338f932d7d1ac746066a13d8dfea7bacdaae11c3c198fda27a50466f693"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-CurveGuard-r0-torus9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-CurveGuard-r0-torus9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 347301,
+      "originalSha256": "08e7a0ed926e27edbb0c59ab94646031ebe2e2ebc865b572d702994cc85c316c",
+      "storedSha256": "08e7a0ed926e27edbb0c59ab94646031ebe2e2ebc865b572d702994cc85c316c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-openings-2026102911.json",
+      "archive": "data/workspace/results/development-openings-2026102911.json",
+      "compressed": false,
+      "originalBytes": 5939,
+      "originalSha256": "41e9130c487bb7034bfd8a71ef6ee2ce82a732bcf9da64520a96ff4e48e9182d",
+      "storedSha256": "41e9130c487bb7034bfd8a71ef6ee2ce82a732bcf9da64520a96ff4e48e9182d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-registration.json",
+      "archive": "data/workspace/results/development-registration.json",
+      "compressed": false,
+      "originalBytes": 592,
+      "originalSha256": "8599ea05fef217aab5eefa0011b6d92acd1cadc37e7bb64d78e00b0529358a15",
+      "storedSha256": "8599ea05fef217aab5eefa0011b6d92acd1cadc37e7bb64d78e00b0529358a15"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-replay-audit.json",
+      "archive": "data/workspace/results/development-replay-audit.json",
+      "compressed": false,
+      "originalBytes": 4608,
+      "originalSha256": "c826c0b3f88e9868a06aa1d96b1dc44fc7c716ec6d8fbad44e086d8fce898f0c",
+      "storedSha256": "c826c0b3f88e9868a06aa1d96b1dc44fc7c716ec6d8fbad44e086d8fce898f0c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\development-summary.json",
+      "archive": "data/workspace/results/development-summary.json",
+      "compressed": false,
+      "originalBytes": 17402,
+      "originalSha256": "65ebb512139e4a705d3a65c7792b3d11f4c6316175f7eaea2a375c965635c98e",
+      "storedSha256": "65ebb512139e4a705d3a65c7792b3d11f4c6316175f7eaea2a375c965635c98e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\environment.json",
+      "archive": "data/workspace/results/environment.json",
+      "compressed": false,
+      "originalBytes": 299,
+      "originalSha256": "71b47dfa3daeeef061349221e05318e2c9e76065ac123c63b334477713a87ae3",
+      "storedSha256": "71b47dfa3daeeef061349221e05318e2c9e76065ac123c63b334477713a87ae3"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\latency-protocol.json",
+      "archive": "data/workspace/results/latency-protocol.json",
+      "compressed": false,
+      "originalBytes": 5111,
+      "originalSha256": "9e04b26e7ebbc13ad10506a374f23c851a3533c959afbc66a6d74844a3703ef1",
+      "storedSha256": "9e04b26e7ebbc13ad10506a374f23c851a3533c959afbc66a6d74844a3703ef1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\preflight.json",
+      "archive": "data/workspace/results/preflight.json",
+      "compressed": false,
+      "originalBytes": 3478,
+      "originalSha256": "5918ab4dc34246d87cac103327866f7183b54130f136d88bcd11bdd3549a649c",
+      "storedSha256": "5918ab4dc34246d87cac103327866f7183b54130f136d88bcd11bdd3549a649c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\reported-game-diagnostic.json",
+      "archive": "data/workspace/results/reported-game-diagnostic.json.gz",
+      "compressed": true,
+      "originalBytes": 136773,
+      "originalSha256": "5dff7505928e1e1bd7f82a0d99e083d49b16af221795390381892c649986e381",
+      "storedSha256": "7f9834aeae1210f4702984104f7075020d9382caa5ac548accf5934c18d84bbb"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\selection.json",
+      "archive": "data/workspace/results/selection.json",
+      "compressed": false,
+      "originalBytes": 17342,
+      "originalSha256": "46cc70c98525f0df8ae130dfa5793b0d7a8087a3e5a98561c9ab957e8437a631",
+      "storedSha256": "46cc70c98525f0df8ae130dfa5793b0d7a8087a3e5a98561c9ab957e8437a631"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\results\\target-audit.json",
+      "archive": "data/workspace/results/target-audit.json",
+      "compressed": false,
+      "originalBytes": 2494,
+      "originalSha256": "3f2442c32e45f3cac57890009b00dd562c01e4d29c190880d5c829ee6889b1af",
+      "storedSha256": "3f2442c32e45f3cac57890009b00dd562c01e4d29c190880d5c829ee6889b1af"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\search.wasm",
+      "archive": "data/workspace/search.wasm",
+      "compressed": false,
+      "originalBytes": 121429,
+      "originalSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+      "storedSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\selection-command.json",
+      "archive": "data/workspace/selection-command.json",
+      "compressed": false,
+      "originalBytes": 1228,
+      "originalSha256": "49471aafba5882d4ae179333de1b76a3ef6f1e1e7e9aad3e45adfa58edd1f4ff",
+      "storedSha256": "49471aafba5882d4ae179333de1b76a3ef6f1e1e7e9aad3e45adfa58edd1f4ff"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\selection-log.txt",
+      "archive": "data/workspace/selection-log.txt",
+      "compressed": false,
+      "originalBytes": 341,
+      "originalSha256": "28d1a7c622b6b0780aa02ef22a64734bd05ee6adc94ec20054113b3f575b0b93",
+      "storedSha256": "28d1a7c622b6b0780aa02ef22a64734bd05ee6adc94ec20054113b3f575b0b93"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\development-matches.mjs",
+      "archive": "data/workspace/sources/development-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9476,
+      "originalSha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d",
+      "storedSha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-completed-q-target.mjs",
+      "archive": "data/workspace/sources/prepare-completed-q-target.mjs",
+      "compressed": false,
+      "originalBytes": 2250,
+      "originalSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6",
+      "storedSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-curve-retention-prepare.mjs",
+      "archive": "data/workspace/sources/prepare-curve-retention-prepare.mjs",
+      "compressed": false,
+      "originalBytes": 5801,
+      "originalSha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0",
+      "storedSha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-model.py",
+      "archive": "data/workspace/sources/prepare-model.py",
+      "compressed": false,
+      "originalBytes": 2953,
+      "originalSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+      "storedSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-test-completed-q-target.mjs",
+      "archive": "data/workspace/sources/prepare-test-completed-q-target.mjs",
+      "compressed": false,
+      "originalBytes": 1534,
+      "originalSha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa",
+      "storedSha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-test_curve_retention.py",
+      "archive": "data/workspace/sources/prepare-test_curve_retention.py",
+      "compressed": false,
+      "originalBytes": 3755,
+      "originalSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc",
+      "storedSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\prepare-train.py",
+      "archive": "data/workspace/sources/prepare-train.py",
+      "compressed": false,
+      "originalBytes": 48249,
+      "originalSha256": "d2a1e49e08357f704a608c18379cf5ab3f31d0a32452aec0d0b96cd984985957",
+      "storedSha256": "d2a1e49e08357f704a608c18379cf5ab3f31d0a32452aec0d0b96cd984985957"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\training-completed-q-target.mjs",
+      "archive": "data/workspace/sources/training-completed-q-target.mjs",
+      "compressed": false,
+      "originalBytes": 2250,
+      "originalSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6",
+      "storedSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\training-curve-retention-train.mjs",
+      "archive": "data/workspace/sources/training-curve-retention-train.mjs",
+      "compressed": false,
+      "originalBytes": 2905,
+      "originalSha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea",
+      "storedSha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\training-model.py",
+      "archive": "data/workspace/sources/training-model.py",
+      "compressed": false,
+      "originalBytes": 2953,
+      "originalSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+      "storedSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\training-test_curve_retention.py",
+      "archive": "data/workspace/sources/training-test_curve_retention.py",
+      "compressed": false,
+      "originalBytes": 3755,
+      "originalSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc",
+      "storedSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\sources\\training-train.py",
+      "archive": "data/workspace/sources/training-train.py",
+      "compressed": false,
+      "originalBytes": 48327,
+      "originalSha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8",
+      "storedSha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\split.json",
+      "archive": "data/workspace/split.json.gz",
+      "compressed": true,
+      "originalBytes": 93919,
+      "originalSha256": "99afd67030e6262bc39bbf1cf0c1c99ed2f86ece2d6409597e399efcf947558c",
+      "storedSha256": "bdd57df66378d2851b878cf51feb83baaf365f6bc20706dc3838c2d6fda42249"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\topologies.json",
+      "archive": "data/workspace/topologies.json",
+      "compressed": false,
+      "originalBytes": 11323,
+      "originalSha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757",
+      "storedSha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-CompletedQ-r0-command.json",
+      "archive": "data/workspace/train-CompletedQ-r0-command.json",
+      "compressed": false,
+      "originalBytes": 2480,
+      "originalSha256": "c47a70511729c7adf3f2cc373f2266f263b77229e3aea76aae80fd113584fcc4",
+      "storedSha256": "c47a70511729c7adf3f2cc373f2266f263b77229e3aea76aae80fd113584fcc4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-CompletedQ-r0-log.txt",
+      "archive": "data/workspace/train-CompletedQ-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 20338,
+      "originalSha256": "e270edbd4147f253753807dc01f3a6016d9a4e52b333cb4d45655f1886ab21d5",
+      "storedSha256": "e270edbd4147f253753807dc01f3a6016d9a4e52b333cb4d45655f1886ab21d5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-Control-r0-command.json",
+      "archive": "data/workspace/train-Control-r0-command.json",
+      "compressed": false,
+      "originalBytes": 2330,
+      "originalSha256": "eb43e4494bcd5392b45fc4278ef092898a2365fb2de0bc4e81cad7b00e952c2e",
+      "storedSha256": "eb43e4494bcd5392b45fc4278ef092898a2365fb2de0bc4e81cad7b00e952c2e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-Control-r0-log.txt",
+      "archive": "data/workspace/train-Control-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 20320,
+      "originalSha256": "7b1cb99263945a55661f71674bc32becc2a1ecec4383cb91bc6c6e83e5edde48",
+      "storedSha256": "7b1cb99263945a55661f71674bc32becc2a1ecec4383cb91bc6c6e83e5edde48"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-CurveGuard-r0-command.json",
+      "archive": "data/workspace/train-CurveGuard-r0-command.json",
+      "compressed": false,
+      "originalBytes": 2472,
+      "originalSha256": "fbe2ecb23687f9b2dbd09424a3fab3d1f323a346d8bc73141248b60f63342905",
+      "storedSha256": "fbe2ecb23687f9b2dbd09424a3fab3d1f323a346d8bc73141248b60f63342905"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\train-CurveGuard-r0-log.txt",
+      "archive": "data/workspace/train-CurveGuard-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 20310,
+      "originalSha256": "4e5a1c25ed87bff79b73ca05b40af90b103670d18e2bc9b587849288121758bc",
+      "storedSha256": "4e5a1c25ed87bff79b73ca05b40af90b103670d18e2bc9b587849288121758bc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\training-registration.json",
+      "archive": "data/workspace/training-registration.json",
+      "compressed": false,
+      "originalBytes": 691,
+      "originalSha256": "8b1ad4afad22061fecffda7d60338ae6a91baf23f370844053ad5a596f4944aa",
+      "storedSha256": "8b1ad4afad22061fecffda7d60338ae6a91baf23f370844053ad5a596f4944aa"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\training-tests-command.json",
+      "archive": "data/workspace/training-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1515,
+      "originalSha256": "a86a424afa034d0a10aa0d69c2785e5d5da275fef2fe4786e85c61f80ac3d858",
+      "storedSha256": "a86a424afa034d0a10aa0d69c2785e5d5da275fef2fe4786e85c61f80ac3d858"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\curve-retention-study-20261029\\training-tests-log.txt",
+      "archive": "data/workspace/training-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 4991,
+      "originalSha256": "b76996bd3182dc79baaffa79c751d5e2e417f50ec814148191961d0cbdbf9cd2",
+      "storedSha256": "b76996bd3182dc79baaffa79c751d5e2e417f50ec814148191961d0cbdbf9cd2"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-prepare.mjs",
+      "archive": "data/tools/curve-retention-prepare.mjs",
+      "compressed": false,
+      "originalBytes": 5801,
+      "originalSha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0",
+      "storedSha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-train.mjs",
+      "archive": "data/tools/curve-retention-train.mjs",
+      "compressed": false,
+      "originalBytes": 2905,
+      "originalSha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea",
+      "storedSha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-preflight.py",
+      "archive": "data/tools/curve-retention-preflight.py",
+      "compressed": false,
+      "originalBytes": 3365,
+      "originalSha256": "4f83399a1b0821b64f64a3b5c692c08db5d51c75dbf58a2e36a289919a9db6ae",
+      "storedSha256": "4f83399a1b0821b64f64a3b5c692c08db5d51c75dbf58a2e36a289919a9db6ae"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-verify.mjs",
+      "archive": "data/tools/curve-retention-verify.mjs",
+      "compressed": false,
+      "originalBytes": 575,
+      "originalSha256": "eda38583e4335dfeb8cf7b5b875ee1af9ddc61403d6e94fc5285b1dab9bb30ea",
+      "storedSha256": "eda38583e4335dfeb8cf7b5b875ee1af9ddc61403d6e94fc5285b1dab9bb30ea"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-matches.mjs",
+      "archive": "data/tools/curve-retention-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9476,
+      "originalSha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d",
+      "storedSha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-audit.mjs",
+      "archive": "data/tools/curve-retention-audit.mjs",
+      "compressed": false,
+      "originalBytes": 3879,
+      "originalSha256": "40754aef3550b9ccd27d66ee9b8c4335a12c639e48b702e75801f5c8c4ec2e88",
+      "storedSha256": "40754aef3550b9ccd27d66ee9b8c4335a12c639e48b702e75801f5c8c4ec2e88"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-diagnostic.py",
+      "archive": "data/tools/curve-retention-diagnostic.py",
+      "compressed": false,
+      "originalBytes": 3107,
+      "originalSha256": "33a6e983c91476fd4db8cafad86a48b9afb4cc44a35bee1ce56cc228c3d818bd",
+      "storedSha256": "33a6e983c91476fd4db8cafad86a48b9afb4cc44a35bee1ce56cc228c3d818bd"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-fixture.mjs",
+      "archive": "data/tools/curve-retention-fixture.mjs",
+      "compressed": false,
+      "originalBytes": 2014,
+      "originalSha256": "2bec0f44ff15d7e74d4bc498f0dadf98dc9ff4776b6be7d78a23bbb8869f0573",
+      "storedSha256": "2bec0f44ff15d7e74d4bc498f0dadf98dc9ff4776b6be7d78a23bbb8869f0573"
+    },
+    {
+      "source": "tools/ai-gnn/curve-retention-archive.mjs",
+      "archive": "data/tools/curve-retention-archive.mjs",
+      "compressed": false,
+      "originalBytes": 10809,
+      "originalSha256": "1b1632c700858093e4ed744460c93047487868f37ef59667f5a98073bdbab013",
+      "storedSha256": "1b1632c700858093e4ed744460c93047487868f37ef59667f5a98073bdbab013"
+    },
+    {
+      "source": "tools/ai-gnn/completed-q-target.mjs",
+      "archive": "data/tools/completed-q-target.mjs",
+      "compressed": false,
+      "originalBytes": 2250,
+      "originalSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6",
+      "storedSha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "source": "tools/ai-gnn/test-completed-q-target.mjs",
+      "archive": "data/tools/test-completed-q-target.mjs",
+      "compressed": false,
+      "originalBytes": 1534,
+      "originalSha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa",
+      "storedSha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa"
+    },
+    {
+      "source": "tools/ai-gnn/test_curve_retention.py",
+      "archive": "data/tools/test_curve_retention.py",
+      "compressed": false,
+      "originalBytes": 3755,
+      "originalSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc",
+      "storedSha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "source": "tools/ai-gnn/model.py",
+      "archive": "data/tools/model.py",
+      "compressed": false,
+      "originalBytes": 2953,
+      "originalSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+      "storedSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "source": "tools/ai-gnn/train.py",
+      "archive": "data/tools/train.py",
+      "compressed": false,
+      "originalBytes": 48327,
+      "originalSha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8",
+      "storedSha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8"
+    },
+    {
+      "source": "tools/ai-gnn/test_training.py",
+      "archive": "data/tools/test_training.py",
+      "compressed": false,
+      "originalBytes": 15197,
+      "originalSha256": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848",
+      "storedSha256": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848"
+    },
+    {
+      "source": "tools/ai-gnn/test_model.py",
+      "archive": "data/tools/test_model.py",
+      "compressed": false,
+      "originalBytes": 2657,
+      "originalSha256": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da",
+      "storedSha256": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da"
+    },
+    {
+      "source": "tools/ai-gnn/test_soft_policy.py",
+      "archive": "data/tools/test_soft_policy.py",
+      "compressed": false,
+      "originalBytes": 4713,
+      "originalSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88",
+      "storedSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88"
+    },
+    {
+      "source": "tools/ai-gnn/test_fresh_replay.py",
+      "archive": "data/tools/test_fresh_replay.py",
+      "compressed": false,
+      "originalBytes": 1383,
+      "originalSha256": "044c08b580bedeb1f1c4c50d2b9db2131387ccd02656e3d355dde27ed3df08d4",
+      "storedSha256": "044c08b580bedeb1f1c4c50d2b9db2131387ccd02656e3d355dde27ed3df08d4"
+    },
+    {
+      "source": "tools/ai-gnn/export_webgpu.py",
+      "archive": "data/tools/export_webgpu.py",
+      "compressed": false,
+      "originalBytes": 2600,
+      "originalSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e",
+      "storedSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e"
+    },
+    {
+      "source": "tools/ai-gnn/node-inference.mjs",
+      "archive": "data/tools/node-inference.mjs",
+      "compressed": false,
+      "originalBytes": 1364,
+      "originalSha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a",
+      "storedSha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a"
+    },
+    {
+      "source": "tools/ai-gnn/study-commands.mjs",
+      "archive": "data/tools/study-commands.mjs",
+      "compressed": false,
+      "originalBytes": 1652,
+      "originalSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+      "storedSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "source": "tools/ai-gnn/match-statistics.mjs",
+      "archive": "data/tools/match-statistics.mjs",
+      "compressed": false,
+      "originalBytes": 1805,
+      "originalSha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997",
+      "storedSha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "source": "tools/ai-gnn/test-browser.mjs",
+      "archive": "data/tools/test-browser.mjs",
+      "compressed": false,
+      "originalBytes": 17801,
+      "originalSha256": "29b2d6c160f3af42332f76982bc007760c89074af2a0ca9ba07317fcafbbb822",
+      "storedSha256": "29b2d6c160f3af42332f76982bc007760c89074af2a0ca9ba07317fcafbbb822"
+    },
+    {
+      "source": "tools/ai-gnn/browser-data-host.mjs",
+      "archive": "data/tools/browser-data-host.mjs",
+      "compressed": false,
+      "originalBytes": 4896,
+      "originalSha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936",
+      "storedSha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936"
+    },
+    {
+      "source": "dist/engine.js",
+      "archive": "data/runtime/engine.js",
+      "compressed": false,
+      "originalBytes": 6979,
+      "originalSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc",
+      "storedSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+    },
+    {
+      "source": "dist/ai-position.js",
+      "archive": "data/runtime/ai-position.js",
+      "compressed": false,
+      "originalBytes": 1315,
+      "originalSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad",
+      "storedSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+    },
+    {
+      "source": "dist/ai-v3-search.js",
+      "archive": "data/runtime/ai-v3-search.js",
+      "compressed": false,
+      "originalBytes": 4919,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "source": "dist/ai-v3-inference.js",
+      "archive": "data/runtime/ai-v3-inference.js",
+      "compressed": false,
+      "originalBytes": 8366,
+      "originalSha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+      "storedSha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "source": "dist/ai-v3-webgpu.js",
+      "archive": "data/runtime/ai-v3-webgpu.js",
+      "compressed": false,
+      "originalBytes": 11161,
+      "originalSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+      "storedSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "source": "dist/ai-v3.js",
+      "archive": "data/runtime/ai-v3.js",
+      "compressed": false,
+      "originalBytes": 3257,
+      "originalSha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+      "storedSha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    },
+    {
+      "source": "dist/record.js",
+      "archive": "data/runtime/record.js",
+      "compressed": false,
+      "originalBytes": 3692,
+      "originalSha256": "08300e4cbfb1a9075bc224bf4faadb2b5601ff7718141b6c80a28fc36c26614f",
+      "storedSha256": "08300e4cbfb1a9075bc224bf4faadb2b5601ff7718141b6c80a28fc36c26614f"
+    },
+    {
+      "source": "experiments/ai/plans/v3-curve-retention/README.md",
+      "archive": "data/plan/README.md",
+      "compressed": false,
+      "originalBytes": 3261,
+      "originalSha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5",
+      "storedSha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5"
+    },
+    {
+      "source": "experiments/ai/plans/v3-curve-retention/plan.json",
+      "archive": "data/plan/plan.json",
+      "compressed": false,
+      "originalBytes": 10422,
+      "originalSha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641",
+      "storedSha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641"
+    }
+  ],
+  "id": "v3/2026-10-29-curve-retention",
+  "architecture": "v3",
+  "recordedAtCommit": "241f7cf7681d17e832516c4487637c293b5214f3",
+  "source": {
+    "kind": "archived-source-snapshots",
+    "description": "Execution is pinned by archived source and artifact SHA-256. recordedAtCommit identifies catalog registration; it does not claim dirty execution sources were committed.",
+    "originalManifest": {
+      "path": "data/catalog-registration/original-manifest.json",
+      "sha256": "8370fc715a7b0f0bb5fe9cf7a46d19e4281d980cb4acfba1463d54e191bd91ad"
+    }
+  },
+  "variants": [
+    {
+      "id": "Control"
+    },
+    {
+      "id": "CurveGuard"
+    },
+    {
+      "id": "CompletedQ"
+    }
+  ],
+  "catalogRegistration": {
+    "registered": "2026-10-28T17:56:46.875Z",
+    "preservedOriginalManifestSha256": "8370fc715a7b0f0bb5fe9cf7a46d19e4281d980cb4acfba1463d54e191bd91ad",
+    "policy": "Original evidence and original file tables retained; artifacts is the complete stored-file inventory including this registration evidence."
+  },
+  "artifacts": [
+    {
+      "path": "data/catalog-registration/original-manifest.json",
+      "sha256": "8370fc715a7b0f0bb5fe9cf7a46d19e4281d980cb4acfba1463d54e191bd91ad"
+    },
+    {
+      "path": "data/catalog-registration/register-study-archives.mjs",
+      "sha256": "4b54c970b2025386ba3dd6fd1a43ad758c8dd2e1931a36a707a7683610fcdaed"
+    },
+    {
+      "path": "data/plan/README.md",
+      "sha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5"
+    },
+    {
+      "path": "data/plan/plan.json",
+      "sha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641"
+    },
+    {
+      "path": "data/runtime/ai-position.js",
+      "sha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+    },
+    {
+      "path": "data/runtime/ai-v3-inference.js",
+      "sha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "path": "data/runtime/ai-v3-search.js",
+      "sha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "path": "data/runtime/ai-v3-webgpu.js",
+      "sha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "path": "data/runtime/ai-v3.js",
+      "sha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    },
+    {
+      "path": "data/runtime/engine.js",
+      "sha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+    },
+    {
+      "path": "data/runtime/record.js",
+      "sha256": "08300e4cbfb1a9075bc224bf4faadb2b5601ff7718141b6c80a28fc36c26614f"
+    },
+    {
+      "path": "data/tools/browser-data-host.mjs",
+      "sha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936"
+    },
+    {
+      "path": "data/tools/completed-q-target.mjs",
+      "sha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "path": "data/tools/curve-retention-archive.mjs",
+      "sha256": "1b1632c700858093e4ed744460c93047487868f37ef59667f5a98073bdbab013"
+    },
+    {
+      "path": "data/tools/curve-retention-audit.mjs",
+      "sha256": "40754aef3550b9ccd27d66ee9b8c4335a12c639e48b702e75801f5c8c4ec2e88"
+    },
+    {
+      "path": "data/tools/curve-retention-diagnostic.py",
+      "sha256": "33a6e983c91476fd4db8cafad86a48b9afb4cc44a35bee1ce56cc228c3d818bd"
+    },
+    {
+      "path": "data/tools/curve-retention-fixture.mjs",
+      "sha256": "2bec0f44ff15d7e74d4bc498f0dadf98dc9ff4776b6be7d78a23bbb8869f0573"
+    },
+    {
+      "path": "data/tools/curve-retention-matches.mjs",
+      "sha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d"
+    },
+    {
+      "path": "data/tools/curve-retention-preflight.py",
+      "sha256": "4f83399a1b0821b64f64a3b5c692c08db5d51c75dbf58a2e36a289919a9db6ae"
+    },
+    {
+      "path": "data/tools/curve-retention-prepare.mjs",
+      "sha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0"
+    },
+    {
+      "path": "data/tools/curve-retention-train.mjs",
+      "sha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea"
+    },
+    {
+      "path": "data/tools/curve-retention-verify.mjs",
+      "sha256": "eda38583e4335dfeb8cf7b5b875ee1af9ddc61403d6e94fc5285b1dab9bb30ea"
+    },
+    {
+      "path": "data/tools/export_webgpu.py",
+      "sha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e"
+    },
+    {
+      "path": "data/tools/match-statistics.mjs",
+      "sha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "path": "data/tools/model.py",
+      "sha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "path": "data/tools/node-inference.mjs",
+      "sha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a"
+    },
+    {
+      "path": "data/tools/study-commands.mjs",
+      "sha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "path": "data/tools/test-browser.mjs",
+      "sha256": "29b2d6c160f3af42332f76982bc007760c89074af2a0ca9ba07317fcafbbb822"
+    },
+    {
+      "path": "data/tools/test-completed-q-target.mjs",
+      "sha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa"
+    },
+    {
+      "path": "data/tools/test_curve_retention.py",
+      "sha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "path": "data/tools/test_fresh_replay.py",
+      "sha256": "044c08b580bedeb1f1c4c50d2b9db2131387ccd02656e3d355dde27ed3df08d4"
+    },
+    {
+      "path": "data/tools/test_model.py",
+      "sha256": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da"
+    },
+    {
+      "path": "data/tools/test_soft_policy.py",
+      "sha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88"
+    },
+    {
+      "path": "data/tools/test_training.py",
+      "sha256": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848"
+    },
+    {
+      "path": "data/tools/train.py",
+      "sha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/KataGo-NN-LICENSE.txt",
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/epoch-00.pt",
+      "sha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/epoch-04.pt",
+      "sha256": "c7c38216fe52664ab7fd27edf485876a20fcd724581be0ca113b5f5976ac3fd5"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/epoch-08.pt",
+      "sha256": "db371cd7c4f7ef367fd46ab6bff0bb612f61f5b72aad6d83ff1fc5d8fa226db8"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/epoch-12.pt",
+      "sha256": "b077b0986a5fbce120d23a4751ad12b2dc85df16bd4b72a4b74268fc78147c17"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/epoch-16.pt",
+      "sha256": "b01574f7d8eafded6f7606e8e9cb10422f4ecf044aa631eece6c60982992251f"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/golden.json.gz",
+      "sha256": "eea0359426b62ae4f3e124a38147fd464271b9210275cd888d0f7c93002cdb5e"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/manifest.json.gz",
+      "sha256": "430198f60ee302f7ddff675a235eca0a1a0e6417e1bae6d9605a9bb55928411f"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/model.onnx",
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/weights.f32",
+      "sha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    },
+    {
+      "path": "data/workspace/CompletedQ-r0-model/weights.pt",
+      "sha256": "30f88aa9d68b5896516df7543be29cf3764ad6faeda40189051489921a67b884"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/KataGo-NN-LICENSE.txt",
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/epoch-00.pt",
+      "sha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/epoch-04.pt",
+      "sha256": "43c685565218490fce31d554549c6de5832ad85ac80eb073078ee32123273b4b"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/epoch-08.pt",
+      "sha256": "88cacb28c545162ac0c3ce45fb8f7248ac497d05a6414ed777c211c5a982f8d4"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/epoch-12.pt",
+      "sha256": "26aaaffcdb3d951442031e629b974438badd0d5519c1204700b73fd21603b04d"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/epoch-16.pt",
+      "sha256": "b76eb8f6a1ec5a71ca0c2920b60d91fb96cff50c339cf875a256c556d05cbe4d"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/golden.json.gz",
+      "sha256": "e0c3604e51a3664b8e86bfadc67c54419f1a5fa7ecb64b20133cc732986acf89"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/manifest.json.gz",
+      "sha256": "d8300c19b7c445b28930dc36dd9ac3c5109f9f9f70de0315dc78789f89dade63"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/model.onnx",
+      "sha256": "fe090e741cb8e69808998c605727f1292f724443d73b41772c517a874331dbcb"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/weights.f32",
+      "sha256": "a22ad4337d5f867c2f35fcabf8962a71f77459672353038eb4b72eb83eb1b741"
+    },
+    {
+      "path": "data/workspace/Control-r0-model/weights.pt",
+      "sha256": "c8ee5aaff37682ad18fe2bb62aeb4dca968fc0ff7b1727cab3cdaacd3f2fc84c"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/KataGo-NN-LICENSE.txt",
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/epoch-00.pt",
+      "sha256": "4237f4050277f28c7562d158b526a37f5bd7020e27bc61caea4701ffaebbcf51"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/epoch-04.pt",
+      "sha256": "88cc88c8e5301b69db49141a28cf9e25ebbe4054d4dfa97889b5b36903ff5030"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/epoch-08.pt",
+      "sha256": "512d38b466274a5b6860912e6aa7db59d9b9f71295453e6ed81573c4b379b0ee"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/epoch-12.pt",
+      "sha256": "4314279687962036508bac3ac207e047941edeaae158388dd593350afb4c07b4"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/epoch-16.pt",
+      "sha256": "625fcae4038237386ff14e400f2590c4e290fdf5abdb3f81a28096f8b90d953d"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/golden.json.gz",
+      "sha256": "76b1cefa95bf136f1daec6b1247efc32d36aa79a6323d7bc152a1264e1bc2b24"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/manifest.json.gz",
+      "sha256": "bab0051e80942e8529a0bc67c0cb345c6953151d3037435ea16876c082247af9"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/model.onnx",
+      "sha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/weights.f32",
+      "sha256": "b7f362c21aad6b0fd381dc7ced03ff469414b9ecd4656b7ff118d45ce4378fb7"
+    },
+    {
+      "path": "data/workspace/CurveGuard-r0-model/weights.pt",
+      "sha256": "f2b8bd49d624149f112461ff11cf9734101f919407586c676184374cc1f831fe"
+    },
+    {
+      "path": "data/workspace/baseline/KataGo-NN-LICENSE.txt",
+      "sha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "path": "data/workspace/baseline/manifest.json.gz",
+      "sha256": "2fa9b29e0db1b6e0b2f16e2076ea47b146c14552e5242ac1b4b2a1e8d0556021"
+    },
+    {
+      "path": "data/workspace/baseline/model.onnx",
+      "sha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "path": "data/workspace/baseline/weights.f32",
+      "sha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "path": "data/workspace/baseline/weights.pt",
+      "sha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db"
+    },
+    {
+      "path": "data/workspace/browser-CompletedQ-r0-command.json",
+      "sha256": "7a2f9f0eede1a94f3669ca384d632a75f5a89e11fbcb4fc4acc9d1c1da7eb7cc"
+    },
+    {
+      "path": "data/workspace/browser-CompletedQ-r0-log.txt",
+      "sha256": "51735efa878c3bcc9b0f95f395be349014ac4745a6a5de8eca5fd272fcad15cc"
+    },
+    {
+      "path": "data/workspace/browser-Control-r0-command.json",
+      "sha256": "dbe97fd977cc0a4d0f10cd0288fa8e30a2c906ec47c6df7c415c1dda9e32b9d9"
+    },
+    {
+      "path": "data/workspace/browser-Control-r0-log.txt",
+      "sha256": "489200131103400259a5a783f52fc4a4525b8939dc57e28f7feb4b1f30308ee8"
+    },
+    {
+      "path": "data/workspace/browser-CurveGuard-r0-command.json",
+      "sha256": "cda285b550f40e9d3091b8797d652b038ed71d35ccde9231a559b8b745fd00b8"
+    },
+    {
+      "path": "data/workspace/browser-CurveGuard-r0-log.txt",
+      "sha256": "901cd27bc026a40365f86bb50acbc03bbba4d18d655225a4087231ead370f7f2"
+    },
+    {
+      "path": "data/workspace/completed-q-legacy.jsonl.gz",
+      "sha256": "e764c6062103d9b7edc1297956cd2a51f29e4b6dcb53b016ee7aa4c0af955862"
+    },
+    {
+      "path": "data/workspace/completed-q-tests-command.json",
+      "sha256": "1454ecf59364bcd8270e8ace493a7bfc71244d1d83976d672386a22b3f33b3ad"
+    },
+    {
+      "path": "data/workspace/completed-q-tests-log.txt",
+      "sha256": "faf47fa61d061ac13a7709a8cd626659330b3637435d3f0d7bd6687e4f7f6ac3"
+    },
+    {
+      "path": "data/workspace/curve-drift-diagnostic-command.json",
+      "sha256": "8ee8eb788fa3f3c5429014e27307688ed1508aaf0b425ceadf5557948ed419c4"
+    },
+    {
+      "path": "data/workspace/curve-drift-diagnostic-log.txt",
+      "sha256": "6a4f54e006d07a3a1620d501709e90c34922a316a88e787c77421cfcc6823d3a"
+    },
+    {
+      "path": "data/workspace/development-audit-command.json",
+      "sha256": "eb5e09eaba563c606d51b9f4f0e906f13b8193da97ef4a8b3176de47867fdb10"
+    },
+    {
+      "path": "data/workspace/development-audit-log.txt",
+      "sha256": "e053948e55ef6529a25ecad0aaa8bff85bcba25e17e2bc076ce93e52cef603be"
+    },
+    {
+      "path": "data/workspace/development-command.json",
+      "sha256": "dbfd96f71c0bb6c0d8fb3ade76c982b9b22f877c4cfad4ea9cef5e149e49d9ca"
+    },
+    {
+      "path": "data/workspace/development-log.txt",
+      "sha256": "32c69b33a26fb563380c9bb9326602cf52486a0e4350521493aa38492ecc7109"
+    },
+    {
+      "path": "data/workspace/plan.json",
+      "sha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641"
+    },
+    {
+      "path": "data/workspace/preflight-command.json",
+      "sha256": "2162b7ee808d2a1a8018035c8c70d008cd68bdb3ca684770812519a3ab1fc4ca"
+    },
+    {
+      "path": "data/workspace/preflight-log.txt",
+      "sha256": "f49e75affeaa940334f7d85b5a57da77e4f9f060205e25af514c56bd3c5dabad"
+    },
+    {
+      "path": "data/workspace/registered-plan.md",
+      "sha256": "596f59705794db5c5930eed934f036faa308928ac3a91ff4586c59ab6e0a0bd5"
+    },
+    {
+      "path": "data/workspace/registration.json",
+      "sha256": "b8910fcfe250b0fdcab3c77ca9ecc037e7ce0b0ee6a0c21c977766d2d6049a67"
+    },
+    {
+      "path": "data/workspace/reported-game-diagnostic-command.json",
+      "sha256": "0f8bd0fe02a3034cfe2c8a6ee52c675f843cc6cae5cd467a3591b75ee7254752"
+    },
+    {
+      "path": "data/workspace/reported-game-diagnostic-log.txt",
+      "sha256": "ba7bcbc7ec572fa0685fdafeea10e49f85f5d1dff3d767cca0bd52a885869428"
+    },
+    {
+      "path": "data/workspace/reported-game.json",
+      "sha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea"
+    },
+    {
+      "path": "data/workspace/results/browser-CompletedQ-r0.json",
+      "sha256": "7fd68f6540f6b8a55bfabd3760d373c1eae663e5f089477eba3662a7e376a276"
+    },
+    {
+      "path": "data/workspace/results/browser-Control-r0.json",
+      "sha256": "74a28e695abe6a631d09e7d33b17b89bd5226bcad208a84b7947f44fb2ac8c12"
+    },
+    {
+      "path": "data/workspace/results/browser-CurveGuard-r0.json",
+      "sha256": "566d01cdc781a152049574923c43d1a163386d41130273fa1f160924cb74edc1"
+    },
+    {
+      "path": "data/workspace/results/curve-drift-diagnostic.json",
+      "sha256": "76e31b2f93971479bc3682c49549174fafaab5fb7bb7c1e9282b224e70b92490"
+    },
+    {
+      "path": "data/workspace/results/decision.json",
+      "sha256": "e732aea38eedfff7f576c3bcf7a6fe99d7bc5ade6e4a7effff3d622498fbce9e"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane11.json",
+      "sha256": "0f55f50ef376f2183c743b8ed3060e5e3b6672052e37df8f72fed4fb5eb1f8b0"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane11.json.trace.jsonl.gz",
+      "sha256": "6d4eaa89a9cd39254b594b6414eace07427f9d223742f8b5b8620f67cc911772"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane7.json",
+      "sha256": "fd2a461f3f22498e551dd901b3b1475fa733cadbcfc544144603510c0988c217"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane7.json.trace.jsonl.gz",
+      "sha256": "816622357bc2eb6b7969454ba069fffd6dfcf69f480bcfee37eebb05d6dee30d"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane9.json",
+      "sha256": "d2a4dee2f39fc20655d725a8f87e36427dc76f7c1d9f9b9aba92c57b7db6b78a"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-plane9.json.trace.jsonl.gz",
+      "sha256": "b24ba6fd78eadd0ceefb213f6debaa53ca607401d7fc31fe2495a590cabb9e62"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere3.json",
+      "sha256": "28e7b7a5e67804d0fe69e6eebd09b3d38f1d1a0b70d882259c284690ede8d3b3"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere3.json.trace.jsonl.gz",
+      "sha256": "2cba3927224bca8026c65a3051b80ac037d529add68b982e7be065a68677e5e9"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere4.json",
+      "sha256": "d1bd8da37a65f264f880c5955458f4e6606118fa67256c82f42f2b4379a5a952"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere4.json.trace.jsonl.gz",
+      "sha256": "2b32a4aaf8bf8260d6ca759c9fa34540bb6fefbdca5f9aec21d038f5bca4566f"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere5.json",
+      "sha256": "c7b8a1676cdc0b9df80bb87669af449e3d448d2e0d9c88c6fa7236f5bdaa6574"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-sphere5.json.trace.jsonl.gz",
+      "sha256": "e55d21f24bbdff03a9caf0e957ec7537fa7e049535a7d17b8fdc20c91dfa5096"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus11.json",
+      "sha256": "e108ae6b8517a557145abe26367495e3d52b1060af678e0e0af7796ac0da9172"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus11.json.trace.jsonl.gz",
+      "sha256": "66fb35be1d4cac20eecc1f15280f64ea46eeb60ce353a7316d4da1f8c2ee4cdd"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus7.json",
+      "sha256": "9dc79855540dde1d64bc0c1a9deae48637a733cf1fc04193fbebce7e24989f85"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus7.json.trace.jsonl.gz",
+      "sha256": "e47f71336f8436643f545af6167ace90411b2b2bc91d517d3314bee6fd2c515c"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus9.json",
+      "sha256": "7d5a373e8b2abd5571b5cf7d05c69f6db6c61069d59e7ae20caddee7e804e273"
+    },
+    {
+      "path": "data/workspace/results/development-CompletedQ-r0-torus9.json.trace.jsonl.gz",
+      "sha256": "791651630da4e730d99d11b9da8d0193e7ff99611b79c09f715fc98a7e011430"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane11.json",
+      "sha256": "e84f7cb66999b56d4ef6591f31e1f649501d290de7395fef2c1cecbcf6b48c0d"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane11.json.trace.jsonl.gz",
+      "sha256": "e42741670ae25d96dce3e5e866a1562064fca0540e292f6e9598855d9128cb39"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane7.json",
+      "sha256": "175d8076a3130c32c7c3763436a5886ba442f76246e25d7fd6152ddf0195a646"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane7.json.trace.jsonl.gz",
+      "sha256": "40322773f4aa8714c61dffa042c489b6f7c548ff45b87cf442bbcceb88b4e5b6"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane9.json",
+      "sha256": "867ba4c0ecaa75a158bd8e81caa52026315c6388f3777291f1611381c2367450"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-plane9.json.trace.jsonl.gz",
+      "sha256": "6c70511109766de7c891d728f5c86ed23f3fa1f11fac5dff7ff570ade3046174"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere3.json",
+      "sha256": "a6fd7d94a58ad2c30978cc5d781ab8a8b811fbb801734edece110979f15da97c"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere3.json.trace.jsonl.gz",
+      "sha256": "c7aa85899556573aca3e8ed692700eb5625e8bd481a43b84ce4aa9925db11460"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere4.json",
+      "sha256": "cc2cbd091a1cb129864960bb3fb3fddd6389351686dafea5c6014b0f3bba48ca"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere4.json.trace.jsonl.gz",
+      "sha256": "52e11a05332ba684afaa36022a4e3c4e5b2061125ec74c5c5b013426c7725312"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere5.json",
+      "sha256": "dbc530674a38851e3aea3f43e06eaa0792775f46ae8ea6aecd151f2ea97e19ee"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-sphere5.json.trace.jsonl.gz",
+      "sha256": "b372be6f1a9d6427454d1128a7efed3b8e5a8934820b4040440091feb1a4d172"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus11.json",
+      "sha256": "dbeb20a3f9051923bad6d6c16eed304344192a646cebca918e0b209f57546c67"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus11.json.trace.jsonl.gz",
+      "sha256": "8db9029659b9d2b507b55c99bf4758c010f268923c0b1d893a12a37920a66e31"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus7.json",
+      "sha256": "4894dd07ee0b849b4a3f6c31695c489f7a4cdcf9dfb140ce5185ffac5fad810a"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus7.json.trace.jsonl.gz",
+      "sha256": "fba86157ae33614815ee65e718e6bde4ebf06e4371e2baf2381b86088d9c2e29"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus9.json",
+      "sha256": "ce91c3680a4ebbdb99d0e6c81c5843331360ce396219afe8e12926f7a8bba892"
+    },
+    {
+      "path": "data/workspace/results/development-Control-r0-torus9.json.trace.jsonl.gz",
+      "sha256": "fa0be0d87a3fc79150ab51a97ef5eba36aeae92313807775f2527662689cf3e1"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane11.json",
+      "sha256": "8ffce0f206ffce4ebfef3e48e9ff52c9afc5a9fff68a50299162a0349e1f83bf"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane11.json.trace.jsonl.gz",
+      "sha256": "eab222cbeadc0e7903144cb7d77c131fdc0bca40b58190c5c45c627abcae7b73"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane7.json",
+      "sha256": "b04b8f8c3c98cabb69c3125184cf07b27162b0606de6b372bcd5b95e7ee3fd05"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane7.json.trace.jsonl.gz",
+      "sha256": "179c6e37665957e86805e4b5f085300b80848d624586efc2702883add9ae0115"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane9.json",
+      "sha256": "cba418908000175783ad4401a18570bb859390864b6b064495a03e664c127da9"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-plane9.json.trace.jsonl.gz",
+      "sha256": "0123629900e58b9d8b50526097f8527c5f1e7ff06f1cb0e2fc557696494e8293"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere3.json",
+      "sha256": "16b58016ebcb48edc6c1dc6e454a4eee08dc60b69209c0a0b4113eed3f70b565"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere3.json.trace.jsonl.gz",
+      "sha256": "d810b6925ee70edefe5e3ad5c7eaadba273600688aad6857c09231acb808ddaf"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere4.json",
+      "sha256": "20e1a04630e24f8789fccb200d2bafc0312100ebbdd14a691043af0985364ad1"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere4.json.trace.jsonl.gz",
+      "sha256": "a53ff69b49ac8b5063ff9c37d18e8c5e4dac7cdbe184ab61c72dd46a80e126f5"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere5.json",
+      "sha256": "c2984cd8cb4c26dd6bffda3d5f959e6baf593eed20c3ab7739297c2246070cf0"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-sphere5.json.trace.jsonl.gz",
+      "sha256": "74aaaed009af7082b6dfe034d3d8a724b1e97816e08d47747d60cac24a9cfbc0"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus11.json",
+      "sha256": "15a6e7799e841ed066a3cde278f08b36d4509f2fa9eaa92b95f4aa73d467ebf8"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus11.json.trace.jsonl.gz",
+      "sha256": "61f2ae30a8281f89536d29b51088f2de7cf7cdd187f5396922b11591e0d22970"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus7.json",
+      "sha256": "608ff957f0bd2453710b3623f7fd66e8fd04ea9516a7803bc672a1e68a4d4b15"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus7.json.trace.jsonl.gz",
+      "sha256": "a4feda34e7c9164b9b75119c2056a30a96e112d32a1de4833ff6d14ccaa14430"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus9.json",
+      "sha256": "12898338f932d7d1ac746066a13d8dfea7bacdaae11c3c198fda27a50466f693"
+    },
+    {
+      "path": "data/workspace/results/development-CurveGuard-r0-torus9.json.trace.jsonl.gz",
+      "sha256": "08e7a0ed926e27edbb0c59ab94646031ebe2e2ebc865b572d702994cc85c316c"
+    },
+    {
+      "path": "data/workspace/results/development-openings-2026102911.json",
+      "sha256": "41e9130c487bb7034bfd8a71ef6ee2ce82a732bcf9da64520a96ff4e48e9182d"
+    },
+    {
+      "path": "data/workspace/results/development-registration.json",
+      "sha256": "8599ea05fef217aab5eefa0011b6d92acd1cadc37e7bb64d78e00b0529358a15"
+    },
+    {
+      "path": "data/workspace/results/development-replay-audit.json",
+      "sha256": "c826c0b3f88e9868a06aa1d96b1dc44fc7c716ec6d8fbad44e086d8fce898f0c"
+    },
+    {
+      "path": "data/workspace/results/development-summary.json",
+      "sha256": "65ebb512139e4a705d3a65c7792b3d11f4c6316175f7eaea2a375c965635c98e"
+    },
+    {
+      "path": "data/workspace/results/environment.json",
+      "sha256": "71b47dfa3daeeef061349221e05318e2c9e76065ac123c63b334477713a87ae3"
+    },
+    {
+      "path": "data/workspace/results/latency-protocol.json",
+      "sha256": "9e04b26e7ebbc13ad10506a374f23c851a3533c959afbc66a6d74844a3703ef1"
+    },
+    {
+      "path": "data/workspace/results/preflight.json",
+      "sha256": "5918ab4dc34246d87cac103327866f7183b54130f136d88bcd11bdd3549a649c"
+    },
+    {
+      "path": "data/workspace/results/reported-game-diagnostic.json.gz",
+      "sha256": "7f9834aeae1210f4702984104f7075020d9382caa5ac548accf5934c18d84bbb"
+    },
+    {
+      "path": "data/workspace/results/selection.json",
+      "sha256": "46cc70c98525f0df8ae130dfa5793b0d7a8087a3e5a98561c9ab957e8437a631"
+    },
+    {
+      "path": "data/workspace/results/target-audit.json",
+      "sha256": "3f2442c32e45f3cac57890009b00dd562c01e4d29c190880d5c829ee6889b1af"
+    },
+    {
+      "path": "data/workspace/search.wasm",
+      "sha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+    },
+    {
+      "path": "data/workspace/selection-command.json",
+      "sha256": "49471aafba5882d4ae179333de1b76a3ef6f1e1e7e9aad3e45adfa58edd1f4ff"
+    },
+    {
+      "path": "data/workspace/selection-log.txt",
+      "sha256": "28d1a7c622b6b0780aa02ef22a64734bd05ee6adc94ec20054113b3f575b0b93"
+    },
+    {
+      "path": "data/workspace/sources/development-matches.mjs",
+      "sha256": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d"
+    },
+    {
+      "path": "data/workspace/sources/prepare-completed-q-target.mjs",
+      "sha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "path": "data/workspace/sources/prepare-curve-retention-prepare.mjs",
+      "sha256": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0"
+    },
+    {
+      "path": "data/workspace/sources/prepare-model.py",
+      "sha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "path": "data/workspace/sources/prepare-test-completed-q-target.mjs",
+      "sha256": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa"
+    },
+    {
+      "path": "data/workspace/sources/prepare-test_curve_retention.py",
+      "sha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "path": "data/workspace/sources/prepare-train.py",
+      "sha256": "d2a1e49e08357f704a608c18379cf5ab3f31d0a32452aec0d0b96cd984985957"
+    },
+    {
+      "path": "data/workspace/sources/training-completed-q-target.mjs",
+      "sha256": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6"
+    },
+    {
+      "path": "data/workspace/sources/training-curve-retention-train.mjs",
+      "sha256": "fa00c8de990f8a94b8dc68df75662527aea5b0dae2bfecb0de0b13d4f18d5cea"
+    },
+    {
+      "path": "data/workspace/sources/training-model.py",
+      "sha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "path": "data/workspace/sources/training-test_curve_retention.py",
+      "sha256": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc"
+    },
+    {
+      "path": "data/workspace/sources/training-train.py",
+      "sha256": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8"
+    },
+    {
+      "path": "data/workspace/split.json.gz",
+      "sha256": "bdd57df66378d2851b878cf51feb83baaf365f6bc20706dc3838c2d6fda42249"
+    },
+    {
+      "path": "data/workspace/topologies.json",
+      "sha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757"
+    },
+    {
+      "path": "data/workspace/train-CompletedQ-r0-command.json",
+      "sha256": "c47a70511729c7adf3f2cc373f2266f263b77229e3aea76aae80fd113584fcc4"
+    },
+    {
+      "path": "data/workspace/train-CompletedQ-r0-log.txt",
+      "sha256": "e270edbd4147f253753807dc01f3a6016d9a4e52b333cb4d45655f1886ab21d5"
+    },
+    {
+      "path": "data/workspace/train-Control-r0-command.json",
+      "sha256": "eb43e4494bcd5392b45fc4278ef092898a2365fb2de0bc4e81cad7b00e952c2e"
+    },
+    {
+      "path": "data/workspace/train-Control-r0-log.txt",
+      "sha256": "7b1cb99263945a55661f71674bc32becc2a1ecec4383cb91bc6c6e83e5edde48"
+    },
+    {
+      "path": "data/workspace/train-CurveGuard-r0-command.json",
+      "sha256": "fbe2ecb23687f9b2dbd09424a3fab3d1f323a346d8bc73141248b60f63342905"
+    },
+    {
+      "path": "data/workspace/train-CurveGuard-r0-log.txt",
+      "sha256": "4e5a1c25ed87bff79b73ca05b40af90b103670d18e2bc9b587849288121758bc"
+    },
+    {
+      "path": "data/workspace/training-registration.json",
+      "sha256": "8b1ad4afad22061fecffda7d60338ae6a91baf23f370844053ad5a596f4944aa"
+    },
+    {
+      "path": "data/workspace/training-tests-command.json",
+      "sha256": "a86a424afa034d0a10aa0d69c2785e5d5da275fef2fe4786e85c61f80ac3d858"
+    },
+    {
+      "path": "data/workspace/training-tests-log.txt",
+      "sha256": "b76996bd3182dc79baaffa79c751d5e2e417f50ec814148191961d0cbdbf9cd2"
+    }
+  ]
+}

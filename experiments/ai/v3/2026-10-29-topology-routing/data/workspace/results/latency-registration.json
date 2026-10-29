@@ -1,0 +1,32 @@
+{
+  "started": "2026-10-28T17:41:11.902Z",
+  "sources": {
+    "topology-routing-timing-prepare.mjs": "558002648c4b8f94224aec1831750911da744da0ff8c02c85cd40dd21b30df5a",
+    "topology-routing-latency.mjs": "99700de31884969b564cdc589b50379d3768e0454b6dc223770c2f572908f05f",
+    "topology-routing-cold-bench.mjs": "8d46e526c10e24cac30defe2fc73d9fbd9400972003659dcbb59cd9e994281f4",
+    "topology-routing-equal-time.mjs": "97a8a54ff95c76b4313b0c4f0cfb8bdff64e69bc1154da54c7c13628f7325741",
+    "search-campaign-bench.mjs": "037da0e2b0f2bcf086cf73e819fc7e27a8ce3ed463f8e1f6aa22fd08882dcfc6"
+  },
+  "rules": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate<=max(1.10*baseline,baseline+2ms)"
+    },
+    "coldAndSwitch": {
+      "repeats": 5,
+      "p95Limit": "candidate<=max(1.5*baseline,baseline+250ms)",
+      "record": "Initialize/default curve model then first plane turn; separately record curve->plane->curve switching and total model asset bytes."
+    },
+    "fixtures": "27 ordinary roots from first candidate development pair0/colour1 at N/4,N/2,3N/4, clamped to final nonterminal saved ply;3 predefined public stress roots. Freeze concrete files before timing.",
+    "condition": "No match/training jobs during timing; alternating sides; real WASM CPU and WebGPU Workers.",
+    "equalTime": "Baseline-only calibration on frozen roots establishes per-board budgets before candidate fixed-time root comparisons. Diagnostic only; fixed-time playing-strength matches are not part of this round.",
+    "mobile": "No phone performance claim without real phone measurement."
+  }
+}

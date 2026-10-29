@@ -1,0 +1,35 @@
+{
+  "adopted": false,
+  "proceedToNewData": true,
+  "reason": "Teacher timing/strength pilot passed; separate full NewData registration required.",
+  "timing": {
+    "startupSeconds": 1.8532189000000001,
+    "seconds": 1.4642964,
+    "secondsPerRoot": 0.2440494,
+    "visits": 512,
+    "roots": 6,
+    "passes": true
+  },
+  "scoreRate": 1,
+  "boards": [
+    {
+      "size": 7,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    },
+    {
+      "size": 9,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    },
+    {
+      "size": 11,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    }
+  ],
+  "screenGamesExcludedFromLearning": true
+}

@@ -1,0 +1,1 @@
+Completed-Q: hand calculation, zero-visit, equal-Q, legal mask, permutation, WDL perspective and invalid inputs passed.

@@ -1,0 +1,19 @@
+{
+  "started": "2026-10-28T16:05:07.548Z",
+  "plan": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641",
+  "driver": "5cdca5756e471636e838ad9793b01be1f7ee8aca55e8670505a48300110a8c3d",
+  "models": [
+    {
+      "id": "Control-r0",
+      "sha256": "fe090e741cb8e69808998c605727f1292f724443d73b41772c517a874331dbcb"
+    },
+    {
+      "id": "CurveGuard-r0",
+      "sha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40"
+    },
+    {
+      "id": "CompletedQ-r0",
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    }
+  ]
+}

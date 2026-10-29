@@ -21,7 +21,7 @@ const previous=path=>{const r=spawnSync('git',['show',revision+':'+path],{cwd:ro
 const baseline=previous('dist/ai-v3-inference.js'),baselinePlayer=previous('dist/ai-v3.js').replace("'./ai-v3-inference.js'","'./ai-v3-baseline-inference.js'");
 const golden=readFileSync(new URL('../../tests/fixtures/ai/v3-golden.json',import.meta.url));
 const search=await createV3Search({load:async()=>readFileSync(new URL('../../dist/ai-v3.wasm',import.meta.url))});
-const native=await createNodeInference('dist/models/v3'),workloads=[];
+const native=await createNodeInference('dist/models/v3',{kind:'torus'}),workloads=[];
 try{
  for(const [kind,size]of [['sphere',3],['sphere',4],['sphere',5],['torus',7],['torus',9],['torus',11]]){
   const game=new Game(createTopology(kind,size),6.5),adjacency=adjacencyFor(game.topology);

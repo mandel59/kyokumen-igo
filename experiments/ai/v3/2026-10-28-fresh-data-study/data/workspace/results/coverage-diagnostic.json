@@ -1,0 +1,308 @@
+{
+  "role": "Explanatory common-validation diagnostic only; not independent strength evidence or model-selection override. Legal NN ranking does not include tactical pruning.",
+  "results": [
+    {
+      "model": "baseline",
+      "groups": {
+        "all": {
+          "positions": 3544,
+          "weight": 0.9999999999999837,
+          "top8Mass": 0.7686312627527875,
+          "top8Recall": 0.8270316027088036,
+          "weightedTop8Mass": 0.848584376933779,
+          "weightedTop8Recall": 0.8929031223469386
+        },
+        "sphere3": {
+          "positions": 124,
+          "weight": 0.11111111111111119,
+          "top8Mass": 0.9305284405427594,
+          "top8Recall": 0.9596774193548387,
+          "weightedTop8Mass": 0.9309875460084664,
+          "weightedTop8Recall": 0.9597288676236043
+        },
+        "legacy": {
+          "positions": 3123,
+          "weight": 0.8999999999999856,
+          "top8Mass": 0.7817613601872744,
+          "top8Recall": 0.834774255523535,
+          "weightedTop8Mass": 0.8650432045648527,
+          "weightedTop8Recall": 0.9034198486111941
+        },
+        "sphere4": {
+          "positions": 190,
+          "weight": 0.11111111111111094,
+          "top8Mass": 0.9126856242355548,
+          "top8Recall": 0.9368421052631579,
+          "weightedTop8Mass": 0.913278065667449,
+          "weightedTop8Recall": 0.9376272808732489
+        },
+        "sphere5": {
+          "positions": 302,
+          "weight": 0.1111111111111109,
+          "top8Mass": 0.9103594882820814,
+          "top8Recall": 0.9470198675496688,
+          "weightedTop8Mass": 0.9104582224908037,
+          "weightedTop8Recall": 0.9470588235294112
+        },
+        "torus7": {
+          "positions": 101,
+          "weight": 0.11111111111111098,
+          "top8Mass": 0.908646786456356,
+          "top8Recall": 0.9306930693069307,
+          "weightedTop8Mass": 0.9061868505352717,
+          "weightedTop8Recall": 0.9269005847953217
+        },
+        "torus9": {
+          "positions": 169,
+          "weight": 0.11111111111111144,
+          "top8Mass": 0.9070544760652195,
+          "top8Recall": 0.9467455621301775,
+          "weightedTop8Mass": 0.9076543852678451,
+          "weightedTop8Recall": 0.9470443349753699
+        },
+        "torus11": {
+          "positions": 263,
+          "weight": 0.1111111111111113,
+          "top8Mass": 0.8831126156826097,
+          "top8Recall": 0.9239543726235742,
+          "weightedTop8Mass": 0.8836207814020491,
+          "weightedTop8Recall": 0.9243070237256287
+        },
+        "plane7": {
+          "positions": 476,
+          "weight": 0.11111111111111058,
+          "top8Mass": 0.8267819274074062,
+          "top8Recall": 0.8781512605042017,
+          "weightedTop8Mass": 0.8288032204040574,
+          "weightedTop8Recall": 0.8812605674554214
+        },
+        "plane9": {
+          "positions": 763,
+          "weight": 0.11111111111111141,
+          "top8Mass": 0.7584890779876791,
+          "top8Recall": 0.8269986893840104,
+          "weightedTop8Mass": 0.7521990141159192,
+          "weightedTop8Recall": 0.8267784021175736
+        },
+        "plane11": {
+          "positions": 1156,
+          "weight": 0.11111111111111138,
+          "top8Mass": 0.6147969902599203,
+          "top8Recall": 0.6937716262975778,
+          "weightedTop8Mass": 0.604071306512013,
+          "weightedTop8Recall": 0.6854222160268253
+        },
+        "fresh": {
+          "positions": 421,
+          "weight": 0.10000000000000053,
+          "top8Mass": 0.6712315138504064,
+          "top8Recall": 0.7695961995249406,
+          "weightedTop8Mass": 0.7004549282540905,
+          "weightedTop8Recall": 0.7982525859686368
+        }
+      }
+    },
+    {
+      "model": "Control-r0-model",
+      "groups": {
+        "all": {
+          "positions": 3544,
+          "weight": 0.9999999999999837,
+          "top8Mass": 0.7855491086124333,
+          "top8Recall": 0.8476297968397292,
+          "weightedTop8Mass": 0.859963689979538,
+          "weightedTop8Recall": 0.9095897285168155
+        },
+        "sphere3": {
+          "positions": 124,
+          "weight": 0.11111111111111119,
+          "top8Mass": 0.9349742581046396,
+          "top8Recall": 0.9758064516129032,
+          "weightedTop8Mass": 0.93466348458043,
+          "weightedTop8Recall": 0.9748803827751197
+        },
+        "legacy": {
+          "positions": 3123,
+          "weight": 0.8999999999999856,
+          "top8Mass": 0.7992176599793132,
+          "top8Recall": 0.8571886007044508,
+          "weightedTop8Mass": 0.8763257921546955,
+          "weightedTop8Recall": 0.9210828445164256
+        },
+        "sphere4": {
+          "positions": 190,
+          "weight": 0.11111111111111094,
+          "top8Mass": 0.9242966040184624,
+          "top8Recall": 0.9526315789473684,
+          "weightedTop8Mass": 0.9248816592286697,
+          "weightedTop8Recall": 0.9534202916259369
+        },
+        "sphere5": {
+          "positions": 302,
+          "weight": 0.1111111111111109,
+          "top8Mass": 0.9132460742720113,
+          "top8Recall": 0.9503311258278145,
+          "weightedTop8Mass": 0.9133893373019378,
+          "weightedTop8Recall": 0.9503921568627447
+        },
+        "torus7": {
+          "positions": 101,
+          "weight": 0.11111111111111098,
+          "top8Mass": 0.9262450448431001,
+          "top8Recall": 0.9603960396039604,
+          "weightedTop8Mass": 0.9243378007512175,
+          "weightedTop8Recall": 0.9578947368421052
+        },
+        "torus9": {
+          "positions": 169,
+          "weight": 0.11111111111111144,
+          "top8Mass": 0.9121453876017466,
+          "top8Recall": 0.9526627218934911,
+          "weightedTop8Mass": 0.912739666286251,
+          "weightedTop8Recall": 0.952996715927751
+        },
+        "torus11": {
+          "positions": 263,
+          "weight": 0.1111111111111113,
+          "top8Mass": 0.8856536705726793,
+          "top8Recall": 0.9391634980988594,
+          "weightedTop8Mass": 0.8860954267993009,
+          "weightedTop8Recall": 0.939462453997338
+        },
+        "plane7": {
+          "positions": 476,
+          "weight": 0.11111111111111058,
+          "top8Mass": 0.839352435133999,
+          "top8Recall": 0.8949579831932774,
+          "weightedTop8Mass": 0.8391139142499527,
+          "weightedTop8Recall": 0.8959006975459193
+        },
+        "plane9": {
+          "positions": 763,
+          "weight": 0.11111111111111141,
+          "top8Mass": 0.7813092353485213,
+          "top8Recall": 0.8492791612057667,
+          "weightedTop8Mass": 0.7788901252051692,
+          "weightedTop8Recall": 0.8528577046137623
+        },
+        "plane11": {
+          "positions": 1156,
+          "weight": 0.11111111111111138,
+          "top8Mass": 0.6404252790957311,
+          "top8Recall": 0.7231833910034602,
+          "weightedTop8Mass": 0.6255617954127949,
+          "weightedTop8Recall": 0.7085024164606253
+        },
+        "fresh": {
+          "positions": 421,
+          "weight": 0.10000000000000053,
+          "top8Mass": 0.6841550803018265,
+          "top8Recall": 0.7767220902612827,
+          "weightedTop8Mass": 0.7127047704030954,
+          "weightedTop8Recall": 0.8061516845203222
+        }
+      }
+    },
+    {
+      "model": "NewData-r0-model",
+      "groups": {
+        "all": {
+          "positions": 3544,
+          "weight": 0.9999999999999837,
+          "top8Mass": 0.7860843749282226,
+          "top8Recall": 0.8510158013544018,
+          "weightedTop8Mass": 0.8601129807176386,
+          "weightedTop8Recall": 0.9104527090080339
+        },
+        "sphere3": {
+          "positions": 124,
+          "weight": 0.11111111111111119,
+          "top8Mass": 0.9290862665061028,
+          "top8Recall": 0.9596774193548387,
+          "weightedTop8Mass": 0.9288123025320002,
+          "weightedTop8Recall": 0.958862076138964
+        },
+        "legacy": {
+          "positions": 3123,
+          "weight": 0.8999999999999856,
+          "top8Mass": 0.7992079214330031,
+          "top8Recall": 0.8594300352225425,
+          "weightedTop8Mass": 0.8760456526709003,
+          "weightedTop8Recall": 0.9208051516190708
+        },
+        "sphere4": {
+          "positions": 190,
+          "weight": 0.11111111111111094,
+          "top8Mass": 0.9240664126057374,
+          "top8Recall": 0.9526315789473684,
+          "weightedTop8Mass": 0.9246472925057452,
+          "weightedTop8Recall": 0.9534202916259369
+        },
+        "sphere5": {
+          "positions": 302,
+          "weight": 0.1111111111111109,
+          "top8Mass": 0.9110032541689691,
+          "top8Recall": 0.9503311258278145,
+          "weightedTop8Mass": 0.9111531154903921,
+          "weightedTop8Recall": 0.9503921568627447
+        },
+        "torus7": {
+          "positions": 101,
+          "weight": 0.11111111111111098,
+          "top8Mass": 0.9264711830949429,
+          "top8Recall": 0.9603960396039604,
+          "weightedTop8Mass": 0.924557760805909,
+          "weightedTop8Recall": 0.9578947368421052
+        },
+        "torus9": {
+          "positions": 169,
+          "weight": 0.11111111111111144,
+          "top8Mass": 0.9150166992296481,
+          "top8Recall": 0.9585798816568047,
+          "weightedTop8Mass": 0.9155278019427353,
+          "weightedTop8Recall": 0.9587438423645327
+        },
+        "torus11": {
+          "positions": 263,
+          "weight": 0.1111111111111113,
+          "top8Mass": 0.8877602967897522,
+          "top8Recall": 0.9391634980988594,
+          "weightedTop8Mass": 0.8882172855592118,
+          "weightedTop8Recall": 0.939462453997338
+        },
+        "plane7": {
+          "positions": 476,
+          "weight": 0.11111111111111058,
+          "top8Mass": 0.839900380758639,
+          "top8Recall": 0.8970588235294118,
+          "weightedTop8Mass": 0.8410188667506453,
+          "weightedTop8Recall": 0.8988441021805005
+        },
+        "plane9": {
+          "positions": 763,
+          "weight": 0.11111111111111141,
+          "top8Mass": 0.7827796394458263,
+          "top8Recall": 0.8558322411533421,
+          "weightedTop8Mass": 0.7790504221329027,
+          "weightedTop8Recall": 0.8600130165589295
+        },
+        "plane11": {
+          "positions": 1156,
+          "weight": 0.11111111111111138,
+          "top8Mass": 0.6412066701456427,
+          "top8Recall": 0.7292387543252595,
+          "weightedTop8Mass": 0.6280319787390779,
+          "weightedTop8Recall": 0.7164417045012118
+        },
+        "fresh": {
+          "positions": 421,
+          "weight": 0.10000000000000053,
+          "top8Mass": 0.688733221164732,
+          "top8Recall": 0.7885985748218527,
+          "weightedTop8Mass": 0.7167189331382597,
+          "weightedTop8Recall": 0.8172807255086983
+        }
+      }
+    }
+  ]
+}

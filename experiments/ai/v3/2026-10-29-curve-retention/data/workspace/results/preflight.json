@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "results": [
+    {
+      "id": "Control-r0",
+      "arm": "Control",
+      "replica": 0,
+      "seed": 2026102910,
+      "eligible": true,
+      "selectedEpoch": 16,
+      "initialLoss": 3.1350748538970947,
+      "selectedLoss": 3.058516025543213,
+      "relativeGain": 0.024420095826010124,
+      "perBoardRatios": {
+        "board/sphere3": 0.9917136062792625,
+        "board/sphere4": 0.9629482248590989,
+        "board/sphere5": 0.9594438422054632,
+        "board/torus7": 0.9747757146640385,
+        "board/torus9": 0.9758366684690278,
+        "board/torus11": 0.9972731080475474,
+        "board/plane7": 0.9738527277757328,
+        "board/plane9": 0.9636368900362456,
+        "board/plane11": 0.9776252385204571
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 120905,
+      "exportParityMaxErrors": {
+        "policy": 0.0,
+        "wdl": 0.0,
+        "score": 0.0,
+        "ownership": 0.0
+      },
+      "sha256": "fe090e741cb8e69808998c605727f1292f724443d73b41772c517a874331dbcb"
+    },
+    {
+      "id": "CurveGuard-r0",
+      "arm": "CurveGuard",
+      "replica": 0,
+      "seed": 2026102910,
+      "eligible": true,
+      "selectedEpoch": 16,
+      "initialLoss": 3.1350748538970947,
+      "selectedLoss": 3.068114757537842,
+      "relativeGain": 0.021358372440778317,
+      "perBoardRatios": {
+        "board/sphere3": 0.9942585615751136,
+        "board/sphere4": 0.9728150243762109,
+        "board/sphere5": 0.9679356340010243,
+        "board/torus7": 0.9808951086527875,
+        "board/torus9": 0.9809577790816861,
+        "board/torus11": 0.9965178435397357,
+        "board/plane7": 0.9738705900160405,
+        "board/plane9": 0.965713713037491,
+        "board/plane11": 0.9746406912698311
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 120905,
+      "exportParityMaxErrors": {
+        "policy": 0.0,
+        "wdl": 0.0,
+        "score": 0.0,
+        "ownership": 0.0
+      },
+      "sha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40"
+    },
+    {
+      "id": "CompletedQ-r0",
+      "arm": "CompletedQ",
+      "replica": 0,
+      "seed": 2026102910,
+      "eligible": true,
+      "selectedEpoch": 16,
+      "initialLoss": 3.1350748538970947,
+      "selectedLoss": 3.080556631088257,
+      "relativeGain": 0.017389767501426068,
+      "perBoardRatios": {
+        "board/sphere3": 1.001105711117993,
+        "board/sphere4": 0.9790305117521695,
+        "board/sphere5": 0.978908898478059,
+        "board/torus7": 0.987008090366904,
+        "board/torus9": 0.9901130575503264,
+        "board/torus11": 1.0033785579182015,
+        "board/plane7": 0.9716095351517038,
+        "board/plane9": 0.9635147720123306,
+        "board/plane11": 0.9713516993600259
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 120905,
+      "exportParityMaxErrors": {
+        "policy": 0.0,
+        "wdl": 0.0,
+        "score": 0.0,
+        "ownership": 0.0
+      },
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    }
+  ],
+  "candidateIds": [
+    "CurveGuard-r0",
+    "CompletedQ-r0"
+  ],
+  "notes": "Control remains a valid comparator even with epoch0. All arms use identical common old+fresh validation and update count; curve-retention loss is training-only. Numerical/Worker checks are additional required gates."
+}

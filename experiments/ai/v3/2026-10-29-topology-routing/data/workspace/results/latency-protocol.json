@@ -1,0 +1,71 @@
+{
+  "registered": "2026-10-28T17:41:11.994Z",
+  "plan": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b",
+  "ordinary": 27,
+  "stress": 3,
+  "sources": [
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-sphere3.json",
+      "sha256": "5a8a30d6b8e0ae59420f67604e2d186ef20d5cf69d372d80316138da5a1185a9"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-sphere4.json",
+      "sha256": "934d41243db1919e8334a7d90beaf86134cc015cc2c098dbf4899781a59a07c9"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-sphere5.json",
+      "sha256": "70d6ae73d2aa480371945a465b034fd0973c7d1a5e261edacabad0afda07c73d"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-torus7.json",
+      "sha256": "1937933a0a737ab410012b224e124b435383696f0b3448fcde9b2ef9375ab010"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-torus9.json",
+      "sha256": "5c406783162883ff20d11251ccfa375237014011432bb893fba0a712cbddf02a"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-torus11.json",
+      "sha256": "353e0c7a2f6bda03fc2b406329dae666d560d4e47c045e222e244db738a37771"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-plane7.json",
+      "sha256": "75ed1eb829adda3cd8a2eddf1daec568fdd6e76bdc06b63bddcc0bc03eb56b46"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-plane9.json",
+      "sha256": "2a81dcb5051a20d747e813d41635a7c3bbc220f79801228eb8006c4681768bf2"
+    },
+    {
+      "file": "tools/ai-gnn/target/topology-routing-study-20261029/results/development-Routed-r0-plane11.json",
+      "sha256": "8ec3f1b657fa0a709caf81af56a7d16fccd87981fa76521485f240567a71a0e0"
+    }
+  ],
+  "stressSource": {
+    "file": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/results/latency-protocol.json",
+    "sha256": "93c37a7601845db021b98ed6397ae24aad551737c4ec9ef93a42b0fccdc734b1"
+  },
+  "rules": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate<=max(1.10*baseline,baseline+2ms)"
+    },
+    "coldAndSwitch": {
+      "repeats": 5,
+      "p95Limit": "candidate<=max(1.5*baseline,baseline+250ms)",
+      "record": "Initialize/default curve model then first plane turn; separately record curve->plane->curve switching and total model asset bytes."
+    },
+    "fixtures": "27 ordinary roots from first candidate development pair0/colour1 at N/4,N/2,3N/4, clamped to final nonterminal saved ply;3 predefined public stress roots. Freeze concrete files before timing.",
+    "condition": "No match/training jobs during timing; alternating sides; real WASM CPU and WebGPU Workers.",
+    "equalTime": "Baseline-only calibration on frozen roots establishes per-board budgets before candidate fixed-time root comparisons. Diagnostic only; fixed-time playing-strength matches are not part of this round.",
+    "mobile": "No phone performance claim without real phone measurement."
+  },
+  "fixturesSha256": "a399646cfdc7c52d63e03ad5d8ada33b74051bca1d5162335c81a0ab4b40bc74"
+}

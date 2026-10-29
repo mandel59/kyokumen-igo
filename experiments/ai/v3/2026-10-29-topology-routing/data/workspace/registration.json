@@ -1,0 +1,27 @@
+{
+  "started": "2026-10-28T16:40:30.887Z",
+  "planSha256": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b",
+  "components": {
+    "plane": {
+      "model": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "weights": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e",
+      "bytes": 986021
+    },
+    "curves": {
+      "model": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "weights": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+      "bytes": 986021
+    }
+  },
+  "baselineRuntime": {
+    "ai-v3.js": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+    "ai-v3-inference.js": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+    "ai-v3-webgpu.js": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+    "ai-v3-search.js": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+    "ai-worker.js": "5fe33f8fab1005985208e1b367ab257492cd489f0bbeb596a25a0db7d28c481c",
+    "engine.js": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc",
+    "ai-position.js": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+  },
+  "bundleManifestSha256": "a1b9f99c36f8c7e1acc939998e579a5dbda0fdab8622b39b8c1cc12967467a38",
+  "newTrainingRuns": 0
+}

@@ -1,0 +1,10 @@
+{
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "torch": "2.14.1+cu130",
+  "cuda": "13.0",
+  "gpu": "NVIDIA GeForce RTX 5060 Ti",
+  "matmulPrecision": "highest",
+  "allowTF32": false,
+  "trainingThreads": 4
+}

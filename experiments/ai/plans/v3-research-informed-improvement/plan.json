@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-research-informed-improvement-20261028",
+  "date": "2026-10-28",
+  "status": "planned-not-executed",
+  "purpose": "Improve playing strength under the current client inference budget; distinguish teacher coverage, learning objective and search effects.",
+  "baseline": {
+    "commit": "241f7cf",
+    "model": "dist/models/v3/model.onnx",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "weights": "dist/models/v3/weights.f32",
+    "weightsSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "inferenceParameters": 120905,
+    "channels": 64,
+    "blocks": 6,
+    "visits": 64,
+    "rootCandidates": 8,
+    "fpu": 1,
+    "rootQScale": 0.4
+  },
+  "evidence": {
+    "previousStudy": "experiments/ai/v3/2026-10-28-improvement-campaign/README.md",
+    "previousIndependent": {
+      "wins": 222,
+      "losses": 210,
+      "paired95Interval": [
+        0.467593,
+        0.560185
+      ],
+      "planeScoreRate": 0.4375,
+      "adopted": false
+    },
+    "interpretation": "No confirmed gain; small screening losses do not establish every rejected idea is intrinsically inferior."
+  },
+  "boards": [
+    "sphere3",
+    "sphere4",
+    "sphere5",
+    "torus7",
+    "torus9",
+    "torus11",
+    "plane7",
+    "plane9",
+    "plane11"
+  ],
+  "workspace": "tools/ai-gnn/target/research-informed-study-20261028",
+  "sources": [
+    {
+      "id": "gumbel2022",
+      "url": "https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/gumbel-alphazero.pdf",
+      "use": "Candidate sampling and completed-Q policy targets; practical strength guarantee does not follow for approximate Q."
+    },
+    {
+      "id": "mctx",
+      "url": "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/policies.py",
+      "use": "Separate final action selection from all-legal-action training weights."
+    },
+    {
+      "id": "katago2019",
+      "url": "https://arxiv.org/abs/1902.10565",
+      "use": "Randomized playout caps and optional future-action auxiliary targets."
+    },
+    {
+      "id": "katagoSoft2023",
+      "url": "https://github.com/lightvector/KataGo/blob/master/docs/KataGoMethods.md#auxiliary-soft-policy-target",
+      "use": "Training-only auxiliary head for softened policy targets; developer evidence, not a standalone controlled v3 study."
+    },
+    {
+      "id": "diversification2024",
+      "url": "https://journals.sagepub.com/doi/10.3233/ICG-240255",
+      "use": "State-diversity motivation; abstract verified, shogi experiment, not evidence of Go gain."
+    }
+  ],
+  "phase0": {
+    "id": "teacher-coverage-audit",
+    "input": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher.jsonl.gz",
+    "inputSha256": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+    "splitManifest": "dist/models/v3/manifest.json",
+    "trainPositions": 9263,
+    "validationPositions": 3123,
+    "metrics": [
+      "Teacher support size (>0 and >=1e-4), entropy, top2 mass and mass outside top2",
+      "Teacher mass and best-action recall inside baseline NN prior top8/top16; report mean/median/p10 per board",
+      "Stratify by teacher source, turn fraction, immediate captures and low-liberty groups; tactical labels are diagnostics, not teacher truth",
+      "Inspect policy eligibility, validationPolicy semantics, duplicate roots, connected game/fork split leakage",
+      "Reported L6 fixture: capture6, prior rank and searched status, diagnostic only"
+    ],
+    "outputs": [
+      "coverage.json",
+      "coverage.md",
+      "data-audit.json"
+    ],
+    "softHeadSkipRule": "Skip phase1 if fewer than10% of eligible training positions have >=1% teacher probability outside top2. This is a resource heuristic, not proof that auxiliary learning cannot help.",
+    "integrityFailure": "Stop affected learning until provenance/split/label issues are resolved and a revised plan is recorded before training."
+  },
+  "phase1": {
+    "id": "soft-policy-auxiliary",
+    "prerequisites": [
+      "Phase0 data integrity passes",
+      "Soft-head skip rule does not fire",
+      "Source, plan, data and split hashes recorded before training"
+    ],
+    "arms": [
+      {
+        "id": "Control",
+        "auxiliaryWeight": 0,
+        "eligibleForAdoption": false
+      },
+      {
+        "id": "Soft4",
+        "auxiliaryWeight": 1,
+        "temperature": 4,
+        "eligibleForAdoption": true
+      }
+    ],
+    "target": "On eligible legal actions only, normalize pi^(1/4). Exact teacher zeros stay zero; no epsilon smoothing or new target support.",
+    "head": "Independent per-node and pass MLP heads matching the ordinary policy-head shapes; training only. Reuse the entire trunk. No change to ordinary policy target.",
+    "loss": "Existing weighted loss plus lambda*soft cross entropy with identical eligibility and within-domain policy normalization; auxiliary term excluded from common validation/checkpoint selection.",
+    "initialization": "Resume the original checkpoint for every run. Initialize the auxiliary head from the resumed policy/passing heads; use a separate RNG stream so its construction cannot alter paired minibatch order. Control uses the same training graph with lambda0.",
+    "training": {
+      "seeds": [
+        2026102810,
+        2026102811
+      ],
+      "trainable": "all",
+      "epochs": 8,
+      "batchSize": 64,
+      "learningRate": 0.00003,
+      "minimumLearningRate": 0.000003,
+      "cosine": true,
+      "emaDecay": 0.99,
+      "balanced": true,
+      "normalTraining": true,
+      "normalSelection": true,
+      "normalizePolicy": true,
+      "requireValidationPolicy": true,
+      "surpriseFraction": 0,
+      "checkpoints": [
+        0,
+        2,
+        4,
+        6,
+        8
+      ],
+      "checkpointSelection": "Lowest common baseline-format validation loss; ties prefer earlier epoch. No auxiliary loss in the score."
+    },
+    "preflight": {
+      "selectedEpochPositive": true,
+      "minimumRelativeCommonLossGain": 0.001,
+      "maximumPerBoardCommonLossRatio": 1.02,
+      "rules": [
+        "Control lambda0 numerically reproduces the ordinary continuation path",
+        "Auxiliary gradients reach trunk; illegal/padded actions are masked; zeros stay zero",
+        "Removing auxiliary heads preserves policy/value/score/ownership outputs",
+        "Export has the original120905-parameter inference architecture and ABI",
+        "Actual nine-board CPU/WebGPU Worker numerical parity passes"
+      ],
+      "appliesTo": "Loss-improvement and positive-epoch gates apply to Soft4 only. Control must pass integrity/numerical/export checks, may select epoch0 and remains available as the causal comparator even without improvement."
+    },
+    "development": {
+      "seedsByTrainingReplica": [
+        2026102812,
+        2026102813
+      ],
+      "pairsPerBoardPerModel": 4,
+      "gamesPerModel": 72,
+      "modelsMax": 4,
+      "gamesMax": 288,
+      "sameOpeningsAcrossArmsWithinReplica": true,
+      "candidateEligibility": "Both Soft4 replicas pass preflight and each scores>=40/72, >=3/8 per board, plane>=50%, curve>=50% against deployed baseline. Mean Soft4 match score across replicas must exceed mean Control; if a paired Control is unavailable, stop causal selection.",
+      "modelSelection": "Freeze replica with training seed2026102810 as the only possible adoption candidate before matches. Replica2 is replication evidence, never a replacement chosen by outcome.",
+      "diagnostics": "Compare Soft4-Control deltas in common policy KL and teacher top8 mass/recall; report regressions without changing gates."
+    },
+    "independent": {
+      "candidateMax": 1,
+      "seed": 2026102814,
+      "bootstrapSeed": 2026102815,
+      "pairsPerBoard": 24,
+      "games": 432,
+      "minimumScoreRate": 0.55,
+      "minimumPaired95LowerExclusive": 0.5,
+      "minimumPerBoardScore": 19,
+      "minimumPlaneScoreRate": 0.5,
+      "minimumCurveScoreRate": 0.5,
+      "bootstrapIterations": 10000,
+      "resampling": "colour-swapped pair, board-stratified",
+      "note": "A successful test supports selected model vs deployed baseline, not a separate formal proof that the auxiliary method beats Control."
+    },
+    "ceilings": {
+      "trainingRuns": 4,
+      "epochsTotalMax": 32,
+      "developmentGamesMax": 288,
+      "independentGamesMax": 432,
+      "totalMatchGamesMax": 720
+    },
+    "stopping": "No hyperparameter sweep, extra replicas, holdout extension or replacement candidate after failure. Archive all runs and conclude the round."
+  },
+  "phase2": {
+    "id": "fresh-data-and-gumbel",
+    "status": "roadmap-requires-separate-preregistration",
+    "start": "Only after phase1 is skipped or its decision is archived; freeze a separate plan before collecting/training or viewing new match outcomes.",
+    "workPackages": [
+      {
+        "id": "NewData",
+        "hypothesis": "More varied fresh experience and better-covered teachers help more than replaying the old corpus.",
+        "design": "Control old data vs old+new data, same training objective and deployment search. Plane KataGo labels; curved boards use only a separately validated topology-correct teacher. Split by origin game including every fork. Pilot and freeze exact budgets before full generation."
+      },
+      {
+        "id": "CompletedQ",
+        "hypothesis": "Training on a completed-Q all-legal policy avoids treating every unexplored or eliminated root action as zero.",
+        "design": "On exactly the same stored roots and search traces, compare current finalist-only targets vs completed-Q targets with mixed value and declared Q transform. Freeze candidate extraction, visits and model. Separate action recommendation from training target. Reject any claim that imputation discovers unsearched tactical wins."
+      },
+      {
+        "id": "GumbelSampling",
+        "hypothesis": "Sampling without replacement during self-play gives low-prior moves training exposure.",
+        "design": "After target semantics are validated, compare deterministic top8 vs Gumbel top8 at identical64-visit generation budget; use the same completed-Q target and training recipe. Keep evaluation noise0 and deployment candidate count8. Measure training exposure and final deterministic top8 recall."
+      }
+    ],
+    "registrationMustSpecify": [
+      "Fixed deployed baseline for the round, teacher identity/strength/provenance, source/model hashes",
+      "Pilot limit and measured cost, total game/root/teacher-query/training-step ceilings",
+      "Playout-cap probabilities/budgets, branching procedure, old/new mixture and data splits",
+      "Complete mixed-value/rescale formula, zero-visit behaviour, legality masking and proof overrides",
+      "Separate training, development, independent and bootstrap seeds not used by prior rounds",
+      "One-factor contrasts, max candidate count, selection rule and independent stop rule"
+    ],
+    "deferred": [
+      "Reply-prediction auxiliary head",
+      "Group-level representation or additional pooling",
+      "Uncertainty head and variance-scaled search"
+    ],
+    "nonGoals": [
+      "Repeat failed root-count/Q sweeps without new evidence",
+      "Model-size increase",
+      "Change game-rule adjacency",
+      "Train on previous independent games or the reported L6 fixture"
+    ]
+  },
+  "matches": {
+    "openingMoves": 4,
+    "colourSwappedPairs": true,
+    "komi": 6.5,
+    "moveCap": "6*N",
+    "cappedGames": "Retain in evaluation; replay and score actual Game position; report caps per arm",
+    "score": "Actual Game area score; draw half point",
+    "audit": "Replay every move, verify legality, actors, topology, scores and exact search budget; no outcome-dependent exclusions",
+    "primary": "64 visits per move on all nine boards",
+    "secondary": "Selected model equal-time paired development benchmark; calibrate fixed time budget using baseline alone before candidate timing. Freeze the procedure and fresh seeds before running; no outcome-based budget changes."
+  },
+  "latency": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate <= max(1.10*baseline, baseline+2ms)"
+    },
+    "fixture": "Freeze27 ordinary roots from first-replica development Control games at N/4,N/2,3N/4 and reported/pass/proof stress roots before timing.",
+    "backends": [
+      "actual WASM CPU Worker",
+      "actual WebGPU Worker"
+    ],
+    "condition": "Alternate baseline/candidate, quiet environment, include restore/search/yields and exclude diagnostic logs.",
+    "mobile": "If no real mobile measurement exists, explicitly report PC-only evidence; do not claim phone latency."
+  },
+  "deliverables": [
+    "Frozen plan and source hashes, coverage audit, implementation correctness report",
+    "Four complete training logs/checkpoints including negative runs, common selection metrics",
+    "Development games, at most one independent result, paired CI and per-board breakdown",
+    "Export parity, latency/equal-time evidence with environment, replay audit, archive manifest and final decision"
+  ],
+  "permissions": "This change records the plan only. No experiment execution, production asset replacement, commit, push or deployment in this planning task."
+}

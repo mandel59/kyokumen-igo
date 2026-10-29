@@ -1,0 +1,1 @@
+{"passed":true,"games":24,"rows":1648,"trainingRows":1224,"validationRows":424,"totalTeacherVisits":843776}

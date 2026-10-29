@@ -1,0 +1,54 @@
+2026-10-28 23:56:36+0900: Running with following config:
+conservativePass = true
+forDeterministicTesting = true
+ignorePreRootHistory = false
+logToStderr = true
+maxVisits = 512
+nnCacheSizePowerOfTwo = 20
+nnMaxBatchSize = 16
+nnMutexPoolSizePowerOfTwo = 16
+nnXLen = 11
+nnYLen = 11
+numAnalysisThreads = 8
+numSearchThreads = 1
+preventCleanupPhase = true
+reportAnalysisWinratesAs = SIDETOMOVE
+rootSymmetryPruning = false
+useEvalCache = false
+wideRootNoise = 0.0
+
+2026-10-28 23:56:36+0900: Analysis Engine starting...
+2026-10-28 23:56:36+0900: KataGo v1.18.1
+2026-10-28 23:56:36+0900: nnRandSeed0 = 11026783282439710922
+2026-10-28 23:56:36+0900: After dedups: nnModelFile0 = C:\Users\mande\ws\kyokumen-igo\tools\ai-tuner\target\katago-distillation-20261027\kata1-b10c128-s1141046784-d204142634.txt.gz useFP16 auto
+2026-10-28 23:56:36+0900: Initializing neural net buffer to be size 19 * 19 allowing smaller boards
+2026-10-28 23:56:37+0900: Found OpenCL Platform 0: NVIDIA CUDA (NVIDIA Corporation) (OpenCL 3.0 CUDA 13.5.38)
+2026-10-28 23:56:37+0900: Found 1 device(s) on platform 0 with type CPU or GPU or Accelerator
+2026-10-28 23:56:37+0900: Found OpenCL Device 0: NVIDIA GeForce RTX 5060 Ti (NVIDIA Corporation) (score 11000300)
+2026-10-28 23:56:37+0900: Creating context for OpenCL Platform: NVIDIA CUDA (NVIDIA Corporation) (OpenCL 3.0 CUDA 13.5.38)
+2026-10-28 23:56:38+0900: Using OpenCL Device 0: NVIDIA GeForce RTX 5060 Ti (NVIDIA Corporation) OpenCL 3.0 CUDA (Extensions: cl_khr_global_int32_base_atomics cl_khr_global_int32_extended_atomics cl_khr_local_int32_base_atomics cl_khr_local_int32_extended_atomics cl_khr_fp64 cl_khr_3d_image_writes cl_khr_byte_addressable_store cl_khr_icd cl_khr_gl_sharing cl_nv_compiler_options cl_nv_device_attribute_query cl_nv_pragma_unroll cl_nv_d3d10_sharing cl_khr_d3d10_sharing cl_nv_d3d11_sharing cl_nv_copy_opts cl_nv_create_buffer cl_khr_int64_base_atomics cl_khr_int64_extended_atomics cl_khr_device_uuid cl_khr_pci_bus_info cl_khr_external_semaphore cl_khr_external_memory cl_khr_external_semaphore_win32 cl_khr_external_memory_win32 cl_khr_semaphore)
+2026-10-28 23:56:38+0900: Loaded tuning parameters from: C:\Users\mande\ws\kyokumen-igo\tools\ai-tuner\target\katago-distillation-20261027\engine/KataGoData/opencltuning/tune13_gpuNVIDIAGeForceRTX5060Ti_x19_y19_c128_mv8.txt
+2026-10-28 23:56:38+0900: OpenCL backend thread 0: Model version 8
+2026-10-28 23:56:38+0900: OpenCL backend thread 0: Model name: b10c128-s1141046784-d204142634 (convnet, 2994503 params)
+2026-10-28 23:56:38+0900: OpenCL backend thread 0: FP16Storage true FP16Compute false FP16TensorCores true FP16TensorCoresFor1x1 true
+2026-10-28 23:56:38+0900: --------------
+2026-10-28 23:56:38+0900: WARNING: Config had unused keys! You may have a typo, an option you specified is being unused from tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+2026-10-28 23:56:38+0900: WARNING: Unused key 'nnXLen' in tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+2026-10-28 23:56:38+0900: WARNING: Unused key 'nnYLen' in tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+2026-10-28 23:56:38+0900: --------------
+--------------
+WARNING: Config had unused keys! You may have a typo, an option you specified is being unused from tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+WARNING: Unused key 'nnXLen' in tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+WARNING: Unused key 'nnYLen' in tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+--------------
+2026-10-28 23:56:38+0900: Loaded config tools/ai-gnn/target/fresh-data-study-20261028/analysis.cfg and/or command-line and query overrides
+2026-10-28 23:56:38+0900: Loaded model C:\Users\mande\ws\kyokumen-igo\tools\ai-tuner\target\katago-distillation-20261027\kata1-b10c128-s1141046784-d204142634.txt.gz
+2026-10-28 23:56:38+0900: Config override: forDeterministicTesting = true
+2026-10-28 23:56:38+0900: Analyzing up to 8 positions at a time in parallel
+2026-10-28 23:56:38+0900: Started, ready to begin handling requests
+2026-10-29 00:02:51+0900: C:\Users\mande\ws\kyokumen-igo\tools\ai-tuner\target\katago-distillation-20261027\kata1-b10c128-s1141046784-d204142634.txt.gz
+2026-10-29 00:02:51+0900: NN rows: 376626
+2026-10-29 00:02:51+0900: NN batches: 274506
+2026-10-29 00:02:51+0900: NN avg batch size: 1.37201
+2026-10-29 00:02:51+0900: GPU -1 finishing, processed 376626 rows 274506 batches
+2026-10-29 00:02:52+0900: All cleaned up, quitting

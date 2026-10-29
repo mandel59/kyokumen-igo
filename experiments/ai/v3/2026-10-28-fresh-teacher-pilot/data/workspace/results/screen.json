@@ -1,0 +1,29 @@
+{
+  "games": 12,
+  "scoreRate": 1,
+  "boards": [
+    {
+      "size": 7,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    },
+    {
+      "size": 9,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    },
+    {
+      "size": 11,
+      "games": 4,
+      "teacherScore": 4,
+      "scoreRate": 1
+    }
+  ],
+  "passes": true,
+  "capped": 0,
+  "teacherQueries": 1262,
+  "baselineVisits": 64,
+  "teacherVisits": 512
+}

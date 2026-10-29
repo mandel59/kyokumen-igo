@@ -6,6 +6,16 @@ import {createV3Inference,adjacencyFor} from './ai-v3-inference.js';
 export const V3_DEFAULT_SIMULATIONS=64;
 
 export async function createV3AI(options={}){
+ if(options.discoverModels!==false){
+  const manifestURL=new URL(options.manifestURL??new URL('./models/v3/manifest.json',import.meta.url),import.meta.url);
+  let manifest=options.manifest;
+  if(!manifest){const response=await fetch(manifestURL,{cache:'no-cache'});if(!response.ok)throw new Error('v3 model manifest HTTP '+response.status);manifest=await response.json();}
+  options={...options,manifestURL,manifest,discoverModels:false};
+  if(manifest.modelRoutes){
+   const {createV3ModelRouter}=await import('./ai-v3-routing.js');
+   return createV3ModelRouter(options,createV3AI);
+  }
+ }
  const search=await createV3Search(options);
  const adjacencies=new Map();
  function adjacencyForPosition(position){

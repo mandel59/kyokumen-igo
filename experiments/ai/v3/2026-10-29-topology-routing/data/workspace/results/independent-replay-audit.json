@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "phase": "independent",
+  "games": 432,
+  "turns": 42031,
+  "capped": 0,
+  "allMovesAndScoresReplayed": true,
+  "allActorsAndSeedsVerified": true,
+  "rootBudgetCountersVerified": true,
+  "childVisitAccounting": "Exact proven-root backups may bypass child edges",
+  "productionUnchanged": true,
+  "rows": [
+    {
+      "file": "independent-Routed-r0-plane11.json",
+      "id": "Routed-r0",
+      "board": "plane11",
+      "games": 48,
+      "turns": 6972
+    },
+    {
+      "file": "independent-Routed-r0-plane7.json",
+      "id": "Routed-r0",
+      "board": "plane7",
+      "games": 48,
+      "turns": 2634
+    },
+    {
+      "file": "independent-Routed-r0-plane9.json",
+      "id": "Routed-r0",
+      "board": "plane9",
+      "games": 48,
+      "turns": 4517
+    },
+    {
+      "file": "independent-Routed-r0-sphere3.json",
+      "id": "Routed-r0",
+      "board": "sphere3",
+      "games": 48,
+      "turns": 2874
+    },
+    {
+      "file": "independent-Routed-r0-sphere4.json",
+      "id": "Routed-r0",
+      "board": "sphere4",
+      "games": 48,
+      "turns": 4877
+    },
+    {
+      "file": "independent-Routed-r0-sphere5.json",
+      "id": "Routed-r0",
+      "board": "sphere5",
+      "games": 48,
+      "turns": 7358
+    },
+    {
+      "file": "independent-Routed-r0-torus11.json",
+      "id": "Routed-r0",
+      "board": "torus11",
+      "games": 48,
+      "turns": 5886
+    },
+    {
+      "file": "independent-Routed-r0-torus7.json",
+      "id": "Routed-r0",
+      "board": "torus7",
+      "games": 48,
+      "turns": 2750
+    },
+    {
+      "file": "independent-Routed-r0-torus9.json",
+      "id": "Routed-r0",
+      "board": "torus9",
+      "games": 48,
+      "turns": 4163
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "command": "node",
+  "args": [
+    "tools/ai-gnn/topology-routing-audit.mjs",
+    "development"
+  ],
+  "started": "2026-10-28T17:03:45.129Z",
+  "toolHashes": {
+    "tools/ai-gnn/train.py": "22c7ae8d637761fb03e8659be823f698e01fcea0fe53d7b8bdf79aa0e410d2f8",
+    "tools/ai-gnn/model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "tools/ai-gnn/node-inference.mjs": "1b621ac2a01bb2493f75239add7ace0623536c13945fcffb17fbbb43a0ad0043",
+    "tools/ai-gnn/match.mjs": "9a180dc37b3f40fe5ecedc1e83efd2dc2edf050d59d8c39df84c24bd04bb980e",
+    "tools/ai-gnn/selfplay.mjs": "d60c5c70c3c6cce10bc0cc9c2d4c99689a2703f90e448dce86d7d438eaf88da3",
+    "tools/ai-gnn/reanalyze.mjs": "243976d461c4275a85860dbd9737cbbc2d7d3a0a0a1efea30a1230fbdb133020",
+    "dist/ai-v3-search.js": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+    "dist/ai-v3-inference.js": "a627744a29795c74eca981a7f36ab457fde78b88e62854d67e1e4a6c13da66b2",
+    "dist/ai-v3.js": "599cceff3fb53269a7f934e929eb9ad6b37a16c45367a5b3533c19e277a2ce42",
+    "dist/ai-v3.wasm": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  },
+  "finished": "2026-10-28T17:03:45.448Z",
+  "elapsedSeconds": 0.319,
+  "exitCode": 0
+}

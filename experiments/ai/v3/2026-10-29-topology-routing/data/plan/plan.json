@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-topology-routing-20261029",
+  "date": "2026-10-29",
+  "status": "registered-before-routing-implementation-and-new-matches",
+  "workspace": "tools/ai-gnn/target/topology-routing-study-20261029",
+  "objective": "Test one fixed topology-based composition of two previously frozen models on fresh games. Shared-model studies showed complementary domain results; prior scores are selection evidence only, never a combined match score.",
+  "baseline": {
+    "model": "dist/models/v3/model.onnx",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "visits": 64,
+    "fpu": 1,
+    "rootCandidates": 8
+  },
+  "models": {
+    "plane": {
+      "archive": "experiments/ai/v3/2026-10-28-fresh-data-study",
+      "prefix": "data/workspace/NewData-r0-model/",
+      "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "weightsSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e"
+    },
+    "curves": {
+      "archive": "experiments/ai/v3/2026-10-29-curve-retention",
+      "prefix": "data/workspace/CompletedQ-r0-model/",
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "weightsSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    }
+  },
+  "routing": "plane7/9/11 always use plane model; sphere3/4/5 and torus7/9/11 always use curves model. No state-, opponent-, score- or result-dependent selection. No changes to either checkpoint. No alternative combinations after new outcomes.",
+  "runtime": {
+    "inferenceParametersPerMove": 120905,
+    "modelsStored": 2,
+    "activePlayersMax": 1,
+    "modelSwitch": "Cancel and wait for active search before disposing it and initializing the next model. Preserve64 visits, FPU1,legal/proof/pass behaviour and cancellation.",
+    "discovery": "Optional modelRoutes in the ordinary v3 manifest; standard single-model manifests retain existing behaviour.",
+    "integrity": "Pin expected child-model SHA in the route descriptor; same-origin subdirectory routes only; validate ONNX/FP32 checksums.",
+    "deployment": "No production model replacement before all gates. Runtime routing is inert for the existing manifest. No hosted deployment or push."
+  },
+  "data": {
+    "newTrainingRuns": 0,
+    "newTeacherQueries": 0,
+    "newSelfplayGames": 0,
+    "previousScores": "Do not sum the old plane and curve scores as evidence. Use only newly registered games for adoption."
+  },
+  "boards": [
+    "sphere3",
+    "sphere4",
+    "sphere5",
+    "torus7",
+    "torus9",
+    "torus11",
+    "plane7",
+    "plane9",
+    "plane11"
+  ],
+  "seeds": {
+    "development": 2026102921,
+    "independent": 2026102922,
+    "bootstrap": 2026102923
+  },
+  "development": {
+    "candidate": "Routed-r0",
+    "pairsPerBoard": 4,
+    "games": 72,
+    "minScore": 40,
+    "minPerBoardScore": 3,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5
+  },
+  "independent": {
+    "candidateMax": 1,
+    "pairsPerBoard": 24,
+    "games": 432,
+    "minScoreRate": 0.55,
+    "minPaired95LowerExclusive": 0.5,
+    "minPerBoardScore": 19,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "bootstrapIterations": 10000
+  },
+  "matches": {
+    "visits": 64,
+    "rootCandidates": 8,
+    "fpu": 1,
+    "komi": 6.5,
+    "openingMoves": 4,
+    "moveCap": "6*N",
+    "concurrency": 3,
+    "seed": "FNV1a32(phaseSeed|board|pair|ply); shared legal opening and per-ply seed across colour-swapped pair",
+    "caps": "Retain and area-score actual Game state; no outcome-dependent replacements."
+  },
+  "correctness": [
+    "Routing by kind only and exact child hash",
+    "Never more than1 initialized active player; cancel/initialization/switch/disposal races",
+    "Legacy single-model regression and default64 visits",
+    "Actual CPU/WebGPU routed-vs-direct equivalence on all9 boards",
+    "Actual application Worker initializes and switches models without v2 fallback",
+    "Replay every game, actor, seed,source child hash, root visit count and score"
+  ],
+  "latency": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate<=max(1.10*baseline,baseline+2ms)"
+    },
+    "coldAndSwitch": {
+      "repeats": 5,
+      "p95Limit": "candidate<=max(1.5*baseline,baseline+250ms)",
+      "record": "Initialize/default curve model then first plane turn; separately record curve->plane->curve switching and total model asset bytes."
+    },
+    "fixtures": "27 ordinary roots from first candidate development pair0/colour1 at N/4,N/2,3N/4, clamped to final nonterminal saved ply;3 predefined public stress roots. Freeze concrete files before timing.",
+    "condition": "No match/training jobs during timing; alternating sides; real WASM CPU and WebGPU Workers.",
+    "equalTime": "Baseline-only calibration on frozen roots establishes per-board budgets before candidate fixed-time root comparisons. Diagnostic only; fixed-time playing-strength matches are not part of this round.",
+    "mobile": "No phone performance claim without real phone measurement."
+  },
+  "ceilings": {
+    "candidateBundles": 1,
+    "trainingRuns": 0,
+    "developmentGames": 72,
+    "independentGames": 432,
+    "totalGamesMax": 504
+  },
+  "stopping": "Failure closes this routing round. Do not substitute another plane/curve model or add more games after independent failure. Archive all evidence. Local integration only if every correctness, strength, ordinary/stress/cold timing gate passes; no push/hosted deployment."
+}

@@ -1,0 +1,568 @@
+{
+  "passed": true,
+  "warmAndStressPass": true,
+  "coldAndSwitchPass": true,
+  "warmSummary": [
+    {
+      "backend": "wasm",
+      "a": {
+        "samples": 189,
+        "p95Ms": 173,
+        "meanMs": 154.60846561098856,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 189,
+        "p95Ms": 168.19999998807907,
+        "meanMs": 153.85714285556602,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "p95Ratio": 1.028537455483122,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 156.19999998807907,
+            "meanMs": 151.46666667007264,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 157.39999997615814,
+            "meanMs": 151.72380952040353,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9923761118916083
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157.5,
+            "meanMs": 153.30952381236213,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 157.89999997615814,
+            "meanMs": 152.4904761853672,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9974667512589073
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 203.9000000357628,
+            "meanMs": 164.6142857159887,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 200.5,
+            "meanMs": 162.04761904478073,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0169576061634054
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 169.9000000357628,
+            "meanMs": 154.90000000737962,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 162.5999999642372,
+            "meanMs": 153.09047618650254,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0448954494042506
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 163.5999999642372,
+            "meanMs": 154.67619048129944,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 164.89999997615814,
+            "meanMs": 153.12857142800377,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9921164341291153
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 157.5,
+            "meanMs": 152.93809523752756,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 170.19999998807907,
+            "meanMs": 154.41428571371804,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9253819037075877
+        },
+        {
+          "board": "plane7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 155,
+            "meanMs": 150.91904761393866,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 160.0999999642372,
+            "meanMs": 151.1285714336804,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9681449096478674
+        },
+        {
+          "board": "plane9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 168.60000002384186,
+            "meanMs": 153.69523809637343,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 163.69999998807907,
+            "meanMs": 153.32857143027442,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0299328041302358
+        },
+        {
+          "board": "plane11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 163.5,
+            "meanMs": 154.95714286395483,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 160.60000002384186,
+            "meanMs": 153.36190475736345,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0180572850294372
+        }
+      ],
+      "stress": [
+        {
+          "phase": "stress-reported",
+          "a": {
+            "samples": 31,
+            "p95Ms": 197.39999997615814,
+            "meanMs": 170.34838709715874,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 219.30000001192093,
+            "meanMs": 169.39354838286675,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "limitMs": 241.23000001311303,
+          "passes": true
+        },
+        {
+          "phase": "stress-proof-pass",
+          "a": {
+            "samples": 31,
+            "p95Ms": 3.800000011920929,
+            "meanMs": 2.9290322565263316,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 4,
+            "meanMs": 3.0064516144414104,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "limitMs": 6,
+          "passes": true
+        },
+        {
+          "phase": "stress-certified-loss",
+          "a": {
+            "samples": 31,
+            "p95Ms": 14.100000023841858,
+            "meanMs": 12.958064515744486,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 14.599999964237213,
+            "meanMs": 13.441935483486422,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "limitMs": 16.599999964237213,
+          "passes": true
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "a": {
+        "samples": 189,
+        "p95Ms": 41.299999952316284,
+        "meanMs": 33.3677248683556,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "b": {
+        "samples": 189,
+        "p95Ms": 41,
+        "meanMs": 33.54973544803246,
+        "meanBatches": 9,
+        "maxBatches": 9
+      },
+      "p95Ratio": 1.0073170720077143,
+      "boards": [
+        {
+          "board": "sphere3",
+          "a": {
+            "samples": 21,
+            "p95Ms": 34.10000002384186,
+            "meanMs": 31.361904757363455,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 37.200000047683716,
+            "meanMs": 31.523809523809526,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9166666661325749
+        },
+        {
+          "board": "sphere4",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38.60000002384186,
+            "meanMs": 32.98571429366157,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 38.299999952316284,
+            "meanMs": 33.51904761223566,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0078329000495843
+        },
+        {
+          "board": "sphere5",
+          "a": {
+            "samples": 21,
+            "p95Ms": 44.89999997615814,
+            "meanMs": 39.733333326521375,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 44.69999998807907,
+            "meanMs": 39.342857145127795,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0044742726651545
+        },
+        {
+          "board": "torus7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 38,
+            "meanMs": 33.55714285373688,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 37,
+            "meanMs": 33.74285714683079,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.027027027027027
+        },
+        {
+          "board": "torus9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37,
+            "meanMs": 31.547619050457364,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36.19999998807907,
+            "meanMs": 31.371428569157917,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.022099447850397
+        },
+        {
+          "board": "torus11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.5,
+            "meanMs": 34.1714285725639,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39,
+            "meanMs": 34.59523809239978,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.9615384615384616
+        },
+        {
+          "board": "plane7",
+          "a": {
+            "samples": 21,
+            "p95Ms": 37.10000002384186,
+            "meanMs": 31.00952381463278,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 35.89999997615814,
+            "meanMs": 32.19999999659402,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.0334261851944473
+        },
+        {
+          "board": "plane9",
+          "a": {
+            "samples": 21,
+            "p95Ms": 33.89999997615814,
+            "meanMs": 31.97619047335216,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 39,
+            "meanMs": 32.876190477893466,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 0.8692307686194395
+        },
+        {
+          "board": "plane11",
+          "a": {
+            "samples": 21,
+            "p95Ms": 39.19999998807907,
+            "meanMs": 33.96666667291096,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 21,
+            "p95Ms": 36,
+            "meanMs": 32.77619046824319,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "p95Ratio": 1.088888888557752
+        }
+      ],
+      "stress": [
+        {
+          "phase": "stress-reported",
+          "a": {
+            "samples": 31,
+            "p95Ms": 37.09999996423721,
+            "meanMs": 32.16129032065791,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 36.200000047683716,
+            "meanMs": 31.86774193856024,
+            "meanBatches": 9,
+            "maxBatches": 9
+          },
+          "limitMs": 39.82000005245209,
+          "passes": true
+        },
+        {
+          "phase": "stress-proof-pass",
+          "a": {
+            "samples": 31,
+            "p95Ms": 5,
+            "meanMs": 3.561290325657014,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 4,
+            "meanMs": 3.2064516082886727,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "limitMs": 6,
+          "passes": true
+        },
+        {
+          "phase": "stress-certified-loss",
+          "a": {
+            "samples": 31,
+            "p95Ms": 5.099999964237213,
+            "meanMs": 4.190322576030608,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "b": {
+            "samples": 31,
+            "p95Ms": 5.199999988079071,
+            "meanMs": 4.067741942021154,
+            "meanBatches": 1,
+            "maxBatches": 1
+          },
+          "limitMs": 7.199999988079071,
+          "passes": true
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "coldSummary": [
+    {
+      "backend": "wasm",
+      "metrics": [
+        {
+          "name": "initial-default-plus-first-plane",
+          "aP95Ms": 593.7999999523163,
+          "bP95Ms": 525.3000000119209,
+          "limitMs": 787.9500000178814,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve",
+          "aP95Ms": 177.10000002384186,
+          "bP95Ms": 161.89999997615814,
+          "limitMs": 411.89999997615814,
+          "passes": true
+        },
+        {
+          "name": "curve-to-plane",
+          "aP95Ms": 167.10000002384186,
+          "bP95Ms": 156.69999998807907,
+          "limitMs": 406.69999998807907,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve-again",
+          "aP95Ms": 165.29999995231628,
+          "bP95Ms": 153.5,
+          "limitMs": 403.5,
+          "passes": true
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "metrics": [
+        {
+          "name": "initial-default-plus-first-plane",
+          "aP95Ms": 323.5,
+          "bP95Ms": 237.69999998807907,
+          "limitMs": 487.69999998807907,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve",
+          "aP95Ms": 91.60000002384186,
+          "bP95Ms": 33.09999996423721,
+          "limitMs": 283.0999999642372,
+          "passes": true
+        },
+        {
+          "name": "curve-to-plane",
+          "aP95Ms": 89.19999998807907,
+          "bP95Ms": 37,
+          "limitMs": 287,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve-again",
+          "aP95Ms": 91.29999995231628,
+          "bP95Ms": 35.5,
+          "limitMs": 285.5,
+          "passes": true
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "noConcurrentMatchesOrTraining": true,
+  "perMoveParameters": 120905,
+  "storedModels": 2,
+  "totalNNBytes": 1972042,
+  "baselineNNBytes": 986021,
+  "equalTimeDiagnostic": "results/equal-time.json",
+  "mobileMeasured": false
+}

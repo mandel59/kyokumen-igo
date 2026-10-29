@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28T14:47:59.059Z",
+  "adopted": false,
+  "reason": "Both Soft4 replicas select epoch0 and fail the registered common-validation improvement gate.",
+  "trainingRuns": 4,
+  "epochs": 32,
+  "developmentGames": 0,
+  "independentGames": 0,
+  "independentConsumed": false,
+  "productionUpdated": false,
+  "results": [
+    {
+      "id": "Control-r0",
+      "arm": "Control",
+      "replica": 0,
+      "seed": 2026102810,
+      "eligible": true,
+      "selectedEpoch": 8,
+      "initialLoss": 3.1122934818267822,
+      "selectedLoss": 3.094315767288208,
+      "relativeGain": 0.00577635581077085,
+      "perBoardRatios": {
+        "board/sphere3": 0.9977564209891839,
+        "board/sphere4": 0.9922896174657488,
+        "board/sphere5": 0.9912114578622845,
+        "board/torus7": 0.9944076148326172,
+        "board/torus9": 0.9966791527188343,
+        "board/torus11": 0.9989350013264717,
+        "board/plane7": 0.9892344707801496,
+        "board/plane9": 0.9910729504278741,
+        "board/plane11": 0.9951620001519372
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 125387,
+      "exportParityMaxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      },
+      "sha256": "03e6dfad3f6661dd41b16c4472d761664bcd8d2abba5dd8868cf625e87c0155e"
+    },
+    {
+      "id": "Soft4-r0",
+      "arm": "Soft4",
+      "replica": 0,
+      "seed": 2026102810,
+      "eligible": false,
+      "selectedEpoch": 0,
+      "initialLoss": 3.1122934818267822,
+      "selectedLoss": 3.1122934818267822,
+      "relativeGain": 0,
+      "perBoardRatios": {
+        "board/sphere3": 1,
+        "board/sphere4": 1,
+        "board/sphere5": 1,
+        "board/torus7": 1,
+        "board/torus9": 1,
+        "board/torus11": 1,
+        "board/plane7": 1,
+        "board/plane9": 1,
+        "board/plane11": 1
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 125387,
+      "exportParityMaxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      },
+      "sha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "id": "Control-r1",
+      "arm": "Control",
+      "replica": 1,
+      "seed": 2026102811,
+      "eligible": true,
+      "selectedEpoch": 8,
+      "initialLoss": 3.1122934818267822,
+      "selectedLoss": 3.0918710231781006,
+      "relativeGain": 0.006561867885510164,
+      "perBoardRatios": {
+        "board/sphere3": 0.9951669281447311,
+        "board/sphere4": 0.988274779586924,
+        "board/sphere5": 0.987916546005967,
+        "board/torus7": 0.993775043940112,
+        "board/torus9": 0.9953938862731839,
+        "board/torus11": 1.0001455616127208,
+        "board/plane7": 0.9908916249398931,
+        "board/plane9": 0.9919876649728766,
+        "board/plane11": 0.9953813328138571
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 125387,
+      "exportParityMaxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      },
+      "sha256": "d41af45cc362382e4b0a106b73ee957de4758f1ff53af038e157e28b0823e9ba"
+    },
+    {
+      "id": "Soft4-r1",
+      "arm": "Soft4",
+      "replica": 1,
+      "seed": 2026102811,
+      "eligible": false,
+      "selectedEpoch": 0,
+      "initialLoss": 3.1122934818267822,
+      "selectedLoss": 3.1122934818267822,
+      "relativeGain": 0,
+      "perBoardRatios": {
+        "board/sphere3": 1,
+        "board/sphere4": 1,
+        "board/sphere5": 1,
+        "board/torus7": 1,
+        "board/torus9": 1,
+        "board/torus11": 1,
+        "board/plane7": 1,
+        "board/plane9": 1,
+        "board/plane11": 1
+      },
+      "inferenceParameters": 120905,
+      "trainingParameters": 125387,
+      "exportParityMaxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      },
+      "sha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    }
+  ]
+}

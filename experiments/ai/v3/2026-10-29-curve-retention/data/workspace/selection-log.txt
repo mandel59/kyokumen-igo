@@ -1,0 +1,1 @@
+{"selected":null,"candidates":[{"id":"CompletedQ-r0","score":42,"gates":{"overall":true,"everyBoard":true,"plane":false,"curves":true,"higherThanControl":true,"curveRetention":true}},{"id":"CurveGuard-r0","score":37,"gates":{"overall":false,"everyBoard":false,"plane":true,"curves":false,"higherThanControl":false,"curveRetention":false}}]}

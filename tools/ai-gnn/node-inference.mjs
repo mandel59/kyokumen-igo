@@ -1,11 +1,21 @@
 import * as ort from 'onnxruntime-node';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {resolve,join} from 'node:path';
+import {resolve,join,dirname} from 'node:path';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+import {v3ModelRoute} from '../../dist/ai-v3-routing.js';
 import {validateManifest} from '../../dist/ai-v3-inference.js';
-export async function createNodeInference(directory){
+export async function createNodeInference(directory,{kind,ignoreRouting=false}={}){
  directory=resolve(directory);const manifest=JSON.parse(readFileSync(join(directory,'manifest.json'),'utf8'));
- validateManifest(manifest);const bytes=readFileSync(join(directory,manifest.model));
+ validateManifest(manifest);
+ if(manifest.modelRoutes&&!ignoreRouting){
+  if(!kind)throw new Error('Routed model requires an explicit board kind');
+  const route=v3ModelRoute(pathToFileURL(join(directory,'manifest.json')),manifest,kind);
+  const inference=await createNodeInference(dirname(fileURLToPath(route.manifestURL)),{ignoreRouting:true});
+  if(inference.manifest.sha256!==route.expectedModelSha256){await inference.dispose();throw new Error('Routed child checksum mismatch');}
+  return inference;
+ }
+ const bytes=readFileSync(join(directory,manifest.model));
  if(createHash('sha256').update(bytes).digest('hex')!==manifest.sha256)throw new Error('v3 model checksum mismatch');
  const session=await ort.InferenceSession.create(bytes,{executionProviders:['cpu'],intraOpNumThreads:4});
  return {manifest,async evaluate(request,adjacency,{auxiliary=false}={}){

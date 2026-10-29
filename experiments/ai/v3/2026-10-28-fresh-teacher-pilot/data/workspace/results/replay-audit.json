@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "games": 12,
+  "turns": 1262,
+  "allMovesReplayed": true,
+  "scoreAndActorOrientationVerified": true,
+  "allPilotGamesExcludedFromLearning": true,
+  "visitAccounting": "Exact terminal/proven backups can occur at root without traversing a child; child visits need not sum to simulations-1. Search completion counter and per-turn64-visit assertions are authoritative."
+}

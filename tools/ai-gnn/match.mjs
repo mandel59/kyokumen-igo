@@ -6,7 +6,7 @@ import {aiPosition,AI_BOARDS} from '../../dist/ai-position.js';
 import {createWasmAI} from '../../dist/ai-wasm.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
-import {createNodeInference} from './node-inference.mjs';
+import {createTopologyNodeInference as createNodeInference} from './node-topology-inference.mjs';
 import {createTeacherInference} from './teacher-inference.mjs';
 import {createOfflineAI} from './offline-player.mjs';
 import {matchStatistics} from './match-statistics.mjs';
@@ -36,12 +36,12 @@ async function player(model,tactics,side){
    inference=teacher?await createTeacherInference({directory:teacher,device:arg('--'+side+'-device','cuda')}):await createNodeInference(model);
    if(!teacher){inference.backend='onnx-cpu';inference.batchSize=8;}return inference;
   }});
-  const config={model:inference.manifest.sha256,format:teacher?'offline-teacher-v1':'v3-onnx',backend:ai.backend,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
-  return {name:config.model+':offline:fpu='+fpu,config,choose:(position,seed)=>ai.chooseMove(position,{seed,maxSimulations:visits,diagnostics:arg('--diagnostics','false')==='true'}),dispose:()=>ai.dispose()};
+  const config={model:inference.manifest.sha256,bundleModel:inference.bundleManifest?.sha256??inference.manifest.sha256,modelRoutes:inference.bundleManifest?.modelRoutes??null,format:teacher?'offline-teacher-v1':'v3-onnx',backend:ai.backend,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
+  return {name:config.model+':offline:fpu='+fpu,config,async setKind(kind){await inference.setKind?.(kind);config.model=inference.manifest.sha256;},choose:(position,seed)=>ai.chooseMove(position,{seed,maxSimulations:visits,diagnostics:arg('--diagnostics','false')==='true'}),dispose:()=>ai.dispose()};
  }
  const search=await createV3Search({load:async()=>loaded}),inference=await createNodeInference(model);
- const config={model:inference.manifest.sha256,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
- return {name:inference.manifest.sha256+':tactics='+tactics+':fpu='+fpu,config,async choose(position,seed,adjacency){
+ const config={model:inference.manifest.sha256,bundleModel:inference.bundleManifest.sha256,modelRoutes:inference.bundleManifest.modelRoutes??null,tactics,fpu,visits,wasmSha256:createHash('sha256').update(loaded).digest('hex')};
+ return {name:inference.manifest.sha256+':tactics='+tactics+':fpu='+fpu,config,async setKind(kind){await inference.setKind(kind);config.model=inference.manifest.sha256;},async choose(position,seed,adjacency){
   search.start(position,{seed,tactics:tactics!=='none',fpu});let root,stalled=0;
   while(search.result().simulations<visits){
    const leaves=search.collect();if(!root&&leaves.count)root=leaves;
@@ -55,13 +55,14 @@ async function player(model,tactics,side){
 let state=seed>>>0||1;const random=()=>{state^=state<<13;state^=state>>>17;state^=state<<5;return state>>>0;};
 const a=await player(arg('--a','dist/models/v3'),arg('--a-tactics','safe'),'a');
 let b;try{b=await player(arg('--b','v2'),arg('--b-tactics','safe'),'b');}catch(error){await a.dispose();throw error;}
-const report={schemaVersion:1,playerMode,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:a.config,bConfig:b.config,
+const report={schemaVersion:1,playerMode,seed,pairsPerBoard:pairs,simulations,komi:6.5,openingMoves:4,a:a.name,b:b.name,aConfig:{...a.config},bConfig:{...b.config},
  condition:playerMode==='offline'?'Finite fixed visits, research-only native ONNX/Torch inference; separate per-player budgets/backends, no wall-time cutoff or speed claim.':'Fixed v3 simulations (certified losses stop early) vs v2 depth 4 or another v3; native CPU inference, not a browser equal-time strength estimate.',boards:[]};
 const output=arg('--output','tools/ai-gnn/target/match.json');
 try{
  for(const [kind,size]of AI_BOARDS){
   if(arg('--board','all')!=='all'&&arg('--board','all')!==kind+size)continue;
-  const topology=createTopology(kind,size),adjacency=adjacencyFor(topology),board={kind,size,games:[],pairScores:[]};report.boards.push(board);
+  await a.setKind?.(kind);await b.setKind?.(kind);
+  const topology=createTopology(kind,size),adjacency=adjacencyFor(topology),board={kind,size,aModel:a.config.model??a.name,bModel:b.config.model??b.name,games:[],pairScores:[]};report.boards.push(board);
   for(let pair=0;pair<pairs;pair++){
    const opening=new Game(topology,6.5),moves=[];
    for(let k=0;k<4;k++){

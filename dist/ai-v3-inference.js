@@ -28,13 +28,15 @@ async function loadRuntimeBinary(variant){
  return runtimeBinaries.get(variant);
 }
 export async function createV3Inference({
- manifestURL=new URL('./models/v3/manifest.json',import.meta.url),backend='auto',batchSize=8,accelerator=true,
+ manifestURL=new URL('./models/v3/manifest.json',import.meta.url),manifest:prefetchedManifest,expectedModelSha256,backend='auto',batchSize=8,accelerator=true,
  importRuntime=variant=>variant==='wasm'?import('./vendor/onnxruntime/ort.wasm.min.mjs'):import('./vendor/onnxruntime/ort.webgpu.min.mjs'),
 }={}) {
  if(!['auto','webgpu','wasm'].includes(backend)||![1,4,8].includes(batchSize))throw new Error('Invalid v3 inference options');
  manifestURL=new URL(manifestURL,import.meta.url);
- const response=await fetch(manifestURL,{cache:'no-cache'});if(!response.ok)throw new Error('v3 model manifest HTTP '+response.status);
- const manifest=await response.json();validateManifest(manifest);
+ let manifest=prefetchedManifest;
+ if(!manifest){const response=await fetch(manifestURL,{cache:'no-cache'});if(!response.ok)throw new Error('v3 model manifest HTTP '+response.status);manifest=await response.json();}
+ validateManifest(manifest);
+ if(expectedModelSha256&&manifest.sha256!==expectedModelSha256)throw new Error('v3 routed model checksum mismatch');
  let selected=backend==='auto'?(globalThis.navigator?.gpu?'webgpu':'wasm'):backend;
  if(accelerator&&selected==='webgpu'&&manifest.webgpu){
   let gpu;
@@ -53,7 +55,7 @@ export async function createV3Inference({
        if(Object.values(result).some(values=>!values.every(Number.isFinite)))throw new Error('Nonfinite v3 inference');return result;
       }catch(error){
        if(disposed)throw error;await gpu.dispose();
-       fallback=await createV3Inference({manifestURL,backend,batchSize,accelerator:false,importRuntime});
+       fallback=await createV3Inference({manifestURL,expectedModelSha256,backend,batchSize,accelerator:false,importRuntime});
        return fallback.evaluate(request,adjacency,options);
       }
      })();

@@ -1,0 +1,4 @@
+{
+  "failedAssumption": "Child visits always sum to simulations-1",
+  "resolved": "mcts.rs collect immediately backs up a proven root; these visits do not traverse children. Audit checks nonnegative child counts bounded by total budget and the per-turn completion counter. No game or search was changed."
+}

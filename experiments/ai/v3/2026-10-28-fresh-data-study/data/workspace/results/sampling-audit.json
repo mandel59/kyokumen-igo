@@ -1,0 +1,271 @@
+{
+  "passed": true,
+  "allBoardsEqualMass": true,
+  "sharedValidationWeights": true,
+  "reports": {
+    "Control": {
+      "train": {
+        "sphere3": {
+          "mass": 0.11111111111111123,
+          "freshMass": 0.0,
+          "positions": 374,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere4": {
+          "mass": 0.11111111111111137,
+          "freshMass": 0.0,
+          "positions": 603,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere5": {
+          "mass": 0.11111111111111119,
+          "freshMass": 0.0,
+          "positions": 953,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus7": {
+          "mass": 0.11111111111111144,
+          "freshMass": 0.0,
+          "positions": 344,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus9": {
+          "mass": 0.11111111111111123,
+          "freshMass": 0.0,
+          "positions": 518,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus11": {
+          "mass": 0.1111111111111113,
+          "freshMass": 0.0,
+          "positions": 742,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane7": {
+          "mass": 0.11111111111110968,
+          "freshMass": 0.0,
+          "positions": 1157,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane9": {
+          "mass": 0.11111111111111183,
+          "freshMass": 0.0,
+          "positions": 1804,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane11": {
+          "mass": 0.1111111111111076,
+          "freshMass": 0.0,
+          "positions": 2768,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        }
+      },
+      "validation": {
+        "sphere3": {
+          "mass": 0.11111111111111119,
+          "freshMass": 0.0,
+          "positions": 124,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere4": {
+          "mass": 0.11111111111111094,
+          "freshMass": 0.0,
+          "positions": 190,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere5": {
+          "mass": 0.1111111111111109,
+          "freshMass": 0.0,
+          "positions": 302,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus7": {
+          "mass": 0.11111111111111098,
+          "freshMass": 0.0,
+          "positions": 101,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus9": {
+          "mass": 0.11111111111111144,
+          "freshMass": 0.0,
+          "positions": 169,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus11": {
+          "mass": 0.1111111111111113,
+          "freshMass": 0.0,
+          "positions": 263,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane7": {
+          "mass": 0.11111111111111058,
+          "freshMass": 0.033333333333333263,
+          "positions": 476,
+          "freshPositions": 86,
+          "freshFraction": 0.3000000000000008
+        },
+        "plane9": {
+          "mass": 0.11111111111111141,
+          "freshMass": 0.03333333333333331,
+          "positions": 763,
+          "freshPositions": 140,
+          "freshFraction": 0.299999999999999
+        },
+        "plane11": {
+          "mass": 0.11111111111111138,
+          "freshMass": 0.03333333333333344,
+          "positions": 1156,
+          "freshPositions": 195,
+          "freshFraction": 0.3000000000000002
+        }
+      }
+    },
+    "NewData": {
+      "train": {
+        "sphere3": {
+          "mass": 0.11111111111111123,
+          "freshMass": 0.0,
+          "positions": 374,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere4": {
+          "mass": 0.11111111111111137,
+          "freshMass": 0.0,
+          "positions": 603,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere5": {
+          "mass": 0.11111111111111119,
+          "freshMass": 0.0,
+          "positions": 953,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus7": {
+          "mass": 0.11111111111111144,
+          "freshMass": 0.0,
+          "positions": 344,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus9": {
+          "mass": 0.11111111111111123,
+          "freshMass": 0.0,
+          "positions": 518,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus11": {
+          "mass": 0.1111111111111113,
+          "freshMass": 0.0,
+          "positions": 742,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane7": {
+          "mass": 0.11111111111111018,
+          "freshMass": 0.03333333333333342,
+          "positions": 1410,
+          "freshPositions": 253,
+          "freshFraction": 0.3000000000000033
+        },
+        "plane9": {
+          "mass": 0.11111111111111106,
+          "freshMass": 0.03333333333333341,
+          "positions": 2166,
+          "freshPositions": 362,
+          "freshFraction": 0.3000000000000008
+        },
+        "plane11": {
+          "mass": 0.1111111111111076,
+          "freshMass": 0.03333333333333343,
+          "positions": 3376,
+          "freshPositions": 608,
+          "freshFraction": 0.30000000000001037
+        }
+      },
+      "validation": {
+        "sphere3": {
+          "mass": 0.11111111111111119,
+          "freshMass": 0.0,
+          "positions": 124,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere4": {
+          "mass": 0.11111111111111094,
+          "freshMass": 0.0,
+          "positions": 190,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "sphere5": {
+          "mass": 0.1111111111111109,
+          "freshMass": 0.0,
+          "positions": 302,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus7": {
+          "mass": 0.11111111111111098,
+          "freshMass": 0.0,
+          "positions": 101,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus9": {
+          "mass": 0.11111111111111144,
+          "freshMass": 0.0,
+          "positions": 169,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "torus11": {
+          "mass": 0.1111111111111113,
+          "freshMass": 0.0,
+          "positions": 263,
+          "freshPositions": 0,
+          "freshFraction": 0.0
+        },
+        "plane7": {
+          "mass": 0.11111111111111058,
+          "freshMass": 0.033333333333333263,
+          "positions": 476,
+          "freshPositions": 86,
+          "freshFraction": 0.3000000000000008
+        },
+        "plane9": {
+          "mass": 0.11111111111111141,
+          "freshMass": 0.03333333333333331,
+          "positions": 763,
+          "freshPositions": 140,
+          "freshFraction": 0.299999999999999
+        },
+        "plane11": {
+          "mass": 0.11111111111111138,
+          "freshMass": 0.03333333333333344,
+          "positions": 1156,
+          "freshPositions": 195,
+          "freshFraction": 0.3000000000000002
+        }
+      }
+    }
+  }
+}

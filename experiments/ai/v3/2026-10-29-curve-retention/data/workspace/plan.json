@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-curve-retention-20261029",
+  "date": "2026-10-29",
+  "status": "registered-before-target-preparation-and-training",
+  "workspace": "tools/ai-gnn/target/curve-retention-study-20261029",
+  "objective": "Retain curved-board strength while keeping the fresh-plane learning that solved the reported L6 diagnostic. Isolate curve output retention from completed-Q policy targets.",
+  "baseline": {
+    "commit": "241f7cf",
+    "model": "dist/models/v3/model.onnx",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "weights": "dist/models/v3/weights.f32",
+    "weightsSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "parameters": 120905,
+    "visits": 64,
+    "fpu": 1,
+    "rootCandidates": 8,
+    "rootQScale": 0.4
+  },
+  "priorEvidence": {
+    "study": "experiments/ai/v3/2026-10-28-fresh-data-study/README.md",
+    "newData": {
+      "wins": 41,
+      "losses": 31,
+      "planeScore": "18/24",
+      "curves": "23/48",
+      "torus7": "2/8",
+      "adopted": false
+    },
+    "interpretation": "Small development sample, not proof of significant curve regression. Retention is a hypothesis. Previous games are development knowledge, never new independent evidence."
+  },
+  "data": {
+    "legacy": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher.jsonl.gz",
+    "legacySha256": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+    "fresh": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/fresh-all.jsonl.gz",
+    "freshSha256": "5544c9c967be52aeb33ed861199acb5bc6c3abec609998415fec837f747c39ab",
+    "split": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/split.json.gz",
+    "splitSha256": "99afd67030e6262bc39bbf1cf0c1c99ed2f86ece2d6409597e399efcf947558c",
+    "checkpoint": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/baseline/weights.pt",
+    "collectionGames": 0,
+    "teacherQueries": 0,
+    "trainPositions": 10486,
+    "validationPositions": 3544,
+    "partition": "Reuse pinned origin-game partitions. No previous development, pilot, independent or reported game added to learning.",
+    "sampling": "Every board1/9. Each plane70% legacy+30% fresh; curves100% legacy. Identical input rows, common validation targets and weights across all arms. Only eligible curved training policy changes for CompletedQ.",
+    "curveTargetSource": "Existing noise-free4096 teacher root traces on each exact old root; teacher model8e5b41e3974c..., not the deployed model. Keep source model/wasm hashes per row. This is target construction, not fresh on-policy curve collection.",
+    "splitStoredSha256": "bdd57df66378d2851b878cf51feb83baaf365f6bc20706dc3838c2d6fda42249",
+    "splitCompression": "gzip; splitSha256 is the decompressed original"
+  },
+  "boards": [
+    "sphere3",
+    "sphere4",
+    "sphere5",
+    "torus7",
+    "torus9",
+    "torus11",
+    "plane7",
+    "plane9",
+    "plane11"
+  ],
+  "arms": [
+    {
+      "id": "Control",
+      "curveAnchorWeight": 0,
+      "curvePolicy": "original",
+      "eligibleForAdoption": false
+    },
+    {
+      "id": "CurveGuard",
+      "curveAnchorWeight": 1,
+      "curvePolicy": "original",
+      "eligibleForAdoption": true
+    },
+    {
+      "id": "CompletedQ",
+      "curveAnchorWeight": 1,
+      "curvePolicy": "completed-q",
+      "eligibleForAdoption": true
+    }
+  ],
+  "curveAnchor": {
+    "teacher": "Frozen deployed checkpoint; cache predictions on training curved roots only, no validation fitting.",
+    "domain": "sphere and torus only; plane loss/gradients receive zero additional term.",
+    "loss": "lambda * curveMask * [KL(frozen policy || current legal policy) + KL(frozen WDL || current WDL) + 0.5*MSE(frozen normalized score,current score) + 0.5*maskedMeanNodeKL(frozen ownership||current ownership)]",
+    "eligibility": "Apply on all normal curved training rows, independently of ordinary policy eligibility. No anchor term in common checkpoint selection. Keep teacher tensors frozen.",
+    "lambda": 1
+  },
+  "completedQ": {
+    "reference": "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/qtransforms.py",
+    "prior": "Stored raw legal NN prior targetSearch.prior from the same clean4096 search, not the prior-mixed training target.",
+    "rawValue": "softmax(targetSearch.rootWdlLogits)[win]-softmax(...)[loss], player-to-move perspective.",
+    "q": "targetSearch.diagnostics.rootQ, already root player perspective; visited iff rawVisits>0.",
+    "mixedValue": "N=sum(childVisits); qbar=sum_{visited}(max(prior,float32tiny)*Q)/sum_{visited}max(prior,float32tiny); vmix=(vNN+N*qbar)/(1+N), or vNN if N=0.",
+    "completion": "Qcomplete(a)=Q(a) if childVisits(a)>0, else vmix.",
+    "transform": "sigma(Qcomplete)=0.1*(50+max(childVisits))*Qcomplete. rescale_values=False because WDL values already have fixed[-1,1] scale; this option is supported by the reference. No coefficient/temperature sweep.",
+    "policy": "softmax(log(rawPrior)+sigma(Qcomplete)) on legal actions only; illegal and padding have zero mass. No25% prior or2% uniform mixture added afterward.",
+    "unaffected": "Plane policy, all validationPolicy fields, features, actions, outcome/score/ownership, splits and row order remain identical. Certified-loss/ineligible rows retain original policy.",
+    "diagnostics": "Record entropy, support, probability on originally zero-policy hands, unvisited legal mass, scale and source hashes. Distinguish raw-zero/eliminated from proven bad. No practical policy-improvement guarantee under approximate Q."
+  },
+  "training": {
+    "seed": 2026102910,
+    "epochs": 16,
+    "samplesPerEpoch": 9263,
+    "batchSize": 64,
+    "stepsPerEpoch": 145,
+    "totalStepsPerArm": 2320,
+    "learningRate": 0.0001,
+    "minimumLearningRate": 0.00001,
+    "cosine": true,
+    "emaDecay": 0.99,
+    "balanced": true,
+    "freshGenerationFraction": 0.3,
+    "normalTraining": true,
+    "normalSelection": true,
+    "normalizePolicy": true,
+    "checkpoints": [
+      0,
+      4,
+      8,
+      12,
+      16
+    ],
+    "selection": "Lowest unchanged common validation loss, including epoch0; ties prefer earlier. No anchor loss or arm-specific target in common checkpoint selection.",
+    "resumes": "All arms start from deployed baseline, not previous failed NewData weights."
+  },
+  "preflight": {
+    "minRelativeSelectionLossGain": 0.001,
+    "maxPerBoardSelectionLossRatio": 1.02,
+    "requirePositiveEpoch": true,
+    "control": "Integrity only; epoch0 remains valid. Candidate arms require gates.",
+    "checks": [
+      "Input/data and parameter hashes",
+      "Identical rows, roots, outcome labels, split and common validation digest",
+      "Frozen teacher and plane isolation; anchor weight0 matches base loss",
+      "Completed-Q hand examples, zero-visit and masking/permutation behaviour",
+      "120905 inference parameters and CPU/WebGPU golden/actual Worker checks"
+    ]
+  },
+  "seeds": {
+    "development": 2026102911,
+    "independent": 2026102912,
+    "bootstrap": 2026102913
+  },
+  "development": {
+    "pairsPerBoard": 4,
+    "gamesPerArm": 72,
+    "maxGames": 216,
+    "minScore": 40,
+    "minPerBoardScore": 3,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "candidateRule": "All gates and candidate total score strictly exceeds Control and candidate curve score >= Control curve score. Control always measured if any candidate reaches this stage. Eligible candidates only.",
+    "selection": "At most1 candidate with highest overall score; ties prefer higher curve score, then CurveGuard over CompletedQ. Freeze chosen checkpoint before matches."
+  },
+  "independent": {
+    "candidateMax": 1,
+    "pairsPerBoard": 24,
+    "games": 432,
+    "minScoreRate": 0.55,
+    "minPaired95LowerExclusive": 0.5,
+    "minPerBoardScore": 19,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "bootstrapIterations": 10000,
+    "unit": "colour-swapped opening pair, stratified by board"
+  },
+  "matches": {
+    "openingMoves": 4,
+    "visits": 64,
+    "fpu": 1,
+    "komi": 6.5,
+    "rootCandidates": 8,
+    "moveCap": "6*N",
+    "capped": "Keep and score actual Game area, include in CI, report count. No outcome-dependent replacements.",
+    "seed": "FNV1a32(phaseSeed|board|pair|ply); identical legal opening and per-ply seed for both colours and arms",
+    "concurrency": 3,
+    "audit": "Replay every move; verify actors,seeds,root visit counters,exact scores and pair aggregation."
+  },
+  "latency": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate<=max(1.10*baseline,baseline+2ms)"
+    },
+    "fixtures": "27 roots from first Control development pair0/colour1 at floor(N/4),floor(N/2),floor(3N/4), clamped to last nonterminal saved ply; predefined public reported/pass/proof stress fixtures. Freeze concrete files before timing.",
+    "backends": [
+      "actual WASM CPU Worker",
+      "actual WebGPU Worker"
+    ],
+    "equalTime": "If strength and fixed-visit latency pass, use baseline-only calibration on the frozen roots to fix per-board time budgets before any candidate timed comparison; report separately. No claim of phone speed without real measurement."
+  },
+  "ceilings": {
+    "trainingRuns": 3,
+    "epochsTotal": 48,
+    "optimizerStepsTotal": 6960,
+    "developmentGamesMax": 216,
+    "independentGamesMax": 432,
+    "totalEvaluationGamesMax": 648,
+    "newTeacherQueries": 0
+  },
+  "diagnostics": {
+    "reportedGame": "Public L6 fixture only. Not training or selection input; log rank/visits/choice after model freeze.",
+    "priorIndependent": "Never reopen old unconsumed holdouts or train on previous match outcomes."
+  },
+  "stopping": "No hyperparameter sweep or extra replicas in this round. Failed preflight/development/independent/latency closes the round with all negative results archived. No substitute candidate, extra games or repeated independent test after failure. No push/deployment.",
+  "sources": [
+    "https://davidstarsilver.wordpress.com/wp-content/uploads/2025/04/gumbel-alphazero.pdf",
+    "https://github.com/google-deepmind/mctx/blob/main/mctx/_src/qtransforms.py"
+  ]
+}

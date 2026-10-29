@@ -1,0 +1,408 @@
+v3 dedicated GPU unavailable: v3 GPU weights checksum mismatch
+{
+  "cpu": {
+    "selected": "wasm",
+    "runtime": "wasm",
+    "adapterInfo": null,
+    "differences": {
+      "policy": 0.00000476837158203125,
+      "wdl": 0.000003814697265625,
+      "score": 2.9802322387695312e-8,
+      "ownership": 3.5762786865234375e-7
+    },
+    "coldMs": 401.19999998807907,
+    "warmBatchMs": [
+      4.900000035762787,
+      4.699999988079071,
+      6,
+      4.899999976158142,
+      4.300000011920929
+    ],
+    "batchParity": [
+      {
+        "count": 8,
+        "maxError": 0.00000476837158203125
+      },
+      {
+        "count": 1,
+        "maxError": 0.0000020265579223632812
+      },
+      {
+        "count": 4,
+        "maxError": 0.00000476837158203125
+      },
+      {
+        "count": 8,
+        "maxError": 0.00000476837158203125
+      }
+    ],
+    "planeParity": [],
+    "capacityParity": [],
+    "permutationError": 0.000002384185791015625,
+    "concurrentRejected": true,
+    "gpuChecksumFallback": false,
+    "gpuExecutionFallback": false,
+    "turns": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "simulations": 64,
+        "elapsedMs": 141.19999998807907,
+        "batches": 9
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "simulations": 64,
+        "elapsedMs": 161.19999998807907,
+        "batches": 9
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "simulations": 64,
+        "elapsedMs": 156,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "simulations": 64,
+        "elapsedMs": 148.20000004768372,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "simulations": 64,
+        "elapsedMs": 153.10000002384186,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "simulations": 64,
+        "elapsedMs": 152.9000000357628,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 7,
+        "simulations": 64,
+        "elapsedMs": 154,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 9,
+        "simulations": 64,
+        "elapsedMs": 153.5999999642372,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 11,
+        "simulations": 64,
+        "elapsedMs": 151.69999998807907,
+        "batches": 9
+      }
+    ],
+    "cancelled": true,
+    "tactics": {
+      "pocketAvoided": 3,
+      "eyePointsAvoided": 6
+    },
+    "endgame": [
+      {
+        "ply": 164,
+        "move": 94,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "batches": 9,
+        "elapsedMs": 108.30000001192093
+      },
+      {
+        "ply": 166,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "batches": 1,
+        "elapsedMs": 2.399999976158142
+      },
+      {
+        "ply": 168,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "batches": 1,
+        "elapsedMs": 4
+      },
+      {
+        "ply": 184,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 19.5,
+        "batches": 1,
+        "elapsedMs": 3
+      },
+      {
+        "ply": 210,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 45.5,
+        "batches": 1,
+        "elapsedMs": 2.600000023841858
+      },
+      {
+        "ply": 228,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 63.5,
+        "batches": 1,
+        "elapsedMs": 2.299999952316284
+      }
+    ]
+  },
+  "gpu": {
+    "selected": "webgpu",
+    "runtime": "wgsl",
+    "adapterInfo": {
+      "vendor": "nvidia",
+      "architecture": "blackwell",
+      "device": "",
+      "description": ""
+    },
+    "differences": {
+      "policy": 0.000004291534423828125,
+      "wdl": 0.00000286102294921875,
+      "score": 5.681067705154419e-8,
+      "ownership": 7.152557373046875e-7
+    },
+    "coldMs": 172.19999998807907,
+    "warmBatchMs": [
+      2.600000023841858,
+      3,
+      3,
+      3,
+      2.899999976158142
+    ],
+    "batchParity": [
+      {
+        "count": 8,
+        "maxError": 0.000004291534423828125
+      },
+      {
+        "count": 1,
+        "maxError": 0.00000286102294921875
+      },
+      {
+        "count": 4,
+        "maxError": 0.000004291534423828125
+      },
+      {
+        "count": 8,
+        "maxError": 0.000004291534423828125
+      }
+    ],
+    "planeParity": [
+      {
+        "size": 7,
+        "maxError": 0.000002384185791015625
+      },
+      {
+        "size": 9,
+        "maxError": 0.00000286102294921875
+      },
+      {
+        "size": 11,
+        "maxError": 0.00000667572021484375
+      }
+    ],
+    "capacityParity": [
+      {
+        "batchSize": 1,
+        "maxError": 0.00000286102294921875
+      },
+      {
+        "batchSize": 4,
+        "maxError": 0.000004291534423828125
+      }
+    ],
+    "permutationError": 0.00000286102294921875,
+    "concurrentRejected": true,
+    "gpuChecksumFallback": true,
+    "gpuExecutionFallback": true,
+    "turns": [
+      {
+        "kind": "sphere",
+        "size": 3,
+        "simulations": 64,
+        "elapsedMs": 35.60000002384186,
+        "batches": 9
+      },
+      {
+        "kind": "sphere",
+        "size": 4,
+        "simulations": 64,
+        "elapsedMs": 37.5,
+        "batches": 9
+      },
+      {
+        "kind": "sphere",
+        "size": 5,
+        "simulations": 64,
+        "elapsedMs": 36.89999997615814,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 7,
+        "simulations": 64,
+        "elapsedMs": 33.299999952316284,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 9,
+        "simulations": 64,
+        "elapsedMs": 35.799999952316284,
+        "batches": 9
+      },
+      {
+        "kind": "torus",
+        "size": 11,
+        "simulations": 64,
+        "elapsedMs": 32.5,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 7,
+        "simulations": 64,
+        "elapsedMs": 33.60000002384186,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 9,
+        "simulations": 64,
+        "elapsedMs": 32.80000001192093,
+        "batches": 9
+      },
+      {
+        "kind": "plane",
+        "size": 11,
+        "simulations": 64,
+        "elapsedMs": 33.59999996423721,
+        "batches": 9
+      }
+    ],
+    "cancelled": true,
+    "tactics": {
+      "pocketAvoided": 3,
+      "eyePointsAvoided": 6
+    },
+    "endgame": [
+      {
+        "ply": 164,
+        "move": 94,
+        "provenLoss": false,
+        "lossMarginLowerBound": 0,
+        "batches": 9,
+        "elapsedMs": 36.40000003576279
+      },
+      {
+        "ply": 166,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "batches": 1,
+        "elapsedMs": 3.5
+      },
+      {
+        "ply": 168,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 1.5,
+        "batches": 1,
+        "elapsedMs": 4.799999952316284
+      },
+      {
+        "ply": 184,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 19.5,
+        "batches": 1,
+        "elapsedMs": 5.699999988079071
+      },
+      {
+        "ply": 210,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 45.5,
+        "batches": 1,
+        "elapsedMs": 4.699999988079071
+      },
+      {
+        "ply": 228,
+        "move": null,
+        "provenLoss": true,
+        "lossMarginLowerBound": 63.5,
+        "batches": 1,
+        "elapsedMs": 4
+      }
+    ]
+  },
+  "production": {
+    "kind": "plane",
+    "size": 7,
+    "id": 1,
+    "move": 24,
+    "backend": "v3-webgpu",
+    "simulations": 64
+  },
+  "productionTurns": [
+    {
+      "kind": "plane",
+      "size": 7,
+      "id": 1,
+      "move": 24,
+      "backend": "v3-webgpu",
+      "simulations": 64
+    },
+    {
+      "kind": "plane",
+      "size": 9,
+      "id": 2,
+      "move": 31,
+      "backend": "v3-webgpu",
+      "simulations": 64
+    },
+    {
+      "kind": "plane",
+      "size": 11,
+      "id": 3,
+      "move": 48,
+      "backend": "v3-webgpu",
+      "simulations": 64
+    },
+    {
+      "kind": "torus",
+      "size": 7,
+      "id": 4,
+      "move": 6,
+      "backend": "v3-webgpu",
+      "simulations": 64
+    }
+  ],
+  "environment": {
+    "node": "v26.12.1",
+    "browser": "156.0.4314.50",
+    "platform": "win32",
+    "arch": "x64",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "modelSha256": "a247528ac8807c38b0761f71c0348bcb91192eae81a92d768cfabe8036c11e40",
+    "searchSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  }
+}
+Real browser Worker: WebGPU/WASM numerical parity, nine-board MCTS, cancellation and production v3 routing passed.

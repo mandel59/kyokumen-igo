@@ -1,0 +1,823 @@
+{
+  "schemaVersion": 1,
+  "repeats": 5,
+  "seed": 2026102924,
+  "condition": "Fresh isolated Worker for each side and repeat. Alternate A/B order. Constructor/default curve load plus first plane turn; then curve->plane->curve. Fixed64 visits, same frozen quarter roots.",
+  "wasm": {
+    "a": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+    "b": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  },
+  "models": {
+    "a": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+    "b": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+  },
+  "fixture": "a399646cfdc7c52d63e03ad5d8ada33b74051bca1d5162335c81a0ab4b40bc74",
+  "environment": {
+    "browser": "156.0.4314.50",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "node": "v26.12.1"
+  },
+  "runs": [
+    {
+      "backend": "wasm",
+      "rows": [
+        {
+          "repeat": 0,
+          "side": "a",
+          "initializedMs": 351.19999998807907,
+          "coldFirstPlaneMs": 540.8999999761581,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 189.69999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 165.30000001192093,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 152.5999999642372,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 149.70000004768372,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 0,
+          "side": "b",
+          "initializedMs": 314.39999997615814,
+          "coldFirstPlaneMs": 454.39999997615814,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 140,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 161.89999997615814,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 151.5,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 149,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 1,
+          "side": "b",
+          "initializedMs": 326.10000002384186,
+          "coldFirstPlaneMs": 467.19999998807907,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 141.0999999642372,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 159.9000000357628,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 155.0999999642372,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 150.10000002384186,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 1,
+          "side": "a",
+          "initializedMs": 338.0999999642372,
+          "coldFirstPlaneMs": 551.5999999642372,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 213.5,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 170.4000000357628,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 164.30000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 165.29999995231628,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "side": "a",
+          "initializedMs": 367.39999997615814,
+          "coldFirstPlaneMs": 593.7999999523163,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 226.39999997615814,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 177.10000002384186,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 167.10000002384186,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 155,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "side": "b",
+          "initializedMs": 348.19999998807907,
+          "coldFirstPlaneMs": 525.3000000119209,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 177.10000002384186,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 160.30000001192093,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 154.19999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 153.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "side": "b",
+          "initializedMs": 346.30000001192093,
+          "coldFirstPlaneMs": 523.3000000119209,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 177,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 155.80000001192093,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 156.69999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 152.69999998807907,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "side": "a",
+          "initializedMs": 327.69999998807907,
+          "coldFirstPlaneMs": 556.5999999642372,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 228.89999997615814,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 168.39999997615814,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 164.5,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 152.20000004768372,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 4,
+          "side": "a",
+          "initializedMs": 342.19999998807907,
+          "coldFirstPlaneMs": 561.6000000238419,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 219.4000000357628,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 160.69999998807907,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 166,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 152.89999997615814,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 4,
+          "side": "b",
+          "initializedMs": 340.5,
+          "coldFirstPlaneMs": 500.80000001192093,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 160.30000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 156.39999997615814,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 150.80000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 152.0999999642372,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "rows": [
+        {
+          "repeat": 0,
+          "side": "a",
+          "initializedMs": 226.89999997615814,
+          "coldFirstPlaneMs": 323.5,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 96.60000002384186,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 91.60000002384186,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 89.19999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 80.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 0,
+          "side": "b",
+          "initializedMs": 177.80000001192093,
+          "coldFirstPlaneMs": 209.9000000357628,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 32.10000002384186,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 27.899999976158142,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 28,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 30.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 1,
+          "side": "b",
+          "initializedMs": 201.39999997615814,
+          "coldFirstPlaneMs": 237.69999998807907,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 36.30000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 28.899999976158142,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 28.5,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 29,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 1,
+          "side": "a",
+          "initializedMs": 209.69999998807907,
+          "coldFirstPlaneMs": 308.7999999523163,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 99.09999996423721,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 80.90000003576279,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 83.80000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 81.79999995231628,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "side": "a",
+          "initializedMs": 181.5,
+          "coldFirstPlaneMs": 270.19999998807907,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 88.69999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 80.80000001192093,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 76.80000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 91.29999995231628,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 2,
+          "side": "b",
+          "initializedMs": 190.60000002384186,
+          "coldFirstPlaneMs": 221.60000002384186,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 31,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 27.900000035762787,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 28.19999998807907,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 28.30000001192093,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "side": "b",
+          "initializedMs": 180.4000000357628,
+          "coldFirstPlaneMs": 211.4000000357628,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 31,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 28,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 27.100000023841858,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 28.399999976158142,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        },
+        {
+          "repeat": 3,
+          "side": "a",
+          "initializedMs": 179.89999997615814,
+          "coldFirstPlaneMs": 262.69999998807907,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 82.80000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 88.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 89,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 85.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 4,
+          "side": "a",
+          "initializedMs": 185.30000001192093,
+          "coldFirstPlaneMs": 279.60000002384186,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 94.30000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 91.39999997615814,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            },
+            {
+              "kind": "plane",
+              "ms": 80.10000002384186,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+            },
+            {
+              "kind": "torus",
+              "ms": 79.19999998807907,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+            }
+          ]
+        },
+        {
+          "repeat": 4,
+          "side": "b",
+          "initializedMs": 175.60000002384186,
+          "coldFirstPlaneMs": 207.4000000357628,
+          "turns": [
+            {
+              "kind": "plane",
+              "ms": 31.80000001192093,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 33.09999996423721,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            },
+            {
+              "kind": "plane",
+              "ms": 37,
+              "simulations": 64,
+              "move": 26,
+              "modelSha256": null
+            },
+            {
+              "kind": "torus",
+              "ms": 35.5,
+              "simulations": 64,
+              "move": 7,
+              "modelSha256": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "backend": "wasm",
+      "metrics": [
+        {
+          "name": "initial-default-plus-first-plane",
+          "aP95Ms": 593.7999999523163,
+          "bP95Ms": 525.3000000119209,
+          "limitMs": 787.9500000178814,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve",
+          "aP95Ms": 177.10000002384186,
+          "bP95Ms": 161.89999997615814,
+          "limitMs": 411.89999997615814,
+          "passes": true
+        },
+        {
+          "name": "curve-to-plane",
+          "aP95Ms": 167.10000002384186,
+          "bP95Ms": 156.69999998807907,
+          "limitMs": 406.69999998807907,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve-again",
+          "aP95Ms": 165.29999995231628,
+          "bP95Ms": 153.5,
+          "limitMs": 403.5,
+          "passes": true
+        }
+      ],
+      "passes": true
+    },
+    {
+      "backend": "webgpu",
+      "metrics": [
+        {
+          "name": "initial-default-plus-first-plane",
+          "aP95Ms": 323.5,
+          "bP95Ms": 237.69999998807907,
+          "limitMs": 487.69999998807907,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve",
+          "aP95Ms": 91.60000002384186,
+          "bP95Ms": 33.09999996423721,
+          "limitMs": 283.0999999642372,
+          "passes": true
+        },
+        {
+          "name": "curve-to-plane",
+          "aP95Ms": 89.19999998807907,
+          "bP95Ms": 37,
+          "limitMs": 287,
+          "passes": true
+        },
+        {
+          "name": "plane-to-curve-again",
+          "aP95Ms": 91.29999995231628,
+          "bP95Ms": 35.5,
+          "limitMs": 285.5,
+          "passes": true
+        }
+      ],
+      "passes": true
+    }
+  ],
+  "passes": true
+}

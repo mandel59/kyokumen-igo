@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "phase": "development",
+  "games": 144,
+  "turns": 13984,
+  "capped": 0,
+  "allMovesAndScoresReplayed": true,
+  "allActorsAndSeedsVerified": true,
+  "rootBudgetCountersVerified": true,
+  "childVisitAccounting": "Exact proven-root backups may bypass child edges",
+  "productionUnchanged": true,
+  "rows": [
+    {
+      "file": "development-Control-r0-plane11.json",
+      "id": "Control-r0",
+      "board": "plane11",
+      "games": 8,
+      "turns": 1133
+    },
+    {
+      "file": "development-Control-r0-plane7.json",
+      "id": "Control-r0",
+      "board": "plane7",
+      "games": 8,
+      "turns": 430
+    },
+    {
+      "file": "development-Control-r0-plane9.json",
+      "id": "Control-r0",
+      "board": "plane9",
+      "games": 8,
+      "turns": 771
+    },
+    {
+      "file": "development-Control-r0-sphere3.json",
+      "id": "Control-r0",
+      "board": "sphere3",
+      "games": 8,
+      "turns": 479
+    },
+    {
+      "file": "development-Control-r0-sphere4.json",
+      "id": "Control-r0",
+      "board": "sphere4",
+      "games": 8,
+      "turns": 773
+    },
+    {
+      "file": "development-Control-r0-sphere5.json",
+      "id": "Control-r0",
+      "board": "sphere5",
+      "games": 8,
+      "turns": 1196
+    },
+    {
+      "file": "development-Control-r0-torus11.json",
+      "id": "Control-r0",
+      "board": "torus11",
+      "games": 8,
+      "turns": 991
+    },
+    {
+      "file": "development-Control-r0-torus7.json",
+      "id": "Control-r0",
+      "board": "torus7",
+      "games": 8,
+      "turns": 467
+    },
+    {
+      "file": "development-Control-r0-torus9.json",
+      "id": "Control-r0",
+      "board": "torus9",
+      "games": 8,
+      "turns": 693
+    },
+    {
+      "file": "development-NewData-r0-plane11.json",
+      "id": "NewData-r0",
+      "board": "plane11",
+      "games": 8,
+      "turns": 1196
+    },
+    {
+      "file": "development-NewData-r0-plane7.json",
+      "id": "NewData-r0",
+      "board": "plane7",
+      "games": 8,
+      "turns": 431
+    },
+    {
+      "file": "development-NewData-r0-plane9.json",
+      "id": "NewData-r0",
+      "board": "plane9",
+      "games": 8,
+      "turns": 771
+    },
+    {
+      "file": "development-NewData-r0-sphere3.json",
+      "id": "NewData-r0",
+      "board": "sphere3",
+      "games": 8,
+      "turns": 492
+    },
+    {
+      "file": "development-NewData-r0-sphere4.json",
+      "id": "NewData-r0",
+      "board": "sphere4",
+      "games": 8,
+      "turns": 836
+    },
+    {
+      "file": "development-NewData-r0-sphere5.json",
+      "id": "NewData-r0",
+      "board": "sphere5",
+      "games": 8,
+      "turns": 1207
+    },
+    {
+      "file": "development-NewData-r0-torus11.json",
+      "id": "NewData-r0",
+      "board": "torus11",
+      "games": 8,
+      "turns": 1003
+    },
+    {
+      "file": "development-NewData-r0-torus7.json",
+      "id": "NewData-r0",
+      "board": "torus7",
+      "games": 8,
+      "turns": 408
+    },
+    {
+      "file": "development-NewData-r0-torus9.json",
+      "id": "NewData-r0",
+      "board": "torus9",
+      "games": 8,
+      "turns": 707
+    }
+  ]
+}

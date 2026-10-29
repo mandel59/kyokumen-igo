@@ -9,7 +9,7 @@ import {Game,createTopology} from '../../dist/engine.js';
 import {aiPosition} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
-import {createNodeInference} from './node-inference.mjs';
+import {createTopologyNodeInference as createNodeInference} from './node-topology-inference.mjs';
 import {createRandom} from './selfplay-policy.mjs';
 import {runTrainingSearch,trainingTarget} from './training-search.mjs';
 const args=process.argv.slice(2),arg=(k,d)=>args.includes(k)?args[args.indexOf(k)+1]:d;
@@ -19,10 +19,11 @@ if(!input||!output||existsSync(output)||existsSync(output+'.report.json')||!Numb
 const random=createRandom(seed),inference=await createNodeInference(arg('--model','dist/models/v3'));
 const wasm=readFileSync(arg('--wasm','dist/ai-v3.wasm')),searchHash=createHash('sha256').update(wasm).digest('hex');
 const search=await createV3Search({load:async()=>wasm}),file=createWriteStream(output),gzip=createGzip();gzip.pipe(file);
-const report={schemaVersion:1,input,inputSha256:createHash('sha256').update(readFileSync(input)).digest('hex'),seed,perPhase,visits,fpu,searchHash,model:inference.manifest.sha256,games:0,positions:0,selected:0,excludedCertified:0,boards:{}};
+const report={schemaVersion:1,input,inputSha256:createHash('sha256').update(readFileSync(input)).digest('hex'),seed,perPhase,visits,fpu,searchHash,model:inference.bundleManifest.sha256,modelRoutes:inference.bundleManifest.modelRoutes??null,games:0,positions:0,selected:0,excludedCertified:0,boards:{}};
 async function family(rows){
  if(!rows.length)return;
  const first=rows[0],n=first.x.length/32,game=new Game(createTopology(first.kind,first.size),Math.round(-first.global[0]*n*2)/2),selected=new Set(),phases=new Map();
+ await inference.setKind(first.kind);
  for(let i=0;i<rows.length;i++){
   const r=rows[i];assert.equal(r.ply,i);assert.equal(r.source,'selfplay');
   if(r.decisionReason==='certified-loss'){report.excludedCertified++;continue;}

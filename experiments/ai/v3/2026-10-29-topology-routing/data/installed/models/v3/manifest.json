@@ -1,0 +1,65 @@
+{
+  "architecture": "v3",
+  "featureVersion": 1,
+  "points": 160,
+  "channels": 32,
+  "globals": 8,
+  "hidden": 64,
+  "blocks": 6,
+  "parameters": 120905,
+  "model": "model.onnx",
+  "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+  "status": "experimental",
+  "accepted": true,
+  "trainPositions": 10486,
+  "webgpu": {
+    "formatVersion": 1,
+    "model": "weights.f32",
+    "sha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+    "sourceSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+  },
+  "search": {
+    "fpu": 1
+  },
+  "teacherProvenance": {
+    "name": "kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "sha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4",
+    "license": "https://katagotraining.org/network_license/"
+  },
+  "planId": "v3-topology-routing-20261029",
+  "modelRoutes": {
+    "plane": {
+      "manifest": "plane/manifest.json",
+      "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+    }
+  },
+  "routingVersion": 1,
+  "packageParameters": 241810,
+  "sourceComponents": {
+    "plane": {
+      "archive": "experiments/ai/v3/2026-10-28-fresh-data-study",
+      "prefix": "data/workspace/NewData-r0-model/",
+      "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "weightsSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e"
+    },
+    "curves": {
+      "archive": "experiments/ai/v3/2026-10-29-curve-retention",
+      "prefix": "data/workspace/CompletedQ-r0-model/",
+      "sha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "weightsSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    }
+  },
+  "acceptance": {
+    "study": "v3-topology-routing-20261029",
+    "scope": "Only the registered kind-based composition; component acceptance does not apply to other topologies.",
+    "independentGames": 432,
+    "wins": 238,
+    "scoreRate": 0.5509259259259259,
+    "paired95": [
+      0.5069444444444444,
+      0.5949074074074074
+    ],
+    "latencyPassed": true
+  }
+}

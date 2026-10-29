@@ -1,0 +1,15 @@
+✔ only the known topology and pinned same-directory child is selected (11.8303ms)
+✔ switches retain one player, reuse same-domain model, preserve budget and child identity (1.569ms)
+✔ cancel during child initialization drops stale request while keeping the initialized model usable (0.6194ms)
+✔ dispose during child initialization waits and releases it exactly once (0.4136ms)
+✔ switch waits for an in-flight search before disposing or allocating the new model (3.7873ms)
+✔ rapid switches retire unused initialization and run only the last request (0.3802ms)
+✔ failed model load can be disposed without leaking a previous player (0.2506ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.0096

@@ -1,0 +1,1 @@
+{"candidateIds": ["CurveGuard-r0", "CompletedQ-r0"], "results": [{"id": "Control-r0", "eligible": true, "selectedEpoch": 16, "relativeGain": 0.024420095826010124}, {"id": "CurveGuard-r0", "eligible": true, "selectedEpoch": 16, "relativeGain": 0.021358372440778317}, {"id": "CompletedQ-r0", "eligible": true, "selectedEpoch": 16, "relativeGain": 0.017389767501426068}]}

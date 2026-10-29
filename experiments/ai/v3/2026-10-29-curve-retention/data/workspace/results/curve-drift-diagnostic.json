@@ -1,0 +1,143 @@
+{
+  "role": "Common-validation diagnostic only; output drift is not playing strength and does not select a candidate.",
+  "results": [
+    {
+      "id": "Control-r0",
+      "equalBoardMean": {
+        "policyKL": 0.020869113738160087,
+        "wdlKL": 0.004402020089502583,
+        "retentionLoss": 0.02701499081834355
+      },
+      "boards": {
+        "sphere3": {
+          "count": 124,
+          "policyKL": 0.025197086275570216,
+          "wdlKL": 0.0022194297598032062,
+          "retentionLoss": 0.02929072515408118
+        },
+        "sphere4": {
+          "count": 190,
+          "policyKL": 0.022831459801742122,
+          "wdlKL": 0.0034865919146873344,
+          "retentionLoss": 0.02776590693300884
+        },
+        "sphere5": {
+          "count": 302,
+          "policyKL": 0.022394801037743016,
+          "wdlKL": 0.00662031175437871,
+          "retentionLoss": 0.030262030678838245
+        },
+        "torus7": {
+          "count": 101,
+          "policyKL": 0.022340304588946275,
+          "wdlKL": 0.005714634536953761,
+          "retentionLoss": 0.030348457774092064
+        },
+        "torus9": {
+          "count": 169,
+          "policyKL": 0.016152397518496706,
+          "wdlKL": 0.0038189470380340274,
+          "retentionLoss": 0.02191022949116911
+        },
+        "torus11": {
+          "count": 263,
+          "policyKL": 0.016298633206462198,
+          "wdlKL": 0.0045522055331584585,
+          "retentionLoss": 0.022512594878871858
+        }
+      }
+    },
+    {
+      "id": "CurveGuard-r0",
+      "equalBoardMean": {
+        "policyKL": 0.009339278554329646,
+        "wdlKL": 0.0021304746982873063,
+        "retentionLoss": 0.012281011061026782
+      },
+      "boards": {
+        "sphere3": {
+          "count": 124,
+          "policyKL": 0.010960305469193226,
+          "wdlKL": 0.0011740222937577658,
+          "retentionLoss": 0.013153926459997292
+        },
+        "sphere4": {
+          "count": 190,
+          "policyKL": 0.009482060029710594,
+          "wdlKL": 0.0016131004530728261,
+          "retentionLoss": 0.011786650839310728
+        },
+        "sphere5": {
+          "count": 302,
+          "policyKL": 0.009944535314551839,
+          "wdlKL": 0.0031403979244678296,
+          "retentionLoss": 0.013667564960551257
+        },
+        "torus7": {
+          "count": 101,
+          "policyKL": 0.010655518667851655,
+          "wdlKL": 0.0030630399988844977,
+          "retentionLoss": 0.014805521850594052
+        },
+        "torus9": {
+          "count": 169,
+          "policyKL": 0.007524088582026734,
+          "wdlKL": 0.0017533886020424357,
+          "retentionLoss": 0.010090654715895653
+        },
+        "torus11": {
+          "count": 263,
+          "policyKL": 0.007469163262643834,
+          "wdlKL": 0.0020388989174984834,
+          "retentionLoss": 0.010181747539811714
+        }
+      }
+    },
+    {
+      "id": "CompletedQ-r0",
+      "equalBoardMean": {
+        "policyKL": 0.021955421835612558,
+        "wdlKL": 0.002346970755363427,
+        "retentionLoss": 0.025206869106942777
+      },
+      "boards": {
+        "sphere3": {
+          "count": 124,
+          "policyKL": 0.018371290666231464,
+          "wdlKL": 0.0011955186447613674,
+          "retentionLoss": 0.0206516106986636
+        },
+        "sphere4": {
+          "count": 190,
+          "policyKL": 0.022532453454148612,
+          "wdlKL": 0.0016921385269954429,
+          "retentionLoss": 0.024964261190402078
+        },
+        "sphere5": {
+          "count": 302,
+          "policyKL": 0.02893819021630033,
+          "wdlKL": 0.0035872268101645056,
+          "retentionLoss": 0.03317229259282733
+        },
+        "torus7": {
+          "count": 101,
+          "policyKL": 0.022545927361129047,
+          "wdlKL": 0.0033701952122946817,
+          "retentionLoss": 0.027221816767117765
+        },
+        "torus9": {
+          "count": 169,
+          "policyKL": 0.0189542498860781,
+          "wdlKL": 0.001948064465890567,
+          "retentionLoss": 0.021832083367064773
+        },
+        "torus11": {
+          "count": 263,
+          "policyKL": 0.020390419429787806,
+          "wdlKL": 0.0022886808720739976,
+          "retentionLoss": 0.02339915002558111
+        }
+      }
+    }
+  ]
+}

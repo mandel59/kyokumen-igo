@@ -6,7 +6,7 @@ import {createTopology,Game} from '../../dist/engine.js';
 import {aiPosition,AI_BOARDS} from '../../dist/ai-position.js';
 import {createV3Search} from '../../dist/ai-v3-search.js';
 import {adjacencyFor} from '../../dist/ai-v3-inference.js';
-import {createNodeInference} from './node-inference.mjs';
+import {createTopologyNodeInference as createNodeInference} from './node-topology-inference.mjs';
 import {createTeacherInference} from './teacher-inference.mjs';
 import {createRandom,exploreRoot,sampleVisits} from './selfplay-policy.mjs';
 import {runTrainingSearch,trainingTarget} from './training-search.mjs';
@@ -28,8 +28,9 @@ let written=0,capped=0,completedGames=0;const boardReports=[];
 try{
  for(const [kind,size] of AI_BOARDS){
   if(value('--board','all')!=='all'&&value('--board','all')!==kind+size)continue;
+  await inference.setKind?.(kind);
   const topology=createTopology(kind,size),adjacency=adjacencyFor(topology);
-  const boardReport={kind,size,attempted:games,completed:0,capped:0};boardReports.push(boardReport);
+  const boardReport={kind,size,model:inference.manifest.sha256,attempted:games,completed:0,capped:0};boardReports.push(boardReport);
   for(let k=0;k<games;k++){
    const game=new Game(topology,[0,3.5,6.5,9.5][k%4]),samples=[];
    while(!game.ended&&game.moves<game.board.length*20){
@@ -69,7 +70,7 @@ try{
   }
  }
 }finally{search.dispose();await inference.dispose();out.end();await once(out,'finish');}
-const report={schemaVersion:1,positions:written,capped,completedGames,seed,model:inference.manifest.sha256,searchHash,fpu,searchMode,boards:boardReports};
+const report={schemaVersion:1,positions:written,capped,completedGames,seed,model:inference.bundleManifest?.sha256??inference.manifest.sha256,searchHash,fpu,searchMode,boards:boardReports};
 if(value('--report'))writeFileSync(value('--report'),JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report));
 if(args.includes('--require-complete')&&capped)throw new Error('Selfplay hit the move cap; completed games were saved but the study must stop');

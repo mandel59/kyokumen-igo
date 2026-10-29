@@ -1,0 +1,259 @@
+{
+  "passed": true,
+  "games": 24,
+  "rows": 1648,
+  "trainingRows": 1224,
+  "validationRows": 424,
+  "totalTeacherVisits": 843776,
+  "originSplitOverlap": 0,
+  "allRootFeaturesReplayed": true,
+  "allLabelsVerified": true,
+  "reports": [
+    {
+      "game": "v3-newdata-20261028:plane7:0",
+      "origin": "v3-newdata-20261028:plane7:0",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 57,
+      "moves": 57,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:1",
+      "origin": "v3-newdata-20261028:plane7:1",
+      "partition": "validation",
+      "branch": false,
+      "prefix": 0,
+      "rows": 46,
+      "moves": 46,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:2",
+      "origin": "katago-distill-v1:generate:7:9",
+      "partition": "train",
+      "branch": true,
+      "prefix": 16,
+      "rows": 29,
+      "moves": 45,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:3",
+      "origin": "katago-distill-v1:generate:7:1",
+      "partition": "train",
+      "branch": true,
+      "prefix": 16,
+      "rows": 20,
+      "moves": 36,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:4",
+      "origin": "v3-newdata-20261028:plane7:4",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 59,
+      "moves": 59,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:5",
+      "origin": "v3-newdata-20261028:plane7:5",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 53,
+      "moves": 53,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:6",
+      "origin": "katago-distill-v1:generate:7:27",
+      "partition": "validation",
+      "branch": true,
+      "prefix": 16,
+      "rows": 41,
+      "moves": 57,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane7:7",
+      "origin": "katago-distill-v1:generate:7:17",
+      "partition": "train",
+      "branch": true,
+      "prefix": 16,
+      "rows": 35,
+      "moves": 51,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:0",
+      "origin": "v3-newdata-20261028:plane9:0",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 98,
+      "moves": 98,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:1",
+      "origin": "v3-newdata-20261028:plane9:1",
+      "partition": "validation",
+      "branch": false,
+      "prefix": 0,
+      "rows": 71,
+      "moves": 71,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:2",
+      "origin": "katago-distill-v1:generate:9:5",
+      "partition": "train",
+      "branch": true,
+      "prefix": 27,
+      "rows": 31,
+      "moves": 58,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:3",
+      "origin": "katago-distill-v1:generate:9:2",
+      "partition": "train",
+      "branch": true,
+      "prefix": 27,
+      "rows": 53,
+      "moves": 80,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:4",
+      "origin": "v3-newdata-20261028:plane9:4",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 8,
+      "moves": 8,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:5",
+      "origin": "v3-newdata-20261028:plane9:5",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 96,
+      "moves": 96,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:6",
+      "origin": "katago-distill-v1:generate:9:31",
+      "partition": "validation",
+      "branch": true,
+      "prefix": 27,
+      "rows": 70,
+      "moves": 97,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane9:7",
+      "origin": "katago-distill-v1:generate:9:4",
+      "partition": "train",
+      "branch": true,
+      "prefix": 27,
+      "rows": 77,
+      "moves": 104,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:0",
+      "origin": "v3-newdata-20261028:plane11:0",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 111,
+      "moves": 111,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:1",
+      "origin": "v3-newdata-20261028:plane11:1",
+      "partition": "validation",
+      "branch": false,
+      "prefix": 0,
+      "rows": 91,
+      "moves": 91,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:2",
+      "origin": "katago-distill-v1:generate:11:9",
+      "partition": "train",
+      "branch": true,
+      "prefix": 40,
+      "rows": 61,
+      "moves": 101,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:3",
+      "origin": "katago-distill-v1:generate:11:25",
+      "partition": "train",
+      "branch": true,
+      "prefix": 40,
+      "rows": 59,
+      "moves": 99,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:4",
+      "origin": "v3-newdata-20261028:plane11:4",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 124,
+      "moves": 124,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:5",
+      "origin": "v3-newdata-20261028:plane11:5",
+      "partition": "train",
+      "branch": false,
+      "prefix": 0,
+      "rows": 149,
+      "moves": 149,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:6",
+      "origin": "katago-distill-v1:generate:11:23",
+      "partition": "validation",
+      "branch": true,
+      "prefix": 40,
+      "rows": 105,
+      "moves": 145,
+      "replayed": true
+    },
+    {
+      "game": "v3-newdata-20261028:plane11:7",
+      "origin": "katago-distill-v1:generate:11:10",
+      "partition": "train",
+      "branch": true,
+      "prefix": 40,
+      "rows": 104,
+      "moves": 144,
+      "replayed": true
+    }
+  ],
+  "files": {
+    "fresh-all.jsonl.gz": "5544c9c967be52aeb33ed861199acb5bc6c3abec609998415fec837f747c39ab",
+    "fresh-validation.jsonl.gz": "108b1f60d15f40b6f0042f1802c24a008bc41d3af92fda213eb20e0daf31a023",
+    "split.json": "99afd67030e6262bc39bbf1cf0c1c99ed2f86ece2d6409597e399efcf947558c"
+  },
+  "driver": "80e8e4917066f0eee2d8ab39848bb61f403a4479fc5ff1ec14451b15995ec44a"
+}

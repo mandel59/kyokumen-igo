@@ -1,0 +1,1877 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\archive-syntax-command.json",
+      "archive": "data/workspace/archive-syntax-command.json",
+      "compressed": false,
+      "originalBytes": 1230,
+      "originalSha256": "0537ea721cc28227ab75083c7162f794b8bc35e531e629917e5782452e57f069",
+      "storedSha256": "0537ea721cc28227ab75083c7162f794b8bc35e531e629917e5782452e57f069"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\archive-syntax-log.txt",
+      "archive": "data/workspace/archive-syntax-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline\\golden.json",
+      "archive": "data/workspace/baseline/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100092,
+      "originalSha256": "49794bd9cb6bfc2bf72106a494174318165654dd8e1fcc74bf9ee8a429a0d12b",
+      "storedSha256": "f6840109b97c7772a213245a3d44eed3b6ae3f567fce2d467678d1cd44cf4ebf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/baseline/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline\\manifest.json",
+      "archive": "data/workspace/baseline/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 93047,
+      "originalSha256": "15db6417a8406e5a6bb2b21b2902789c4dbe472bc60b5d3fc96a509d44cd6790",
+      "storedSha256": "2fa9b29e0db1b6e0b2f16e2076ea47b146c14552e5242ac1b4b2a1e8d0556021"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline\\model.onnx",
+      "archive": "data/workspace/baseline/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+      "storedSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline\\weights.f32",
+      "archive": "data/workspace/baseline/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+      "storedSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-browser-command.json",
+      "archive": "data/workspace/baseline-browser-command.json",
+      "compressed": false,
+      "originalBytes": 1391,
+      "originalSha256": "d85315cc101128c9bf89dd5e508e1de26d1ecb701b42197a338c8fc3e180b21f",
+      "storedSha256": "d85315cc101128c9bf89dd5e508e1de26d1ecb701b42197a338c8fc3e180b21f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-browser-log.txt",
+      "archive": "data/workspace/baseline-browser-log.txt",
+      "compressed": false,
+      "originalBytes": 8816,
+      "originalSha256": "783d377d2011c38134ddafe5b9fbc2b925582e18908304e678bf52342770bb1a",
+      "storedSha256": "783d377d2011c38134ddafe5b9fbc2b925582e18908304e678bf52342770bb1a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-only-calibration-command.json",
+      "archive": "data/workspace/baseline-only-calibration-command.json",
+      "compressed": false,
+      "originalBytes": 1780,
+      "originalSha256": "21a2d543f426702150e396dad4395ea5cb3def2f1a63fb0afbd0bd56c2f0e1c0",
+      "storedSha256": "21a2d543f426702150e396dad4395ea5cb3def2f1a63fb0afbd0bd56c2f0e1c0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-only-calibration-log.txt",
+      "archive": "data/workspace/baseline-only-calibration-log.txt",
+      "compressed": false,
+      "originalBytes": 6722,
+      "originalSha256": "39d1ede64e2a989e2cb1a8cfba388ac356d628824d7b25053b680dee7f7e936c",
+      "storedSha256": "39d1ede64e2a989e2cb1a8cfba388ac356d628824d7b25053b680dee7f7e936c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-position.js",
+      "archive": "data/workspace/baseline-runtime/ai-position.js",
+      "compressed": false,
+      "originalBytes": 1315,
+      "originalSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad",
+      "storedSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-v3-inference.js",
+      "archive": "data/workspace/baseline-runtime/ai-v3-inference.js",
+      "compressed": false,
+      "originalBytes": 8366,
+      "originalSha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129",
+      "storedSha256": "1d9fd129eba8838975fd38019c2ca37d6fe13579485afe9b55cd926ad2fdc129"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-v3-search.js",
+      "archive": "data/workspace/baseline-runtime/ai-v3-search.js",
+      "compressed": false,
+      "originalBytes": 4919,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-v3-webgpu.js",
+      "archive": "data/workspace/baseline-runtime/ai-v3-webgpu.js",
+      "compressed": false,
+      "originalBytes": 11161,
+      "originalSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+      "storedSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-v3.js",
+      "archive": "data/workspace/baseline-runtime/ai-v3.js",
+      "compressed": false,
+      "originalBytes": 3257,
+      "originalSha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f",
+      "storedSha256": "6c467693449968da3785f0e6dd7de678ad2550a7c7b793863a53d2cbf8934c2f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\ai-worker.js",
+      "archive": "data/workspace/baseline-runtime/ai-worker.js",
+      "compressed": false,
+      "originalBytes": 1903,
+      "originalSha256": "5fe33f8fab1005985208e1b367ab257492cd489f0bbeb596a25a0db7d28c481c",
+      "storedSha256": "5fe33f8fab1005985208e1b367ab257492cd489f0bbeb596a25a0db7d28c481c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\baseline-runtime\\engine.js",
+      "archive": "data/workspace/baseline-runtime/engine.js",
+      "compressed": false,
+      "originalBytes": 6979,
+      "originalSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc",
+      "storedSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\cold-switch-latency-command.json",
+      "archive": "data/workspace/cold-switch-latency-command.json",
+      "compressed": false,
+      "originalBytes": 1786,
+      "originalSha256": "db4e56388ab6d511440bc798c858bf95bb06f7f24d5f06d8966857261ed69639",
+      "storedSha256": "db4e56388ab6d511440bc798c858bf95bb06f7f24d5f06d8966857261ed69639"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\cold-switch-latency-log.txt",
+      "archive": "data/workspace/cold-switch-latency-log.txt",
+      "compressed": false,
+      "originalBytes": 1093,
+      "originalSha256": "a6e9ec49405ddfd3b30cbc7449d6e54e8f2fd1801e2901fd84fa2dff1610bedf",
+      "storedSha256": "a6e9ec49405ddfd3b30cbc7449d6e54e8f2fd1801e2901fd84fa2dff1610bedf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\development-audit-command.json",
+      "archive": "data/workspace/development-audit-command.json",
+      "compressed": false,
+      "originalBytes": 1232,
+      "originalSha256": "6cf3604efe1cb34f9d3390eb66eec54dd579f5291c94a167e0020e4d22170b49",
+      "storedSha256": "6cf3604efe1cb34f9d3390eb66eec54dd579f5291c94a167e0020e4d22170b49"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\development-audit-log.txt",
+      "archive": "data/workspace/development-audit-log.txt",
+      "compressed": false,
+      "originalBytes": 73,
+      "originalSha256": "f04c288e99d38a3e1bf4d07c15afc47e603cd724ff9f8946cdc7f2f4152caa61",
+      "storedSha256": "f04c288e99d38a3e1bf4d07c15afc47e603cd724ff9f8946cdc7f2f4152caa61"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\development-command.json",
+      "archive": "data/workspace/development-command.json",
+      "compressed": false,
+      "originalBytes": 1236,
+      "originalSha256": "738a75933ab9866c688495626b9715b475dcaa14bc841b425eb1aa177d8181dc",
+      "storedSha256": "738a75933ab9866c688495626b9715b475dcaa14bc841b425eb1aa177d8181dc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\development-log.txt",
+      "archive": "data/workspace/development-log.txt",
+      "compressed": false,
+      "originalBytes": 4625,
+      "originalSha256": "c61d52354eb44d599bfce7c6e7c61651a135ae3876640a3a8bf78f85de1612a8",
+      "storedSha256": "c61d52354eb44d599bfce7c6e7c61651a135ae3876640a3a8bf78f85de1612a8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\equal-time-root-diagnostic-command.json",
+      "archive": "data/workspace/equal-time-root-diagnostic-command.json",
+      "compressed": false,
+      "originalBytes": 1886,
+      "originalSha256": "0a9c2b14b5b219a1dcacae3af16fdfc7508276dbcb7afa298eae9917929571b7",
+      "storedSha256": "0a9c2b14b5b219a1dcacae3af16fdfc7508276dbcb7afa298eae9917929571b7"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\equal-time-root-diagnostic-log.txt",
+      "archive": "data/workspace/equal-time-root-diagnostic-log.txt",
+      "compressed": false,
+      "originalBytes": 2808,
+      "originalSha256": "cddc7d2ee8b9d71b50ca0667467f2c74ab58ba946dc7db9f95ed37cb54bcc57f",
+      "storedSha256": "cddc7d2ee8b9d71b50ca0667467f2c74ab58ba946dc7db9f95ed37cb54bcc57f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\fixed64-latency-command.json",
+      "archive": "data/workspace/fixed64-latency-command.json",
+      "compressed": false,
+      "originalBytes": 1777,
+      "originalSha256": "40f008c05d604ff8b4673923cece7db58fca176ca1d0e74a0ee4d054d8b53b9d",
+      "storedSha256": "40f008c05d604ff8b4673923cece7db58fca176ca1d0e74a0ee4d054d8b53b9d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\fixed64-latency-log.txt",
+      "archive": "data/workspace/fixed64-latency-log.txt",
+      "compressed": false,
+      "originalBytes": 6688,
+      "originalSha256": "d5fff30b239d123c415d35fdc650a070797a7f5b9cdd60163923461fb5a9eae2",
+      "storedSha256": "d5fff30b239d123c415d35fdc650a070797a7f5b9cdd60163923461fb5a9eae2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\full-v3-regression-command.json",
+      "archive": "data/workspace/full-v3-regression-command.json",
+      "compressed": false,
+      "originalBytes": 1186,
+      "originalSha256": "7b567e53eedbfa5f94bd7c6748f614f386aa05dd0862680630fb21fee299b437",
+      "storedSha256": "7b567e53eedbfa5f94bd7c6748f614f386aa05dd0862680630fb21fee299b437"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\full-v3-regression-log.txt",
+      "archive": "data/workspace/full-v3-regression-log.txt",
+      "compressed": false,
+      "originalBytes": 452,
+      "originalSha256": "c397533456134ee6a8012c39a7cd1b6951135403137b9aa364df70076d29ec56",
+      "storedSha256": "c397533456134ee6a8012c39a7cd1b6951135403137b9aa364df70076d29ec56"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-assess-command.json",
+      "archive": "data/workspace/independent-assess-command.json",
+      "compressed": false,
+      "originalBytes": 1229,
+      "originalSha256": "d0e916385d16e322186a4cbd2ecf826871e4482c34a7eeb7d55c075568885a7a",
+      "storedSha256": "d0e916385d16e322186a4cbd2ecf826871e4482c34a7eeb7d55c075568885a7a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-assess-log.txt",
+      "archive": "data/workspace/independent-assess-log.txt",
+      "compressed": false,
+      "originalBytes": 62,
+      "originalSha256": "59cd65ccc4f6664459122dfc7c3f39293314e331ab99d9cf0bd647ef32fc1a75",
+      "storedSha256": "59cd65ccc4f6664459122dfc7c3f39293314e331ab99d9cf0bd647ef32fc1a75"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-audit-command.json",
+      "archive": "data/workspace/independent-audit-command.json",
+      "compressed": false,
+      "originalBytes": 1232,
+      "originalSha256": "a395bac8f3c1709ee71690ae7b4630123cd0562615fed2ec8deabe4461c033a4",
+      "storedSha256": "a395bac8f3c1709ee71690ae7b4630123cd0562615fed2ec8deabe4461c033a4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-audit-log.txt",
+      "archive": "data/workspace/independent-audit-log.txt",
+      "compressed": false,
+      "originalBytes": 75,
+      "originalSha256": "1e16d7480f73aa6a04a52e3b2a1838659a153eb9c051ae477b2b68b050170c0e",
+      "storedSha256": "1e16d7480f73aa6a04a52e3b2a1838659a153eb9c051ae477b2b68b050170c0e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-command.json",
+      "archive": "data/workspace/independent-command.json",
+      "compressed": false,
+      "originalBytes": 1237,
+      "originalSha256": "d41a8a47bad107b1c039152930f905b13c84cf9c003d5ba11e4032a2087fa009",
+      "storedSha256": "d41a8a47bad107b1c039152930f905b13c84cf9c003d5ba11e4032a2087fa009"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\independent-log.txt",
+      "archive": "data/workspace/independent-log.txt",
+      "compressed": false,
+      "originalBytes": 27583,
+      "originalSha256": "4abafed8c52f805e7638f181c691b743435416bce79dfad209b4213a26109267",
+      "storedSha256": "4abafed8c52f805e7638f181c691b743435416bce79dfad209b4213a26109267"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-browser-command.json",
+      "archive": "data/workspace/installed-browser-command.json",
+      "compressed": false,
+      "originalBytes": 1326,
+      "originalSha256": "978d0739913624a3b17622e7632bf332311b533e62bacaba306d3a11956bc064",
+      "storedSha256": "978d0739913624a3b17622e7632bf332311b533e62bacaba306d3a11956bc064"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-browser-log.txt",
+      "archive": "data/workspace/installed-browser-log.txt",
+      "compressed": false,
+      "originalBytes": 13070,
+      "originalSha256": "045bef181b6b7c09737bdedee91f3b14a0f2ba1343a1f139ced9aa5f2cc7a14e",
+      "storedSha256": "045bef181b6b7c09737bdedee91f3b14a0f2ba1343a1f139ced9aa5f2cc7a14e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-native-onnx-command.json",
+      "archive": "data/workspace/installed-native-onnx-command.json",
+      "compressed": false,
+      "originalBytes": 1200,
+      "originalSha256": "ffc0c8cd9cc451e6a233c11e25d8fdef02ecbb067f2b66d8723b166f4235e5f7",
+      "storedSha256": "ffc0c8cd9cc451e6a233c11e25d8fdef02ecbb067f2b66d8723b166f4235e5f7"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-native-onnx-log.txt",
+      "archive": "data/workspace/installed-native-onnx-log.txt",
+      "compressed": false,
+      "originalBytes": 291,
+      "originalSha256": "87047a78c9df9e50208bf0ac9b7c3ac05a61fea050c12297c43ebdaf9cd1f818",
+      "storedSha256": "87047a78c9df9e50208bf0ac9b7c3ac05a61fea050c12297c43ebdaf9cd1f818"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-search-regression-command.json",
+      "archive": "data/workspace/installed-search-regression-command.json",
+      "compressed": false,
+      "originalBytes": 1186,
+      "originalSha256": "96d7ec1bc7f6158440d85bc5273ca82feba8c85a1a5d45fc44c15b4ddf7af983",
+      "storedSha256": "96d7ec1bc7f6158440d85bc5273ca82feba8c85a1a5d45fc44c15b4ddf7af983"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\installed-search-regression-log.txt",
+      "archive": "data/workspace/installed-search-regression-log.txt",
+      "compressed": false,
+      "originalBytes": 452,
+      "originalSha256": "c397533456134ee6a8012c39a7cd1b6951135403137b9aa364df70076d29ec56",
+      "storedSha256": "c397533456134ee6a8012c39a7cd1b6951135403137b9aa364df70076d29ec56"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\integrity-fixture\\manifest.json",
+      "archive": "data/workspace/integrity-fixture/manifest.json",
+      "compressed": false,
+      "originalBytes": 1621,
+      "originalSha256": "a06166bbdc176872cdec0b9117127b7a8008d6a64bf9b3b21d9f9cf4051060ac",
+      "storedSha256": "a06166bbdc176872cdec0b9117127b7a8008d6a64bf9b3b21d9f9cf4051060ac"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\integrity-fixture\\plane\\manifest.json",
+      "archive": "data/workspace/integrity-fixture/plane/manifest.json",
+      "compressed": false,
+      "originalBytes": 1007,
+      "originalSha256": "d0b488ecd8329ce2659eab6d4400f50bae200d1cc2bd723fd846b186c6ab90ec",
+      "storedSha256": "d0b488ecd8329ce2659eab6d4400f50bae200d1cc2bd723fd846b186c6ab90ec"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\integrity-fixture\\plane\\model.onnx",
+      "archive": "data/workspace/integrity-fixture/plane/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "storedSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\latency-orchestrator-command.json",
+      "archive": "data/workspace/latency-orchestrator-command.json",
+      "compressed": false,
+      "originalBytes": 1217,
+      "originalSha256": "969d13daee8530cef125c21fe7934c8d411c7b7510aa493723d730ee315638ff",
+      "storedSha256": "969d13daee8530cef125c21fe7934c8d411c7b7510aa493723d730ee315638ff"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\latency-orchestrator-log.txt",
+      "archive": "data/workspace/latency-orchestrator-log.txt",
+      "compressed": false,
+      "originalBytes": 8491,
+      "originalSha256": "f439c20a7d41b22b662c5f938a9803883ffae673f656ee5224bb7aa813e1a384",
+      "storedSha256": "f439c20a7d41b22b662c5f938a9803883ffae673f656ee5224bb7aa813e1a384"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\legacy-player-tests-command.json",
+      "archive": "data/workspace/legacy-player-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1202,
+      "originalSha256": "60093523b5ebb8a2eca203c11ee3aaf3048fff556cc019d9a009c2a8743257be",
+      "storedSha256": "60093523b5ebb8a2eca203c11ee3aaf3048fff556cc019d9a009c2a8743257be"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\legacy-player-tests-log.txt",
+      "archive": "data/workspace/legacy-player-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 602,
+      "originalSha256": "e4d24c1284a44e0405a106e15afe0f466d1960e91adde494872680cd5ff7deff",
+      "storedSha256": "e4d24c1284a44e0405a106e15afe0f466d1960e91adde494872680cd5ff7deff"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\legacy-player-tests-vm-enabled-command.json",
+      "archive": "data/workspace/legacy-player-tests-vm-enabled-command.json",
+      "compressed": false,
+      "originalBytes": 1235,
+      "originalSha256": "e26de5b1ba518a86b2965be1642d86b333551bdf5042e2006c503488f3fc4ee2",
+      "storedSha256": "e26de5b1ba518a86b2965be1642d86b333551bdf5042e2006c503488f3fc4ee2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\legacy-player-tests-vm-enabled-log.txt",
+      "archive": "data/workspace/legacy-player-tests-vm-enabled-log.txt",
+      "compressed": false,
+      "originalBytes": 335,
+      "originalSha256": "851c44236dd4b00e5a391a60b05cb8e99c38ec324c011d1ef2ecb6664517fa4d",
+      "storedSha256": "851c44236dd4b00e5a391a60b05cb8e99c38ec324c011d1ef2ecb6664517fa4d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\local-installation-command.json",
+      "archive": "data/workspace/local-installation-command.json",
+      "compressed": false,
+      "originalBytes": 1215,
+      "originalSha256": "984dbf317776e3b9c9a7648c223ba4ed100b8b7a4e38a9a9fb9f48dca83de2ea",
+      "storedSha256": "984dbf317776e3b9c9a7648c223ba4ed100b8b7a4e38a9a9fb9f48dca83de2ea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\local-installation-log.txt",
+      "archive": "data/workspace/local-installation-log.txt",
+      "compressed": false,
+      "originalBytes": 205,
+      "originalSha256": "7ff7e44e95e18f9512740aae46891f8e7fb6eb32401196849ab2b41bc2372827",
+      "storedSha256": "7ff7e44e95e18f9512740aae46891f8e7fb6eb32401196849ab2b41bc2372827"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\native-topology-tests-command.json",
+      "archive": "data/workspace/native-topology-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1233,
+      "originalSha256": "6a1d5ad2c686355f2fe9e32bea267af697505412d3d3d9b3ecf34fa06f33c82c",
+      "storedSha256": "6a1d5ad2c686355f2fe9e32bea267af697505412d3d3d9b3ecf34fa06f33c82c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\native-topology-tests-log.txt",
+      "archive": "data/workspace/native-topology-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 314,
+      "originalSha256": "140ca8558b1ed6477e5be994e4823b1a653720fc17262fdb9310583600f3756a",
+      "storedSha256": "140ca8558b1ed6477e5be994e4823b1a653720fc17262fdb9310583600f3756a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\plan.json",
+      "archive": "data/workspace/plan.json",
+      "compressed": false,
+      "originalBytes": 5784,
+      "originalSha256": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b",
+      "storedSha256": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\registration.json",
+      "archive": "data/workspace/registration.json",
+      "compressed": false,
+      "originalBytes": 1343,
+      "originalSha256": "53a10213aecb9f86101dc5f9423c41b2a304fee29746a94871c734f04cea023c",
+      "storedSha256": "53a10213aecb9f86101dc5f9423c41b2a304fee29746a94871c734f04cea023c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\reported-browser-diagnostic-command.json",
+      "archive": "data/workspace/reported-browser-diagnostic-command.json",
+      "compressed": false,
+      "originalBytes": 1807,
+      "originalSha256": "720e43d92bd8932a7e0a12a0d644e1f2b6356e0ce19fc9f4f93542b26c6967e8",
+      "storedSha256": "720e43d92bd8932a7e0a12a0d644e1f2b6356e0ce19fc9f4f93542b26c6967e8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\reported-browser-diagnostic-log.txt",
+      "archive": "data/workspace/reported-browser-diagnostic-log.txt",
+      "compressed": false,
+      "originalBytes": 2025,
+      "originalSha256": "81bcafb13eec974338842fab822362b31c9d5454c9331d9f224be1789ea92446",
+      "storedSha256": "81bcafb13eec974338842fab822362b31c9d5454c9331d9f224be1789ea92446"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\reported-game-diagnostic-command.json",
+      "archive": "data/workspace/reported-game-diagnostic-command.json",
+      "compressed": false,
+      "originalBytes": 1215,
+      "originalSha256": "7f63f1352577ff04a841a48e5fb40017364d6128b473d000f3db3ef2e61bea77",
+      "storedSha256": "7f63f1352577ff04a841a48e5fb40017364d6128b473d000f3db3ef2e61bea77"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\reported-game-diagnostic-log.txt",
+      "archive": "data/workspace/reported-game-diagnostic-log.txt",
+      "compressed": false,
+      "originalBytes": 453,
+      "originalSha256": "6d0c58158c5a6fe5a4c156285fdc676cd21dd518b7cb39826b97acb34bebed24",
+      "storedSha256": "6d0c58158c5a6fe5a4c156285fdc676cd21dd518b7cb39826b97acb34bebed24"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\reported-game.json",
+      "archive": "data/workspace/reported-game.json",
+      "compressed": false,
+      "originalBytes": 2331,
+      "originalSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea",
+      "storedSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\baseline-browser.json",
+      "archive": "data/workspace/results/baseline-browser.json",
+      "compressed": false,
+      "originalBytes": 8638,
+      "originalSha256": "2449a869ad83a9e07e90166c42b9fbe84e3d375a1381232b184dafc201c0dac5",
+      "storedSha256": "2449a869ad83a9e07e90166c42b9fbe84e3d375a1381232b184dafc201c0dac5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\baseline-only-calibration.json",
+      "archive": "data/workspace/results/baseline-only-calibration.json.gz",
+      "compressed": true,
+      "originalBytes": 232716,
+      "originalSha256": "4b0950173db7b8fae4bc44fc0a07954b8546660e19985a26f5afbaac216f7f21",
+      "storedSha256": "d174ed0a2f6b5ad1e06a3be6f580e1bfa173cdcf58968fd7e3f9b8d5204c5f9a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\cold-switch-latency.json",
+      "archive": "data/workspace/results/cold-switch-latency.json",
+      "compressed": false,
+      "originalBytes": 24151,
+      "originalSha256": "6b4fd07d1af60433cf7989e1cdbe00910082e8e2e17a992ae9c936ddceaa5099",
+      "storedSha256": "6b4fd07d1af60433cf7989e1cdbe00910082e8e2e17a992ae9c936ddceaa5099"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\decision.json",
+      "archive": "data/workspace/results/decision.json",
+      "compressed": false,
+      "originalBytes": 35962,
+      "originalSha256": "f660a5405946bafb9cd5ecf9b672e2a0590692d65a7229fa1e9e9d0d870ede79",
+      "storedSha256": "f660a5405946bafb9cd5ecf9b672e2a0590692d65a7229fa1e9e9d0d870ede79"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-openings-2026102921.json",
+      "archive": "data/workspace/results/development-openings-2026102921.json",
+      "compressed": false,
+      "originalBytes": 5929,
+      "originalSha256": "c3c6ab1bbae832cde50f01a3346e8d1b7c527da91f5a5e7da3b6f4f86fb6bd84",
+      "storedSha256": "c3c6ab1bbae832cde50f01a3346e8d1b7c527da91f5a5e7da3b6f4f86fb6bd84"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-registration.json",
+      "archive": "data/workspace/results/development-registration.json",
+      "compressed": false,
+      "originalBytes": 341,
+      "originalSha256": "27baacde03c6eb1969cee67195e88dd1fc56aa6b0a1c65f1f05458d0391c9d64",
+      "storedSha256": "27baacde03c6eb1969cee67195e88dd1fc56aa6b0a1c65f1f05458d0391c9d64"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-replay-audit.json",
+      "archive": "data/workspace/results/development-replay-audit.json",
+      "compressed": false,
+      "originalBytes": 1702,
+      "originalSha256": "8791bbf6b729a52a51bfe68aff4a99d7681a94c3155e8c26611e64b0bca3e38e",
+      "storedSha256": "8791bbf6b729a52a51bfe68aff4a99d7681a94c3155e8c26611e64b0bca3e38e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane11.json",
+      "archive": "data/workspace/results/development-Routed-r0-plane11.json",
+      "compressed": false,
+      "originalBytes": 18389,
+      "originalSha256": "8ec3f1b657fa0a709caf81af56a7d16fccd87981fa76521485f240567a71a0e0",
+      "storedSha256": "8ec3f1b657fa0a709caf81af56a7d16fccd87981fa76521485f240567a71a0e0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-plane11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 784162,
+      "originalSha256": "95bb9335dedd9734b3bd66a38c9cf6b98ab7db83c820b292f33921891055e0b0",
+      "storedSha256": "95bb9335dedd9734b3bd66a38c9cf6b98ab7db83c820b292f33921891055e0b0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane7.json",
+      "archive": "data/workspace/results/development-Routed-r0-plane7.json",
+      "compressed": false,
+      "originalBytes": 9075,
+      "originalSha256": "75ed1eb829adda3cd8a2eddf1daec568fdd6e76bdc06b63bddcc0bc03eb56b46",
+      "storedSha256": "75ed1eb829adda3cd8a2eddf1daec568fdd6e76bdc06b63bddcc0bc03eb56b46"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-plane7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 140562,
+      "originalSha256": "4a0ba18bede5e4471bc1baef6cd49d1f7d8b289202ddf937c21a9cd72f73564e",
+      "storedSha256": "4a0ba18bede5e4471bc1baef6cd49d1f7d8b289202ddf937c21a9cd72f73564e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane9.json",
+      "archive": "data/workspace/results/development-Routed-r0-plane9.json",
+      "compressed": false,
+      "originalBytes": 13415,
+      "originalSha256": "2a81dcb5051a20d747e813d41635a7c3bbc220f79801228eb8006c4681768bf2",
+      "storedSha256": "2a81dcb5051a20d747e813d41635a7c3bbc220f79801228eb8006c4681768bf2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-plane9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-plane9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 372694,
+      "originalSha256": "677da26ef9e80ba660ec649459e9c145bfeea5123edd8d88a4a86e3a9757a10b",
+      "storedSha256": "677da26ef9e80ba660ec649459e9c145bfeea5123edd8d88a4a86e3a9757a10b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere3.json",
+      "archive": "data/workspace/results/development-Routed-r0-sphere3.json",
+      "compressed": false,
+      "originalBytes": 9535,
+      "originalSha256": "5a8a30d6b8e0ae59420f67604e2d186ef20d5cf69d372d80316138da5a1185a9",
+      "storedSha256": "5a8a30d6b8e0ae59420f67604e2d186ef20d5cf69d372d80316138da5a1185a9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere3.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-sphere3.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 176789,
+      "originalSha256": "d42d9a0c12ab1cb1784527e1368a3d36ea10974d0459b3c1723672d2397ac6e8",
+      "storedSha256": "d42d9a0c12ab1cb1784527e1368a3d36ea10974d0459b3c1723672d2397ac6e8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere4.json",
+      "archive": "data/workspace/results/development-Routed-r0-sphere4.json",
+      "compressed": false,
+      "originalBytes": 13343,
+      "originalSha256": "934d41243db1919e8334a7d90beaf86134cc015cc2c098dbf4899781a59a07c9",
+      "storedSha256": "934d41243db1919e8334a7d90beaf86134cc015cc2c098dbf4899781a59a07c9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere4.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-sphere4.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 465627,
+      "originalSha256": "368b3da61149a5267acde6aeee4708ab7cdbf509ac40d8af03221eef21e63483",
+      "storedSha256": "368b3da61149a5267acde6aeee4708ab7cdbf509ac40d8af03221eef21e63483"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere5.json",
+      "archive": "data/workspace/results/development-Routed-r0-sphere5.json",
+      "compressed": false,
+      "originalBytes": 19035,
+      "originalSha256": "70d6ae73d2aa480371945a465b034fd0973c7d1a5e261edacabad0afda07c73d",
+      "storedSha256": "70d6ae73d2aa480371945a465b034fd0973c7d1a5e261edacabad0afda07c73d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-sphere5.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-sphere5.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 1026369,
+      "originalSha256": "e19860b80ea5bba17037f8d6005216195a91b2c1eb7aaa3c43bc70f0333dba74",
+      "storedSha256": "e19860b80ea5bba17037f8d6005216195a91b2c1eb7aaa3c43bc70f0333dba74"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus11.json",
+      "archive": "data/workspace/results/development-Routed-r0-torus11.json",
+      "compressed": false,
+      "originalBytes": 16143,
+      "originalSha256": "353e0c7a2f6bda03fc2b406329dae666d560d4e47c045e222e244db738a37771",
+      "storedSha256": "353e0c7a2f6bda03fc2b406329dae666d560d4e47c045e222e244db738a37771"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-torus11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 695744,
+      "originalSha256": "31ed73f756dd942211ce21bb6f8a054b29003430e65e775fe93f9dd2ee0d63f3",
+      "storedSha256": "31ed73f756dd942211ce21bb6f8a054b29003430e65e775fe93f9dd2ee0d63f3"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus7.json",
+      "archive": "data/workspace/results/development-Routed-r0-torus7.json",
+      "compressed": false,
+      "originalBytes": 9234,
+      "originalSha256": "1937933a0a737ab410012b224e124b435383696f0b3448fcde9b2ef9375ab010",
+      "storedSha256": "1937933a0a737ab410012b224e124b435383696f0b3448fcde9b2ef9375ab010"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-torus7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 151872,
+      "originalSha256": "73071bca656c74c5a2f54b4d8fe47731c686a577f6f6ad43c0d3ac7c66ea3e59",
+      "storedSha256": "73071bca656c74c5a2f54b4d8fe47731c686a577f6f6ad43c0d3ac7c66ea3e59"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus9.json",
+      "archive": "data/workspace/results/development-Routed-r0-torus9.json",
+      "compressed": false,
+      "originalBytes": 12485,
+      "originalSha256": "5c406783162883ff20d11251ccfa375237014011432bb893fba0a712cbddf02a",
+      "storedSha256": "5c406783162883ff20d11251ccfa375237014011432bb893fba0a712cbddf02a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-Routed-r0-torus9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/development-Routed-r0-torus9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 354326,
+      "originalSha256": "15be77f452354b29c40e0362066b06df3e4d4a21f611ae0da31e7e892a9a1746",
+      "storedSha256": "15be77f452354b29c40e0362066b06df3e4d4a21f611ae0da31e7e892a9a1746"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\development-summary.json",
+      "archive": "data/workspace/results/development-summary.json",
+      "compressed": false,
+      "originalBytes": 5860,
+      "originalSha256": "bb85812a732adbede622f71ffb8d1e6eaafaeddf93304f0850e0bdee1acbdaa1",
+      "storedSha256": "bb85812a732adbede622f71ffb8d1e6eaafaeddf93304f0850e0bdee1acbdaa1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\equal-time-budgets.json",
+      "archive": "data/workspace/results/equal-time-budgets.json",
+      "compressed": false,
+      "originalBytes": 969,
+      "originalSha256": "0511e4bc3388969765c46ccaae666119076a5b2d403fb2ee1a6426224257d8c8",
+      "storedSha256": "0511e4bc3388969765c46ccaae666119076a5b2d403fb2ee1a6426224257d8c8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\equal-time.json",
+      "archive": "data/workspace/results/equal-time.json.gz",
+      "compressed": true,
+      "originalBytes": 225271,
+      "originalSha256": "dd554ae430238f4fd831b7a6a565adaf5f47082254b61fe49c2ca793d0b05427",
+      "storedSha256": "f8b0fcc1629914155b2a575b3e11252c8a943e16b725fc4ac9d428ace574828d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\fixed64-latency.json",
+      "archive": "data/workspace/results/fixed64-latency.json.gz",
+      "compressed": true,
+      "originalBytes": 231485,
+      "originalSha256": "1a9da8103df58ca436e9705dce1a33a286f80dbf13b15af9e4c675e88b872531",
+      "storedSha256": "8b366e36a34808948d09c64025ae17ada2cc32c72748477e07aac7d2f8b17703"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-decision.json",
+      "archive": "data/workspace/results/independent-decision.json",
+      "compressed": false,
+      "originalBytes": 11277,
+      "originalSha256": "2c884c5dfead3e0c07c412e98234e049bfb5f5a684e92c9e9233860f7725597c",
+      "storedSha256": "2c884c5dfead3e0c07c412e98234e049bfb5f5a684e92c9e9233860f7725597c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-openings-2026102922.json",
+      "archive": "data/workspace/results/independent-openings-2026102922.json",
+      "compressed": false,
+      "originalBytes": 30867,
+      "originalSha256": "5a5505243dbdfc8a78349320659253eb02ce3355c11d4042058e3100a0fc3fce",
+      "storedSha256": "5a5505243dbdfc8a78349320659253eb02ce3355c11d4042058e3100a0fc3fce"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-registration.json",
+      "archive": "data/workspace/results/independent-registration.json",
+      "compressed": false,
+      "originalBytes": 341,
+      "originalSha256": "ef7f49ec7dd72b8ef111b540e746c50a47ef8e9c677f4f3912dc7efd5fff2ec1",
+      "storedSha256": "ef7f49ec7dd72b8ef111b540e746c50a47ef8e9c677f4f3912dc7efd5fff2ec1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-replay-audit.json",
+      "archive": "data/workspace/results/independent-replay-audit.json",
+      "compressed": false,
+      "originalBytes": 1720,
+      "originalSha256": "d8e68acc7a7fd6aaf900bcecc833f1d1dfa3f2d7fea30432f10933ef9edbbd4d",
+      "storedSha256": "d8e68acc7a7fd6aaf900bcecc833f1d1dfa3f2d7fea30432f10933ef9edbbd4d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane11.json",
+      "archive": "data/workspace/results/independent-Routed-r0-plane11.json.gz",
+      "compressed": true,
+      "originalBytes": 106000,
+      "originalSha256": "2adf9982809fbac745930932b1086a0c8fa5b4f8f60cce304ed41045253bd900",
+      "storedSha256": "15baa3f4f97a7d9d8d53d0dcc7458d24ebb8c2e2c2ddc724c8699c333bf2e74a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-plane11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 4520192,
+      "originalSha256": "92da7dca821546fa29a6ae72e16d9e8a177674f87c5ebd15d1f5c4f220639b19",
+      "storedSha256": "92da7dca821546fa29a6ae72e16d9e8a177674f87c5ebd15d1f5c4f220639b19"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane7.json",
+      "archive": "data/workspace/results/independent-Routed-r0-plane7.json",
+      "compressed": false,
+      "originalBytes": 52658,
+      "originalSha256": "dd6fedad20646d95b85b79a51e5379a12c97e2d9b888c54de91c6d8b6766b596",
+      "storedSha256": "dd6fedad20646d95b85b79a51e5379a12c97e2d9b888c54de91c6d8b6766b596"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-plane7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 882203,
+      "originalSha256": "ff018c05a1aded1ad3e64cbc67ba256f06c6d6baaac73e309fd05c07602041d9",
+      "storedSha256": "ff018c05a1aded1ad3e64cbc67ba256f06c6d6baaac73e309fd05c07602041d9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane9.json",
+      "archive": "data/workspace/results/independent-Routed-r0-plane9.json.gz",
+      "compressed": true,
+      "originalBytes": 75353,
+      "originalSha256": "3601764cf2b41a2a0717671313385bd6a0f7b9186a254173e2435953f4ca41ff",
+      "storedSha256": "119bbdbfc3ac526d5f72c23a547ba15a3dd289215e6a9639cefbfeb5f35dd020"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-plane9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-plane9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 2192476,
+      "originalSha256": "7346c04bd3b8d17cb30bea061aa72d6ba1bd21a88fe5d3e7530713aafece944e",
+      "storedSha256": "7346c04bd3b8d17cb30bea061aa72d6ba1bd21a88fe5d3e7530713aafece944e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere3.json",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere3.json",
+      "compressed": false,
+      "originalBytes": 55568,
+      "originalSha256": "d1177a863c530c0b6069e928ec263f89062fcf726e475cb0f74ad6d86017ada2",
+      "storedSha256": "d1177a863c530c0b6069e928ec263f89062fcf726e475cb0f74ad6d86017ada2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere3.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere3.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 1097391,
+      "originalSha256": "6e6416bafa8fe26db2a2e1906d7c2365cbb9b784341707b0ee83d21d1bdfe664",
+      "storedSha256": "6e6416bafa8fe26db2a2e1906d7c2365cbb9b784341707b0ee83d21d1bdfe664"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere4.json",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere4.json.gz",
+      "compressed": true,
+      "originalBytes": 79667,
+      "originalSha256": "e1288b8b859fb95ea715094f252cd7390b03688c81f55439c3fda27e8a133053",
+      "storedSha256": "5e0c38454e1278e4f8a080d0b3b51b75ebca2ba61c29ecab002d7c7653d4a3f2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere4.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere4.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 2854824,
+      "originalSha256": "cdd806dd41cd569758b92e33f86b60d8458c12fac7c11664371cfbe6445a8db3",
+      "storedSha256": "cdd806dd41cd569758b92e33f86b60d8458c12fac7c11664371cfbe6445a8db3"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere5.json",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere5.json.gz",
+      "compressed": true,
+      "originalBytes": 112035,
+      "originalSha256": "0d29c5854ec09909839e37bc9b8bb0a279f2b428a374ec9dacd10d2de64de419",
+      "storedSha256": "fc00520de0182b4369eb2e549c60cba0a67a2dabb50b3a87f550cc162abcf564"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-sphere5.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-sphere5.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 6129204,
+      "originalSha256": "040012da8930c5d692a1e9ea3ba2b3c1933eb33ed5a677254285ed2777e21894",
+      "storedSha256": "040012da8930c5d692a1e9ea3ba2b3c1933eb33ed5a677254285ed2777e21894"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus11.json",
+      "archive": "data/workspace/results/independent-Routed-r0-torus11.json.gz",
+      "compressed": true,
+      "originalBytes": 92787,
+      "originalSha256": "2699fec3304ed1b960cc6bc42e6dbb3fd419cc92dcbf6a7964696e7de4f50189",
+      "storedSha256": "dd6088451efba034bd04b8324d15f8244571fcaf142311850a65294e5d7d8290"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus11.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-torus11.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 4143888,
+      "originalSha256": "b4638541158bd0c33974642d6e19786a7c76780b5bd9b30666fdc69985f97d76",
+      "storedSha256": "b4638541158bd0c33974642d6e19786a7c76780b5bd9b30666fdc69985f97d76"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus7.json",
+      "archive": "data/workspace/results/independent-Routed-r0-torus7.json",
+      "compressed": false,
+      "originalBytes": 54002,
+      "originalSha256": "50f1b51a111d1b865ce2acfd3cc93fedca0a2c8be51b97596269c611edc20bea",
+      "storedSha256": "50f1b51a111d1b865ce2acfd3cc93fedca0a2c8be51b97596269c611edc20bea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus7.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-torus7.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 927032,
+      "originalSha256": "aa1bd292c4d4c119b5f2f297748becd827686b1357356f42260d6b8cb8d0daaa",
+      "storedSha256": "aa1bd292c4d4c119b5f2f297748becd827686b1357356f42260d6b8cb8d0daaa"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus9.json",
+      "archive": "data/workspace/results/independent-Routed-r0-torus9.json.gz",
+      "compressed": true,
+      "originalBytes": 71031,
+      "originalSha256": "15e7efdd19ffd2a7363fc459bd566c8dbaf1f9437b79b223487a6f96ff7e6cf6",
+      "storedSha256": "862002827d834816744afea549489a2c89826cc607672d3aee00278bfb40b339"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-Routed-r0-torus9.json.trace.jsonl.gz",
+      "archive": "data/workspace/results/independent-Routed-r0-torus9.json.trace.jsonl.gz",
+      "compressed": false,
+      "originalBytes": 2107179,
+      "originalSha256": "8e67351302c748b49ada2596285fc967a1add9a700a21d3c68960b90d2422aae",
+      "storedSha256": "8e67351302c748b49ada2596285fc967a1add9a700a21d3c68960b90d2422aae"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\independent-summary.json",
+      "archive": "data/workspace/results/independent-summary.json",
+      "compressed": false,
+      "originalBytes": 12394,
+      "originalSha256": "0ea91a832280abeee984988936ae794f54786427717c71caf7aa0cb839dc4d0b",
+      "storedSha256": "0ea91a832280abeee984988936ae794f54786427717c71caf7aa0cb839dc4d0b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\installed-browser.json",
+      "archive": "data/workspace/results/installed-browser.json",
+      "compressed": false,
+      "originalBytes": 12892,
+      "originalSha256": "3ec6d67f190374b79046534b1331b997e591a832157a4b3e01989f78f2c1ec02",
+      "storedSha256": "3ec6d67f190374b79046534b1331b997e591a832157a4b3e01989f78f2c1ec02"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\latency-decision.json",
+      "archive": "data/workspace/results/latency-decision.json",
+      "compressed": false,
+      "originalBytes": 14656,
+      "originalSha256": "77a74cccc7745ef804b892f89b8c14e1237263901d4587372fd28fe71a26b005",
+      "storedSha256": "77a74cccc7745ef804b892f89b8c14e1237263901d4587372fd28fe71a26b005"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\latency-protocol.json",
+      "archive": "data/workspace/results/latency-protocol.json",
+      "compressed": false,
+      "originalBytes": 3502,
+      "originalSha256": "cdba781ad4f04f1df01a8b9d19c5577d52bae0aded4c90bd718b85026aa9de19",
+      "storedSha256": "cdba781ad4f04f1df01a8b9d19c5577d52bae0aded4c90bd718b85026aa9de19"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\latency-registration.json",
+      "archive": "data/workspace/results/latency-registration.json",
+      "compressed": false,
+      "originalBytes": 1750,
+      "originalSha256": "b7e0f0173e64a9a6727dca3a88f5ebb7b373a65e2e45997ac13eae3c307628fc",
+      "storedSha256": "b7e0f0173e64a9a6727dca3a88f5ebb7b373a65e2e45997ac13eae3c307628fc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\local-integration.json",
+      "archive": "data/workspace/results/local-integration.json",
+      "compressed": false,
+      "originalBytes": 1851,
+      "originalSha256": "d48bd9828f77ca15fb4c6950b2af9cd4078332f596701141209783fca197dbde",
+      "storedSha256": "d48bd9828f77ca15fb4c6950b2af9cd4078332f596701141209783fca197dbde"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\preflight.json",
+      "archive": "data/workspace/results/preflight.json",
+      "compressed": false,
+      "originalBytes": 2005,
+      "originalSha256": "2b695ec883cc49838abc83e19d5ac1a61135916c65b85514041eb7c61276b7f1",
+      "storedSha256": "2b695ec883cc49838abc83e19d5ac1a61135916c65b85514041eb7c61276b7f1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\reported-browser-diagnostic.json",
+      "archive": "data/workspace/results/reported-browser-diagnostic.json",
+      "compressed": false,
+      "originalBytes": 4094,
+      "originalSha256": "4e819da846415f337818ad5604a696777efc7f802af0564066bca9619c448b0b",
+      "storedSha256": "4e819da846415f337818ad5604a696777efc7f802af0564066bca9619c448b0b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\reported-browser-position.json",
+      "archive": "data/workspace/results/reported-browser-position.json",
+      "compressed": false,
+      "originalBytes": 632,
+      "originalSha256": "965d3ba95dba713ff47a3f75f2f97ed1c50fc1f26c585b46d201bf566716cf8f",
+      "storedSha256": "965d3ba95dba713ff47a3f75f2f97ed1c50fc1f26c585b46d201bf566716cf8f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\reported-game-diagnostic.json",
+      "archive": "data/workspace/results/reported-game-diagnostic.json.gz",
+      "compressed": true,
+      "originalBytes": 69213,
+      "originalSha256": "3f930ed02e092d96685f3c82881e0e8e445ce9446ec22e12aea6b865cdffb87f",
+      "storedSha256": "818b89fe1b60661cbc52ca1e8a325b37b97db6ede12bd74fd4b2e4a69df70a34"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\routing-browser.json",
+      "archive": "data/workspace/results/routing-browser.json",
+      "compressed": false,
+      "originalBytes": 12962,
+      "originalSha256": "399ec4232f3816aa49cc60e607aeb75874fb95b6f9ede6a0601999e07a3c5320",
+      "storedSha256": "399ec4232f3816aa49cc60e607aeb75874fb95b6f9ede6a0601999e07a3c5320"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\selection.json",
+      "archive": "data/workspace/results/selection.json",
+      "compressed": false,
+      "originalBytes": 6045,
+      "originalSha256": "f2bc10f43ab4fdbc6238fc1a3a069ad551966d3637335e6e13c5b4f0d6981715",
+      "storedSha256": "f2bc10f43ab4fdbc6238fc1a3a069ad551966d3637335e6e13c5b4f0d6981715"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\results\\timing-positions.json",
+      "archive": "data/workspace/results/timing-positions.json",
+      "compressed": false,
+      "originalBytes": 28097,
+      "originalSha256": "a399646cfdc7c52d63e03ad5d8ada33b74051bca1d5162335c81a0ab4b40bc74",
+      "storedSha256": "a399646cfdc7c52d63e03ad5d8ada33b74051bca1d5162335c81a0ab4b40bc74"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\golden.json",
+      "archive": "data/workspace/Routed-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 99944,
+      "originalSha256": "a7e2d84806ff73d26c9a5fb9234cc7565294aafbd212f2f2aa9ec93e1046f157",
+      "storedSha256": "eea0359426b62ae4f3e124a38147fd464271b9210275cd888d0f7c93002cdb5e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Routed-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\manifest.json",
+      "archive": "data/workspace/Routed-r0-model/manifest.json",
+      "compressed": false,
+      "originalBytes": 1889,
+      "originalSha256": "a1b9f99c36f8c7e1acc939998e579a5dbda0fdab8622b39b8c1cc12967467a38",
+      "storedSha256": "a1b9f99c36f8c7e1acc939998e579a5dbda0fdab8622b39b8c1cc12967467a38"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\model.onnx",
+      "archive": "data/workspace/Routed-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "storedSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\plane\\golden.json",
+      "archive": "data/workspace/Routed-r0-model/plane/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100610,
+      "originalSha256": "a64eab73c8c46a08e1f7879f3297ebd9749763f6446094de38f5e049d66273eb",
+      "storedSha256": "70db62a03be0f8c66bea2f6c9482f601c6beae8ba486a0864e8cc6c795e7b6f5"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\plane\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Routed-r0-model/plane/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\plane\\manifest.json",
+      "archive": "data/workspace/Routed-r0-model/plane/manifest.json",
+      "compressed": false,
+      "originalBytes": 1007,
+      "originalSha256": "d0b488ecd8329ce2659eab6d4400f50bae200d1cc2bd723fd846b186c6ab90ec",
+      "storedSha256": "d0b488ecd8329ce2659eab6d4400f50bae200d1cc2bd723fd846b186c6ab90ec"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\plane\\model.onnx",
+      "archive": "data/workspace/Routed-r0-model/plane/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "storedSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\plane\\weights.f32",
+      "archive": "data/workspace/Routed-r0-model/plane/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e",
+      "storedSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\Routed-r0-model\\weights.f32",
+      "archive": "data/workspace/Routed-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+      "storedSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-browser-command.json",
+      "archive": "data/workspace/routing-browser-command.json",
+      "compressed": false,
+      "originalBytes": 1414,
+      "originalSha256": "edd6b2555b2733580418cc2281ec33f428abd1a31db3b7252758957d178ac4be",
+      "storedSha256": "edd6b2555b2733580418cc2281ec33f428abd1a31db3b7252758957d178ac4be"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-browser-log.txt",
+      "archive": "data/workspace/routing-browser-log.txt",
+      "compressed": false,
+      "originalBytes": 13140,
+      "originalSha256": "e86f199631055510a00282a956f77e05417313b6b5e7c6f87fbb3df5374ac193",
+      "storedSha256": "e86f199631055510a00282a956f77e05417313b6b5e7c6f87fbb3df5374ac193"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-integrity-tests-command.json",
+      "archive": "data/workspace/routing-integrity-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1235,
+      "originalSha256": "83b919717581fd1ae66d8802e5137a4c710e3da8151725513214d60883369930",
+      "storedSha256": "83b919717581fd1ae66d8802e5137a4c710e3da8151725513214d60883369930"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-integrity-tests-log.txt",
+      "archive": "data/workspace/routing-integrity-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 296,
+      "originalSha256": "f228a8a69db7169483dca501ba4f5207c4e62924e7cfd9ea1cd5f70dfc7f3c6e",
+      "storedSha256": "f228a8a69db7169483dca501ba4f5207c4e62924e7cfd9ea1cd5f70dfc7f3c6e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-unit-tests-command.json",
+      "archive": "data/workspace/routing-unit-tests-command.json",
+      "compressed": false,
+      "originalBytes": 1226,
+      "originalSha256": "9f49e3e1f70836cd279402896478f0df8ab055cf99ebac063039c8d1ed8de2eb",
+      "storedSha256": "9f49e3e1f70836cd279402896478f0df8ab055cf99ebac063039c8d1ed8de2eb"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\routing-unit-tests-log.txt",
+      "archive": "data/workspace/routing-unit-tests-log.txt",
+      "compressed": false,
+      "originalBytes": 766,
+      "originalSha256": "e6066ae4ba88b3ac5beb1f7b3e96abf3ca4a4e90e4220865cca83d84187dccd9",
+      "storedSha256": "e6066ae4ba88b3ac5beb1f7b3e96abf3ca4a4e90e4220865cca83d84187dccd9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\search.wasm",
+      "archive": "data/workspace/search.wasm",
+      "compressed": false,
+      "originalBytes": 121429,
+      "originalSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+      "storedSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\selection-command.json",
+      "archive": "data/workspace/selection-command.json",
+      "compressed": false,
+      "originalBytes": 1228,
+      "originalSha256": "34e061aad3a0f15914ffe51c56b12413d9d9ccf3d66310f2669df6f8709d20f6",
+      "storedSha256": "34e061aad3a0f15914ffe51c56b12413d9d9ccf3d66310f2669df6f8709d20f6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\selection-log.txt",
+      "archive": "data/workspace/selection-log.txt",
+      "compressed": false,
+      "originalBytes": 140,
+      "originalSha256": "1df45cc57b219ca39f6e67aa1e254562cc675fc154b8c5d1bb3916f0da027552",
+      "storedSha256": "1df45cc57b219ca39f6e67aa1e254562cc675fc154b8c5d1bb3916f0da027552"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\baseline-node-inference.mjs",
+      "archive": "data/workspace/sources/baseline-node-inference.mjs",
+      "compressed": false,
+      "originalBytes": 1364,
+      "originalSha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a",
+      "storedSha256": "53d0fe981ab3cd60aedeb726aab5c7ebaa967dc75ed750d3d86902c358836a9a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\development-matches.mjs",
+      "archive": "data/workspace/sources/development-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9215,
+      "originalSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4",
+      "storedSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-v3-inference.js",
+      "archive": "data/workspace/sources/dist-ai-v3-inference.js",
+      "compressed": false,
+      "originalBytes": 8594,
+      "originalSha256": "a627744a29795c74eca981a7f36ab457fde78b88e62854d67e1e4a6c13da66b2",
+      "storedSha256": "a627744a29795c74eca981a7f36ab457fde78b88e62854d67e1e4a6c13da66b2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-v3-routing.js",
+      "archive": "data/workspace/sources/dist-ai-v3-routing.js",
+      "compressed": false,
+      "originalBytes": 3198,
+      "originalSha256": "8955f23ab198408e1516df6cd0c06ee675a1f339385f3f99c5c72b25d52e1c77",
+      "storedSha256": "8955f23ab198408e1516df6cd0c06ee675a1f339385f3f99c5c72b25d52e1c77"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-v3-search.js",
+      "archive": "data/workspace/sources/dist-ai-v3-search.js",
+      "compressed": false,
+      "originalBytes": 4919,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-v3-webgpu.js",
+      "archive": "data/workspace/sources/dist-ai-v3-webgpu.js",
+      "compressed": false,
+      "originalBytes": 11161,
+      "originalSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+      "storedSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-v3.js",
+      "archive": "data/workspace/sources/dist-ai-v3.js",
+      "compressed": false,
+      "originalBytes": 3849,
+      "originalSha256": "599cceff3fb53269a7f934e929eb9ad6b37a16c45367a5b3533c19e277a2ce42",
+      "storedSha256": "599cceff3fb53269a7f934e929eb9ad6b37a16c45367a5b3533c19e277a2ce42"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\dist-ai-worker.js",
+      "archive": "data/workspace/sources/dist-ai-worker.js",
+      "compressed": false,
+      "originalBytes": 2386,
+      "originalSha256": "4aa1bc8b6cd91278118f0a7126e6d4171b7833cb0efc99258f8df661410ed33c",
+      "storedSha256": "4aa1bc8b6cd91278118f0a7126e6d4171b7833cb0efc99258f8df661410ed33c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\independent-matches.mjs",
+      "archive": "data/workspace/sources/independent-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9215,
+      "originalSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4",
+      "storedSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\search-campaign-bench.mjs",
+      "archive": "data/workspace/sources/search-campaign-bench.mjs",
+      "compressed": false,
+      "originalBytes": 7341,
+      "originalSha256": "037da0e2b0f2bcf086cf73e819fc7e27a8ce3ed463f8e1f6aa22fd08882dcfc6",
+      "storedSha256": "037da0e2b0f2bcf086cf73e819fc7e27a8ce3ed463f8e1f6aa22fd08882dcfc6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\tools-ai-gnn-node-inference.mjs",
+      "archive": "data/workspace/sources/tools-ai-gnn-node-inference.mjs",
+      "compressed": false,
+      "originalBytes": 1995,
+      "originalSha256": "1b621ac2a01bb2493f75239add7ace0623536c13945fcffb17fbbb43a0ad0043",
+      "storedSha256": "1b621ac2a01bb2493f75239add7ace0623536c13945fcffb17fbbb43a0ad0043"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\tools-ai-gnn-topology-routing-audit.mjs",
+      "archive": "data/workspace/sources/tools-ai-gnn-topology-routing-audit.mjs",
+      "compressed": false,
+      "originalBytes": 3917,
+      "originalSha256": "3904f5ecd4624bf3e93d656972a9db63b6ecc556f7fbc189cddc4dad294848dd",
+      "storedSha256": "3904f5ecd4624bf3e93d656972a9db63b6ecc556f7fbc189cddc4dad294848dd"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\tools-ai-gnn-topology-routing-matches.mjs",
+      "archive": "data/workspace/sources/tools-ai-gnn-topology-routing-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9215,
+      "originalSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4",
+      "storedSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\topology-routing-cold-bench.mjs",
+      "archive": "data/workspace/sources/topology-routing-cold-bench.mjs",
+      "compressed": false,
+      "originalBytes": 6719,
+      "originalSha256": "8d46e526c10e24cac30defe2fc73d9fbd9400972003659dcbb59cd9e994281f4",
+      "storedSha256": "8d46e526c10e24cac30defe2fc73d9fbd9400972003659dcbb59cd9e994281f4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\topology-routing-equal-time.mjs",
+      "archive": "data/workspace/sources/topology-routing-equal-time.mjs",
+      "compressed": false,
+      "originalBytes": 7402,
+      "originalSha256": "97a8a54ff95c76b4313b0c4f0cfb8bdff64e69bc1154da54c7c13628f7325741",
+      "storedSha256": "97a8a54ff95c76b4313b0c4f0cfb8bdff64e69bc1154da54c7c13628f7325741"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\topology-routing-latency.mjs",
+      "archive": "data/workspace/sources/topology-routing-latency.mjs",
+      "compressed": false,
+      "originalBytes": 3618,
+      "originalSha256": "99700de31884969b564cdc589b50379d3768e0454b6dc223770c2f572908f05f",
+      "storedSha256": "99700de31884969b564cdc589b50379d3768e0454b6dc223770c2f572908f05f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\sources\\topology-routing-timing-prepare.mjs",
+      "archive": "data/workspace/sources/topology-routing-timing-prepare.mjs",
+      "compressed": false,
+      "originalBytes": 2165,
+      "originalSha256": "558002648c4b8f94224aec1831750911da744da0ff8c02c85cd40dd21b30df5a",
+      "storedSha256": "558002648c4b8f94224aec1831750911da744da0ff8c02c85cd40dd21b30df5a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-bench-inference-command.json",
+      "archive": "data/workspace/syntax-bench-inference-command.json",
+      "compressed": false,
+      "originalBytes": 1220,
+      "originalSha256": "8cb69e30609e84540a0b16d4072699bb0ebfd32840b7ea6843b3c1a992f35418",
+      "storedSha256": "8cb69e30609e84540a0b16d4072699bb0ebfd32840b7ea6843b3c1a992f35418"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-bench-inference-log.txt",
+      "archive": "data/workspace/syntax-bench-inference-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-match-command.json",
+      "archive": "data/workspace/syntax-match-command.json",
+      "compressed": false,
+      "originalBytes": 1211,
+      "originalSha256": "30460cdf7b91010b13fb732eb8eff911f02e924aa9edd127746748eb9841fa55",
+      "storedSha256": "30460cdf7b91010b13fb732eb8eff911f02e924aa9edd127746748eb9841fa55"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-match-log.txt",
+      "archive": "data/workspace/syntax-match-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-node-topology-inference-command.json",
+      "archive": "data/workspace/syntax-node-topology-inference-command.json",
+      "compressed": false,
+      "originalBytes": 1229,
+      "originalSha256": "f122b0efbfca60f1ea5532d7b90d5fa78fdbdd2bf465f284bdbd8c2a9263cc81",
+      "storedSha256": "f122b0efbfca60f1ea5532d7b90d5fa78fdbdd2bf465f284bdbd8c2a9263cc81"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-node-topology-inference-log.txt",
+      "archive": "data/workspace/syntax-node-topology-inference-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-reanalyze-command.json",
+      "archive": "data/workspace/syntax-reanalyze-command.json",
+      "compressed": false,
+      "originalBytes": 1215,
+      "originalSha256": "370e9dcd2e153c9e545ed34b3c0bb5e83340d3fb2b559821994efd41c4c79c90",
+      "storedSha256": "370e9dcd2e153c9e545ed34b3c0bb5e83340d3fb2b559821994efd41c4c79c90"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-reanalyze-log.txt",
+      "archive": "data/workspace/syntax-reanalyze-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-refresh-search-targets-command.json",
+      "archive": "data/workspace/syntax-refresh-search-targets-command.json",
+      "compressed": false,
+      "originalBytes": 1228,
+      "originalSha256": "c7f6d321b4e591a0b5449aea6b7eed15329862ee0776e06541565efc351afcdc",
+      "storedSha256": "c7f6d321b4e591a0b5449aea6b7eed15329862ee0776e06541565efc351afcdc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-refresh-search-targets-log.txt",
+      "archive": "data/workspace/syntax-refresh-search-targets-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-replay-endgame-command.json",
+      "archive": "data/workspace/syntax-replay-endgame-command.json",
+      "compressed": false,
+      "originalBytes": 1220,
+      "originalSha256": "a002e00906a85d5331b413e72b7a5656acf713299114ce375de684da819bb5eb",
+      "storedSha256": "a002e00906a85d5331b413e72b7a5656acf713299114ce375de684da819bb5eb"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-replay-endgame-log.txt",
+      "archive": "data/workspace/syntax-replay-endgame-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-selfplay-command.json",
+      "archive": "data/workspace/syntax-selfplay-command.json",
+      "compressed": false,
+      "originalBytes": 1214,
+      "originalSha256": "c60ead72aa20f5950d372366f4d02089ab0b4299507462273834e6883b9c0f50",
+      "storedSha256": "c60ead72aa20f5950d372366f4d02089ab0b4299507462273834e6883b9c0f50"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-selfplay-log.txt",
+      "archive": "data/workspace/syntax-selfplay-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-test-onnx-command.json",
+      "archive": "data/workspace/syntax-test-onnx-command.json",
+      "compressed": false,
+      "originalBytes": 1215,
+      "originalSha256": "0a2fdb4b4d45ed7c6bfb01d96b10dacd9f193f203b0d4a341e4da80e9e146aa4",
+      "storedSha256": "0a2fdb4b4d45ed7c6bfb01d96b10dacd9f193f203b0d4a341e4da80e9e146aa4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\syntax-test-onnx-log.txt",
+      "archive": "data/workspace/syntax-test-onnx-log.txt",
+      "compressed": false,
+      "originalBytes": 0,
+      "originalSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\third-party-generated-command.json",
+      "archive": "data/workspace/third-party-generated-command.json",
+      "compressed": false,
+      "originalBytes": 1195,
+      "originalSha256": "bdd4b54c90ce86da384cab5f07cd529a4d69fe66389d13ead7c465c840dad10a",
+      "storedSha256": "bdd4b54c90ce86da384cab5f07cd529a4d69fe66389d13ead7c465c840dad10a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\third-party-generated-log.txt",
+      "archive": "data/workspace/third-party-generated-log.txt",
+      "compressed": false,
+      "originalBytes": 94,
+      "originalSha256": "e94f5d0485e7124235b8ea333950f107ea6b93efaa183eb247712385453c3e20",
+      "storedSha256": "e94f5d0485e7124235b8ea333950f107ea6b93efaa183eb247712385453c3e20"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\third-party-notices-command.json",
+      "archive": "data/workspace/third-party-notices-command.json",
+      "compressed": false,
+      "originalBytes": 1218,
+      "originalSha256": "b347bf2dc2c69a31d53f5a1c5cc5695865127e5faa687b53e1e0c538459f745f",
+      "storedSha256": "b347bf2dc2c69a31d53f5a1c5cc5695865127e5faa687b53e1e0c538459f745f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\third-party-notices-log.txt",
+      "archive": "data/workspace/third-party-notices-log.txt",
+      "compressed": false,
+      "originalBytes": 153,
+      "originalSha256": "4ee270af6f9b0cc1332ace8711b7c37a597f03e36efa2eafc5f982c5427892dd",
+      "storedSha256": "4ee270af6f9b0cc1332ace8711b7c37a597f03e36efa2eafc5f982c5427892dd"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\timing-fixture-preparation-command.json",
+      "archive": "data/workspace/timing-fixture-preparation-command.json",
+      "compressed": false,
+      "originalBytes": 1221,
+      "originalSha256": "075b1eb28d01ec5f1bb700f898a607818025aa70514e685ca0f244e19c69d948",
+      "storedSha256": "075b1eb28d01ec5f1bb700f898a607818025aa70514e685ca0f244e19c69d948"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\topology-routing-study-20261029\\timing-fixture-preparation-log.txt",
+      "archive": "data/workspace/timing-fixture-preparation-log.txt",
+      "compressed": false,
+      "originalBytes": 107,
+      "originalSha256": "58b56d83cd7f2f1a9d8b463a0333ed53f20382aa7b05f78ebed938f43ac38f6d",
+      "storedSha256": "58b56d83cd7f2f1a9d8b463a0333ed53f20382aa7b05f78ebed938f43ac38f6d"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-prepare.mjs",
+      "archive": "data/tools/topology-routing-prepare.mjs",
+      "compressed": false,
+      "originalBytes": 3726,
+      "originalSha256": "0f8305d1be6d8e1c12cecc2dff8d636afa1a8328cf95e38b0433ca255a247c29",
+      "storedSha256": "0f8305d1be6d8e1c12cecc2dff8d636afa1a8328cf95e38b0433ca255a247c29"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-matches.mjs",
+      "archive": "data/tools/topology-routing-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9215,
+      "originalSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4",
+      "storedSha256": "3a8669dd79e391f2be6e8f81a50d5f4166b119b4653ed41a50f6ebd3c64323a4"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-audit.mjs",
+      "archive": "data/tools/topology-routing-audit.mjs",
+      "compressed": false,
+      "originalBytes": 3917,
+      "originalSha256": "3904f5ecd4624bf3e93d656972a9db63b6ecc556f7fbc189cddc4dad294848dd",
+      "storedSha256": "3904f5ecd4624bf3e93d656972a9db63b6ecc556f7fbc189cddc4dad294848dd"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-archive.mjs",
+      "archive": "data/tools/topology-routing-archive.mjs",
+      "compressed": false,
+      "originalBytes": 12263,
+      "originalSha256": "44022bb146a3a273b39a5b76f9979a03fe77e4dd67305772a0a258e1f4a07c24",
+      "storedSha256": "44022bb146a3a273b39a5b76f9979a03fe77e4dd67305772a0a258e1f4a07c24"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-fixture.mjs",
+      "archive": "data/tools/topology-routing-fixture.mjs",
+      "compressed": false,
+      "originalBytes": 2034,
+      "originalSha256": "b12eeb343f3073dec6a76efc8caefb800fa78b234cd2a64025caddcb1473f7a1",
+      "storedSha256": "b12eeb343f3073dec6a76efc8caefb800fa78b234cd2a64025caddcb1473f7a1"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-fixture-browser.mjs",
+      "archive": "data/tools/topology-routing-fixture-browser.mjs",
+      "compressed": false,
+      "originalBytes": 5553,
+      "originalSha256": "18f79c7a391bddc7faf631c8d80380e5eb5d0ee791e22ce9b2568a5088e2ff18",
+      "storedSha256": "18f79c7a391bddc7faf631c8d80380e5eb5d0ee791e22ce9b2568a5088e2ff18"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-install.mjs",
+      "archive": "data/tools/topology-routing-install.mjs",
+      "compressed": false,
+      "originalBytes": 3019,
+      "originalSha256": "73b3d0ca652f9ade1c31e665752c4dc29c29dd79c2e3824fa06765daaa8f0d3c",
+      "storedSha256": "73b3d0ca652f9ade1c31e665752c4dc29c29dd79c2e3824fa06765daaa8f0d3c"
+    },
+    {
+      "source": "tools/ai-gnn/node-topology-inference.mjs",
+      "archive": "data/tools/node-topology-inference.mjs",
+      "compressed": false,
+      "originalBytes": 1647,
+      "originalSha256": "a259590d0f81e89a63dee626b15f4f33da77f5edd89d46c757360d2c1d0f5bb6",
+      "storedSha256": "a259590d0f81e89a63dee626b15f4f33da77f5edd89d46c757360d2c1d0f5bb6"
+    },
+    {
+      "source": "tools/ai-gnn/test-node-topology-inference.mjs",
+      "archive": "data/tools/test-node-topology-inference.mjs",
+      "compressed": false,
+      "originalBytes": 2364,
+      "originalSha256": "321f37081da0b8f0a65e139cae5718fe76d24eb931f900033b36947a4692b7e3",
+      "storedSha256": "321f37081da0b8f0a65e139cae5718fe76d24eb931f900033b36947a4692b7e3"
+    },
+    {
+      "source": "tools/ai-gnn/match.mjs",
+      "archive": "data/tools/match.mjs",
+      "compressed": false,
+      "originalBytes": 9818,
+      "originalSha256": "94db44cc3619d9489fc9fe47df29dda30d65ef817b6d3cf6b62a173193cbac25",
+      "storedSha256": "94db44cc3619d9489fc9fe47df29dda30d65ef817b6d3cf6b62a173193cbac25"
+    },
+    {
+      "source": "tools/ai-gnn/selfplay.mjs",
+      "archive": "data/tools/selfplay.mjs",
+      "compressed": false,
+      "originalBytes": 6003,
+      "originalSha256": "5b086bc1ce95fafc7d73b1f8aeaa1c40e7d6c0349c593c1417eb1a045ff83969",
+      "storedSha256": "5b086bc1ce95fafc7d73b1f8aeaa1c40e7d6c0349c593c1417eb1a045ff83969"
+    },
+    {
+      "source": "tools/ai-gnn/reanalyze.mjs",
+      "archive": "data/tools/reanalyze.mjs",
+      "compressed": false,
+      "originalBytes": 5896,
+      "originalSha256": "b3e49f5e5aeae3b155eac251f3f1ad0051a1766b18fd72f7fcee80c67a46cae3",
+      "storedSha256": "b3e49f5e5aeae3b155eac251f3f1ad0051a1766b18fd72f7fcee80c67a46cae3"
+    },
+    {
+      "source": "tools/ai-gnn/refresh-search-targets.mjs",
+      "archive": "data/tools/refresh-search-targets.mjs",
+      "compressed": false,
+      "originalBytes": 5111,
+      "originalSha256": "ba64282d01c5d36bed67c4c1de49d96728f334dbd30c17c829a5b71ed528842c",
+      "storedSha256": "ba64282d01c5d36bed67c4c1de49d96728f334dbd30c17c829a5b71ed528842c"
+    },
+    {
+      "source": "tools/ai-gnn/test-onnx.mjs",
+      "archive": "data/tools/test-onnx.mjs",
+      "compressed": false,
+      "originalBytes": 2021,
+      "originalSha256": "a7b5e1f0e3077c41e2a1e8e1ad1eab57778bfe7355312bee2c54a99f989d5838",
+      "storedSha256": "a7b5e1f0e3077c41e2a1e8e1ad1eab57778bfe7355312bee2c54a99f989d5838"
+    },
+    {
+      "source": "tools/ai-gnn/bench-inference.mjs",
+      "archive": "data/tools/bench-inference.mjs",
+      "compressed": false,
+      "originalBytes": 10279,
+      "originalSha256": "2e75fdc4ca10d1cd07a5f245013cbf0ec078ecba3f924075a94dd0e8c153e6d0",
+      "storedSha256": "2e75fdc4ca10d1cd07a5f245013cbf0ec078ecba3f924075a94dd0e8c153e6d0"
+    },
+    {
+      "source": "tools/ai-gnn/replay-endgame.mjs",
+      "archive": "data/tools/replay-endgame.mjs",
+      "compressed": false,
+      "originalBytes": 3843,
+      "originalSha256": "0a6698db4c60073cae83519969805eccf5c2ca4a84dd658956b468496849621a",
+      "storedSha256": "0a6698db4c60073cae83519969805eccf5c2ca4a84dd658956b468496849621a"
+    },
+    {
+      "source": "tools/ai-gnn/test-topology-routing.mjs",
+      "archive": "data/tools/test-topology-routing.mjs",
+      "compressed": false,
+      "originalBytes": 5532,
+      "originalSha256": "9e9a1cdb865dbe2c38c556c9caedeac0cd224056fe18fdfeb9d748bc88ba632e",
+      "storedSha256": "9e9a1cdb865dbe2c38c556c9caedeac0cd224056fe18fdfeb9d748bc88ba632e"
+    },
+    {
+      "source": "tools/ai-gnn/test-topology-routing-integrity.mjs",
+      "archive": "data/tools/test-topology-routing-integrity.mjs",
+      "compressed": false,
+      "originalBytes": 1720,
+      "originalSha256": "645ce26ab243251a33027cfef7de596be228bfa071456c453b9e9cd92ca84d53",
+      "storedSha256": "645ce26ab243251a33027cfef7de596be228bfa071456c453b9e9cd92ca84d53"
+    },
+    {
+      "source": "tools/ai-gnn/test-topology-routing-browser.mjs",
+      "archive": "data/tools/test-topology-routing-browser.mjs",
+      "compressed": false,
+      "originalBytes": 19884,
+      "originalSha256": "655ba8e3855392b6e98adaeda3cc5ec33616b7167bf5459c381697ec0427a9fe",
+      "storedSha256": "655ba8e3855392b6e98adaeda3cc5ec33616b7167bf5459c381697ec0427a9fe"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-timing-prepare.mjs",
+      "archive": "data/tools/topology-routing-timing-prepare.mjs",
+      "compressed": false,
+      "originalBytes": 2165,
+      "originalSha256": "558002648c4b8f94224aec1831750911da744da0ff8c02c85cd40dd21b30df5a",
+      "storedSha256": "558002648c4b8f94224aec1831750911da744da0ff8c02c85cd40dd21b30df5a"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-latency.mjs",
+      "archive": "data/tools/topology-routing-latency.mjs",
+      "compressed": false,
+      "originalBytes": 3618,
+      "originalSha256": "99700de31884969b564cdc589b50379d3768e0454b6dc223770c2f572908f05f",
+      "storedSha256": "99700de31884969b564cdc589b50379d3768e0454b6dc223770c2f572908f05f"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-cold-bench.mjs",
+      "archive": "data/tools/topology-routing-cold-bench.mjs",
+      "compressed": false,
+      "originalBytes": 6719,
+      "originalSha256": "8d46e526c10e24cac30defe2fc73d9fbd9400972003659dcbb59cd9e994281f4",
+      "storedSha256": "8d46e526c10e24cac30defe2fc73d9fbd9400972003659dcbb59cd9e994281f4"
+    },
+    {
+      "source": "tools/ai-gnn/topology-routing-equal-time.mjs",
+      "archive": "data/tools/topology-routing-equal-time.mjs",
+      "compressed": false,
+      "originalBytes": 7402,
+      "originalSha256": "97a8a54ff95c76b4313b0c4f0cfb8bdff64e69bc1154da54c7c13628f7325741",
+      "storedSha256": "97a8a54ff95c76b4313b0c4f0cfb8bdff64e69bc1154da54c7c13628f7325741"
+    },
+    {
+      "source": "tools/ai-gnn/test-player.mjs",
+      "archive": "data/tools/test-player.mjs",
+      "compressed": false,
+      "originalBytes": 4176,
+      "originalSha256": "31678ca11326cfec46cc2a0f9c792f5555bb2d99fc7027490625543426fabb93",
+      "storedSha256": "31678ca11326cfec46cc2a0f9c792f5555bb2d99fc7027490625543426fabb93"
+    },
+    {
+      "source": "tools/ai-gnn/test-browser.mjs",
+      "archive": "data/tools/test-browser.mjs",
+      "compressed": false,
+      "originalBytes": 17801,
+      "originalSha256": "29b2d6c160f3af42332f76982bc007760c89074af2a0ca9ba07317fcafbbb822",
+      "storedSha256": "29b2d6c160f3af42332f76982bc007760c89074af2a0ca9ba07317fcafbbb822"
+    },
+    {
+      "source": "tools/ai-gnn/node-inference.mjs",
+      "archive": "data/tools/node-inference.mjs",
+      "compressed": false,
+      "originalBytes": 1995,
+      "originalSha256": "1b621ac2a01bb2493f75239add7ace0623536c13945fcffb17fbbb43a0ad0043",
+      "storedSha256": "1b621ac2a01bb2493f75239add7ace0623536c13945fcffb17fbbb43a0ad0043"
+    },
+    {
+      "source": "tools/ai-gnn/study-commands.mjs",
+      "archive": "data/tools/study-commands.mjs",
+      "compressed": false,
+      "originalBytes": 1652,
+      "originalSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+      "storedSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "source": "tools/ai-gnn/match-statistics.mjs",
+      "archive": "data/tools/match-statistics.mjs",
+      "compressed": false,
+      "originalBytes": 1805,
+      "originalSha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997",
+      "storedSha256": "7d58a951326130133dd6f207f8e764339c174ad64fc7a4533575dd8c96cad997"
+    },
+    {
+      "source": "tools/ai-gnn/browser-data-host.mjs",
+      "archive": "data/tools/browser-data-host.mjs",
+      "compressed": false,
+      "originalBytes": 4896,
+      "originalSha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936",
+      "storedSha256": "550a7b5caec8a828ce1fd793788639099f2843076b94f47122794362b0d5e936"
+    },
+    {
+      "source": "tools/ai-gnn/search-campaign-bench.mjs",
+      "archive": "data/tools/search-campaign-bench.mjs",
+      "compressed": false,
+      "originalBytes": 7341,
+      "originalSha256": "037da0e2b0f2bcf086cf73e819fc7e27a8ce3ed463f8e1f6aa22fd08882dcfc6",
+      "storedSha256": "037da0e2b0f2bcf086cf73e819fc7e27a8ce3ed463f8e1f6aa22fd08882dcfc6"
+    },
+    {
+      "source": "dist/ai-v3.js",
+      "archive": "data/runtime/ai-v3.js",
+      "compressed": false,
+      "originalBytes": 3849,
+      "originalSha256": "599cceff3fb53269a7f934e929eb9ad6b37a16c45367a5b3533c19e277a2ce42",
+      "storedSha256": "599cceff3fb53269a7f934e929eb9ad6b37a16c45367a5b3533c19e277a2ce42"
+    },
+    {
+      "source": "dist/ai-v3-routing.js",
+      "archive": "data/runtime/ai-v3-routing.js",
+      "compressed": false,
+      "originalBytes": 3198,
+      "originalSha256": "8955f23ab198408e1516df6cd0c06ee675a1f339385f3f99c5c72b25d52e1c77",
+      "storedSha256": "8955f23ab198408e1516df6cd0c06ee675a1f339385f3f99c5c72b25d52e1c77"
+    },
+    {
+      "source": "dist/ai-v3-inference.js",
+      "archive": "data/runtime/ai-v3-inference.js",
+      "compressed": false,
+      "originalBytes": 8594,
+      "originalSha256": "a627744a29795c74eca981a7f36ab457fde78b88e62854d67e1e4a6c13da66b2",
+      "storedSha256": "a627744a29795c74eca981a7f36ab457fde78b88e62854d67e1e4a6c13da66b2"
+    },
+    {
+      "source": "dist/ai-v3-webgpu.js",
+      "archive": "data/runtime/ai-v3-webgpu.js",
+      "compressed": false,
+      "originalBytes": 11161,
+      "originalSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f",
+      "storedSha256": "a003c78d687f8fb776af6aa98e227ff26bce876776bc5d9d0bcc3177b316652f"
+    },
+    {
+      "source": "dist/ai-v3-search.js",
+      "archive": "data/runtime/ai-v3-search.js",
+      "compressed": false,
+      "originalBytes": 4919,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "source": "dist/ai-worker.js",
+      "archive": "data/runtime/ai-worker.js",
+      "compressed": false,
+      "originalBytes": 2386,
+      "originalSha256": "4aa1bc8b6cd91278118f0a7126e6d4171b7833cb0efc99258f8df661410ed33c",
+      "storedSha256": "4aa1bc8b6cd91278118f0a7126e6d4171b7833cb0efc99258f8df661410ed33c"
+    },
+    {
+      "source": "dist/engine.js",
+      "archive": "data/runtime/engine.js",
+      "compressed": false,
+      "originalBytes": 6979,
+      "originalSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc",
+      "storedSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+    },
+    {
+      "source": "dist/ai-position.js",
+      "archive": "data/runtime/ai-position.js",
+      "compressed": false,
+      "originalBytes": 1315,
+      "originalSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad",
+      "storedSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+    },
+    {
+      "source": "v3-tests.mjs",
+      "archive": "data/tools/v3-tests.mjs",
+      "compressed": false,
+      "originalBytes": 15126,
+      "originalSha256": "a66ced93a5622f9d67179c08141278c1717fcd8f0391026bebd5837a32c74fa2",
+      "storedSha256": "a66ced93a5622f9d67179c08141278c1717fcd8f0391026bebd5837a32c74fa2"
+    },
+    {
+      "source": "dist/models/v3/model.onnx",
+      "archive": "data/installed/models/v3/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+      "storedSha256": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af"
+    },
+    {
+      "source": "dist/models/v3/weights.f32",
+      "archive": "data/installed/models/v3/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f",
+      "storedSha256": "87cdaaed3a3af7d0b4816d8c34eb03d8cc090e252b93b7bdbe2586fbfee5135f"
+    },
+    {
+      "source": "dist/models/v3/manifest.json",
+      "archive": "data/installed/models/v3/manifest.json",
+      "compressed": false,
+      "originalBytes": 2258,
+      "originalSha256": "443d6db3c0fad18ac01b47143887b6cba97a2bf5c81ef3bdf3f086b7539923f4",
+      "storedSha256": "443d6db3c0fad18ac01b47143887b6cba97a2bf5c81ef3bdf3f086b7539923f4"
+    },
+    {
+      "source": "dist/models/v3/KataGo-NN-LICENSE.txt",
+      "archive": "data/installed/models/v3/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "dist/models/v3/plane/model.onnx",
+      "archive": "data/installed/models/v3/plane/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+      "storedSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+    },
+    {
+      "source": "dist/models/v3/plane/weights.f32",
+      "archive": "data/installed/models/v3/plane/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e",
+      "storedSha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e"
+    },
+    {
+      "source": "dist/models/v3/plane/manifest.json",
+      "archive": "data/installed/models/v3/plane/manifest.json",
+      "compressed": false,
+      "originalBytes": 1419,
+      "originalSha256": "9750056350a5122db32b0a715a888a9f48ec978d66890a8086af9d5c594fed86",
+      "storedSha256": "9750056350a5122db32b0a715a888a9f48ec978d66890a8086af9d5c594fed86"
+    },
+    {
+      "source": "dist/models/v3/plane/KataGo-NN-LICENSE.txt",
+      "archive": "data/installed/models/v3/plane/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tests/fixtures/ai/v3-golden.json",
+      "archive": "data/installed/tests/fixtures/ai/v3-golden.json.gz",
+      "compressed": true,
+      "originalBytes": 99944,
+      "originalSha256": "a7e2d84806ff73d26c9a5fb9234cc7565294aafbd212f2f2aa9ec93e1046f157",
+      "storedSha256": "eea0359426b62ae4f3e124a38147fd464271b9210275cd888d0f7c93002cdb5e"
+    },
+    {
+      "source": "experiments/ai/plans/v3-topology-routing/README.md",
+      "archive": "data/plan/README.md",
+      "compressed": false,
+      "originalBytes": 3919,
+      "originalSha256": "c3ed83a9b5319b34577fdccb358127caaaef3395c196bc68e4c812caaa392cad",
+      "storedSha256": "c3ed83a9b5319b34577fdccb358127caaaef3395c196bc68e4c812caaa392cad"
+    },
+    {
+      "source": "experiments/ai/plans/v3-topology-routing/plan.json",
+      "archive": "data/plan/plan.json",
+      "compressed": false,
+      "originalBytes": 5784,
+      "originalSha256": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b",
+      "storedSha256": "680fb5036f52b654a83f405d62930bed0c222d628f181e761d68c11a6a34e30b"
+    }
+  ]
+}

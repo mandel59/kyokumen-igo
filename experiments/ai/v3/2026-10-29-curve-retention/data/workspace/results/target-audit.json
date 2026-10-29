@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "positions": 12453,
+  "changedTrainingCurvePolicies": 3534,
+  "perBoard": {
+    "sphere3": 374,
+    "sphere4": 603,
+    "sphere5": 953,
+    "torus7": 344,
+    "torus9": 518,
+    "torus11": 742
+  },
+  "sourceTeachers": {
+    "8e5b41e3974cbd30349fa483bb8a3a0f5c055ea9bb6cddef82c63b69b88b4b9a|1ff2d06a137cdd2f39d1b0cd18acacd3478121139a7d4fee03e2389a288ee940": 3534
+  },
+  "commonValidationAndAllNonPolicyFieldsIdentical": true,
+  "originalValidationUntouched": true,
+  "extraTeacherQueries": 0,
+  "derivedSha256": "e764c6062103d9b7edc1297956cd2a51f29e4b6dcb53b016ee7aa4c0af955862",
+  "summary": {
+    "all": {
+      "entropyBefore": 1.1180177335536423,
+      "entropyAfter": 1.5461829080085465,
+      "changedL1": 0.7726788876977608,
+      "scale": 87.90611205432978,
+      "unvisitedMass": 0.009836373768831886,
+      "float32Support": 53.599886813808716
+    },
+    "sphere3": {
+      "entropyBefore": 1.0495078167037464,
+      "entropyAfter": 1.1790378364230727,
+      "changedL1": 0.807646748505032,
+      "scale": 100.62352941176468,
+      "unvisitedMass": 0.013267238778586436,
+      "float32Support": 28.288770053475936
+    },
+    "sphere4": {
+      "entropyBefore": 1.1082312340867877,
+      "entropyAfter": 1.5826290547408257,
+      "changedL1": 0.7719983344700841,
+      "scale": 83.71824212271964,
+      "unvisitedMass": 0.007333487626705804,
+      "float32Support": 49.80099502487562
+    },
+    "sphere5": {
+      "entropyBefore": 1.141883974526088,
+      "entropyAfter": 1.7842549861483283,
+      "changedL1": 0.776679836171662,
+      "scale": 80.92245540398737,
+      "unvisitedMass": 0.007451087889680273,
+      "float32Support": 76.5299055613851
+    },
+    "torus7": {
+      "entropyBefore": 1.069827229185496,
+      "entropyAfter": 1.307572125981862,
+      "changedL1": 0.7866338046945989,
+      "scale": 109.74505813953468,
+      "unvisitedMass": 0.02273604315058516,
+      "float32Support": 24.4796511627907
+    },
+    "torus9": {
+      "entropyBefore": 1.1447042169031085,
+      "entropyAfter": 1.4426577316232327,
+      "changedL1": 0.798414165210589,
+      "scale": 92.20868725868725,
+      "unvisitedMass": 0.009810522673119788,
+      "float32Support": 41.71235521235521
+    },
+    "torus11": {
+      "entropyBefore": 1.1335613663855133,
+      "entropyAfter": 1.5787444851122732,
+      "changedL1": 0.7260321552990875,
+      "scale": 80.74043126684641,
+      "unvisitedMass": 0.007242275215113627,
+      "float32Support": 61.793800539083556
+    }
+  }
+}

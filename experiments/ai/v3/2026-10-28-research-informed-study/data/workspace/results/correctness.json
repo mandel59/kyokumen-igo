@@ -1,0 +1,61 @@
+{
+  "trainingTests": 16,
+  "modelTests": 2,
+  "softPolicyTests": 4,
+  "totalPassed": 22,
+  "commands": [
+    "python -m unittest discover -s tools/ai-gnn -p test_soft_policy.py -v",
+    "python -m unittest discover -s tools/ai-gnn -p test_training.py",
+    "python -m unittest discover -s tools/ai-gnn -p test_model.py"
+  ],
+  "sourceHashes": {
+    "tools/ai-gnn/model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "tools/ai-gnn/train.py": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688",
+    "tools/ai-gnn/test_training.py": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848",
+    "tools/ai-gnn/test_model.py": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da",
+    "tools/ai-gnn/test_soft_policy.py": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88"
+  },
+  "exportParity": [
+    {
+      "id": "Control-r0",
+      "parameters": 120905,
+      "maxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      }
+    },
+    {
+      "id": "Soft4-r0",
+      "parameters": 120905,
+      "maxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      }
+    },
+    {
+      "id": "Control-r1",
+      "parameters": 120905,
+      "maxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      }
+    },
+    {
+      "id": "Soft4-r1",
+      "parameters": 120905,
+      "maxErrors": {
+        "policy": 0,
+        "wdl": 0,
+        "score": 0,
+        "ownership": 0
+      }
+    }
+  ],
+  "workerAndLatency": "Not run: registered validation gate failed before matches. No strength or speed gain claimed."
+}

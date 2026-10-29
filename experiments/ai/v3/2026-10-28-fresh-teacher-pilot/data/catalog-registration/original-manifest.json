@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\analysis.cfg",
+      "archive": "data/workspace/analysis.cfg",
+      "compressed": false,
+      "originalSha256": "021736213e4dca65a147bc409319bd7efd2dc0ac97e1506566ed1064207ea8ad",
+      "storedSha256": "021736213e4dca65a147bc409319bd7efd2dc0ac97e1506566ed1064207ea8ad",
+      "originalBytes": 385
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\engine-log.txt",
+      "archive": "data/workspace/engine-log.txt",
+      "compressed": false,
+      "originalSha256": "2b8f60a5f86529e0caa1cdd7493ede7129309f8d632c4ba109b97dd403a6ded7",
+      "storedSha256": "2b8f60a5f86529e0caa1cdd7493ede7129309f8d632c4ba109b97dd403a6ded7",
+      "originalBytes": 4774
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\openings.json",
+      "archive": "data/workspace/openings.json",
+      "compressed": false,
+      "originalSha256": "f55e160b66f53470fb1ca92465a28e5f0959ea07d3af1173be816c51b4be38ee",
+      "storedSha256": "f55e160b66f53470fb1ca92465a28e5f0959ea07d3af1173be816c51b4be38ee",
+      "originalBytes": 758
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\plan.json",
+      "archive": "data/workspace/plan.json",
+      "compressed": false,
+      "originalSha256": "9e7acb7ba61c2fea128dd918de71a7d624a54d01f5029eb8f1c7483fb818cac2",
+      "storedSha256": "9e7acb7ba61c2fea128dd918de71a7d624a54d01f5029eb8f1c7483fb818cac2",
+      "originalBytes": 2220
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\registration.json",
+      "archive": "data/workspace/registration.json",
+      "compressed": false,
+      "originalSha256": "5e883d9a1fe3a532da8520db85e1e4c501e19f9802b7e8d2c05e054b2b6b9439",
+      "storedSha256": "5e883d9a1fe3a532da8520db85e1e4c501e19f9802b7e8d2c05e054b2b6b9439",
+      "originalBytes": 1601
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\audit-correction.json",
+      "archive": "data/workspace/results/audit-correction.json",
+      "compressed": false,
+      "originalSha256": "dacf35305ed37eed421f1542179b7534b41b45dc71295f310e05e81255c6539e",
+      "storedSha256": "dacf35305ed37eed421f1542179b7534b41b45dc71295f310e05e81255c6539e",
+      "originalBytes": 311
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\decision.json",
+      "archive": "data/workspace/results/decision.json",
+      "compressed": false,
+      "originalSha256": "37492b58c2ff1ac1bc7ebaf715b80f7a0a2dcf3cb72d65a8854352ecc1d90f26",
+      "storedSha256": "37492b58c2ff1ac1bc7ebaf715b80f7a0a2dcf3cb72d65a8854352ecc1d90f26",
+      "originalBytes": 685
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane11-0-1.json.gz",
+      "archive": "data/workspace/results/game-plane11-0-1.json.gz",
+      "compressed": false,
+      "originalSha256": "bdd8a825abda02a1c8c5f21438a8832d7d5ef4cb31135703f0979c25a0283665",
+      "storedSha256": "bdd8a825abda02a1c8c5f21438a8832d7d5ef4cb31135703f0979c25a0283665",
+      "originalBytes": 115583
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane11-0-2.json.gz",
+      "archive": "data/workspace/results/game-plane11-0-2.json.gz",
+      "compressed": false,
+      "originalSha256": "3ed7f9334fef57719977e35b048974c02b278d3574a17a51d21e5ca7a16555bc",
+      "storedSha256": "3ed7f9334fef57719977e35b048974c02b278d3574a17a51d21e5ca7a16555bc",
+      "originalBytes": 124093
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane11-1-1.json.gz",
+      "archive": "data/workspace/results/game-plane11-1-1.json.gz",
+      "compressed": false,
+      "originalSha256": "7dd60d8f96d36b6046062d12f5ba1b72ac1ca8e195f8b08cc080f1096a0baead",
+      "storedSha256": "7dd60d8f96d36b6046062d12f5ba1b72ac1ca8e195f8b08cc080f1096a0baead",
+      "originalBytes": 118560
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane11-1-2.json.gz",
+      "archive": "data/workspace/results/game-plane11-1-2.json.gz",
+      "compressed": false,
+      "originalSha256": "aa593d48363be8fa04235bc4be20bdf7ef9c488b9645c4a2b7092b2da71dfb53",
+      "storedSha256": "aa593d48363be8fa04235bc4be20bdf7ef9c488b9645c4a2b7092b2da71dfb53",
+      "originalBytes": 102459
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane7-0-1.json.gz",
+      "archive": "data/workspace/results/game-plane7-0-1.json.gz",
+      "compressed": false,
+      "originalSha256": "d60e32224d54d508fd2add2b4422179125e8a2edb7dc3ec4f29a883b92d822b8",
+      "storedSha256": "d60e32224d54d508fd2add2b4422179125e8a2edb7dc3ec4f29a883b92d822b8",
+      "originalBytes": 28347
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane7-0-2.json.gz",
+      "archive": "data/workspace/results/game-plane7-0-2.json.gz",
+      "compressed": false,
+      "originalSha256": "ce98c02087fbbd15b0e036b3fd0fbe5cbbb5159b00968948faf960be0030140b",
+      "storedSha256": "ce98c02087fbbd15b0e036b3fd0fbe5cbbb5159b00968948faf960be0030140b",
+      "originalBytes": 30176
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane7-1-1.json.gz",
+      "archive": "data/workspace/results/game-plane7-1-1.json.gz",
+      "compressed": false,
+      "originalSha256": "5f6f0ea629ce82d66e005ae108fe57bdc89850bd45d00ad1c6481baa184eb9a3",
+      "storedSha256": "5f6f0ea629ce82d66e005ae108fe57bdc89850bd45d00ad1c6481baa184eb9a3",
+      "originalBytes": 29084
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane7-1-2.json.gz",
+      "archive": "data/workspace/results/game-plane7-1-2.json.gz",
+      "compressed": false,
+      "originalSha256": "115759d51fd5bc718f4dbab401fd1fabf213d41c1f2d6f5c0110994ffe86a596",
+      "storedSha256": "115759d51fd5bc718f4dbab401fd1fabf213d41c1f2d6f5c0110994ffe86a596",
+      "originalBytes": 30023
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane9-0-1.json.gz",
+      "archive": "data/workspace/results/game-plane9-0-1.json.gz",
+      "compressed": false,
+      "originalSha256": "c9d41caa64aeb15346c9cd164cbf5e8c819b89c76b30e5effe744420b839bf99",
+      "storedSha256": "c9d41caa64aeb15346c9cd164cbf5e8c819b89c76b30e5effe744420b839bf99",
+      "originalBytes": 56939
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane9-0-2.json.gz",
+      "archive": "data/workspace/results/game-plane9-0-2.json.gz",
+      "compressed": false,
+      "originalSha256": "d58a5d79469cc9dc87c842f9b9c2e28fcee476137956ffc92daab8dee7feab5a",
+      "storedSha256": "d58a5d79469cc9dc87c842f9b9c2e28fcee476137956ffc92daab8dee7feab5a",
+      "originalBytes": 55725
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane9-1-1.json.gz",
+      "archive": "data/workspace/results/game-plane9-1-1.json.gz",
+      "compressed": false,
+      "originalSha256": "72daf4a40fb01c58255a3d57e2d1a4ae7c5819fa8e1a93eb7ce316d50b9f6e13",
+      "storedSha256": "72daf4a40fb01c58255a3d57e2d1a4ae7c5819fa8e1a93eb7ce316d50b9f6e13",
+      "originalBytes": 60038
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\game-plane9-1-2.json.gz",
+      "archive": "data/workspace/results/game-plane9-1-2.json.gz",
+      "compressed": false,
+      "originalSha256": "c562af0890040bae820724ffc874f99279658af05202358bd075db68958b9c91",
+      "storedSha256": "c562af0890040bae820724ffc874f99279658af05202358bd075db68958b9c91",
+      "originalBytes": 62513
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\replay-audit.json",
+      "archive": "data/workspace/results/replay-audit.json",
+      "compressed": false,
+      "originalSha256": "9f98e5d4f64d7d482a59ad0c7a65c6138e5b09daf18b86220795f4f062a8b454",
+      "storedSha256": "9f98e5d4f64d7d482a59ad0c7a65c6138e5b09daf18b86220795f4f062a8b454",
+      "originalBytes": 391
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\screen.json",
+      "archive": "data/workspace/results/screen.json",
+      "compressed": false,
+      "originalSha256": "dccec7a411daefb4fcc542d6a61808ded06fd1a4b60751281c14f0d9c876ca33",
+      "storedSha256": "dccec7a411daefb4fcc542d6a61808ded06fd1a4b60751281c14f0d9c876ca33",
+      "originalBytes": 444
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\results\\timing.json",
+      "archive": "data/workspace/results/timing.json",
+      "compressed": false,
+      "originalSha256": "800f7c112056f223a1aadfc32cd4885eed5da5555a10f7233ea6bbb143ba3b10",
+      "storedSha256": "800f7c112056f223a1aadfc32cd4885eed5da5555a10f7233ea6bbb143ba3b10",
+      "originalBytes": 147
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\sources\\ai-v3-search.js",
+      "archive": "data/workspace/sources/ai-v3-search.js",
+      "compressed": false,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "originalBytes": 4919
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\sources\\katago-analysis.mjs",
+      "archive": "data/workspace/sources/katago-analysis.mjs",
+      "compressed": false,
+      "originalSha256": "d4c783273645a770dde940a96ad2abc5cb1cdcabdf9ce1e75b20c2e64a66b855",
+      "storedSha256": "d4c783273645a770dde940a96ad2abc5cb1cdcabdf9ce1e75b20c2e64a66b855",
+      "originalBytes": 3876
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\sources\\research-informed-teacher-pilot.mjs",
+      "archive": "data/workspace/sources/research-informed-teacher-pilot.mjs",
+      "compressed": false,
+      "originalSha256": "8204da7adab806e888c6391e8d4e08dbbedb92eaf31ba1b268fa57478f2acab2",
+      "storedSha256": "8204da7adab806e888c6391e8d4e08dbbedb92eaf31ba1b268fa57478f2acab2",
+      "originalBytes": 7371
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\fresh-teacher-pilot-20261028\\sources\\training-search.mjs",
+      "archive": "data/workspace/sources/training-search.mjs",
+      "compressed": false,
+      "originalSha256": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+      "storedSha256": "21ea05c16fb26260434b96f29732891bde5981261a21be6f582a0788135ba5af",
+      "originalBytes": 2067
+    },
+    {
+      "source": "experiments/ai/plans/v3-fresh-teacher-pilot/plan.json",
+      "archive": "data/plan/plan.json",
+      "compressed": false,
+      "originalSha256": "9e7acb7ba61c2fea128dd918de71a7d624a54d01f5029eb8f1c7483fb818cac2",
+      "storedSha256": "9e7acb7ba61c2fea128dd918de71a7d624a54d01f5029eb8f1c7483fb818cac2",
+      "originalBytes": 2220
+    },
+    {
+      "source": "experiments/ai/plans/v3-fresh-teacher-pilot/README.md",
+      "archive": "data/plan/README.md",
+      "compressed": false,
+      "originalSha256": "e4a43fae144cc3bcac0335e6744dad3efc7fc91177aaa86846cea3dfc863df37",
+      "storedSha256": "e4a43fae144cc3bcac0335e6744dad3efc7fc91177aaa86846cea3dfc863df37",
+      "originalBytes": 704
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-teacher-pilot.mjs",
+      "archive": "data/tools/research-informed-teacher-pilot.mjs",
+      "compressed": false,
+      "originalSha256": "8204da7adab806e888c6391e8d4e08dbbedb92eaf31ba1b268fa57478f2acab2",
+      "storedSha256": "8204da7adab806e888c6391e8d4e08dbbedb92eaf31ba1b268fa57478f2acab2",
+      "originalBytes": 7371
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-pilot-archive.mjs",
+      "archive": "data/tools/research-informed-pilot-archive.mjs",
+      "compressed": false,
+      "originalSha256": "65c072785032da0481aa3a83b3ebba54ec8ca2034ca329cf191eb68a3cdad967",
+      "storedSha256": "65c072785032da0481aa3a83b3ebba54ec8ca2034ca329cf191eb68a3cdad967",
+      "originalBytes": 4264
+    }
+  ]
+}

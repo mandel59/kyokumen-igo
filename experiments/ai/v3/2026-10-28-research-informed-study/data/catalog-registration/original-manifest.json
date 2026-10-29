@@ -1,0 +1,839 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\baseline\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/baseline/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\baseline\\manifest.json",
+      "archive": "data/workspace/baseline/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 93047,
+      "originalSha256": "15db6417a8406e5a6bb2b21b2902789c4dbe472bc60b5d3fc96a509d44cd6790",
+      "storedSha256": "2fa9b29e0db1b6e0b2f16e2076ea47b146c14552e5242ac1b4b2a1e8d0556021"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\baseline\\model.onnx",
+      "archive": "data/workspace/baseline/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+      "storedSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\baseline\\weights.f32",
+      "archive": "data/workspace/baseline/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+      "storedSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\baseline\\weights.pt",
+      "archive": "data/workspace/baseline/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+      "storedSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\epoch-00.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f",
+      "storedSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\epoch-02.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-02.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "84f1d2196d54d209b103c796b0646e0f97293650ebfaa5754b39863450be5770",
+      "storedSha256": "84f1d2196d54d209b103c796b0646e0f97293650ebfaa5754b39863450be5770"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\epoch-04.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "fbc2520c42d4a8b24c227831c8aeb96b2ce8722591b41b41227f4f8b67bc9ce1",
+      "storedSha256": "fbc2520c42d4a8b24c227831c8aeb96b2ce8722591b41b41227f4f8b67bc9ce1"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\epoch-06.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-06.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "deb78df720fc21a9dca749741f3109ee72c6876eca13f2c5ae3a6bfdc1bae731",
+      "storedSha256": "deb78df720fc21a9dca749741f3109ee72c6876eca13f2c5ae3a6bfdc1bae731"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\epoch-08.pt",
+      "archive": "data/workspace/Control-r0-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "9a973515e957bfd980844ae2dddc0624cafcc7acd53f7e7fc0e076b444bf7674",
+      "storedSha256": "9a973515e957bfd980844ae2dddc0624cafcc7acd53f7e7fc0e076b444bf7674"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\golden.json",
+      "archive": "data/workspace/Control-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100075,
+      "originalSha256": "b4fcfd040cd5287d95fe9a4009d301b874f5e90f53adc000f912e652af750c06",
+      "storedSha256": "5012554c0f9510c68ff42962f9992638f4f7fc7e722e2080b6590dfec95166b2"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Control-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\manifest.json",
+      "archive": "data/workspace/Control-r0-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 82290,
+      "originalSha256": "cd9014434268432d7f3249b6d551eb5d068bd95c9c7a0aa2d754d81428650b6a",
+      "storedSha256": "5af5e1f91ab01112e691aa1fd78c77e58d5c68a35a0477f7d4bef2be0913732e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\model.onnx",
+      "archive": "data/workspace/Control-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "03e6dfad3f6661dd41b16c4472d761664bcd8d2abba5dd8868cf625e87c0155e",
+      "storedSha256": "03e6dfad3f6661dd41b16c4472d761664bcd8d2abba5dd8868cf625e87c0155e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\selected-training-weights.pt",
+      "archive": "data/workspace/Control-r0-model/selected-training-weights.pt",
+      "compressed": false,
+      "originalBytes": 526727,
+      "originalSha256": "625e525e8e76b4d1a53c8131a4afae75e0506dad91c80c7d9e582bb20463084f",
+      "storedSha256": "625e525e8e76b4d1a53c8131a4afae75e0506dad91c80c7d9e582bb20463084f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\weights.f32",
+      "archive": "data/workspace/Control-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "bbc8682d75f99e1ed22c78a2f7179b2d1bfa0ca6a9b6b1a170b6f28446dc27d9",
+      "storedSha256": "bbc8682d75f99e1ed22c78a2f7179b2d1bfa0ca6a9b6b1a170b6f28446dc27d9"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r0-model\\weights.pt",
+      "archive": "data/workspace/Control-r0-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "61db8849f86e030c6ed0e1eaaf1b003d11e61bc92fd5eb0822fd85256f7bb641",
+      "storedSha256": "61db8849f86e030c6ed0e1eaaf1b003d11e61bc92fd5eb0822fd85256f7bb641"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\epoch-00.pt",
+      "archive": "data/workspace/Control-r1-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f",
+      "storedSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\epoch-02.pt",
+      "archive": "data/workspace/Control-r1-model/epoch-02.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "6a254218f5ce23a336f41e81e9a8323ed039c9795497c9f79916935ff5651a5e",
+      "storedSha256": "6a254218f5ce23a336f41e81e9a8323ed039c9795497c9f79916935ff5651a5e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\epoch-04.pt",
+      "archive": "data/workspace/Control-r1-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "cad27ced5bd36e10c5b19ba04aa75bd0d9e11fab31c1f94502cdd9e8b676c4fb",
+      "storedSha256": "cad27ced5bd36e10c5b19ba04aa75bd0d9e11fab31c1f94502cdd9e8b676c4fb"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\epoch-06.pt",
+      "archive": "data/workspace/Control-r1-model/epoch-06.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "da2862c06155c7dc7396bb6098037a04b58a7f0963d407eece8468825e227c20",
+      "storedSha256": "da2862c06155c7dc7396bb6098037a04b58a7f0963d407eece8468825e227c20"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\epoch-08.pt",
+      "archive": "data/workspace/Control-r1-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "4fd3e4ba7b0beddc551dd108d702b6956f62557ae380e0822e23029d29ab7ee0",
+      "storedSha256": "4fd3e4ba7b0beddc551dd108d702b6956f62557ae380e0822e23029d29ab7ee0"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\golden.json",
+      "archive": "data/workspace/Control-r1-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100334,
+      "originalSha256": "0be424472731508c67d9c40f639e60a1e768204f687f47edb23fdfc6c484b05c",
+      "storedSha256": "d4abd98e0fb5eb05d73e6f50f6afb83703eaacdb59c75273bc438b4fd3168d1e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Control-r1-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\manifest.json",
+      "archive": "data/workspace/Control-r1-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 82246,
+      "originalSha256": "79df2eccc52b4e90d44540834946333dc8b1ffc483f87705e0cf0548318d36e6",
+      "storedSha256": "05bbd766f6c052828a80af1666d392f8c1656869c5dc1c99aec262756b1c5a24"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\model.onnx",
+      "archive": "data/workspace/Control-r1-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d41af45cc362382e4b0a106b73ee957de4758f1ff53af038e157e28b0823e9ba",
+      "storedSha256": "d41af45cc362382e4b0a106b73ee957de4758f1ff53af038e157e28b0823e9ba"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\selected-training-weights.pt",
+      "archive": "data/workspace/Control-r1-model/selected-training-weights.pt",
+      "compressed": false,
+      "originalBytes": 526727,
+      "originalSha256": "54a90280e1c550a7a23d94d29a4eae67aeefe01c75bb974b039a36bd14571a0b",
+      "storedSha256": "54a90280e1c550a7a23d94d29a4eae67aeefe01c75bb974b039a36bd14571a0b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\weights.f32",
+      "archive": "data/workspace/Control-r1-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "8929f3ce12eec9fa8dc9c641dcd48305e05e0821af7a5cda1335332244f755b6",
+      "storedSha256": "8929f3ce12eec9fa8dc9c641dcd48305e05e0821af7a5cda1335332244f755b6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Control-r1-model\\weights.pt",
+      "archive": "data/workspace/Control-r1-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "e0340c7a2968b2e8fc5da6aa4155e50c4393cb846d39ad04587044d7e21ab387",
+      "storedSha256": "e0340c7a2968b2e8fc5da6aa4155e50c4393cb846d39ad04587044d7e21ab387"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\plan.json",
+      "archive": "data/workspace/plan.json",
+      "compressed": false,
+      "originalBytes": 13516,
+      "originalSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864",
+      "storedSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\registration.json",
+      "archive": "data/workspace/registration.json",
+      "compressed": false,
+      "originalBytes": 1411,
+      "originalSha256": "9faeb51b1ffe72cd6f60a85790224fe6e637b03d42c0cc9c1035d8c0906aee98",
+      "storedSha256": "9faeb51b1ffe72cd6f60a85790224fe6e637b03d42c0cc9c1035d8c0906aee98"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\reported-game.json",
+      "archive": "data/workspace/reported-game.json",
+      "compressed": false,
+      "originalBytes": 2331,
+      "originalSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea",
+      "storedSha256": "1b61c45c2a602b0c1f16628046551698ad52b27d68ea1c6f1e1c79aed5aa9eea"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\audit-correction.json",
+      "archive": "data/workspace/results/audit-correction.json",
+      "compressed": false,
+      "originalBytes": 419,
+      "originalSha256": "c13be01e024e3ecab9ce79262aef541486dd770ade3d3c8d8fbfe024d1435a28",
+      "storedSha256": "c13be01e024e3ecab9ce79262aef541486dd770ade3d3c8d8fbfe024d1435a28"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\correctness.json",
+      "archive": "data/workspace/results/correctness.json",
+      "compressed": false,
+      "originalBytes": 1710,
+      "originalSha256": "8b20ca898eef1c904f3e40b5c147fd6789f5f612154a352d07b388dd94b032a4",
+      "storedSha256": "8b20ca898eef1c904f3e40b5c147fd6789f5f612154a352d07b388dd94b032a4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\coverage.json",
+      "archive": "data/workspace/results/coverage.json.gz",
+      "compressed": true,
+      "originalBytes": 93415,
+      "originalSha256": "c6d8249af34861741efb0a61736d7247c375d6e7cdd5b29ac657395f12f0bc1f",
+      "storedSha256": "71962dbed87166fcb1480fb069d1882e60cbd631df7c0141144b149c6fffe722"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\coverage.md",
+      "archive": "data/workspace/results/coverage.md",
+      "compressed": false,
+      "originalBytes": 2020,
+      "originalSha256": "077341d4cb19b161cce4f6b3dbde22e18e069093e819852b6c557099720bd5df",
+      "storedSha256": "077341d4cb19b161cce4f6b3dbde22e18e069093e819852b6c557099720bd5df"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\data-audit.json",
+      "archive": "data/workspace/results/data-audit.json",
+      "compressed": false,
+      "originalBytes": 1103,
+      "originalSha256": "52a0b04619e06b440f0751a277badaa8629d00bec2128bfb0d2b103ad880df91",
+      "storedSha256": "52a0b04619e06b440f0751a277badaa8629d00bec2128bfb0d2b103ad880df91"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\decision.json",
+      "archive": "data/workspace/results/decision.json",
+      "compressed": false,
+      "originalBytes": 4009,
+      "originalSha256": "0e0f97de368c2d88a56e52c53b46e23c17e162b1d992abec6f3c0963005abb71",
+      "storedSha256": "0e0f97de368c2d88a56e52c53b46e23c17e162b1d992abec6f3c0963005abb71"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\results\\preflight.json",
+      "archive": "data/workspace/results/preflight.json",
+      "compressed": false,
+      "originalBytes": 4131,
+      "originalSha256": "9a6d28bc44323cfed8cb7c3c5b26c0df9895d1d9fc1cdc76803af7d100a4292a",
+      "storedSha256": "9a6d28bc44323cfed8cb7c3c5b26c0df9895d1d9fc1cdc76803af7d100a4292a"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\search.wasm",
+      "archive": "data/workspace/search.wasm",
+      "compressed": false,
+      "originalBytes": 121429,
+      "originalSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321",
+      "storedSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\epoch-00.pt",
+      "archive": "data/workspace/Soft4-r0-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f",
+      "storedSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\epoch-02.pt",
+      "archive": "data/workspace/Soft4-r0-model/epoch-02.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "288828501198ea499092e21d43354dbb6ac886d149692f36fd78141393d4488b",
+      "storedSha256": "288828501198ea499092e21d43354dbb6ac886d149692f36fd78141393d4488b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\epoch-04.pt",
+      "archive": "data/workspace/Soft4-r0-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "ba8b9d3bec23e25b522a7117b5fe6258e3566a53bfe602968529267bbf1f86e6",
+      "storedSha256": "ba8b9d3bec23e25b522a7117b5fe6258e3566a53bfe602968529267bbf1f86e6"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\epoch-06.pt",
+      "archive": "data/workspace/Soft4-r0-model/epoch-06.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "794fc45d6f1b1a0ef9b281c6460d4d1bebb5925b5373372a811d3350e1e82cc8",
+      "storedSha256": "794fc45d6f1b1a0ef9b281c6460d4d1bebb5925b5373372a811d3350e1e82cc8"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\epoch-08.pt",
+      "archive": "data/workspace/Soft4-r0-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "6754a8ccc3f7e52bdcdf48cc2fe2ce16d676209d7bf11cfe767df21fab17a501",
+      "storedSha256": "6754a8ccc3f7e52bdcdf48cc2fe2ce16d676209d7bf11cfe767df21fab17a501"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\golden.json",
+      "archive": "data/workspace/Soft4-r0-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100092,
+      "originalSha256": "49794bd9cb6bfc2bf72106a494174318165654dd8e1fcc74bf9ee8a429a0d12b",
+      "storedSha256": "f6840109b97c7772a213245a3d44eed3b6ae3f567fce2d467678d1cd44cf4ebf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Soft4-r0-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\manifest.json",
+      "archive": "data/workspace/Soft4-r0-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 82394,
+      "originalSha256": "24a7b52e3c4e202d2a1bcf6540aa3aa31d6e4abd6534abe66cef720b5a131150",
+      "storedSha256": "615bbcb8c57819279a0a2eb070f874baf749fdc21934d1151bc4e1ead40f0322"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\model.onnx",
+      "archive": "data/workspace/Soft4-r0-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+      "storedSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\selected-training-weights.pt",
+      "archive": "data/workspace/Soft4-r0-model/selected-training-weights.pt",
+      "compressed": false,
+      "originalBytes": 526727,
+      "originalSha256": "57d24173b21b5839de5a54a5b1496a9c48642f5c5dfd88eb3b396a27764aad75",
+      "storedSha256": "57d24173b21b5839de5a54a5b1496a9c48642f5c5dfd88eb3b396a27764aad75"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\weights.f32",
+      "archive": "data/workspace/Soft4-r0-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+      "storedSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r0-model\\weights.pt",
+      "archive": "data/workspace/Soft4-r0-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+      "storedSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\epoch-00.pt",
+      "archive": "data/workspace/Soft4-r1-model/epoch-00.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f",
+      "storedSha256": "fa9e52b911ba525d8195f5ecf926f482334d6f8d56df3ebba2f7919bc84c042f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\epoch-02.pt",
+      "archive": "data/workspace/Soft4-r1-model/epoch-02.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "4ca4f5d673a29d0defa51ad565db20b3d174c89be48d02675b925449eb640a21",
+      "storedSha256": "4ca4f5d673a29d0defa51ad565db20b3d174c89be48d02675b925449eb640a21"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\epoch-04.pt",
+      "archive": "data/workspace/Soft4-r1-model/epoch-04.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "9daafe013479ce039598438227e64e897ab5a769cb8cd1338e21e9d277a8169e",
+      "storedSha256": "9daafe013479ce039598438227e64e897ab5a769cb8cd1338e21e9d277a8169e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\epoch-06.pt",
+      "archive": "data/workspace/Soft4-r1-model/epoch-06.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "ae6badb80028c6bdbbb184848a822a617aaf6f18591d293b120759b9bf7ba964",
+      "storedSha256": "ae6badb80028c6bdbbb184848a822a617aaf6f18591d293b120759b9bf7ba964"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\epoch-08.pt",
+      "archive": "data/workspace/Soft4-r1-model/epoch-08.pt",
+      "compressed": false,
+      "originalBytes": 523161,
+      "originalSha256": "6bf668a4414f5e3eb8328acf909d0b3d86629f77a87fed3f9b5fbea203db5f46",
+      "storedSha256": "6bf668a4414f5e3eb8328acf909d0b3d86629f77a87fed3f9b5fbea203db5f46"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\golden.json",
+      "archive": "data/workspace/Soft4-r1-model/golden.json.gz",
+      "compressed": true,
+      "originalBytes": 100092,
+      "originalSha256": "49794bd9cb6bfc2bf72106a494174318165654dd8e1fcc74bf9ee8a429a0d12b",
+      "storedSha256": "f6840109b97c7772a213245a3d44eed3b6ae3f567fce2d467678d1cd44cf4ebf"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\KataGo-NN-LICENSE.txt",
+      "archive": "data/workspace/Soft4-r1-model/KataGo-NN-LICENSE.txt",
+      "compressed": false,
+      "originalBytes": 1117,
+      "originalSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70",
+      "storedSha256": "178b983a067e7e92d6e908d5e12e331a7f00f79b3b96bee24f95976120104c70"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\manifest.json",
+      "archive": "data/workspace/Soft4-r1-model/manifest.json.gz",
+      "compressed": true,
+      "originalBytes": 82337,
+      "originalSha256": "a7baefd6be69d57337db30f4960a4e192dde664ab95a2221b23f4f1d8dac1bfa",
+      "storedSha256": "c33adb012952bd32058200144e0a4e866b1e814e718b8aa82a7a02d38005ef5b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\model.onnx",
+      "archive": "data/workspace/Soft4-r1-model/model.onnx",
+      "compressed": false,
+      "originalBytes": 502401,
+      "originalSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+      "storedSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\selected-training-weights.pt",
+      "archive": "data/workspace/Soft4-r1-model/selected-training-weights.pt",
+      "compressed": false,
+      "originalBytes": 526727,
+      "originalSha256": "57d24173b21b5839de5a54a5b1496a9c48642f5c5dfd88eb3b396a27764aad75",
+      "storedSha256": "57d24173b21b5839de5a54a5b1496a9c48642f5c5dfd88eb3b396a27764aad75"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\weights.f32",
+      "archive": "data/workspace/Soft4-r1-model/weights.f32",
+      "compressed": false,
+      "originalBytes": 483620,
+      "originalSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d",
+      "storedSha256": "86ac72f9263b4fe7624ff41312fbef127b5f87421968a451bd5c926f461d167d"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\Soft4-r1-model\\weights.pt",
+      "archive": "data/workspace/Soft4-r1-model/weights.pt",
+      "compressed": false,
+      "originalBytes": 504035,
+      "originalSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+      "storedSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\ai-position.js",
+      "archive": "data/workspace/sources/ai-position.js",
+      "compressed": false,
+      "originalBytes": 1315,
+      "originalSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad",
+      "storedSha256": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\ai-v3-search.js",
+      "archive": "data/workspace/sources/ai-v3-search.js",
+      "compressed": false,
+      "originalBytes": 4919,
+      "originalSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+      "storedSha256": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\engine.js",
+      "archive": "data/workspace/sources/engine.js",
+      "compressed": false,
+      "originalBytes": 6979,
+      "originalSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc",
+      "storedSha256": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\export_webgpu.py",
+      "archive": "data/workspace/sources/export_webgpu.py",
+      "compressed": false,
+      "originalBytes": 2600,
+      "originalSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e",
+      "storedSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\model.py",
+      "archive": "data/workspace/sources/model.py",
+      "compressed": false,
+      "originalBytes": 1781,
+      "originalSha256": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+      "storedSha256": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\research-informed-coverage.py",
+      "archive": "data/workspace/sources/research-informed-coverage.py",
+      "compressed": false,
+      "originalBytes": 7908,
+      "originalSha256": "614bc1b1b6d6df13bd11bac9f838ef60f7196aeb4790a41a2fa3ee02d0be6a35",
+      "storedSha256": "614bc1b1b6d6df13bd11bac9f838ef60f7196aeb4790a41a2fa3ee02d0be6a35"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\research-informed-setup.py",
+      "archive": "data/workspace/sources/research-informed-setup.py",
+      "compressed": false,
+      "originalBytes": 2297,
+      "originalSha256": "12809ad76e08187f044f5d29cdb77d5c0d293302814bf63cd21dc38bc5f3bc76",
+      "storedSha256": "12809ad76e08187f044f5d29cdb77d5c0d293302814bf63cd21dc38bc5f3bc76"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\train.py",
+      "archive": "data/workspace/sources/train.py",
+      "compressed": false,
+      "originalBytes": 39599,
+      "originalSha256": "7352f582b88b2872528cb38d6a845faee75d283d943de5aaa12e0c1f811d9be4",
+      "storedSha256": "7352f582b88b2872528cb38d6a845faee75d283d943de5aaa12e0c1f811d9be4"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\training-model.py",
+      "archive": "data/workspace/sources/training-model.py",
+      "compressed": false,
+      "originalBytes": 2953,
+      "originalSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+      "storedSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\training-research-informed-coverage.py",
+      "archive": "data/workspace/sources/training-research-informed-coverage.py",
+      "compressed": false,
+      "originalBytes": 8389,
+      "originalSha256": "64046f3a3983c9e1e48bafeea0705cd7ba9b3fc39ec2d973ae80e74dc2259f00",
+      "storedSha256": "64046f3a3983c9e1e48bafeea0705cd7ba9b3fc39ec2d973ae80e74dc2259f00"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\training-research-informed-train.mjs",
+      "archive": "data/workspace/sources/training-research-informed-train.mjs",
+      "compressed": false,
+      "originalBytes": 3195,
+      "originalSha256": "a08de1c850c64fb52397647b5d0a9ab5d8447f20ed856168ec01d98994a9832f",
+      "storedSha256": "a08de1c850c64fb52397647b5d0a9ab5d8447f20ed856168ec01d98994a9832f"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\training-test_soft_policy.py",
+      "archive": "data/workspace/sources/training-test_soft_policy.py",
+      "compressed": false,
+      "originalBytes": 4713,
+      "originalSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88",
+      "storedSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\sources\\training-train.py",
+      "archive": "data/workspace/sources/training-train.py",
+      "compressed": false,
+      "originalBytes": 42568,
+      "originalSha256": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688",
+      "storedSha256": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\topologies.json",
+      "archive": "data/workspace/topologies.json",
+      "compressed": false,
+      "originalBytes": 11323,
+      "originalSha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757",
+      "storedSha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Control-r0-command.json",
+      "archive": "data/workspace/train-Control-r0-command.json",
+      "compressed": false,
+      "originalBytes": 2300,
+      "originalSha256": "3e9e13d62cad052aa3a4343827ea1f3f03fe381d9dc9f52f816b96216479470c",
+      "storedSha256": "3e9e13d62cad052aa3a4343827ea1f3f03fe381d9dc9f52f816b96216479470c"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Control-r0-log.txt",
+      "archive": "data/workspace/train-Control-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 10866,
+      "originalSha256": "e668b26511470ed51825a07de43f857247054f5480ac0387835402b6f04570ed",
+      "storedSha256": "e668b26511470ed51825a07de43f857247054f5480ac0387835402b6f04570ed"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Control-r1-command.json",
+      "archive": "data/workspace/train-Control-r1-command.json",
+      "compressed": false,
+      "originalBytes": 2300,
+      "originalSha256": "31b3fc5326d064353bd0bd633b84a12a9b0819202866dba075f0de9c71c39193",
+      "storedSha256": "31b3fc5326d064353bd0bd633b84a12a9b0819202866dba075f0de9c71c39193"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Control-r1-log.txt",
+      "archive": "data/workspace/train-Control-r1-log.txt",
+      "compressed": false,
+      "originalBytes": 10805,
+      "originalSha256": "bfd92cdf55bf864a28644a0cd6a9c98903e4060cb4be930a08e1c43892334f3e",
+      "storedSha256": "bfd92cdf55bf864a28644a0cd6a9c98903e4060cb4be930a08e1c43892334f3e"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Soft4-r0-command.json",
+      "archive": "data/workspace/train-Soft4-r0-command.json",
+      "compressed": false,
+      "originalBytes": 2298,
+      "originalSha256": "1028b1eb7a55ea4f97e90559698a8c9c97aaa8939f944dbb50f4ac56d437678b",
+      "storedSha256": "1028b1eb7a55ea4f97e90559698a8c9c97aaa8939f944dbb50f4ac56d437678b"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Soft4-r0-log.txt",
+      "archive": "data/workspace/train-Soft4-r0-log.txt",
+      "compressed": false,
+      "originalBytes": 10878,
+      "originalSha256": "94a542db3d9ac53d91e011a009b6f7709061e43198d23f977b5b75935bf79eca",
+      "storedSha256": "94a542db3d9ac53d91e011a009b6f7709061e43198d23f977b5b75935bf79eca"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Soft4-r1-command.json",
+      "archive": "data/workspace/train-Soft4-r1-command.json",
+      "compressed": false,
+      "originalBytes": 2298,
+      "originalSha256": "ffe9a80a55c570d9975b6652ec594a76ace342920046639957800e6ae4f2acfd",
+      "storedSha256": "ffe9a80a55c570d9975b6652ec594a76ace342920046639957800e6ae4f2acfd"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\train-Soft4-r1-log.txt",
+      "archive": "data/workspace/train-Soft4-r1-log.txt",
+      "compressed": false,
+      "originalBytes": 10821,
+      "originalSha256": "27d4fb58536c3e49fc96c3ea65e8f734465c067b56ae25570a755acaea96b518",
+      "storedSha256": "27d4fb58536c3e49fc96c3ea65e8f734465c067b56ae25570a755acaea96b518"
+    },
+    {
+      "source": "tools\\ai-gnn\\target\\research-informed-study-20261028\\training-registration.json",
+      "archive": "data/workspace/training-registration.json",
+      "compressed": false,
+      "originalBytes": 1209,
+      "originalSha256": "70db7b3c6d1ad55edb323db2415d6b269c2faf6c4e9512a747a7dcdf5daee0e2",
+      "storedSha256": "70db7b3c6d1ad55edb323db2415d6b269c2faf6c4e9512a747a7dcdf5daee0e2"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-setup.py",
+      "archive": "data/tools/research-informed-setup.py",
+      "compressed": false,
+      "originalBytes": 2297,
+      "originalSha256": "12809ad76e08187f044f5d29cdb77d5c0d293302814bf63cd21dc38bc5f3bc76",
+      "storedSha256": "12809ad76e08187f044f5d29cdb77d5c0d293302814bf63cd21dc38bc5f3bc76"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-coverage.py",
+      "archive": "data/tools/research-informed-coverage.py",
+      "compressed": false,
+      "originalBytes": 8389,
+      "originalSha256": "64046f3a3983c9e1e48bafeea0705cd7ba9b3fc39ec2d973ae80e74dc2259f00",
+      "storedSha256": "64046f3a3983c9e1e48bafeea0705cd7ba9b3fc39ec2d973ae80e74dc2259f00"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-train.mjs",
+      "archive": "data/tools/research-informed-train.mjs",
+      "compressed": false,
+      "originalBytes": 3195,
+      "originalSha256": "a08de1c850c64fb52397647b5d0a9ab5d8447f20ed856168ec01d98994a9832f",
+      "storedSha256": "a08de1c850c64fb52397647b5d0a9ab5d8447f20ed856168ec01d98994a9832f"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-preflight.py",
+      "archive": "data/tools/research-informed-preflight.py",
+      "compressed": false,
+      "originalBytes": 3048,
+      "originalSha256": "95093ddd5a433adbc08a2bd4cde73f7810fed8cf57d1835bea0c43401d9d24ce",
+      "storedSha256": "95093ddd5a433adbc08a2bd4cde73f7810fed8cf57d1835bea0c43401d9d24ce"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-matches.mjs",
+      "archive": "data/tools/research-informed-matches.mjs",
+      "compressed": false,
+      "originalBytes": 9215,
+      "originalSha256": "eb21bebeb46c61ed5e2ca3675f4228edc6a86625b18aa320a3c5f50f131edcfb",
+      "storedSha256": "eb21bebeb46c61ed5e2ca3675f4228edc6a86625b18aa320a3c5f50f131edcfb"
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-archive.mjs",
+      "archive": "data/tools/research-informed-archive.mjs",
+      "compressed": false,
+      "originalBytes": 8085,
+      "originalSha256": "b556d2fc00098bfc6202b5af0504139876a5f37e3ab1802fc37a282fcc9e2bbb",
+      "storedSha256": "b556d2fc00098bfc6202b5af0504139876a5f37e3ab1802fc37a282fcc9e2bbb"
+    },
+    {
+      "source": "tools/ai-gnn/model.py",
+      "archive": "data/tools/model.py",
+      "compressed": false,
+      "originalBytes": 2953,
+      "originalSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+      "storedSha256": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88"
+    },
+    {
+      "source": "tools/ai-gnn/train.py",
+      "archive": "data/tools/train.py",
+      "compressed": false,
+      "originalBytes": 42568,
+      "originalSha256": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688",
+      "storedSha256": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688"
+    },
+    {
+      "source": "tools/ai-gnn/test_soft_policy.py",
+      "archive": "data/tools/test_soft_policy.py",
+      "compressed": false,
+      "originalBytes": 4713,
+      "originalSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88",
+      "storedSha256": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88"
+    },
+    {
+      "source": "tools/ai-gnn/test_training.py",
+      "archive": "data/tools/test_training.py",
+      "compressed": false,
+      "originalBytes": 15197,
+      "originalSha256": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848",
+      "storedSha256": "7c15d4b3115e1425e8192440592a1dadb15855d2aa54ebae7b8c49fe48b00848"
+    },
+    {
+      "source": "tools/ai-gnn/test_model.py",
+      "archive": "data/tools/test_model.py",
+      "compressed": false,
+      "originalBytes": 2657,
+      "originalSha256": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da",
+      "storedSha256": "241efb7880b9d3ed5e8c8c65f9d9cbefe0ddce023ed54f7481699123b50169da"
+    },
+    {
+      "source": "tools/ai-gnn/export_webgpu.py",
+      "archive": "data/tools/export_webgpu.py",
+      "compressed": false,
+      "originalBytes": 2600,
+      "originalSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e",
+      "storedSha256": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e"
+    },
+    {
+      "source": "tools/ai-gnn/study-commands.mjs",
+      "archive": "data/tools/study-commands.mjs",
+      "compressed": false,
+      "originalBytes": 1652,
+      "originalSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27",
+      "storedSha256": "dd5a98b6a0a42c4ffb40b62a76b354cc3db0fe3177f01a9d39e7eb4974167d27"
+    },
+    {
+      "source": "experiments/ai/plans/v3-research-informed-improvement/README.md",
+      "archive": "data/plan/README.md",
+      "compressed": false,
+      "originalBytes": 12541,
+      "originalSha256": "b6bebe97864db4852e7b5529263b9198e28cf610874b6aa4d200bdf9141c420a",
+      "storedSha256": "b6bebe97864db4852e7b5529263b9198e28cf610874b6aa4d200bdf9141c420a"
+    },
+    {
+      "source": "experiments/ai/plans/v3-research-informed-improvement/plan.json",
+      "archive": "data/plan/plan.json",
+      "compressed": false,
+      "originalBytes": 13516,
+      "originalSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864",
+      "storedSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864"
+    },
+    {
+      "source": "tools/ai-gnn/target/research-informed-study-20261028/results/smoothing-diagnostic.json",
+      "archive": "data/workspace/results/smoothing-diagnostic.json",
+      "compressed": false,
+      "originalBytes": 24734,
+      "originalSha256": "580d11b4f59550a254230f412c53aedd38cb259b38c607e99f1bddd457774c5f",
+      "storedSha256": "580d11b4f59550a254230f412c53aedd38cb259b38c607e99f1bddd457774c5f",
+      "postHoc": true
+    },
+    {
+      "source": "tools/ai-gnn/research-informed-smoothing.py",
+      "archive": "data/tools/research-informed-smoothing.py",
+      "compressed": false,
+      "originalBytes": 2438,
+      "originalSha256": "7463648d7cb6aa9087e17dd6d96f059b09ff10e0451137e89981c12afc302c63",
+      "storedSha256": "7463648d7cb6aa9087e17dd6d96f059b09ff10e0451137e89981c12afc302c63",
+      "postHoc": true
+    }
+  ]
+}

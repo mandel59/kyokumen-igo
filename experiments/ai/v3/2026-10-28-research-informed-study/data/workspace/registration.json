@@ -1,0 +1,18 @@
+{
+  "started": "2026-10-28T14:37:50.593748+00:00",
+  "planSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864",
+  "sourceHashes": {
+    "tools/ai-gnn/train.py": "7352f582b88b2872528cb38d6a845faee75d283d943de5aaa12e0c1f811d9be4",
+    "tools/ai-gnn/model.py": "f5f7f49a40e33fa416bed09d6d9c607400e582baf87b567d77d3f20cd82968bd",
+    "tools/ai-gnn/export_webgpu.py": "b1f9f5b7a3285c9e52bbfffb7181ef497ca53cd4a916dac727d83b066a5f2d0e",
+    "tools/ai-gnn/research-informed-setup.py": "12809ad76e08187f044f5d29cdb77d5c0d293302814bf63cd21dc38bc5f3bc76",
+    "tools/ai-gnn/research-informed-coverage.py": "614bc1b1b6d6df13bd11bac9f838ef60f7196aeb4790a41a2fa3ee02d0be6a35",
+    "dist/ai-v3-search.js": "bb2f0fa6be76d2fc35afe5749593431d37cac88e7ff740366aa14a09a5802a56",
+    "dist/ai-position.js": "3989fd67cda02b19a620d231c174bf26c700cc751e9a01d3e8792a37ae75cfad",
+    "dist/engine.js": "cc16dd834d0d8e95c1ec85d6cff2955d41c99b3b8d1aa72f9c6c25ab095cfedc"
+  },
+  "baselineCheckpointSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+  "topologiesSha256": "c4959e2303941f412e01ad6843af88b826e91efc98f9f8f3004f5c62c663e757",
+  "authorization": "User requested experiment execution after the planning turn.",
+  "preliminaryInspection": "Read-only inspection counted raw records and tail support before the full audit; no learning or match outcomes viewed."
+}

@@ -1,0 +1,12 @@
+{
+  "started": "2026-10-28T15:03:33.749Z",
+  "sourceHashes": {
+    "train.py": "c19f68cb0f9eb83e153d037574fe165eb11fe4d352fcfeac4280dde10db5e8bf",
+    "model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "test_fresh_replay.py": "044c08b580bedeb1f1c4c50d2b9db2131387ccd02656e3d355dde27ed3df08d4",
+    "research-informed-newdata-train.mjs": "15376537c7546dcc1894b9632f97fb2e37de5403a94b943fcf8262c4cde5dc15",
+    "research-informed-newdata-prepare.mjs": "80e8e4917066f0eee2d8ab39848bb61f403a4479fc5ff1ec14451b15995ec44a"
+  },
+  "plan": "8f52471b73cc9349172e61e66426885dd662ffe0e30d372b6e9337584a538b8f",
+  "audit": "90997283104c15f026cb769c1063dc5156e257514c3cfdaa76255eb65a97a9b6"
+}

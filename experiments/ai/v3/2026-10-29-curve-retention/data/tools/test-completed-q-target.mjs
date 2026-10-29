@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {completedQPolicy,wdlValue} from './completed-q-target.mjs';
+const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-10,a+' != '+b);
+const x={prior:[.5,.25,.25],q:[.6,-.2,NaN],visits:[2,1,0],legal:[true,true,true],rawValue:.1};
+const r=completedQPolicy(x);close(r.mixedValue,.275);close(r.scale,5.2);close(r.policy[0]/r.policy[1],2*Math.exp(4.16));close(r.policy[2]/r.policy[1],Math.exp(2.47));close(r.policy.reduce((a,b)=>a+b,0),1);
+const empty=completedQPolicy({...x,q:[NaN,NaN,NaN],visits:[0,0,0]});empty.policy.forEach((v,i)=>close(v,x.prior[i]));
+const same=completedQPolicy({...x,q:[.2,.2,.2],visits:[1,2,3],rawValue:.2});same.policy.forEach((v,i)=>close(v,x.prior[i]));
+const masked=completedQPolicy({prior:[.7,.3,0],q:[.4,NaN,NaN],visits:[3,0,0],legal:[true,true,false],rawValue:0});assert.equal(masked.policy[2],0);assert.ok(masked.policy[0]>.7);
+const permutation=[2,0,1],permuted=completedQPolicy(Object.fromEntries(Object.entries(x).map(([k,v])=>[k,Array.isArray(v)?permutation.map(i=>v[i]):v])));permuted.policy.forEach((v,i)=>close(v,r.policy[permutation[i]]));
+close(wdlValue([Math.log(6),Math.log(1),Math.log(3)]),.3);
+assert.throws(()=>completedQPolicy({...x,visits:[-1,1,0]}));assert.throws(()=>completedQPolicy({...x,rawValue:NaN}));assert.throws(()=>completedQPolicy({...x,legal:[true,false,true]}));assert.throws(()=>wdlValue([1,NaN,2]));
+console.log('Completed-Q: hand calculation, zero-visit, equal-Q, legal mask, permutation, WDL perspective and invalid inputs passed.');

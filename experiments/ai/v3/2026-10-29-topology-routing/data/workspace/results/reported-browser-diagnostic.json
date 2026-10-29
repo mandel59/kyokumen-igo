@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "role": "Public L6 fixture only; no training, selection, strength or latency use. Independent matches may be running concurrently.",
+  "fixture": "965d3ba95dba713ff47a3f75f2f97ed1c50fc1f26c585b46d201bf566716cf8f",
+  "models": {
+    "a": "b0d6a8fc3b984a0337b3e65f8b65f6a9325d6e63592448f377e0a2920760e5af",
+    "b": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f"
+  },
+  "environment": {
+    "browser": "156.0.4314.50",
+    "cpu": "AMD Ryzen 7 3700X 8-Core Processor             ",
+    "node": "v26.12.1"
+  },
+  "runs": [
+    {
+      "backend": "wasm",
+      "rows": [
+        {
+          "side": "a",
+          "seed": 0,
+          "move": 115,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 1,
+          "move": 115,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 2,
+          "move": 115,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 3,
+          "move": 115,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "b",
+          "seed": 0,
+          "move": 96,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 1,
+          "move": 96,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 2,
+          "move": 96,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 3,
+          "move": 96,
+          "backend": "v3-wasm",
+          "simulations": 64,
+          "modelSha256": null
+        }
+      ]
+    },
+    {
+      "backend": "webgpu",
+      "rows": [
+        {
+          "side": "a",
+          "seed": 0,
+          "move": 115,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 1,
+          "move": 115,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 2,
+          "move": 115,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "a",
+          "seed": 3,
+          "move": 115,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+        },
+        {
+          "side": "b",
+          "seed": 0,
+          "move": 96,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 1,
+          "move": 96,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 2,
+          "move": 96,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": null
+        },
+        {
+          "side": "b",
+          "seed": 3,
+          "move": 96,
+          "backend": "v3-webgpu",
+          "simulations": 64,
+          "modelSha256": null
+        }
+      ]
+    }
+  ],
+  "allCandidateSelectL6": true
+}

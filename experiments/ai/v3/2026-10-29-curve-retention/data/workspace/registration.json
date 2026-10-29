@@ -1,0 +1,32 @@
+{
+  "started": "2026-10-28T15:54:05.226Z",
+  "clientDate": "2026-10-29",
+  "planSha256": "162ae6d89845c08387172a5c2fb11891cf5065db8d7f847b6a06bc335c9ba641",
+  "baselineCheckpointSha256": "c5835e88ebfa994b98b30512f98a72b714266c6dd0d31275efbdad84fe26d3db",
+  "sourceHashes": {
+    "curve-retention-prepare.mjs": "f42ee6fde1664d7683e9d8c4aa926e29042bf571d2254b22448173a64df471e0",
+    "completed-q-target.mjs": "fb210a85adb5b3cb86475d2bdc512305e63f6e7703db7883122335b28b916aa6",
+    "train.py": "d2a1e49e08357f704a608c18379cf5ab3f31d0a32452aec0d0b96cd984985957",
+    "model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "test_curve_retention.py": "8d812b5ea5396f8b6312c894d718fc149c6cefb7fa2cc9542b46060576979dbc",
+    "test-completed-q-target.mjs": "7aee7ee7a61e508697911a38028e691d128b063b4a7a8e46788c18aba06f55aa"
+  },
+  "inputs": {
+    "legacy": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher.jsonl.gz",
+    "legacySha256": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+    "fresh": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/fresh-all.jsonl.gz",
+    "freshSha256": "5544c9c967be52aeb33ed861199acb5bc6c3abec609998415fec837f747c39ab",
+    "split": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/split.json.gz",
+    "splitSha256": "99afd67030e6262bc39bbf1cf0c1c99ed2f86ece2d6409597e399efcf947558c",
+    "checkpoint": "experiments/ai/v3/2026-10-28-fresh-data-study/data/workspace/baseline/weights.pt",
+    "collectionGames": 0,
+    "teacherQueries": 0,
+    "trainPositions": 10486,
+    "validationPositions": 3544,
+    "partition": "Reuse pinned origin-game partitions. No previous development, pilot, independent or reported game added to learning.",
+    "sampling": "Every board1/9. Each plane70% legacy+30% fresh; curves100% legacy. Identical input rows, common validation targets and weights across all arms. Only eligible curved training policy changes for CompletedQ.",
+    "curveTargetSource": "Existing noise-free4096 teacher root traces on each exact old root; teacher model8e5b41e3974c..., not the deployed model. Keep source model/wasm hashes per row. This is target construction, not fresh on-policy curve collection.",
+    "splitStoredSha256": "bdd57df66378d2851b878cf51feb83baaf365f6bc20706dc3838c2d6fda42249",
+    "splitCompression": "gzip; splitSha256 is the decompressed original"
+  }
+}

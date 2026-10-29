@@ -236,3 +236,32 @@ node tools/ai-gnn/selfplay.mjs --teacher-package tools/ai-gnn/target/teacher-gnn
 `train.py --trainable policy` は着手とパスのヘッド4,482パラメータだけを学習し、盤面表現・勝敗・得点・所属の重みを固定します。`--trainable value` は従来どおり勝敗ヘッドだけ、既定の `--trainable all` は全体を学習します。部分学習には `--resume` が必要です。モデル規模と入出力ABIは変わりません。
 
 `--refresh-policy-surprise` は、再開したモデルと教師方策のKLを学習局面だけで再計算してから優先再生に使います。`--resume`、`--balanced`、0より大きい `--policy-surprise-fraction` と併用します。検証局面を使って優先度を決めることはなく、元の教材ファイルも変更しません。学習比率、対局単位の分割、モデル選定と独立評価条件を実行前に固定してください。
+
+
+## 研究に基づく補助方策と新規データの比較
+
+--auxiliary-soft-policy は通常の着手・パス出力を複製した学習専用出力を追加する。--auxiliary-policy-temperature と --auxiliary-policy-weight で補助目標を指定し、通常のモデル選択には補助損失を含めない。係数0は対照用。書き出す推論モデルから補助出力を除き、元の120,905パラメータを保つ。選択した学習用重みは selected-training-weights.pt に別保存する。
+
+--samples-per-epoch は --balanced と併用し、入力局面数にかかわらず更新回数を揃える。--fresh-generation-fraction は自己対局データの replayGeneration=0/1 を盤内で混合し、新規データのない盤は既存データだけを使う。全盤の重みを均等に維持し、generation balancingや優先再生とは併用しない。検証にも同じ混合を使うため、比較対照にも新規の検証局面だけを渡し、共通のsplit manifestを固定する。
+
+[補助学習の記録](../../experiments/ai/v3/2026-10-28-research-informed-study/README.md)と[新規データ追加の計画・結果](../../experiments/ai/plans/v3-fresh-data-study/README.md)を参照。両実験の登録済み条件・入力・モデル・全ログを使い、過去の作業領域を上書きして再試行しない。
+
+## 曲面での元モデル保持とQ教師
+
+--curve-anchor と --curve-anchor-weight は、固定checkpointから曲面の学習局面だけの方策・勝敗・得点・所有の目標をキャッシュし、出力のずれを追加損失にする。平面と共通のモデル選択損失には適用しない。既定値0では従来どおりで、推論の出力やパラメータは増えない。
+
+completed-q-target.mjs は、同じ根の生NN事前確率・探索Q・子訪問数・根NN勝敗値から未探索手を混合値で補完する。合法手でlog(prior)＋変換Qを正規化し、違法手の確率は0にする。通常の混合済み教師を生の事前確率として渡さない。曲面の保持と教師構成の比較は[登録計画](../../experiments/ai/plans/v3-curve-retention/README.md)を参照。
+
+## 盤面別モデルの実験
+
+createV3AI は通常のmanifestを読み、任意のmodelRoutesがあれば盤面のkindだけでモデルを選ぶ。たとえばmodelRoutes.planeにmanifest: 'plane/manifest.json'とsha256: '64桁のモデルSHA-256'を指定する。子manifestは同じ配信元・同じディレクトリ配下に限定し、宣言されたモデルハッシュを照合する。単一モデルのmanifestは従来どおり使える。discoverModels:falseは指定モデルを直接使う比較用の指定である。
+
+同時に保持するプレイヤーは1つとし、切替前の探索をキャンセルして完了を待ち、破棄してから次を初期化する。保存する重みは2モデル分になるが、1手あたりは従来と同じ120,905パラメータの1モデル・64訪問である。初回の平面手や盤面を変えた直後には読み込みが発生するため、通常時の探索速度と分けて測る。
+
+NodeのcreateNodeInference(directory,{kind:'plane'})も同じ経路とハッシュを使う。経路を持つmanifestでkindを省略するとエラーにする。意図した単体モデルとの比較にはignoreRouting:trueを指定する。単体モデル側は従来どおりkindの指定が不要である。
+
+[盤面別モデルの登録計画](../../experiments/ai/plans/v3-topology-routing/README.md)とtest-topology-routing.mjs、実Workerのtest-topology-routing-browser.mjsを参照。配信manifestへの経路追加は独立対局・通常/負荷/初期化速度の全採用条件を満たした場合だけ行う。
+
+2026年10月29日の[盤面別切替実験](../../experiments/ai/v3/2026-10-29-topology-routing/README.md)は独立432局238勝194敗と全速度条件を通過し、ローカルv3へ反映した。平面はNewData、球・トーラスはCompletedQを使う。保存容量は2モデル分、1手の推論規模は従来のままである。
+
+学習・再解析・対局CLIではnode-topology-inference.mjsのcreateTopologyNodeInferenceを使い、各盤面の評価前にsetKind(kind)を呼ぶ。manifestは現在の子モデル、bundleManifestは固定した構成全体を示す。実際に使った子モデルSHAを棋譜や教師の由来に記録する。これは逐次処理用で、推論中の切替・破棄を拒否する。

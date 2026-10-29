@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "id": "v3-fresh-data-study-20261028",
+  "date": "2026-10-28",
+  "status": "registered-before-generation-and-training",
+  "workspace": "tools/ai-gnn/target/fresh-data-study-20261028",
+  "reason": "Compare fresh on-policy plane experience with legacy-only continuation after Soft4 failed. Keep inference architecture, deployment search, board mass and optimizer-step count identical.",
+  "baseline": {
+    "model": "dist/models/v3/model.onnx",
+    "modelSha256": "d866f7d8ec0c3a5813832da25f925c6fb74662eee9b2511eedbe379bd09e1f7f",
+    "wasm": "dist/ai-v3.wasm",
+    "wasmSha256": "a7168da72141d5f1fd3654baf863834624bd7c0ce3cd6b38fcf5d9ebf2cde321"
+  },
+  "prerequisites": {
+    "pilotDecision": "tools/ai-gnn/target/fresh-teacher-pilot-20261028/results/decision.json",
+    "requireProceedToNewData": true
+  },
+  "boards": [
+    "sphere3",
+    "sphere4",
+    "sphere5",
+    "torus7",
+    "torus9",
+    "torus11",
+    "plane7",
+    "plane9",
+    "plane11"
+  ],
+  "teacher": {
+    "provenance": "tools/ai-tuner/target/katago-distillation-20261027/provenance.json",
+    "modelSha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4",
+    "visits": 512,
+    "uniformLegalMix": 0.02,
+    "scope": "plane only"
+  },
+  "legacyData": "experiments/ai/v3/2026-10-27-katago-distillation/data/teacher.jsonl.gz",
+  "legacySha256": "c67b0c81f70d814d77b73a5beac3ffe27471d9a9d4c7e03a6ac1c99a4df960f4",
+  "data": {
+    "boards": [
+      7,
+      9,
+      11
+    ],
+    "gamesPerBoard": 8,
+    "totalGames": 24,
+    "trainIndices": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      7
+    ],
+    "validationIndices": [
+      1,
+      6
+    ],
+    "teacherPlayedIndices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "baselinePlayedIndices": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "branchIndices": [
+      2,
+      3,
+      6,
+      7
+    ],
+    "branch": "Restore floor(N/3) legal prefix moves from an original teacher game in the same partition. Select sorted eligible origin by FNV1a(dataSeed|board|index|origin). Origin must have >=prefix+8 moves. Record full history and group every fork with original origin for splitting. Record new training rows only after the restored prefix.",
+    "baselineVisits": 64,
+    "concurrency": 3,
+    "komi": 6.5,
+    "moveCap": "6*N",
+    "maximumTeacherQueries": 12048,
+    "maximumTeacherVisits": 6168576,
+    "generationSeed": 2026102850,
+    "noOutcomeBasedReplacement": true,
+    "capPolicy": "Save all trajectories. Any capped game fails this data recipe; no relabeling or replacement.",
+    "exploration": "Sample played teacher/baseline policy with temperature1 until min(18,N/3), temperature0.25 until N/2, then argmax. In the first phase use25% Dirichlet noise with concentration10 for played-action sampling only. Teacher labels remain noise-free.",
+    "exclusion": "All pilot/screen/independent/reported-L6 games are excluded. Original validation families remain validation, including forks."
+  },
+  "training": {
+    "seed": 2026102851,
+    "arms": [
+      {
+        "id": "Control",
+        "freshTraining": false
+      },
+      {
+        "id": "NewData",
+        "freshTraining": true
+      }
+    ],
+    "trainable": "all",
+    "epochs": 16,
+    "samplesPerEpoch": 9263,
+    "batchSize": 64,
+    "optimizerStepsPerEpoch": 145,
+    "optimizerStepsTotalPerArm": 2320,
+    "learningRate": 0.0001,
+    "minimumLearningRate": 0.00001,
+    "cosine": true,
+    "emaDecay": 0.99,
+    "balanced": true,
+    "freshGenerationFractionWithinPlane": 0.3,
+    "curveReplay": "100% unchanged legacy data; every board retains1/9 total training mass. Within each plane board NewData has70% legacy+30% fresh; Control has100% legacy.",
+    "commonValidation": "Both inputs contain identical original and fresh validation roots. Validation has the same within-board70/30 mixture on planes, legacy-only curves. Control input excludes fresh training games entirely. Pin all game IDs and assert origin-family split integrity and equal selection-corpus hashes.",
+    "checkpoints": [
+      0,
+      4,
+      8,
+      12,
+      16
+    ],
+    "selection": "Lowest common validation loss including epoch0, no auxiliary head, no policy anchor or surprise replay.",
+    "rationale": "The16-epoch1e-4 schedule follows the earlier successful distillation recipe; both arms have identical updates. This round changes data availability, not the recipe between arms."
+  },
+  "preflight": {
+    "selectedEpochPositive": true,
+    "minRelativeSelectionLossGain": 0.001,
+    "maxPerBoardSelectionLossRatio": 1.02,
+    "control": "Integrity/export checks required; no improvement gate. Epoch0 remains valid.",
+    "tests": [
+      "Full replay and root feature/legal/area labels for every fresh game",
+      "Fixed board mass/old-new mixture and identical update counts",
+      "Identical common selection corpus across arms",
+      "Original inference format and actual CPU/WebGPU Worker checks"
+    ]
+  },
+  "seeds": {
+    "development": 2026102852,
+    "independent": 2026102853,
+    "bootstrap": 2026102854
+  },
+  "development": {
+    "pairsPerBoard": 4,
+    "gamesPerArm": 72,
+    "totalGamesMax": 144,
+    "minScore": 40,
+    "minPerBoardScore": 3,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "selection": "NewData only: all gates plus higher total score than Control. No candidate/epoch substitution after development."
+  },
+  "independent": {
+    "candidateMax": 1,
+    "pairsPerBoard": 24,
+    "games": 432,
+    "minScoreRate": 0.55,
+    "minPaired95LowerExclusive": 0.5,
+    "minPerBoardScore": 19,
+    "minPlaneScoreRate": 0.5,
+    "minCurveScoreRate": 0.5,
+    "bootstrapIterations": 10000
+  },
+  "matches": {
+    "openingMoves": 4,
+    "seedFormula": "FNV1a32(phaseSeed|board|pair|ply); shared legal4-move opening and per-turn seed in swapped colours and both arms",
+    "visits": 64,
+    "fpu": 1,
+    "rootCandidates": 8,
+    "rootQScale": 0.4,
+    "komi": 6.5,
+    "moveCap": "6*N",
+    "cappedGames": "Retain, score actual Game area, report count; no outcome-dependent replacement"
+  },
+  "latency": {
+    "ordinary": {
+      "warmups": 2,
+      "repeats": 7,
+      "overallP95RatioMax": 1.05,
+      "perBoardP95RatioMax": 1.1
+    },
+    "stress": {
+      "warmups": 2,
+      "repeats": 31,
+      "p95Limit": "candidate <= max(1.10*baseline,baseline+2ms)"
+    },
+    "backends": [
+      "WASM CPU",
+      "WebGPU"
+    ],
+    "secondary": "If strength passes, freeze equal-time development protocol from baseline-only calibration before candidate timing; report separately."
+  },
+  "ceilings": {
+    "freshGames": 24,
+    "trainingRuns": 2,
+    "epochsTotal": 32,
+    "optimizerStepsTotal": 4640,
+    "developmentGames": 144,
+    "independentGames": 432,
+    "totalEvaluationGames": 576
+  },
+  "stopping": "If data, preflight or development fails, archive and stop this round. One independent candidate only; no extra games, retries, replacement models or parameter tuning after independent failure. No hosted deployment.",
+  "limitations": "One training seed is a resource-limited causal comparison; independent matches test the selected model against deployed baseline, not method superiority in general."
+}

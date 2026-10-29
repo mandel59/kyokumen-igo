@@ -1,0 +1,31 @@
+{
+  "architecture": "v3",
+  "featureVersion": 1,
+  "points": 160,
+  "channels": 32,
+  "globals": 8,
+  "hidden": 64,
+  "blocks": 6,
+  "parameters": 120905,
+  "model": "model.onnx",
+  "sha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff",
+  "status": "experimental",
+  "accepted": false,
+  "trainPositions": 10486,
+  "webgpu": {
+    "formatVersion": 1,
+    "model": "weights.f32",
+    "sha256": "f106aca279db073534a9c111c00f0d0ceaece1d6a5a7c419f3ffa35af3b6595e",
+    "sourceSha256": "df7de3ab83ce3ea0253b55de3c4515c2641bf6e780123f76513c40de69b03fff"
+  },
+  "search": {
+    "fpu": 1
+  },
+  "teacherProvenance": {
+    "name": "kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "url": "https://media.katagotraining.org/uploaded/networks/models/kata1/kata1-b10c128-s1141046784-d204142634.txt.gz",
+    "sha256": "3d8a24697ba25fe4da39af4c2b6bd405907b0ad8295322f5a550fa2d8fe4a2f4",
+    "license": "https://katagotraining.org/network_license/"
+  },
+  "planId": "v3-topology-routing-20261029"
+}

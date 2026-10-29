@@ -1,0 +1,35 @@
+{
+  "started": "2026-10-28T14:42:23.068Z",
+  "planSha256": "29f17e41e273040e23c79854c1bb058ea6a53cfc097c66c93593d42e2b2de864",
+  "dataAuditSha256": "52a0b04619e06b440f0751a277badaa8629d00bec2128bfb0d2b103ad880df91",
+  "coverageSha256": "c6d8249af34861741efb0a61736d7247c375d6e7cdd5b29ac657395f12f0bc1f",
+  "sourceHashes": {
+    "tools/ai-gnn/train.py": "7eed19021e90892c2f39e3d90797f0bf307fdbd2621b8cbcb7fd1455d09d7688",
+    "tools/ai-gnn/model.py": "0038338f2020554f82245e774dcb414a0202cf9ccf80b8931a8b717e47aa5f88",
+    "tools/ai-gnn/test_soft_policy.py": "79b9103425f45ba22b1fcc115df07b59bf69a4be3f49bc99ec3f4a865da1bd88",
+    "tools/ai-gnn/research-informed-train.mjs": "a08de1c850c64fb52397647b5d0a9ab5d8447f20ed856168ec01d98994a9832f",
+    "tools/ai-gnn/research-informed-coverage.py": "64046f3a3983c9e1e48bafeea0705cd7ba9b3fc39ec2d973ae80e74dc2259f00"
+  },
+  "runs": [
+    {
+      "id": "Control-r0",
+      "seed": 2026102810,
+      "weight": 0
+    },
+    {
+      "id": "Soft4-r0",
+      "seed": 2026102810,
+      "weight": 1
+    },
+    {
+      "id": "Control-r1",
+      "seed": 2026102811,
+      "weight": 0
+    },
+    {
+      "id": "Soft4-r1",
+      "seed": 2026102811,
+      "weight": 1
+    }
+  ]
+}

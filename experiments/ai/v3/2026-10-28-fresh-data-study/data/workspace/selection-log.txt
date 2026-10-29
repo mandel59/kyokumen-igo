@@ -1,0 +1,1 @@
+{"selected":null,"gates":{"candidate":false,"higherThanControl":true}}

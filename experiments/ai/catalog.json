@@ -192,6 +192,48 @@
       "architecture": "v3",
       "title": "KataGoの平面盤方策からv3への蒸留",
       "path": "v3/2026-10-27-katago-distillation/"
+    },
+    {
+      "id": "v3/2026-10-28-root-candidate-recall",
+      "architecture": "v3",
+      "title": "根の候補取りこぼしの比較",
+      "path": "v3/2026-10-28-root-candidate-recall/"
+    },
+    {
+      "id": "v3/2026-10-28-improvement-campaign",
+      "architecture": "v3",
+      "title": "探索6案・学習5案の改善実験",
+      "path": "v3/2026-10-28-improvement-campaign/"
+    },
+    {
+      "id": "v3/2026-10-28-research-informed-study",
+      "architecture": "v3",
+      "title": "学習専用の軟方策補助出力の比較",
+      "path": "v3/2026-10-28-research-informed-study/"
+    },
+    {
+      "id": "v3/2026-10-28-fresh-teacher-pilot",
+      "architecture": "v3",
+      "title": "平面KataGo教師の収集パイロット",
+      "path": "v3/2026-10-28-fresh-teacher-pilot/"
+    },
+    {
+      "id": "v3/2026-10-28-fresh-data-study",
+      "architecture": "v3",
+      "title": "新規平面教師データ追加の比較",
+      "path": "v3/2026-10-28-fresh-data-study/"
+    },
+    {
+      "id": "v3/2026-10-29-curve-retention",
+      "architecture": "v3",
+      "title": "曲面保持とcompleted-Q教師の比較",
+      "path": "v3/2026-10-29-curve-retention/"
+    },
+    {
+      "id": "v3/2026-10-29-topology-routing",
+      "architecture": "v3",
+      "title": "盤面別の固定モデル切替の比較",
+      "path": "v3/2026-10-29-topology-routing/"
     }
   ]
 }

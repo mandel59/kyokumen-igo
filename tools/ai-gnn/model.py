@@ -1,4 +1,5 @@
 """v3: permutation-equivariant, 64-channel / six-block residual graph network."""
+import copy
 import torch
 from torch import nn
 
@@ -38,10 +39,35 @@ class GraphNet(nn.Module):
         self.score = head(HIDDEN + GLOBALS, 1, 64)
         self.ownership = head(HIDDEN, 3)
 
-    def forward(self, x, adjacency, mask, global_features):
+    def features(self, x, adjacency, mask, global_features):
         h = torch.relu(self.input(x)) * mask
         for block in self.blocks:
             h = block(h, adjacency, mask, global_features)
         g = torch.cat((pool(h, mask), global_features), -1)
+        return h, g
+
+    def predictions(self, h, g):
         policy = torch.cat((self.policy(h).squeeze(-1), self.passing(g)), -1)
         return policy, self.value(g), self.score(g).squeeze(-1), self.ownership(h)
+
+    def forward(self, x, adjacency, mask, global_features):
+        return self.predictions(*self.features(x, adjacency, mask, global_features))
+
+    def enable_soft_policy(self):
+        if hasattr(self, 'auxiliary_policy'):
+            raise ValueError('Auxiliary policy already enabled')
+        # Copy the resumed heads without consuming the paired training RNG.
+        self.auxiliary_policy = copy.deepcopy(self.policy)
+        self.auxiliary_passing = copy.deepcopy(self.passing)
+
+    def forward_with_aux(self, x, adjacency, mask, global_features):
+        h, g = self.features(x, adjacency, mask, global_features)
+        auxiliary = torch.cat((self.auxiliary_policy(h).squeeze(-1), self.auxiliary_passing(g)), -1)
+        return self.predictions(h, g), auxiliary
+
+    def inference_model(self):
+        # Export only the original inference graph and original parameter order.
+        with torch.random.fork_rng(devices=[]):
+            result = GraphNet()
+        result.load_state_dict({k:v for k,v in self.state_dict().items() if not k.startswith('auxiliary_')})
+        return result.eval()
